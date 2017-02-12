@@ -3,17 +3,19 @@ from .device import *
 from .auth import *
 import requests
 
-clientCharacteristics = {"clientCharacteristics": {
-		                                                  "apiVersion": "7",
-		                                                  "applicationIdentifier": "statistic.bot",
-		                                                  "applicationVersion": "1.0", 
-		                                                  "deviceManufacturer": "Microsoft",
-		                                                  "deviceType": "Computer",
-		                                                  "language": "de-AT",
-		                                                  "osType": "Windows",
-		                                                  "osVersion": "10",
-	                                                  }
-                                                  }
+clientCharacteristics = {"clientCharacteristics": 
+                         {
+		                        "apiVersion": "7",
+		                        "applicationIdentifier": "homematicip-python",
+		                        "applicationVersion": "1.0", 
+		                        "deviceManufacturer": "none",
+		                        "deviceType": "Computer",
+		                        "language": "de-AT",
+		                        "osType": "Windows",
+		                        "osVersion": "10",
+	                        },
+                         "id": None
+                        }
 
 auth_token = ""
 urlREST = ""
@@ -40,7 +42,6 @@ def init(accesspoint_id):
   js = json.loads(result.text)
   urlREST=js["urlREST"]
   urlWebSocket=js["urlWebSocket"]
-  clientCharacteristics["id"]
 
 def get_urlREST():
   return urlREST
