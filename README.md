@@ -18,6 +18,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] Basic Informations( apversion, pinAssigned, timeZone, ... )
 - [X] Devices (partly)
 - [X] Client
+- [ ] Groups
 
 ## Devices: ##
 - [X] HMIP-eTRV (Heating-thermostat)
@@ -47,7 +48,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] setIntrusionAlertThroughSmokeDetectors
 
 ### Device ###
-- [ ] setClimateControlDisplay
+- [X] setClimateControlDisplay
 
 ### Alarm ###
 - [ ] testSignalOptical

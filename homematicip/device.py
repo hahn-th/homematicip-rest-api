@@ -57,8 +57,13 @@ class ShutterContact(Device):
         self.unreach = c["unreach"]
         self.lowBat = c["lowBat"]
         self.sabotage = c["sabotage"]
-
+        
 class WallMountedThermostatPro(Device):
+  DISPLAY_ACTUAL = "ACTUAL"
+  DISPLAY_SETPOINT = "SETPOINT"
+  DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
+
+
   temperatureOffset=None
   display=None
   operationLockActive=None
@@ -79,6 +84,11 @@ class WallMountedThermostatPro(Device):
         self.unreach = c["unreach"]
         self.lowBat = c["lowBat"]
         self.operationLockActive = c["operationLockActive"]
+
+  def set_display(self, display=WallMountedThermostatPro.DISPLAY_ACTUAL):
+    data = {"channel": "1", "deviceId" : self.id, "display":display }
+    return self._restCall("hmip/device/configuration/setClimateControlDisplay",json.dumps(data))
+
   
 class SmokeDetector(Device):
   smokeDetectorAlarmType=None
