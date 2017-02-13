@@ -120,9 +120,21 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
   
   def activate_absence_with_period(self, endtime):
     data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M") }
-    return self._restCall("home/heating/activateAbsenceWithPeriod",json.dumps(data))  
+    return self._restCall("home/heating/activateAbsenceWithPeriod",json.dumps(data)) 
+
+  def activate_absence_with_duration(self, duration):
+    data = {"duration": duration }
+    return self._restCall("home/heating/activateAbsenceWithDuration",json.dumps(data))    
+
   def deactivate_absence(self):
     return self._restCall("home/heating/deactivateAbsence")
+  
+  def activate_vacation(self, endtime, temperature):
+    data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M"), "temperature":temperature }
+    return self._restCall("home/heating/activateVacation",json.dumps(data)) 
+   
+  def deactivate_vacation(self):
+    return self._restCall("home/heating/deactivateVacation")
 
 
         

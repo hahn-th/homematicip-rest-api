@@ -30,16 +30,16 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] getCurrentState (this reads the base configuration for the whole AP)
 - [X] setZonesActivation (activates the alarm zones (internal and/or external))
 - [X] everything needed for a successfull registration/authentication
-- [ ] setLocation
+- [X] setLocation
 
 ### Heating ###
 - [ ] setBoost
 - [ ] getProfile
 - [ ] updateProfile
-- [ ] activateAbsenceWithDuration
+- [X] activateAbsenceWithDuration
 - [X] activateAbsenceWithPeriod
 - [X] activateVacation
-- [ ] deactivateVacation
+- [X] deactivateVacation
 - [X] deactivateAbsence
 
 ### Security ###
