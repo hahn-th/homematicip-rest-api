@@ -7,7 +7,8 @@ class HomeMaticIPObject(object):
   def __init__(self):
     self.headers = {'content-type':'application/json', 'accept':'application/json' , 'VERSION' : '7', 'AUTHTOKEN':homematicip.get_auth_token()}
   def _restCall(self, path, body):
-    return requests.post('{}/hmip/{}'.format(homematicip.get_urlREST(),path), data=body, headers=self.headers).text
+    result = requests.post('{}/hmip/{}'.format(homematicip.get_urlREST(),path), data=body, headers=self.headers)
+    return result.text
   def from_json(self,js):
     pass
 

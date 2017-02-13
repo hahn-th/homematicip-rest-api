@@ -1,5 +1,6 @@
 from homematicip import HomeMaticIPObject
 import json
+from datetime import datetime
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
   """this class represents a generic homematic ip device """
@@ -18,11 +19,16 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     self.id = js["id"]
     self.homeId = js["homeId"]
     self.label = js["label"]
-    self.lastStatusUpdate = js["lastStatusUpdate"]
+    self.lastStatusUpdate = datetime.fromtimestamp(js["lastStatusUpdate"]/1000.0)
     self.deviceType = js["type"]
     self.updateState = js["updateState"]
     self.firmwareVersion = js["firmwareVersion"]
     self.availableFirmwareVersion = js["availableFirmwareVersion"]
+
+  def __str__(self):
+    return unicode(self).encode('utf-8')
+  def __unicode__(self):
+    return u"{} {}".format(self.deviceType,self.label)
 
 class HeatingThermostat(Device):
   temperatureOffset=None
@@ -41,6 +47,9 @@ class HeatingThermostat(Device):
         self.lowBat = c["lowBat"]
         self.operationLockActive = c["operationLockActive"]
 
+  def __unicode__(self):
+    return u"{}: valvePosition({})".format(super(HeatingThermostat,self).__unicode__(),self.valvePosition)
+
 class ShutterContact(Device):
   sabotage = None
   open = None
@@ -57,6 +66,8 @@ class ShutterContact(Device):
         self.unreach = c["unreach"]
         self.lowBat = c["lowBat"]
         self.sabotage = c["sabotage"]
+  def __unicode__(self):
+    return u"{}: open({}) sabotage ({})".format(super(ShutterContact,self).__unicode__(),self.open,self.sabotage)
         
 class WallMountedThermostatPro(Device):
   DISPLAY_ACTUAL = "ACTUAL"
@@ -85,9 +96,12 @@ class WallMountedThermostatPro(Device):
         self.lowBat = c["lowBat"]
         self.operationLockActive = c["operationLockActive"]
 
-  def set_display(self, display=WallMountedThermostatPro.DISPLAY_ACTUAL):
-    data = {"channel": "1", "deviceId" : self.id, "display":display }
-    return self._restCall("hmip/device/configuration/setClimateControlDisplay",json.dumps(data))
+  def set_display(self, display=DISPLAY_ACTUAL):
+    data = {"channelIndex": 1, "deviceId" : self.id, "display":display }
+    return self._restCall("device/configuration/setClimateControlDisplay",json.dumps(data))
+
+  def __unicode__(self):
+    return u"{}: actualTemperature({}) humidity({})".format(super(WallMountedThermostatPro,self).__unicode__(),self.actualTemperature,self.humidity)
 
   
 class SmokeDetector(Device):
@@ -102,3 +116,6 @@ class SmokeDetector(Device):
       elif type == "DEVICE_BASE":
         self.unreach = c["unreach"]
         self.lowBat = c["lowBat"]
+        
+  def __unicode__(self):
+    return u"{}: smokeDetectorAlarmType({})".format(super(SmokeDetector,self).__unicode__(),self.smokeDetectorAlarmType)

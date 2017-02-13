@@ -32,16 +32,21 @@ def get_auth_token():
 def get_clientCharacteristics():
   return clientCharacteristics
 
-def init(accesspoint_id):
+def init(accesspoint_id,lookup=True):
   global urlREST
   global clientCharacteristics
   global urlWebSocket
   accesspoint_id=accesspoint_id.replace('-',' ')
   clientCharacteristics["id"] = accesspoint_id
-  result = requests.post("https://lookup.homematic.com:48335/getHost", json=clientCharacteristics)
-  js = json.loads(result.text)
-  urlREST=js["urlREST"]
-  urlWebSocket=js["urlWebSocket"]
+  if lookup:
+    result = requests.post("https://lookup.homematic.com:48335/getHost", json=clientCharacteristics)
+    js = json.loads(result.text)
+    urlREST=js["urlREST"]
+    urlWebSocket=js["urlWebSocket"]
+  else:
+    urlREST="https://ps2.homematic.com:16969"
+    urlWebSocket="wss://ps2.homematic.com:18888"
+
 
 def get_urlREST():
   return urlREST
