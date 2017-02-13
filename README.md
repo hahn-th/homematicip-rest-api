@@ -37,14 +37,14 @@ copy the generated auth token from the window config.py and add also the Access 
 - [ ] getProfile
 - [ ] updateProfile
 - [ ] activateAbsenceWithDuration
-- [ ] activateAbsenceWithPeriod
-- [ ] activateVacation
+- [X] activateAbsenceWithPeriod
+- [X] activateVacation
 - [ ] deactivateVacation
-- [ ] deactivateAbsence
+- [X] deactivateAbsence
 
 ### Security ###
 - [ ] getSecurityJournal
-- [ ] setIntrusionAlertThroughSmokeDetectors
+- [X] setIntrusionAlertThroughSmokeDetectors
 
 ### Device ###
 - [ ] setClimateControlDisplay
