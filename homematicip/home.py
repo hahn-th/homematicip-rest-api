@@ -110,5 +110,19 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     data = {"zonesActivation": { "EXTERNAL": external, "INTERNAL": internal } }
     return self._restCall("home/security/setZonesActivation",json.dumps(data))
 
+  def set_location(self,city,latitude,longitude):
+    data = {"city": city, "latitude" : latitude, "longitude" : longitude }
+    return self._restCall("home/setLocation",json.dumps(data))
+  
+  def set_intrusion_alert_through_smoke_detectors(self, activate = True):
+    data = {"intrusionAlertThroughSmokeDetectors": activate }
+    return self._restCall("home/security/setIntrusionAlertThroughSmokeDetectors",json.dumps(data))
+  
+  def activate_absence_with_period(self, endtime):
+    data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M") }
+    return self._restCall("home/heating/activateAbsenceWithPeriod",json.dumps(data))  
+  def deactivate_absence(self):
+    return self._restCall("home/heating/deactivateAbsence")
+
 
         
