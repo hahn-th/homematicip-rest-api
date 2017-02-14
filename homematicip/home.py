@@ -1,5 +1,3 @@
-import json
-
 import homematicip
 from homematicip.device import *
 
