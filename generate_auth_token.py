@@ -2,7 +2,7 @@ import homematicip
 import time
 
 while True:
-    access_point = raw_input("Please enter the accesspoint id (SGTIN): ").replace('-', ' ')
+    access_point = raw_input("Please enter the accesspoint id (SGTIN): ").replace('-', '').upper()
     if len(access_point) != 24:
         print "Invalid access_point id"
         continue

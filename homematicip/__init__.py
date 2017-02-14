@@ -40,7 +40,7 @@ def init(accesspoint_id, lookup=True):
     global urlREST
     global clientCharacteristics
     global urlWebSocket
-    accesspoint_id = accesspoint_id.replace('-', ' ')
+    accesspoint_id = accesspoint_id.replace('-', '').upper()
     clientCharacteristics["id"] = accesspoint_id
     if lookup:
         result = requests.post("https://lookup.homematic.com:48335/getHost", json=clientCharacteristics)
