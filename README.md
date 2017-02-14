@@ -25,6 +25,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HmIP-WTH-2 (Wall Mounted Thermostat Pro)
 - [X] HMIP-SWDO (Shutter Contact)
 - [X] HmIP-SWSD (Smoke Detector)
+- [X] HmIP-FAL230-C6 (Floor Terminal Block)
 
 ## Implemented Functions: ##
 ### General ###

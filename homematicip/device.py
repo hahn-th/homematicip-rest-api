@@ -130,3 +130,22 @@ class SmokeDetector(Device):
     def __unicode__(self):
         return u"{}: smokeDetectorAlarmType({})".format(super(SmokeDetector, self).__unicode__(),
                                                         self.smokeDetectorAlarmType)
+
+
+class FloorTerminalBlock6(Device):
+    globalPumpControl = None
+    heatingValveType = None
+
+    def from_json(self, js):
+        super(FloorTerminalBlock6, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DEVICE_GLOBAL_PUMP_CONTROL":
+                self.unreach = c["unreach"]
+                self.globalPumpControl = c["globalPumpControl"]
+                self.heatingValveType = c["heatingValveType"]
+
+    def __unicode__(self):
+        return u"{}: globalPumpControl({})".format(super(FloorTerminalBlock6, self).__unicode__(),
+                                                   self.globalPumpControl)
