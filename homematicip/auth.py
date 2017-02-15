@@ -9,14 +9,17 @@ import homematicip
 class Auth(object):
     uuid = None
     headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '7'}
-
+    pin = None
     def __init__(self):
         self.uuid = str(uuid.uuid4())
 
     def connectionRequest(self, access_point):
         data = {"deviceId": self.uuid, "deviceName": "homematicip-python", "sgtin": access_point}
+        headers = self.headers
+        if self.pin != None:
+            headers["PIN"] = self.pin
         response = requests.post("{}/hmip/auth/connectionRequest".format(homematicip.get_urlREST()), json=data,
-                                 headers=self.headers)
+                                 headers=headers)
         return response
 
     def isRequestAcknowledged(self):

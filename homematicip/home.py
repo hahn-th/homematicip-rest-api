@@ -1,5 +1,6 @@
 import homematicip
 from homematicip.device import *
+import requests
 
 _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat, "SHUTTER_CONTACT": ShutterContact,
                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro, "SMOKE_DETECTOR": SmokeDetector,
@@ -140,3 +141,11 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def deactivate_vacation(self):
         return self._restCall("home/heating/deactivateVacation")
+
+    def set_pin(self,newPin,oldPin=None):
+        data = { "pin" : newPin }
+        headers = self.headers
+        if oldPin:
+            headers["PIN"] = oldPin
+        result = requests.post('{}/hmip/home/setPin'.format(homematicip.get_urlREST()), data=json.dumps(data), headers=headers)
+        return result.text

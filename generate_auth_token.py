@@ -7,9 +7,13 @@ while True:
         print "Invalid access_point id"
         continue
     break
+pin = raw_input("Please enter the PIN (leave Blank if there is none): ")
 
 homematicip.init(access_point)
 auth = homematicip.Auth()
+
+if pin != '':
+    auth.pin=pin
 
 auth.connectionRequest(access_point)
 print "Please press the blue button on the access point"
