@@ -9,6 +9,7 @@ copy the generated auth token from the window config.py and add also the Access 
 
 # Examples #
 * list_devices.py - this file will list all (yet implemented) devices from your AP and will print some informations about them
+* show_firmware.py - this file shows current and available firmware versions of all devices
 
 # Implemented Stuff #
 - [X] generate authentication token
@@ -25,6 +26,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HmIP-WTH-2 (Wall Mounted Thermostat Pro)
 - [X] HMIP-SWDO (Shutter Contact)
 - [X] HmIP-SWSD (Smoke Detector)
+- [X] HmIP-FAL230-C6 (Floor Terminal Block)
 
 ## Implemented Functions: ##
 ### General ###

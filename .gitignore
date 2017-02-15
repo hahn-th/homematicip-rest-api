@@ -89,3 +89,7 @@ ENV/
 .ropeproject
 /config.py
 /.vs
+
+# PyCharm
+.idea
+
