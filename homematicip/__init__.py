@@ -1,3 +1,6 @@
+import platform
+import locale
+
 from .home import *
 from .device import *
 from .auth import *
@@ -10,9 +13,9 @@ clientCharacteristics = {"clientCharacteristics":
         "applicationVersion": "1.0",
         "deviceManufacturer": "none",
         "deviceType": "Computer",
-        "language": "de-AT",
-        "osType": "Windows",
-        "osVersion": "10",
+        "language": locale.getdefaultlocale()[0],
+        "osType": platform.system(),
+        "osVersion": platform.release(),
     },
     "id": None
 }
