@@ -49,6 +49,7 @@
     <Compile Include="list_devices.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="show_firmware.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />
