@@ -7,7 +7,8 @@ _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat, "SHUTTER_CONTACT": Shu
                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro, "SMOKE_DETECTOR": SmokeDetector,
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring}
 
-_typeGroupMap = { "SECURITY" : SecurityGroup }
+_typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING": SwitchingGroup, "EXTENDED_LINKED_SWITCHING" : ExtendedLinkedSwitchingGroup
+                 , "LINKED_SWITCHING": LinkedSwitchingGroup, "ALARM_SWITCHING": AlarmSwitchingGroup }
 
 
 
@@ -182,3 +183,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             headers["PIN"] = oldPin
         result = requests.post('{}/hmip/home/setPin'.format(homematicip.get_urlREST()), data=json.dumps(data), headers=headers)
         return result.text
+
+    def set_zone_activation_delay( self, delay):
+        data = { "zoneActivationDelay":delay }
+        return self._restCall("home/security/setZoneActivationDelay", body=json.dumps(data))

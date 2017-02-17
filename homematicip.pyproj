@@ -53,6 +53,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="generate_auth_token.py" />
+    <Compile Include="list_groups.py" />
     <Compile Include="list_devices.py">
       <SubType>Code</SubType>
     </Compile>

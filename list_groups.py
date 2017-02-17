@@ -2,6 +2,7 @@ import config
 import logging
 from operator import attrgetter
 
+
 import homematicip
 
 def create_logger():
@@ -19,8 +20,6 @@ homematicip.set_auth_token(config.AUTH_TOKEN)
 
 home = homematicip.Home()
 home.get_current_state()
-
-sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
-
-for d in sortedDevices:
-    print unicode(d)
+sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
+for g in sortedGroups:
+    print unicode(g)

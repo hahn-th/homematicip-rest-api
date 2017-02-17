@@ -19,7 +19,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] Basic Informations( apversion, pinAssigned, timeZone, ... )
 - [X] Devices (partly)
 - [X] Client
-- [ ] Groups
+- [X] Groups
 
 ## Devices: ##
 - [X] HmIP-eTRV (Heating-thermostat)
@@ -28,6 +28,19 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HmIP-SWSD (Smoke Detector)
 - [X] HmIP-FAL230-C6 (Floor Terminal Block)
 - [X] HMIP-PSM (Plugable Switch Measuring)
+
+## Groups ##
+- [X] Meta (Rooms)
+- [ ] Heating
+- [X] Security
+- [X] Switching
+- [X] Switch Groups
+- [ ] INBOX
+- [ ] HEATING_TEMPERATURE_LIMITER
+- [ ] SECURITY_ZONE
+- [X] ALARM_SWITCHING
+- [ ] HEATING_CHANGEOVER
+- [X] LINKED_SWITCHING
 
 ## Implemented Functions: ##
 ### General ###

@@ -15,7 +15,7 @@ class HomeMaticIPObject(object):
 
     def _restCall(self, path, body):
         result = None
-        result = requests.post('{}/hmip/{}'.format(homematicip.get_urlREST(), path), data=body, headers=self.headers, timeout=10)
+        result = requests.post('{}/hmip/{}'.format(homematicip.get_urlREST(), path), data=body, headers=self.headers)
         return result.json()
 
 
