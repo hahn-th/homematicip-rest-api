@@ -61,8 +61,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     id = None
 
     def get_current_state(self):
-        state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
-        json_state = json.loads(state)
+        json_state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
         js_home = json_state["home"]
 
         self.weather = Weather()
