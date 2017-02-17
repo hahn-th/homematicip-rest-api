@@ -4,6 +4,7 @@ import locale
 from .home import *
 from .device import *
 from .auth import *
+from .group import *
 import requests
 
 clientCharacteristics = {"clientCharacteristics":

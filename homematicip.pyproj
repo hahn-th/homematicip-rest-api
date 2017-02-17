@@ -13,6 +13,10 @@
     <Name>homematicip</Name>
     <RootNamespace>homematicip</RootNamespace>
     <IsWindowsApplication>False</IsWindowsApplication>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterArguments>
+    </InterpreterArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,6 +38,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\device.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="homematicip\group.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\home.py">

@@ -1,10 +1,14 @@
 import homematicip
 from homematicip.device import *
+from homematicip.group import *
 import requests
 
 _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat, "SHUTTER_CONTACT": ShutterContact,
                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro, "SMOKE_DETECTOR": SmokeDetector,
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring}
+
+_typeGroupMap = { "SECURITY" : SecurityGroup }
+
 
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
@@ -43,6 +47,7 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
     devices = None
+    groups = None
     weather = None
     location = None
     connected = None
@@ -84,10 +89,11 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeState = js_home["apExchangeState"]
         self.id = js_home["id"]
 
-        self.devices = self.get_devices(json_state)
-        self.clients = self.get_clients(json_state)
+        self.devices = self._get_devices(json_state)
+        self.clients = self._get_clients(json_state)
+        self.groups = self._get_groups(json_state)
 
-    def get_devices(self, json_state):
+    def _get_devices(self, json_state):
         ret = []
         data = json_state
         for k in data["devices"]:
@@ -98,10 +104,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 d.from_json(device)
                 ret.append(d)
             else:
+                d = Device()
+                d.from_json(device)
+                ret.append(d)
                 print "There is no class for {} yet".format(deviceType)
         return ret
 
-    def get_clients(self, json_state):
+    def _get_clients(self, json_state):
         ret = []
         data = json_state
         for k in data["clients"]:
@@ -110,6 +119,31 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             c.from_json(client)
             ret.append(c)
         return ret
+
+    def _get_groups(self, json_state):
+        ret = []
+        data = json_state
+        metaGroups = []
+        for k in data["groups"]:
+            group = data["groups"][k]
+            groupType = group["type"]
+            if _typeGroupMap.has_key(groupType):
+                g = _typeGroupMap[groupType]()
+                g.from_json(group,self.devices)
+                ret.append(g)
+            elif groupType == "META":
+                metaGroups.append(group)
+            else:
+                g = Group()
+                g.from_json(group,self.devices)
+                ret.append(g)
+                print "There is no class for {} yet".format(groupType)
+        
+        for mg in metaGroups:
+            g = MetaGroup()
+            g.from_json(mg,self.devices,ret)
+            ret.append(g)
+        return ret  
 
     def set_security_zones_activation(self, internal=True, external=True):
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
