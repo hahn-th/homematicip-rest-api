@@ -4,7 +4,7 @@ import requests
 
 _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat, "SHUTTER_CONTACT": ShutterContact,
                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro, "SMOKE_DETECTOR": SmokeDetector,
-                 "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6}
+                 "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring}
 
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):

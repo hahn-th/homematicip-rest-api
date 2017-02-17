@@ -22,11 +22,12 @@ copy the generated auth token from the window config.py and add also the Access 
 - [ ] Groups
 
 ## Devices: ##
-- [X] HMIP-eTRV (Heating-thermostat)
+- [X] HmIP-eTRV (Heating-thermostat)
 - [X] HmIP-WTH-2 (Wall Mounted Thermostat Pro)
-- [X] HMIP-SWDO (Shutter Contact)
+- [X] HmIP-SWDO (Shutter Contact)
 - [X] HmIP-SWSD (Smoke Detector)
 - [X] HmIP-FAL230-C6 (Floor Terminal Block)
+- [X] HMIP-PSM (Plugable Switch Measuring)
 
 ## Implemented Functions: ##
 ### General ###
@@ -52,6 +53,8 @@ copy the generated auth token from the window config.py and add also the Access 
 
 ### Device ###
 - [X] setClimateControlDisplay
+- [X] setDeviceLabel
+- [X] setSwitchState (turn on/off)
 
 ### Alarm ###
 - [ ] testSignalOptical

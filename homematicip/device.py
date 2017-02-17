@@ -32,6 +32,9 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     def __unicode__(self):
         return u"{} {}".format(self.deviceType, self.label)
 
+    def set_label(self, label):
+        data = { "deviceId" : self.id, "label" : label }
+        return self._restCall("home/setDeviceLabel", json.dumps(data))
 
 class HeatingThermostat(Device):
     temperatureOffset = None
@@ -149,3 +152,34 @@ class FloorTerminalBlock6(Device):
     def __unicode__(self):
         return u"{}: globalPumpControl({})".format(super(FloorTerminalBlock6, self).__unicode__(),
                                                    self.globalPumpControl)
+
+class PlugableSwitchMeasuring(Device):
+    on = None
+    energyCounter = None
+    currentPowerConsumption = None
+
+    def from_json(self, js):
+        super(PlugableSwitchMeasuring, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "SWITCH_MEASURING_CHANNEL":
+                self.on = c["on"]
+                self.energyCounter = c["energyCounter"]
+                self.currentPowerConsumption = c["currentPowerConsumption"]
+            elif type == "DEVICE_BASE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+
+    def __unicode__(self):
+        return u"{}: on({}) energyCounter({}) currentPowerConsumption({}W)".format(super(PlugableSwitchMeasuring, self).__unicode__()
+                                                                                   , self.on, self.energyCounter,self.currentPowerConsumption)
+    def set_switch_state(self, on=True):
+        data = { "channelIndex": 1, "deviceId":self.id, "on":on }
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+    
+    def turn_on(self):
+        return self.set_switch_state(True)
+
+    def turn_off(self):
+        return self.set_switch_state(False)
