@@ -297,3 +297,35 @@ class HeatingGroup(Group):
     def set_boost(self,enable=True):
         data = { "groupId" : self.id, "boost" : enable}
         return self._restCall("group/heating/setBoost", body=json.dumps(data))
+
+class HeatingDehumidifierGroup(Group):
+    on = None
+    dimLevel = None
+
+    def from_json(self, js, devices):
+        super(HeatingDehumidifierGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+
+    def __unicode__(self):
+        return u"{}: on({}) dimLevel({}) ".format(super(HeatingDehumidifierGroup, self).__unicode__(),
+                                                self.on, self.dimLevel) 
+
+class HeatingCoolingDemandGroup(Group):
+    on = None
+    dimLevel = None
+
+    def from_json(self, js, devices):
+        super(HeatingCoolingDemandGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+
+    def __unicode__(self):
+        return u"{}: on({}) dimLevel({}) ".format(super(HeatingCoolingDemandGroup, self).__unicode__(),
+                                                self.on, self.dimLevel) 
+
+#at the moment it doesn't look like this class has any special properties/functions
+#keep it as a placeholder in the meantime
+class HeatingExternalClockGroup(Group):
+    def __unicode__(self):
+        return super(HeatingExternalClockGroup,self).__unicode__()

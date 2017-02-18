@@ -42,6 +42,10 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] ALARM_SWITCHING
 - [X] HEATING_CHANGEOVER
 - [X] LINKED_SWITCHING
+- [X] HEATING_COOLING_DEMAND
+- [X] HEATING_DEHUMIDIFIER
+- [X] HEATING_EXTERNAL_CLOCK
+
 
 ## Implemented Functions: ##
 ### General ###
