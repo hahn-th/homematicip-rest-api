@@ -166,4 +166,57 @@ class AlarmSwitchingGroup(Group):
         return u"{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(super(AlarmSwitchingGroup, self).__unicode__(),
                                                 self.on, self.dimLevel, self.onTime, self.signalAcoustic, self.signalOptical, self.smokeDetectorAlarmType, self.acousticFeedbackEnabled) 
 
+#at the moment it doesn't look like this class has any special properties/functions
+#keep it as a placeholder in the meantime
+class HeatingHumidyLimiterGroup(Group):
+    def __unicode__(self):
+        return super(HeatingHumidyLimiterGroup,self).__unicode__()
+    
+#at the moment it doesn't look like this class has any special properties/functions
+#keep it as a placeholder in the meantime
+class HeatingTemperatureLimiterGroup(Group):
+    def __unicode__(self):
+        return super(HeatingTemperatureLimiterGroup,self).__unicode__()
 
+class HeatingChangeoverGroup(Group):
+    on = None
+    dimLevel = None
+    sensorSpecificParameters = None
+
+    def from_json(self, js, devices):
+        super(HeatingChangeoverGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+
+    def __unicode__(self):
+        return u"{} on({}) dimLevel({})".format(super(HeatingChangeoverGroup, self).__unicode__(),
+                                                self.on, self.dimLevel) 
+
+#at the moment it doesn't look like this class has any special properties/functions
+#keep it as a placeholder in the meantime
+class InboxGroup(Group):
+    def __unicode__(self):
+        return super(InboxGroup,self).__unicode__()
+
+class SecurityZoneGroup(Group):
+    active = None
+    silent = None
+    ignorableDevices = None
+    open = None
+    motionDetected = None
+    sabotage = None
+    def from_json(self, js, devices):
+        super(SecurityZoneGroup, self).from_json(js, devices)
+        self.active = js["active"]
+        self.silent = js["silent"]
+        self.open = js["open"]
+        self.motionDetected = js["motionDetected"]
+        self.sabotage = js["sabotage"]
+        self.ignorableDevices = []
+        for device in js["ignorableDevices"]:
+            self.ignorableDevices.append([d for d in devices if d.id == device][0])
+
+
+    def __unicode__(self):
+        return u"{} active({}) silent({}) open({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
+                                                self.active, self.silent, self.open, self.motionDetected, self.sabotage, len(self.ignorableDevices) ) 

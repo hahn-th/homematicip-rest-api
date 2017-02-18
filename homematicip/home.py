@@ -3,12 +3,14 @@ from homematicip.device import *
 from homematicip.group import *
 import requests
 
-_typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat, "SHUTTER_CONTACT": ShutterContact,
-                 "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro, "SMOKE_DETECTOR": SmokeDetector,
+_typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : ShutterContact,
+                 "WALL_MOUNTED_THERMOSTAT_PRO" : WallMountedThermostatPro, "SMOKE_DETECTOR" : SmokeDetector,
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring}
 
-_typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING": SwitchingGroup, "EXTENDED_LINKED_SWITCHING" : ExtendedLinkedSwitchingGroup
-                 , "LINKED_SWITCHING": LinkedSwitchingGroup, "ALARM_SWITCHING": AlarmSwitchingGroup }
+_typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXTENDED_LINKED_SWITCHING" : ExtendedLinkedSwitchingGroup
+                , "LINKED_SWITCHING" : LinkedSwitchingGroup, "ALARM_SWITCHING" : AlarmSwitchingGroup, "HEATING_HUMIDITY_LIMITER" : HeatingHumidyLimiterGroup
+                , "HEATING_TEMPERATURE_LIMITER" : HeatingTemperatureLimiterGroup, "HEATING_CHANGEOVER" : HeatingChangeoverGroup, "INBOX" : InboxGroup
+                , "SECURITY_ZONE" : SecurityZoneGroup }
 
 
 

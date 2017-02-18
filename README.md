@@ -35,11 +35,12 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] Security
 - [X] Switching
 - [X] Switch Groups
-- [ ] INBOX
-- [ ] HEATING_TEMPERATURE_LIMITER
-- [ ] SECURITY_ZONE
+- [X] INBOX
+- [X] HEATING_TEMPERATURE_LIMITER
+- [X] HEATING_HUMIDITY_LIMITER
+- [X] SECURITY_ZONE
 - [X] ALARM_SWITCHING
-- [ ] HEATING_CHANGEOVER
+- [X] HEATING_CHANGEOVER
 - [X] LINKED_SWITCHING
 
 ## Implemented Functions: ##
