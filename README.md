@@ -31,7 +31,7 @@ copy the generated auth token from the window config.py and add also the Access 
 
 ## Groups ##
 - [X] Meta (Rooms)
-- [ ] Heating
+- [X] Heating
 - [X] Security
 - [X] Switching
 - [X] Switch Groups
