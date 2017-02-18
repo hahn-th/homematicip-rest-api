@@ -52,7 +52,8 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] setPin
 
 ### Heating ###
-- [ ] setBoost
+- [X] setBoost
+- [X] setSetPointTemperature
 - [ ] getProfile
 - [ ] updateProfile
 - [X] activateAbsenceWithDuration
@@ -71,5 +72,5 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] setSwitchState (turn on/off)
 
 ### Alarm ###
-- [ ] testSignalOptical
-- [ ] setSignalOptical
+- [X] testSignalOptical
+- [X] setSignalOptical

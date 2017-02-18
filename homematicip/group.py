@@ -140,6 +140,9 @@ class ExtendedLinkedSwitchingGroup(Group):
         return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
 
 class AlarmSwitchingGroup(Group):
+    SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING = "BLINKING_ALTERNATELY_REPEATING"
+    SIGNAL_OPTICAL_DOUBLE_FLASHING_REPEATING = "DOUBLE_FLASHING_REPEATING"
+
     on = None
     dimLevel = None
     onTime = None
@@ -165,6 +168,15 @@ class AlarmSwitchingGroup(Group):
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(super(AlarmSwitchingGroup, self).__unicode__(),
                                                 self.on, self.dimLevel, self.onTime, self.signalAcoustic, self.signalOptical, self.smokeDetectorAlarmType, self.acousticFeedbackEnabled) 
+
+    def test_signal_optical(self,signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+        data = { "groupId":self.id, "signalOptical":signalOptical }
+        return self._restCall("group/switching/arlarm/testSignalOptical", body=json.dumps(data))
+
+    def set_signal_optical(self,signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+        data = { "groupId":self.id, "signalOptical":signalOptical }
+        return self._restCall("group/switching/arlarm/setSignalOptical", body=json.dumps(data))
+
 
 #at the moment it doesn't look like this class has any special properties/functions
 #keep it as a placeholder in the meantime
@@ -220,3 +232,68 @@ class SecurityZoneGroup(Group):
     def __unicode__(self):
         return u"{} active({}) silent({}) open({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
                                                 self.active, self.silent, self.open, self.motionDetected, self.sabotage, len(self.ignorableDevices) ) 
+
+class HeatingGroup(Group):
+    windowOpenTemperature = None
+    setPointTemperature = None
+    open = None
+    maxTemperature = None
+    minTemperature = None
+    cooling = None
+    partyMode = None
+    controlMode = None
+    activeProfile                      = None
+    boostMode                          = None
+    boostDuration                      = None
+    actualTemperature                  = None
+    humidity                           = None
+    coolingAllowed                     = None
+    coolingIgnored                     = None
+    ecoAllowed                         = None
+    ecoIgnored                         = None
+    controllable                       = None
+    floorHeatingMode                   = None
+    humidityLimitEnabled               = None
+    humidityLimitValue                 = None
+    externalClockEnabled               = None
+    externalClockHeatingTemperature    = None
+    externalClockCoolingTemperature    = None
+
+    def from_json(self, js, devices):
+        super(HeatingGroup, self).from_json(js, devices)
+        self.windowOpenTemperature = js["windowOpenTemperature"]
+        self.setPointTemperature = js["setPointTemperature"]
+        self.open = js["open"]
+        self.maxTemperature = js["maxTemperature"]
+        self.minTemperature = js["minTemperature"]
+        self.cooling = js["cooling"]
+        self.partyMode = js["partyMode"]
+        self.controlMode = js["controlMode"]
+        self.activeProfile = js["activeProfile"]
+        self.boostMode = js["boostMode"]
+        self.boostDuration = js["boostDuration"]
+        self.actualTemperature = js["actualTemperature"]
+        self.humidity = js["humidity"]
+        self.coolingAllowed = js["coolingAllowed"]
+        self.coolingIgnored = js["coolingIgnored"]
+        self.ecoAllowed = js["ecoAllowed"]
+        self.ecoIgnored = js["ecoIgnored"]
+        self.controllable = js["controllable"]
+        self.floorHeatingMode = js["floorHeatingMode"]
+        self.humidityLimitEnabled = js["humidityLimitEnabled"]
+        self.humidityLimitValue = js["humidityLimitValue"]
+        self.externalClockEnabled = js["externalClockEnabled"]
+        self.externalClockHeatingTemperature = js["externalClockHeatingTemperature"]
+        self.externalClockCoolingTemperature = js["externalClockCoolingTemperature"]
+
+    def __unicode__(self):
+        return u"{} windowOpenTemperature({}) setPointTemperature({}) open({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(super(HeatingGroup, self).__unicode__(),
+                                                self.windowOpenTemperature, self.setPointTemperature, self.open, self.maxTemperature, self.minTemperature, self.cooling,self.partyMode,self.controlMode, self.actualTemperature ) 
+
+    def set_point_temperature(self,temperature):
+        data = { "groupId" : self.id, "setPointTemperature" : temperature}
+        return self._restCall("group/heating/setSetPointTemperature", body=json.dumps(data))
+
+    def set_boost(self,enable=True):
+        data = { "groupId" : self.id, "boost" : enable}
+        return self._restCall("group/heating/setBoost", body=json.dumps(data))
