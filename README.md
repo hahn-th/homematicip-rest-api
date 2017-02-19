@@ -3,8 +3,11 @@ A python wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was done via reverse engineering
 Use at your own risk.
 
+#Installation
+Just run **pip install homematicip** to get the package
+
 # Usage #
-first run generate_auth_token.py to get an auth token for your access point.
+first download and run generate_auth_token.py from the examples folder to get an auth token for your access point.
 copy the generated auth token from the window config.py and add also the Access Point ID
 
 # Examples #
