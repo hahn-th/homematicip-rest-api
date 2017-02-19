@@ -93,4 +93,3 @@ ENV/
 # PyCharm
 .idea
 
-/examples/config.py
