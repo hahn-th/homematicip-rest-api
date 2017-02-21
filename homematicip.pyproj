@@ -34,6 +34,7 @@
     <Compile Include="config.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="dump_devicevalues.py" />
     <Compile Include="homematicip\auth.py">
       <SubType>Code</SubType>
     </Compile>
