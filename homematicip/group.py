@@ -24,7 +24,9 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
 
         self.devices = []
         for channel in js["channels"]:
-            self.devices.append([d for d in devices if d.id == channel["deviceId"]])
+            for d in devices:
+                if d.id == channel["deviceId"]:
+                    self.devices.append(d)
 
 
     def __str__(self):
@@ -51,9 +53,9 @@ class MetaGroup(Group):
 
         self.devices = []
         for channel in js["channels"]:
-            [d for d in devices if d.id == channel["deviceId"]]
-            if d:
-                self.devices.append(d)
+            for d in devices:
+                if d.id == channel["deviceId"]:
+                    self.devices.append(d)
         self.groups = []
         for group in js["groups"]:
             [g for g in groups if g == group]
