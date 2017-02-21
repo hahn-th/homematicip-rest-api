@@ -13,8 +13,8 @@ class Auth(object):
     def __init__(self):
         self.uuid = str(uuid.uuid4())
 
-    def connectionRequest(self, access_point):
-        data = {"deviceId": self.uuid, "deviceName": "homematicip-python", "sgtin": access_point}
+    def connectionRequest(self, access_point, devicename = "homematicip-python"):
+        data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": access_point}
         headers = self.headers
         if self.pin != None:
             headers["PIN"] = self.pin

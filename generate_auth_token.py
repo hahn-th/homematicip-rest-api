@@ -9,13 +9,19 @@ while True:
     break
 pin = raw_input("Please enter the PIN (leave Blank if there is none): ")
 
+devicename = raw_input("Please enter the client/devicename (leave blank to use default):")
+
 homematicip.init(access_point)
 auth = homematicip.Auth()
 
 if pin != '':
     auth.pin=pin
 
-auth.connectionRequest(access_point)
+if devicename != '':
+    auth.connectionRequest(access_point,devicename)
+else:
+    auth.connectionRequest(access_point)
+
 print "Please press the blue button on the access point"
 while not auth.isRequestAcknowledged():
     print "Please press the blue button on the access point"
