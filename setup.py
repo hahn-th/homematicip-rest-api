@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'homematicip',
   packages = ['homematicip'], 
-  version = '0.1',
+  version = '0.2',
   description = 'An API for the homematicip cloud',
   author = 'Heimo Stieg',
   author_email = 'stieg@corona-bytes.net',
