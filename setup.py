@@ -2,12 +2,12 @@ from distutils.core import setup
 setup(
   name = 'homematicip',
   packages = ['homematicip'], 
-  version = '0.2',
+  version = '0.3',
   description = 'An API for the homematicip cloud',
   author = 'Heimo Stieg',
   author_email = 'stieg@corona-bytes.net',
   url = 'https://github.com/coreGreenberet/homematicip-rest-api', 
-  download_url = 'https://github.com/coreGreenberet/homematicip-rest-api/tarball/0.1', 
+  download_url = 'https://github.com/coreGreenberet/homematicip-rest-api/tarball/0.3', 
   keywords = ['homematicip'], # arbitrary keywords
   classifiers = [],
 )
