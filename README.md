@@ -13,6 +13,7 @@ copy the generated auth token from the window config.py and add also the Access 
 # Examples #
 * list_devices.py - this file will list all (yet implemented) devices from your AP and will print some informations about them
 * list_groups.py this file will list all groups from your AP and will print some informations about them
+* list_securityJournal.py this file will list all events from the security journal
 * show_firmware.py - this file shows current and available firmware versions of all devices
 
 # Implemented Stuff #
