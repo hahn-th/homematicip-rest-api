@@ -8,7 +8,7 @@ import homematicip
 
 class Auth(object):
     uuid = None
-    headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '7'}
+    headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '8'}
     pin = None
     def __init__(self):
         self.uuid = str(uuid.uuid4())
