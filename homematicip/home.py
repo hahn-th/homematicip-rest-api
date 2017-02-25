@@ -45,7 +45,7 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
 class Client(HomeMaticIPObject.HomeMaticIPObject):
     id = None
     label = None
-    weatherDayTime = None
+    homeId = None
 
     def from_json(self, js):
         self.id = js["id"]
