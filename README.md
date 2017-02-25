@@ -73,7 +73,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] deactivateAbsence
 
 ### Security ###
-- [ ] getSecurityJournal
+- [X] getSecurityJournal
 - [X] setIntrusionAlertThroughSmokeDetectors
 
 ### Device ###

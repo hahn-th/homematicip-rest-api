@@ -1,6 +1,9 @@
 import homematicip
 from homematicip.device import *
 from homematicip.group import *
+from homematicip.securityEvent import *
+
+
 import requests
 
 _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : ShutterContact,
@@ -14,6 +17,8 @@ _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXT
                 , "HEATING_EXTERNAL_CLOCK" : HeatingExternalClockGroup, "HEATING_DEHUMIDIFIER" : HeatingDehumidifierGroup
                 , "HEATING_COOLING_DEMAND_BOILER" : HeatingCoolingDemandBoilerGroup, "HEATING_COOLING_DEMAND_PUMP" : HeatingCoolingDemandPumpGroup  }
 
+_typeSecurityEventMap = { "SILENCE_CHANGED" : SilenceChangedEvent, "ACTIVATION_CHANGED" : ActivationChangedEvent,  "ACCESS_POINT_CONNECTED" : AccessPointConnectedEvent,
+                         "ACCESS_POINT_DISCONNECTED" : AccessPointDisconnectedEvent, "SENSOR_EVENT" : SensorEvent }
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
     temperature = None
@@ -189,3 +194,19 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def set_zone_activation_delay( self, delay):
         data = { "zoneActivationDelay":delay }
         return self._restCall("home/security/setZoneActivationDelay", body=json.dumps(data))
+
+    def get_security_journal(self):
+        journal = self._restCall("home/security/getSecurityJournal")
+        ret = []
+        for entry in journal["entries"]:
+            eventType = entry["eventType"]
+            if _typeSecurityEventMap.has_key(eventType):
+                j = _typeSecurityEventMap[eventType]()
+                j.from_json(entry)
+                ret.append(j)
+            else:
+                j = SecurityEvent()
+                j.from_json(entry)
+                ret.append(j)
+                print "There is no  for {} yet".format(eventType)
+        return ret
