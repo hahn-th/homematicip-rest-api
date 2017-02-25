@@ -12,8 +12,7 @@ _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXT
                 , "HEATING_TEMPERATURE_LIMITER" : HeatingTemperatureLimiterGroup, "HEATING_CHANGEOVER" : HeatingChangeoverGroup, "INBOX" : InboxGroup
                 , "SECURITY_ZONE" : SecurityZoneGroup, "HEATING" : HeatingGroup, "HEATING_COOLING_DEMAND" : HeatingCoolingDemandGroup
                 , "HEATING_EXTERNAL_CLOCK" : HeatingExternalClockGroup, "HEATING_DEHUMIDIFIER" : HeatingDehumidifierGroup
-                , "HEATING_COOLING_DEMAND_BOILER" : HeatingCoolingDemandBoiler, "HEATING_COOLING_DEMAND_PUMP" : HeatingCoolingDemandPump  }
-
+                , "HEATING_COOLING_DEMAND_BOILER" : HeatingCoolingDemandBoilerGroup, "HEATING_COOLING_DEMAND_PUMP" : HeatingCoolingDemandPumpGroup  }
 
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
@@ -47,7 +46,6 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
-
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
