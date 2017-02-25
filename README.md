@@ -49,6 +49,8 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HEATING_COOLING_DEMAND
 - [X] HEATING_DEHUMIDIFIER
 - [X] HEATING_EXTERNAL_CLOCK
+- [X] HEATING_COOLING_DEMAND_BOILER 
+- [X] HEATING_COOLING_DEMAND_PUMP
 
 
 ## Implemented Functions: ##
