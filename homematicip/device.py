@@ -115,6 +115,30 @@ class WallMountedThermostatPro(Device):
         return u"{}: actualTemperature({}) humidity({})".format(super(WallMountedThermostatPro, self).__unicode__(),
                                                                 self.actualTemperature, self.humidity)
 
+class TemperatureHumiditySensorDisplay(Device):
+    temperatureOffset = None
+    display = None
+    actualTemperature = None
+    humidity = None
+
+    def from_json(self, js):
+        super(TemperatureHumiditySensorDisplay, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL":
+                self.temperatureOffset = c["temperatureOffset"]
+                self.display = c["display"]
+                self.actualTemperature = c["actualTemperature"]
+                self.humidity = c["humidity"]
+
+            elif type == "DEVICE_BASE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+
+    def __unicode__(self):
+        return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorDisplay, self).__unicode__(),
+                                                                self.actualTemperature, self.humidity)
 
 class SmokeDetector(Device):
     smokeDetectorAlarmType = None
@@ -183,3 +207,18 @@ class PlugableSwitchMeasuring(Device):
 
     def turn_off(self):
         return self.set_switch_state(False)
+
+
+class PushButton(Device):
+
+    def from_json(self, js):
+        super(PushButton, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DEVICE_BASE":              
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+
+    def __unicode__(self):
+        return u"{}".format(super(PushButton, self).__unicode__())
