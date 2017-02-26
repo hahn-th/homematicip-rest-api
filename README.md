@@ -35,9 +35,9 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-PSM (Plugable Switch Measuring)
 - [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
 - [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
-- [ ] HMIP-ASIR (Alarm Siren)
-- [ ] HMIP-KRCA (Key Ring Remote Control – alarm)
-- [ ] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
+- [X] HMIP-ASIR (Alarm Siren)
+- [X] HMIP-KRCA (Key Ring Remote Control – alarm)
+- [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 
 ## Groups ##
 - [X] Meta (Rooms)

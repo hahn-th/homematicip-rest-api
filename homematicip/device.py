@@ -222,3 +222,55 @@ class PushButton(Device):
 
     def __unicode__(self):
         return u"{}".format(super(PushButton, self).__unicode__())
+
+
+class AlarmSirenIndoor(Device):
+    sabotage = None
+
+    def from_json(self, js):
+        super(AlarmSirenIndoor, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]            
+            if type == "DEVICE_SABOTAGE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+                self.sabotage = c["sabotage"]
+
+    def __unicode__(self):
+        return u"{}: sabotage ({})".format(super(AlarmSirenIndoor, self).__unicode__(), self.sabotage)
+
+class MotionDetectorIndoor(Device):
+    motionDetected = None
+    illumination = None
+
+    def from_json(self, js):
+        super(MotionDetectorIndoor, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "MOTION_DETECTION_CHANNEL":
+                self.motionDetected = c["motionDetected"]
+                self.illumination = c["illumination"]
+            elif type == "DEVICE_SABOTAGE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+                self.sabotage = c["sabotage"]
+
+    def __unicode__(self):
+        return u"{}: sabotage({}) motionDetected({}) illumination({})".format(super(MotionDetectorIndoor, self).__unicode__(),
+                                                                              self.sabotage, self.motionDetected, self.illumination)
+
+class KeyRemoteControlAlarm(Device):
+
+    def from_json(self, js):
+        super(KeyRemoteControlAlarm, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DEVICE_BASE":              
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+
+    def __unicode__(self):
+        return u"{}".format(super(KeyRemoteControlAlarm, self).__unicode__())
