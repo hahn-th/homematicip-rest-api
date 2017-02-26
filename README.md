@@ -13,6 +13,7 @@ copy the generated auth token from the window config.py and add also the Access 
 # Examples #
 * list_devices.py - this file will list all (yet implemented) devices from your AP and will print some informations about them
 * list_groups.py this file will list all groups from your AP and will print some informations about them
+* list_securityJournal.py this file will list all events from the security journal
 * show_firmware.py - this file shows current and available firmware versions of all devices
 
 # Implemented Stuff #
@@ -49,6 +50,8 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HEATING_COOLING_DEMAND
 - [X] HEATING_DEHUMIDIFIER
 - [X] HEATING_EXTERNAL_CLOCK
+- [X] HEATING_COOLING_DEMAND_BOILER 
+- [X] HEATING_COOLING_DEMAND_PUMP
 
 
 ## Implemented Functions: ##
@@ -71,7 +74,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] deactivateAbsence
 
 ### Security ###
-- [ ] getSecurityJournal
+- [X] getSecurityJournal
 - [X] setIntrusionAlertThroughSmokeDetectors
 
 ### Device ###

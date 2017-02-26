@@ -4,7 +4,7 @@ import config
 
 import homematicip
 
-homematicip.init(config.ACCESS_POINT, False)
+homematicip.init(config.ACCESS_POINT)
 homematicip.set_auth_token(config.AUTH_TOKEN)
 
 home = homematicip.Home()

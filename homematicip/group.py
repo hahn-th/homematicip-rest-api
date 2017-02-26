@@ -331,3 +331,41 @@ class HeatingCoolingDemandGroup(Group):
 class HeatingExternalClockGroup(Group):
     def __unicode__(self):
         return super(HeatingExternalClockGroup,self).__unicode__()
+
+class HeatingCoolingDemandBoilerGroup(Group):
+    boilerFollowUpTime = None
+    boilerLeadTime = None
+    on = None
+    dimLevel = None
+
+    def from_json(self, js, devices):
+        super(HeatingCoolingDemandBoilerGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+        self.boilerLeadTime = js["boilerLeadTime"]
+        self.boilerFollowUpTime = js["boilerFollowUpTime"]
+
+    def __unicode__(self):
+        return u"{}: on({}) dimLevel({}) boilerFollowUpTime({}) boilerLeadTime({})".format(super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
+                                                self.on, self.dimLevel, self.boilerFollowUpTime, self.boilerLeadTime) 
+
+class HeatingCoolingDemandPumpGroup(Group):
+    pumpProtectionDuration = None
+    pumpProtectionSwitchingInterval = None
+    pumpFollowUpTime = None
+    pumpLeadTime = None
+    on = None
+    dimLevel = None
+
+    def from_json(self, js, devices):
+        super(HeatingCoolingDemandPumpGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+        self.pumpProtectionSwitchingInterval = js["pumpProtectionSwitchingInterval"]
+        self.pumpProtectionDuration = js["pumpProtectionDuration"]
+        self.pumpFollowUpTime = js["pumpFollowUpTime"]
+        self.pumpLeadTime = js["pumpLeadTime"]
+
+    def __unicode__(self):
+        return u"{}: on({}) dimLevel({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
+                                                self.on, self.dimLevel, self.pumpProtectionDuration, self.pumpProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime) 

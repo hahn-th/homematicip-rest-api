@@ -19,7 +19,7 @@ homematicip.init(config.ACCESS_POINT)
 homematicip.set_auth_token(config.AUTH_TOKEN)
 
 home = homematicip.Home()
-home.get_current_state()
-sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
-for g in sortedGroups:
+journal = home.get_security_journal()
+#sort = sorted(home.groups, key=attrgetter('groupType', 'label'))
+for g in journal:
     print unicode(g)

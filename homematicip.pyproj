@@ -50,10 +50,14 @@
     <Compile Include="homematicip\HomeMaticIPObject.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\securityEvent.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="homematicip\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="generate_auth_token.py" />
+    <Compile Include="list_securityJournal.py" />
     <Compile Include="list_groups.py" />
     <Compile Include="list_devices.py">
       <SubType>Code</SubType>

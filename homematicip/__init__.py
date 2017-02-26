@@ -5,6 +5,8 @@ from .home import *
 from .device import *
 from .auth import *
 from .group import *
+from .securityEvent import *
+
 import requests
 
 clientCharacteristics = {"clientCharacteristics":
