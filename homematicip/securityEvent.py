@@ -27,8 +27,8 @@ class SecurityZoneEvent(SecurityEvent):
 
     def from_json(self, js):
         super(SecurityZoneEvent, self).from_json(js)
-        external_zone = js["securityZoneValues"]["EXTERNAL"];
-        internal_zone = js["securityZoneValues"]["INTERNAL"];
+        self.external_zone = js["securityZoneValues"]["EXTERNAL"];
+        self.internal_zone = js["securityZoneValues"]["INTERNAL"];
 
     def __unicode__(self):
         return u"{}: external_zone({}) internal_zone({}) ".format(super(SecurityZoneEvent, self).__unicode__(),
