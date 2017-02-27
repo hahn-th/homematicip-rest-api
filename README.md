@@ -66,6 +66,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] everything needed for a successfull registration/authentication
 - [X] setLocation
 - [X] setPin
+- [X] deleteGroup
 
 ### Heating ###
 - [X] setBoost

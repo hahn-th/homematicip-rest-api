@@ -213,3 +213,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 ret.append(j)
                 print "There is no  for {} yet".format(eventType)
         return ret
+
+    def delete_group(self, group):
+        data = { "groupId" : group.id }
+        return self._restCall("home/group/deleteGroup", body = json.dumps(data))
