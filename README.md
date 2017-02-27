@@ -67,6 +67,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] setLocation
 - [X] setPin
 - [X] deleteGroup
+- [X] getOAuthOTK (Get Token for Alexa)
 
 ### Heating ###
 - [X] setBoost

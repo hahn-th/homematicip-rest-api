@@ -3,7 +3,7 @@ from homematicip.device import *
 from homematicip.group import *
 from homematicip.securityEvent import *
 
-
+from datetime import datetime
 import requests
 
 _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : ShutterContact,
@@ -54,6 +54,14 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
+
+class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
+    authToken = None
+    expirationTimestamp = None
+
+    def from_json(self, js):
+        self.authToken = js["authToken"]
+        self.expirationTimestamp = datetime.fromtimestamp(js["expirationTimestamp"] / 1000.0)
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
@@ -217,3 +225,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def delete_group(self, group):
         data = { "groupId" : group.id }
         return self._restCall("home/group/deleteGroup", body = json.dumps(data))
+
+    def get_OAuth_OTK(self):
+        token = OAuthOTK()
+        token.from_json(self._restCall("home/getOAuthOTK" ))
+        return token
