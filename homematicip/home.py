@@ -230,3 +230,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         token = OAuthOTK()
         token.from_json(self._restCall("home/getOAuthOTK" ))
         return token
+
+    def set_timezone(self, timezone):
+        """ sets the timezone for the AP. e.g. "Europe/Berlin" """
+        data = { "timezoneId" : timezone }
+        return self._restCall("home/setTimezone", body = json.dumps(data))
+
+    def set_powermeter_unit_price(self, price):
+        data = { "powerMeterUnitPrice" : price }
+        return self._restCall("home/setPowerMeterUnitPrice", body = json.dumps(data))
