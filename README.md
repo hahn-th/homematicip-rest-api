@@ -65,8 +65,8 @@ copy the generated auth token from the window config.py and add also the Access 
 ### Heating ###
 - [X] setBoost
 - [X] setSetPointTemperature
-- [ ] getProfile
-- [ ] updateProfile
+- [X] getProfile
+- [X] updateProfile
 - [X] activateAbsenceWithDuration
 - [X] activateAbsenceWithPeriod
 - [X] activateVacation

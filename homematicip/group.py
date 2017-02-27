@@ -14,7 +14,7 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
     updateState = None
     unreach = None
     lowBat = None
-    metagroup = None
+    metaGroup = None
     devices = None
     def from_json(self, js, devices):
         self.id = js["id"]
@@ -59,10 +59,10 @@ class MetaGroup(Group):
                     self.devices.append(d)
         self.groups = []
         for group in js["groups"]:
-            [g for g in groups if g == group]
-            if g:
-                g.metaGroup = self
-                self.groups.append(g)
+            for g in groups:
+                if g.id == group:
+                    g.metaGroup = self
+                    self.groups.append(g)
 
 class SecurityGroup(Group):
     open = None
@@ -282,24 +282,6 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
             day = HeatingCoolingProfileDay()
             day.from_json(js["profileDays"][calendar.day_name[i].upper()])
             self.profileDays[i] = day
-        #day = HeatingCoolingProfileDay()
-        #day.from_json(js["TUESDAY"])
-        #profileDays[calendar.TUESDAY] = day
-        #day = HeatingCoolingProfileDay()
-        #day.from_json(js["WEDNESDAY"])
-        #profileDays[calendar.WEDNESDAY] = day
-        #day = HeatingCoolingProfileDay()
-        #day.from_json(js["THURSDAY"])
-        #profileDays[calendar.THURSDAY] = day
-        #day = HeatingCoolingProfileDay()
-        #day.from_json(js["FRIDAY"])
-        #profileDays[calendar.FRIDAY] = day
-        #day = HeatingCoolingProfileDay()
-        #day.from_json(js["SATURDAY"])
-        #profileDays[calendar.SATURDAY] = day
-        #day = HeatingCoolingProfileDay()
-        #day.from_json(js["SUNDAY"])
-        #profileDays[calendar.SUNDAY] = day
 
     def from_json(self, js):
         super(HeatingCoolingProfile, self).from_json(js)
@@ -309,6 +291,27 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
         self.name = js["name"]
         self.visible = js["visible"]
         self.enabled = js["enabled"]
+
+    def _time_to_totalminutes(self,time):
+        s = time.split(":")
+        return int(s[0])*60+int(s[1])
+
+    def update_profile(self):
+        days = {}
+        for i in xrange(0,7):
+            periods = []
+            day = self.profileDays[i]
+            for p in day.periods:                
+                periods.append( { "endtime" : p.endtime, "starttime":p.starttime, "value" : p.value
+                                 , "endtimeAsMinutesOfDay" : self._time_to_totalminutes(p.endtime)
+                                 , "starttimeAsMinutesOfDay" : self._time_to_totalminutes(p.starttime) } )
+
+            dayOfWeek = calendar.day_name[i].upper()
+            days[dayOfWeek] = { "baseValue" : day.baseValue, "dayOfWeek" : dayOfWeek, "periods" : periods }
+
+        data = { "groupId" : self.groupId, "profile": { "groupId" : self.groupId, "homeId" : self.homeId, "id" : self.id
+                                                       , "index" : self.index, "name" : self.name, "profileDays" : days, "type" : self.type }, "profileIndex" : self.index }
+        return self._restCall("group/heating/updateProfile", body=json.dumps(data) )
         
 
 class HeatingGroup(Group):
