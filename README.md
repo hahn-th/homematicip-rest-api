@@ -66,12 +66,16 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] everything needed for a successfull registration/authentication
 - [X] setLocation
 - [X] setPin
+- [X] deleteGroup
+- [X] getOAuthOTK (Get Token for Alexa)
+- [X] setTimeZone
+- [X] setPowerMeterUnitPrice
 
 ### Heating ###
 - [X] setBoost
 - [X] setSetPointTemperature
-- [ ] getProfile
-- [ ] updateProfile
+- [X] getProfile
+- [X] updateProfile
 - [X] activateAbsenceWithDuration
 - [X] activateAbsenceWithPeriod
 - [X] activateVacation

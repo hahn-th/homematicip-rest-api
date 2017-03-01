@@ -1,7 +1,8 @@
 from homematicip import HomeMaticIPObject
 import json
 from datetime import datetime
-
+import calendar
+from operator import attrgetter
 
 class Group(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents a group """
@@ -13,7 +14,7 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
     updateState = None
     unreach = None
     lowBat = None
-    metagroup = None
+    metaGroup = None
     devices = None
     def from_json(self, js, devices):
         self.id = js["id"]
@@ -58,10 +59,10 @@ class MetaGroup(Group):
                     self.devices.append(d)
         self.groups = []
         for group in js["groups"]:
-            [g for g in groups if g == group]
-            if g:
-                g.metaGroup = self
-                self.groups.append(g)
+            for g in groups:
+                if g.id == group:
+                    g.metaGroup = self
+                    self.groups.append(g)
 
 class SecurityGroup(Group):
     open = None
@@ -234,6 +235,84 @@ class SecurityZoneGroup(Group):
     def __unicode__(self):
         return u"{} active({}) silent({}) open({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
                                                 self.active, self.silent, self.open, self.motionDetected, self.sabotage, len(self.ignorableDevices) ) 
+class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
+    starttime = None
+    endtime = None
+    value = None
+
+    def from_json(self, js):
+        super(HeatingCoolingPeriod, self).from_json(js)
+        self.starttime = js["starttime"]
+        self.endtime = js["endtime"]
+        self.value = js["value"]
+
+class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
+    baseValue = None
+    periods = None
+    def from_json(self, js):
+        super(HeatingCoolingProfileDay, self).from_json(js)
+        self.baseValue = js["baseValue"]
+        self.periods = []
+        for p in js["periods"]:
+            period = HeatingCoolingPeriod()
+            period.from_json(p)
+            self.periods.append(period)
+
+class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
+    id = None
+    homeId = None
+
+    groupId = None
+    index = None
+    visible = None
+    enabled = None
+
+    name = None
+    type = None
+    profileDays = None
+
+    def get_details(self):
+        data = { "groupId": self.groupId, "profileIndex" : self.index, "profileName" : self.name }
+        js = self._restCall("group/heating/getProfile", body=json.dumps(data))
+        self.homeId = js["homeId"]
+        self.type = js["type"]
+        self.profileDays = {}
+        
+        for i in xrange(0,7):
+            day = HeatingCoolingProfileDay()
+            day.from_json(js["profileDays"][calendar.day_name[i].upper()])
+            self.profileDays[i] = day
+
+    def from_json(self, js):
+        super(HeatingCoolingProfile, self).from_json(js)
+        self.id = js["profileId"]
+        self.groupId = js["groupId"]
+        self.index = js["index"]
+        self.name = js["name"]
+        self.visible = js["visible"]
+        self.enabled = js["enabled"]
+
+    def _time_to_totalminutes(self,time):
+        s = time.split(":")
+        return int(s[0])*60+int(s[1])
+
+    def update_profile(self):
+        days = {}
+        for i in xrange(0,7):
+            periods = []
+            day = self.profileDays[i]
+            for p in day.periods:                
+                periods.append( { "endtime" : p.endtime, "starttime":p.starttime, "value" : p.value
+                                 , "endtimeAsMinutesOfDay" : self._time_to_totalminutes(p.endtime)
+                                 , "starttimeAsMinutesOfDay" : self._time_to_totalminutes(p.starttime) } )
+
+            dayOfWeek = calendar.day_name[i].upper()
+            days[dayOfWeek] = { "baseValue" : day.baseValue, "dayOfWeek" : dayOfWeek, "periods" : periods }
+
+        data = { "groupId" : self.groupId, "profile": { "groupId" : self.groupId, "homeId" : self.homeId, "id" : self.id
+                                                       , "index" : self.index, "name" : self.name, "profileDays" : days, "type" : self.type }, "profileIndex" : self.index }
+        return self._restCall("group/heating/updateProfile", body=json.dumps(data) )
+        
 
 class HeatingGroup(Group):
     windowOpenTemperature = None
@@ -260,6 +339,7 @@ class HeatingGroup(Group):
     externalClockEnabled               = None
     externalClockHeatingTemperature    = None
     externalClockCoolingTemperature    = None
+    profiles                           = None
 
     def from_json(self, js, devices):
         super(HeatingGroup, self).from_json(js, devices)
@@ -271,7 +351,6 @@ class HeatingGroup(Group):
         self.cooling = js["cooling"]
         self.partyMode = js["partyMode"]
         self.controlMode = js["controlMode"]
-        self.activeProfile = js["activeProfile"]
         self.boostMode = js["boostMode"]
         self.boostDuration = js["boostDuration"]
         self.actualTemperature = js["actualTemperature"]
@@ -287,6 +366,17 @@ class HeatingGroup(Group):
         self.externalClockEnabled = js["externalClockEnabled"]
         self.externalClockHeatingTemperature = js["externalClockHeatingTemperature"]
         self.externalClockCoolingTemperature = js["externalClockCoolingTemperature"]
+
+        profiles = []
+        activeProfile = js["activeProfile"] #not self.!!!!
+        for k,v in js["profiles"].items():
+            profile = HeatingCoolingProfile()
+            profile.from_json(v)
+            profiles.append(profile)
+            if activeProfile == k:
+                self.activeProfile = profile
+        self.profiles = sorted(profiles, key=attrgetter('index'))
+
 
     def __unicode__(self):
         return u"{} windowOpenTemperature({}) setPointTemperature({}) open({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(super(HeatingGroup, self).__unicode__(),
