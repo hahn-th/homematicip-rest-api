@@ -36,6 +36,20 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         data = { "deviceId" : self.id, "label" : label }
         return self._restCall("home/setDeviceLabel", json.dumps(data))
 
+    def is_update_applicable(self):
+        data = { "deviceId" : self.id }
+        result = self._restCall("device/isUpdateApplicable", json.dumps(data))
+        if result == "":
+            return True
+        else:
+            return result["errorCode"]
+
+    def authorizeUpdate(self):
+        data = { "deviceId" : self.id }
+        return self._restCall("device/authorizeUpdate", json.dumps(data))
+
+
+
 class HeatingThermostat(Device):
     temperatureOffset = None
     operationLockActive = None
