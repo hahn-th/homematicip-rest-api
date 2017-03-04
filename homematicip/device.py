@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
-    """this class represents a generic homematic ip device """
+    """ this class represents a generic homematic ip device """
     id = None
     homeId = None
     label = None
@@ -47,10 +47,11 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     def authorizeUpdate(self):
         data = { "deviceId" : self.id }
         return self._restCall("device/authorizeUpdate", json.dumps(data))
-
-
+    
 
 class HeatingThermostat(Device):
+    """ HMIP-eTRV (Radiator Thermostat) """
+
     temperatureOffset = None
     operationLockActive = None
     valvePosition = None
@@ -73,6 +74,8 @@ class HeatingThermostat(Device):
 
 
 class ShutterContact(Device):
+    """ HMIP-SWDO (Door / Window Contact - optical) """
+
     sabotage = None
     open = None
     eventDelay = None
@@ -95,6 +98,8 @@ class ShutterContact(Device):
 
 
 class WallMountedThermostatPro(Device):
+    """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
+
     DISPLAY_ACTUAL = "ACTUAL"
     DISPLAY_SETPOINT = "SETPOINT"
     DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
@@ -130,6 +135,12 @@ class WallMountedThermostatPro(Device):
                                                                 self.actualTemperature, self.humidity)
 
 class TemperatureHumiditySensorDisplay(Device):
+    """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
+
+    DISPLAY_ACTUAL = "ACTUAL"
+    DISPLAY_SETPOINT = "SETPOINT"
+    DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
+
     temperatureOffset = None
     display = None
     actualTemperature = None
@@ -150,11 +161,17 @@ class TemperatureHumiditySensorDisplay(Device):
                 self.unreach = c["unreach"]
                 self.lowBat = c["lowBat"]
 
+    def set_display(self, display=DISPLAY_ACTUAL):
+        data = {"channelIndex": 1, "deviceId": self.id, "display": display}
+        return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
+
     def __unicode__(self):
         return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorDisplay, self).__unicode__(),
                                                                 self.actualTemperature, self.humidity)
 
 class SmokeDetector(Device):
+    """ HMIP-SWSD (Smoke Alarm with Q label) """
+
     smokeDetectorAlarmType = None
 
     def from_json(self, js):
@@ -174,6 +191,8 @@ class SmokeDetector(Device):
 
 
 class FloorTerminalBlock6(Device):
+    """ HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V) """
+
     globalPumpControl = None
     heatingValveType = None
 
@@ -192,6 +211,8 @@ class FloorTerminalBlock6(Device):
                                                    self.globalPumpControl)
 
 class PlugableSwitchMeasuring(Device):
+    """ HMIP-PSM (Pluggable Switch and Meter) """
+
     on = None
     energyCounter = None
     currentPowerConsumption = None
@@ -224,6 +245,7 @@ class PlugableSwitchMeasuring(Device):
 
 
 class PushButton(Device):
+    """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
     def from_json(self, js):
         super(PushButton, self).from_json(js)
@@ -239,6 +261,8 @@ class PushButton(Device):
 
 
 class AlarmSirenIndoor(Device):
+    """ HMIP-ASIR (Alarm Siren) """
+
     sabotage = None
 
     def from_json(self, js):
@@ -255,6 +279,8 @@ class AlarmSirenIndoor(Device):
         return u"{}: sabotage ({})".format(super(AlarmSirenIndoor, self).__unicode__(), self.sabotage)
 
 class MotionDetectorIndoor(Device):
+    """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
+
     motionDetected = None
     illumination = None
 
@@ -276,6 +302,7 @@ class MotionDetectorIndoor(Device):
                                                                               self.sabotage, self.motionDetected, self.illumination)
 
 class KeyRemoteControlAlarm(Device):
+    """ HMIP-KRCA (Key Ring Remote Control - alarm) """
 
     def from_json(self, js):
         super(KeyRemoteControlAlarm, self).from_json(js)
