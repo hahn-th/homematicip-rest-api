@@ -1,3 +1,4 @@
+# coding=utf-8
 import homematicip
 from homematicip.device import *
 from homematicip.group import *
@@ -11,7 +12,7 @@ _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : S
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
                  "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay, "PUSH_BUTTON": PushButton,
                  "ALARM_SIREN_INDOOR": AlarmSirenIndoor, "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
-                 "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm}                 
+                 "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm, "PLUGABLE_SWITCH" : PlugableSwitch}                 
 
 _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXTENDED_LINKED_SWITCHING" : ExtendedLinkedSwitchingGroup
                 , "LINKED_SWITCHING" : LinkedSwitchingGroup, "ALARM_SWITCHING" : AlarmSwitchingGroup, "HEATING_HUMIDITY_LIMITER" : HeatingHumidyLimiterGroup

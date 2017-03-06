@@ -1,3 +1,4 @@
+# coding=utf-8
 from homematicip import HomeMaticIPObject
 import json
 from datetime import datetime
@@ -209,11 +210,38 @@ class FloorTerminalBlock6(Device):
     def __unicode__(self):
         return u"{}: globalPumpControl({})".format(super(FloorTerminalBlock6, self).__unicode__(),
                                                    self.globalPumpControl)
-
-class PlugableSwitchMeasuring(Device):
-    """ HMIP-PSM (Pluggable Switch and Meter) """
+class PlugableSwitch(Device):
+    """ HMIP-PS (Pluggable Switch) """
 
     on = None
+
+    def from_json(self, js):
+        super(PlugableSwitch, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "SWITCH_CHANNEL":
+                self.on = c["on"]
+            elif type == "DEVICE_BASE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+
+    def __unicode__(self):
+        return u"{}: on({})".format(super(PlugableSwitch, self).__unicode__(), self.on)
+
+    def set_switch_state(self, on=True):
+        data = { "channelIndex": 1, "deviceId":self.id, "on":on }
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+    
+    def turn_on(self):
+        return self.set_switch_state(True)
+
+    def turn_off(self):
+        return self.set_switch_state(False)
+
+
+class PlugableSwitchMeasuring(PlugableSwitch):
+    """ HMIP-PSM (Pluggable Switch and Meter) """
     energyCounter = None
     currentPowerConsumption = None
 
@@ -226,22 +254,10 @@ class PlugableSwitchMeasuring(Device):
                 self.on = c["on"]
                 self.energyCounter = c["energyCounter"]
                 self.currentPowerConsumption = c["currentPowerConsumption"]
-            elif type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
 
     def __unicode__(self):
-        return u"{}: on({}) energyCounter({}) currentPowerConsumption({}W)".format(super(PlugableSwitchMeasuring, self).__unicode__()
-                                                                                   , self.on, self.energyCounter,self.currentPowerConsumption)
-    def set_switch_state(self, on=True):
-        data = { "channelIndex": 1, "deviceId":self.id, "on":on }
-        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
-    
-    def turn_on(self):
-        return self.set_switch_state(True)
-
-    def turn_off(self):
-        return self.set_switch_state(False)
+        return u"{} energyCounter({}) currentPowerConsumption({}W)".format(super(PlugableSwitchMeasuring, self).__unicode__()
+                                                                                   , self.energyCounter,self.currentPowerConsumption)
 
 
 class PushButton(Device):
