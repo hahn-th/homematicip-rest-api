@@ -35,7 +35,8 @@ def main():
     group = OptionGroup(parser,"Device Settings")
     group.add_option("", "--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
     group.add_option("", "--turn_off", action="store_false", dest="device_switch_state", help="turn the switch off")
-    group.add_option("", "--label", dest="device_new_label", help="set a new label")
+    group.add_option("", "--set-label", dest="device_new_label", help="set a new label")
+    group.add_option("", "--set-display", dest="device_display", type="choice", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
     parser.add_option_group(group)   
 
     if len(sys.argv) == 1:
@@ -56,12 +57,12 @@ def main():
     if options.list_devices:
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            unicode(d)
+            print d.id, unicode(d)
 
     elif options.list_groups:
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            unicode(g)
+            print unicode(g)
        
     elif options.list_firmware:
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
@@ -85,7 +86,22 @@ def main():
         if options.device_new_label:
             device.set_label(options.device_new_label)
         if options.device_switch_state != None:
-            device.set_switch_state(options.device_switch_state)
+            if isinstance(device, homematicip.PlugableSwitch):
+                device.set_switch_state(options.device_switch_state)
+            else:
+                logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
+
+        if options.device_display != None:
+            if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):
+                device.set_display(options.device_display.upper())
+            else:
+                logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+
+        else:
+            parser.print_help()
+    else:
+        parser.print_help()
+
 
 
 if __name__ == "__main__":
