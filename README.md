@@ -11,10 +11,7 @@ first download and run generate_auth_token.py to get an auth token for your acce
 copy the generated auth token from the window config.py and add also the Access Point ID
 
 # Examples #
-* list_devices.py - this file will list all (yet implemented) devices from your AP and will print some informations about them
-* list_groups.py this file will list all groups from your AP and will print some informations about them
-* list_securityJournal.py this file will list all events from the security journal
-* show_firmware.py - this file shows current and available firmware versions of all devices
+* homematicip_cli.py list devices,groups,securityJournal; set label, turn switches on/off
 
 # Implemented Stuff #
 - [X] generate authentication token
@@ -32,6 +29,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-SWDO (Shutter Contact)
 - [X] HMIP-SWSD (Smoke Detector)
 - [X] HMIP-FAL230-C6 (Floor Terminal Block)
+- [X] HMIP-PS (Plugable Switch)
 - [X] HMIP-PSM (Plugable Switch Measuring)
 - [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
 - [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
