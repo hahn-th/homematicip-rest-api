@@ -35,7 +35,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_label(self, label):
         data = { "deviceId" : self.id, "label" : label }
-        return self._restCall("home/setDeviceLabel", json.dumps(data))
+        return self._restCall("device/setDeviceLabel", json.dumps(data))
 
     def is_update_applicable(self):
         data = { "deviceId" : self.id }
