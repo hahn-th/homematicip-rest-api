@@ -97,44 +97,6 @@ class ShutterContact(Device):
     def __unicode__(self):
         return u"{}: open({}) sabotage ({})".format(super(ShutterContact, self).__unicode__(), self.open, self.sabotage)
 
-
-class WallMountedThermostatPro(Device):
-    """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
-
-    DISPLAY_ACTUAL = "ACTUAL"
-    DISPLAY_SETPOINT = "SETPOINT"
-    DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
-
-    temperatureOffset = None
-    display = None
-    operationLockActive = None
-    actualTemperature = None
-    humidity = None
-
-    def from_json(self, js):
-        super(WallMountedThermostatPro, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL":
-                self.temperatureOffset = c["temperatureOffset"]
-                self.display = c["display"]
-                self.actualTemperature = c["actualTemperature"]
-                self.humidity = c["humidity"]
-
-            elif type == "DEVICE_OPERATIONLOCK":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.operationLockActive = c["operationLockActive"]
-
-    def set_display(self, display=DISPLAY_ACTUAL):
-        data = {"channelIndex": 1, "deviceId": self.id, "display": display}
-        return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
-
-    def __unicode__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(super(WallMountedThermostatPro, self).__unicode__(),
-                                                                self.actualTemperature, self.humidity)
-
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
 
@@ -169,6 +131,27 @@ class TemperatureHumiditySensorDisplay(Device):
     def __unicode__(self):
         return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorDisplay, self).__unicode__(),
                                                                 self.actualTemperature, self.humidity)
+
+class WallMountedThermostatPro(TemperatureHumiditySensorDisplay):
+    """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
+    operationLockActive = None
+
+    def from_json(self, js):
+        super(WallMountedThermostatPro, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL":
+                self.temperatureOffset = c["temperatureOffset"]
+                self.display = c["display"]
+                self.actualTemperature = c["actualTemperature"]
+                self.humidity = c["humidity"]
+
+            elif type == "DEVICE_OPERATIONLOCK":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+                self.operationLockActive = c["operationLockActive"]
+
 
 class SmokeDetector(Device):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
