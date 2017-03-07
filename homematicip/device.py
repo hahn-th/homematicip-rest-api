@@ -49,6 +49,10 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         data = { "deviceId" : self.id }
         return self._restCall("device/authorizeUpdate", json.dumps(data))
     
+    def delete(self):
+        data = { "deviceId" : self.id }
+        return self._restCall("device/deleteDevice", json.dumps(data))
+
 
 class HeatingThermostat(Device):
     """ HMIP-eTRV (Radiator Thermostat) """
