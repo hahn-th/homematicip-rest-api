@@ -1,6 +1,7 @@
 # coding=utf-8
 import platform
 import locale
+import logging
 
 from .home import *
 from .device import *
@@ -50,10 +51,16 @@ def init(accesspoint_id, lookup=True):
     accesspoint_id = accesspoint_id.replace('-', '').upper()
     clientCharacteristics["id"] = accesspoint_id
     if lookup:
-        result = requests.post("https://lookup.homematic.com:48335/getHost", json=clientCharacteristics)
-        js = json.loads(result.text)
-        urlREST = js["urlREST"]
-        urlWebSocket = js["urlWebSocket"]
+        while True:
+            try:
+                result = requests.post("https://lookup.homematic.com:48335/getHost", json=clientCharacteristics,timeout=3)
+                js = json.loads(result.text)
+                urlREST = js["urlREST"]
+                urlWebSocket = js["urlWebSocket"]
+            except:
+                pass
+            finally:
+                break
     else:
         urlREST = "https://ps1.homematic.com:6969"
         urlWebSocket = "wss://ps1.homematic.com:8888"
@@ -65,3 +72,12 @@ def get_urlREST():
 
 def get_urlWebSocket():
     return urlWebSocket
+
+#adding a new "trace" log level
+TRACE_LEVEL_NUM = 5 
+logging.addLevelName(TRACE_LEVEL_NUM, "TRACE")
+def trace(self, message, *args, **kws):
+    # Yes, logger takes its '*args' as 'args'.
+    if self.isEnabledFor(TRACE_LEVEL_NUM):
+        self._log(TRACE_LEVEL_NUM, message, args, **kws) 
+logging.Logger.trace = trace

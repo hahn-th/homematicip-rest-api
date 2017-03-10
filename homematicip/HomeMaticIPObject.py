@@ -18,10 +18,13 @@ class HomeMaticIPObject(object):
     def _restCall(self, path, body = None):
         result = None
         requestPath = '{}/hmip/{}'.format(homematicip.get_urlREST(), path)
+        logger.trace("_restcall path({}) body({})".format(requestPath,body))
         for i in xrange(0,self._restCallRequestCounter):
             try:
                 result = requests.post(requestPath, data=body, headers=self.headers, timeout=self._restCallTimout)
-                return (result.json() if result.content != "" else "")
+                ret = (result.json() if result.content != "" else "")
+                logger.trace("_restcall result: Errorcode={} content({})".format(result.status_code, ret))
+                return ret
             except requests.Timeout:
                 logger.error("call to '{}' failed due Timeout".format(requestPath))
                 pass
