@@ -91,7 +91,7 @@ class SwitchingGroup(Group):
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
     
-    def set_state(self, on=True):
+    def set_switch_state(self, on=True):
         data = { "groupId":self.id, "on":on }
         return self._restCall("group/switching/setState", body=json.dumps(data))
     
@@ -105,18 +105,7 @@ class SwitchingGroup(Group):
         return u"{}: on({}) dimLevel({}) ".format(super(SwitchingGroup, self).__unicode__(),
                                                 self.on, self.dimLevel) 
 
-class LinkedSwitchingGroup(Group):
-    on = None
-    dimLevel = None
-
-    def from_json(self, js, devices):
-        super(LinkedSwitchingGroup, self).from_json(js, devices)
-        self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
-
-    def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) ".format(super(LinkedSwitchingGroup, self).__unicode__(),
-                                                self.on, self.dimLevel) 
+class LinkedSwitchingGroup(SwitchingGroup):
     def set_light_group_switches(self, devices):
         switchChannels = []
         for d in devices:
@@ -125,7 +114,7 @@ class LinkedSwitchingGroup(Group):
         data = { "groupId" : self.id, "switchChannels" : switchChannels }
         return self._restCall("home/security/setLightGroupSwitches", body=json.dumps(data))
 
-class ExtendedLinkedSwitchingGroup(Group):
+class ExtendedLinkedSwitchingGroup(SwitchingGroup):
     onTime = None
     onLevel = None
     sensorSpecificParameters = None
