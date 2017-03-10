@@ -219,6 +219,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
+        if journal.has_key("errorCode"):
+            logger.error("Could not get the security journal. Error: {}".format(journal["errorCode"]))
+            return None
         ret = []
         for entry in journal["entries"]:
             eventType = entry["eventType"]
