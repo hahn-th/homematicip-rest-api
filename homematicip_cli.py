@@ -38,6 +38,9 @@ def main():
 
     group = parser.add_argument_group("Home Settings")
     group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
+    group.add_argument("--set-pin", dest="new_pin", action="store", help="set a new pin")
+    group.add_argument("--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin")
+    group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
       
 
     if len(sys.argv) == 1:
@@ -74,14 +77,16 @@ def main():
         elif args.protectionmode == "disable":
             home.set_security_zones_activation(False,False)
 
-    elif args.list_security_journal:
-        journal = home.get_security_journal()
-        for entry in journal:
-            print unicode(entry)    
+    elif args.new_pin:
+        home.set_pin(args.new_pin,args.old_pin)
+    elif args.delete_pin:
+        home.set_pin(None,args.old_pin)  
+
     elif args.list_security_journal:
         journal = home.get_security_journal()
         for entry in journal:
             print unicode(entry)
+
     elif args.device:
         command_entered = False
         device = None
