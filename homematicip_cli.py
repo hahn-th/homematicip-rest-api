@@ -27,6 +27,7 @@ def main():
     
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
+
     parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
 
     group = parser.add_argument_group("Device Settings")
@@ -34,6 +35,9 @@ def main():
     group.add_argument("--turn_off", action="store_false", dest="device_switch_state", help="turn the switch off")
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
     group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
+
+    group = parser.add_argument_group("Home Settings")
+    group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
       
 
     if len(sys.argv) == 1:
@@ -62,11 +66,18 @@ def main():
         for g in sortedGroups:
             print unicode(g)
        
-    elif args.list_firmware:
-        sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
-        for d in sortedDevices:
-            print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {} UpdateState: {}".format(d.label, d.firmwareVersion,
-                                                                                      d.availableFirmwareVersion, d.updateState))
+    elif args.protectionmode:
+        if args.protectionmode == "presence":
+            home.set_security_zones_activation(False,True)
+        elif args.protectionmode == "absence":
+            home.set_security_zones_activation(True,True)
+        elif args.protectionmode == "disable":
+            home.set_security_zones_activation(False,False)
+
+    elif args.list_security_journal:
+        journal = home.get_security_journal()
+        for entry in journal:
+            print unicode(entry)    
     elif args.list_security_journal:
         journal = home.get_security_journal()
         for entry in journal:
