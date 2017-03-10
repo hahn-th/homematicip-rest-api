@@ -10,4 +10,5 @@ setup(
   download_url = 'https://github.com/coreGreenberet/homematicip-rest-api/tarball/0.5', 
   keywords = ['homematicip'], # arbitrary keywords
   classifiers = [],
+  install_requires = ["requests"]
 )
