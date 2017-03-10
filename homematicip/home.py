@@ -206,12 +206,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return self._restCall("home/heating/deactivateVacation")
 
     def set_pin(self,newPin,oldPin=None):
+        if newPin == None:
+            newPin = ""
         data = { "pin" : newPin }
-        headers = self.headers
         if oldPin:
-            headers["PIN"] = oldPin
-        result = requests.post('{}/hmip/home/setPin'.format(homematicip.get_urlREST()), data=json.dumps(data), headers=headers)
-        return result.text
+            self.headers["PIN"] = oldPin
+        result = self._restCall('home/setPin', body=json.dumps(data))
+        if oldPin:
+            del self.headers["PIN"]
+        return result
 
     def set_zone_activation_delay( self, delay):
         data = { "zoneActivationDelay":delay }
