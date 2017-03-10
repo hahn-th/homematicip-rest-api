@@ -48,7 +48,8 @@ def main():
     homematicip.set_auth_token(config.AUTH_TOKEN)
 
     home = homematicip.Home()
-    home.get_current_state()
+    if not home.get_current_state():
+        return
 
 
     if args.list_devices:

@@ -7,6 +7,10 @@ from homematicip.securityEvent import *
 from datetime import datetime
 import requests
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : ShutterContact,
                  "WALL_MOUNTED_THERMOSTAT_PRO" : WallMountedThermostatPro, "SMOKE_DETECTOR" : SmokeDetector,
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
@@ -87,6 +91,10 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def get_current_state(self):
         json_state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
+        if json_state.has_key("errorCode"):
+            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
+            return False
+
         js_home = json_state["home"]
 
         self.weather = Weather()
@@ -112,6 +120,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.devices = self._get_devices(json_state)
         self.clients = self._get_clients(json_state)
         self.groups = self._get_groups(json_state)
+
+        return True
 
     def _get_devices(self, json_state):
         ret = []
