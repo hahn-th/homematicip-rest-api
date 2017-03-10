@@ -72,6 +72,7 @@ def main():
         for entry in journal:
             print unicode(entry)
     elif args.device:
+        command_entered = False
         device = None
         for d in home.devices:
             if d.id == args.device:
@@ -83,19 +84,22 @@ def main():
 
         if args.device_new_label:
             device.set_label(args.device_new_label)
+            command_entered = True
         if args.device_switch_state != None:
             if isinstance(device, homematicip.PlugableSwitch):
                 device.set_switch_state(args.device_switch_state)
+                command_entered = True
             else:
                 logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
 
         if args.device_display != None:
             if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):
                 device.set_display(args.device_display.upper())
+                command_entered = True
             else:
                 logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
 
-        else:
+        if not command_entered:
             parser.print_help()
     else:
         parser.print_help()
