@@ -87,6 +87,11 @@ def main():
         for entry in journal:
             print unicode(entry)
 
+    elif args.list_firmware:
+        sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
+        for d in sortedDevices:
+            print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {} UpdateState: {}".format(d.label, d.firmwareVersion,
+                                                                                      d.availableFirmwareVersion, d.updateState))
     elif args.device:
         command_entered = False
         device = None
