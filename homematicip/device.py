@@ -77,11 +77,24 @@ class HeatingThermostat(Device):
     def __unicode__(self):
         return u"{}: valvePosition({})".format(super(HeatingThermostat, self).__unicode__(), self.valvePosition)
 
-
-class ShutterContact(Device):
-    """ HMIP-SWDO (Door / Window Contact - optical) """
-
+class SabotageDevice(Device):
     sabotage = None
+    def from_json(self, js):
+        super(SabotageDevice, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DEVICE_SABOTAGE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+                self.sabotage = c["sabotage"]
+                break # not needed to check the other channels
+
+    def __unicode__(self):
+        return u"{}: sabotage({})".format(super(SabotageDevice, self).__unicode__(), self.sabotage)
+
+class ShutterContact(SabotageDevice):
+    """ HMIP-SWDO (Door / Window Contact - optical) """
     open = None
     eventDelay = None
 
@@ -93,13 +106,9 @@ class ShutterContact(Device):
             if type == "SHUTTER_CONTACT_CHANNEL":
                 self.open = c["open"]
                 self.eventDelay = c["eventDelay"]
-            elif type == "DEVICE_SABOTAGE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.sabotage = c["sabotage"]
 
     def __unicode__(self):
-        return u"{}: open({}) sabotage ({})".format(super(ShutterContact, self).__unicode__(), self.open, self.sabotage)
+        return u"{} open({})".format(super(ShutterContact, self).__unicode__(), self.open)
 
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
@@ -263,25 +272,10 @@ class PushButton(Device):
         return u"{}".format(super(PushButton, self).__unicode__())
 
 
-class AlarmSirenIndoor(Device):
+class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
 
-    sabotage = None
-
-    def from_json(self, js):
-        super(AlarmSirenIndoor, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]            
-            if type == "DEVICE_SABOTAGE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.sabotage = c["sabotage"]
-
-    def __unicode__(self):
-        return u"{}: sabotage ({})".format(super(AlarmSirenIndoor, self).__unicode__(), self.sabotage)
-
-class MotionDetectorIndoor(Device):
+class MotionDetectorIndoor(SabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
 
     motionDetected = None
@@ -295,14 +289,10 @@ class MotionDetectorIndoor(Device):
             if type == "MOTION_DETECTION_CHANNEL":
                 self.motionDetected = c["motionDetected"]
                 self.illumination = c["illumination"]
-            elif type == "DEVICE_SABOTAGE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.sabotage = c["sabotage"]
 
     def __unicode__(self):
-        return u"{}: sabotage({}) motionDetected({}) illumination({})".format(super(MotionDetectorIndoor, self).__unicode__(),
-                                                                              self.sabotage, self.motionDetected, self.illumination)
+        return u"{} motionDetected({}) illumination({})".format(super(MotionDetectorIndoor, self).__unicode__(),
+                                                                              self.motionDetected, self.illumination)
 
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
