@@ -88,6 +88,9 @@ class OperationLockableDevice(Device):
                 self.lowBat = c["lowBat"]
                 self.operationLockActive = c["operationLockActive"]
                 break # not needed to check the other channels
+    def set_operation_lock(self, operationLock=True):
+        data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
+        return self._restCall("device/configuration/setOperationLock", json.dumps(data))
 
     def __unicode__(self):
         return u"{}: operationLockActive({})".format(super(OperationLockableDevice, self).__unicode__(), self.operationLockActive)
