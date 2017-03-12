@@ -26,12 +26,19 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.updateState = js["updateState"]
         self.firmwareVersion = js["firmwareVersion"]
         self.availableFirmwareVersion = js["availableFirmwareVersion"]
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DEVICE_BASE":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+                break
 
     def __str__(self):
         return unicode(self).encode('utf-8')
 
     def __unicode__(self):
-        return u"{} {}".format(self.deviceType, self.label)
+        return u"{} {} lowbat({}) unreach({})".format(self.deviceType, self.label, self.lowBat, self.unreach)
 
     def set_label(self, label):
         data = { "deviceId" : self.id, "label" : label }
@@ -53,30 +60,6 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         data = { "deviceId" : self.id }
         return self._restCall("device/deleteDevice", json.dumps(data))
 
-
-class HeatingThermostat(Device):
-    """ HMIP-eTRV (Radiator Thermostat) """
-
-    temperatureOffset = None
-    operationLockActive = None
-    valvePosition = None
-
-    def from_json(self, js):
-        super(HeatingThermostat, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "HEATING_THERMOSTAT_CHANNEL":
-                self.temperatureOffset = c["temperatureOffset"]
-                self.valvePosition = c["valvePosition"]
-            elif type == "DEVICE_OPERATIONLOCK":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.operationLockActive = c["operationLockActive"]
-
-    def __unicode__(self):
-        return u"{}: valvePosition({})".format(super(HeatingThermostat, self).__unicode__(), self.valvePosition)
-
 class SabotageDevice(Device):
     sabotage = None
     def from_json(self, js):
@@ -92,6 +75,40 @@ class SabotageDevice(Device):
 
     def __unicode__(self):
         return u"{}: sabotage({})".format(super(SabotageDevice, self).__unicode__(), self.sabotage)
+
+class OperationLockableDevice(Device):
+    operationLockActive = None
+    def from_json(self, js):
+        super(OperationLockableDevice, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DEVICE_OPERATIONLOCK":
+                self.unreach = c["unreach"]
+                self.lowBat = c["lowBat"]
+                self.operationLockActive = c["operationLockActive"]
+                break # not needed to check the other channels
+
+    def __unicode__(self):
+        return u"{}: operationLockActive({})".format(super(OperationLockableDevice, self).__unicode__(), self.operationLockActive)
+
+class HeatingThermostat(OperationLockableDevice):
+    """ HMIP-eTRV (Radiator Thermostat) """
+
+    temperatureOffset = None
+    valvePosition = None
+
+    def from_json(self, js):
+        super(HeatingThermostat, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "HEATING_THERMOSTAT_CHANNEL":
+                self.temperatureOffset = c["temperatureOffset"]
+                self.valvePosition = c["valvePosition"]
+
+    def __unicode__(self):
+        return u"{} valvePosition({})".format(super(HeatingThermostat, self).__unicode__(), self.valvePosition)
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) """
@@ -133,10 +150,6 @@ class TemperatureHumiditySensorDisplay(Device):
                 self.actualTemperature = c["actualTemperature"]
                 self.humidity = c["humidity"]
 
-            elif type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-
     def set_display(self, display=DISPLAY_ACTUAL):
         data = {"channelIndex": 1, "deviceId": self.id, "display": display}
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
@@ -145,10 +158,8 @@ class TemperatureHumiditySensorDisplay(Device):
         return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorDisplay, self).__unicode__(),
                                                                 self.actualTemperature, self.humidity)
 
-class WallMountedThermostatPro(TemperatureHumiditySensorDisplay):
+class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,OperationLockableDevice):
     """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
-    operationLockActive = None
-
     def from_json(self, js):
         super(WallMountedThermostatPro, self).from_json(js)
         for cid in js["functionalChannels"]:
@@ -159,11 +170,6 @@ class WallMountedThermostatPro(TemperatureHumiditySensorDisplay):
                 self.display = c["display"]
                 self.actualTemperature = c["actualTemperature"]
                 self.humidity = c["humidity"]
-
-            elif type == "DEVICE_OPERATIONLOCK":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.operationLockActive = c["operationLockActive"]
 
 
 class SmokeDetector(Device):
@@ -178,9 +184,6 @@ class SmokeDetector(Device):
             type = c["functionalChannelType"]
             if type == "SMOKE_DETECTOR_CHANNEL":
                 self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
-            elif type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
 
     def __unicode__(self):
         return u"{}: smokeDetectorAlarmType({})".format(super(SmokeDetector, self).__unicode__(),
@@ -218,9 +221,6 @@ class PlugableSwitch(Device):
             type = c["functionalChannelType"]
             if type == "SWITCH_CHANNEL":
                 self.on = c["on"]
-            elif type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
 
     def __unicode__(self):
         return u"{}: on({})".format(super(PlugableSwitch, self).__unicode__(), self.on)
@@ -258,19 +258,6 @@ class PlugableSwitchMeasuring(PlugableSwitch):
 
 class PushButton(Device):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
-
-    def from_json(self, js):
-        super(PushButton, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":              
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-
-    def __unicode__(self):
-        return u"{}".format(super(PushButton, self).__unicode__())
-
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
