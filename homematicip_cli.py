@@ -41,6 +41,9 @@ def main():
     group.add_argument("--set-pin", dest="new_pin", action="store", help="set a new pin")
     group.add_argument("--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin")
     group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
+    group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true", help="sets the zones devices assignment")
+    group.add_argument("--external_devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
+    group.add_argument("--internal_devices", dest="internal_devices", nargs='+', help="sets the devices for the external zone")
       
 
     if len(sys.argv) == 1:
@@ -128,6 +131,31 @@ def main():
                 command_entered = True
             else:
                 logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+
+
+    if args.set_zones_device_assignment:
+        internal = []
+        external = []
+        error = False
+        command_entered = True
+        for id in args.external_devices:
+            d = home.search_device_by_id(id)
+            if d == None:
+                logger.error("Device {} is not registered on this Access Point".format(id))
+                error = True
+            else:
+                external.append(d)
+
+        for id in args.internal_devices:
+            d = home.search_device_by_id(id)
+            if d == None:
+                logger.error("Device {} is not registered on this Access Point".format(id))
+                error = True
+            else:
+                internal.append(d)
+        if not error:
+            home.set_zones_device_assignment(internal,external)
+            
 
     if not command_entered:
         parser.print_help()

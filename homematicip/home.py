@@ -175,6 +175,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             ret.append(g)
         return ret  
 
+    def search_device_by_id(self, deviceID):
+        """ searches a device by given id
+        :param deviceID the device to search for
+        :return the Device object or None if it couldn't find a device
+        """
+        for d in self.devices:
+            if d.id == deviceID:
+                return d
+        return None
+
     def set_security_zones_activation(self, internal=True, external=True):
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return self._restCall("home/security/setZonesActivation", json.dumps(data))
@@ -256,3 +266,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def set_powermeter_unit_price(self, price):
         data = { "powerMeterUnitPrice" : price }
         return self._restCall("home/setPowerMeterUnitPrice", body = json.dumps(data))
+
+    def set_zones_device_assignment(self, internal_devices, external_devices):
+        """ sets the devices for the security zones
+        :param internal_devices the devices which should be used for the internal zone
+        :param external_devices the devices which should be used for the external(hull) zone
+        :return the result of _restCall
+        """
+        internal = [x.id for x in internal_devices]
+        external = [x.id for x in external_devices]
+        data = { "zonesDeviceAssignment" : { "INTERNAL":internal, "EXTERNAL":external } }
+        return self._restCall("home/security/setZonesDeviceAssignment", body = json.dumps(data))
+
