@@ -57,19 +57,23 @@ def main():
     home = homematicip.Home()
     if not home.get_current_state():
         return
-
+    
+    command_entered = False
 
     if args.list_devices:
+        command_entered = True
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
             print d.id, unicode(d)
 
-    elif args.list_groups:
+    if args.list_groups:
+        command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
             print unicode(g)
        
-    elif args.protectionmode:
+    if args.protectionmode:
+        command_entered = True
         if args.protectionmode == "presence":
             home.set_security_zones_activation(False,True)
         elif args.protectionmode == "absence":
@@ -77,22 +81,27 @@ def main():
         elif args.protectionmode == "disable":
             home.set_security_zones_activation(False,False)
 
-    elif args.new_pin:
+    if args.new_pin:
+        command_entered = True
         home.set_pin(args.new_pin,args.old_pin)
-    elif args.delete_pin:
+    if args.delete_pin:
+        command_entered = True
         home.set_pin(None,args.old_pin)  
 
-    elif args.list_security_journal:
+    if args.list_security_journal:
+        command_entered = True
         journal = home.get_security_journal()
         for entry in journal:
             print unicode(entry)
 
-    elif args.list_firmware:
+    if args.list_firmware:
+        command_entered = True
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
             print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {} UpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                       d.availableFirmwareVersion, d.updateState))
-    elif args.device:
+
+    if args.device:
         command_entered = False
         device = None
         for d in home.devices:
@@ -120,10 +129,9 @@ def main():
             else:
                 logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
 
-        if not command_entered:
-            parser.print_help()
-    else:
+    if not command_entered:
         parser.print_help()
+
 
 
 
