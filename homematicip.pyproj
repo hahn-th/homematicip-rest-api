@@ -17,8 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>
-    </CommandLineArguments>
+    <CommandLineArguments>--set-zones-device-assignment --external_devices 3014F711A00000D569A4A978 3014F711A00000D569A0AD32 3014F711A00000D569A0ADC8 3014F711A00000D569A0ADED 3014F711A00000D569A0AFEN 3014F711A00000D569A0ADA0 3014F711A00000D569A0AFEB 3014F711A00000D569A0AD4B --internal_devices 3014F711A0000A5569A22EBA 3014F711A0000A5569A22D30 3014F711A0000A5569A22EC2</CommandLineArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
