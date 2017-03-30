@@ -99,9 +99,13 @@ def main():
 
     if args.list_firmware:
         command_entered = True
+        print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
+                                                                                        home.currentAPVersion,
+                                                                                        home.availableAPVersion,
+                                                                                        home.updateState))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {} UpdateState: {}".format(d.label, d.firmwareVersion,
+            print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                       d.availableFirmwareVersion, d.updateState))
 
     if args.device:
