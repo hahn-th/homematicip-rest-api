@@ -24,7 +24,7 @@ def main():
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
     group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
-    
+
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
@@ -43,8 +43,10 @@ def main():
     group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
     group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true", help="sets the zones devices assignment")
     group.add_argument("--external_devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
-    group.add_argument("--internal_devices", dest="internal_devices", nargs='+', help="sets the devices for the external zone")
-      
+    group.add_argument("--internal_devices", dest="internal_devices", nargs='+', help="sets the devices for the internal zone")
+    group.add_argument("--activate-absence", dest="activate_absence", action="store", help="activates absence for provided amount of minutes", default=None, type=int)
+    group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
+
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -60,7 +62,7 @@ def main():
     home = homematicip.Home()
     if not home.get_current_state():
         return
-    
+
     command_entered = False
 
     if args.list_devices:
@@ -74,7 +76,7 @@ def main():
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
             print unicode(g)
-       
+
     if args.protectionmode:
         command_entered = True
         if args.protectionmode == "presence":
@@ -89,7 +91,7 @@ def main():
         home.set_pin(args.new_pin,args.old_pin)
     if args.delete_pin:
         command_entered = True
-        home.set_pin(None,args.old_pin)  
+        home.set_pin(None,args.old_pin)
 
     if args.list_security_journal:
         command_entered = True
@@ -159,11 +161,20 @@ def main():
                 internal.append(d)
         if not error:
             home.set_zones_device_assignment(internal,external)
-            
+
+
+    if args.activate_absence:
+        command_entered = True
+        home.activate_absence_with_duration(args.activate_absence)
+
+
+    if args.deactivate_absence:
+        command_entered = True
+        home.deactivate_absence()
+
 
     if not command_entered:
         parser.print_help()
-
 
 
 
