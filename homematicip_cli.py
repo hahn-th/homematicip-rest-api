@@ -23,12 +23,14 @@ def main():
     group = parser.add_argument_group("Display Configuration")
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
+    group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
     group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
 
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
     parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
+    parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
 
     group = parser.add_argument_group("Device Settings")
     group.add_argument("--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
@@ -47,6 +49,8 @@ def main():
     group.add_argument("--activate-absence", dest="activate_absence", action="store", help="activates absence for provided amount of minutes", default=None, type=int)
     group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
+    group = parser.add_argument_group("Group Settings")
+    group.add_argument("--heating-profiles", dest="heating_profiles", action="store_true", help="displays the active heating profile for the group")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -76,6 +80,12 @@ def main():
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
             print unicode(g)
+
+    if args.list_group_ids:
+        command_entered = True
+        sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
+        for g in sortedGroups:
+            print u"Id: {} - Type: {} - Lable: {}".format(g.id, g.groupType, g.label)
 
     if args.protectionmode:
         command_entered = True
@@ -171,6 +181,25 @@ def main():
     if args.deactivate_absence:
         command_entered = True
         home.deactivate_absence()
+
+
+    if args.group:
+        command_entered = False
+        group = None
+        for g in home.groups:
+            if g.id == args.group:
+                group = g
+                break
+        if group == None:
+            logger.error("Could not find device {}".format(args.device))
+            return
+
+        if args.heating_profiles:
+            command_entered = True
+            for p in group.profiles:
+                active = p.id == group.activeProfile.id
+                if p.name:
+                    print u"Id: {} - Name: {} - Active: {}".format(p.id, p.name, active)
 
 
     if not command_entered:
