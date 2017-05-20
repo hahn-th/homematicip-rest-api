@@ -51,8 +51,8 @@ def main():
     group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
     group = parser.add_argument_group("Group Settings")
-    group.add_argument("--list-profiles", dest="profiles", action="store_true", help="displays the active heating profile for the group")
-    group.add_argument("--activate-profile", dest="activate_profile", help="set the active heating profile")
+    group.add_argument("--list-profiles", dest="profiles", action="store_true", help="displays the all profile for a group")
+    group.add_argument("--activate-profile", dest="activate_profile", help="activates a profile by using its index")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -87,7 +87,7 @@ def main():
         command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print u"Id: {} - Type: {} - Lable: {}".format(g.id, g.groupType, g.label)
+            print u"Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label)
 
     if args.protectionmode:
         command_entered = True
