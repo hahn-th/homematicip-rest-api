@@ -31,6 +31,7 @@ def main():
 
     parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
+    parser.add_argument("-p", "--profile-index", dest="profile_index", help="the index if the profile you want to modify (see \"Group Settings\")")
 
     group = parser.add_argument_group("Device Settings")
     group.add_argument("--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
@@ -50,7 +51,8 @@ def main():
     group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
     group = parser.add_argument_group("Group Settings")
-    group.add_argument("--heating-profiles", dest="heating_profiles", action="store_true", help="displays the active heating profile for the group")
+    group.add_argument("--list-profiles", dest="profiles", action="store_true", help="displays the active heating profile for the group")
+    group.add_argument("--activate-profile", dest="activate_profile", help="set the active heating profile")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -194,12 +196,16 @@ def main():
             logger.error("Could not find device {}".format(args.device))
             return
 
-        if args.heating_profiles:
+        if args.activate_profile:
+            command_entered = True
+            group.set_active_profile(args.activate_profile)
+
+        if args.profiles:
             command_entered = True
             for p in group.profiles:
                 active = p.id == group.activeProfile.id
                 if p.name:
-                    print u"Id: {} - Name: {} - Active: {}".format(p.id, p.name, active)
+                    print u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, active)
 
 
     if not command_entered:
