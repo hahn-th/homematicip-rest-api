@@ -80,7 +80,7 @@ class SecurityGroup(Group):
 
     def __unicode__(self):
         return u"{}: open({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(super(SecurityGroup, self).__unicode__(),
-                                                   self.open, self.motionDetected, self.sabotage, self.smokeDetectorAlarmType)        
+                                                   self.open, self.motionDetected, self.sabotage, self.smokeDetectorAlarmType)
 
 class SwitchingGroup(Group):
     on = None
@@ -90,11 +90,11 @@ class SwitchingGroup(Group):
         super(SwitchingGroup, self).from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
-    
+
     def set_switch_state(self, on=True):
         data = { "groupId":self.id, "on":on }
         return self._restCall("group/switching/setState", body=json.dumps(data))
-    
+
     def turn_on(self):
         return self.set_state(True)
 
@@ -103,7 +103,7 @@ class SwitchingGroup(Group):
 
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) ".format(super(SwitchingGroup, self).__unicode__(),
-                                                self.on, self.dimLevel) 
+                                                self.on, self.dimLevel)
 
 class LinkedSwitchingGroup(SwitchingGroup):
     def set_light_group_switches(self, devices):
@@ -127,7 +127,7 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
 
     def __unicode__(self):
         return u"{} onTime({}) onLevel({})".format(super(ExtendedLinkedSwitchingGroup, self).__unicode__(),
-                                                self.onTime, self.onLevel) 
+                                                self.onTime, self.onLevel)
     def set_on_time(self, onTimeSeconds):
         data = { "groupId":self.id, "onTime":onTimeSeconds }
         return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
@@ -166,7 +166,7 @@ class AlarmSwitchingGroup(Group):
 
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(super(AlarmSwitchingGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.onTime, self.signalAcoustic, self.signalOptical, self.smokeDetectorAlarmType, self.acousticFeedbackEnabled) 
+                                                self.on, self.dimLevel, self.onTime, self.signalAcoustic, self.signalOptical, self.smokeDetectorAlarmType, self.acousticFeedbackEnabled)
 
     def test_signal_optical(self,signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
         data = { "groupId":self.id, "signalOptical":signalOptical }
@@ -182,7 +182,7 @@ class AlarmSwitchingGroup(Group):
 class HeatingHumidyLimiterGroup(Group):
     def __unicode__(self):
         return super(HeatingHumidyLimiterGroup,self).__unicode__()
-    
+
 #at the moment it doesn't look like this class has any special properties/functions
 #keep it as a placeholder in the meantime
 class HeatingTemperatureLimiterGroup(Group):
@@ -201,7 +201,7 @@ class HeatingChangeoverGroup(Group):
 
     def __unicode__(self):
         return u"{} on({}) dimLevel({})".format(super(HeatingChangeoverGroup, self).__unicode__(),
-                                                self.on, self.dimLevel) 
+                                                self.on, self.dimLevel)
 
 #at the moment it doesn't look like this class has any special properties/functions
 #keep it as a placeholder in the meantime
@@ -230,7 +230,7 @@ class SecurityZoneGroup(Group):
 
     def __unicode__(self):
         return u"{} active({}) silent({}) open({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
-                                                self.active, self.silent, self.open, self.motionDetected, self.sabotage, len(self.ignorableDevices) ) 
+                                                self.active, self.silent, self.open, self.motionDetected, self.sabotage, len(self.ignorableDevices) )
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
     starttime = None
     endtime = None
@@ -273,7 +273,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.profileDays = {}
-        
+
         for i in xrange(0,7):
             day = HeatingCoolingProfileDay()
             day.from_json(js["profileDays"][calendar.day_name[i].upper()])
@@ -297,7 +297,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
         for i in xrange(0,7):
             periods = []
             day = self.profileDays[i]
-            for p in day.periods:                
+            for p in day.periods:
                 periods.append( { "endtime" : p.endtime, "starttime":p.starttime, "value" : p.value
                                  , "endtimeAsMinutesOfDay" : self._time_to_totalminutes(p.endtime)
                                  , "starttimeAsMinutesOfDay" : self._time_to_totalminutes(p.starttime) } )
@@ -308,7 +308,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
         data = { "groupId" : self.groupId, "profile": { "groupId" : self.groupId, "homeId" : self.homeId, "id" : self.id
                                                        , "index" : self.index, "name" : self.name, "profileDays" : days, "type" : self.type }, "profileIndex" : self.index }
         return self._restCall("group/heating/updateProfile", body=json.dumps(data) )
-        
+
 
 class HeatingGroup(Group):
     windowOpenTemperature = None
@@ -376,7 +376,7 @@ class HeatingGroup(Group):
 
     def __unicode__(self):
         return u"{} windowOpenTemperature({}) setPointTemperature({}) open({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(super(HeatingGroup, self).__unicode__(),
-                                                self.windowOpenTemperature, self.setPointTemperature, self.open, self.maxTemperature, self.minTemperature, self.cooling,self.partyMode,self.controlMode, self.actualTemperature ) 
+                                                self.windowOpenTemperature, self.setPointTemperature, self.open, self.maxTemperature, self.minTemperature, self.cooling,self.partyMode,self.controlMode, self.actualTemperature )
 
     def set_point_temperature(self,temperature):
         data = { "groupId" : self.id, "setPointTemperature" : temperature}
@@ -385,6 +385,10 @@ class HeatingGroup(Group):
     def set_boost(self,enable=True):
         data = { "groupId" : self.id, "boost" : enable}
         return self._restCall("group/heating/setBoost", body=json.dumps(data))
+
+    def set_active_profile(self,index):
+        data = { "groupId" : self.id, "profileIndex" : index}
+        return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
 
 class HeatingDehumidifierGroup(Group):
     on = None
@@ -397,7 +401,7 @@ class HeatingDehumidifierGroup(Group):
 
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) ".format(super(HeatingDehumidifierGroup, self).__unicode__(),
-                                                self.on, self.dimLevel) 
+                                                self.on, self.dimLevel)
 
 class HeatingCoolingDemandGroup(Group):
     on = None
@@ -410,7 +414,7 @@ class HeatingCoolingDemandGroup(Group):
 
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) ".format(super(HeatingCoolingDemandGroup, self).__unicode__(),
-                                                self.on, self.dimLevel) 
+                                                self.on, self.dimLevel)
 
 #at the moment it doesn't look like this class has any special properties/functions
 #keep it as a placeholder in the meantime
@@ -433,7 +437,7 @@ class HeatingCoolingDemandBoilerGroup(Group):
 
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) boilerFollowUpTime({}) boilerLeadTime({})".format(super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.boilerFollowUpTime, self.boilerLeadTime) 
+                                                self.on, self.dimLevel, self.boilerFollowUpTime, self.boilerLeadTime)
 
 class HeatingCoolingDemandPumpGroup(Group):
     pumpProtectionDuration = None
@@ -454,4 +458,4 @@ class HeatingCoolingDemandPumpGroup(Group):
 
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.pumpProtectionDuration, self.pumpProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime) 
+                                                self.on, self.dimLevel, self.pumpProtectionDuration, self.pumpProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime)

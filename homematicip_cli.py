@@ -23,12 +23,15 @@ def main():
     group = parser.add_argument_group("Display Configuration")
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
+    group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
     group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
-    
+
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
     parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
+    parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
+    parser.add_argument("-p", "--profile-index", dest="profile_index", help="the index if the profile you want to modify (see \"Group Settings\")")
 
     group = parser.add_argument_group("Device Settings")
     group.add_argument("--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
@@ -43,8 +46,13 @@ def main():
     group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
     group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true", help="sets the zones devices assignment")
     group.add_argument("--external_devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
-    group.add_argument("--internal_devices", dest="internal_devices", nargs='+', help="sets the devices for the external zone")
-      
+    group.add_argument("--internal_devices", dest="internal_devices", nargs='+', help="sets the devices for the internal zone")
+    group.add_argument("--activate-absence", dest="activate_absence", action="store", help="activates absence for provided amount of minutes", default=None, type=int)
+    group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
+
+    group = parser.add_argument_group("Group Settings")
+    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
+    group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -60,7 +68,7 @@ def main():
     home = homematicip.Home()
     if not home.get_current_state():
         return
-    
+
     command_entered = False
 
     if args.list_devices:
@@ -74,7 +82,13 @@ def main():
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
             print unicode(g)
-       
+
+    if args.list_group_ids:
+        command_entered = True
+        sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
+        for g in sortedGroups:
+            print u"Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label)
+
     if args.protectionmode:
         command_entered = True
         if args.protectionmode == "presence":
@@ -89,7 +103,7 @@ def main():
         home.set_pin(args.new_pin,args.old_pin)
     if args.delete_pin:
         command_entered = True
-        home.set_pin(None,args.old_pin)  
+        home.set_pin(None,args.old_pin)
 
     if args.list_security_journal:
         command_entered = True
@@ -159,11 +173,47 @@ def main():
                 internal.append(d)
         if not error:
             home.set_zones_device_assignment(internal,external)
-            
+
+
+    if args.activate_absence:
+        command_entered = True
+        home.activate_absence_with_duration(args.activate_absence)
+
+
+    if args.deactivate_absence:
+        command_entered = True
+        home.deactivate_absence()
+
+
+    if args.group:
+        command_entered = False
+        group = None
+        for g in home.groups:
+            if g.id == args.group:
+                group = g
+                break
+        if group == None:
+            logger.error("Could not find group {}".format(args.group))
+            return
+
+        if args.group_activate_profile:
+            command_entered = True
+            index = args.group_activate_profile
+            for p in group.profiles:
+                if p.name == args.group_activate_profile:
+                    index = p.index
+                    break
+            group.set_active_profile(index)
+
+        if args.group_list_profiles:
+            command_entered = True
+            for p in group.profiles:
+                isActive = p.id == group.activeProfile.id
+                print u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive)
+
 
     if not command_entered:
         parser.print_help()
-
 
 
 
