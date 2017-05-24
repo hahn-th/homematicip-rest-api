@@ -31,7 +31,6 @@ def main():
 
     parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
-    parser.add_argument("-p", "--profile-index", dest="profile_index", help="the index if the profile you want to modify (see \"Group Settings\")")
 
     group = parser.add_argument_group("Device Settings")
     group.add_argument("--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
