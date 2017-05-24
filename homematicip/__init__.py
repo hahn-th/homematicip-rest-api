@@ -57,10 +57,9 @@ def init(accesspoint_id, lookup=True):
                 js = json.loads(result.text)
                 urlREST = js["urlREST"]
                 urlWebSocket = js["urlWebSocket"]
+                break
             except:
                 pass
-            finally:
-                break
     else:
         urlREST = "https://ps1.homematic.com:6969"
         urlWebSocket = "wss://ps1.homematic.com:8888"
