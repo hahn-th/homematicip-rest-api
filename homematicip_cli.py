@@ -51,8 +51,8 @@ def main():
     group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
     group = parser.add_argument_group("Group Settings")
-    group.add_argument("--list-profiles", dest="profiles", action="store_true", help="displays the all profile for a group")
-    group.add_argument("--activate-profile", dest="activate_profile", help="activates a profile by using its index")
+    group.add_argument("--list-profiles", dest="list_profiles", action="store_true", help="displays the all profile for a group")
+    group.add_argument("--activate-profile", dest="activate_profile", help="activates a profile by using its index or its name")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -193,19 +193,23 @@ def main():
                 group = g
                 break
         if group == None:
-            logger.error("Could not find device {}".format(args.device))
+            logger.error("Could not find group {}".format(args.group))
             return
 
         if args.activate_profile:
             command_entered = True
-            group.set_active_profile(args.activate_profile)
+            index = args.activate_profile
+            for p in group.profiles:
+                if p.name == args.activate_profile:
+                    index = p.index
+                    break
+            group.set_active_profile(index)
 
-        if args.profiles:
+        if args.list_profiles:
             command_entered = True
             for p in group.profiles:
-                active = p.id == group.activeProfile.id
-                if p.name:
-                    print u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, active)
+                isActive = p.id == group.activeProfile.id
+                print u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive)
 
 
     if not command_entered:
