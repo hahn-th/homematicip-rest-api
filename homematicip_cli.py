@@ -51,7 +51,7 @@ def main():
     group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
     group = parser.add_argument_group("Group Settings")
-    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays the all profile for a group")
+    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
     group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
 
     if len(sys.argv) == 1:
