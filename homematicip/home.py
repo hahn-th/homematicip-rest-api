@@ -16,7 +16,7 @@ _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : S
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
                  "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay, "PUSH_BUTTON": PushButton,
                  "ALARM_SIREN_INDOOR": AlarmSirenIndoor, "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
-                 "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm, "PLUGABLE_SWITCH" : PlugableSwitch}                 
+                 "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm, "PLUGABLE_SWITCH" : PlugableSwitch}
 
 _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXTENDED_LINKED_SWITCHING" : ExtendedLinkedSwitchingGroup
                 , "LINKED_SWITCHING" : LinkedSwitchingGroup, "ALARM_SWITCHING" : AlarmSwitchingGroup, "HEATING_HUMIDITY_LIMITER" : HeatingHumidyLimiterGroup
@@ -168,12 +168,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 g.from_json(group,self.devices)
                 ret.append(g)
                 print "There is no class for {} yet".format(groupType)
-        
+
         for mg in metaGroups:
             g = MetaGroup()
             g.from_json(mg,self.devices,ret)
             ret.append(g)
-        return ret  
+        return ret
 
     def search_device_by_id(self, deviceID):
         """ searches a device by given id
@@ -198,7 +198,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return self._restCall("home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data))
 
     def activate_absence_with_period(self, endtime):
-        data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M")}
+        data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
         return self._restCall("home/heating/activateAbsenceWithPeriod", json.dumps(data))
 
     def activate_absence_with_duration(self, duration):
@@ -277,4 +277,3 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         external = [x.id for x in external_devices]
         data = { "zonesDeviceAssignment" : { "INTERNAL":internal, "EXTERNAL":external } }
         return self._restCall("home/security/setZonesDeviceAssignment", body = json.dumps(data))
-
