@@ -66,12 +66,19 @@ home = homematicip.Home()
 #add a function to handle new events
 home.onEvent += printEvents
 #enable the event connection -> this will also start the websocket connection to the homeMaticIP Cloud
-home.enable_events
+home.enable_events()
+
 
 #example function to display incoming events
 def printEvents(eventList):
     for event in eventList:
         print u"EventType: {} Data: {}".format(event["eventType"], event["data"])
+
+#if needed you can close the websocket connection with
+home.disable_events()
+
+
+
 
 ```
 
