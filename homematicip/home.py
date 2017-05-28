@@ -6,7 +6,7 @@ from homematicip.securityEvent import *
 
 from datetime import datetime
 import requests
-
+import websocket
 import logging
 
 logger = logging.getLogger(__name__)
@@ -88,6 +88,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     apExchangeClientId = None
     apExchangeState = None
     id = None
+
+    __webSocket = None
 
     def get_current_state(self):
         json_state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
@@ -185,6 +187,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 return d
         return None
 
+    def search_group_by_id(self, groupID):
+        """ searches a group by given id
+        :param groupID the device to search for
+        :return the group object or None if it couldn't find a group
+        """
+        for g in self.groups:
+            if g.id == groupID:
+                return g
+        return None
+
     def set_security_zones_activation(self, internal=True, external=True):
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return self._restCall("home/security/setZonesActivation", json.dumps(data))
@@ -278,3 +290,22 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         data = { "zonesDeviceAssignment" : { "INTERNAL":internal, "EXTERNAL":external } }
         return self._restCall("home/security/setZonesDeviceAssignment", body = json.dumps(data))
 
+    def enable_events(self):
+        websocket.enableTrace(True)
+        __webSocket = websocket.WebSocketApp(homematicip.get_urlWebSocket(), header=['AUTHTOKEN: {}'.format(homematicip.get_auth_token())], on_message=self.__ws_on_message)
+        __webSocket.run_forever()
+
+    def __ws_on_message(self,ws, message):
+        logger.debug(message) 
+        js = json.loads(message)
+        for eID in js["events"]:
+            event = js["events"][eID]
+            pushEventType = event["pushEventType"] 
+            if pushEventType == "DEVICE_CHANGED":
+                device = event["device"]
+                d=self.search_device_by_id(device["id"])
+                d.from_json(device)
+            elif pushEventType == "GROUP_CHANGED":
+                group = event["group"]
+                g=self.search_grou(device["id"])
+                g.from_json(device)

@@ -67,7 +67,7 @@ def main():
     home = homematicip.Home()
     if not home.get_current_state():
         return
-
+    home.enable_events()
     command_entered = False
 
     if args.list_devices:
