@@ -51,6 +51,9 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         self.latitude = js["latitude"]
         self.longitude = js["longitude"]
 
+    def __unicode__(self):
+        return u"city({}) latitude({}) longitude({})".format(self.city,self.latitude,self.longitude)
+
 
 class Client(HomeMaticIPObject.HomeMaticIPObject):
     id = None
@@ -61,6 +64,9 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
+
+    def __unicode__(self):
+        return u"label({})".format(self.label)
 
 class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
     authToken = None
@@ -149,7 +155,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 ret.append(d)
                 logger.warn("There is no class for {} yet".format(deviceType))
         return ret
-
+    
     def _get_clients(self, json_state):
         ret = []
         data = json_state
@@ -203,6 +209,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for g in self.groups:
             if g.id == groupID:
                 return g
+        return None
+
+    def search_client_by_id(self, clientID):
+        """ searches a client by given id
+        :param clientID the device to search for
+        :return the client object or None if it couldn't find a client
+        """
+        for c in self.clients:
+            if c.id == clientID:
+                return c
         return None
 
     def set_security_zones_activation(self, internal=True, external=True):
@@ -313,12 +329,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         eventList=[]
         for eID in js["events"]:
             event = js["events"][eID]
-            pushEventType = event["pushEventType"] 
-            if pushEventType == "DEVICE_CHANGED":
-                data = event["device"]
-                obj=self.search_device_by_id(data["id"])
-                obj.from_json(data)
-            elif pushEventType == "GROUP_CHANGED":
+            pushEventType = event["pushEventType"]
+            obj = None 
+            if pushEventType == "GROUP_CHANGED":
                 data = event["group"]
                 obj=self.search_group_by_id(data["id"])
                 obj.from_json(data)
@@ -326,7 +339,32 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 data = event["home"]
                 obj = self
                 obj.from_json(data)
-            #TODO: implement CLIENT_ADDED, CLIENT_REMOVED, CLIENT_CHANGED, DEVICE_ADDED, DEVICE_REMOVED, GROUP_ADDED, GROUP_REMOVED, SECURITY_JOURNAL_CHANGED, INCLUSION_REQUESTED, NONE
+            elif pushEventType == "CLIENT_ADDED":
+                data = event["client"]
+                obj=Client()
+                obj.from_json(data)
+                self.clients.append(obj)                             
+            elif pushEventType == "CLIENT_CHANGED":
+                data = event["client"]
+                obj=self.search_client_by_id(data["id"])
+                obj.from_json(data)
+            elif pushEventType == "CLIENT_REMOVED":
+                obj=self.search_client_by_id(event["id"])
+                self.clients.remove(obj)
+            elif pushEventType == "DEVICE_ADDED":
+                data = event["device"]
+                obj=Device() #TODO:implement typecheck
+                obj.from_json(data)
+                self.devices.append(obj)                             
+            elif pushEventType == "DEVICE_CHANGED":
+                data = event["device"]
+                obj=self.search_device_by_id(data["id"])
+                obj.from_json(data)
+            elif pushEventType == "DEVICE_REMOVED":
+                obj=self.search_device_by_id(event["id"])
+                self.devices.remove(obj)
+
+            #TODO: implement GROUP_ADDED, GROUP_REMOVED, SECURITY_JOURNAL_CHANGED, INCLUSION_REQUESTED, NONE
             else:
                 logger.warn("Uknown EventType '{}' Data: {}".format(pushEventType,event))
             eventList.append({"eventType":pushEventType, "data" : obj})

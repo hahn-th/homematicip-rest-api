@@ -34,9 +34,6 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
                 self.lowBat = c["lowBat"]
                 break
 
-    def __str__(self):
-        return unicode(self).encode('utf-8')
-
     def __unicode__(self):
         return u"{} {} lowbat({}) unreach({})".format(self.deviceType, self.label, self.lowBat, self.unreach)
 
