@@ -56,6 +56,31 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HEATING_COOLING_DEMAND_BOILER 
 - [X] HEATING_COOLING_DEMAND_PUMP
 
+## Events ##
+It's also possible to use push notifications based on a websocket connection
+```python
+##initialize the api 
+#...
+#get the home object
+home = homematicip.Home()
+#add a function to handle new events
+home.onEvent += printEvents
+#enable the event connection -> this will also start the websocket connection to the homeMaticIP Cloud
+home.enable_events()
+
+
+#example function to display incoming events
+def printEvents(eventList):
+    for event in eventList:
+        print u"EventType: {} Data: {}".format(event["eventType"], event["data"])
+
+#if needed you can close the websocket connection with
+home.disable_events()
+
+
+
+
+```
 
 ## Implemented Functions: ##
 ### General ###

@@ -4,6 +4,7 @@ from operator import attrgetter
 from argparse import ArgumentParser
 import sys
 import homematicip
+import time
 
 def create_logger():
   logger = logging.getLogger()
@@ -25,12 +26,14 @@ def main():
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
     group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
     group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
-
+    group.add_argument("--list-events", action="store_true", dest="list_events", help="prints all the events")
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
     parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
+
+
 
     group = parser.add_argument_group("Device Settings")
     group.add_argument("--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
@@ -210,10 +213,23 @@ def main():
                 isActive = p.id == group.activeProfile.id
                 print u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive)
 
+    if args.list_events:
+        command_entered = True
+        home.onEvent += printEvents
+        home.enable_events()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            return
 
     if not command_entered:
         parser.print_help()
 
+
+def printEvents(eventList):
+    for event in eventList:
+        print u"EventType: {} Data: {}".format(event["eventType"], event["data"])
 
 
 if __name__ == "__main__":

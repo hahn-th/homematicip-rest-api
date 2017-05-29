@@ -1,12 +1,14 @@
 # coding=utf-8
 import homematicip
+import threading
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.securityEvent import *
+from homematicip.EventHook import *
 
 from datetime import datetime
 import requests
-
+import websocket
 import logging
 
 logger = logging.getLogger(__name__)
@@ -16,7 +18,7 @@ _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : S
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
                  "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay, "PUSH_BUTTON": PushButton,
                  "ALARM_SIREN_INDOOR": AlarmSirenIndoor, "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
-                 "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm, "PLUGABLE_SWITCH" : PlugableSwitch}                 
+                 "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm, "PLUGABLE_SWITCH" : PlugableSwitch}
 
 _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXTENDED_LINKED_SWITCHING" : ExtendedLinkedSwitchingGroup
                 , "LINKED_SWITCHING" : LinkedSwitchingGroup, "ALARM_SWITCHING" : AlarmSwitchingGroup, "HEATING_HUMIDITY_LIMITER" : HeatingHumidyLimiterGroup
@@ -49,6 +51,9 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         self.latitude = js["latitude"]
         self.longitude = js["longitude"]
 
+    def __unicode__(self):
+        return u"city({}) latitude({}) longitude({})".format(self.city,self.latitude,self.longitude)
+
 
 class Client(HomeMaticIPObject.HomeMaticIPObject):
     id = None
@@ -59,6 +64,9 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
+
+    def __unicode__(self):
+        return u"label({})".format(self.label)
 
 class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
     authToken = None
@@ -89,14 +97,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     apExchangeState = None
     id = None
 
-    def get_current_state(self):
-        json_state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
-        if json_state.has_key("errorCode"):
-            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
-            return False
+    __webSocket = None
+    __webSocketThread = None
+    onEvent = EventHook()
 
-        js_home = json_state["home"]
-
+    def from_json(self, js_home):
+        super(Home, self).from_json(js_home)
         self.weather = Weather()
         self.weather.from_json(js_home["weather"])
         self.location = Location()
@@ -116,6 +122,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeClientId = js_home["apExchangeClientId"]
         self.apExchangeState = js_home["apExchangeState"]
         self.id = js_home["id"]
+
+    def get_current_state(self):
+        json_state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
+        if json_state.has_key("errorCode"):
+            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
+            return False
+
+        js_home = json_state["home"]
+
+        self.from_json(js_home)
 
         self.devices = self._get_devices(json_state)
         self.clients = self._get_clients(json_state)
@@ -137,9 +153,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 d = Device()
                 d.from_json(device)
                 ret.append(d)
-                print "There is no class for {} yet".format(deviceType)
+                logger.warn("There is no class for {} yet".format(deviceType))
         return ret
-
+    
     def _get_clients(self, json_state):
         ret = []
         data = json_state
@@ -167,13 +183,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 g = Group()
                 g.from_json(group,self.devices)
                 ret.append(g)
-                print "There is no class for {} yet".format(groupType)
-        
+                logger.warn("There is no class for {} yet".format(groupType))
+
         for mg in metaGroups:
             g = MetaGroup()
             g.from_json(mg,self.devices,ret)
             ret.append(g)
-        return ret  
+        return ret
 
     def search_device_by_id(self, deviceID):
         """ searches a device by given id
@@ -183,6 +199,26 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for d in self.devices:
             if d.id == deviceID:
                 return d
+        return None
+
+    def search_group_by_id(self, groupID):
+        """ searches a group by given id
+        :param groupID the device to search for
+        :return the group object or None if it couldn't find a group
+        """
+        for g in self.groups:
+            if g.id == groupID:
+                return g
+        return None
+
+    def search_client_by_id(self, clientID):
+        """ searches a client by given id
+        :param clientID the device to search for
+        :return the client object or None if it couldn't find a client
+        """
+        for c in self.clients:
+            if c.id == clientID:
+                return c
         return None
 
     def set_security_zones_activation(self, internal=True, external=True):
@@ -198,7 +234,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return self._restCall("home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data))
 
     def activate_absence_with_period(self, endtime):
-        data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M")}
+        data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
         return self._restCall("home/heating/activateAbsenceWithPeriod", json.dumps(data))
 
     def activate_absence_with_duration(self, duration):
@@ -246,7 +282,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 j = SecurityEvent()
                 j.from_json(entry)
                 ret.append(j)
-                print "There is no  for {} yet".format(eventType)
+                logger.warn("There is no class for {} yet".format(eventType))
         return ret
 
     def delete_group(self, group):
@@ -278,3 +314,59 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         data = { "zonesDeviceAssignment" : { "INTERNAL":internal, "EXTERNAL":external } }
         return self._restCall("home/security/setZonesDeviceAssignment", body = json.dumps(data))
 
+    def enable_events(self):
+        websocket.enableTrace(True)
+        self.__webSocket = websocket.WebSocketApp(homematicip.get_urlWebSocket(), header=['AUTHTOKEN: {}'.format(homematicip.get_auth_token())], on_message=self.__ws_on_message)
+        self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
+        self.__webSocketThread.daemon = True
+        self.__webSocketThread.start()
+
+    def disable_events(self):
+        self.__webSocket.close()
+
+    def __ws_on_message(self,ws, message):
+        js = json.loads(message)
+        eventList=[]
+        for eID in js["events"]:
+            event = js["events"][eID]
+            pushEventType = event["pushEventType"]
+            obj = None 
+            if pushEventType == "GROUP_CHANGED":
+                data = event["group"]
+                obj=self.search_group_by_id(data["id"])
+                obj.from_json(data)
+            elif pushEventType == "HOME_CHANGED":
+                data = event["home"]
+                obj = self
+                obj.from_json(data)
+            elif pushEventType == "CLIENT_ADDED":
+                data = event["client"]
+                obj=Client()
+                obj.from_json(data)
+                self.clients.append(obj)                             
+            elif pushEventType == "CLIENT_CHANGED":
+                data = event["client"]
+                obj=self.search_client_by_id(data["id"])
+                obj.from_json(data)
+            elif pushEventType == "CLIENT_REMOVED":
+                obj=self.search_client_by_id(event["id"])
+                self.clients.remove(obj)
+            elif pushEventType == "DEVICE_ADDED":
+                data = event["device"]
+                obj=Device() #TODO:implement typecheck
+                obj.from_json(data)
+                self.devices.append(obj)                             
+            elif pushEventType == "DEVICE_CHANGED":
+                data = event["device"]
+                obj=self.search_device_by_id(data["id"])
+                obj.from_json(data)
+            elif pushEventType == "DEVICE_REMOVED":
+                obj=self.search_device_by_id(event["id"])
+                self.devices.remove(obj)
+
+            #TODO: implement GROUP_ADDED, GROUP_REMOVED, SECURITY_JOURNAL_CHANGED, INCLUSION_REQUESTED, NONE
+            else:
+                logger.warn("Uknown EventType '{}' Data: {}".format(pushEventType,event))
+            eventList.append({"eventType":pushEventType, "data" : obj})
+
+        self.onEvent.fire(eventList)
