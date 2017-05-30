@@ -13,7 +13,7 @@ import requests
 
 clientCharacteristics = {"clientCharacteristics":
     {
-        "apiVersion": "8",
+        "apiVersion": "10",
         "applicationIdentifier": "homematicip-python",
         "applicationVersion": "1.0",
         "deviceManufacturer": "none",

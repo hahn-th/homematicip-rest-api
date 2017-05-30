@@ -12,7 +12,7 @@ class HomeMaticIPObject(object):
     _restCallRequestCounter = 3 #the homematic ip cloud tends to time out. retry the call X times.
     _restCallTimout = 3
     def __init__(self):
-        self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '8',
+        self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '10',
                         'AUTHTOKEN': homematicip.get_auth_token()}
 
     def _restCall(self, path, body = None):
