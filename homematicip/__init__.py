@@ -2,6 +2,7 @@
 import platform
 import locale
 import logging
+import hashlib
 
 from .home import *
 from .device import *
@@ -26,6 +27,7 @@ clientCharacteristics = {"clientCharacteristics":
 }
 
 auth_token = ""
+clientauth_token =""
 urlREST = ""
 urlWebSocket = ""
 
@@ -39,6 +41,10 @@ def get_auth_token():
     global auth_token
     return auth_token
 
+def get_clientauth_token():
+    global clientauth_token
+    return clientauth_token
+
 
 def get_clientCharacteristics():
     return clientCharacteristics
@@ -48,8 +54,12 @@ def init(accesspoint_id, lookup=True):
     global urlREST
     global clientCharacteristics
     global urlWebSocket
+    global clientauth_token
     accesspoint_id = accesspoint_id.replace('-', '').upper()
     clientCharacteristics["id"] = accesspoint_id
+
+    clientauth_token=hashlib.sha512(accesspoint_id+"jiLpVitHvWnIGD1yo7MA").hexdigest().upper()
+
     if lookup:
         while True:
             try:
