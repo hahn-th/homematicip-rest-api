@@ -112,7 +112,7 @@ class HeatingThermostat(OperationLockableDevice):
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) """
-    open = None
+    windowState = None
     eventDelay = None
 
     def from_json(self, js):
@@ -121,11 +121,11 @@ class ShutterContact(SabotageDevice):
             c = js["functionalChannels"][cid]
             type = c["functionalChannelType"]
             if type == "SHUTTER_CONTACT_CHANNEL":
-                self.open = c["open"]
+                self.windowState = c["windowState"]
                 self.eventDelay = c["eventDelay"]
 
     def __unicode__(self):
-        return u"{} open({})".format(super(ShutterContact, self).__unicode__(), self.open)
+        return u"{} windowState({})".format(super(ShutterContact, self).__unicode__(), self.windowState)
 
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """

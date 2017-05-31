@@ -66,21 +66,21 @@ class MetaGroup(Group):
                     self.groups.append(g)
 
 class SecurityGroup(Group):
-    open = None
+    windowState = None
     motionDetected = None
     sabotage = None
     smokeDetectorAlarmType = None
 
     def from_json(self, js, devices):
         super(SecurityGroup, self).from_json(js, devices)
-        self.open = js["open"]
+        self.windowState = js["windowState"]
         self.motionDetected = js["motionDetected"]
         self.sabotage = js["sabotage"]
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
 
     def __unicode__(self):
-        return u"{}: open({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(super(SecurityGroup, self).__unicode__(),
-                                                   self.open, self.motionDetected, self.sabotage, self.smokeDetectorAlarmType)
+        return u"{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(super(SecurityGroup, self).__unicode__(),
+                                                   self.windowState, self.motionDetected, self.sabotage, self.smokeDetectorAlarmType)
 
 class SwitchingGroup(Group):
     on = None
@@ -213,14 +213,14 @@ class SecurityZoneGroup(Group):
     active = None
     silent = None
     ignorableDevices = None
-    open = None
+    windowState = None
     motionDetected = None
     sabotage = None
     def from_json(self, js, devices):
         super(SecurityZoneGroup, self).from_json(js, devices)
         self.active = js["active"]
         self.silent = js["silent"]
-        self.open = js["open"]
+        self.windowState = js["windowState"]
         self.motionDetected = js["motionDetected"]
         self.sabotage = js["sabotage"]
         self.ignorableDevices = []
@@ -229,8 +229,8 @@ class SecurityZoneGroup(Group):
 
 
     def __unicode__(self):
-        return u"{} active({}) silent({}) open({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
-                                                self.active, self.silent, self.open, self.motionDetected, self.sabotage, len(self.ignorableDevices) )
+        return u"{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
+                                                self.active, self.silent, self.windowState, self.motionDetected, self.sabotage, len(self.ignorableDevices) )
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
     starttime = None
     endtime = None
@@ -313,7 +313,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
 class HeatingGroup(Group):
     windowOpenTemperature = None
     setPointTemperature = None
-    open = None
+    windowState = None
     maxTemperature = None
     minTemperature = None
     cooling = None
@@ -341,7 +341,7 @@ class HeatingGroup(Group):
         super(HeatingGroup, self).from_json(js, devices)
         self.windowOpenTemperature = js["windowOpenTemperature"]
         self.setPointTemperature = js["setPointTemperature"]
-        self.open = js["open"]
+        self.windowState = js["windowState"]
         self.maxTemperature = js["maxTemperature"]
         self.minTemperature = js["minTemperature"]
         self.cooling = js["cooling"]
@@ -375,8 +375,8 @@ class HeatingGroup(Group):
 
 
     def __unicode__(self):
-        return u"{} windowOpenTemperature({}) setPointTemperature({}) open({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(super(HeatingGroup, self).__unicode__(),
-                                                self.windowOpenTemperature, self.setPointTemperature, self.open, self.maxTemperature, self.minTemperature, self.cooling,self.partyMode,self.controlMode, self.actualTemperature )
+        return u"{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(super(HeatingGroup, self).__unicode__(),
+                                                self.windowOpenTemperature, self.setPointTemperature, self.windowState, self.maxTemperature, self.minTemperature, self.cooling,self.partyMode,self.controlMode, self.actualTemperature )
 
     def set_point_temperature(self,temperature):
         data = { "groupId" : self.id, "setPointTemperature" : temperature}
