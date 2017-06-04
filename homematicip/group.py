@@ -32,7 +32,7 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
 
 
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()
 
     def __unicode__(self):
         return u"{} {}".format(self.groupType, self.label)
@@ -85,20 +85,11 @@ class SecurityGroup(Group):
 class SwitchingGroup(Group):
     on = None
     dimLevel = None
-    processing = None
-    shutterLevel = None
-    slatsLevel = None
 
     def from_json(self, js, devices):
         super(SwitchingGroup, self).from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
-        try:#TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchintGroup
-            self.processing = js["processing"]
-            self.shutterLevel = js["shutterLevel"]
-            self.slatsLevel = js["slatsLevel"]
-        except:
-            pass
 
     def set_switch_state(self, on=True):
         data = { "groupId":self.id, "on":on }
@@ -111,8 +102,8 @@ class SwitchingGroup(Group):
         return self.set_state(False)
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(super(SwitchingGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.processing, self.shutterLevel,self.slatsLevel)
+        return u"{}: on({}) dimLevel({}) ".format(super(SwitchingGroup, self).__unicode__(),
+                                                self.on, self.dimLevel)
 
 class LinkedSwitchingGroup(SwitchingGroup):
     def set_light_group_switches(self, devices):
@@ -201,6 +192,7 @@ class HeatingTemperatureLimiterGroup(Group):
 class HeatingChangeoverGroup(Group):
     on = None
     dimLevel = None
+    sensorSpecificParameters = None
 
     def from_json(self, js, devices):
         super(HeatingChangeoverGroup, self).from_json(js, devices)
@@ -218,13 +210,12 @@ class InboxGroup(Group):
         return super(InboxGroup,self).__unicode__()
 
 class SecurityZoneGroup(Group):
-    active = False
-    silent = False
-    ignorableDevices = []
-    windowState = ""
+    active = None
+    silent = None
+    ignorableDevices = None
+    windowState = None
     motionDetected = None
     sabotage = None
-    presenceDetected = None
     def from_json(self, js, devices):
         super(SecurityZoneGroup, self).from_json(js, devices)
         self.active = js["active"]
@@ -238,8 +229,8 @@ class SecurityZoneGroup(Group):
 
 
     def __unicode__(self):
-        return u"{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
-                                                self.active, self.silent, self.windowState, self.motionDetected, self.sabotage, self.presenceDetected, len(self.ignorableDevices) )
+        return u"{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
+                                                self.active, self.silent, self.windowState, self.motionDetected, self.sabotage, len(self.ignorableDevices) )
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
     starttime = None
     endtime = None

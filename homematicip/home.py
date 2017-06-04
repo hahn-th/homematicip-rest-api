@@ -136,7 +136,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def get_current_state(self):
         json_state = self._restCall('home/getCurrentState', json.dumps(homematicip.get_clientCharacteristics()))
-        if json_state.has_key("errorCode"):
+        if 'errorCode' in json_state: 
             logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
             return False
 
@@ -156,7 +156,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for k in data["devices"]:
             device = data["devices"][k]
             deviceType = device["type"]
-            if _typeClassMap.has_key(deviceType):
+            if deviceType in _typeClassMap:
                 d = _typeClassMap[deviceType]()
                 d.from_json(device)
                 ret.append(d)
@@ -184,7 +184,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for k in data["groups"]:
             group = data["groups"][k]
             groupType = group["type"]
-            if _typeGroupMap.has_key(groupType):
+            if groupType in _typeGroupMap:
                 g = _typeGroupMap[groupType]()
                 g.from_json(group,self.devices)
                 ret.append(g)
@@ -279,13 +279,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
-        if journal.has_key("errorCode"):
+        if 'errorCode' in journal:
             logger.error("Could not get the security journal. Error: {}".format(journal["errorCode"]))
             return None
         ret = []
         for entry in journal["entries"]:
             eventType = entry["eventType"]
-            if _typeSecurityEventMap.has_key(eventType):
+            if eventType in _typeSecurityEventMap:
                 j = _typeSecurityEventMap[eventType]()
                 j.from_json(entry)
                 ret.append(j)

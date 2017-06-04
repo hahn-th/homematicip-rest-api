@@ -19,7 +19,7 @@ class HomeMaticIPObject(object):
         result = None
         requestPath = '{}/hmip/{}'.format(homematicip.get_urlREST(), path)
         logger.trace("_restcall path({}) body({})".format(requestPath,body))
-        for i in xrange(0,self._restCallRequestCounter):
+        for i in range(0,self._restCallRequestCounter):
             try:
                 result = requests.post(requestPath, data=body, headers=self.headers, timeout=self._restCallTimout)
                 ret = (result.json() if result.content != "" else "")
@@ -39,4 +39,4 @@ class HomeMaticIPObject(object):
 
     
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        return self.__unicode__()
