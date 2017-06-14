@@ -468,3 +468,34 @@ class HeatingCoolingDemandPumpGroup(Group):
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
                                                 self.on, self.dimLevel, self.pumpProtectionDuration, self.pumpProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime)
+
+class SwitchingProfileGroup(Group):
+    on = None
+    dimLevel = None
+    profileId = None # Not sure why it is there. You can't use it to query something.
+    profileMode = None
+
+    def from_json(self, js, devices):
+        super(SwitchingProfileGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+        self.profileId = js["profileId"]
+        self.profileMode = js["profileMode"]
+
+    def __unicode__(self):
+        return u"{}: on({}) dimLevel({}) profileMode({})".format(super(SwitchingProfileGroup, self).__unicode__(),
+                                                self.on, self.dimLevel, self.profileMode)
+
+    def set_group_channels(self):
+        channels = []
+        for d in self.devices:
+            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
+        data = { "groupId" : self.id, "channels" : channels}
+        return self._restCall("group/switching/profile/setGroupChannels", body=json.dumps(data))
+
+    def set_profile_mode(self,devices,automatic=True):
+        channels = []
+        for d in devices:
+            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
+        data = { "groupId" : self.id, "channels" : channels, "profileMode" : "AUTOMATIC" if automatic else "MANUAL"}
+        return self._restCall("group/switching/profile/setProfileMode", body=json.dumps(data))
