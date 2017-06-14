@@ -93,7 +93,7 @@ class SwitchingGroup(Group):
         super(SwitchingGroup, self).from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
-        try:#TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchintGroup
+        try:#TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
             self.processing = js["processing"]
             self.shutterLevel = js["shutterLevel"]
             self.slatsLevel = js["slatsLevel"]
