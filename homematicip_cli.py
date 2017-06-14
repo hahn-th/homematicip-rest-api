@@ -36,10 +36,12 @@ def main():
 
 
     group = parser.add_argument_group("Device Settings")
-    group.add_argument("--turn_on", action="store_true", dest="device_switch_state", help="turn the switch on")
-    group.add_argument("--turn_off", action="store_false", dest="device_switch_state", help="turn the switch off")
+    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on")
+    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off")
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
     group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
+    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device")
+    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device")
 
     group = parser.add_argument_group("Home Settings")
     group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
@@ -47,8 +49,8 @@ def main():
     group.add_argument("--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin")
     group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
     group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true", help="sets the zones devices assignment")
-    group.add_argument("--external_devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
-    group.add_argument("--internal_devices", dest="internal_devices", nargs='+', help="sets the devices for the internal zone")
+    group.add_argument("--external-devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
+    group.add_argument("--internal-devices", dest="internal_devices", nargs='+', help="sets the devices for the internal zone")
     group.add_argument("--activate-absence", dest="activate_absence", action="store", help="activates absence for provided amount of minutes", default=None, type=int)
     group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
@@ -151,6 +153,13 @@ def main():
                 command_entered = True
             else:
                 logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+        
+        if args.device_enable_router_module != None:
+            if device.routerModuleSupported or True:
+                device.set_router_module_enabled(args.device_enable_router_module)
+                command_entered = True
+            else:
+                logger.error("the device {} doesn't support the router module".format(device.id))
 
 
     if args.set_zones_device_assignment:

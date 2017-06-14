@@ -16,6 +16,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     availableFirmwareVersion = None
     unreach = None
     lowBat = None
+    routerModuleSupported = False
+    routerModuleEnabled = False
 
     def from_json(self, js):
         self.id = js["id"]
@@ -32,6 +34,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             if type == "DEVICE_BASE":
                 self.unreach = c["unreach"]
                 self.lowBat = c["lowBat"]
+                self.routerModuleSupported = c["routerModuleSupported"]
+                self.routerModuleEnabled = c["routerModuleEnabled"]
                 break
 
     def __unicode__(self):
@@ -56,6 +60,17 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     def delete(self):
         data = { "deviceId" : self.id }
         return self._restCall("device/deleteDevice", json.dumps(data))
+
+    def set_router_module_enabled(self,enabled=True):
+        if not self.routerModuleSupported:
+            return False 
+        data = { "deviceId" : self.id, "channelIndex":0, "routerModuleEnabled":enabled }
+        result = self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
+        if result == "":
+            return True
+        else:
+            return result["errorCode"]
+
 
 class SabotageDevice(Device):
     sabotage = None
