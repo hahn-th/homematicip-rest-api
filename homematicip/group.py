@@ -538,3 +538,10 @@ class SwitchingProfileGroup(Group):
             channels.append[ { "channelIndex":1, "deviceId" : d.id}]
         data = { "groupId" : self.id, "channels" : channels, "profileMode" : "AUTOMATIC" if automatic else "MANUAL"}
         return self._restCall("group/switching/profile/setProfileMode", body=json.dumps(data))
+
+    def create(self,label):
+        data = { "label" : label }
+        result = self._restCall("group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data))
+        if "groupId" in result:
+            self.id=result["groupId"]
+        return result
