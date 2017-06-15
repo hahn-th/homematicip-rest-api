@@ -58,7 +58,7 @@ def init(accesspoint_id, lookup=True):
     accesspoint_id = accesspoint_id.replace('-', '').upper()
     clientCharacteristics["id"] = accesspoint_id
 
-    clientauth_token=hashlib.sha512(accesspoint_id+"jiLpVitHvWnIGD1yo7MA").hexdigest().upper()
+    clientauth_token=hashlib.sha512(str(accesspoint_id+"jiLpVitHvWnIGD1yo7MA").encode('utf-8')).hexdigest().upper()
 
     if lookup:
         while True:

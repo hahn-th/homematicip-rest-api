@@ -1,10 +1,12 @@
 # coding=utf-8
 import requests
+from builtins import range
 import homematicip
 
 import logging
-
 logger = logging.getLogger(__name__)
+import sys
+
 
 class HomeMaticIPObject(object):
     """This class represents a generic homematic ip object to make basic requests to the access point"""
@@ -19,7 +21,7 @@ class HomeMaticIPObject(object):
         result = None
         requestPath = '{}/hmip/{}'.format(homematicip.get_urlREST(), path)
         logger.trace("_restcall path({}) body({})".format(requestPath,body))
-        for i in xrange(0,self._restCallRequestCounter):
+        for i in range(0,self._restCallRequestCounter):
             try:
                 result = requests.post(requestPath, data=body, headers=self.headers, timeout=self._restCallTimout)
                 ret = (result.json() if result.content != "" else "")
@@ -37,6 +39,11 @@ class HomeMaticIPObject(object):
     def __repr__(self):
         return "id({}) {}".format(self.id,self.__str__())
 
-    
+    def __unicode__(self):
+        pass
+
     def __str__(self):
-        return unicode(self).encode('utf-8')
+        if sys.version_info >= (3,0):
+            return self.__unicode__()
+        else:
+            return unicode(self).encode('utf-8')

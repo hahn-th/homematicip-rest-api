@@ -79,19 +79,19 @@ def main():
         command_entered = True
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print d.id, unicode(d)
+            print(u'{} {}'.format(d.id, unicode(d)))
 
     if args.list_groups:
         command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print unicode(g)
+            print(unicode(g))
 
     if args.list_group_ids:
         command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print u"Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label)
+            print(u"Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label))
 
     if args.protectionmode:
         command_entered = True
@@ -113,18 +113,18 @@ def main():
         command_entered = True
         journal = home.get_security_journal()
         for entry in journal:
-            print unicode(entry)
+            print(unicode(entry))
 
     if args.list_firmware:
         command_entered = True
-        print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
+        print(unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
                                                                                         home.currentAPVersion,
                                                                                         home.availableAPVersion,
-                                                                                        home.updateState))
+                                                                                        home.updateState)))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
-                                                                                      d.availableFirmwareVersion, d.updateState))
+            print(unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
+                                                                                      d.availableFirmwareVersion, d.updateState)))
 
     if args.device:
         command_entered = False
@@ -220,7 +220,7 @@ def main():
             command_entered = True
             for p in group.profiles:
                 isActive = p.id == group.activeProfile.id
-                print u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive)
+                print(u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive))
 
     if args.list_events:
         command_entered = True
@@ -238,7 +238,7 @@ def main():
 
 def printEvents(eventList):
     for event in eventList:
-        print u"EventType: {} Data: {}".format(event["eventType"], event["data"])
+        print(u"EventType: {} Data: {}".format(event["eventType"], event["data"]))
 
 
 if __name__ == "__main__":

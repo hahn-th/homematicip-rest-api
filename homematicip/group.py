@@ -31,8 +31,6 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
                     self.devices.append(d)
 
 
-    def __str__(self):
-        return unicode(self).encode('utf-8')
 
     def __unicode__(self):
         return u"{} {}".format(self.groupType, self.label)
