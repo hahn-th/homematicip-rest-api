@@ -27,6 +27,7 @@ def main():
     group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
     group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
     group.add_argument("--list-events", action="store_true", dest="list_events", help="prints all the events")
+    group.add_argument("--list-last-status-update", action="store_true", dest="list_last_status_update", help="prints the last status update of all systems")
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
@@ -86,6 +87,17 @@ def main():
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
             print(unicode(g))
+
+    if args.list_last_status_update:
+        command_entered = True
+        print(u'Devices:')
+        sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
+        for d in sortedDevices:
+            print(u'\t{}\t{}\t{}'.format(d.id, d.label, d.lastStatusUpdate))
+        print(u'Groups:')
+        sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
+        for g in sortedGroups:
+            print(u'\t{}\t{}\t{}'.format(g.groupType, g.label, g.lastStatusUpdate))
 
     if args.list_group_ids:
         command_entered = True
