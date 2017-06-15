@@ -21,7 +21,12 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
-        self.lastStatusUpdate = datetime.fromtimestamp(js["lastStatusUpdate"] / 1000.0)
+        time = js["lastStatusUpdate"]
+        if time > 0:
+            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
+        else:
+            self.lastStatusUpdate = None
+
         self.groupType = js["type"]
 
         self.devices = []
@@ -48,7 +53,11 @@ class MetaGroup(Group):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
-        self.lastStatusUpdate = datetime.fromtimestamp(js["lastStatusUpdate"] / 1000.0)
+        time = js["lastStatusUpdate"]
+        if time > 0:
+            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
+        else:
+            self.lastStatusUpdate = None
         self.groupType = js["type"]
 
         self.devices = []
@@ -56,6 +65,7 @@ class MetaGroup(Group):
             for d in devices:
                 if d.id == channel["deviceId"]:
                     self.devices.append(d)
+
         self.groups = []
         for group in js["groups"]:
             for g in groups:

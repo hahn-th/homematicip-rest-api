@@ -86,7 +86,11 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
 
     def from_json(self, js):
         self.authToken = js["authToken"]
-        self.expirationTimestamp = datetime.fromtimestamp(js["expirationTimestamp"] / 1000.0)
+        time = js["expirationTimestamp"]
+        if time > 0:
+            self.expirationTimestamp = datetime.fromtimestamp(time / 1000.0)
+        else:
+            self.expirationTimestamp = None
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
