@@ -332,7 +332,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def enable_events(self):
         websocket.enableTrace(True)
-        self.__webSocket = websocket.WebSocketApp(homematicip.get_urlWebSocket(), header=['AUTHTOKEN: {}'.format(homematicip.get_auth_token())], on_message=self.__ws_on_message)
+        self.__webSocket = websocket.WebSocketApp(homematicip.get_urlWebSocket(), header=['AUTHTOKEN: {}'.format(homematicip.get_auth_token()), 'CLIENTAUTH: {}'.format(homematicip.get_clientauth_token())], on_message=self.__ws_on_message)
         self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
         self.__webSocketThread.daemon = True
         self.__webSocketThread.start()
@@ -343,6 +343,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def __ws_on_message(self,ws, message):
         js = json.loads(message)
         eventList=[]
+        logging.trace(js)
         for eID in js["events"]:
             event = js["events"][eID]
             pushEventType = event["pushEventType"]
@@ -379,8 +380,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             elif pushEventType == "DEVICE_REMOVED":
                 obj=self.search_device_by_id(event["id"])
                 self.devices.remove(obj)
+            elif pushEventType == "GROUP_REMOVED":
+                obj=self.search_group_by_id(event["id"])
+                self.groups.remove(obj)
+            elif pushEventType == "GROUP_ADDED":
+                data = event["group"]
+                obj=Group() #TODO:implement typecheck
+                obj.from_json(data)
+                self.groups.append(obj)  
 
-            #TODO: implement GROUP_ADDED, GROUP_REMOVED, SECURITY_JOURNAL_CHANGED, INCLUSION_REQUESTED, NONE
+            #TODO: implement GROUP_ADDED, SECURITY_JOURNAL_CHANGED, INCLUSION_REQUESTED, NONE
             else:
                 logger.warn("Uknown EventType '{}' Data: {}".format(pushEventType,event))
             eventList.append({"eventType":pushEventType, "data" : obj})
