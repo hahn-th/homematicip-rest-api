@@ -40,7 +40,7 @@ class HomeMaticIPObject(object):
         return "id({}) {}".format(self.id,self.__str__())
 
     def __unicode__(self):
-        pass
+        return u'id({})'.format(self.id)
 
     def __str__(self):
         if sys.version_info >= (3,0):
