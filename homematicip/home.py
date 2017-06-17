@@ -10,6 +10,7 @@ from datetime import datetime
 import requests
 import websocket
 import logging
+import sys
 
 logger = logging.getLogger(__name__)
 
@@ -332,7 +333,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def enable_events(self):
         websocket.enableTrace(True)
-        self.__webSocket = websocket.WebSocketApp(homematicip.get_urlWebSocket(), header=['AUTHTOKEN: {}'.format(homematicip.get_auth_token()), 'CLIENTAUTH: {}'.format(homematicip.get_clientauth_token())], on_message=self.__ws_on_message)
+        self.__webSocket = websocket.WebSocketApp(homematicip.get_urlWebSocket(), header=['AUTHTOKEN: {}'.format(homematicip.get_auth_token()), 'CLIENTAUTH: {}'.format(homematicip.get_clientauth_token())], on_message=self.__ws_on_message, on_error=self.__ws_on_error)
         self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
         self.__webSocketThread.daemon = True
         self.__webSocketThread.start()
@@ -340,58 +341,64 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def disable_events(self):
         self.__webSocket.close()
 
+    def __ws_on_error(self,ws,message):
+        logger.error("Websocket error: {}".format(message))
+        
     def __ws_on_message(self,ws, message):
         js = json.loads(message)
         eventList=[]
-        logging.trace(js)
-        for eID in js["events"]:
-            event = js["events"][eID]
-            pushEventType = event["pushEventType"]
-            obj = None 
-            if pushEventType == "GROUP_CHANGED":
-                data = event["group"]
-                obj=self.search_group_by_id(data["id"])
-                obj.from_json(data)
-            elif pushEventType == "HOME_CHANGED":
-                data = event["home"]
-                obj = self
-                obj.from_json(data)
-            elif pushEventType == "CLIENT_ADDED":
-                data = event["client"]
-                obj=Client()
-                obj.from_json(data)
-                self.clients.append(obj)                             
-            elif pushEventType == "CLIENT_CHANGED":
-                data = event["client"]
-                obj=self.search_client_by_id(data["id"])
-                obj.from_json(data)
-            elif pushEventType == "CLIENT_REMOVED":
-                obj=self.search_client_by_id(event["id"])
-                self.clients.remove(obj)
-            elif pushEventType == "DEVICE_ADDED":
-                data = event["device"]
-                obj=Device() #TODO:implement typecheck
-                obj.from_json(data)
-                self.devices.append(obj)                             
-            elif pushEventType == "DEVICE_CHANGED":
-                data = event["device"]
-                obj=self.search_device_by_id(data["id"])
-                obj.from_json(data)
-            elif pushEventType == "DEVICE_REMOVED":
-                obj=self.search_device_by_id(event["id"])
-                self.devices.remove(obj)
-            elif pushEventType == "GROUP_REMOVED":
-                obj=self.search_group_by_id(event["id"])
-                self.groups.remove(obj)
-            elif pushEventType == "GROUP_ADDED":
-                data = event["group"]
-                obj=Group() #TODO:implement typecheck
-                obj.from_json(data)
-                self.groups.append(obj)  
+        try:
+            for eID in js["events"]:
+                event = js["events"][eID]
+                pushEventType = event["pushEventType"]
+                obj = None 
+                if pushEventType == "GROUP_CHANGED":
+                    data = event["group"]
+                    obj=self.search_group_by_id(data["id"])
+                    obj.from_json(data,self.devices)
+                elif pushEventType == "HOME_CHANGED":
+                    data = event["home"]
+                    obj = self
+                    obj.from_json(data)
+                elif pushEventType == "CLIENT_ADDED":
+                    data = event["client"]
+                    obj=Client()
+                    obj.from_json(data)
+                    self.clients.append(obj)                             
+                elif pushEventType == "CLIENT_CHANGED":
+                    data = event["client"]
+                    obj=self.search_client_by_id(data["id"])
+                    obj.from_json(data)
+                elif pushEventType == "CLIENT_REMOVED":
+                    obj=self.search_client_by_id(event["id"])
+                    self.clients.remove(obj)
+                elif pushEventType == "DEVICE_ADDED":
+                    data = event["device"]
+                    obj=Device() #TODO:implement typecheck
+                    obj.from_json(data)
+                    self.devices.append(obj)                             
+                elif pushEventType == "DEVICE_CHANGED":
+                    data = event["device"]
+                    obj=self.search_device_by_id(data["id"])
+                    obj.from_json(data)
+                elif pushEventType == "DEVICE_REMOVED":
+                    obj=self.search_device_by_id(event["id"])
+                    self.devices.remove(obj)
+                elif pushEventType == "GROUP_REMOVED":
+                    obj=self.search_group_by_id(event["id"])
+                    self.groups.remove(obj)
+                elif pushEventType == "GROUP_ADDED":
+                    data = event["group"]
+                    obj=Group() #TODO:implement typecheck
+                    obj.from_json(data)
+                    self.groups.append(obj)
+                elif pushEventType == "SECURITY_JOURNAL_CHANGED":
+                    pass # data is just none so nothing to do here
 
-            #TODO: implement GROUP_ADDED, SECURITY_JOURNAL_CHANGED, INCLUSION_REQUESTED, NONE
-            else:
-                logger.warn("Uknown EventType '{}' Data: {}".format(pushEventType,event))
-            eventList.append({"eventType":pushEventType, "data" : obj})
-
+                #TODO: implement INCLUSION_REQUESTED, NONE
+                else:
+                    logger.warn("Uknown EventType '{}' Data: {}".format(pushEventType,event))
+                eventList.append({"eventType":pushEventType, "data" : obj})
+        except:
+            logger.error("Unexpected error: {}".format(sys.exc_info()[0]))
         self.onEvent.fire(eventList)
