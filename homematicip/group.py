@@ -93,7 +93,7 @@ class SwitchingGroup(Group):
         super(SwitchingGroup, self).from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
-        try:#TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchintGroup
+        try:#TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
             self.processing = js["processing"]
             self.shutterLevel = js["shutterLevel"]
             self.slatsLevel = js["slatsLevel"]
@@ -468,3 +468,73 @@ class HeatingCoolingDemandPumpGroup(Group):
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
                                                 self.on, self.dimLevel, self.pumpProtectionDuration, self.pumpProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime)
+class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
+    weekdays = []
+    hour = 0
+    minute = 0
+    astroOffset = 0
+    astroLimitationType = "NO_LIMITATION" # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
+    switchTimeMode = "REGULAR_SWITCH_TIME" # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
+    dimLevel  = 1.0
+    rampTime = 0
+    def from_json(self, js):
+        super(TimeProfilePeriod, self).from_json(js)
+        self.weekdays = js["weekdays"]
+        self.hour = js["hour"]
+        self.minute = js["minute"]
+        self.astroOffset = js["astroOffset"]
+        self.astroLimitationType = js["astroLimitationType"]
+        self.switchTimeMode = js["switchTimeMode"]
+        self.dimLevel = js["dimLevel"]
+        self.rampTime = js["rampTime"]
+
+class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
+    id = None
+    homeId = None
+    groupId = None
+    type = None
+    periods = []
+
+    def get_details(self):
+        data = { "groupId": self.groupId }
+        js = self._restCall("group/switching/profile/getProfile", body=json.dumps(data))
+        self.homeId = js["homeId"]
+        self.type = js["type"]
+        self.id = js["id"]
+        self.periods = []
+        for p in js["periods"]:
+            period = TimeProfilePeriod()
+            period.from_json(p)
+            self.periods.append(period)
+
+
+class SwitchingProfileGroup(Group):
+    on = None
+    dimLevel = None
+    profileId = None # Not sure why it is there. You can't use it to query something.
+    profileMode = None
+
+    def from_json(self, js, devices):
+        super(SwitchingProfileGroup, self).from_json(js, devices)
+        self.on = js["on"]
+        self.dimLevel = js["dimLevel"]
+        self.profileId = js["profileId"]
+        self.profileMode = js["profileMode"]
+
+    def __unicode__(self):
+        return u"{}: on({}) dimLevel({}) profileMode({})".format(super(SwitchingProfileGroup, self).__unicode__(),
+                                                self.on, self.dimLevel, self.profileMode)
+
+    def set_group_channels(self):
+        channels = []
+        for d in self.devices:
+            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
+        data = { "groupId" : self.id, "channels" : channels}
+        return self._restCall("group/switching/profile/setGroupChannels", body=json.dumps(data))
+
+    def set_profile_mode(self,devices,automatic=True):
+        channels = []
+        for d in devices:
+            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
+        data = { "groupId" : self.id, "channels" : channels, "profileMode" : "AUTOMATIC" if automatic else "MANUAL"}
+        return self._restCall("group/switching/profile/setProfileMode", body=json.dumps(data))
