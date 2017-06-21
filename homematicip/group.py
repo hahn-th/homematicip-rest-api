@@ -21,7 +21,12 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
-        self.lastStatusUpdate = datetime.fromtimestamp(js["lastStatusUpdate"] / 1000.0)
+        time = js["lastStatusUpdate"]
+        if time > 0:
+            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
+        else:
+            self.lastStatusUpdate = None
+
         self.groupType = js["type"]
 
         self.devices = []
@@ -31,8 +36,6 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
                     self.devices.append(d)
 
 
-    def __str__(self):
-        return unicode(self).encode('utf-8')
 
     def __unicode__(self):
         return u"{} {}".format(self.groupType, self.label)
@@ -50,7 +53,11 @@ class MetaGroup(Group):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
-        self.lastStatusUpdate = datetime.fromtimestamp(js["lastStatusUpdate"] / 1000.0)
+        time = js["lastStatusUpdate"]
+        if time > 0:
+            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
+        else:
+            self.lastStatusUpdate = None
         self.groupType = js["type"]
 
         self.devices = []
@@ -58,6 +65,7 @@ class MetaGroup(Group):
             for d in devices:
                 if d.id == channel["deviceId"]:
                     self.devices.append(d)
+
         self.groups = []
         for group in js["groups"]:
             for g in groups:
@@ -538,3 +546,10 @@ class SwitchingProfileGroup(Group):
             channels.append[ { "channelIndex":1, "deviceId" : d.id}]
         data = { "groupId" : self.id, "channels" : channels, "profileMode" : "AUTOMATIC" if automatic else "MANUAL"}
         return self._restCall("group/switching/profile/setProfileMode", body=json.dumps(data))
+
+    def create(self,label):
+        data = { "label" : label }
+        result = self._restCall("group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data))
+        if "groupId" in result:
+            self.id=result["groupId"]
+        return result

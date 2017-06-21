@@ -11,7 +11,11 @@ class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
     label = None
     def from_json(self, js):
         self.label = js["label"]
-        self.eventTimestamp = datetime.fromtimestamp(js["eventTimestamp"] / 1000.0)
+        time = js["eventTimestamp"]
+        if time > 0:
+            self.eventTimestamp = datetime.fromtimestamp(time / 1000.0)
+        else:
+            self.eventTimestamp = None
         self.eventType = js["eventType"]
 
 
