@@ -1,15 +1,17 @@
 import homematicip
 import time
+from builtins import input
+
 
 while True:
-    access_point = raw_input("Please enter the accesspoint id (SGTIN): ").replace('-', '').upper()
+    access_point = input("Please enter the accesspoint id (SGTIN): ").replace('-', '').upper()
     if len(access_point) != 24:
         print( "Invalid access_point id")
         continue
     break
-pin = raw_input("Please enter the PIN (leave Blank if there is none): ")
+pin = input("Please enter the PIN (leave Blank if there is none): ")
 
-devicename = raw_input("Please enter the client/devicename (leave blank to use default):")
+devicename = input("Please enter the client/devicename (leave blank to use default):")
 
 homematicip.init(access_point)
 auth = homematicip.Auth()
@@ -30,5 +32,6 @@ while not auth.isRequestAcknowledged():
 auth_token = auth.requestAuthToken()
 clientId = auth.confirmAuthToken(auth_token)
 
-print("Token successfully registered: ", auth_token)
-print("Client ID is ", clientId)
+print(u'-----------------------------------------------------------------------------')
+print(u'Token successfully registered!')
+print(u'AUTH_TOKEN:\t{}\nACCESS_POINT:\t{}\nClient ID:\t{}'.format(auth_token,access_point,clientId))
