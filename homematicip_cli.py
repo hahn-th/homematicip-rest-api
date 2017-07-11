@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 import sys
 import homematicip
 import time
+from builtins import str
 
 def create_logger():
   logger = logging.getLogger()
@@ -80,13 +81,13 @@ def main():
         command_entered = True
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(u'{} {}'.format(d.id, unicode(d)))
+            print(u'{} {}'.format(d.id, str(d)))
 
     if args.list_groups:
         command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print(unicode(g))
+            print(str(g))
 
     if args.list_last_status_update:
         command_entered = True
@@ -125,17 +126,17 @@ def main():
         command_entered = True
         journal = home.get_security_journal()
         for entry in journal:
-            print(unicode(entry))
+            print(str(entry))
 
     if args.list_firmware:
         command_entered = True
-        print(unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
+        print(str(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
                                                                                         home.currentAPVersion,
                                                                                         home.availableAPVersion,
                                                                                         home.updateState)))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(unicode(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
+            print(str(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                       d.availableFirmwareVersion, d.updateState)))
 
     if args.device:
