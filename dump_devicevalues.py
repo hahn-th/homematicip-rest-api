@@ -54,5 +54,5 @@ for d in home.devices:
         write_heatingthermostat(d)
     elif isinstance(d, homematicip.PlugableSwitchMeasuring):
         write_plugableswitchmeasuring(d)
-    elif isinstance(d, homematicip.WallMountedThermostatPro):
+    elif isinstance(d, homematicip.WallMountedThermostatPro) or isinstance(d, homematicip.TemperatureHumiditySensorDisplay):
         write_wallmountedthermostatpro(d)
