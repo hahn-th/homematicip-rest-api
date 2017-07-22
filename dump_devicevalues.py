@@ -17,7 +17,7 @@ def write_shutter(device):
         with open("shutter.csv", "w") as csv:
             csv.write("name;timestamp;open/close\n")
     with open("shutter.csv", "a") as csv:
-        csv.write("{};{};{}\n".format(device.id, unicode(device.lastStatusUpdate), d.open))
+        csv.write("{};{};{}\n".format(device.id, unicode(device.lastStatusUpdate), d.windowState))
 
 
 def write_heatingthermostat(device):
@@ -54,5 +54,5 @@ for d in home.devices:
         write_heatingthermostat(d)
     elif isinstance(d, homematicip.PlugableSwitchMeasuring):
         write_plugableswitchmeasuring(d)
-    elif isinstance(d, homematicip.WallMountedThermostatPro):
+    elif isinstance(d, homematicip.WallMountedThermostatPro) or isinstance(d, homematicip.TemperatureHumiditySensorDisplay):
         write_wallmountedthermostatpro(d)
