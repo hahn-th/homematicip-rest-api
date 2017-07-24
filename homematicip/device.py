@@ -315,3 +315,26 @@ class KeyRemoteControlAlarm(Device):
 
     def __unicode__(self):
         return u"{}".format(super(KeyRemoteControlAlarm, self).__unicode__())
+
+
+class FullFlushShutter(Device):
+    """ HMIP-FROLL (Shutter Actuator - flush-mount) """
+
+    shutterLevel = None
+    bottomToTopReferenceTime = None
+    topToBottomReferenceTime = None
+
+    def from_json(self, js):
+        super(FullFlushShutter, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "SHUTTER_CHANNEL":
+                self.shutterLevel = c["shutterLevel"]
+                self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
+                self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+
+    def __unicode__(self):
+        return u"{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
+            super(FullFlushShutter, self).__unicode__(),
+            self.shutterLevel, self.topToBottomReferenceTime, self.bottomToTopReferenceTime)
