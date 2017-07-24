@@ -56,6 +56,8 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HEATING_EXTERNAL_CLOCK
 - [X] HEATING_COOLING_DEMAND_BOILER 
 - [X] HEATING_COOLING_DEMAND_PUMP
+- [X] OVER_HEAT_PROTECTION_RULE
+- [X] SMOKE_ALARM_DETECTION_RULE
 
 ## Events ##
 It's also possible to use push notifications based on a websocket connection
