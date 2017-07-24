@@ -116,6 +116,8 @@ home.disable_events()
 - [X] setClimateControlDisplay
 - [X] setDeviceLabel
 - [X] setSwitchState (turn on/off)
+- [X] setShutterLevel
+- [X] setShutterStop
 
 ### Alarm ###
 - [X] testSignalOptical

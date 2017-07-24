@@ -343,6 +343,6 @@ class FullFlushShutter(Device):
         data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
-    def stop(self):
+    def set_shutter_stop(self):
         data = {"channelIndex": 1, "deviceId": self.id}
         return self._restCall("device/control/stop", body=json.dumps(data))

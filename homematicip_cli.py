@@ -177,7 +177,7 @@ def main():
 
         if args.device_shutter_stop is not None:
             if isinstance(device, homematicip.FullFlushShutter):
-                device.stop()
+                device.set_shutter_stop()
                 command_entered = True
             else:
                 logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
