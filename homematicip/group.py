@@ -553,3 +553,47 @@ class SwitchingProfileGroup(Group):
         if "groupId" in result:
             self.id=result["groupId"]
         return result
+
+
+class OverHeatProtectionRule(Group):
+    temperatureLowerThreshold = None
+    temperatureUpperThreshold = None
+    targetShutterLevel = None
+    targetSlatsLevel = None
+    startHour = None
+    startMinute = None
+    startSunrise = None
+    endHour = None
+    endMinute = None
+    endSunset = None
+
+    def from_json(self, js, devices):
+        super(OverHeatProtectionRule, self).from_json(js, devices)
+        self.temperatureLowerThreshold = js["temperatureLowerThreshold"]
+        self.temperatureUpperThreshold = js["temperatureUpperThreshold"]
+        self.targetShutterLevel = js["targetShutterLevel"]
+        self.targetSlatsLevel = js["targetSlatsLevel"]
+        self.startHour = js["startHour"]
+        self.startMinute = js["startMinute"]
+        self.startSunrise = js["startSunrise"]
+        self.endHour = js["endHour"]
+        self.endMinute = js["endMinute"]
+        self.endSunset = js["endSunset"]
+
+    def __unicode__(self):
+        return u"{}: tempLower({}) tempUpper({}) targetShutterLevel({}) targetSlatsLevel({})".format(
+            super(OverHeatProtectionRule, self).__unicode__(),
+            self.temperatureLowerThreshold, self.temperatureUpperThreshold,
+            self.targetShutterLevel, self.targetSlatsLevel)
+
+
+class SmokeAlarmDetectionRule(Group):
+    smokeDetectorAlarmType = None
+
+    def from_json(self, js, devices):
+        super(SmokeAlarmDetectionRule, self).from_json(js, devices)
+        self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
+
+    def __unicode__(self):
+        return u"{}: smokeDetectorAlarmType({})".format(
+            super(SmokeAlarmDetectionRule, self).__unicode__(), self.smokeDetectorAlarmType)
