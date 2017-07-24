@@ -38,12 +38,20 @@ def main():
 
 
     group = parser.add_argument_group("Device Settings")
-    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on")
-    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off")
+    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on",
+                       default=None)
+    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off",
+                       default=None)
+    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level",
+                       help="set shutter to level (0..1)")
+    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter",
+                       default=None)
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
     group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
-    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device")
-    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device")
+    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module",
+                       help="enables the router module of the device", default=None)
+    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module",
+                       help="disables the router module of the device", default=None)
 
     group = parser.add_argument_group("Home Settings")
     group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
@@ -159,6 +167,20 @@ def main():
                 command_entered = True
             else:
                 logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
+
+        if args.device_shutter_level is not None:
+            if isinstance(device, homematicip.FullFlushShutter):
+                device.set_shutter_level(args.device_shutter_level)
+                command_entered = True
+            else:
+                logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
+
+        if args.device_shutter_stop is not None:
+            if isinstance(device, homematicip.FullFlushShutter):
+                device.stop()
+                command_entered = True
+            else:
+                logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
 
         if args.device_display != None:
             if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):

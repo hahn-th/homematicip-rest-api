@@ -338,3 +338,11 @@ class FullFlushShutter(Device):
         return u"{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
             super(FullFlushShutter, self).__unicode__(),
             self.shutterLevel, self.topToBottomReferenceTime, self.bottomToTopReferenceTime)
+
+    def set_shutter_level(self, level):
+        data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+
+    def stop(self):
+        data = {"channelIndex": 1, "deviceId": self.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
