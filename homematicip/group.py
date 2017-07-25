@@ -608,3 +608,31 @@ class SmokeAlarmDetectionRule(Group):
     def __unicode__(self):
         return u"{}: smokeDetectorAlarmType({})".format(
             super(SmokeAlarmDetectionRule, self).__unicode__(), self.smokeDetectorAlarmType)
+
+
+class ShutterWindProtectionRule(Group):
+    windSpeedThreshold = None
+    targetShutterLevel = None
+
+    def from_json(self, js, devices):
+        super(ShutterWindProtectionRule, self).from_json(js, devices)
+        self.windSpeedThreshold = js["windSpeedThreshold"]
+        self.targetShutterLevel = js["targetShutterLevel"]
+
+    def __unicode__(self):
+        return u"{}: windSpeedThreshold({}) targetShutterLevel({})".format(
+            super(ShutterWindProtectionRule, self).__unicode__(), self.windSpeedThreshold, self.targetShutterLevel)
+
+
+class LockOutProtectionRule(Group):
+    triggered = None
+    windowState = None
+
+    def from_json(self, js, devices):
+        super(LockOutProtectionRule, self).from_json(js, devices)
+        self.triggered = js["triggered"]
+        self.windowState = js["windowState"]
+
+    def __unicode__(self):
+        return u"{}: triggered({}) windowState({})".format(
+            super(LockOutProtectionRule, self).__unicode__(), self.triggered, self.windowState)
