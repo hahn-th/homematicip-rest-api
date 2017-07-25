@@ -67,6 +67,10 @@ def main():
     group = parser.add_argument_group("Group Settings")
     group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
     group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
+    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level",
+                       help="set all shutters in group to level (0..1)")
+    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop",
+                       help="stop all shutters in group", default=None)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -256,6 +260,14 @@ def main():
             for p in group.profiles:
                 isActive = p.id == group.activeProfile.id
                 print(u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive))
+
+        if args.group_shutter_level:
+            command_entered = True
+            group.set_shutter_level(args.group_shutter_level)
+
+        if args.group_shutter_stop:
+            command_entered = True
+            group.set_shutter_stop()
 
     if args.list_events:
         command_entered = True
