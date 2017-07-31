@@ -90,6 +90,7 @@ class SecurityGroup(Group):
         return u"{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(super(SecurityGroup, self).__unicode__(),
                                                    self.windowState, self.motionDetected, self.sabotage, self.smokeDetectorAlarmType)
 
+
 class SwitchingGroup(Group):
     on = None
     dimLevel = None
@@ -101,7 +102,7 @@ class SwitchingGroup(Group):
         super(SwitchingGroup, self).from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
-        try:#TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
+        try:  # TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
             self.processing = js["processing"]
             self.shutterLevel = js["shutterLevel"]
             self.slatsLevel = js["slatsLevel"]
@@ -109,18 +110,28 @@ class SwitchingGroup(Group):
             pass
 
     def set_switch_state(self, on=True):
-        data = { "groupId":self.id, "on":on }
+        data = {"groupId": self.id, "on": on}
         return self._restCall("group/switching/setState", body=json.dumps(data))
 
     def turn_on(self):
-        return self.set_state(True)
+        return self.set_switch_state(True)
 
     def turn_off(self):
-        return self.set_state(False)
+        return self.set_switch_state(False)
+
+    def set_shutter_level(self, level):
+        data = {"groupId": self.id, "shutterLevel": level}
+        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+
+    def set_shutter_stop(self):
+        data = {"groupId": self.id}
+        return self._restCall("group/switching/stop", body=json.dumps(data))
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(super(SwitchingGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.processing, self.shutterLevel,self.slatsLevel)
+        return u"{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(
+            super(SwitchingGroup, self).__unicode__(),
+            self.on, self.dimLevel, self.processing, self.shutterLevel, self.slatsLevel)
+
 
 class LinkedSwitchingGroup(SwitchingGroup):
     def set_light_group_switches(self, devices):
@@ -553,3 +564,75 @@ class SwitchingProfileGroup(Group):
         if "groupId" in result:
             self.id=result["groupId"]
         return result
+
+
+class OverHeatProtectionRule(Group):
+    temperatureLowerThreshold = None
+    temperatureUpperThreshold = None
+    targetShutterLevel = None
+    targetSlatsLevel = None
+    startHour = None
+    startMinute = None
+    startSunrise = None
+    endHour = None
+    endMinute = None
+    endSunset = None
+
+    def from_json(self, js, devices):
+        super(OverHeatProtectionRule, self).from_json(js, devices)
+        self.temperatureLowerThreshold = js["temperatureLowerThreshold"]
+        self.temperatureUpperThreshold = js["temperatureUpperThreshold"]
+        self.targetShutterLevel = js["targetShutterLevel"]
+        self.targetSlatsLevel = js["targetSlatsLevel"]
+        self.startHour = js["startHour"]
+        self.startMinute = js["startMinute"]
+        self.startSunrise = js["startSunrise"]
+        self.endHour = js["endHour"]
+        self.endMinute = js["endMinute"]
+        self.endSunset = js["endSunset"]
+
+    def __unicode__(self):
+        return u"{}: tempLower({}) tempUpper({}) targetShutterLevel({}) targetSlatsLevel({})".format(
+            super(OverHeatProtectionRule, self).__unicode__(),
+            self.temperatureLowerThreshold, self.temperatureUpperThreshold,
+            self.targetShutterLevel, self.targetSlatsLevel)
+
+
+class SmokeAlarmDetectionRule(Group):
+    smokeDetectorAlarmType = None
+
+    def from_json(self, js, devices):
+        super(SmokeAlarmDetectionRule, self).from_json(js, devices)
+        self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
+
+    def __unicode__(self):
+        return u"{}: smokeDetectorAlarmType({})".format(
+            super(SmokeAlarmDetectionRule, self).__unicode__(), self.smokeDetectorAlarmType)
+
+
+class ShutterWindProtectionRule(Group):
+    windSpeedThreshold = None
+    targetShutterLevel = None
+
+    def from_json(self, js, devices):
+        super(ShutterWindProtectionRule, self).from_json(js, devices)
+        self.windSpeedThreshold = js["windSpeedThreshold"]
+        self.targetShutterLevel = js["targetShutterLevel"]
+
+    def __unicode__(self):
+        return u"{}: windSpeedThreshold({}) targetShutterLevel({})".format(
+            super(ShutterWindProtectionRule, self).__unicode__(), self.windSpeedThreshold, self.targetShutterLevel)
+
+
+class LockOutProtectionRule(Group):
+    triggered = None
+    windowState = None
+
+    def from_json(self, js, devices):
+        super(LockOutProtectionRule, self).from_json(js, devices)
+        self.triggered = js["triggered"]
+        self.windowState = js["windowState"]
+
+    def __unicode__(self):
+        return u"{}: triggered({}) windowState({})".format(
+            super(LockOutProtectionRule, self).__unicode__(), self.triggered, self.windowState)

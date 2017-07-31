@@ -34,8 +34,9 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
 - [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
 - [X] HMIP-ASIR (Alarm Siren)
-- [X] HMIP-KRCA (Key Ring Remote Control – alarm)
+- [X] HMIP-KRCA (Key Ring Remote Control & alarm)
 - [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
+- [X] HMIP-FROLL (Shutter Actuator - flush-mount)
 
 ## Groups ##
 - [X] Meta (Rooms)
@@ -55,6 +56,10 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HEATING_EXTERNAL_CLOCK
 - [X] HEATING_COOLING_DEMAND_BOILER 
 - [X] HEATING_COOLING_DEMAND_PUMP
+- [X] OVER_HEAT_PROTECTION_RULE
+- [X] SMOKE_ALARM_DETECTION_RULE
+- [X] LOCK_OUT_PROTECTION_RULE
+- [X] SHUTTER_WIND_PROTECTION_RULE
 
 ## Events ##
 It's also possible to use push notifications based on a websocket connection
@@ -113,6 +118,8 @@ home.disable_events()
 - [X] setClimateControlDisplay
 - [X] setDeviceLabel
 - [X] setSwitchState (turn on/off)
+- [X] setShutterLevel
+- [X] setShutterStop
 
 ### Alarm ###
 - [X] testSignalOptical

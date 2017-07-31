@@ -315,3 +315,34 @@ class KeyRemoteControlAlarm(Device):
 
     def __unicode__(self):
         return u"{}".format(super(KeyRemoteControlAlarm, self).__unicode__())
+
+
+class FullFlushShutter(Device):
+    """ HMIP-FROLL (Shutter Actuator - flush-mount) """
+
+    shutterLevel = None
+    bottomToTopReferenceTime = None
+    topToBottomReferenceTime = None
+
+    def from_json(self, js):
+        super(FullFlushShutter, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "SHUTTER_CHANNEL":
+                self.shutterLevel = c["shutterLevel"]
+                self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
+                self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+
+    def __unicode__(self):
+        return u"{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
+            super(FullFlushShutter, self).__unicode__(),
+            self.shutterLevel, self.topToBottomReferenceTime, self.bottomToTopReferenceTime)
+
+    def set_shutter_level(self, level):
+        data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+
+    def set_shutter_stop(self):
+        data = {"channelIndex": 1, "deviceId": self.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
