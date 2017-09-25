@@ -16,9 +16,9 @@ class Device(HomeIPObject.HomeMaticIPobject, device.Device):
 
     @asyncio.coroutine
     def set_label(self, label):
-        url,data = super().set_label(label)
+        url, data = super().set_label(label)
 
-        _val = yield from self._apiCall(url,data)
+        _val = yield from self._apiCall(url, data)
         return _val
 
     @asyncio.coroutine
@@ -150,7 +150,6 @@ class PlugableSwitch(HomeIPObject.HomeMaticIPobject, device.PlugableSwitch):
     def set_switch_state(self, on=True):
         url, data = super().set_switch_state(on)
         _val = yield from self._apiCall(url, data)
-
         return _val
 
     @asyncio.coroutine

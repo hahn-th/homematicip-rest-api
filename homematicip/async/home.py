@@ -40,9 +40,10 @@ CONNECTED = "connected"
 LOCATION = "location"
 WEATHER = "weather"
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
 
-# _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat,
+
+# c = {"HEATING_THERMOSTAT": HeatingThermostat,
 #                  "SHUTTER_CONTACT": ShutterContact,
 #                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro,
 #                  "SMOKE_DETECTOR": SmokeDetector,
@@ -140,33 +141,6 @@ class Client(HomeIPObject.HomeMaticIPobject):
         self.label = js["label"]
         self.homeId = js["homeId"]
 
-        # def __unicode__(self):
-        #     return u"label({})".format(self.label)
-
-
-
-
-
-# websocket implementation
-
-# session = aiohttp.ClientSession()
-# ws = await session.ws_connect(
-#     'http://webscoket-server.org/endpoint')
-#
-# while True:
-#     msg = await ws.receive()
-#
-#     if msg.tp == aiohttp.MsgType.text:
-#         if msg.data == 'close':
-#            await ws.close()
-#            break
-#         else:
-#            ws.send_str(msg.data + '/answer')
-#     elif msg.tp == aiohttp.MsgType.closed:
-#         break
-#     elif msg.tp == aiohttp.MsgType.error:
-#         break
-
 
 class Home(HomeIPObject.HomeMaticIPobject, home.Home):
     """this class represents the 'Home' of the homematic ip"""
@@ -187,7 +161,7 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
                 msg = yield from ws.receive()
                 if msg.tp == aiohttp.WSMsgType.BINARY:
                     js = json.loads(msg.data)
-                    logger.debug("incomgin: {}".format(js))
+                    LOGGER.debug("incoming: {}".format(js))
                     eventList = []
                     try:
                         for eID in js["events"]:
@@ -195,7 +169,7 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
                             pushEventType = event["pushEventType"]
                             obj = None
                             if pushEventType == "GROUP_CHANGED":
-                                logger.debug(pushEventType)
+                                LOGGER.debug(pushEventType)
                                 # data = event["group"]
                                 # obj = self.search_group_by_id(data["id"])
                                 # obj.from_json(data, self.devices)
@@ -240,31 +214,31 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
 
                             # TODO: implement INCLUSION_REQUESTED, NONE
                             else:
-                                logger.warning(
+                                LOGGER.warning(
                                     "Uknown EventType '{}' Data: {}".format(
                                         pushEventType, event))
                             eventList.append(
                                 {"eventType": pushEventType, "data": obj})
                     except Exception as e:
-                        logger.exception(e)
-                        # logger.error("Unexpected error: {}".format(sys.exc_info()[0]))
+                        LOGGER.exception(e)
+                        # LOGGER.error("Unexpected error: {}".format(sys.exc_info()[0]))
 
 
                 elif msg.tp == aiohttp.WSMsgType.CLOSED:
-                    logger.warning("websocket connection closed")
+                    LOGGER.warning("websocket connection closed")
                     break
                 elif msg.tp == aiohttp.WSMsgType.ERROR:
-                    logger.warning("websocket connection error")
+                    LOGGER.warning("websocket connection error")
                     break
         except Exception as e:
-            logger.exception(e)
+            LOGGER.exception(e)
 
     async def get_current_state(self):
         json_state = await self._apiCall(
             URL_GET_CURRENT_STATE,
             json.dumps(self._connection.client_characteristics))
         if ERROR_CODE in json_state:
-            logger.error(
+            LOGGER.error(
                 "Could not get the current configuration. Error: {}".format(
                     json_state[ERROR_CODE]))
             return False
@@ -275,37 +249,9 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
 
         self.devices = self._get_devices(json_state)
         self.clients = self._get_clients(json_state)
-        # self.groups = self._get_groups(json_state)
+        self.groups = self._get_groups(json_state)
 
         return True
-
-
-    # def _get_groups(self, json_state):
-    #     ret = []
-    #     data = json_state
-    #     metaGroups = []
-    #     for k in data[GROUPS]:
-    #         group = data[GROUPS][k]
-    #         groupType = group[TYPE]
-    #         if groupType in _typeGroupMap:
-    #             g = _typeGroupMap[groupType]()
-    #             g.from_json(group, self.devices)
-    #             ret.append(g)
-    #         elif groupType == "META":
-    #             metaGroups.append(group)
-    #         else:
-    #             g = Group()
-    #             g.from_json(group, self.devices)
-    #             ret.append(g)
-    #             logger.warning(
-    #                 "There is no class for {} yet".format(groupType))
-    #
-    #     for mg in metaGroups:
-    #         g = MetaGroup()
-    #         g.from_json(mg, self.devices, ret)
-    #         ret.append(g)
-    #     return ret
-
 
     # def set_security_zones_activation(self, internal=True, external=True):
     #     data = {
@@ -345,17 +291,9 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
     # def deactivate_vacation(self):
     #     return self._restCall("home/heating/deactivateVacation")
     #
-    # def set_pin(self, newPin, oldPin=None):
-    #     if newPin == None:
-    #         newPin = ""
-    #     data = {"pin": newPin}
-    #     if oldPin:
-    #         self.headers["PIN"] = oldPin
-    #     result = self._restCall('home/setPin', body=json.dumps(data))
-    #     if oldPin:
-    #         del self.headers["PIN"]
-    #     return result
-    #
+    def set_pin(self, newPin, oldPin=None):
+        LOGGER.warning('Not implemented')
+
     # def set_zone_activation_delay(self, delay):
     #     data = {"zoneActivationDelay": delay}
     #     return self._restCall("home/security/setZoneActivationDelay",
@@ -364,7 +302,7 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
     # async def get_security_journal(self):
     #     journal = await self._restCall("home/security/getSecurityJournal")
     #     if "errorCode" in journal:
-    #         logger.error(
+    #         LOGGER.error(
     #             "Could not get the security journal. Error: {}".format(
     #                 journal["errorCode"]))
     #         return None
@@ -379,7 +317,7 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
     #             j = SecurityEvent()
     #             j.from_json(entry)
     #             ret.append(j)
-    #             logger.warning("There is no class for {} yet".format(eventType))
+    #             LOGGER.warning("There is no class for {} yet".format(eventType))
     #     return ret
 
     # def delete_group(self, group):
@@ -391,28 +329,24 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
         token.from_json(await self._apiCall("home/getOAuthOTK"))
         return token
 
-    # def set_timezone(self, timezone):
-    #     """ sets the timezone for the AP. e.g. "Europe/Berlin" """
-    #     data = {"timezoneId": timezone}
-    #     return self._restCall("home/setTimezone", body=json.dumps(data))
+    def set_timezone(self, timezone):
+        """ sets the timezone for the AP. e.g. "Europe/Berlin" """
+        url, data = super().set_timezone(timezone)
+        return self._apiCall(url, data)
 
     async def set_powermeter_unit_price(self, price):
-        data = {"powerMeterUnitPrice": price}
-        return await self._restCall("home/setPowerMeterUnitPrice",
-                                    body=json.dumps(data))
+        url, data = super().set_powermeter_unit_price(price)
 
+        return await self._apiCall(url, data)
 
     async def set_zones_device_assignment(self, internal_devices,
                                           external_devices):
         """ sets the devices for the security zones
-        :param internal_devices the devices which should be used for the internal zone
-        :param external_devices the devices which should be used for the external(hull) zone
-        :return the result of _restCall
-        """
-        internal = [x.id for x in internal_devices]
-        external = [x.id for x in external_devices]
-        data = {"zonesDeviceAssignment": {"INTERNAL": internal,
-                                          "EXTERNAL": external}}
-        return await self._restCall("home/security/setZonesDeviceAssignment",
-                                    body=json.dumps(data))
+                :param internal_devices the devices which should be used for the internal zone
+                :param external_devices the devices which should be used for the external(hull) zone
+                :return the result of _restCall
+                """
+        url, data = super().set_zones_device_assignment(internal_devices,
+                                                        external_devices)
 
+        return await self._apiCall(url, data)
