@@ -23,9 +23,11 @@ class HomeMaticIPobject:
         self._connection = connection
         self._websession = connection.websession
 
+    def _restCall(self, path, body=None):
+        return path, body
 
     @asyncio.coroutine
-    def _restCall(self, path, body=None):
+    def _apiCall(self, path, body=None):
         result = None
         requestPath = '{}/hmip/{}'.format(self._connection.urlREST, path)
         logger.debug("_restcall path({}) body({})".format(requestPath, body))
