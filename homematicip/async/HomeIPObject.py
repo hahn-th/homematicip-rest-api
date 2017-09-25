@@ -23,6 +23,7 @@ class HomeMaticIPobject:
         self._connection = connection
         self._websession = connection.websession
 
+
     @asyncio.coroutine
     def _restCall(self, path, body=None):
         result = None
@@ -69,11 +70,11 @@ class HomeMaticIPobject:
     def from_json(self, js):
         pass
 
-        # def __repr__(self):
-        #     return "id({}) {}".format(self.id, self.__str__())
+    def __repr__(self):
+        return "id({}) {}".format(self.id, self.__str__())
 
-        # def __unicode__(self):
-        #     return u'id({})'.format(self.id)
+    def __str__(self):
+        return u'id({})'.format(self.id)
 
         # def __str__(self):
         #     if sys.version_info >= (3, 0):

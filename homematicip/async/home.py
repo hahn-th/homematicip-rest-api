@@ -22,7 +22,6 @@ GROUPS = "groups"
 URL_GET_CURRENT_STATE = 'home/getCurrentState'
 URL_HOME_SET_LOCATION = "home/setLocation"
 CLIENTS = "clients"
-TYPE = "type"
 DEVICES = "devices"
 ERROR_CODE = "errorCode"
 ID = "id"
@@ -142,8 +141,8 @@ class Client(HomeIPObject.HomeMaticIPobject):
         self.label = js["label"]
         self.homeId = js["homeId"]
 
-    def __unicode__(self):
-        return u"label({})".format(self.label)
+    # def __unicode__(self):
+    #     return u"label({})".format(self.label)
 
 
 class OAuthOTK(HomeIPObject.HomeMaticIPobject):

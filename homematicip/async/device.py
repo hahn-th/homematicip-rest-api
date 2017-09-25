@@ -9,6 +9,8 @@ from homematicip.async import HomeIPObject
 ERROR_CODE = "errorCode"
 
 
+
+
 class Device(HomeIPObject.HomeMaticIPobject):
     """ this class represents a generic homematic ip device """
     id = None
@@ -95,6 +97,11 @@ class Device(HomeIPObject.HomeMaticIPobject):
             return True
         else:
             return result[ERROR_CODE]
+
+    def __repr__(self):
+        return u"{} {} lowbat({}) unreach({})".format(self.deviceType,
+                                                      self.label, self.lowBat,
+                                                      self.unreach)
 
 
 class SabotageDevice(Device):
@@ -319,9 +326,9 @@ class PlugableSwitch(Device):
             if type == "SWITCH_CHANNEL":
                 self.on = c["on"]
 
-    # def __unicode__(self):
-    #     return u"{}: on({})".format(super(PlugableSwitch, self).__unicode__(),
-    #                                 self.on)
+    def __repr__(self):
+        return u"{}: on({})".format(super().__repr__(),
+                                    self.on)
 
     @asyncio.coroutine
     def set_switch_state(self, on=True):
@@ -350,7 +357,7 @@ class PlugableSwitchMeasuring(PlugableSwitch):
         super().__init__(connection)
 
     def from_json(self, js):
-        super(PlugableSwitchMeasuring, self).from_json(js)
+        super().from_json(js)
         for cid in js["functionalChannels"]:
             c = js["functionalChannels"][cid]
             type = c["functionalChannelType"]
@@ -359,10 +366,10 @@ class PlugableSwitchMeasuring(PlugableSwitch):
                 self.energyCounter = c["energyCounter"]
                 self.currentPowerConsumption = c["currentPowerConsumption"]
 
-                # def __unicode__(self):
-                #     return u"{} energyCounter({}) currentPowerConsumption({}W)".format(
-                #         super(PlugableSwitchMeasuring, self).__unicode__()
-                #         , self.energyCounter, self.currentPowerConsumption)
+    def __repr__(self):
+        return u"{} energyCounter({}) currentPowerConsumption({}W)".format(
+            super().__repr__()
+            , self.energyCounter, self.currentPowerConsumption)
 
 
 class PushButton(Device):
