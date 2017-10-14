@@ -4,14 +4,12 @@ import logging
 import asyncio
 import aiohttp
 
-from datetime import datetime
 from homematicip.async import HomeIPObject
 from homematicip.async.connection import Connection
-from homematicip.async.device import HeatingThermostat, ShutterContact, \
-    WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, \
-    PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
-    AlarmSirenIndoor, MotionDetectorIndoor, KeyRemoteControlAlarm, \
-    PlugableSwitch, FullFlushShutter, Device
+
+from asyncio.futures import CancelledError
+
+from homematicip.async import device
 
 from homematicip import home
 from homematicip.home import OAuthOTK
@@ -42,48 +40,19 @@ WEATHER = "weather"
 
 LOGGER = logging.getLogger(__name__)
 
-
-# c = {"HEATING_THERMOSTAT": HeatingThermostat,
-#                  "SHUTTER_CONTACT": ShutterContact,
-#                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro,
-#                  "SMOKE_DETECTOR": SmokeDetector,
-#                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6,
-#                  "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
-#                  "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay,
-#                  "PUSH_BUTTON": PushButton,
-#                  "ALARM_SIREN_INDOOR": AlarmSirenIndoor,
-#                  "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
-#                  "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm,
-#                  "PLUGABLE_SWITCH": PlugableSwitch,
-#                  "FULL_FLUSH_SHUTTER": FullFlushShutter}
-
-
-# _typeGroupMap = {"SECURITY": SecurityGroup, "SWITCHING": SwitchingGroup,
-#                  "EXTENDED_LINKED_SWITCHING": ExtendedLinkedSwitchingGroup
-#     , "LINKED_SWITCHING": LinkedSwitchingGroup,
-#                  "ALARM_SWITCHING": AlarmSwitchingGroup,
-#                  "HEATING_HUMIDITY_LIMITER": HeatingHumidyLimiterGroup
-#     , "HEATING_TEMPERATURE_LIMITER": HeatingTemperatureLimiterGroup,
-#                  "HEATING_CHANGEOVER": HeatingChangeoverGroup,
-#                  "INBOX": InboxGroup
-#     , "SECURITY_ZONE": SecurityZoneGroup, "HEATING": HeatingGroup,
-#                  "HEATING_COOLING_DEMAND": HeatingCoolingDemandGroup
-#     , "HEATING_EXTERNAL_CLOCK": HeatingExternalClockGroup,
-#                  "HEATING_DEHUMIDIFIER": HeatingDehumidifierGroup
-#     , "HEATING_COOLING_DEMAND_BOILER": HeatingCoolingDemandBoilerGroup,
-#                  "HEATING_COOLING_DEMAND_PUMP": HeatingCoolingDemandPumpGroup
-#     , "SWITCHING_PROFILE": SwitchingProfileGroup,
-#                  "OVER_HEAT_PROTECTION_RULE": OverHeatProtectionRule,
-#                  "SMOKE_ALARM_DETECTION_RULE": SmokeAlarmDetectionRule,
-#                  "LOCK_OUT_PROTECTION_RULE": LockOutProtectionRule,
-#                  "SHUTTER_WIND_PROTECTION_RULE": ShutterWindProtectionRule}
-#
-# _typeSecurityEventMap = {"SILENCE_CHANGED": SilenceChangedEvent,
-#                          "ACTIVATION_CHANGED": ActivationChangedEvent,
-#                          "ACCESS_POINT_CONNECTED": AccessPointConnectedEvent,
-#                          "ACCESS_POINT_DISCONNECTED": AccessPointDisconnectedEvent,
-#                          "SENSOR_EVENT": SensorEvent}
-
+_typeClassMap = {"HEATING_THERMOSTAT": device.HeatingThermostat,
+                 "SHUTTER_CONTACT": device.ShutterContact,
+                 "WALL_MOUNTED_THERMOSTAT_PRO": device.WallMountedThermostatPro,
+                 "SMOKE_DETECTOR": device.SmokeDetector,
+                 "FLOOR_TERMINAL_BLOCK_6": device.FloorTerminalBlock6,
+                 "PLUGABLE_SWITCH_MEASURING": device.PlugableSwitchMeasuring,
+                 "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": device.TemperatureHumiditySensorDisplay,
+                 "PUSH_BUTTON": device.PushButton,
+                 "ALARM_SIREN_INDOOR": device.AlarmSirenIndoor,
+                 "MOTION_DETECTOR_INDOOR": device.MotionDetectorIndoor,
+                 "KEY_REMOTE_CONTROL_ALARM": device.KeyRemoteControlAlarm,
+                 "PLUGABLE_SWITCH": device.PlugableSwitch,
+                 "FULL_FLUSH_SHUTTER": device.FullFlushShutter}
 
 class Weather(HomeIPObject.HomeMaticIPobject):
     temperature = 0.0
@@ -147,111 +116,68 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
 
     def __init__(self, connection: Connection):
         super().__init__(connection)
-        self._connection._loop.create_task(self.websocket())
 
-    @asyncio.coroutine
-    def websocket(self):
-        try:
-            ws = yield from self._connection.websession.ws_connect(
-                self._connection.urlWebSocket,
-                headers={'AUTHTOKEN': self._connection.auth_token,
-                         'CLIENTAUTH': self._connection.clientauth_token}
-            )
-            while True:
-                msg = yield from ws.receive()
-                if msg.tp == aiohttp.WSMsgType.BINARY:
-                    js = json.loads(msg.data)
-                    LOGGER.debug("incoming: {}".format(js))
-                    eventList = []
-                    try:
-                        for eID in js["events"]:
-                            event = js["events"][eID]
-                            pushEventType = event["pushEventType"]
-                            obj = None
-                            if pushEventType == "GROUP_CHANGED":
-                                LOGGER.debug(pushEventType)
-                                # data = event["group"]
-                                # obj = self.search_group_by_id(data["id"])
-                                # obj.from_json(data, self.devices)
-                            elif pushEventType == "HOME_CHANGED":
-                                data = event["home"]
-                                obj = self
-                                obj.from_json(data)
-                            # elif pushEventType == "CLIENT_ADDED":
-                            #     data = event["client"]
-                            #     obj = Client()
-                            #     obj.from_json(data)
-                            #     self.clients.append(obj)
-                            elif pushEventType == "CLIENT_CHANGED":
-                                data = event["client"]
-                                obj = self.search_client_by_id(data["id"])
-                                obj.from_json(data)
-                            elif pushEventType == "CLIENT_REMOVED":
-                                obj = self.search_client_by_id(event["id"])
-                                self.clients.remove(obj)
-                            # elif pushEventType == "DEVICE_ADDED":
-                            #     data = event["device"]
-                            #     obj = Device()  # TODO:implement typecheck
-                            #     obj.from_json(data)
-                            #     self.devices.append(obj)
-                            elif pushEventType == "DEVICE_CHANGED":
-                                data = event["device"]
-                                obj = self.search_device_by_id(data["id"])
-                                obj.from_json(data)
-                            elif pushEventType == "DEVICE_REMOVED":
-                                obj = self.search_device_by_id(event["id"])
-                                self.devices.remove(obj)
-                            # elif pushEventType == "GROUP_REMOVED":
-                            #     obj = self.search_group_by_id(event["id"])
-                            #     self.groups.remove(obj)
-                            # elif pushEventType == "GROUP_ADDED":
-                            #     data = event["group"]
-                            #     obj=Group() #TODO:implement typecheck
-                            #     obj.from_json(data)
-                            #     self.groups.append(obj)
-                            elif pushEventType == "SECURITY_JOURNAL_CHANGED":
-                                pass  # data is just none so nothing to do here
+        
+    def from_json(self, js):
+        home.Home.from_json(self, js)
 
-                            # TODO: implement INCLUSION_REQUESTED, NONE
-                            else:
-                                LOGGER.warning(
-                                    "Uknown EventType '{}' Data: {}".format(
-                                        pushEventType, event))
-                            eventList.append(
-                                {"eventType": pushEventType, "data": obj})
-                    except Exception as e:
-                        LOGGER.exception(e)
-                        # LOGGER.error("Unexpected error: {}".format(sys.exc_info()[0]))
+    def start_incoming_websocket_data(self):
+        """Starts listening for incoming websocket data."""
+        self._connection.listen_for_websocket_data(
+            self._parse_incoming_socket_data)
 
+    def stop_incoming_websocket_data(self):
+        """Stops listening for incoming websocket data."""
+        self._connection.close_websocket_connection()
 
-                elif msg.tp == aiohttp.WSMsgType.CLOSED:
-                    LOGGER.warning("websocket connection closed")
-                    break
-                elif msg.tp == aiohttp.WSMsgType.ERROR:
-                    LOGGER.warning("websocket connection error")
-                    break
-        except Exception as e:
-            LOGGER.exception(e)
+    def _parse_incoming_socket_data(self, js):
+        for eID in js["events"]:
+            event = js["events"][eID]
+            pushEventType = event["pushEventType"]
+            obj = None
+            if pushEventType == "DEVICE_CHANGED":
+                data = event["device"]
+                obj = self.search_device_by_id(data["id"])
+                if obj:
+                    obj.from_json(data)
+            else:
+                LOGGER.warning(
+                    "Uknown EventType '{}' Data: {}".format(
+                        pushEventType, event))
+
 
     async def get_current_state(self):
-        json_state = await self._apiCall(
+        json_state = await self._connection._apiCall(
             URL_GET_CURRENT_STATE,
             json.dumps(self._connection.client_characteristics))
-        if ERROR_CODE in json_state:
-            LOGGER.error(
-                "Could not get the current configuration. Error: {}".format(
-                    json_state[ERROR_CODE]))
-            return False
 
         js_home = json_state[HOME]
 
         self.from_json(js_home)
 
         self.devices = self._get_devices(json_state)
-        self.clients = self._get_clients(json_state)
-        self.groups = self._get_groups(json_state)
+        # self.clients = self._get_clients(json_state)
+        # self.groups = self._get_groups(json_state)
 
         return True
+
+    def _get_devices(self, json_state):
+        ret = []
+        data = json_state
+        for k in data["devices"]:
+            _device = data["devices"][k]
+            deviceType = _device["type"]
+            if deviceType in _typeClassMap:
+                d = _typeClassMap[deviceType](self._connection)
+                d.from_json(_device)
+                ret.append(d)
+            else:
+                d = device.Device(self._connection)
+                d.from_json(_device)
+                ret.append(d)
+                LOGGER.warning(
+                    "There is no class for {} yet".format(deviceType))
+        return ret
 
     # def set_security_zones_activation(self, internal=True, external=True):
     #     data = {
@@ -326,18 +252,18 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
 
     async def get_OAuth_OTK(self):
         token = OAuthOTK()
-        token.from_json(await self._apiCall("home/getOAuthOTK"))
+        token.from_json(await self._connection._apiCall("home/getOAuthOTK"))
         return token
 
     def set_timezone(self, timezone):
         """ sets the timezone for the AP. e.g. "Europe/Berlin" """
         url, data = super().set_timezone(timezone)
-        return self._apiCall(url, data)
+        return self._connection._apiCall(url, data)
 
     async def set_powermeter_unit_price(self, price):
         url, data = super().set_powermeter_unit_price(price)
 
-        return await self._apiCall(url, data)
+        return await self._connection._apiCall(url, data)
 
     async def set_zones_device_assignment(self, internal_devices,
                                           external_devices):
@@ -349,4 +275,4 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
         url, data = super().set_zones_device_assignment(internal_devices,
                                                         external_devices)
 
-        return await self._apiCall(url, data)
+        return await self._connection._apiCall(url, data)

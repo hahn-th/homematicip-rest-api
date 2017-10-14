@@ -1,14 +1,14 @@
 import asyncio
 from pprint import pprint
 
+
 class Test():
     def go(self):
         print("blocking gone")
 
 
 class AsyncTest1(Test):
-    @asyncio.coroutine
-    def go(self):
+    async def go(self):
         print("async gone using generator")
 
 
@@ -22,19 +22,18 @@ class A:
         print("A")
 
 
-class B(A):
-    def go1(self):
-        self.go()
-
-
-class C:
+class B:
     def go(self):
-        print('C')
+        print("B")
 
 
-class K(C,B):
-    def go2(self):
-        self.go1()
+class C(A):
+    pass
+
+
+class K(C, B):
+    def go(self):
+        super().go()
 
 
 if __name__ == "__main__":
@@ -50,5 +49,5 @@ if __name__ == "__main__":
     # loop.run_until_complete(tst.go())
 
     k = K()
-    k.go2()
+    k.go()
     pprint(K.__mro__)

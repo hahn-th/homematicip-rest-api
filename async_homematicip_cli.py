@@ -128,8 +128,7 @@ def get_arg_parser():
                        help="stop all shutters in group", default=None)
     return parser
 
-@asyncio.coroutine
-def main(loop):
+async def main(loop):
     parser = get_arg_parser()
 
     # if len(sys.argv) == 1:
@@ -139,22 +138,21 @@ def main(loop):
     # args = parser.parse_args()
     #
     # logger.setLevel(args.debug_level)
-    connection = Connection(loop, config.AUTH_TOKEN)
-    yield from connection.init(config.ACCESS_POINT)
+    connection = Connection(loop, config.AUTH_TOKEN,config.ACCESS_POINT)
+    #await connection.init(config.ACCESS_POINT)
+    await connection.init()
     # await homematicip.async_init(config.ACCESS_POINT, websession)
     # homematicip.set_auth_token(config.AUTH_TOKEN)
 
     home = Home(connection)
-    _val = yield from home.get_current_state()
-    if not _val:
-        return
-
-    sortedDevices = sorted(home.devices,
-                           key=attrgetter('deviceType', 'label'))
-    for d in sortedDevices:
+    _val =await home.get_current_state()
+    home.start_incoming_websocket_data()
+    # sortedDevices = sorted(home.devices,
+    #                        key=attrgetter('deviceType', 'label'))
+    for d in home.devices:
         print('{} {} {}'.format(d.id, d.label, str(d)))
-
-    switch = home.search_device_by_id('3014F711A00001D7098DA081')
+    #
+    # switch = home.search_device_by_id('3014F711A00001D7098DA081')
     # yield from switch.turn_off()
     # yield from asyncio.sleep(5)
     # yield from switch.turn_on()
