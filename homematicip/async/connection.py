@@ -66,8 +66,9 @@ class Connection:
         self._socket_task = self._loop.create_task(
             self._listen_for_incoming_websocket_data(incoming_parser))
 
-    async def _connect_to_websocket(self):
-        self.socket_connection = await self._websession.ws_connect(
+    @asyncio.coroutine
+    def _connect_to_websocket(self):
+        self.socket_connection = yield from self._websession.ws_connect(
             self._urlWebSocket,
             headers={'AUTHTOKEN': self._auth_token,
                      'CLIENTAUTH': self._clientauth_token},
@@ -78,7 +79,8 @@ class Connection:
     def close_websocket_connection(self):
         self._socket_task.cancel()
 
-    async def _listen_for_incoming_websocket_data(self, incoming_parser):
+    @asyncio.coroutine
+    def _listen_for_incoming_websocket_data(self, incoming_parser):
         """Creates a websocket connection, listens for incoming data and
         uses the incoming parser to parse the incoming data.
         """
@@ -88,14 +90,14 @@ class Connection:
                 _connection_try = 0
                 while _connection_try < WEBSOCKET_RETRIES:
                     try:
-                        await self._connect_to_websocket()
+                        yield from self._connect_to_websocket()
                         break
                     except TimeoutError:
                         _LOGGER.info(
                             'websocket connection timed-out. retry %s'
                             % _connection_try)
                     _connection_try += 1
-                    await asyncio.sleep(_connection_try ** 2)
+                    yield from asyncio.sleep(_connection_try ** 2)
                 else:
                     # exit while loop without break. Raising error.
                     raise ConnectionError(
@@ -104,16 +106,22 @@ class Connection:
                 _LOGGER.info('Connected to HMIP websocket.')
                 try:
                     while not self.socket_connection.closed:
-                        msg = await self.socket_connection.receive()
+                        msg = yield from self.socket_connection.receive()
                         if msg.tp == aiohttp.WSMsgType.BINARY:
                             js = json.loads(str(msg.data, 'utf-8'))
                             _LOGGER.debug("incoming: {}".format(js))
                             incoming_parser(js)
-                except Exception as e:
+                        elif msg.tp == aiohttp.WSMsgType.CLOSE:
+                            break
+                except KeyError as e:
                     _LOGGER.exception(e)
+                _LOGGER.info("Socket connection closed. Retry in 5 seconds.")
+                yield from asyncio.sleep(5)
         except CancelledError:
             _LOGGER.debug('stopping websocket incoming listener')
-            self._loop.create_task(self.socket_connection.close())
+        finally:
+            self._websession.close()
+            #self._loop.create_task(self.socket_connection.close())
 
     def full_url(self, partial_url):
         return '{}/hmip/{}'.format(self._urlREST, partial_url)

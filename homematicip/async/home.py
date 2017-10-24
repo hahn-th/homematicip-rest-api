@@ -1,13 +1,9 @@
 # coding=utf-8
 import json
 import logging
-import asyncio
-import aiohttp
 
 from homematicip.async import HomeIPObject
 from homematicip.async.connection import Connection
-
-from asyncio.futures import CancelledError
 
 from homematicip.async import device
 
@@ -40,19 +36,19 @@ WEATHER = "weather"
 
 LOGGER = logging.getLogger(__name__)
 
-_typeClassMap = {"HEATING_THERMOSTAT": device.HeatingThermostat,
-                 "SHUTTER_CONTACT": device.ShutterContact,
-                 "WALL_MOUNTED_THERMOSTAT_PRO": device.WallMountedThermostatPro,
-                 "SMOKE_DETECTOR": device.SmokeDetector,
-                 "FLOOR_TERMINAL_BLOCK_6": device.FloorTerminalBlock6,
-                 "PLUGABLE_SWITCH_MEASURING": device.PlugableSwitchMeasuring,
-                 "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": device.TemperatureHumiditySensorDisplay,
-                 "PUSH_BUTTON": device.PushButton,
-                 "ALARM_SIREN_INDOOR": device.AlarmSirenIndoor,
-                 "MOTION_DETECTOR_INDOOR": device.MotionDetectorIndoor,
-                 "KEY_REMOTE_CONTROL_ALARM": device.KeyRemoteControlAlarm,
-                 "PLUGABLE_SWITCH": device.PlugableSwitch,
-                 "FULL_FLUSH_SHUTTER": device.FullFlushShutter}
+_typeClassMap = {'HEATING_THERMOSTAT': device.HeatingThermostat,
+                 'SHUTTER_CONTACT': device.ShutterContact,
+                 'WALL_MOUNTED_THERMOSTAT_PRO': device.WallMountedThermostatPro,
+                 'SMOKE_DETECTOR': device.SmokeDetector,
+                 'FLOOR_TERMINAL_BLOCK_6': device.FloorTerminalBlock6,
+                 'PLUGABLE_SWITCH_MEASURING': device.PlugableSwitchMeasuring,
+                 'TEMPERATURE_HUMIDITY_SENSOR_DISPLAY': device.TemperatureHumiditySensorDisplay,
+                 'PUSH_BUTTON': device.PushButton,
+                 'ALARM_SIREN_INDOOR': device.AlarmSirenIndoor,
+                 'MOTION_DETECTOR_INDOOR': device.MotionDetectorIndoor,
+                 'KEY_REMOTE_CONTROL_ALARM': device.KeyRemoteControlAlarm,
+                 'PLUGABLE_SWITCH': device.PlugableSwitch,
+                 'FULL_FLUSH_SHUTTER': device.FullFlushShutter}
 
 class Weather(HomeIPObject.HomeMaticIPobject):
     temperature = 0.0
@@ -156,8 +152,6 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
         self.from_json(js_home)
 
         self.devices = self._get_devices(json_state)
-        # self.clients = self._get_clients(json_state)
-        # self.groups = self._get_groups(json_state)
 
         return True
 
@@ -179,76 +173,9 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
                     "There is no class for {} yet".format(deviceType))
         return ret
 
-    # def set_security_zones_activation(self, internal=True, external=True):
-    #     data = {
-    #         "zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
-    #     return self._restCall("home/security/setZonesActivation",
-    #                           json.dumps(data))
-    #
-    # def set_location(self, city, latitude, longitude):
-    #     data = {"city": city, "latitude": latitude, "longitude": longitude}
-    #     return self._restCall(URL_HOME_SET_LOCATION, json.dumps(data))
-    #
-    # def set_intrusion_alert_through_smoke_detectors(self, activate=True):
-    #     data = {"intrusionAlertThroughSmokeDetectors": activate}
-    #     return self._restCall(
-    #         "home/security/setIntrusionAlertThroughSmokeDetectors",
-    #         json.dumps(data))
 
-    # def activate_absence_with_period(self, endtime):
-    #     data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
-    #     return self._restCall("home/heating/activateAbsenceWithPeriod",
-    #                           json.dumps(data))
-    #
-    # def activate_absence_with_duration(self, duration):
-    #     data = {"duration": duration}
-    #     return self._restCall("home/heating/activateAbsenceWithDuration",
-    #                           json.dumps(data))
-    #
-    # def deactivate_absence(self):
-    #     return self._restCall("home/heating/deactivateAbsence")
-    #
-    # def activate_vacation(self, endtime, temperature):
-    #     data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M"),
-    #             "temperature": temperature}
-    #     return self._restCall("home/heating/activateVacation",
-    #                           json.dumps(data))
-    #
-    # def deactivate_vacation(self):
-    #     return self._restCall("home/heating/deactivateVacation")
-    #
     def set_pin(self, newPin, oldPin=None):
-        LOGGER.warning('Not implemented')
-
-    # def set_zone_activation_delay(self, delay):
-    #     data = {"zoneActivationDelay": delay}
-    #     return self._restCall("home/security/setZoneActivationDelay",
-    #                           body=json.dumps(data))
-
-    # async def get_security_journal(self):
-    #     journal = await self._restCall("home/security/getSecurityJournal")
-    #     if "errorCode" in journal:
-    #         LOGGER.error(
-    #             "Could not get the security journal. Error: {}".format(
-    #                 journal["errorCode"]))
-    #         return None
-    #     ret = []
-    #     for entry in journal["entries"]:
-    #         eventType = entry["eventType"]
-    #         if eventType in _typeSecurityEventMap:
-    #             j = _typeSecurityEventMap[eventType]()
-    #             j.from_json(entry)
-    #             ret.append(j)
-    #         else:
-    #             j = SecurityEvent()
-    #             j.from_json(entry)
-    #             ret.append(j)
-    #             LOGGER.warning("There is no class for {} yet".format(eventType))
-    #     return ret
-
-    # def delete_group(self, group):
-    #     data = {"groupId": group.id}
-    #     return self._restCall("home/group/deleteGroup", body=json.dumps(data))
+        LOGGER.warning('set_pin not implemented')
 
     async def get_OAuth_OTK(self):
         token = OAuthOTK()
@@ -256,23 +183,11 @@ class Home(HomeIPObject.HomeMaticIPobject, home.Home):
         return token
 
     def set_timezone(self, timezone):
-        """ sets the timezone for the AP. e.g. "Europe/Berlin" """
-        url, data = super().set_timezone(timezone)
-        return self._connection._apiCall(url, data)
+        LOGGER.warning("set_timezone not implemented.")
 
     async def set_powermeter_unit_price(self, price):
-        url, data = super().set_powermeter_unit_price(price)
-
-        return await self._connection._apiCall(url, data)
+        LOGGER.warning('set_powermeter_unit_price not implemented.')
 
     async def set_zones_device_assignment(self, internal_devices,
                                           external_devices):
-        """ sets the devices for the security zones
-                :param internal_devices the devices which should be used for the internal zone
-                :param external_devices the devices which should be used for the external(hull) zone
-                :return the result of _restCall
-                """
-        url, data = super().set_zones_device_assignment(internal_devices,
-                                                        external_devices)
-
-        return await self._connection._apiCall(url, data)
+        LOGGER.warning('set_zones_device_assignment not implemented.')

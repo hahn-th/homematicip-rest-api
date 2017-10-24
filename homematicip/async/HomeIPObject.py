@@ -27,18 +27,3 @@ class HomeMaticIPobject:
         else:
             _LOGGER.warning(
                 'onUpdate event not fired as has no method is assigned to it.')
-
-            # def from_json(self, js):
-            #     pass
-
-            # def __repr__(self):
-            #     return "id({}) {}".format(self.id, self.__str__())
-            #
-            # def __str__(self):
-            #     return 'id({})'.format(self.id)
-
-            # def __str__(self):
-            #     if sys.version_info >= (3, 0):
-            #         return self.__unicode__()
-            #     else:
-            #         return unicode(self).encode('utf-8')

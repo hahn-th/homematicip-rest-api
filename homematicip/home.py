@@ -8,7 +8,7 @@ from homematicip.EventHook import *
 
 from datetime import datetime
 import requests
-import websocket
+#import websocket
 import logging
 import sys
 
