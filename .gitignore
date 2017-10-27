@@ -98,4 +98,7 @@ ENV/
 # CSV
 *.csv
 
+# VsCode
+.code
+
 /Backup

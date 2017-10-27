@@ -4,51 +4,19 @@ import asyncio
 
 from homematicip.async import HomeIPObject
 from homematicip import device
+from homematicip.async.connection import Connection
+from homematicip.base.base_device import BasePluggableSwitch, BaseDevice
 
 ERROR_CODE = "errorCode"
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class Device(HomeIPObject.HomeMaticIPobject, device.Device):
-    """ this class represents a generic homematic ip device """
+class Device(BaseDevice):
+    """ Async implementation of a genereric homematic ip device """
 
-    def __init__(self, connection):
-        super().__init__(connection)
-
-    async def set_label(self, label):
-        url, data = super().set_label(label)
-
-        _val = await self._connection._apiCall(url, data)
-        return _val
-
-    async def is_update_applicable(self):
-        data = {"deviceId": self.id}
-        result = await self._connection._apiCall("device/isUpdateApplicable",
-                                          json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result[ERROR_CODE]
-
-    def authorizeUpdate(self):
-        _LOGGER.debug('authorizeUpdate not implemented')
-
-    async def delete(self):
-        _LOGGER.debug('delete not implemented')
-
-    async def set_router_module_enabled(self, enabled=True):
-        if not self.routerModuleSupported:
-            return False
-        data = {"deviceId": self.id, "channelIndex": 0,
-                "routerModuleEnabled": enabled}
-        result = await self._connection._apiCall(
-            "device/configuration/setRouterModuleEnabled",
-            json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result[ERROR_CODE]
+    def from_json(self, js):
+        raise NotImplemented('from_json should not be called from here.')
 
     def __repr__(self):
         return u"{} {} lowbat({}) unreach({})".format(self.deviceType,
@@ -142,31 +110,16 @@ class FloorTerminalBlock6(HomeIPObject.HomeMaticIPobject,
         super().__init__(connection)
 
 
-class PlugableSwitch(HomeIPObject.HomeMaticIPobject, device.PlugableSwitch):
-    """ HMIP-PS (Pluggable Switch) """
-
-    def __init__(self, connection):
-        super().__init__(connection)
-
-    def __repr__(self):
-        return self.__unicode__()
-
-    def from_json(self, js):
-        super().from_json(js)
-        self.update(js)
-
-    async def set_switch_state(self, on=True):
-        url, data = super().set_switch_state(on)
-        _val = await self._connection._apiCall(url, data)
-        return _val
+class PluggableSwitch(BasePluggableSwitch, Device):
+    """ Async implementation of HMIP-PS (Pluggable Switch) """
 
     async def turn_on(self):
-        _val = await self.set_switch_state(True)
-        return _val
+        url, data = self._turn_on()
+        return await self.connection._rest_call(url, data)
 
     async def turn_off(self):
-        _val = await self.set_switch_state(False)
-        return _val
+        url, data = self._turn_off()
+        return await self.connection._rest_call(url, data)
 
 
 class PlugableSwitchMeasuring(HomeIPObject.HomeMaticIPobject,

@@ -21,9 +21,3 @@ class HomeMaticIPobject:
         making an async request."""
         return path, body
 
-    def update(self, js):
-        if self.onUpdate is not None:
-            self.onUpdate(js)
-        else:
-            _LOGGER.warning(
-                'onUpdate event not fired as has no method is assigned to it.')

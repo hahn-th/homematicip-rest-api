@@ -14,53 +14,31 @@ import async_timeout
 from aiohttp.client_exceptions import ClientResponseError
 from aiohttp.client_ws import ClientWebSocketResponse
 
+from homematicip.base.base_connection import BaseConnection
+
 _LOGGER = logging.getLogger(__name__)
 
 INIT_RETRIES = 3
 WEBSOCKET_RETRIES = 3
 
 
-class Connection:
-    _restCallRequestCounter = 3  # the homematic ip cloud tends to time out. retry the call X times.
-    _restCallTimout = 5
+class HmipConnectionException(Exception):
+    pass
+
+
+class HmipBadResponseCodeException(HmipConnectionException):
+    pass
+
+
+class Connection(BaseConnection):
+    """Async connection class implementation."""
 
     def __init__(self, loop, auth_token, access_point_id):
+        super().__init__(auth_token, access_point_id)
         self._loop = loop
         self._websession = aiohttp.ClientSession(loop=loop)
 
-        # accesspoint_id = accesspoint_id.replace('-', '').upper()
-
-        self._clientCharacteristics = {"clientCharacteristics":
-            {
-                "apiVersion": "10",
-                "applicationIdentifier": "homematicip-python",
-                "applicationVersion": "1.0",
-                "deviceManufacturer": "none",
-                "deviceType": "Computer",
-                "language": locale.getdefaultlocale()[0],
-                "osType": platform.system(),
-                "osVersion": platform.release(),
-            },
-            "id": access_point_id.replace('-', '').upper()
-        }
-
-        self._auth_token = auth_token
-        self._clientauth_token = hashlib.sha512(
-            str(access_point_id + "jiLpVitHvWnIGD1yo7MA").encode(
-                'utf-8')).hexdigest().upper()
-        self._urlREST = ""
-        self._urlWebSocket = ""
-        self.socket_connection = None  # ClientWebSocketResponse
         self._socket_task = None
-
-        self._headers = {'content-type': 'application/json',
-                         'accept': 'application/json', 'VERSION': '10',
-                         'AUTHTOKEN': self._auth_token,
-                         'CLIENTAUTH': self._clientauth_token}
-
-    @property
-    def client_characteristics(self):
-        return self._clientCharacteristics
 
     def listen_for_websocket_data(self, incoming_parser):
         self._socket_task = self._loop.create_task(
@@ -121,58 +99,59 @@ class Connection:
             _LOGGER.debug('stopping websocket incoming listener')
         finally:
             self._websession.close()
-            #self._loop.create_task(self.socket_connection.close())
+            # self._loop.create_task(self.socket_connection.close())
 
-    def full_url(self, partial_url):
-        return '{}/hmip/{}'.format(self._urlREST, partial_url)
-
-    async def _apiCall(self, path, body=None, full_url=False):
+    async def _call(self, full_path, body: dict = None):
         result = None
+        try:
+            with async_timeout.timeout(self._restCallTimeout,
+                                       loop=self._loop):
+                result = await self._websession.post(
+                    full_path,
+                    json=body,
+                    headers=self._headers
+                )
+                if result.status in [200, 201]:
+                    if result.content_type == 'application/json':
+                        ret = await result.json()
+                    else:
+                        ret = True
+                    return ret
+                else:
+                    _LOGGER.error("Error %s on %s", result.status, full_path)
+                    raise HmipBadResponseCodeException("status: %s path: %s",
+                                                       result.status,
+                                                       full_path)
+        finally:
+            if result is not None:
+                await result.release()
+
+    async def _rest_call(self, path: str, body: dict = None, full_url=False):
+        """Make the API call.
+        returns a dict with results if content type == 'application/json'
+        returns true if not, but status is still 200 or 201
+        raises an exception when any error occurs or status is not 200 or 201
+
+
+        :param path:
+        :param body:
+        :param full_url:
+        :return:
+        """
         if not full_url:
-            path = self.full_url(path)
-        # requestPath = '{}/hmip/{}'.format(self._urlREST, path)
+            path = self._full_url(path)
         for i in range(self._restCallRequestCounter):
             try:
-                with async_timeout.timeout(self._restCallTimout,
-                                           loop=self._loop):
-                    result = await self._websession.post(
-                        path,
-                        data=body,
-                        headers=self._headers
-                    )
-                    if result.status == 200:
-
-                        try:
-                            if result.content_type == 'application/json':
-                                ret = await result.json()
-                            else:
-                                ret = True
-                            return ret
-                        except Exception as e:
-                            _LOGGER.exception(e)
-            except (
-                    asyncio.TimeoutError, ConnectionError,
-                    ClientResponseError):
+                return await self._call(path, body=body)
+            except (asyncio.TimeoutError, ConnectionError):
                 _LOGGER.error(
-                    "Error connecting to: %s" % path)
-            except JSONDecodeError:
-                _LOGGER.error('Unable to decode response to json')
-            finally:
-                if result is not None:
-                    await result.release()
-        raise ConnectionError(
-            "Problem connecting to hmip server %s" % path)
+                    "Error connecting to: %s. Retries left: %s",
+                    path,
+                    self._restCallRequestCounter - i)
+        raise HmipConnectionException(
+            "Problem connecting to hmip server %s", path)
 
-    async def init(self, lookup=True):
-
-        if lookup:
-            js = await self._apiCall(
-                "https://lookup.homematic.com:48335/getHost",
-                body=json.dumps(self._clientCharacteristics), full_url=True)
-
-            self._urlREST = js["urlREST"]
-            self._urlWebSocket = js["urlWebSocket"]
-        else:
-            self._urlREST = "https://ps1.homematic.com:6969"
-            self._urlWebSocket = "wss://ps1.homematic.com:8888"
-        return True
+    async def init_connection(self, lookup=True):
+        url, body = self._init_connection()
+        js = await self._rest_call(url, body=body, full_url=True)
+        self._do_lookup(lookup, js)
