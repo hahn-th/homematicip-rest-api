@@ -224,11 +224,9 @@ class HeatingChangeoverGroup(Group):
     def from_json(self, js, devices):
         super(HeatingChangeoverGroup, self).from_json(js, devices)
         self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
 
     def __unicode__(self):
-        return u"{} on({}) dimLevel({})".format(super(HeatingChangeoverGroup, self).__unicode__(),
-                                                self.on, self.dimLevel)
+        return u"{} on({})".format(super(HeatingChangeoverGroup, self).__unicode__(), self.on)
 
 #at the moment it doesn't look like this class has any special properties/functions
 #keep it as a placeholder in the meantime
@@ -425,11 +423,9 @@ class HeatingDehumidifierGroup(Group):
     def from_json(self, js, devices):
         super(HeatingDehumidifierGroup, self).from_json(js, devices)
         self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) ".format(super(HeatingDehumidifierGroup, self).__unicode__(),
-                                                self.on, self.dimLevel)
+        return u"{}: on({})".format(super(HeatingDehumidifierGroup, self).__unicode__(), self.on)
 
 class HeatingCoolingDemandGroup(Group):
     on = None
@@ -459,13 +455,12 @@ class HeatingCoolingDemandBoilerGroup(Group):
     def from_json(self, js, devices):
         super(HeatingCoolingDemandBoilerGroup, self).from_json(js, devices)
         self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
         self.boilerLeadTime = js["boilerLeadTime"]
         self.boilerFollowUpTime = js["boilerFollowUpTime"]
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) boilerFollowUpTime({}) boilerLeadTime({})".format(super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.boilerFollowUpTime, self.boilerLeadTime)
+        return u"{}: on({}) boilerFollowUpTime({}) boilerLeadTime({})".format(super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
+                                                self.on, self.boilerFollowUpTime, self.boilerLeadTime)
 
 class HeatingCoolingDemandPumpGroup(Group):
     pumpProtectionDuration = None
@@ -478,15 +473,19 @@ class HeatingCoolingDemandPumpGroup(Group):
     def from_json(self, js, devices):
         super(HeatingCoolingDemandPumpGroup, self).from_json(js, devices)
         self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
         self.pumpProtectionSwitchingInterval = js["pumpProtectionSwitchingInterval"]
         self.pumpProtectionDuration = js["pumpProtectionDuration"]
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.pumpProtectionDuration, self.pumpProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime)
+        return u"{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) " \
+               u"pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
+                                          self.on, self.pumpProtectionDuration,
+                                          self.pumpProtectionSwitchingInterval,
+                                          self.pumpFollowUpTime, self.pumpLeadTime)
+
+
 class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
     weekdays = []
     hour = 0
