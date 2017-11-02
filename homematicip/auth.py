@@ -13,7 +13,7 @@ class Auth(object):
     pin = None
     def __init__(self):
         self.uuid = str(uuid.uuid4())
-        self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '10', 'CLIENTAUTH' : homematicip.get_clientauth_token() }
+        self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '12', 'CLIENTAUTH' : homematicip.get_clientauth_token() }
 
     def connectionRequest(self, access_point, devicename = "homematicip-python"):
         data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": access_point}
