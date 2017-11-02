@@ -17,8 +17,9 @@ logger = logging.getLogger(__name__)
 _typeClassMap = {"HEATING_THERMOSTAT" : HeatingThermostat, "SHUTTER_CONTACT" : ShutterContact,
                  "WALL_MOUNTED_THERMOSTAT_PRO" : WallMountedThermostatPro, "SMOKE_DETECTOR" : SmokeDetector,
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6, "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
-                 "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay, "PUSH_BUTTON": PushButton,
-                 "ALARM_SIREN_INDOOR": AlarmSirenIndoor, "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
+                 "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay,
+                 "TEMPERATURE_HUMIDITY_SENSOR": TemperatureHumiditySensorWithoutDisplay,
+                 "PUSH_BUTTON": PushButton, "ALARM_SIREN_INDOOR": AlarmSirenIndoor, "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
                  "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm, "PLUGABLE_SWITCH" : PlugableSwitch,
                  "FULL_FLUSH_SHUTTER": FullFlushShutter}
 
@@ -27,7 +28,7 @@ _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXT
                 , "HEATING_TEMPERATURE_LIMITER" : HeatingTemperatureLimiterGroup, "HEATING_CHANGEOVER" : HeatingChangeoverGroup, "INBOX" : InboxGroup
                 , "SECURITY_ZONE" : SecurityZoneGroup, "HEATING" : HeatingGroup, "HEATING_COOLING_DEMAND" : HeatingCoolingDemandGroup
                 , "HEATING_EXTERNAL_CLOCK" : HeatingExternalClockGroup, "HEATING_DEHUMIDIFIER" : HeatingDehumidifierGroup
-                , "HEATING_COOLING_DEMAND_BOILER" : HeatingCoolingDemandBoilerGroup, "HEATING_COOLING_DEMAND_PUMP" : HeatingCoolingDemandPumpGroup  
+                , "HEATING_COOLING_DEMAND_BOILER" : HeatingCoolingDemandBoilerGroup, "HEATING_COOLING_DEMAND_PUMP" : HeatingCoolingDemandPumpGroup
                 , "SWITCHING_PROFILE" : SwitchingProfileGroup, "OVER_HEAT_PROTECTION_RULE": OverHeatProtectionRule,
                   "SMOKE_ALARM_DETECTION_RULE": SmokeAlarmDetectionRule,
                   "LOCK_OUT_PROTECTION_RULE": LockOutProtectionRule,
@@ -176,7 +177,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 ret.append(d)
                 logger.warn("There is no class for {} yet".format(deviceType))
         return ret
-    
+
     def _get_clients(self, json_state):
         ret = []
         data = json_state
@@ -347,7 +348,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def __ws_on_error(self,ws,message):
         logger.error("Websocket error: {}".format(message))
-        
+
     def __ws_on_message(self,ws, message):
         js = json.loads(message)
         eventList=[]
@@ -355,7 +356,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             for eID in js["events"]:
                 event = js["events"][eID]
                 pushEventType = event["pushEventType"]
-                obj = None 
+                obj = None
                 if pushEventType == "GROUP_CHANGED":
                     data = event["group"]
                     obj=self.search_group_by_id(data["id"])
@@ -368,7 +369,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     data = event["client"]
                     obj=Client()
                     obj.from_json(data)
-                    self.clients.append(obj)                             
+                    self.clients.append(obj)
                 elif pushEventType == "CLIENT_CHANGED":
                     data = event["client"]
                     obj=self.search_client_by_id(data["id"])
@@ -380,7 +381,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     data = event["device"]
                     obj=Device() #TODO:implement typecheck
                     obj.from_json(data)
-                    self.devices.append(obj)                             
+                    self.devices.append(obj)
                 elif pushEventType == "DEVICE_CHANGED":
                     data = event["device"]
                     obj=self.search_device_by_id(data["id"])

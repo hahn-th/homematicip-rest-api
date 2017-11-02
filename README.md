@@ -32,6 +32,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-PS (Plugable Switch)
 - [X] HMIP-PSM (Plugable Switch Measuring)
 - [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
+- [X] HMIP-STH (Temperature and Humidity Sensor without display - indoor)
 - [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
 - [X] HMIP-ASIR (Alarm Siren)
 - [X] HMIP-KRCA (Key Ring Remote Control & alarm)
@@ -54,7 +55,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HEATING_COOLING_DEMAND
 - [X] HEATING_DEHUMIDIFIER
 - [X] HEATING_EXTERNAL_CLOCK
-- [X] HEATING_COOLING_DEMAND_BOILER 
+- [X] HEATING_COOLING_DEMAND_BOILER
 - [X] HEATING_COOLING_DEMAND_PUMP
 - [X] OVER_HEAT_PROTECTION_RULE
 - [X] SMOKE_ALARM_DETECTION_RULE
@@ -64,7 +65,7 @@ copy the generated auth token from the window config.py and add also the Access 
 ## Events ##
 It's also possible to use push notifications based on a websocket connection
 ```python
-##initialize the api 
+##initialize the api
 #...
 #get the home object
 home = homematicip.Home()
