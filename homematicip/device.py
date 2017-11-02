@@ -61,14 +61,14 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     def authorizeUpdate(self):
         data = { "deviceId" : self.id }
         return self._restCall("device/authorizeUpdate", json.dumps(data))
-    
+
     def delete(self):
         data = { "deviceId" : self.id }
         return self._restCall("device/deleteDevice", json.dumps(data))
 
     def set_router_module_enabled(self,enabled=True):
         if not self.routerModuleSupported:
-            return False 
+            return False
         data = { "deviceId" : self.id, "channelIndex":0, "routerModuleEnabled":enabled }
         result = self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
         if result == "":
@@ -178,6 +178,27 @@ class TemperatureHumiditySensorDisplay(Device):
         return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorDisplay, self).__unicode__(),
                                                                 self.actualTemperature, self.humidity)
 
+class TemperatureHumiditySensorWithoutDisplay(Device):
+    """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
+
+    temperatureOffset = None
+    actualTemperature = None
+    humidity = None
+
+    def from_json(self, js):
+        super(TemperatureHumiditySensorWithoutDisplay, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL":
+                self.temperatureOffset = c["temperatureOffset"]
+                self.actualTemperature = c["actualTemperature"]
+                self.humidity = c["humidity"]
+
+    def __unicode__(self):
+        return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorWithoutDisplay, self).__unicode__(),
+                                                                self.actualTemperature, self.humidity)
+
 class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,OperationLockableDevice):
     """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
     def from_json(self, js):
@@ -248,7 +269,7 @@ class PlugableSwitch(Device):
     def set_switch_state(self, on=True):
         data = { "channelIndex": 1, "deviceId":self.id, "on":on }
         return self._restCall("device/control/setSwitchState", body=json.dumps(data))
-    
+
     def turn_on(self):
         return self.set_switch_state(True)
 
@@ -309,7 +330,7 @@ class KeyRemoteControlAlarm(Device):
         for cid in js["functionalChannels"]:
             c = js["functionalChannels"][cid]
             type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":              
+            if type == "DEVICE_BASE":
                 self.unreach = c["unreach"]
                 self.lowBat = c["lowBat"]
 
