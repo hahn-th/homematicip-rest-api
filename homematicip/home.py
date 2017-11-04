@@ -1,6 +1,9 @@
 # coding=utf-8
 import homematicip
 import threading
+
+from homematicip.base.location import Location
+from homematicip.base.weather import Weather
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.securityEvent import *
@@ -8,7 +11,7 @@ from homematicip.EventHook import *
 
 from datetime import datetime
 import requests
-import websocket
+#import websocket
 import logging
 import sys
 
@@ -36,66 +39,6 @@ _typeGroupMap = { "SECURITY" : SecurityGroup, "SWITCHING" : SwitchingGroup, "EXT
 _typeSecurityEventMap = { "SILENCE_CHANGED" : SilenceChangedEvent, "ACTIVATION_CHANGED" : ActivationChangedEvent,  "ACCESS_POINT_CONNECTED" : AccessPointConnectedEvent,
                          "ACCESS_POINT_DISCONNECTED" : AccessPointDisconnectedEvent, "SENSOR_EVENT" : SensorEvent }
 
-class Weather(HomeMaticIPObject.HomeMaticIPObject):
-    temperature = 0.0
-    weatherCondition = "CLEAR"
-    weatherDayTime = "DAY"
-    minTemperature = 0.0
-    maxTemperature = 0.0
-    humidity = 0
-    windSpeed = 0.0
-    windDirection = 0
-
-
-    def from_json(self, js):
-        self.temperature = js["temperature"]
-        self.weatherCondition = js["weatherCondition"]
-        self.weatherDayTime = js["weatherDayTime"]
-        self.minTemperature = js["minTemperature"]
-        self.maxTemperature = js["maxTemperature"]
-        self.humidity = js["humidity"]
-        self.windSpeed = js["windSpeed"]
-        self.windDirection = js["windDirection"]
-
-
-class Location(HomeMaticIPObject.HomeMaticIPObject):
-    city = "London"
-    latitude = "51.509865"
-    longitude = "-0.118092"
-
-    def from_json(self, js):
-        self.city = js["city"]
-        self.latitude = js["latitude"]
-        self.longitude = js["longitude"]
-
-    def __unicode__(self):
-        return u"city({}) latitude({}) longitude({})".format(self.city,self.latitude,self.longitude)
-
-
-class Client(HomeMaticIPObject.HomeMaticIPObject):
-    id = None
-    label = None
-    homeId = None
-
-    def from_json(self, js):
-        self.id = js["id"]
-        self.label = js["label"]
-        self.homeId = js["homeId"]
-
-    def __unicode__(self):
-        return u"label({})".format(self.label)
-
-class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
-    authToken = None
-    expirationTimestamp = None
-
-    def from_json(self, js):
-        self.authToken = js["authToken"]
-        time = js["expirationTimestamp"]
-        if time > 0:
-            self.expirationTimestamp = datetime.fromtimestamp(time / 1000.0)
-        else:
-            self.expirationTimestamp = None
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
@@ -269,7 +212,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M"), "temperature": temperature}
         return self._restCall("home/heating/activateVacation", json.dumps(data))
 
-    def deactivate_vacation(self):
+    def _deactivate_vacation(self):
         return self._restCall("home/heating/deactivateVacation")
 
     def set_pin(self,newPin,oldPin=None):

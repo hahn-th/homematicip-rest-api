@@ -7,7 +7,7 @@ import requests
 import homematicip
 
 
-class Auth(object):
+class Auth:
     uuid = None
     headers = None 
     pin = None

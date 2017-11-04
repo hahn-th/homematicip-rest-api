@@ -3,114 +3,33 @@ from homematicip import HomeMaticIPObject
 import json
 from datetime import datetime
 
+from homematicip.base.base_device import BaseDevice, BaseSabotageDevice, \
+    BaseOperationLockableDevice
 
-class Device(HomeMaticIPObject.HomeMaticIPObject):
+
+class Device(BaseDevice):
     """ this class represents a generic homematic ip device """
-    id = None
-    homeId = None
-    label = None
-    lastStatusUpdate = None
-    deviceType = None
-    updateState = None
-    firmwareVersion = None
-    availableFirmwareVersion = None
-    unreach = None
-    lowBat = None
-    routerModuleSupported = False
-    routerModuleEnabled = False
 
     def from_json(self, js):
-        self.id = js["id"]
-        self.homeId = js["homeId"]
-        self.label = js["label"]
-        time = js["lastStatusUpdate"]
-        if time > 0:
-            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
-        else:
-            self.lastStatusUpdate = None
-
-        self.deviceType = js["type"]
-        self.updateState = js["updateState"]
-        self.firmwareVersion = js["firmwareVersion"]
-        self.availableFirmwareVersion = js["availableFirmwareVersion"]
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.routerModuleSupported = c["routerModuleSupported"]
-                self.routerModuleEnabled = c["routerModuleEnabled"]
-                break
-
-    def __unicode__(self):
-        return u"{} {} lowbat({}) unreach({})".format(self.deviceType, self.label, self.lowBat, self.unreach)
-
-    def set_label(self, label):
-        data = { "deviceId" : self.id, "label" : label }
-        return self._restCall("device/setDeviceLabel", json.dumps(data))
-
-    def is_update_applicable(self):
-        data = { "deviceId" : self.id }
-        result = self._restCall("device/isUpdateApplicable", json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result["errorCode"]
-
-    def authorizeUpdate(self):
-        data = { "deviceId" : self.id }
-        return self._restCall("device/authorizeUpdate", json.dumps(data))
-    
-    def delete(self):
-        data = { "deviceId" : self.id }
-        return self._restCall("device/deleteDevice", json.dumps(data))
-
-    def set_router_module_enabled(self,enabled=True):
-        if not self.routerModuleSupported:
-            return False 
-        data = { "deviceId" : self.id, "channelIndex":0, "routerModuleEnabled":enabled }
-        result = self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result["errorCode"]
+        raise NotImplementedError('from_json should not be called from here.')
 
 
-class SabotageDevice(Device):
-    sabotage = None
-    def from_json(self, js):
-        super(SabotageDevice, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_SABOTAGE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.sabotage = c["sabotage"]
-                break # not needed to check the other channels
+class SabotageDevice(BaseSabotageDevice,Device):
+    pass
 
-    def __unicode__(self):
-        return u"{}: sabotage({})".format(super(SabotageDevice, self).__unicode__(), self.sabotage)
+class OperationLockableDevice(BaseOperationLockableDevice, Device):
 
-class OperationLockableDevice(Device):
-    operationLockActive = None
-    def from_json(self, js):
-        super(OperationLockableDevice, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_OPERATIONLOCK":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.operationLockActive = c["operationLockActive"]
-                break # not needed to check the other channels
     def set_operation_lock(self, operationLock=True):
-        data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
-        return self._restCall("device/configuration/setOperationLock", json.dumps(data))
+        data = {"channelIndex": 0, "deviceId": self.id,
+                "operationLock": operationLock}
+        return self._restCall("device/configuration/setOperationLock",
+                              json.dumps(data))
 
     def __unicode__(self):
-        return u"{}: operationLockActive({})".format(super(OperationLockableDevice, self).__unicode__(), self.operationLockActive)
+        return u"{}: operationLockActive({})".format(
+            super(OperationLockableDevice, self).__unicode__(),
+            self.operationLockActive)
+
 
 class HeatingThermostat(OperationLockableDevice):
     """ HMIP-eTRV (Radiator Thermostat) """
@@ -128,7 +47,9 @@ class HeatingThermostat(OperationLockableDevice):
                 self.valvePosition = c["valvePosition"]
 
     def __unicode__(self):
-        return u"{} valvePosition({})".format(super(HeatingThermostat, self).__unicode__(), self.valvePosition)
+        return u"{} valvePosition({})".format(
+            super(HeatingThermostat, self).__unicode__(), self.valvePosition)
+
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) """
@@ -145,7 +66,9 @@ class ShutterContact(SabotageDevice):
                 self.eventDelay = c["eventDelay"]
 
     def __unicode__(self):
-        return u"{} windowState({})".format(super(ShutterContact, self).__unicode__(), self.windowState)
+        return u"{} windowState({})".format(
+            super(ShutterContact, self).__unicode__(), self.windowState)
+
 
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
@@ -172,14 +95,19 @@ class TemperatureHumiditySensorDisplay(Device):
 
     def set_display(self, display=DISPLAY_ACTUAL):
         data = {"channelIndex": 1, "deviceId": self.id, "display": display}
-        return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
+        return self._restCall("device/configuration/setClimateControlDisplay",
+                              json.dumps(data))
 
     def __unicode__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(super(TemperatureHumiditySensorDisplay, self).__unicode__(),
-                                                                self.actualTemperature, self.humidity)
+        return u"{}: actualTemperature({}) humidity({})".format(
+            super(TemperatureHumiditySensorDisplay, self).__unicode__(),
+            self.actualTemperature, self.humidity)
 
-class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,OperationLockableDevice):
+
+class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
+                               OperationLockableDevice):
     """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
+
     def from_json(self, js):
         super(WallMountedThermostatPro, self).from_json(js)
         for cid in js["functionalChannels"]:
@@ -206,8 +134,9 @@ class SmokeDetector(Device):
                 self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
 
     def __unicode__(self):
-        return u"{}: smokeDetectorAlarmType({})".format(super(SmokeDetector, self).__unicode__(),
-                                                        self.smokeDetectorAlarmType)
+        return u"{}: smokeDetectorAlarmType({})".format(
+            super(SmokeDetector, self).__unicode__(),
+            self.smokeDetectorAlarmType)
 
 
 class FloorTerminalBlock6(Device):
@@ -227,8 +156,11 @@ class FloorTerminalBlock6(Device):
                 self.heatingValveType = c["heatingValveType"]
 
     def __unicode__(self):
-        return u"{}: globalPumpControl({})".format(super(FloorTerminalBlock6, self).__unicode__(),
-                                                   self.globalPumpControl)
+        return u"{}: globalPumpControl({})".format(
+            super(FloorTerminalBlock6, self).__unicode__(),
+            self.globalPumpControl)
+
+
 class PlugableSwitch(Device):
     """ HMIP-PS (Pluggable Switch) """
 
@@ -243,12 +175,14 @@ class PlugableSwitch(Device):
                 self.on = c["on"]
 
     def __unicode__(self):
-        return u"{}: on({})".format(super(PlugableSwitch, self).__unicode__(), self.on)
+        return u"{}: on({})".format(super(PlugableSwitch, self).__unicode__(),
+                                    self.on)
 
     def set_switch_state(self, on=True):
-        data = { "channelIndex": 1, "deviceId":self.id, "on":on }
-        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
-    
+        data = {"channelIndex": 1, "deviceId": self.id, "on": on}
+        return self._restCall("device/control/setSwitchState",
+                              body=json.dumps(data))
+
     def turn_on(self):
         return self.set_switch_state(True)
 
@@ -272,15 +206,18 @@ class PlugableSwitchMeasuring(PlugableSwitch):
                 self.currentPowerConsumption = c["currentPowerConsumption"]
 
     def __unicode__(self):
-        return u"{} energyCounter({}) currentPowerConsumption({}W)".format(super(PlugableSwitchMeasuring, self).__unicode__()
-                                                                                   , self.energyCounter,self.currentPowerConsumption)
+        return u"{} energyCounter({}) currentPowerConsumption({}W)".format(
+            super(PlugableSwitchMeasuring, self).__unicode__()
+            , self.energyCounter, self.currentPowerConsumption)
 
 
 class PushButton(Device):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
+
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
+
 
 class MotionDetectorIndoor(SabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
@@ -298,8 +235,10 @@ class MotionDetectorIndoor(SabotageDevice):
                 self.illumination = c["illumination"]
 
     def __unicode__(self):
-        return u"{} motionDetected({}) illumination({})".format(super(MotionDetectorIndoor, self).__unicode__(),
-                                                                              self.motionDetected, self.illumination)
+        return u"{} motionDetected({}) illumination({})".format(
+            super(MotionDetectorIndoor, self).__unicode__(),
+            self.motionDetected, self.illumination)
+
 
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
@@ -309,7 +248,7 @@ class KeyRemoteControlAlarm(Device):
         for cid in js["functionalChannels"]:
             c = js["functionalChannels"][cid]
             type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":              
+            if type == "DEVICE_BASE":
                 self.unreach = c["unreach"]
                 self.lowBat = c["lowBat"]
 
@@ -337,11 +276,13 @@ class FullFlushShutter(Device):
     def __unicode__(self):
         return u"{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
             super(FullFlushShutter, self).__unicode__(),
-            self.shutterLevel, self.topToBottomReferenceTime, self.bottomToTopReferenceTime)
+            self.shutterLevel, self.topToBottomReferenceTime,
+            self.bottomToTopReferenceTime)
 
     def set_shutter_level(self, level):
         data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
-        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+        return self._restCall("device/control/setShutterLevel",
+                              body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"channelIndex": 1, "deviceId": self.id}

@@ -17,6 +17,7 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
     lowBat = None
     metaGroup = None
     devices = None
+
     def from_json(self, js, devices):
         self.id = js["id"]
         self.homeId = js["homeId"]
@@ -547,7 +548,7 @@ class SwitchingProfileGroup(Group):
     def set_group_channels(self):
         channels = []
         for d in self.devices:
-            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
+            channels.append[{ "channelIndex":1, "deviceId" : d.id}]
         data = { "groupId" : self.id, "channels" : channels}
         return self._restCall("group/switching/profile/setGroupChannels", body=json.dumps(data))
 
