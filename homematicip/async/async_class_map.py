@@ -3,6 +3,7 @@ from homematicip.async.device import WallMountedThermostatPro, \
     PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
     AlarmSirenIndoor, MotionDetectorIndoor, KeyRemoteControlAlarm, \
     PluggableSwitch, FullFlushShutter
+
 from homematicip.base.constants import HEATING_THERMOSTAT, SHUTTER_CONTACT, \
     WALL_MOUNTED_THERMOSTAT_PRO, SMOKE_DETECTOR, FLOOR_TERMINAL_BLOCK_6, \
     PLUGABLE_SWITCH, PLUGABLE_SWITCH_MEASURING, \

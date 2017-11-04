@@ -5,6 +5,12 @@ import pytest
 
 from homematicip.base.base_device import BaseDevice
 from homematicip.base.base_home import BaseHome
+from homematicip.base.constants import HEATING_THERMOSTAT, SHUTTER_CONTACT, \
+    WALL_MOUNTED_THERMOSTAT_PRO, SMOKE_DETECTOR, FLOOR_TERMINAL_BLOCK_6, \
+    PLUGABLE_SWITCH_MEASURING, TEMPERATURE_HUMIDITY_SENSOR_DISPLAY, \
+    PUSH_BUTTON, ALARM_SIREN_INDOOR, MOTION_DETECTOR_INDOOR, \
+    KEY_REMOTE_CONTROL_ALARM, PLUGABLE_SWITCH, FULL_FLUSH_SHUTTER
+from tests.incoming import current_state
 
 
 @pytest.fixture
@@ -15,6 +21,7 @@ def base_home() -> BaseHome:
 
 
 location = ['city', 'latitude', 'longitude']
+
 
 @pytest.fixture
 def mock_devices():
@@ -27,7 +34,20 @@ def mock_group():
     return Mock()
 
 
-def test_search_device_by_id(base_home,mock_devices):
+@pytest.fixture
+def mocked_class_map(monkeypatch):
+    def mocked_device(key, default):
+        _device = MagicMock()
+        monkeypatch.setattr(_device, 'from_json', lambda: True)
+        return _device
+
+    _map = MagicMock()
+    monkeypatch.setattr(_map, 'get', mocked_device)
+
+    return _map
+
+
+def test_search_device_by_id(base_home, mock_devices):
     base_home.devices = mock_devices
     _device = base_home.search_device_by_id('abc')
     assert isinstance(_device, BaseDevice)
@@ -39,8 +59,14 @@ def test_search_group_by_id():
     assert False
 
 
-def test_get_devices(base_home):
-    assert False
+def test_get_devices(base_home, mocked_type_class_map):
+    base_home._type_class_map = mocked_type_class_map
+    base_home._get_devices(current_state)
+    assert len(base_home.devices) == 4
+
+
+def test__add_device():
+    pass
 
 
 def test_from_json():

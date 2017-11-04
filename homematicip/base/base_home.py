@@ -8,14 +8,9 @@ from homematicip.base.client import Client
 from homematicip.base.hmip_ip_object import HmipIpObject
 from homematicip.base.location import Location
 from homematicip.base.weather import Weather
-from homematicip.device import *
 from homematicip.group import *
 from homematicip.securityEvent import *
-from homematicip.EventHook import *
 
-from datetime import datetime
-import requests
-# import websocket
 import logging
 import sys
 
@@ -79,14 +74,14 @@ class BaseHome(HmipIpObject):
     def _get_devices(self, json_state):
         self.devices = {}
         data = json_state
-        for k in data["devices"]:
-            _device = data["devices"][k]
-            self._add_device(_device)
+        for device_data in data["devices"].values():
+            self._add_device(device_data)
 
     def _add_device(self, device_data):
         deviceType = device_data["type"]
-        if deviceType in self._type_class_map:
-            d = self._type_class_map[deviceType](self.connection)
+        device_class = self._type_class_map.get(deviceType, None)
+        if device_class:
+            d = device_class(self.connection)
             d.from_json(device_data)
             self.devices[d.id] = d
         else:
@@ -95,8 +90,7 @@ class BaseHome(HmipIpObject):
     def _get_clients(self, json_state):
         self.clients = {}
         data = json_state
-        for k in data["clients"]:
-            client_data = data["clients"][k]
+        for client_data in data["clients"].values():
             self._add_client(client_data)
 
     def _add_client(self, client_data):
@@ -108,11 +102,11 @@ class BaseHome(HmipIpObject):
         self.groups = {}
         data = json_state
         metaGroups = []
-        for k in data["groups"]:
-            group = data["groups"][k]
+        for group in data["groups"].values():
             groupType = group["type"]
-            if groupType in self._type_group_map:
-                g = self._type_group_map[groupType]()
+            group_class = self._type_group_map.get(groupType)
+            if group_class:
+                g = group_class()
                 g.from_json(group, self.devices)
                 self.groups[g.id] = g
             elif groupType == "META":
@@ -127,21 +121,21 @@ class BaseHome(HmipIpObject):
 
     def search_device_by_id(self, device_id):
         """ searches a device by given id
-        :param deviceID the device to search for
+        :param device_id the device to search for
         :return the Device object or None if it couldn't find a device
         """
         return self.devices.get(device_id, None)
 
     def search_group_by_id(self, group_id):
         """ searches a group by given id
-        :param groupID the device to search for
+        :param group_id the device to search for
         :return the group object or None if it couldn't find a group
         """
         return self.groups.get(group_id, None)
 
     def search_client_by_id(self, client_id):
         """ searches a client by given id
-        :param clientID the device to search for
+        :param client_id the device to search for
         :return the client object or None if it couldn't find a client
         """
         return self.clients.get(client_id, None)
@@ -226,30 +220,30 @@ class BaseHome(HmipIpObject):
         return "home/security/setZoneActivationDelay", data
 
     def set_zone_activation_delay(self, delay):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def get_security_journal(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _get_security_journal(self):
         return "home/security/getSecurityJournal", None
 
     def delete_group(self, group):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _delete_group(self, group):
         data = {"groupId": group.id}
         return "home/group/deleteGroup", data
 
     def get_OAuth_OTK(self):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _get_OAuth_OTK(self):
         return "home/getOAuthOTK", None
 
     def set_timezone(self, timezone):
         """ sets the timezone for the AP. e.g. "Europe/Berlin" """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _set_timezone(self, timezone):
         data = {"timezoneId": timezone}
@@ -259,7 +253,7 @@ class BaseHome(HmipIpObject):
         return "home/setPowerMeterUnitPrice", {"powerMeterUnitPrice": price}
 
     def set_powermeter_unit_price(self, price):
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def set_zones_device_assignment(self, internal_devices, external_devices):
         """ sets the devices for the security zones
@@ -267,7 +261,7 @@ class BaseHome(HmipIpObject):
                 :param external_devices the devices which should be used for the external(hull) zone
                 :return the result of _restCall
                 """
-        raise NotImplementedError()
+        raise NotImplementedError
 
     def _set_zones_device_assignment(self, internal_devices,
                                      external_devices):

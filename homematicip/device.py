@@ -3,116 +3,21 @@ from homematicip import HomeMaticIPObject
 import json
 from datetime import datetime
 
+from homematicip.base.base_device import BaseDevice, BaseSabotageDevice, \
+    BaseOperationLockableDevice
 
-class Device(HomeMaticIPObject.HomeMaticIPObject):
+
+class Device(BaseDevice):
     """ this class represents a generic homematic ip device """
-    id = None
-    homeId = None
-    label = None
-    lastStatusUpdate = None
-    deviceType = None
-    updateState = None
-    firmwareVersion = None
-    availableFirmwareVersion = None
-    unreach = None
-    lowBat = None
-    routerModuleSupported = False
-    routerModuleEnabled = False
 
     def from_json(self, js):
-        self.id = js["id"]
-        self.homeId = js["homeId"]
-        self.label = js["label"]
-        time = js["lastStatusUpdate"]
-        if time > 0:
-            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
-        else:
-            self.lastStatusUpdate = None
-
-        self.deviceType = js["type"]
-        self.updateState = js["updateState"]
-        self.firmwareVersion = js["firmwareVersion"]
-        self.availableFirmwareVersion = js["availableFirmwareVersion"]
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.routerModuleSupported = c["routerModuleSupported"]
-                self.routerModuleEnabled = c["routerModuleEnabled"]
-                break
-
-    def __unicode__(self):
-        return u"{} {} lowbat({}) unreach({})".format(self.deviceType,
-                                                      self.label, self.lowBat,
-                                                      self.unreach)
-
-    def set_label(self, label):
-        data = {"deviceId": self.id, "label": label}
-        return self._restCall("device/setDeviceLabel", json.dumps(data))
-
-    def is_update_applicable(self):
-        data = {"deviceId": self.id}
-        result = self._restCall("device/isUpdateApplicable", json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result["errorCode"]
-
-    def authorizeUpdate(self):
-        data = {"deviceId": self.id}
-        return self._restCall("device/authorizeUpdate", json.dumps(data))
-
-    def delete(self):
-        data = {"deviceId": self.id}
-        return self._restCall("device/deleteDevice", json.dumps(data))
-
-    def set_router_module_enabled(self, enabled=True):
-        if not self.routerModuleSupported:
-            return False
-        data = {"deviceId": self.id, "channelIndex": 0,
-                "routerModuleEnabled": enabled}
-        result = self._restCall("device/configuration/setRouterModuleEnabled",
-                                json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result["errorCode"]
+        raise NotImplementedError('from_json should not be called from here.')
 
 
-class SabotageDevice(Device):
-    sabotage = None
+class SabotageDevice(BaseSabotageDevice,Device):
+    pass
 
-    def from_json(self, js):
-        super(SabotageDevice, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_SABOTAGE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.sabotage = c["sabotage"]
-                break  # not needed to check the other channels
-
-    def __unicode__(self):
-        return u"{}: sabotage({})".format(
-            super(SabotageDevice, self).__unicode__(), self.sabotage)
-
-
-class OperationLockableDevice(Device):
-    operationLockActive = None
-
-    def from_json(self, js):
-        super(OperationLockableDevice, self).from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_OPERATIONLOCK":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.operationLockActive = c["operationLockActive"]
-                break  # not needed to check the other channels
+class OperationLockableDevice(BaseOperationLockableDevice, Device):
 
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id,

@@ -21,8 +21,16 @@ async def test_switch_on(mock_connection):
     resp = await switch.turn_on()
     assert resp == 'called'
 
+
 @pytest.mark.asyncio
 async def test_switch_off(mock_connection):
     switch = PluggableSwitch(mock_connection)
     resp = await switch.turn_off()
+    assert resp == 'called'
+
+
+@pytest.mark.asyncio
+async def test_set_label(mock_connection):
+    switch = PluggableSwitch(mock_connection)
+    resp = await switch.set_label("label")
     assert resp == 'called'
