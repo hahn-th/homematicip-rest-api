@@ -5,39 +5,42 @@ import uuid
 import requests
 
 import homematicip
+from homematicip.home import Home
 
 
 class Auth(object):
     uuid = None
-    headers = None 
+    headers = None
     pin = None
-    def __init__(self):
+    def __init__(self,home:Home):
         self.uuid = str(uuid.uuid4())
-        self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '12', 'CLIENTAUTH' : homematicip.get_clientauth_token() }
+        self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '12', 'CLIENTAUTH' : home._connection.clientauth_token }
+        self.url_rest = home._connection.urlREST
+
 
     def connectionRequest(self, access_point, devicename = "homematicip-python"):
         data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": access_point}
         headers = self.headers
         if self.pin != None:
             headers["PIN"] = self.pin
-        response = requests.post("{}/hmip/auth/connectionRequest".format(homematicip.get_urlREST()), json=data,
+        response = requests.post("{}/hmip/auth/connectionRequest".format(self.url_rest), json=data,
                                  headers=headers)
         return response
 
     def isRequestAcknowledged(self):
         data = {"deviceId": self.uuid}
-        response = requests.post("{}/hmip/auth/isRequestAcknowledged".format(homematicip.get_urlREST()), json=data,
+        response = requests.post("{}/hmip/auth/isRequestAcknowledged".format(self.url_rest), json=data,
                                  headers=self.headers)
         return response.status_code == 200
 
     def requestAuthToken(self):
         data = {"deviceId": self.uuid}
-        response = requests.post("{}/hmip/auth/requestAuthToken".format(homematicip.get_urlREST()), json=data,
+        response = requests.post("{}/hmip/auth/requestAuthToken".format(self.url_rest), json=data,
                                  headers=self.headers)
         return json.loads(response.text)["authToken"]
 
     def confirmAuthToken(self, authToken):
         data = {"deviceId": self.uuid, "authToken": authToken}
-        response = requests.post("{}/hmip/auth/confirmAuthToken".format(homematicip.get_urlREST()), json=data,
+        response = requests.post("{}/hmip/auth/confirmAuthToken".format(self.url_rest), json=data,
                                  headers=self.headers)
         return json.loads(response.text)["clientId"]
