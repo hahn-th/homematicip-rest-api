@@ -26,7 +26,9 @@ copy the generated auth token from the window config.py and add also the Access 
 ## Devices: ##
 - [X] HMIP-eTRV (Heating-thermostat)
 - [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro)
+- [X] HMIP-BWTH (Brand Wall Mounted Thermostat Pro)
 - [X] HMIP-SWDO (Shutter Contact)
+- [X] HMIP-SWDO-I (Shutter Contact Invisible)
 - [X] HMIP-SWSD (Smoke Detector)
 - [X] HMIP-FAL230-C6 (Floor Terminal Block)
 - [X] HMIP-PS (Plugable Switch)
@@ -37,6 +39,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-KRCA (Key Ring Remote Control & alarm)
 - [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 - [X] HMIP-FROLL (Shutter Actuator - flush-mount)
+- [X] HMIP-BROLL (Shutter Actuator - brand-mount)
 
 ## Groups ##
 - [X] Meta (Rooms)

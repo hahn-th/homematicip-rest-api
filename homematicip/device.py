@@ -131,7 +131,7 @@ class HeatingThermostat(OperationLockableDevice):
         return u"{} valvePosition({})".format(super(HeatingThermostat, self).__unicode__(), self.valvePosition)
 
 class ShutterContact(SabotageDevice):
-    """ HMIP-SWDO (Door / Window Contact - optical) """
+    """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
     windowState = None
     eventDelay = None
 
@@ -179,7 +179,7 @@ class TemperatureHumiditySensorDisplay(Device):
                                                                 self.actualTemperature, self.humidity)
 
 class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,OperationLockableDevice):
-    """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) """
+    """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)"""
     def from_json(self, js):
         super(WallMountedThermostatPro, self).from_json(js)
         for cid in js["functionalChannels"]:
@@ -318,7 +318,7 @@ class KeyRemoteControlAlarm(Device):
 
 
 class FullFlushShutter(Device):
-    """ HMIP-FROLL (Shutter Actuator - flush-mount) """
+    """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
 
     shutterLevel = None
     bottomToTopReferenceTime = None
