@@ -166,7 +166,27 @@ class ShutterContact(SabotageDevice):
         return "{} windowState({})".format(
             super().__str__(), self.windowState)
 
+class TemperatureHumiditySensorWithoutDisplay(Device):
+    """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
 
+    temperatureOffset = None
+    actualTemperature = None
+    humidity = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL":
+                self.temperatureOffset = c["temperatureOffset"]
+                self.actualTemperature = c["actualTemperature"]
+                self.humidity = c["humidity"]
+
+    def __str__(self):
+        return u"{}: actualTemperature({}) humidity({})".format(
+               super().__str__(), self.actualTemperature, self.humidity)
+                                       
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
 
@@ -197,8 +217,7 @@ class TemperatureHumiditySensorDisplay(Device):
 
     def __str__(self):
         return "{}: actualTemperature({}) humidity({})".format(
-            super().__str__(),
-            self.actualTemperature, self.humidity)
+            super().__str__(), self.actualTemperature, self.humidity)
 
 
 class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,

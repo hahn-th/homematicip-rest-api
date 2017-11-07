@@ -79,7 +79,6 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
         else:
             self.expirationTimestamp = None
 
-
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
     devices = None

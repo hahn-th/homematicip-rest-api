@@ -34,7 +34,7 @@ class SecurityZoneEvent(SecurityEvent):
 
     def __str__(self):
         return "{}: external_zone({}) internal_zone({}) ".format(super().__str__(),
-                                                self.external_zone, self.internal_zone) 
+                                                self.external_zone, self.internal_zone)
 
 class SensorEvent(SecurityEvent):
     def from_json(self, js):

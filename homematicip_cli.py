@@ -196,7 +196,7 @@ def main():
                 command_entered = True
             else:
                 logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
-        
+
         if args.device_enable_router_module != None:
             if device.routerModuleSupported or True:
                 device.set_router_module_enabled(args.device_enable_router_module)

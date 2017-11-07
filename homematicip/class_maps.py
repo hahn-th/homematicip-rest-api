@@ -2,7 +2,7 @@ from homematicip.device import HeatingThermostat, ShutterContact, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, \
     PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
     AlarmSirenIndoor, MotionDetectorIndoor, KeyRemoteControlAlarm, \
-    PlugableSwitch, FullFlushShutter
+    PlugableSwitch, FullFlushShutter, TemperatureHumiditySensorWithoutDisplay
 from homematicip.group import SecurityGroup, SwitchingGroup, \
     ExtendedLinkedSwitchingGroup, LinkedSwitchingGroup, AlarmSwitchingGroup, \
     HeatingHumidyLimiterGroup, HeatingTemperatureLimiterGroup, \
@@ -26,6 +26,7 @@ TYPE_CLASS_MAP = {
     "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6,
     "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
     "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay,
+    "TEMPERATURE_HUMIDITY_SENSOR": TemperatureHumiditySensorWithoutDisplay,
     "PUSH_BUTTON": PushButton,
     "ALARM_SIREN_INDOOR": AlarmSirenIndoor,
     "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
