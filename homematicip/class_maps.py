@@ -19,7 +19,9 @@ from homematicip.securityEvent import SilenceChangedEvent, \
 TYPE_CLASS_MAP = {
     "HEATING_THERMOSTAT": HeatingThermostat,
     "SHUTTER_CONTACT": ShutterContact,
+    "SHUTTER_CONTACT_INVISIBLE" : ShutterContact,
     "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro,
+    "BRAND_WALL_MOUNTED_THERMOSTAT": WallMountedThermostatPro,
     "SMOKE_DETECTOR": SmokeDetector,
     "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6,
     "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
@@ -29,7 +31,9 @@ TYPE_CLASS_MAP = {
     "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
     "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm,
     "PLUGABLE_SWITCH": PlugableSwitch,
-    "FULL_FLUSH_SHUTTER": FullFlushShutter}
+    "FULL_FLUSH_SHUTTER": FullFlushShutter,
+    "BRAND_SHUTTER": FullFlushShutter
+    }
 
 TYPE_GROUP_MAP = {
     "SECURITY": SecurityGroup,
@@ -51,11 +55,13 @@ TYPE_GROUP_MAP = {
     "OVER_HEAT_PROTECTION_RULE": OverHeatProtectionRule,
     "SMOKE_ALARM_DETECTION_RULE": SmokeAlarmDetectionRule,
     "LOCK_OUT_PROTECTION_RULE": LockOutProtectionRule,
-    "SHUTTER_WIND_PROTECTION_RULE": ShutterWindProtectionRule}
+    "SHUTTER_WIND_PROTECTION_RULE": ShutterWindProtectionRule
+    }
 
 TYPE_SECURITY_EVENT_MAP = {
     "SILENCE_CHANGED": SilenceChangedEvent,
     "ACTIVATION_CHANGED": ActivationChangedEvent,
     "ACCESS_POINT_CONNECTED": AccessPointConnectedEvent,
     "ACCESS_POINT_DISCONNECTED": AccessPointDisconnectedEvent,
-    "SENSOR_EVENT": SensorEvent}
+    "SENSOR_EVENT": SensorEvent
+    }
