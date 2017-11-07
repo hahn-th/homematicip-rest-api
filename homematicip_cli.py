@@ -146,14 +146,14 @@ def main():
 
     if args.list_firmware:
         command_entered = True
-        print(str("{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
-                                                                                        home.currentAPVersion,
-                                                                                        home.availableAPVersion,
+        print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format("HmIP AccessPoint",
+                                                                                        home.currentAPVersion if home.currentAPVersion is not None else "None",
+                                                                                        home.availableAPVersion if home.availableAPVersion is not None else "None",
                                                                                         home.updateState)))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(str("{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
-                                                                                      d.availableFirmwareVersion, d.updateState)))
+            print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
+                                                                                      d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None", d.updateState)))
 
     if args.device:
         command_entered = False
