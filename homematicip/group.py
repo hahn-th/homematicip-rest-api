@@ -38,8 +38,8 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
                 if d.id == channel["deviceId"]:
                     self.devices.append(d)
 
-    def __unicode__(self):
-        return u"{} {}".format(self.groupType, self.label)
+    def __str__(self):
+        return "{} {}".format(self.groupType, self.label)
 
     def set_label(self, label):
         data = {"groupId": self.id, "label": label}
@@ -83,15 +83,15 @@ class SecurityGroup(Group):
     smokeDetectorAlarmType = None
 
     def from_json(self, js, devices):
-        super(SecurityGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.windowState = js["windowState"]
         self.motionDetected = js["motionDetected"]
         self.sabotage = js["sabotage"]
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
 
-    def __unicode__(self):
-        return u"{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(
-            super(SecurityGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(
+            super().__str__(),
             self.windowState, self.motionDetected, self.sabotage,
             self.smokeDetectorAlarmType)
 
@@ -104,7 +104,7 @@ class SwitchingGroup(Group):
     slatsLevel = None
 
     def from_json(self, js, devices):
-        super(SwitchingGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
         try:  # TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
@@ -134,9 +134,9 @@ class SwitchingGroup(Group):
         data = {"groupId": self.id}
         return self._restCall("group/switching/stop", body=json.dumps(data))
 
-    def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(
-            super(SwitchingGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(
+            super().__str__(),
             self.on, self.dimLevel, self.processing, self.shutterLevel,
             self.slatsLevel)
 
@@ -158,14 +158,14 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
     sensorSpecificParameters = None
 
     def from_json(self, js, devices):
-        super(ExtendedLinkedSwitchingGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.onTime = js["onTime"]
         self.onLevel = js["onLevel"]
         self.sensorSpecificParameters = js["sensorSpecificParameters"]
 
-    def __unicode__(self):
-        return u"{} onTime({}) onLevel({})".format(
-            super(ExtendedLinkedSwitchingGroup, self).__unicode__(),
+    def __str__(self):
+        return "{} onTime({}) onLevel({})".format(
+            super().__str__(),
             self.onTime, self.onLevel)
 
     def set_on_time(self, onTimeSeconds):
@@ -193,7 +193,7 @@ class AlarmSwitchingGroup(Group):
     acousticFeedbackEnabled = None
 
     def from_json(self, js, devices):
-        super(AlarmSwitchingGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.onTime = js["onTime"]
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
@@ -207,9 +207,9 @@ class AlarmSwitchingGroup(Group):
         return self._restCall("group/switching/arlarm/setOnTime",
                               body=json.dumps(data))
 
-    def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
-            super(AlarmSwitchingGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
+            super().__str__(),
             self.on, self.dimLevel, self.onTime, self.signalAcoustic,
             self.signalOptical, self.smokeDetectorAlarmType,
             self.acousticFeedbackEnabled)
@@ -230,15 +230,15 @@ class AlarmSwitchingGroup(Group):
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingHumidyLimiterGroup(Group):
-    def __unicode__(self):
-        return super(HeatingHumidyLimiterGroup, self).__unicode__()
+    def __str__(self):
+        return super().__str__()
 
 
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingTemperatureLimiterGroup(Group):
-    def __unicode__(self):
-        return super(HeatingTemperatureLimiterGroup, self).__unicode__()
+    def __str__(self):
+        return super().__str__()
 
 
 class HeatingChangeoverGroup(Group):
@@ -246,19 +246,19 @@ class HeatingChangeoverGroup(Group):
     dimLevel = None
 
     def from_json(self, js, devices):
-        super(HeatingChangeoverGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
 
-    def __unicode__(self):
-        return u"{} on({})".format(
-            super(HeatingChangeoverGroup, self).__unicode__(), self.on)
+    def __str__(self):
+        return "{} on({})".format(
+            super().__str__(), self.on)
 
 
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class InboxGroup(Group):
-    def __unicode__(self):
-        return super(InboxGroup, self).__unicode__()
+    def __str__(self):
+        return super().__str__()
 
 
 class SecurityZoneGroup(Group):
@@ -271,7 +271,7 @@ class SecurityZoneGroup(Group):
     presenceDetected = None
 
     def from_json(self, js, devices):
-        super(SecurityZoneGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.active = js["active"]
         self.silent = js["silent"]
         self.windowState = js["windowState"]
@@ -282,9 +282,9 @@ class SecurityZoneGroup(Group):
             self.ignorableDevices.append(
                 [d for d in devices if d.id == device][0])
 
-    def __unicode__(self):
-        return u"{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
-            super(SecurityZoneGroup, self).__unicode__(),
+    def __str__(self):
+        return "{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
+            super().__str__(),
             self.active, self.silent, self.windowState, self.motionDetected,
             self.sabotage, self.presenceDetected, len(self.ignorableDevices))
 
@@ -295,7 +295,7 @@ class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
     value = None
 
     def from_json(self, js):
-        super(HeatingCoolingPeriod, self).from_json(js)
+        super().from_json(js)
         self.starttime = js["starttime"]
         self.endtime = js["endtime"]
         self.value = js["value"]
@@ -306,7 +306,7 @@ class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
     periods = None
 
     def from_json(self, js):
-        super(HeatingCoolingProfileDay, self).from_json(js)
+        super().from_json(js)
         self.baseValue = js["baseValue"]
         self.periods = []
         for p in js["periods"]:
@@ -342,7 +342,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
             self.profileDays[i] = day
 
     def from_json(self, js):
-        super(HeatingCoolingProfile, self).from_json(js)
+        super().from_json(js)
         self.id = js["profileId"]
         self.groupId = js["groupId"]
         self.index = js["index"]
@@ -411,7 +411,7 @@ class HeatingGroup(Group):
     profiles = None
 
     def from_json(self, js, devices):
-        super(HeatingGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.windowOpenTemperature = js["windowOpenTemperature"]
         self.setPointTemperature = js["setPointTemperature"]
         self.windowState = js["windowState"]
@@ -448,9 +448,9 @@ class HeatingGroup(Group):
                 self.activeProfile = profile
         self.profiles = sorted(profiles, key=attrgetter('index'))
 
-    def __unicode__(self):
-        return u"{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(
-            super(HeatingGroup, self).__unicode__(),
+    def __str__(self):
+        return "{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(
+            super().__str__(),
             self.windowOpenTemperature, self.setPointTemperature,
             self.windowState, self.maxTemperature, self.minTemperature,
             self.cooling, self.partyMode, self.controlMode,
@@ -476,12 +476,12 @@ class HeatingDehumidifierGroup(Group):
     dimLevel = None
 
     def from_json(self, js, devices):
-        super(HeatingDehumidifierGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
 
-    def __unicode__(self):
-        return u"{}: on({})".format(
-            super(HeatingDehumidifierGroup, self).__unicode__(), self.on)
+    def __str__(self):
+        return "{}: on({})".format(
+            super().__str__(), self.on)
 
 
 class HeatingCoolingDemandGroup(Group):
@@ -489,21 +489,21 @@ class HeatingCoolingDemandGroup(Group):
     dimLevel = None
 
     def from_json(self, js, devices):
-        super(HeatingCoolingDemandGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
 
-    def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) ".format(
-            super(HeatingCoolingDemandGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: on({}) dimLevel({}) ".format(
+            super().__str__(),
             self.on, self.dimLevel)
 
 
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingExternalClockGroup(Group):
-    def __unicode__(self):
-        return super(HeatingExternalClockGroup, self).__unicode__()
+    def __str__(self):
+        return super().__str__()
 
 
 class HeatingCoolingDemandBoilerGroup(Group):
@@ -513,14 +513,14 @@ class HeatingCoolingDemandBoilerGroup(Group):
     dimLevel = None
 
     def from_json(self, js, devices):
-        super(HeatingCoolingDemandBoilerGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
         self.boilerLeadTime = js["boilerLeadTime"]
         self.boilerFollowUpTime = js["boilerFollowUpTime"]
 
-    def __unicode__(self):
-        return u"{}: on({}) boilerFollowUpTime({}) boilerLeadTime({})".format(
-            super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: on({}) boilerFollowUpTime({}) boilerLeadTime({})".format(
+            super().__str__(),
             self.on, self.boilerFollowUpTime, self.boilerLeadTime)
 
 
@@ -533,7 +533,7 @@ class HeatingCoolingDemandPumpGroup(Group):
     dimLevel = None
 
     def from_json(self, js, devices):
-        super(HeatingCoolingDemandPumpGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
         self.pumpProtectionSwitchingInterval = js[
             "pumpProtectionSwitchingInterval"]
@@ -541,10 +541,10 @@ class HeatingCoolingDemandPumpGroup(Group):
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
 
-    def __unicode__(self):
-        return u"{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) " \
-               u"pumpLeadTime({})".format(
-            super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) " \
+               "pumpLeadTime({})".format(
+            super().__str__(),
             self.on, self.pumpProtectionDuration,
             self.pumpProtectionSwitchingInterval,
             self.pumpFollowUpTime, self.pumpLeadTime)
@@ -561,7 +561,7 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
     rampTime = 0
 
     def from_json(self, js):
-        super(TimeProfilePeriod, self).from_json(js)
+        super().from_json(js)
         self.weekdays = js["weekdays"]
         self.hour = js["hour"]
         self.minute = js["minute"]
@@ -600,15 +600,15 @@ class SwitchingProfileGroup(Group):
     profileMode = None
 
     def from_json(self, js, devices):
-        super(SwitchingProfileGroup, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
         self.profileId = js["profileId"]
         self.profileMode = js["profileMode"]
 
-    def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) profileMode({})".format(
-            super(SwitchingProfileGroup, self).__unicode__(),
+    def __str__(self):
+        return "{}: on({}) dimLevel({}) profileMode({})".format(
+            super().__str__(),
             self.on, self.dimLevel, self.profileMode)
 
     def set_group_channels(self):
@@ -651,7 +651,7 @@ class OverHeatProtectionRule(Group):
     endSunset = None
 
     def from_json(self, js, devices):
-        super(OverHeatProtectionRule, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.temperatureLowerThreshold = js["temperatureLowerThreshold"]
         self.temperatureUpperThreshold = js["temperatureUpperThreshold"]
         self.targetShutterLevel = js["targetShutterLevel"]
@@ -663,9 +663,9 @@ class OverHeatProtectionRule(Group):
         self.endMinute = js["endMinute"]
         self.endSunset = js["endSunset"]
 
-    def __unicode__(self):
-        return u"{}: tempLower({}) tempUpper({}) targetShutterLevel({}) targetSlatsLevel({})".format(
-            super(OverHeatProtectionRule, self).__unicode__(),
+    def __str__(self):
+        return "{}: tempLower({}) tempUpper({}) targetShutterLevel({}) targetSlatsLevel({})".format(
+            super().__str__(),
             self.temperatureLowerThreshold, self.temperatureUpperThreshold,
             self.targetShutterLevel, self.targetSlatsLevel)
 
@@ -674,12 +674,12 @@ class SmokeAlarmDetectionRule(Group):
     smokeDetectorAlarmType = None
 
     def from_json(self, js, devices):
-        super(SmokeAlarmDetectionRule, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
 
-    def __unicode__(self):
-        return u"{}: smokeDetectorAlarmType({})".format(
-            super(SmokeAlarmDetectionRule, self).__unicode__(),
+    def __str__(self):
+        return "{}: smokeDetectorAlarmType({})".format(
+            super().__str__(),
             self.smokeDetectorAlarmType)
 
 
@@ -688,13 +688,13 @@ class ShutterWindProtectionRule(Group):
     targetShutterLevel = None
 
     def from_json(self, js, devices):
-        super(ShutterWindProtectionRule, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.windSpeedThreshold = js["windSpeedThreshold"]
         self.targetShutterLevel = js["targetShutterLevel"]
 
-    def __unicode__(self):
-        return u"{}: windSpeedThreshold({}) targetShutterLevel({})".format(
-            super(ShutterWindProtectionRule, self).__unicode__(),
+    def __str__(self):
+        return "{}: windSpeedThreshold({}) targetShutterLevel({})".format(
+            super().__str__(),
             self.windSpeedThreshold, self.targetShutterLevel)
 
 
@@ -703,11 +703,11 @@ class LockOutProtectionRule(Group):
     windowState = None
 
     def from_json(self, js, devices):
-        super(LockOutProtectionRule, self).from_json(js, devices)
+        super().from_json(js, devices)
         self.triggered = js["triggered"]
         self.windowState = js["windowState"]
 
-    def __unicode__(self):
-        return u"{}: triggered({}) windowState({})".format(
-            super(LockOutProtectionRule, self).__unicode__(), self.triggered,
+    def __str__(self):
+        return "{}: triggered({}) windowState({})".format(
+            super().__str__(), self.triggered,
             self.windowState)
