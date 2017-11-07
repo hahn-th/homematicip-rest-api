@@ -17,7 +17,9 @@ logger = logging.getLogger(__name__)
 
 _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat,
                  "SHUTTER_CONTACT": ShutterContact,
+                 "SHUTTER_CONTACT_INVISIBLE" : ShutterContact,
                  "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro,
+                 "BRAND_WALL_MOUNTED_THERMOSTAT": WallMountedThermostatPro,
                  "SMOKE_DETECTOR": SmokeDetector,
                  "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6,
                  "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
@@ -27,7 +29,8 @@ _typeClassMap = {"HEATING_THERMOSTAT": HeatingThermostat,
                  "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
                  "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm,
                  "PLUGABLE_SWITCH": PlugableSwitch,
-                 "FULL_FLUSH_SHUTTER": FullFlushShutter}
+                 "FULL_FLUSH_SHUTTER": FullFlushShutter,
+                 "BRAND_SHUTTER": FullFlushShutter}
 
 _typeGroupMap = {"SECURITY": SecurityGroup, "SWITCHING": SwitchingGroup,
                  "EXTENDED_LINKED_SWITCHING": ExtendedLinkedSwitchingGroup
