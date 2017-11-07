@@ -87,8 +87,8 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         self.latitude = js["latitude"]
         self.longitude = js["longitude"]
 
-    def __unicode__(self):
-        return u"city({}) latitude({}) longitude({})".format(self.city,
+    def __str__(self):
+        return "city({}) latitude({}) longitude({})".format(self.city,
                                                              self.latitude,
                                                              self.longitude)
 
@@ -103,8 +103,8 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.label = js["label"]
         self.homeId = js["homeId"]
 
-    def __unicode__(self):
-        return u"label({})".format(self.label)
+    def __str__(self):
+        return "label({})".format(self.label)
 
 
 class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
@@ -155,7 +155,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self._connection.set_auth_token(auth_token)
 
     def from_json(self, js_home):
-        super(Home, self).from_json(js_home)
+        super().from_json(js_home)
         self.weather = Weather(self._connection)
         self.weather.from_json(js_home["weather"])
         self.location = Location(self._connection)

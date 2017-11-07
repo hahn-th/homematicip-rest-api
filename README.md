@@ -77,7 +77,7 @@ home.enable_events()
 #example function to display incoming events
 def printEvents(eventList):
     for event in eventList:
-        print u"EventType: {} Data: {}".format(event["eventType"], event["data"])
+        print "EventType: {} Data: {}".format(event["eventType"], event["data"])
 
 #if needed you can close the websocket connection with
 home.disable_events()
