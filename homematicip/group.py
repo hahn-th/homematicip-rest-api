@@ -5,6 +5,7 @@ from datetime import datetime
 import calendar
 from operator import attrgetter
 
+
 class Group(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents a group """
     id = None
@@ -17,6 +18,8 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
     lowBat = None
     metaGroup = None
     devices = None
+
+
     def from_json(self, js, devices):
         self.id = js["id"]
         self.homeId = js["homeId"]
@@ -35,13 +38,11 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
                 if d.id == channel["deviceId"]:
                     self.devices.append(d)
 
-
-
     def __unicode__(self):
         return u"{} {}".format(self.groupType, self.label)
 
     def set_label(self, label):
-        data = { "groupId" : self.id, "label" : label }
+        data = {"groupId": self.id, "label": label}
         return self._restCall("group/setGroupLabel", json.dumps(data))
 
 
@@ -49,6 +50,7 @@ class MetaGroup(Group):
     """ a meta group is a "Room" inside the homematic configuration """
 
     groups = None
+
     def from_json(self, js, devices, groups):
         self.id = js["id"]
         self.homeId = js["homeId"]
@@ -73,6 +75,7 @@ class MetaGroup(Group):
                     g.metaGroup = self
                     self.groups.append(g)
 
+
 class SecurityGroup(Group):
     windowState = None
     motionDetected = None
@@ -87,8 +90,10 @@ class SecurityGroup(Group):
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
 
     def __unicode__(self):
-        return u"{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(super(SecurityGroup, self).__unicode__(),
-                                                   self.windowState, self.motionDetected, self.sabotage, self.smokeDetectorAlarmType)
+        return u"{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(
+            super(SecurityGroup, self).__unicode__(),
+            self.windowState, self.motionDetected, self.sabotage,
+            self.smokeDetectorAlarmType)
 
 
 class SwitchingGroup(Group):
@@ -111,7 +116,8 @@ class SwitchingGroup(Group):
 
     def set_switch_state(self, on=True):
         data = {"groupId": self.id, "on": on}
-        return self._restCall("group/switching/setState", body=json.dumps(data))
+        return self._restCall("group/switching/setState",
+                              body=json.dumps(data))
 
     def turn_on(self):
         return self.set_switch_state(True)
@@ -121,7 +127,8 @@ class SwitchingGroup(Group):
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
-        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+        return self._restCall("group/switching/setShutterLevel",
+                              body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
@@ -130,17 +137,20 @@ class SwitchingGroup(Group):
     def __unicode__(self):
         return u"{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(
             super(SwitchingGroup, self).__unicode__(),
-            self.on, self.dimLevel, self.processing, self.shutterLevel, self.slatsLevel)
+            self.on, self.dimLevel, self.processing, self.shutterLevel,
+            self.slatsLevel)
 
 
 class LinkedSwitchingGroup(SwitchingGroup):
     def set_light_group_switches(self, devices):
         switchChannels = []
         for d in devices:
-            channel = { "channelIndex" : 1, "deviceId" : d.id }
+            channel = {"channelIndex": 1, "deviceId": d.id}
             switchChannels.append(channel)
-        data = { "groupId" : self.id, "switchChannels" : switchChannels }
-        return self._restCall("home/security/setLightGroupSwitches", body=json.dumps(data))
+        data = {"groupId": self.id, "switchChannels": switchChannels}
+        return self._restCall("home/security/setLightGroupSwitches",
+                              body=json.dumps(data))
+
 
 class ExtendedLinkedSwitchingGroup(SwitchingGroup):
     onTime = None
@@ -154,21 +164,25 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
         self.sensorSpecificParameters = js["sensorSpecificParameters"]
 
     def __unicode__(self):
-        return u"{} onTime({}) onLevel({})".format(super(ExtendedLinkedSwitchingGroup, self).__unicode__(),
-                                                self.onTime, self.onLevel)
+        return u"{} onTime({}) onLevel({})".format(
+            super(ExtendedLinkedSwitchingGroup, self).__unicode__(),
+            self.onTime, self.onLevel)
+
     def set_on_time(self, onTimeSeconds):
-        data = { "groupId":self.id, "onTime":onTimeSeconds }
-        return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
+        data = {"groupId": self.id, "onTime": onTimeSeconds}
+        return self._restCall("group/switching/linked/setOnTime",
+                              body=json.dumps(data))
+
 
 class AlarmSwitchingGroup(Group):
-    SIGNAL_OPTICAL_DISABLE_OPTICAL_SIGNAL         = "DISABLE_OPTICAL_SIGNAL"
+    SIGNAL_OPTICAL_DISABLE_OPTICAL_SIGNAL = "DISABLE_OPTICAL_SIGNAL"
     SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING = "BLINKING_ALTERNATELY_REPEATING"
-    SIGNAL_OPTICAL_BLINKING_BOTH_REPEATING        = "BLINKING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_DOUBLE_FLASHING_REPEATING      = "DOUBLE_FLASHING_REPEATING"
-    SIGNAL_OPTICAL_FLASHING_BOTH_REPEATING        = "FLASHING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_0          = "CONFIRMATION_SIGNAL_0"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_1          = "CONFIRMATION_SIGNAL_1"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_2          = "CONFIRMATION_SIGNAL_2"
+    SIGNAL_OPTICAL_BLINKING_BOTH_REPEATING = "BLINKING_BOTH_REPEATING"
+    SIGNAL_OPTICAL_DOUBLE_FLASHING_REPEATING = "DOUBLE_FLASHING_REPEATING"
+    SIGNAL_OPTICAL_FLASHING_BOTH_REPEATING = "FLASHING_BOTH_REPEATING"
+    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_0 = "CONFIRMATION_SIGNAL_0"
+    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_1 = "CONFIRMATION_SIGNAL_1"
+    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_2 = "CONFIRMATION_SIGNAL_2"
 
     on = None
     dimLevel = None
@@ -189,33 +203,43 @@ class AlarmSwitchingGroup(Group):
         self.acousticFeedbackEnabled = js["acousticFeedbackEnabled"]
 
     def set_on_time(self, onTimeSeconds):
-        data = { "groupId":self.id, "onTime":onTimeSeconds }
-        return self._restCall("group/switching/arlarm/setOnTime", body=json.dumps(data))
+        data = {"groupId": self.id, "onTime": onTimeSeconds}
+        return self._restCall("group/switching/arlarm/setOnTime",
+                              body=json.dumps(data))
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(super(AlarmSwitchingGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.onTime, self.signalAcoustic, self.signalOptical, self.smokeDetectorAlarmType, self.acousticFeedbackEnabled)
+        return u"{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
+            super(AlarmSwitchingGroup, self).__unicode__(),
+            self.on, self.dimLevel, self.onTime, self.signalAcoustic,
+            self.signalOptical, self.smokeDetectorAlarmType,
+            self.acousticFeedbackEnabled)
 
-    def test_signal_optical(self,signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
-        data = { "groupId":self.id, "signalOptical":signalOptical }
-        return self._restCall("group/switching/arlarm/testSignalOptical", body=json.dumps(data))
+    def test_signal_optical(self,
+                            signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+        data = {"groupId": self.id, "signalOptical": signalOptical}
+        return self._restCall("group/switching/arlarm/testSignalOptical",
+                              body=json.dumps(data))
 
-    def set_signal_optical(self,signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
-        data = { "groupId":self.id, "signalOptical":signalOptical }
-        return self._restCall("group/switching/arlarm/setSignalOptical", body=json.dumps(data))
+    def set_signal_optical(self,
+                           signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+        data = {"groupId": self.id, "signalOptical": signalOptical}
+        return self._restCall("group/switching/arlarm/setSignalOptical",
+                              body=json.dumps(data))
 
 
-#at the moment it doesn't look like this class has any special properties/functions
-#keep it as a placeholder in the meantime
+# at the moment it doesn't look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
 class HeatingHumidyLimiterGroup(Group):
     def __unicode__(self):
-        return super(HeatingHumidyLimiterGroup,self).__unicode__()
+        return super(HeatingHumidyLimiterGroup, self).__unicode__()
 
-#at the moment it doesn't look like this class has any special properties/functions
-#keep it as a placeholder in the meantime
+
+# at the moment it doesn't look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
 class HeatingTemperatureLimiterGroup(Group):
     def __unicode__(self):
-        return super(HeatingTemperatureLimiterGroup,self).__unicode__()
+        return super(HeatingTemperatureLimiterGroup, self).__unicode__()
+
 
 class HeatingChangeoverGroup(Group):
     on = None
@@ -226,13 +250,16 @@ class HeatingChangeoverGroup(Group):
         self.on = js["on"]
 
     def __unicode__(self):
-        return u"{} on({})".format(super(HeatingChangeoverGroup, self).__unicode__(), self.on)
+        return u"{} on({})".format(
+            super(HeatingChangeoverGroup, self).__unicode__(), self.on)
 
-#at the moment it doesn't look like this class has any special properties/functions
-#keep it as a placeholder in the meantime
+
+# at the moment it doesn't look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
 class InboxGroup(Group):
     def __unicode__(self):
-        return super(InboxGroup,self).__unicode__()
+        return super(InboxGroup, self).__unicode__()
+
 
 class SecurityZoneGroup(Group):
     active = False
@@ -242,6 +269,7 @@ class SecurityZoneGroup(Group):
     motionDetected = None
     sabotage = None
     presenceDetected = None
+
     def from_json(self, js, devices):
         super(SecurityZoneGroup, self).from_json(js, devices)
         self.active = js["active"]
@@ -251,12 +279,16 @@ class SecurityZoneGroup(Group):
         self.sabotage = js["sabotage"]
         self.ignorableDevices = []
         for device in js["ignorableDevices"]:
-            self.ignorableDevices.append([d for d in devices if d.id == device][0])
-
+            self.ignorableDevices.append(
+                [d for d in devices if d.id == device][0])
 
     def __unicode__(self):
-        return u"{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(super(SecurityZoneGroup, self).__unicode__(),
-                                                self.active, self.silent, self.windowState, self.motionDetected, self.sabotage, self.presenceDetected, len(self.ignorableDevices) )
+        return u"{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
+            super(SecurityZoneGroup, self).__unicode__(),
+            self.active, self.silent, self.windowState, self.motionDetected,
+            self.sabotage, self.presenceDetected, len(self.ignorableDevices))
+
+
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
     starttime = None
     endtime = None
@@ -268,17 +300,20 @@ class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
         self.endtime = js["endtime"]
         self.value = js["value"]
 
+
 class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
     baseValue = None
     periods = None
+
     def from_json(self, js):
         super(HeatingCoolingProfileDay, self).from_json(js)
         self.baseValue = js["baseValue"]
         self.periods = []
         for p in js["periods"]:
-            period = HeatingCoolingPeriod()
+            period = HeatingCoolingPeriod(self._connection)
             period.from_json(p)
             self.periods.append(period)
+
 
 class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
     id = None
@@ -294,14 +329,15 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
     profileDays = None
 
     def get_details(self):
-        data = { "groupId": self.groupId, "profileIndex" : self.index, "profileName" : self.name }
+        data = {"groupId": self.groupId, "profileIndex": self.index,
+                "profileName": self.name}
         js = self._restCall("group/heating/getProfile", body=json.dumps(data))
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.profileDays = {}
 
-        for i in xrange(0,7):
-            day = HeatingCoolingProfileDay()
+        for i in range(0, 7):
+            day = HeatingCoolingProfileDay(self._connection)
             day.from_json(js["profileDays"][calendar.day_name[i].upper()])
             self.profileDays[i] = day
 
@@ -314,26 +350,37 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
         self.visible = js["visible"]
         self.enabled = js["enabled"]
 
-    def _time_to_totalminutes(self,time):
+    def _time_to_totalminutes(self, time):
         s = time.split(":")
-        return int(s[0])*60+int(s[1])
+        return int(s[0]) * 60 + int(s[1])
 
     def update_profile(self):
         days = {}
-        for i in xrange(0,7):
+        for i in xrange(0, 7):
             periods = []
             day = self.profileDays[i]
             for p in day.periods:
-                periods.append( { "endtime" : p.endtime, "starttime":p.starttime, "value" : p.value
-                                 , "endtimeAsMinutesOfDay" : self._time_to_totalminutes(p.endtime)
-                                 , "starttimeAsMinutesOfDay" : self._time_to_totalminutes(p.starttime) } )
+                periods.append({"endtime": p.endtime, "starttime": p.starttime,
+                                "value": p.value
+                                   ,
+                                "endtimeAsMinutesOfDay": self._time_to_totalminutes(
+                                    p.endtime)
+                                   ,
+                                "starttimeAsMinutesOfDay": self._time_to_totalminutes(
+                                    p.starttime)})
 
             dayOfWeek = calendar.day_name[i].upper()
-            days[dayOfWeek] = { "baseValue" : day.baseValue, "dayOfWeek" : dayOfWeek, "periods" : periods }
+            days[dayOfWeek] = {"baseValue": day.baseValue,
+                               "dayOfWeek": dayOfWeek, "periods": periods}
 
-        data = { "groupId" : self.groupId, "profile": { "groupId" : self.groupId, "homeId" : self.homeId, "id" : self.id
-                                                       , "index" : self.index, "name" : self.name, "profileDays" : days, "type" : self.type }, "profileIndex" : self.index }
-        return self._restCall("group/heating/updateProfile", body=json.dumps(data) )
+        data = {"groupId": self.groupId,
+                "profile": {"groupId": self.groupId, "homeId": self.homeId,
+                            "id": self.id
+                    , "index": self.index, "name": self.name,
+                            "profileDays": days, "type": self.type},
+                "profileIndex": self.index}
+        return self._restCall("group/heating/updateProfile",
+                              body=json.dumps(data))
 
 
 class HeatingGroup(Group):
@@ -345,23 +392,23 @@ class HeatingGroup(Group):
     cooling = None
     partyMode = None
     controlMode = None
-    activeProfile                      = None
-    boostMode                          = None
-    boostDuration                      = None
-    actualTemperature                  = None
-    humidity                           = None
-    coolingAllowed                     = None
-    coolingIgnored                     = None
-    ecoAllowed                         = None
-    ecoIgnored                         = None
-    controllable                       = None
-    floorHeatingMode                   = None
-    humidityLimitEnabled               = None
-    humidityLimitValue                 = None
-    externalClockEnabled               = None
-    externalClockHeatingTemperature    = None
-    externalClockCoolingTemperature    = None
-    profiles                           = None
+    activeProfile = None
+    boostMode = None
+    boostDuration = None
+    actualTemperature = None
+    humidity = None
+    coolingAllowed = None
+    coolingIgnored = None
+    ecoAllowed = None
+    ecoIgnored = None
+    controllable = None
+    floorHeatingMode = None
+    humidityLimitEnabled = None
+    humidityLimitValue = None
+    externalClockEnabled = None
+    externalClockHeatingTemperature = None
+    externalClockCoolingTemperature = None
+    profiles = None
 
     def from_json(self, js, devices):
         super(HeatingGroup, self).from_json(js, devices)
@@ -386,35 +433,43 @@ class HeatingGroup(Group):
         self.humidityLimitEnabled = js["humidityLimitEnabled"]
         self.humidityLimitValue = js["humidityLimitValue"]
         self.externalClockEnabled = js["externalClockEnabled"]
-        self.externalClockHeatingTemperature = js["externalClockHeatingTemperature"]
-        self.externalClockCoolingTemperature = js["externalClockCoolingTemperature"]
+        self.externalClockHeatingTemperature = js[
+            "externalClockHeatingTemperature"]
+        self.externalClockCoolingTemperature = js[
+            "externalClockCoolingTemperature"]
 
         profiles = []
-        activeProfile = js["activeProfile"] #not self.!!!!
-        for k,v in js["profiles"].items():
-            profile = HeatingCoolingProfile()
+        activeProfile = js["activeProfile"]  # not self.!!!!
+        for k, v in js["profiles"].items():
+            profile = HeatingCoolingProfile(self._connection)
             profile.from_json(v)
             profiles.append(profile)
             if activeProfile == k:
                 self.activeProfile = profile
         self.profiles = sorted(profiles, key=attrgetter('index'))
 
-
     def __unicode__(self):
-        return u"{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(super(HeatingGroup, self).__unicode__(),
-                                                self.windowOpenTemperature, self.setPointTemperature, self.windowState, self.maxTemperature, self.minTemperature, self.cooling,self.partyMode,self.controlMode, self.actualTemperature )
+        return u"{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(
+            super(HeatingGroup, self).__unicode__(),
+            self.windowOpenTemperature, self.setPointTemperature,
+            self.windowState, self.maxTemperature, self.minTemperature,
+            self.cooling, self.partyMode, self.controlMode,
+            self.actualTemperature)
 
-    def set_point_temperature(self,temperature):
-        data = { "groupId" : self.id, "setPointTemperature" : temperature}
-        return self._restCall("group/heating/setSetPointTemperature", body=json.dumps(data))
+    def set_point_temperature(self, temperature):
+        data = {"groupId": self.id, "setPointTemperature": temperature}
+        return self._restCall("group/heating/setSetPointTemperature",
+                              body=json.dumps(data))
 
-    def set_boost(self,enable=True):
-        data = { "groupId" : self.id, "boost" : enable}
+    def set_boost(self, enable=True):
+        data = {"groupId": self.id, "boost": enable}
         return self._restCall("group/heating/setBoost", body=json.dumps(data))
 
-    def set_active_profile(self,index):
-        data = { "groupId" : self.id, "profileIndex" : index}
-        return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
+    def set_active_profile(self, index):
+        data = {"groupId": self.id, "profileIndex": index}
+        return self._restCall("group/heating/setActiveProfile",
+                              body=json.dumps(data))
+
 
 class HeatingDehumidifierGroup(Group):
     on = None
@@ -425,7 +480,9 @@ class HeatingDehumidifierGroup(Group):
         self.on = js["on"]
 
     def __unicode__(self):
-        return u"{}: on({})".format(super(HeatingDehumidifierGroup, self).__unicode__(), self.on)
+        return u"{}: on({})".format(
+            super(HeatingDehumidifierGroup, self).__unicode__(), self.on)
+
 
 class HeatingCoolingDemandGroup(Group):
     on = None
@@ -437,14 +494,17 @@ class HeatingCoolingDemandGroup(Group):
         self.dimLevel = js["dimLevel"]
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) ".format(super(HeatingCoolingDemandGroup, self).__unicode__(),
-                                                self.on, self.dimLevel)
+        return u"{}: on({}) dimLevel({}) ".format(
+            super(HeatingCoolingDemandGroup, self).__unicode__(),
+            self.on, self.dimLevel)
 
-#at the moment it doesn't look like this class has any special properties/functions
-#keep it as a placeholder in the meantime
+
+# at the moment it doesn't look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
 class HeatingExternalClockGroup(Group):
     def __unicode__(self):
-        return super(HeatingExternalClockGroup,self).__unicode__()
+        return super(HeatingExternalClockGroup, self).__unicode__()
+
 
 class HeatingCoolingDemandBoilerGroup(Group):
     boilerFollowUpTime = None
@@ -459,8 +519,10 @@ class HeatingCoolingDemandBoilerGroup(Group):
         self.boilerFollowUpTime = js["boilerFollowUpTime"]
 
     def __unicode__(self):
-        return u"{}: on({}) boilerFollowUpTime({}) boilerLeadTime({})".format(super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
-                                                self.on, self.boilerFollowUpTime, self.boilerLeadTime)
+        return u"{}: on({}) boilerFollowUpTime({}) boilerLeadTime({})".format(
+            super(HeatingCoolingDemandBoilerGroup, self).__unicode__(),
+            self.on, self.boilerFollowUpTime, self.boilerLeadTime)
+
 
 class HeatingCoolingDemandPumpGroup(Group):
     pumpProtectionDuration = None
@@ -473,17 +535,19 @@ class HeatingCoolingDemandPumpGroup(Group):
     def from_json(self, js, devices):
         super(HeatingCoolingDemandPumpGroup, self).from_json(js, devices)
         self.on = js["on"]
-        self.pumpProtectionSwitchingInterval = js["pumpProtectionSwitchingInterval"]
+        self.pumpProtectionSwitchingInterval = js[
+            "pumpProtectionSwitchingInterval"]
         self.pumpProtectionDuration = js["pumpProtectionDuration"]
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
 
     def __unicode__(self):
         return u"{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) " \
-               u"pumpLeadTime({})".format(super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
-                                          self.on, self.pumpProtectionDuration,
-                                          self.pumpProtectionSwitchingInterval,
-                                          self.pumpFollowUpTime, self.pumpLeadTime)
+               u"pumpLeadTime({})".format(
+            super(HeatingCoolingDemandPumpGroup, self).__unicode__(),
+            self.on, self.pumpProtectionDuration,
+            self.pumpProtectionSwitchingInterval,
+            self.pumpFollowUpTime, self.pumpLeadTime)
 
 
 class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
@@ -491,10 +555,11 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
     hour = 0
     minute = 0
     astroOffset = 0
-    astroLimitationType = "NO_LIMITATION" # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
-    switchTimeMode = "REGULAR_SWITCH_TIME" # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
-    dimLevel  = 1.0
+    astroLimitationType = "NO_LIMITATION"  # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
+    switchTimeMode = "REGULAR_SWITCH_TIME"  # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
+    dimLevel = 1.0
     rampTime = 0
+
     def from_json(self, js):
         super(TimeProfilePeriod, self).from_json(js)
         self.weekdays = js["weekdays"]
@@ -506,6 +571,7 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
         self.dimLevel = js["dimLevel"]
         self.rampTime = js["rampTime"]
 
+
 class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
     id = None
     homeId = None
@@ -514,14 +580,15 @@ class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
     periods = []
 
     def get_details(self):
-        data = { "groupId": self.groupId }
-        js = self._restCall("group/switching/profile/getProfile", body=json.dumps(data))
+        data = {"groupId": self.groupId}
+        js = self._restCall("group/switching/profile/getProfile",
+                            body=json.dumps(data))
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.id = js["id"]
         self.periods = []
         for p in js["periods"]:
-            period = TimeProfilePeriod()
+            period = TimeProfilePeriod(self._connection)
             period.from_json(p)
             self.periods.append(period)
 
@@ -529,7 +596,7 @@ class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
 class SwitchingProfileGroup(Group):
     on = None
     dimLevel = None
-    profileId = None # Not sure why it is there. You can't use it to query something.
+    profileId = None  # Not sure why it is there. You can't use it to query something.
     profileMode = None
 
     def from_json(self, js, devices):
@@ -540,28 +607,34 @@ class SwitchingProfileGroup(Group):
         self.profileMode = js["profileMode"]
 
     def __unicode__(self):
-        return u"{}: on({}) dimLevel({}) profileMode({})".format(super(SwitchingProfileGroup, self).__unicode__(),
-                                                self.on, self.dimLevel, self.profileMode)
+        return u"{}: on({}) dimLevel({}) profileMode({})".format(
+            super(SwitchingProfileGroup, self).__unicode__(),
+            self.on, self.dimLevel, self.profileMode)
 
     def set_group_channels(self):
         channels = []
         for d in self.devices:
-            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
-        data = { "groupId" : self.id, "channels" : channels}
-        return self._restCall("group/switching/profile/setGroupChannels", body=json.dumps(data))
+            channels.append[{"channelIndex": 1, "deviceId": d.id}]
+        data = {"groupId": self.id, "channels": channels}
+        return self._restCall("group/switching/profile/setGroupChannels",
+                              body=json.dumps(data))
 
-    def set_profile_mode(self,devices,automatic=True):
+    def set_profile_mode(self, devices, automatic=True):
         channels = []
         for d in devices:
-            channels.append[ { "channelIndex":1, "deviceId" : d.id}]
-        data = { "groupId" : self.id, "channels" : channels, "profileMode" : "AUTOMATIC" if automatic else "MANUAL"}
-        return self._restCall("group/switching/profile/setProfileMode", body=json.dumps(data))
+            channels.append[{"channelIndex": 1, "deviceId": d.id}]
+        data = {"groupId": self.id, "channels": channels,
+                "profileMode": "AUTOMATIC" if automatic else "MANUAL"}
+        return self._restCall("group/switching/profile/setProfileMode",
+                              body=json.dumps(data))
 
-    def create(self,label):
-        data = { "label" : label }
-        result = self._restCall("group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data))
+    def create(self, label):
+        data = {"label": label}
+        result = self._restCall(
+            "group/switching/profile/createSwitchingProfileGroup",
+            body=json.dumps(data))
         if "groupId" in result:
-            self.id=result["groupId"]
+            self.id = result["groupId"]
         return result
 
 
@@ -606,7 +679,8 @@ class SmokeAlarmDetectionRule(Group):
 
     def __unicode__(self):
         return u"{}: smokeDetectorAlarmType({})".format(
-            super(SmokeAlarmDetectionRule, self).__unicode__(), self.smokeDetectorAlarmType)
+            super(SmokeAlarmDetectionRule, self).__unicode__(),
+            self.smokeDetectorAlarmType)
 
 
 class ShutterWindProtectionRule(Group):
@@ -620,7 +694,8 @@ class ShutterWindProtectionRule(Group):
 
     def __unicode__(self):
         return u"{}: windSpeedThreshold({}) targetShutterLevel({})".format(
-            super(ShutterWindProtectionRule, self).__unicode__(), self.windSpeedThreshold, self.targetShutterLevel)
+            super(ShutterWindProtectionRule, self).__unicode__(),
+            self.windSpeedThreshold, self.targetShutterLevel)
 
 
 class LockOutProtectionRule(Group):
@@ -634,4 +709,5 @@ class LockOutProtectionRule(Group):
 
     def __unicode__(self):
         return u"{}: triggered({}) windowState({})".format(
-            super(LockOutProtectionRule, self).__unicode__(), self.triggered, self.windowState)
+            super(LockOutProtectionRule, self).__unicode__(), self.triggered,
+            self.windowState)

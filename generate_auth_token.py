@@ -2,6 +2,7 @@ import homematicip
 import time
 from builtins import input
 
+from homematicip.home import Home
 
 while True:
     access_point = input("Please enter the accesspoint id (SGTIN): ").replace('-', '').upper()
@@ -13,7 +14,8 @@ pin = input("Please enter the PIN (leave Blank if there is none): ")
 
 devicename = input("Please enter the client/devicename (leave blank to use default):")
 
-homematicip.init(access_point)
+home=Home()
+home.init(access_point)
 auth = homematicip.Auth()
 
 if pin != '':

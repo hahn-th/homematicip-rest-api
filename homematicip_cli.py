@@ -8,6 +8,9 @@ import homematicip
 import time
 from builtins import str
 
+from homematicip.home import Home
+
+
 def create_logger():
   logger = logging.getLogger()
   logger.setLevel(config.LOGGING_LEVEL)
@@ -16,7 +19,7 @@ def create_logger():
   logger.addHandler(handler)
   return logger
 
-logger = create_logger();
+logger = create_logger()
 
 
 def main():
@@ -81,10 +84,10 @@ def main():
 
     logger.setLevel(args.debug_level)
 
-    homematicip.init(config.ACCESS_POINT)
-    homematicip.set_auth_token(config.AUTH_TOKEN)
+    home = Home()
+    home.init(config.ACCESS_POINT)
+    home.set_auth_token(config.AUTH_TOKEN)
 
-    home = homematicip.Home()
     if not home.get_current_state():
         return
 
