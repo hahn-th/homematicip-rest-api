@@ -17,9 +17,8 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>
-    </CommandLineArguments>
-    <InterpreterId>Global|PythonCore|2.7-32</InterpreterId>
+    <CommandLineArguments></CommandLineArguments>
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +39,8 @@
     <Compile Include="homematicip\auth.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\class_maps.py" />
+    <Compile Include="homematicip\connection.py" />
     <Compile Include="homematicip\EventHook.py">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +77,7 @@
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|2.7" />
     <InterpreterReference Include="Global|PythonCore|2.7-32" />
+    <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in

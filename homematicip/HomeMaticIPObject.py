@@ -14,11 +14,5 @@ class HomeMaticIPObject:
     def from_json(self, js):
         pass
 
-    def __repr__(self):
-        return "id({}) {}".format(self.id, self.__str__())
-
-    def __unicode__(self):
-        return u'id({})'.format(self.id)
-
     def __str__(self):
-        return self.__unicode__()
+        return 'id({})'.format(self.id)
