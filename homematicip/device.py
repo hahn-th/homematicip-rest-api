@@ -357,7 +357,7 @@ class MotionDetectorIndoor(SabotageDevice):
 
 
 class PresenceDetectorIndoor(SabotageDevice):
-    """ HMIP-SMI (Presence Detector with Brightness Sensor - indoor) """
+    """ HMIP-SPI (Presence Sensor - indoor) """
 
     presenceDetected = None
     illumination = None
@@ -371,8 +371,10 @@ class PresenceDetectorIndoor(SabotageDevice):
                 self.presenceDetected = c["presenceDetected"]
                 self.illumination = c["illumination"]
 
-    def __unicode__(self):
-        return u"{} motionDetected({}) illumination({})".format(super(PresenceDetectorIndoor, self).__unicode__(), self.presenceDetected, self.illumination)
+    def __str__(self):
+        return "{} motionDetected({}) illumination({})".format(
+            super().__str__(),
+            self.presenceDetected, self.illumination)
 
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
