@@ -7,7 +7,6 @@ import sys
 import homematicip
 import time
 from builtins import str
-from homematicip import Device
 
 from homematicip.home import Home
 
