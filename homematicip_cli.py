@@ -7,6 +7,7 @@ import sys
 import homematicip
 import time
 from builtins import str
+from homematicip import Device
 
 def create_logger():
   logger = logging.getLogger()
@@ -286,8 +287,12 @@ def main():
 
 def printEvents(eventList):
     for event in eventList:
-        print(u"EventType: {} Data: {}".format(event["eventType"], event["data"]))
-
+        try:
+            data = event["data"]
+            if isinstance(data, Device) and data.deviceType == 'PRESENCE_DETECTOR_INDOOR':
+                print(u"EventType: {} Data: {}".format(event["eventType"], event["data"]))
+        except TypeError:
+            continue
 
 if __name__ == "__main__":
     main()

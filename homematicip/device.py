@@ -301,6 +301,24 @@ class MotionDetectorIndoor(SabotageDevice):
         return u"{} motionDetected({}) illumination({})".format(super(MotionDetectorIndoor, self).__unicode__(),
                                                                               self.motionDetected, self.illumination)
 
+class PresenceDetectorIndoor(SabotageDevice):
+    """ HMIP-SMI (Presence Detector with Brightness Sensor - indoor) """
+
+    presenceDetected = None
+    illumination = None
+
+    def from_json(self, js):
+        super(PresenceDetectorIndoor, self).from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "PRESENCE_DETECTION_CHANNEL":
+                self.presenceDetected = c["presenceDetected"]
+                self.illumination = c["illumination"]
+
+    def __unicode__(self):
+        return u"{} motionDetected({}) illumination({})".format(super(PresenceDetectorIndoor, self).__unicode__(), self.presenceDetected, self.illumination)
+
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
 
