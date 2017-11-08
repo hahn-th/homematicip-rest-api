@@ -9,6 +9,9 @@ import time
 from builtins import str
 from homematicip import Device
 
+from homematicip.home import Home
+
+
 def create_logger():
   logger = logging.getLogger()
   logger.setLevel(config.LOGGING_LEVEL)
@@ -17,7 +20,7 @@ def create_logger():
   logger.addHandler(handler)
   return logger
 
-logger = create_logger();
+logger = create_logger()
 
 
 def main():
@@ -82,10 +85,10 @@ def main():
 
     logger.setLevel(args.debug_level)
 
-    homematicip.init(config.ACCESS_POINT)
-    homematicip.set_auth_token(config.AUTH_TOKEN)
+    home = Home()
+    home.init(config.ACCESS_POINT)
+    home.set_auth_token(config.AUTH_TOKEN)
 
-    home = homematicip.Home()
     if not home.get_current_state():
         return
 
@@ -118,7 +121,7 @@ def main():
         command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print(u"Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label))
+            print("Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label))
 
     if args.protectionmode:
         command_entered = True
@@ -144,14 +147,14 @@ def main():
 
     if args.list_firmware:
         command_entered = True
-        print(str(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format("HmIP AccessPoint",
-                                                                                        home.currentAPVersion,
-                                                                                        home.availableAPVersion,
+        print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format("HmIP AccessPoint",
+                                                                                        home.currentAPVersion if home.currentAPVersion is not None else "None",
+                                                                                        home.availableAPVersion if home.availableAPVersion is not None else "None",
                                                                                         home.updateState)))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(str(u"{:45s} - Firmware: {:6s} - Available Firmware: {:6s} UpdateState: {}".format(d.label, d.firmwareVersion,
-                                                                                      d.availableFirmwareVersion, d.updateState)))
+            print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
+                                                                                      d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None", d.updateState)))
 
     if args.device:
         command_entered = False
@@ -194,7 +197,7 @@ def main():
                 command_entered = True
             else:
                 logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
-        
+
         if args.device_enable_router_module != None:
             if device.routerModuleSupported or True:
                 device.set_router_module_enabled(args.device_enable_router_module)
@@ -261,7 +264,7 @@ def main():
             command_entered = True
             for p in group.profiles:
                 isActive = p.id == group.activeProfile.id
-                print(u"Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive))
+                print("Index: {} - Id: {} - Name: {} - Active: {}".format(p.index, p.id, p.name, isActive))
 
         if args.group_shutter_level:
             command_entered = True
@@ -287,12 +290,8 @@ def main():
 
 def printEvents(eventList):
     for event in eventList:
-        try:
-            data = event["data"]
-            if isinstance(data, Device) and data.deviceType == 'PRESENCE_DETECTOR_INDOOR':
-                print(u"EventType: {} Data: {}".format(event["eventType"], event["data"]))
-        except TypeError:
-            continue
+        print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
+
 
 if __name__ == "__main__":
     main()
