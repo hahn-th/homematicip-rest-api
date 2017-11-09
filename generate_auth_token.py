@@ -1,6 +1,8 @@
 import homematicip
+import homematicip.auth
 import time
 from builtins import input
+
 
 from homematicip.home import Home
 
@@ -16,7 +18,7 @@ devicename = input("Please enter the client/devicename (leave blank to use defau
 
 home=Home()
 home.init(access_point)
-auth = homematicip.Auth()
+auth = homematicip.auth.Auth(home)
 
 if pin != '':
     auth.pin=pin
