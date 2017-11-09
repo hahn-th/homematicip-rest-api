@@ -96,7 +96,7 @@ class Connection:
                 result = requests.post(requestPath, data=body,
                                        headers=self.headers,
                                        timeout=self._restCallTimout)
-                ret = (result.json() if result.content != "" else "")
+                ret = (result.json() if len(result.content) != 0 else "")
                 logger.debug(
                     "_restcall result: Errorcode={} content({})".format(
                         result.status_code, ret))
