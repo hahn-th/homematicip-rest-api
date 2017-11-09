@@ -41,6 +41,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 - [X] HMIP-FROLL (Shutter Actuator - flush-mount)
 - [X] HMIP-BROLL (Shutter Actuator - brand-mount)
+- [X] HMIP-SPI (Precence Sensor - indoor)
 
 ## Groups ##
 - [X] Meta (Rooms)
