@@ -15,7 +15,6 @@ import sys
 
 logger = logging.getLogger(__name__)
 
-
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
     temperature = 0.0
     weatherCondition = "CLEAR"
