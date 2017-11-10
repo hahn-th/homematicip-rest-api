@@ -75,8 +75,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             return False
         data = {"deviceId": self.id, "channelIndex": 0,
                 "routerModuleEnabled": enabled}
-        result = self._restCall("device/configuration/setRouterModuleEnabled",
-                                json.dumps(data))
+        result = self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
         if result == "":
             return True
         else:
@@ -119,8 +118,7 @@ class OperationLockableDevice(Device):
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id,
                 "operationLock": operationLock}
-        return self._restCall("device/configuration/setOperationLock",
-                              json.dumps(data))
+        return self._restCall("device/configuration/setOperationLock", json.dumps(data))
 
     def __str__(self):
         return "{}: operationLockActive({})".format(
@@ -212,8 +210,7 @@ class TemperatureHumiditySensorDisplay(Device):
 
     def set_display(self, display=DISPLAY_ACTUAL):
         data = {"channelIndex": 1, "deviceId": self.id, "display": display}
-        return self._restCall("device/configuration/setClimateControlDisplay",
-                              json.dumps(data))
+        return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
         return "{}: actualTemperature({}) humidity({})".format(

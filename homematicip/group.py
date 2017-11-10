@@ -116,8 +116,7 @@ class SwitchingGroup(Group):
 
     def set_switch_state(self, on=True):
         data = {"groupId": self.id, "on": on}
-        return self._restCall("group/switching/setState",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/setState", body=json.dumps(data))
 
     def turn_on(self):
         return self.set_switch_state(True)
@@ -127,8 +126,7 @@ class SwitchingGroup(Group):
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
-        return self._restCall("group/switching/setShutterLevel",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
@@ -148,8 +146,7 @@ class LinkedSwitchingGroup(SwitchingGroup):
             channel = {"channelIndex": 1, "deviceId": d.id}
             switchChannels.append(channel)
         data = {"groupId": self.id, "switchChannels": switchChannels}
-        return self._restCall("home/security/setLightGroupSwitches",
-                              body=json.dumps(data))
+        return self._restCall("home/security/setLightGroupSwitches", body=json.dumps(data))
 
 
 class ExtendedLinkedSwitchingGroup(SwitchingGroup):
@@ -170,8 +167,7 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
 
     def set_on_time(self, onTimeSeconds):
         data = {"groupId": self.id, "onTime": onTimeSeconds}
-        return self._restCall("group/switching/linked/setOnTime",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
 
 
 class AlarmSwitchingGroup(Group):
@@ -204,8 +200,7 @@ class AlarmSwitchingGroup(Group):
 
     def set_on_time(self, onTimeSeconds):
         data = {"groupId": self.id, "onTime": onTimeSeconds}
-        return self._restCall("group/switching/arlarm/setOnTime",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/arlarm/setOnTime", body=json.dumps(data))
 
     def __str__(self):
         return "{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
@@ -217,14 +212,12 @@ class AlarmSwitchingGroup(Group):
     def test_signal_optical(self,
                             signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
         data = {"groupId": self.id, "signalOptical": signalOptical}
-        return self._restCall("group/switching/arlarm/testSignalOptical",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/arlarm/testSignalOptical", body=json.dumps(data))
 
     def set_signal_optical(self,
                            signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
         data = {"groupId": self.id, "signalOptical": signalOptical}
-        return self._restCall("group/switching/arlarm/setSignalOptical",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/arlarm/setSignalOptical", body=json.dumps(data))
 
 
 # at the moment it doesn't look like this class has any special properties/functions
@@ -250,8 +243,7 @@ class HeatingChangeoverGroup(Group):
         self.on = js["on"]
 
     def __str__(self):
-        return "{} on({})".format(
-            super().__str__(), self.on)
+        return "{} on({})".format( super().__str__(), self.on)
 
 
 # at the moment it doesn't look like this class has any special properties/functions
@@ -379,8 +371,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
                     , "index": self.index, "name": self.name,
                             "profileDays": days, "type": self.type},
                 "profileIndex": self.index}
-        return self._restCall("group/heating/updateProfile",
-                              body=json.dumps(data))
+        return self._restCall("group/heating/updateProfile", body=json.dumps(data))
 
 
 class HeatingGroup(Group):
@@ -458,8 +449,7 @@ class HeatingGroup(Group):
 
     def set_point_temperature(self, temperature):
         data = {"groupId": self.id, "setPointTemperature": temperature}
-        return self._restCall("group/heating/setSetPointTemperature",
-                              body=json.dumps(data))
+        return self._restCall("group/heating/setSetPointTemperature", body=json.dumps(data))
 
     def set_boost(self, enable=True):
         data = {"groupId": self.id, "boost": enable}
@@ -467,8 +457,7 @@ class HeatingGroup(Group):
 
     def set_active_profile(self, index):
         data = {"groupId": self.id, "profileIndex": index}
-        return self._restCall("group/heating/setActiveProfile",
-                              body=json.dumps(data))
+        return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
 
 
 class HeatingDehumidifierGroup(Group):
@@ -581,8 +570,7 @@ class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
 
     def get_details(self):
         data = {"groupId": self.groupId}
-        js = self._restCall("group/switching/profile/getProfile",
-                            body=json.dumps(data))
+        js = self._restCall("group/switching/profile/getProfile", body=json.dumps(data))
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.id = js["id"]
@@ -616,8 +604,7 @@ class SwitchingProfileGroup(Group):
         for d in self.devices:
             channels.append[{"channelIndex": 1, "deviceId": d.id}]
         data = {"groupId": self.id, "channels": channels}
-        return self._restCall("group/switching/profile/setGroupChannels",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/profile/setGroupChannels", body=json.dumps(data))
 
     def set_profile_mode(self, devices, automatic=True):
         channels = []
@@ -625,14 +612,12 @@ class SwitchingProfileGroup(Group):
             channels.append[{"channelIndex": 1, "deviceId": d.id}]
         data = {"groupId": self.id, "channels": channels,
                 "profileMode": "AUTOMATIC" if automatic else "MANUAL"}
-        return self._restCall("group/switching/profile/setProfileMode",
-                              body=json.dumps(data))
+        return self._restCall("group/switching/profile/setProfileMode", body=json.dumps(data))
 
     def create(self, label):
         data = {"label": label}
         result = self._restCall(
-            "group/switching/profile/createSwitchingProfileGroup",
-            body=json.dumps(data))
+            "group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data))
         if "groupId" in result:
             self.id = result["groupId"]
         return result
