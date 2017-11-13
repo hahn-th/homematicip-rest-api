@@ -60,8 +60,8 @@ class Connection:
         return self._clientauth_token
 
     def init(self, accesspoint_id, lookup=True, **kwargs):
-        self.clientCharacteristics["id"] = accesspoint_id.replace(
-            '-', '').upper()
+        accesspoint_id = accesspoint_id.replace('-', '').upper()
+        self.clientCharacteristics["id"] = accesspoint_id
         self._clientauth_token = hashlib.sha512(
             str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode(
                 'utf-8')).hexdigest().upper()
