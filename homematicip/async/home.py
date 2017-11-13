@@ -44,7 +44,7 @@ class AsyncHome(Home):
     def enable_events(self):
         """Starts listening for incoming websocket data."""
         self._connection.listen_for_websocket_data(
-            self.__ws_on_message)
+            self._ws_on_message)
 
     def disable_events(self):
         self._connection.close_websocket_connection()

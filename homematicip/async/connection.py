@@ -119,9 +119,8 @@ class AsyncConnection(BaseConnection):
                     while not self.socket_connection.closed:
                         msg = await self.socket_connection.receive()
                         if msg.tp == aiohttp.WSMsgType.BINARY:
-                            js = json.loads(str(msg.data, 'utf-8'))
-                            logger.debug("incoming: {}".format(js))
-                            incoming_parser(js)
+                            message = str(msg.data,'utf-8')
+                            incoming_parser(None,message)
                 except Exception as e:
                     logger.exception(e)
                     await asyncio.sleep(3)
