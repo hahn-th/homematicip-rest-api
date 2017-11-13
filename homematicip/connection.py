@@ -4,6 +4,7 @@ import locale
 import platform
 import logging
 import requests
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ class Connection:
         return self._clientauth_token
 
     def init(self, accesspoint_id, lookup=True, **kwargs):
-        accesspoint_id = accesspoint_id.replace('-', '').upper()
+        accesspoint_id = re.sub('\W+','', accesspoint_id).upper()
         self.clientCharacteristics["id"] = accesspoint_id
         self._clientauth_token = hashlib.sha512(
             str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode(
