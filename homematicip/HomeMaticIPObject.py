@@ -1,5 +1,8 @@
 import sys
 
+import logging
+
+LOGGER = logging.getLogger(__name__)
 
 class HomeMaticIPObject:
     """This class represents a generic homematic ip object to make
@@ -12,7 +15,7 @@ class HomeMaticIPObject:
         return self._connection._restCall(path, body)
 
     def from_json(self, js):
-        pass
+        LOGGER.debug("from_json call HomeMaticIpObject")
 
     def __str__(self):
         return 'id({})'.format(self.id)

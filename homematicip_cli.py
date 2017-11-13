@@ -85,8 +85,8 @@ def main():
     logger.setLevel(args.debug_level)
 
     home = Home()
-    home.init(config.ACCESS_POINT)
     home.set_auth_token(config.AUTH_TOKEN)
+    home.init(config.ACCESS_POINT)
 
     if not home.get_current_state():
         return

@@ -49,8 +49,8 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
 
     def __str__(self):
         return "city({}) latitude({}) longitude({})".format(self.city,
-                                                             self.latitude,
-                                                             self.longitude)
+                                                            self.latitude,
+                                                            self.longitude)
 
 
 class Client(HomeMaticIPObject.HomeMaticIPObject):
@@ -109,8 +109,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
-    def __init__(self):
-        super().__init__(Connection())
+    def __init__(self, connection=Connection()):
+        super().__init__(connection)
 
     def init(self, access_point_id, lookup=True):
         self._connection.init(access_point_id, lookup)
@@ -171,9 +171,6 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 d.from_json(device)
                 ret.append(d)
             else:
-                d = Device(self._connection)
-                d.from_json(device)
-                ret.append(d)
                 logger.warning(
                     "There is no class for {} yet".format(deviceType))
         return ret
