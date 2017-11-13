@@ -342,8 +342,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 'AUTHTOKEN: {}'.format(self._connection.auth_token),
                 'CLIENTAUTH: {}'.format(self._connection.clientauth_token)
                 ],
-            on_message=self.__ws_on_message,
-            on_error=self.__ws_on_error)
+            on_message=self._ws_on_message,
+            on_error=self._ws_on_error)
         self.__webSocketThread = threading.Thread(
             target=self.__webSocket.run_forever)
         self.__webSocketThread.daemon = True
@@ -352,10 +352,10 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def disable_events(self):
         self.__webSocket.close()
 
-    def __ws_on_error(self, ws, message):
+    def _ws_on_error(self, ws, message):
         logger.error("Websocket error: {}".format(message))
 
-    def __ws_on_message(self, ws, message):
+    def _ws_on_message(self, ws, message):
         js = json.loads(message)
         eventList = []
         try:
