@@ -1,3 +1,10 @@
+from homematicip.base.constants import MOTION_DETECTOR_INDOOR, \
+    KEY_REMOTE_CONTROL_ALARM, PLUGABLE_SWITCH, FULL_FLUSH_SHUTTER, \
+    HEATING_THERMOSTAT, SHUTTER_CONTACT, SHUTTER_CONTACT_INVISIBLE, \
+    WALL_MOUNTED_THERMOSTAT_PRO, BRAND_WALL_MOUNTED_THERMOSTAT, SMOKE_DETECTOR, \
+    FLOOR_TERMINAL_BLOCK_6, PLUGABLE_SWITCH_MEASURING, \
+    TEMPERATURE_HUMIDITY_SENSOR_DISPLAY, TEMPERATURE_HUMIDITY_SENSOR, \
+    PUSH_BUTTON, ALARM_SIREN_INDOOR, BRAND_SHUTTER, PRECENCE_DETECTOR_INDOOR
 from homematicip.device import HeatingThermostat, ShutterContact, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, \
     PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
@@ -18,24 +25,24 @@ from homematicip.securityEvent import SilenceChangedEvent, \
     AccessPointDisconnectedEvent, SensorEvent
 
 TYPE_CLASS_MAP = {
-    "HEATING_THERMOSTAT": HeatingThermostat,
-    "SHUTTER_CONTACT": ShutterContact,
-    "SHUTTER_CONTACT_INVISIBLE" : ShutterContact,
-    "WALL_MOUNTED_THERMOSTAT_PRO": WallMountedThermostatPro,
-    "BRAND_WALL_MOUNTED_THERMOSTAT": WallMountedThermostatPro,
-    "SMOKE_DETECTOR": SmokeDetector,
-    "FLOOR_TERMINAL_BLOCK_6": FloorTerminalBlock6,
-    "PLUGABLE_SWITCH_MEASURING": PlugableSwitchMeasuring,
-    "TEMPERATURE_HUMIDITY_SENSOR_DISPLAY": TemperatureHumiditySensorDisplay,
-    "TEMPERATURE_HUMIDITY_SENSOR": TemperatureHumiditySensorWithoutDisplay,
-    "PUSH_BUTTON": PushButton,
-    "ALARM_SIREN_INDOOR": AlarmSirenIndoor,
-    "MOTION_DETECTOR_INDOOR": MotionDetectorIndoor,
-    "KEY_REMOTE_CONTROL_ALARM": KeyRemoteControlAlarm,
-    "PLUGABLE_SWITCH": PlugableSwitch,
-    "FULL_FLUSH_SHUTTER": FullFlushShutter,
-    "BRAND_SHUTTER": FullFlushShutter,
-    "PRECENCE_DETECTOR_INDOOR": PresenceDetectorIndoor
+    HEATING_THERMOSTAT: HeatingThermostat,
+    SHUTTER_CONTACT: ShutterContact,
+    SHUTTER_CONTACT_INVISIBLE : ShutterContact,
+    WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
+    BRAND_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
+    SMOKE_DETECTOR: SmokeDetector,
+    FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
+    PLUGABLE_SWITCH_MEASURING: PlugableSwitchMeasuring,
+    TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
+    TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
+    PUSH_BUTTON: PushButton,
+    ALARM_SIREN_INDOOR: AlarmSirenIndoor,
+    MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
+    KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
+    PLUGABLE_SWITCH: PlugableSwitch,
+    FULL_FLUSH_SHUTTER: FullFlushShutter,
+    BRAND_SHUTTER: FullFlushShutter,
+    PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor
     }
 
 TYPE_GROUP_MAP = {
