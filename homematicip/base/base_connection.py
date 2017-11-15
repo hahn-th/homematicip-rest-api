@@ -1,6 +1,7 @@
 import hashlib
 import locale
 import platform
+import re
 
 ATTR_AUTH_TOKEN = 'AUTHTOKEN'
 ATTR_CLIENT_AUTH = 'CLIENTAUTH'
@@ -66,7 +67,7 @@ class BaseConnection:
         return self._clientauth_token
 
     def set_token_and_characteristics(self, accesspoint_id):
-        accesspoint_id = accesspoint_id.replace('-', '').upper()
+        accesspoint_id = re.sub('\W+','', accesspoint_id).upper()
         self._clientCharacteristics["id"]= accesspoint_id
         self._clientauth_token = hashlib.sha512(
             str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode(

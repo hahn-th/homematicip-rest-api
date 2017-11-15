@@ -4,7 +4,6 @@ import locale
 import platform
 import logging
 import requests
-import re
 
 from homematicip.base.base_connection import BaseConnection
 
@@ -13,12 +12,6 @@ logger = logging.getLogger(__name__)
 
 class Connection(BaseConnection):
     def init(self, accesspoint_id, lookup=True, **kwargs):
-        accesspoint_id = re.sub('\W+','', accesspoint_id).upper()
-        self.clientCharacteristics["id"] = accesspoint_id
-        self._clientauth_token = hashlib.sha512(
-            str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode(
-                'utf-8')).hexdigest().upper()
-        self.headers[CLIENT_AUTH] = self._clientauth_token
         self.set_token_and_characteristics(accesspoint_id)
 
         if lookup:
