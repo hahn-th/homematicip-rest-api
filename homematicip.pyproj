@@ -17,7 +17,8 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments></CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -36,9 +37,16 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="dump_devicevalues.py" />
+    <Compile Include="homematicip\async\class_maps.py" />
+    <Compile Include="homematicip\async\connection.py" />
+    <Compile Include="homematicip\async\device.py" />
+    <Compile Include="homematicip\async\home.py" />
     <Compile Include="homematicip\auth.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\base\base_connection.py" />
+    <Compile Include="homematicip\base\constants.py" />
+    <Compile Include="homematicip\base\helpers.py" />
     <Compile Include="homematicip\class_maps.py" />
     <Compile Include="homematicip\connection.py" />
     <Compile Include="homematicip\EventHook.py">
@@ -56,6 +64,7 @@
     <Compile Include="homematicip\HomeMaticIPObject.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\homematicip_cli_async.py" />
     <Compile Include="homematicip\securityEvent.py">
       <SubType>Code</SubType>
     </Compile>
@@ -69,14 +78,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />
+    <Folder Include="homematicip\async\" />
+    <Folder Include="homematicip\base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|2.7" />
-    <InterpreterReference Include="Global|PythonCore|2.7-32" />
     <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <!-- Uncomment the CoreCompile target to enable the Build command in
