@@ -19,7 +19,7 @@ from homematicip.group import SecurityGroup, SwitchingGroup, \
     HeatingDehumidifierGroup, HeatingCoolingDemandBoilerGroup, \
     HeatingCoolingDemandPumpGroup, SwitchingProfileGroup, \
     OverHeatProtectionRule, SmokeAlarmDetectionRule, LockOutProtectionRule, \
-    ShutterWindProtectionRule
+    ShutterWindProtectionRule, ExtendedLinkedShutterGroup
 from homematicip.securityEvent import SilenceChangedEvent, \
     ActivationChangedEvent, AccessPointConnectedEvent, \
     AccessPointDisconnectedEvent, SensorEvent
@@ -65,7 +65,8 @@ TYPE_GROUP_MAP = {
     "OVER_HEAT_PROTECTION_RULE": OverHeatProtectionRule,
     "SMOKE_ALARM_DETECTION_RULE": SmokeAlarmDetectionRule,
     "LOCK_OUT_PROTECTION_RULE": LockOutProtectionRule,
-    "SHUTTER_WIND_PROTECTION_RULE": ShutterWindProtectionRule
+    "SHUTTER_WIND_PROTECTION_RULE": ShutterWindProtectionRule,
+    "EXTENDED_LINKED_SHUTTER": ExtendedLinkedShutterGroup
     }
 
 TYPE_SECURITY_EVENT_MAP = {
