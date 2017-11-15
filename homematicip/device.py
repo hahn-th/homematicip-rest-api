@@ -18,8 +18,13 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
     lowBat = None
     routerModuleSupported = False
     routerModuleEnabled = False
-
-
+    modelType = ""
+    modelId = 0
+    oem = ""
+    manufacturerCode = 0
+    serializedGlobalTradeItemNumber = ""
+    rssiDeviceValue = 0
+    rssiPeerValue = 0
 
     def from_json(self, js):
         self.id = js["id"]
@@ -35,6 +40,12 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.updateState = js["updateState"]
         self.firmwareVersion = js["firmwareVersion"]
         self.availableFirmwareVersion = js["availableFirmwareVersion"]
+        self.modelType = js['modelType']
+        self.modelId = js['modelId']
+        self.oem = js['oem']
+        self.manufacturerCode = js['manufacturerCode']
+        self.serializedGlobalTradeItemNumber = js['serializedGlobalTradeItemNumber']
+
         for cid in js["functionalChannels"]:
             c = js["functionalChannels"][cid]
             type = c["functionalChannelType"]
@@ -43,12 +54,12 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
                 self.lowBat = c["lowBat"]
                 self.routerModuleSupported = c["routerModuleSupported"]
                 self.routerModuleEnabled = c["routerModuleEnabled"]
+                self.rssiDeviceValue = c["rssiDeviceValue"]
+                self.rssiPeerValue = c["rssiPeerValue"]
                 break
 
     def __str__(self):
-        return "{} {} lowbat({}) unreach({})".format(self.deviceType,
-                                                      self.label, self.lowBat,
-                                                      self.unreach)
+        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({})".format(self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue, self.rssiPeerValue)
 
     def set_label(self, label):
         data = {"deviceId": self.id, "label": label}
@@ -94,11 +105,12 @@ class SabotageDevice(Device):
                 self.unreach = c["unreach"]
                 self.lowBat = c["lowBat"]
                 self.sabotage = c["sabotage"]
+                self.rssiDeviceValue = c["rssiDeviceValue"]
+                self.rssiPeerValue = c["rssiPeerValue"]
                 break  # not needed to check the other channels
 
     def __str__(self):
-        return "{}: sabotage({})".format(
-            super().__str__(), self.sabotage)
+        return "{}: sabotage({})".format(super().__str__(), self.sabotage)
 
 
 class OperationLockableDevice(Device):
@@ -113,6 +125,8 @@ class OperationLockableDevice(Device):
                 self.unreach = c["unreach"]
                 self.lowBat = c["lowBat"]
                 self.operationLockActive = c["operationLockActive"]
+                self.rssiDeviceValue = c["rssiDeviceValue"]
+                self.rssiPeerValue = c["rssiPeerValue"]
                 break  # not needed to check the other channels
 
     def set_operation_lock(self, operationLock=True):
@@ -121,8 +135,7 @@ class OperationLockableDevice(Device):
         return self._restCall("device/configuration/setOperationLock", json.dumps(data))
 
     def __str__(self):
-        return "{}: operationLockActive({})".format(
-            super().__str__(),
+        return "{}: operationLockActive({})".format(super().__str__(),
             self.operationLockActive)
 
 
@@ -142,8 +155,7 @@ class HeatingThermostat(OperationLockableDevice):
                 self.valvePosition = c["valvePosition"]
 
     def __str__(self):
-        return "{} valvePosition({})".format(
-            super().__str__(), self.valvePosition)
+        return "{} valvePosition({})".format(super().__str__(), self.valvePosition)
 
 
 class ShutterContact(SabotageDevice):
@@ -161,8 +173,7 @@ class ShutterContact(SabotageDevice):
                 self.eventDelay = c["eventDelay"]
 
     def __str__(self):
-        return "{} windowState({})".format(
-            super().__str__(), self.windowState)
+        return "{} windowState({})".format(super().__str__(), self.windowState)
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
@@ -213,8 +224,7 @@ class TemperatureHumiditySensorDisplay(Device):
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
-        return "{}: actualTemperature({}) humidity({})".format(
-            super().__str__(), self.actualTemperature, self.humidity)
+        return "{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 
 class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
@@ -247,8 +257,7 @@ class SmokeDetector(Device):
                 self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
 
     def __str__(self):
-        return "{}: smokeDetectorAlarmType({})".format(
-            super().__str__(),
+        return "{}: smokeDetectorAlarmType({})".format(super().__str__(),
             self.smokeDetectorAlarmType)
 
 
@@ -269,8 +278,7 @@ class FloorTerminalBlock6(Device):
                 self.heatingValveType = c["heatingValveType"]
 
     def __str__(self):
-        return "{}: globalPumpControl({})".format(
-            super().__str__(),
+        return "{}: globalPumpControl({})".format(super().__str__(),
             self.globalPumpControl)
 
 
@@ -319,8 +327,7 @@ class PlugableSwitchMeasuring(PlugableSwitch):
                 self.currentPowerConsumption = c["currentPowerConsumption"]
 
     def __str__(self):
-        return "{} energyCounter({}) currentPowerConsumption({}W)".format(
-            super().__str__()
+        return "{} energyCounter({}) currentPowerConsumption({}W)".format(super().__str__()
             , self.energyCounter, self.currentPowerConsumption)
 
 
@@ -348,8 +355,7 @@ class MotionDetectorIndoor(SabotageDevice):
                 self.illumination = c["illumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(
-            super().__str__(),
+        return "{} motionDetected({}) illumination({})".format(super().__str__(),
             self.motionDetected, self.illumination)
 
 
@@ -369,8 +375,7 @@ class PresenceDetectorIndoor(SabotageDevice):
                 self.illumination = c["illumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(
-            super().__str__(),
+        return "{} motionDetected({}) illumination({})".format(super().__str__(),
             self.presenceDetected, self.illumination)
 
 class KeyRemoteControlAlarm(Device):
@@ -407,8 +412,7 @@ class FullFlushShutter(Device):
                 self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
 
     def __str__(self):
-        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
-            super().__str__(),
+        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(super().__str__(),
             self.shutterLevel, self.topToBottomReferenceTime,
             self.bottomToTopReferenceTime)
 
