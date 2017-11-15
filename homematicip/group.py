@@ -169,6 +169,26 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
         data = {"groupId": self.id, "onTime": onTimeSeconds}
         return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
 
+class ExtendedLinkedShutterGroup(Group):
+    shutterLevel = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.shutterLevel = js["shutterLevel"]
+
+    def __str__(self):
+        return "{} shutterLevel({})".format(
+            super().__str__(),
+            self.shutterLevel)
+
+    def set_shutter_level(self, level):
+        data = {"groupId": self.id, "shutterLevel": level}
+        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+
+    def set_shutter_stop(self):
+        data = {"groupId": self.id}
+        return self._restCall("group/switching/stop", body=json.dumps(data))
+
 
 class AlarmSwitchingGroup(Group):
     SIGNAL_OPTICAL_DISABLE_OPTICAL_SIGNAL = "DISABLE_OPTICAL_SIGNAL"
@@ -200,7 +220,7 @@ class AlarmSwitchingGroup(Group):
 
     def set_on_time(self, onTimeSeconds):
         data = {"groupId": self.id, "onTime": onTimeSeconds}
-        return self._restCall("group/switching/arlarm/setOnTime", body=json.dumps(data))
+        return self._restCall("group/switching/alarm/setOnTime", body=json.dumps(data))
 
     def __str__(self):
         return "{}: on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
@@ -212,12 +232,12 @@ class AlarmSwitchingGroup(Group):
     def test_signal_optical(self,
                             signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
         data = {"groupId": self.id, "signalOptical": signalOptical}
-        return self._restCall("group/switching/arlarm/testSignalOptical", body=json.dumps(data))
+        return self._restCall("group/switching/alarm/testSignalOptical", body=json.dumps(data))
 
     def set_signal_optical(self,
                            signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
         data = {"groupId": self.id, "signalOptical": signalOptical}
-        return self._restCall("group/switching/arlarm/setSignalOptical", body=json.dumps(data))
+        return self._restCall("group/switching/alarm/setSignalOptical", body=json.dumps(data))
 
 
 # at the moment it doesn't look like this class has any special properties/functions
