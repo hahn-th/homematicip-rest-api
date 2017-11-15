@@ -144,9 +144,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             'home/getCurrentState',
             json.dumps(self._connection.clientCharacteristics))
         if "errorCode" in json_state:
-            logger.error(
-                "Could not get the current configuration. Error: {}".format(
-                    json_state["errorCode"]))
+            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
             return False
 
         js_home = json_state["home"]
@@ -159,18 +157,22 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
         return True
 
+    def _parse_device(self, json_state):        
+        device = json_state
+        deviceType = device["type"]
+        if deviceType in self._typeClassMap:
+            d = self._typeClassMap[deviceType](self._connection)
+            d.from_json(device)
+            return d
+        else:
+            logger.warning("There is no class for {} yet".format(deviceType))
+        return None
+
     def _get_devices(self, json_state):
         ret = []
         data = json_state
         for device in data["devices"].values():
-            deviceType = device["type"]
-            if deviceType in self._typeClassMap:
-                d = self._typeClassMap[deviceType](self._connection)
-                d.from_json(device)
-                ret.append(d)
-            else:
-                logger.warning(
-                    "There is no class for {} yet".format(deviceType))
+            ret.append(self._parse_device(device))
         return ret
 
     def _get_clients(self, json_state):
@@ -182,29 +184,34 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             ret.append(c)
         return ret
 
+    def _parse_group(self, json_state, groups = None):
+        group = json_state
+        groupType = group["type"]
+        if groupType in self._typeGroupMap:
+            g = self._typeGroupMap[groupType](self._connection)
+            g.from_json(group, self.devices)
+        elif groupType == "META":
+            g = MetaGroup(self._connection)
+            g.from_json(group, self.devices, groups if groups else self.groups )
+        else:
+            g = Group(self._connection)
+            g.from_json(group, self.devices)
+            logger.warning("There is no class for {} yet".format(groupType))
+        return g
+
     def _get_groups(self, json_state):
         ret = []
         data = json_state
         metaGroups = []
         for group in data["groups"].values():
             groupType = group["type"]
-            if groupType in self._typeGroupMap:
-                g = self._typeGroupMap[groupType](self._connection)
-                g.from_json(group, self.devices)
-                ret.append(g)
-            elif groupType == "META":
+            if groupType == "META":
                 metaGroups.append(group)
             else:
-                g = Group(self._connection)
-                g.from_json(group, self.devices)
-                ret.append(g)
-                logger.warning(
-                    "There is no class for {} yet".format(groupType))
+                ret.append(self._parse_group(group))
 
         for mg in metaGroups:
-            g = MetaGroup(self._connection)
-            g.from_json(mg, self.devices, ret)
-            ret.append(g)
+            ret.append(self._parse_group(mg,ret))
         return ret
 
     def search_device_by_id(self, deviceID):
@@ -238,8 +245,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return None
 
     def set_security_zones_activation(self, internal=True, external=True):
-        data = {
-            "zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
+        data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return self._restCall("home/security/setZonesActivation", json.dumps(data))
 
     def set_location(self, city, latitude, longitude):
@@ -287,8 +293,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
         if "errorCode" in journal:
-            logger.error(
-                "Could not get the security journal. Error: {}".format(journal["errorCode"]))
+            logger.error("Could not get the security journal. Error: {}".format(journal["errorCode"]))
             return None
         ret = []
         for entry in journal["entries"]:
@@ -301,8 +306,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 j = SecurityEvent(self._connection)
                 j.from_json(entry)
                 ret.append(j)
-                logger.warning(
-                    "There is no class for {} yet".format(eventType))
+                logger.warning("There is no class for {} yet".format(eventType))
         return ret
 
     def delete_group(self, group):
@@ -362,11 +366,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             for eID in js["events"]:
                 event = js["events"][eID]
                 pushEventType = event["pushEventType"]
+                logger.debug(pushEventType)
                 obj = None
                 if pushEventType == "GROUP_CHANGED":
                     data = event["group"]
                     obj = self.search_group_by_id(data["id"])
-                    obj.from_json(data, self.devices)
+                    if type(obj) is MetaGroup:
+                        obj.from_json(data, self.devices, self.groups)
+                    else:
+                        obj.from_json(data, self.devices)
                 elif pushEventType == "HOME_CHANGED":
                     data = event["home"]
                     obj = self
@@ -385,13 +393,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     self.clients.remove(obj)
                 elif pushEventType == "DEVICE_ADDED":
                     data = event["device"]
-                    obj = Device(self._connection)  # TODO:implement typecheck
-                    obj.from_json(data)
+                    obj = self._parse_device(data)
                     self.devices.append(obj)
                 elif pushEventType == "DEVICE_CHANGED":
                     data = event["device"]
                     obj = self.search_device_by_id(data["id"])
-                    obj.from_json(data)
+                    if obj is None: # no DEVICE_ADDED Event?
+                        obj = self._parse_device(data)
+                        self.devices.append(obj)
+                    else:
+                        obj.from_json(data)
                 elif pushEventType == "DEVICE_REMOVED":
                     obj = self.search_device_by_id(event["id"])
                     self.devices.remove(obj)
@@ -399,18 +410,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     obj = self.search_group_by_id(event["id"])
                     self.groups.remove(obj)
                 elif pushEventType == "GROUP_ADDED":
-                    data = event["group"]
-                    obj = Group(self._connection)  # TODO:implement typecheck
-                    obj.from_json(data)
+                    group = event["group"]
+                    obj = self._parse_group(group,self.groups)
                     self.groups.append(obj)
                 elif pushEventType == "SECURITY_JOURNAL_CHANGED":
                     pass  # data is just none so nothing to do here
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 else:
-                    logger.warning(
-                        "Uknown EventType '{}' Data: {}".format(pushEventType,
-                                                                event))
+                    logger.warning("Uknown EventType '{}' Data: {}".format(pushEventType,event))
                 eventList.append({"eventType": pushEventType, "data": obj})
         except:
             logger.error("Unexpected error: {}".format(sys.exc_info()[0]))
