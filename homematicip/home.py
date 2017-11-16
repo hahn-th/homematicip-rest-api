@@ -15,6 +15,7 @@ import sys
 
 logger = logging.getLogger(__name__)
 
+
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
     temperature = 0.0
     weatherCondition = "CLEAR"
@@ -77,6 +78,7 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
             self.expirationTimestamp = datetime.fromtimestamp(time / 1000.0)
         else:
             self.expirationTimestamp = None
+
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
@@ -240,7 +242,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def set_security_zones_activation(self, internal=True, external=True):
         data = {
             "zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
-        return self._restCall("home/security/setZonesActivation", json.dumps(data))
+        return self._restCall("home/security/setZonesActivation",
+                              json.dumps(data))
 
     def set_location(self, city, latitude, longitude):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
@@ -248,15 +251,19 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_intrusion_alert_through_smoke_detectors(self, activate=True):
         data = {"intrusionAlertThroughSmokeDetectors": activate}
-        return self._restCall( "home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data))
+        return self._restCall(
+            "home/security/setIntrusionAlertThroughSmokeDetectors",
+            json.dumps(data))
 
     def activate_absence_with_period(self, endtime):
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
-        return self._restCall("home/heating/activateAbsenceWithPeriod", json.dumps(data))
+        return self._restCall("home/heating/activateAbsenceWithPeriod",
+                              json.dumps(data))
 
     def activate_absence_with_duration(self, duration):
         data = {"duration": duration}
-        return self._restCall("home/heating/activateAbsenceWithDuration", json.dumps(data))
+        return self._restCall("home/heating/activateAbsenceWithDuration",
+                              json.dumps(data))
 
     def deactivate_absence(self):
         return self._restCall("home/heating/deactivateAbsence")
@@ -264,7 +271,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def activate_vacation(self, endtime, temperature):
         data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M"),
                 "temperature": temperature}
-        return self._restCall("home/heating/activateVacation", json.dumps(data))
+        return self._restCall("home/heating/activateVacation",
+                              json.dumps(data))
 
     def deactivate_vacation(self):
         return self._restCall("home/heating/deactivateVacation")
@@ -272,7 +280,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def set_pin(self, newPin, oldPin=None):
         if newPin == None:
             newPin = ""
-        data = {"pin": newPin }
+        data = {"pin": newPin}
         if oldPin:
             self._connection.headers["PIN"] = oldPin
         result = self._restCall('home/setPin', body=json.dumps(data))
@@ -282,13 +290,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_zone_activation_delay(self, delay):
         data = {"zoneActivationDelay": delay}
-        return self._restCall("home/security/setZoneActivationDelay", body=json.dumps(data))
+        return self._restCall("home/security/setZoneActivationDelay",
+                              body=json.dumps(data))
 
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
         if "errorCode" in journal:
             logger.error(
-                "Could not get the security journal. Error: {}".format(journal["errorCode"]))
+                "Could not get the security journal. Error: {}".format(
+                    journal["errorCode"]))
             return None
         ret = []
         for entry in journal["entries"]:
@@ -321,7 +331,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_powermeter_unit_price(self, price):
         data = {"powerMeterUnitPrice": price}
-        return self._restCall("home/setPowerMeterUnitPrice", body=json.dumps(data))
+        return self._restCall("home/setPowerMeterUnitPrice",
+                              body=json.dumps(data))
 
     def set_zones_device_assignment(self, internal_devices, external_devices):
         """ sets the devices for the security zones
@@ -333,7 +344,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         external = [x.id for x in external_devices]
         data = {"zonesDeviceAssignment": {"INTERNAL": internal,
                                           "EXTERNAL": external}}
-        return self._restCall("home/security/setZonesDeviceAssignment", body=json.dumps(data))
+        return self._restCall("home/security/setZonesDeviceAssignment",
+                              body=json.dumps(data))
 
     def enable_events(self):
         websocket.enableTrace(True)
@@ -341,7 +353,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             self._connection.urlWebSocket, header=[
                 'AUTHTOKEN: {}'.format(self._connection.auth_token),
                 'CLIENTAUTH: {}'.format(self._connection.clientauth_token)
-                ],
+            ],
             on_message=self._ws_on_message,
             on_error=self._ws_on_error)
         self.__webSocketThread = threading.Thread(
@@ -357,6 +369,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def _ws_on_message(self, ws, message):
         js = json.loads(message)
+        logger.debug(js)
         eventList = []
         try:
             for eID in js["events"]:
@@ -409,9 +422,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 else:
                     logger.warning(
-                        "Uknown EventType '{}' Data: {}".format(pushEventType,
-                                                                event))
+                        "Uknown EventType '%s' Data: %s", pushEventType,
+                        event)
                 eventList.append({"eventType": pushEventType, "data": obj})
-        except:
-            logger.error("Unexpected error: {}".format(sys.exc_info()[0]))
+        except Exception as err:
+            logger.exception(err)
         self.onEvent.fire(eventList)
