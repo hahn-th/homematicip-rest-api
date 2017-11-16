@@ -1,5 +1,6 @@
 import logging
-from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring
+from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, \
+    SabotageDevice, ShutterContact
 
 ERROR_CODE = "errorCode"
 
@@ -40,4 +41,15 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncDevice):
 class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring,
                                    AsyncPlugableSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
+    pass
 
+
+class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
+    pass
+
+
+class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
+    """ HMIP-SWDO (Door / Window Contact - optical) /
+    HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
+
+    pass
