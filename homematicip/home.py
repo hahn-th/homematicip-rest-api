@@ -165,7 +165,10 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             d.from_json(device)
             return d
         else:
+            d = Device(self._connection)
+            d.from_json(device)
             logger.warning("There is no class for {} yet".format(deviceType))
+            return d
         return None
 
     def _get_devices(self, json_state):
