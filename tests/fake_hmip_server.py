@@ -89,8 +89,9 @@ class FakeLookupHmip(BaseFakeHmip):
 
 
 class FakeConnectionHmip(BaseFakeHmip):
-    js_response = {'response': True}
     """Test various connection issues"""
+    js_response = {'response': True}
+
 
     def add_routes(self):
         self.app.router.add_routes([

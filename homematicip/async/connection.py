@@ -79,7 +79,6 @@ class AsyncConnection(BaseConnection):
                     "Connection timed out or another error occurred %s" % path)
             except JSONDecodeError as err:
                 logger.exception(err)
-                raise
             finally:
                 if result is not None:
                     await result.release()
