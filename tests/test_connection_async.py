@@ -7,6 +7,7 @@ from homematicip.async.connection import AsyncConnection
 from homematicip.base.base_connection import HmipWrongHttpStatusError, HmipConnectionError, \
     ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
 from tests.fake_hmip_server import FakeLookupHmip, FakeConnectionHmip
+from tests.helpers import mockreturn
 
 
 @pytest.fixture
@@ -45,25 +46,6 @@ async def test_init(fake_lookup_connection):
     fake_lookup_connection.set_auth_token('auth_token')
     await fake_lookup_connection.init('accesspoint_id')
     assert fake_lookup_connection.urlWebSocket == FakeLookupHmip.host_response['urlWebSocket']
-
-
-class FakeResponse:
-    def __init__(self, status=200, body=None):
-        self.status = status
-        self.body = body
-
-    async def release(self):
-        pass
-
-
-def mockreturn(return_status=None, return_body=None, exception=None):
-    async def mocked(path, data, headers):
-        if exception:
-            raise exception
-        else:
-            return FakeResponse(status=return_status, body=return_body)
-
-    return mocked
 
 
 @pytest.mark.asyncio
