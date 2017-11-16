@@ -139,10 +139,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeState = js_home["apExchangeState"]
         self.id = js_home["id"]
 
+    def download_configuration(self):
+        return self._restCall( 'home/getCurrentState', json.dumps(self._connection.clientCharacteristics))
+
     def get_current_state(self):
-        json_state = self._restCall(
-            'home/getCurrentState',
-            json.dumps(self._connection.clientCharacteristics))
+        json_state = self.download_configuration()
+
         if "errorCode" in json_state:
             logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
             return False

@@ -6,6 +6,7 @@ from argparse import ArgumentParser
 import sys
 import homematicip
 import time
+import json
 from builtins import str
 
 from homematicip.home import Home
@@ -27,6 +28,7 @@ def main():
     parser.add_argument("--debug-level", dest="debug_level", type=int, default=30, help="the debug level which should get used(Critical=50, DEBUG=10)")
 
     group = parser.add_argument_group("Display Configuration")
+    group.add_argument("--dump-configuration", action="store_true", dest="dump_config", help="dumps the current configuration from the AP")
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
     group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
@@ -92,6 +94,14 @@ def main():
         return
 
     command_entered = False
+
+    if args.dump_config:
+        command_entered = True
+        json_state = home.download_configuration()
+        if "errorCode" in json_state:
+            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
+        else:
+            print(json.dumps(json_state, indent=4, sort_keys=True))
 
     if args.list_devices:
         command_entered = True
