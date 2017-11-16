@@ -15,7 +15,7 @@ class AsyncHome(Home):
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
-    def __init__(self,loop):
+    def __init__(self, loop):
         super().__init__(AsyncConnection(loop))
 
     async def init(self, access_point_id, lookup=True):
@@ -27,8 +27,8 @@ class AsyncHome(Home):
             json.dumps(self._connection.clientCharacteristics))
         if "errorCode" in json_state:
             LOGGER.error(
-                "Could not get the current configuration. Error: {}".format(
-                    json_state["errorCode"]))
+                "Could not get the current configuration. Error: %s",
+                json_state["errorCode"])
             return False
 
         js_home = json_state["home"]
@@ -94,19 +94,6 @@ class AsyncHome(Home):
     def delete_group(self, group):
         pass
 
-
-
-    # def start_incoming_websocket_data(self):
-    #     """Starts listening for incoming websocket data."""
-    #     self.connection.listen_for_websocket_data(
-    #         self._parse_incoming_socket_data)
-    #
-    # def stop_incoming_websocket_data(self):
-    #     """Stops listening for incoming websocket data."""
-    #     self.connection.close_websocket_connection()
-
     def set_location(self, city, latitude, longitude):
         LOGGER.warning('set_location not implemented.')
         pass
-
-
