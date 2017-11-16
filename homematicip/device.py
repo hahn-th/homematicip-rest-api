@@ -130,8 +130,7 @@ class OperationLockableDevice(Device):
                 break  # not needed to check the other channels
 
     def set_operation_lock(self, operationLock=True):
-        data = {"channelIndex": 0, "deviceId": self.id,
-                "operationLock": operationLock}
+        data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
         return self._restCall("device/configuration/setOperationLock", json.dumps(data))
 
     def __str__(self):
@@ -142,8 +141,9 @@ class OperationLockableDevice(Device):
 class HeatingThermostat(OperationLockableDevice):
     """ HMIP-eTRV (Radiator Thermostat) """
 
-    temperatureOffset = None
-    valvePosition = None
+    temperatureOffset = 0
+    valvePosition = 0.0
+    valveState = ""
 
     def from_json(self, js):
         super().from_json(js)
@@ -153,9 +153,10 @@ class HeatingThermostat(OperationLockableDevice):
             if type == "HEATING_THERMOSTAT_CHANNEL":
                 self.temperatureOffset = c["temperatureOffset"]
                 self.valvePosition = c["valvePosition"]
+                self.valveState = c["valveState"]
 
     def __str__(self):
-        return "{} valvePosition({})".format(super().__str__(), self.valvePosition)
+        return "{} valvePosition({}) valveState({})".format(super().__str__(), self.valvePosition, self.valveState)
 
 
 class ShutterContact(SabotageDevice):
@@ -355,8 +356,7 @@ class MotionDetectorIndoor(SabotageDevice):
                 self.illumination = c["illumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(),
-            self.motionDetected, self.illumination)
+        return "{} motionDetected({}) illumination({})".format(super().__str__(), self.motionDetected, self.illumination)
 
 
 class PresenceDetectorIndoor(SabotageDevice):
@@ -375,8 +375,7 @@ class PresenceDetectorIndoor(SabotageDevice):
                 self.illumination = c["illumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(),
-            self.presenceDetected, self.illumination)
+        return "{} motionDetected({}) illumination({})".format(super().__str__(), self.presenceDetected, self.illumination)
 
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
@@ -418,9 +417,32 @@ class FullFlushShutter(Device):
 
     def set_shutter_level(self, level):
         data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
-        return self._restCall("device/control/setShutterLevel",
-                              body=json.dumps(data))
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"channelIndex": 1, "deviceId": self.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
+
+
+class PluggableDimmer(Device):
+    """HmIP-PDT Pluggable Dimmer"""
+    dimLevel = 0.0
+    profileMode = ""
+    userDesiredProfileMode = ""
+
+    def from_json(self, js):
+        super().from_json(js)
+        for cid in js["functionalChannels"]:
+            c = js["functionalChannels"][cid]
+            type = c["functionalChannelType"]
+            if type == "DIMMER_CHANNEL":
+                self.dimLevel = c["dimLevel"]
+                self.profileMode = c["profileMode"]
+                self.userDesiredProfileMode = c["userDesiredProfileMode"]
+
+    def __str__(self):
+        return "{} dimLevel({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.dimLevel, self.profileMode, self.userDesiredProfileMode)
+
+    def set_dim_level(self, dimLevel = 0.0):
+        data = {"channelIndex": 1, "deviceId": self.id, "dimLevel": dimLevel}
+        return self._restCall("device/control/setDimLevel", json.dumps(data))

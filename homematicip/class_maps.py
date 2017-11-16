@@ -4,13 +4,15 @@ from homematicip.base.constants import MOTION_DETECTOR_INDOOR, \
     WALL_MOUNTED_THERMOSTAT_PRO, BRAND_WALL_MOUNTED_THERMOSTAT, SMOKE_DETECTOR, \
     FLOOR_TERMINAL_BLOCK_6, PLUGABLE_SWITCH_MEASURING, \
     TEMPERATURE_HUMIDITY_SENSOR_DISPLAY, TEMPERATURE_HUMIDITY_SENSOR, \
-    PUSH_BUTTON, ALARM_SIREN_INDOOR, BRAND_SHUTTER, PRECENCE_DETECTOR_INDOOR
+    PUSH_BUTTON, ALARM_SIREN_INDOOR, BRAND_SHUTTER, PRECENCE_DETECTOR_INDOOR, \
+    PLUGGABLE_DIMMER
+
 from homematicip.device import HeatingThermostat, ShutterContact, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, \
     PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
     AlarmSirenIndoor, MotionDetectorIndoor, KeyRemoteControlAlarm, \
     PlugableSwitch, FullFlushShutter, TemperatureHumiditySensorWithoutDisplay, \
-    PresenceDetectorIndoor
+    PresenceDetectorIndoor, PluggableDimmer
 from homematicip.group import SecurityGroup, SwitchingGroup, \
     ExtendedLinkedSwitchingGroup, LinkedSwitchingGroup, AlarmSwitchingGroup, \
     HeatingHumidyLimiterGroup, HeatingTemperatureLimiterGroup, \
@@ -42,7 +44,8 @@ TYPE_CLASS_MAP = {
     PLUGABLE_SWITCH: PlugableSwitch,
     FULL_FLUSH_SHUTTER: FullFlushShutter,
     BRAND_SHUTTER: FullFlushShutter,
-    PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor
+    PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
+    PLUGGABLE_DIMMER: PluggableDimmer
     }
 
 TYPE_GROUP_MAP = {
