@@ -15,13 +15,15 @@ logger = logging.getLogger(__name__)
 
 
 class AsyncConnection(BaseConnection):
-    def __init__(self, loop,session=None):
+    reconnect_timeout = 1800
+
+    def __init__(self, loop, session=None):
         super().__init__()
         self._loop = loop
         if session is None:
             self._websession = aiohttp.ClientSession(loop=loop)
         else:
-            self._websession=session
+            self._websession = session
         self.socket_connection = None  # ClientWebSocketResponse
         self._socket_task = None
 
@@ -47,6 +49,9 @@ class AsyncConnection(BaseConnection):
         return '{}/hmip/{}'.format(self._urlREST, partial_url)
 
     async def api_call(self, path, body=None, full_url=False):
+        # todo: Needs re-evaluation.
+        # It should by default do some retries to overcome timeouts.
+        # after that it should raise exceptions to be handled by its users.
         result = None
         if not full_url:
             path = self.full_url(path)
@@ -67,12 +72,14 @@ class AsyncConnection(BaseConnection):
                         return ret
                     else:
                         raise HmipWrongHttpStatusError
-            except (asyncio.TimeoutError, ConnectionError):
+            except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
+                # Both exceptions occur when connecting to the server does
+                # somehow not work.
                 logger.debug(
                     "Connection timed out or another error occurred %s" % path)
             except JSONDecodeError as err:
                 logger.exception(err)
-                break
+                raise
             finally:
                 if result is not None:
                     await result.release()
@@ -83,13 +90,13 @@ class AsyncConnection(BaseConnection):
             self._listen_for_incoming_websocket_data(incoming_parser))
 
     async def _connect_to_websocket(self):
-        self.socket_connection = await self._websession.ws_connect(
-            self._urlWebSocket,
-            headers={ATTR_AUTH_TOKEN: self._auth_token,
-                     ATTR_CLIENT_AUTH: self._clientauth_token},
-            heartbeat=120,
-            timeout=3
-        )
+        with async_timeout.timeout(self._restCallTimout, loop=self._loop):
+            self.socket_connection = await self._websession.ws_connect(
+                self._urlWebSocket,
+                headers={ATTR_AUTH_TOKEN: self._auth_token,
+                         ATTR_CLIENT_AUTH: self._clientauth_token},
+                heartbeat=1
+            )
 
     def close_websocket_connection(self):
         self._socket_task.cancel()
@@ -98,32 +105,49 @@ class AsyncConnection(BaseConnection):
         """Creates a websocket connection, listens for incoming data and
         uses the incoming parser to parse the incoming data.
         """
-
         try:
             while True:
                 for i in range(self._restCallRequestCounter):
                     try:
                         await self._connect_to_websocket()
                         break
-                    except TimeoutError:
-                        logger.info('websocket connection timed-out.')
-
-                        await asyncio.sleep(i ** 2)
+                    except (asyncio.TimeoutError,
+                            aiohttp.ClientConnectionError):
+                        logger.warning(
+                            'websocket connection timed-out. or \
+                            other connection error occurred.')
+                        await asyncio.sleep(self._restCallTimout)
                 else:
-                    # exit while loop without break. Raising error.
-                    raise ConnectionError(
+                    # exit while loop without break. Raising error which
+                    # should be handled by user.
+                    raise HmipConnectionError(
                         "Problem connecting to hmip websocket connection")
 
                 logger.info('Connected to HMIP websocket.')
                 try:
-                    while not self.socket_connection.closed:
-                        msg = await self.socket_connection.receive()
-                        if msg.tp == aiohttp.WSMsgType.BINARY:
-                            message = str(msg.data,'utf-8')
-                            incoming_parser(None,message)
-                except Exception as e:
-                    logger.exception(e)
-                    await asyncio.sleep(3)
+                    # It doesn't seem to be possible to observe an unexpected
+                    # internet disconnect. To keep the connection persistent
+                    # the connection is wrapped in a timeout after which a
+                    # reconnect attempt is made.
+
+                    with async_timeout.timeout(self.reconnect_timeout,
+                                               loop=self._loop):
+                        async for msg in self.socket_connection:
+                            if msg.tp == aiohttp.WSMsgType.BINARY:
+                                message = str(msg.data, 'utf-8')
+                                incoming_parser(None, message)
+                            elif msg.tp in [aiohttp.WSMsgType.CLOSE,
+                                            aiohttp.WSMsgType.CLOSED,
+                                            aiohttp.WSMsgType.ERROR]:
+                                # Server has closed the connection.
+                                # Raising error which should be handled by
+                                # user.
+                                raise HmipConnectionError("Connection closed")
+                except asyncio.TimeoutError:
+                    await self.socket_connection.close()
+                    logger.debug(
+                        'controlled stopping of websocket. Reconnecting')
         except CancelledError:
             logger.debug('stopping websocket incoming listener')
+        finally:
             self._loop.create_task(self.socket_connection.close())
