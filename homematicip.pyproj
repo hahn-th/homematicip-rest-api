@@ -63,7 +63,6 @@
     <Compile Include="homematicip\HomeMaticIPObject.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="homematicip\homematicip_cli_async.py" />
     <Compile Include="homematicip\securityEvent.py">
       <SubType>Code</SubType>
     </Compile>
@@ -74,6 +73,7 @@
     <Compile Include="homematicip_cli.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip_cli_async.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />
