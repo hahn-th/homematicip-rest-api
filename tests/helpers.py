@@ -14,11 +14,11 @@ class FakeResponse:
         pass
 
 
-def mockreturn(return_status=None, return_body={},content_type='application/json', exception=None):
+def mockreturn(return_status=None, return_body={}, content_type='application/json', exception=None):
     async def mocked(path, data, headers):
         if exception:
             raise exception
         else:
-            return FakeResponse(status=return_status, body=return_body,content_type=content_type)
+            return FakeResponse(status=return_status, body=return_body, content_type=content_type)
 
     return mocked
