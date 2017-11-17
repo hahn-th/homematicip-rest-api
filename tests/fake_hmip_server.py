@@ -14,9 +14,7 @@ from homematicip.base.base_connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
 
 
 class FakeResolver:
-    _LOCAL_HOST = {0: '127.0.0.1',
-                   socket.AF_INET: '127.0.0.1',
-                   socket.AF_INET6: '::1'}
+    _LOCAL_HOST = {0: '127.0.0.1', socket.AF_INET: '127.0.0.1', socket.AF_INET6: '::1'}
 
     def __init__(self, fakes, *, loop):
         """fakes -- dns -> port dict"""
@@ -56,13 +54,11 @@ class BaseFakeHmip:
         if self.port is None:
             self.port = unused_port()
         self.handler = self.app.make_handler()
-        self.server = await self.loop.create_server(self.handler,
-                                                    '127.0.0.1', self.port,
+        self.server = await self.loop.create_server(self.handler, '127.0.0.1', self.port,
                                                     ssl=self.ssl_context)
         # return the base url and port which need to be resolved/mocked.
         resolver = FakeResolver({self.base_url: self.port}, loop=self.loop)
-        connector = aiohttp.TCPConnector(loop=self.loop, resolver=resolver,
-                                         verify_ssl=False)
+        connector = aiohttp.TCPConnector(loop=self.loop, resolver=resolver, verify_ssl=False)
 
         return connector
 
@@ -81,8 +77,7 @@ class FakeLookupHmip(BaseFakeHmip):
     }
 
     def add_routes(self):
-        self.app.router.add_routes(
-            [web.post('/getHost', self.get_host)])
+        self.app.router.add_routes([web.post('/getHost', self.get_host)])
 
     async def get_host(self, request):
         return web.json_response(self.host_response)
@@ -91,7 +86,6 @@ class FakeLookupHmip(BaseFakeHmip):
 class FakeConnectionHmip(BaseFakeHmip):
     """Test various connection issues"""
     js_response = {'response': True}
-
 
     def add_routes(self):
         self.app.router.add_routes([
@@ -115,8 +109,7 @@ class FakeWebsocketHmip(BaseFakeHmip):
 
     def add_routes(self):
         self.app.router.add_routes([
-            web.get('/', self.websocket_handler)
-        ])
+            web.get('/', self.websocket_handler)])
 
     async def websocket_handler(self, request):
         self.ws = web.WebSocketResponse()
@@ -162,8 +155,7 @@ async def main(loop):
     fake_ws = FakeWebsocketHmip(loop=loop, base_url='ws.homematic.com')
     connector = await fake_ws.start()
 
-    async with aiohttp.ClientSession(connector=connector,
-                                     loop=loop) as session:
+    async with aiohttp.ClientSession(connector=connector, loop=loop) as session:
         connection = AsyncConnection(loop, session)
 
         # async with session.get('https://lookup.homematic.com:48335/getHost',
@@ -181,6 +173,7 @@ async def main(loop):
 
         await fake_ws.stop()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main(loop))

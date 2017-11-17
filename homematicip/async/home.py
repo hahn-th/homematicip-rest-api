@@ -1,8 +1,7 @@
 import json
 import logging
 
-from homematicip.async.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, \
-    TYPE_SECURITY_EVENT_MAP
+from homematicip.async.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP
 from homematicip.async.connection import AsyncConnection
 from homematicip.home import Home
 
@@ -23,12 +22,10 @@ class AsyncHome(Home):
 
     async def get_current_state(self):
         json_state = await self._connection.api_call(
-            'home/getCurrentState',
-            json.dumps(self._connection.clientCharacteristics))
+            'home/getCurrentState', json.dumps(self._connection.clientCharacteristics))
         if "errorCode" in json_state:
             LOGGER.error(
-                "Could not get the current configuration. Error: %s",
-                json_state["errorCode"])
+                "Could not get the current configuration. Error: %s", json_state["errorCode"])
             return False
 
         js_home = json_state["home"]
@@ -43,8 +40,7 @@ class AsyncHome(Home):
 
     def enable_events(self):
         """Starts listening for incoming websocket data."""
-        self._connection.listen_for_websocket_data(
-            self._ws_on_message)
+        self._connection.listen_for_websocket_data(self._ws_on_message)
 
     def disable_events(self):
         self._connection.close_websocket_connection()

@@ -7,9 +7,8 @@ import aiohttp
 import async_timeout
 import asyncio
 
-from homematicip.base.base_connection import BaseConnection, \
-    HmipWrongHttpStatusError, ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, \
-    HmipConnectionError
+from homematicip.base.base_connection import BaseConnection, HmipWrongHttpStatusError, \
+    ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipConnectionError
 
 logger = logging.getLogger(__name__)
 
@@ -31,9 +30,8 @@ class AsyncConnection(BaseConnection):
         self.set_token_and_characteristics(accesspoint_id)
 
         if lookup:
-            result = await self.api_call(
-                "https://lookup.homematic.com:48335/getHost",
-                json.dumps(self.clientCharacteristics), full_url=True)
+            result = await self.api_call("https://lookup.homematic.com:48335/getHost",
+                                         json.dumps(self.clientCharacteristics), full_url=True)
 
             self._urlREST = result["urlREST"]
             self._urlWebSocket = result["urlWebSocket"]
@@ -59,11 +57,7 @@ class AsyncConnection(BaseConnection):
             try:
                 with async_timeout.timeout(self._restCallTimout,
                                            loop=self._loop):
-                    result = await self._websession.post(
-                        path,
-                        data=body,
-                        headers=self.headers
-                    )
+                    result = await self._websession.post(path, data=body, headers=self.headers)
                     if result.status == 200:
                         if result.content_type == 'application/json':
                             ret = await result.json()
@@ -75,8 +69,7 @@ class AsyncConnection(BaseConnection):
             except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
                 # Both exceptions occur when connecting to the server does
                 # somehow not work.
-                logger.debug(
-                    "Connection timed out or another error occurred %s" % path)
+                logger.debug("Connection timed out or another error occurred %s" % path)
             except JSONDecodeError as err:
                 logger.exception(err)
             finally:
@@ -92,8 +85,9 @@ class AsyncConnection(BaseConnection):
         with async_timeout.timeout(self._restCallTimout, loop=self._loop):
             self.socket_connection = await self._websession.ws_connect(
                 self._urlWebSocket,
-                headers={ATTR_AUTH_TOKEN: self._auth_token,
-                         ATTR_CLIENT_AUTH: self._clientauth_token},
+                headers={
+                    ATTR_AUTH_TOKEN: self._auth_token,
+                    ATTR_CLIENT_AUTH: self._clientauth_token},
                 heartbeat=1
             )
 
@@ -113,14 +107,12 @@ class AsyncConnection(BaseConnection):
                     except (asyncio.TimeoutError,
                             aiohttp.ClientConnectionError):
                         logger.warning(
-                            'websocket connection timed-out. or \
-                            other connection error occurred.')
+                            'websocket connection timed-out. or other connection error occurred.')
                         await asyncio.sleep(self._restCallTimout)
                 else:
                     # exit while loop without break. Raising error which
                     # should be handled by user.
-                    raise HmipConnectionError(
-                        "Problem connecting to hmip websocket connection")
+                    raise HmipConnectionError("Problem connecting to hmip websocket connection")
 
                 logger.info('Connected to HMIP websocket.')
                 try:
@@ -129,8 +121,7 @@ class AsyncConnection(BaseConnection):
                     # the connection is wrapped in a timeout after which a
                     # reconnect attempt is made.
 
-                    with async_timeout.timeout(self.reconnect_timeout,
-                                               loop=self._loop):
+                    with async_timeout.timeout(self.reconnect_timeout, loop=self._loop):
                         async for msg in self.socket_connection:
                             if msg.tp == aiohttp.WSMsgType.BINARY:
                                 message = str(msg.data, 'utf-8')
@@ -144,8 +135,7 @@ class AsyncConnection(BaseConnection):
                                 raise HmipConnectionError("Connection closed")
                 except asyncio.TimeoutError:
                     await self.socket_connection.close()
-                    logger.debug(
-                        'controlled stopping of websocket. Reconnecting')
+                    logger.debug('controlled stopping of websocket. Reconnecting')
         except CancelledError:
             logger.debug('stopping websocket incoming listener')
         finally:

@@ -29,8 +29,10 @@ class BaseConnection:
 
     def __init__(self):
         self.headers = {'content-type': 'application/json',
-                        'accept': 'application/json', 'VERSION': '12',
-                        ATTR_AUTH_TOKEN: None, ATTR_CLIENT_AUTH: None}
+                        'accept': 'application/json',
+                        'VERSION': '12',
+                        ATTR_AUTH_TOKEN: None,
+                        ATTR_CLIENT_AUTH: None}
 
         self._clientCharacteristics = {"clientCharacteristics":
             {
@@ -67,9 +69,10 @@ class BaseConnection:
         return self._clientauth_token
 
     def set_token_and_characteristics(self, accesspoint_id):
-        accesspoint_id = re.sub(r'[^a-fA-F0-9 ]','', accesspoint_id).upper()
+        accesspoint_id = re.sub(r'[^a-fA-F0-9 ]', '', accesspoint_id).upper()
         self._clientCharacteristics["id"] = accesspoint_id
-        self._clientauth_token = hashlib.sha512(str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode('utf-8')).hexdigest().upper()
+        self._clientauth_token = hashlib.sha512(
+            str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode('utf-8')).hexdigest().upper()
         self.headers[ATTR_CLIENT_AUTH] = self._clientauth_token
 
     def set_auth_token(self, auth_token):

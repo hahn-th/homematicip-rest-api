@@ -38,8 +38,7 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncDevice):
         return await self._connection.api_call(url, data)
 
 
-class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring,
-                                   AsyncPlugableSwitch):
+class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncPlugableSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
     pass
 
