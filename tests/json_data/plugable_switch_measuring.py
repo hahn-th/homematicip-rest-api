@@ -1,5 +1,8 @@
 fake_device_id = '4014G711N50021D569B5804B'
 fake_home_id = '7b3ae3bb-be04-34d4-7af8-aa706570e0af'
+fake_id='abc'
+fake_id1='def'
+fake_id2 ='ghi'
 
 plugable_switch_measuring = {
     'id': fake_device_id,
@@ -15,7 +18,7 @@ plugable_switch_measuring = {
               'groupIndex': 0,
               'functionalChannelType': 'DEVICE_BASE',
               'groups': [
-                  '8ba14126-6403-4f75-9c0f-1950e7d7563a'],
+                  fake_id2],
               'unreach': False,
               'lowBat': None,
               'routerModuleEnabled': False,
@@ -28,8 +31,8 @@ plugable_switch_measuring = {
                'groupIndex': 1,
                'functionalChannelType': 'SWITCH_MEASURING_CHANNEL',
                'groups': [
-                   'f71c7f28-5ce1-44a8-845f-aed0a8337e68',
-                   'f5218c3d-05e4-4260-9c37-c336d882967e'],
+                   fake_id,
+                   fake_id1],
                'on': False,
                'profileMode': 'AUTOMATIC',
                'userDesiredProfileMode': 'AUTOMATIC',

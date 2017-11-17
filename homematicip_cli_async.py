@@ -17,6 +17,7 @@ async def main(loop):
     await home.init(config.ACCESS_POINT)
 
     await home.get_current_state()
+    home.enable_events()
     #home.start_incoming_websocket_data()
     for d in home.devices:
         print('{} {} {}'.format(d.id, d.label, str(d)))
@@ -25,6 +26,6 @@ async def main(loop):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     loop = asyncio.get_event_loop()
-    #loop.create_task(main(loop))
-    loop.run_until_complete(main(loop))
-    #loop.run_forever()
+    loop.create_task(main(loop))
+    #loop.run_until_complete(main(loop))
+    loop.run_forever()
