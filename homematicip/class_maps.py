@@ -37,7 +37,8 @@ TYPE_CLASS_MAP = {
     cn.PLUGABLE_SWITCH: PlugableSwitch,
     cn.FULL_FLUSH_SHUTTER: FullFlushShutter,
     cn.BRAND_SHUTTER: FullFlushShutter,
-    cn.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor
+    cn.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
+    cn.PLUGGABLE_DIMMER: PluggableDimmer
 }
 
 TYPE_GROUP_MAP = {
