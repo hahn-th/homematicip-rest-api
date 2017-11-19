@@ -15,12 +15,13 @@ class AsyncHome(Home):
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
     def __init__(self, loop):
-        super().__init__(AsyncConnection(loop))
+        super().__init__(connection=AsyncConnection(loop))
 
     async def init(self, access_point_id, lookup=True):
         await self._connection.init(access_point_id, lookup)
 
     async def get_current_state(self):
+        #todo: a download_configuration method has been added. This can simplify this one.
         json_state = await self._connection.api_call(
             'home/getCurrentState', json.dumps(self._connection.clientCharacteristics))
         if "errorCode" in json_state:

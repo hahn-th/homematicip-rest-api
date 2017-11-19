@@ -1,9 +1,9 @@
 import threading
 
+from homematicip.base.constants import DEVICE
 from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, \
     TYPE_SECURITY_EVENT_MAP
 from homematicip.connection import Connection
-from homematicip.device import Device
 from homematicip.group import *
 from homematicip.securityEvent import *
 from homematicip.EventHook import *
@@ -12,7 +12,8 @@ from datetime import datetime
 import websocket
 import logging
 
-logger = logging.getLogger(__name__)
+LOGGER = logging.getLogger(__name__)
+
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
     temperature = 0.0
@@ -77,6 +78,7 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
         else:
             self.expirationTimestamp = None
 
+
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
     devices = None
@@ -108,7 +110,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def __init__(self, connection=None):
         if connection is None:
-            connection=Connection()
+            connection = Connection()
         super().__init__(connection)
 
     def init(self, access_point_id, lookup=True):
@@ -141,13 +143,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js_home["id"]
 
     def download_configuration(self):
-        return self._restCall( 'home/getCurrentState', json.dumps(self._connection.clientCharacteristics))
+        return self._restCall('home/getCurrentState',
+                              json.dumps(self._connection.clientCharacteristics))
 
     def get_current_state(self):
         json_state = self.download_configuration()
 
         if "errorCode" in json_state:
-            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
+            LOGGER.error("Could not get the current configuration. Error: %s",
+                         json_state["errorCode"])
             return False
 
         js_home = json_state["home"]
@@ -161,55 +165,46 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return True
 
     def _parse_device(self, json_state):
-        device = json_state
-        deviceType = device["type"]
+        deviceType = json_state["type"]
         if deviceType in self._typeClassMap:
             d = self._typeClassMap[deviceType](self._connection)
-            d.from_json(device)
+            d.from_json(json_state)
             return d
         else:
-            d = Device(self._connection)
-            d.from_json(device)
-            logger.warning("There is no class for {} yet".format(deviceType))
+            d = self._typeClassMap[DEVICE](self._connection)
+            d.from_json(json_state)
+            LOGGER.warning("There is no class for %s yet", deviceType)
             return d
-        return None
 
     def _get_devices(self, json_state):
-        ret = []
-        data = json_state
-        for device in data["devices"].values():
-            ret.append(self._parse_device(device))
-        return ret
+        return [self._parse_device(device) for device in json_state["devices"].values()]
 
     def _get_clients(self, json_state):
         ret = []
-        data = json_state
-        for client in data["clients"].values():
+        for client in json_state["clients"].values():
             c = Client(self._connection)
             c.from_json(client)
             ret.append(c)
         return ret
 
-    def _parse_group(self, json_state, groups = None):
-        group = json_state
-        groupType = group["type"]
+    def _parse_group(self, json_state, groups=None):
+        groupType = json_state["type"]
         if groupType in self._typeGroupMap:
             g = self._typeGroupMap[groupType](self._connection)
-            g.from_json(group, self.devices)
+            g.from_json(json_state, self.devices)
         elif groupType == "META":
             g = MetaGroup(self._connection)
-            g.from_json(group, self.devices, groups if groups else self.groups )
+            g.from_json(json_state, self.devices, groups if groups else self.groups)
         else:
             g = Group(self._connection)
-            g.from_json(group, self.devices)
-            logger.warning("There is no class for {} yet".format(groupType))
+            g.from_json(json_state, self.devices)
+            LOGGER.warning("There is no class for %s yet", groupType)
         return g
 
     def _get_groups(self, json_state):
         ret = []
-        data = json_state
         metaGroups = []
-        for group in data["groups"].values():
+        for group in json_state["groups"].values():
             groupType = group["type"]
             if groupType == "META":
                 metaGroups.append(group)
@@ -217,7 +212,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 ret.append(self._parse_group(group))
 
         for mg in metaGroups:
-            ret.append(self._parse_group(mg,ret))
+            ret.append(self._parse_group(mg, ret))
         return ret
 
     def search_device_by_id(self, deviceID):
@@ -260,7 +255,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_intrusion_alert_through_smoke_detectors(self, activate=True):
         data = {"intrusionAlertThroughSmokeDetectors": activate}
-        return self._restCall( "home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data))
+        return self._restCall("home/security/setIntrusionAlertThroughSmokeDetectors",
+                              json.dumps(data))
 
     def activate_absence_with_period(self, endtime):
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
@@ -301,7 +297,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
         if "errorCode" in journal:
-            logger.error("Could not get the security journal. Error: {}".format(journal["errorCode"]))
+            LOGGER.error(
+                "Could not get the security journal. Error: %s", journal["errorCode"])
             return None
         ret = []
         for entry in journal["entries"]:
@@ -314,7 +311,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 j = SecurityEvent(self._connection)
                 j.from_json(entry)
                 ret.append(j)
-                logger.warning("There is no class for {} yet".format(eventType))
+                LOGGER.warning("There is no class for %s yet", eventType)
         return ret
 
     def delete_group(self, group):
@@ -367,17 +364,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocket.close()
 
     def _ws_on_error(self, ws, message):
-        logger.error("Websocket error: {}".format(message))
+        LOGGER.error("Websocket error: %s", message)
 
     def _ws_on_message(self, ws, message):
         js = json.loads(message)
-        logger.debug(js)
+        LOGGER.debug(js)
         eventList = []
         try:
-            for eID in js["events"]:
-                event = js["events"][eID]
+            for event in js["events"].values():
                 pushEventType = event["pushEventType"]
-                logger.debug(pushEventType)
+                LOGGER.debug(pushEventType)
                 obj = None
                 if pushEventType == "GROUP_CHANGED":
                     data = event["group"]
@@ -409,7 +405,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 elif pushEventType == "DEVICE_CHANGED":
                     data = event["device"]
                     obj = self.search_device_by_id(data["id"])
-                    if obj is None: # no DEVICE_ADDED Event?
+                    if obj is None:  # no DEVICE_ADDED Event?
                         obj = self._parse_device(data)
                         self.devices.append(obj)
                     else:
@@ -422,17 +418,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     self.groups.remove(obj)
                 elif pushEventType == "GROUP_ADDED":
                     group = event["group"]
-                    obj = self._parse_group(group,self.groups)
+                    obj = self._parse_group(group, self.groups)
                     self.groups.append(obj)
                 elif pushEventType == "SECURITY_JOURNAL_CHANGED":
                     pass  # data is just none so nothing to do here
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 else:
-                    logger.warning(
-                        "Uknown EventType '%s' Data: %s", pushEventType,
-                        event)
+                    LOGGER.warning("Uknown EventType '%s' Data: %s", pushEventType, event)
                 eventList.append({"eventType": pushEventType, "data": obj})
         except Exception as err:
-            logger.exception(err)
+            LOGGER.exception(err)
         self.onEvent.fire(eventList)

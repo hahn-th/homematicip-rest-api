@@ -5,7 +5,7 @@ from homematicip.async.device import AsyncPlugableSwitch, \
     AsyncWallMountedThermostatPro, AsyncSmokeDetector, AsyncFloorTerminalBlock6, \
     AsyncTemperatureHumiditySensorDisplay, AsyncTemperatureHumiditySensorWithoutDisplay, \
     AsyncPushButton, AsyncAlarmSirenIndoor, AsyncMotionDetectorIndoor, AsyncKeyRemoteControlAlarm, \
-    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer
+    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice
 from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncExtendedLinkedSwitchingGroup, AsyncLinkedSwitchingGroup, AsyncAlarmSwitchingGroup, \
     AsyncHeatingHumidyLimiterGroup, AsyncHeatingTemperatureLimiterGroup, \
@@ -18,6 +18,7 @@ from homematicip.async.securityEvent import AsyncSilenceChangedEvent, AsyncActiv
     AsyncAccessPointConnectedEvent, AsyncAccessPointDisconnectedEvent, AsyncSensorEvent
 
 TYPE_CLASS_MAP = {
+    cn.DEVICE: AsyncDevice,
     cn.HEATING_THERMOSTAT: AsyncHeatingThermostat,
     cn.SHUTTER_CONTACT: AsyncShutterContact,
     cn.SHUTTER_CONTACT_INVISIBLE: AsyncShutterContact,
@@ -71,4 +72,3 @@ TYPE_SECURITY_EVENT_MAP = {
     cn.ACCESS_POINT_DISCONNECTED: AsyncAccessPointDisconnectedEvent,
     cn.SENSOR_EVENT: AsyncSensorEvent
 }
-
