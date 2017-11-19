@@ -47,9 +47,10 @@ class AsyncConnection(BaseConnection):
         return '{}/hmip/{}'.format(self._urlREST, partial_url)
 
     async def api_call(self, path, body=None, full_url=False):
-        # todo: Needs re-evaluation.
-        # It should by default do some retries to overcome timeouts.
-        # after that it should raise exceptions to be handled by its users.
+        """Make the actual call to the HMIP server.
+
+        Throws `HmipWrongHttpStatusError` or `HmipConnectionError` if connection has failed or
+        response is not correct."""
         result = None
         if not full_url:
             path = self.full_url(path)

@@ -5,7 +5,7 @@ from homematicip.device import HeatingThermostat, ShutterContact, \
     PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
     AlarmSirenIndoor, MotionDetectorIndoor, KeyRemoteControlAlarm, \
     PlugableSwitch, FullFlushShutter, TemperatureHumiditySensorWithoutDisplay, \
-    PresenceDetectorIndoor, PluggableDimmer
+    PresenceDetectorIndoor, PluggableDimmer, Device
 from homematicip.group import SecurityGroup, SwitchingGroup, \
     ExtendedLinkedSwitchingGroup, LinkedSwitchingGroup, AlarmSwitchingGroup, \
     HeatingHumidyLimiterGroup, HeatingTemperatureLimiterGroup, \
@@ -19,9 +19,8 @@ from homematicip.securityEvent import SilenceChangedEvent, \
     ActivationChangedEvent, AccessPointConnectedEvent, \
     AccessPointDisconnectedEvent, SensorEvent
 
-
-
 TYPE_CLASS_MAP = {
+    cn.DEVICE: Device,
     cn.HEATING_THERMOSTAT: HeatingThermostat,
     cn.SHUTTER_CONTACT: ShutterContact,
     cn.SHUTTER_CONTACT_INVISIBLE: ShutterContact,
