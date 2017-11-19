@@ -11,7 +11,6 @@ from homematicip.EventHook import *
 from datetime import datetime
 import websocket
 import logging
-import sys
 
 logger = logging.getLogger(__name__)
 
@@ -107,7 +106,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
-    def __init__(self, connection=Connection()):
+    def __init__(self, connection=None):
+        if connection is None:
+            connection=Connection()
         super().__init__(connection)
 
     def init(self, access_point_id, lookup=True):
