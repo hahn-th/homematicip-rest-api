@@ -51,7 +51,7 @@ class MetaGroup(Group):
 
     groups = None
 
-    def from_json(self, js, devices, groups):
+    def from_json(self, js, devices, groups = None):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
@@ -69,11 +69,12 @@ class MetaGroup(Group):
                     self.devices.append(d)
 
         self.groups = []
-        for group in js["groups"]:
-            for g in groups:
-                if g.id == group:
-                    g.metaGroup = self
-                    self.groups.append(g)
+        if (groups != None):
+            for group in js["groups"]:
+                for g in groups:
+                    if g.id == group:
+                        g.metaGroup = self
+                        self.groups.append(g)
 
 
 class SecurityGroup(Group):
