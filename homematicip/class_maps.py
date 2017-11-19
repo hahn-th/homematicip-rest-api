@@ -19,6 +19,8 @@ from homematicip.securityEvent import SilenceChangedEvent, \
     ActivationChangedEvent, AccessPointConnectedEvent, \
     AccessPointDisconnectedEvent, SensorEvent
 
+
+
 TYPE_CLASS_MAP = {
     cn.HEATING_THERMOSTAT: HeatingThermostat,
     cn.SHUTTER_CONTACT: ShutterContact,
@@ -67,9 +69,9 @@ TYPE_GROUP_MAP = {
 }
 
 TYPE_SECURITY_EVENT_MAP = {
-    "SILENCE_CHANGED": SilenceChangedEvent,
-    "ACTIVATION_CHANGED": ActivationChangedEvent,
-    "ACCESS_POINT_CONNECTED": AccessPointConnectedEvent,
-    "ACCESS_POINT_DISCONNECTED": AccessPointDisconnectedEvent,
-    "SENSOR_EVENT": SensorEvent
+    cn.SILENCE_CHANGED: SilenceChangedEvent,
+    cn.ACTIVATION_CHANGED: ActivationChangedEvent,
+    cn.ACCESS_POINT_CONNECTED: AccessPointConnectedEvent,
+    cn.ACCESS_POINT_DISCONNECTED: AccessPointDisconnectedEvent,
+    cn.SENSOR_EVENT: SensorEvent
 }

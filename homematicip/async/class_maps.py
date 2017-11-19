@@ -1,7 +1,11 @@
 import homematicip.base.constants as cn
 
 from homematicip.async.device import AsyncPlugableSwitch, \
-    AsyncPlugableSwitchMeasuring, AsyncShutterContact
+    AsyncPlugableSwitchMeasuring, AsyncShutterContact, AsyncHeatingThermostat, \
+    AsyncWallMountedThermostatPro, AsyncSmokeDetector, AsyncFloorTerminalBlock6, \
+    AsyncTemperatureHumiditySensorDisplay, AsyncTemperatureHumiditySensorWithoutDisplay, \
+    AsyncPushButton, AsyncAlarmSirenIndoor, AsyncMotionDetectorIndoor, AsyncKeyRemoteControlAlarm, \
+    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer
 from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncExtendedLinkedSwitchingGroup, AsyncLinkedSwitchingGroup, AsyncAlarmSwitchingGroup, \
     AsyncHeatingHumidyLimiterGroup, AsyncHeatingTemperatureLimiterGroup, \
@@ -10,11 +14,29 @@ from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncHeatingCoolingDemandBoilerGroup, AsyncHeatingCoolingDemandPumpGroup, \
     AsyncSwitchingProfileGroup, AsyncOverHeatProtectionRule, AsyncSmokeAlarmDetectionRule, \
     AsyncLockOutProtectionRule, AsyncShutterWindProtectionRule, AsyncExtendedLinkedShutterGroup
+from homematicip.async.securityEvent import AsyncSilenceChangedEvent, AsyncActivationChangedEvent, \
+    AsyncAccessPointConnectedEvent, AsyncAccessPointDisconnectedEvent, AsyncSensorEvent
 
 TYPE_CLASS_MAP = {
+    cn.HEATING_THERMOSTAT: AsyncHeatingThermostat,
+    cn.SHUTTER_CONTACT: AsyncShutterContact,
+    cn.SHUTTER_CONTACT_INVISIBLE: AsyncShutterContact,
+    cn.WALL_MOUNTED_THERMOSTAT_PRO: AsyncWallMountedThermostatPro,
+    cn.BRAND_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
+    cn.SMOKE_DETECTOR: AsyncSmokeDetector,
+    cn.FLOOR_TERMINAL_BLOCK_6: AsyncFloorTerminalBlock6,
     cn.PLUGABLE_SWITCH_MEASURING: AsyncPlugableSwitchMeasuring,
+    cn.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: AsyncTemperatureHumiditySensorDisplay,
+    cn.TEMPERATURE_HUMIDITY_SENSOR: AsyncTemperatureHumiditySensorWithoutDisplay,
+    cn.PUSH_BUTTON: AsyncPushButton,
+    cn.ALARM_SIREN_INDOOR: AsyncAlarmSirenIndoor,
+    cn.MOTION_DETECTOR_INDOOR: AsyncMotionDetectorIndoor,
+    cn.KEY_REMOTE_CONTROL_ALARM: AsyncKeyRemoteControlAlarm,
     cn.PLUGABLE_SWITCH: AsyncPlugableSwitch,
-    cn.SHUTTER_CONTACT: AsyncShutterContact
+    cn.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,
+    cn.BRAND_SHUTTER: AsyncFullFlushShutter,
+    cn.PRECENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
+    cn.PLUGGABLE_DIMMER: AsyncPluggableDimmer
 }
 
 TYPE_GROUP_MAP = {
@@ -43,5 +65,10 @@ TYPE_GROUP_MAP = {
 }
 
 TYPE_SECURITY_EVENT_MAP = {
-
+    cn.SILENCE_CHANGED: AsyncSilenceChangedEvent,
+    cn.ACTIVATION_CHANGED: AsyncActivationChangedEvent,
+    cn.ACCESS_POINT_CONNECTED: AsyncAccessPointConnectedEvent,
+    cn.ACCESS_POINT_DISCONNECTED: AsyncAccessPointDisconnectedEvent,
+    cn.SENSOR_EVENT: AsyncSensorEvent
 }
+

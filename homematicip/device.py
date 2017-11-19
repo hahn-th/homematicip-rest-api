@@ -366,7 +366,7 @@ class PresenceDetectorIndoor(SabotageDevice):
     illumination = None
 
     def from_json(self, js):
-        super(PresenceDetectorIndoor, self).from_json(js)
+        super().from_json(js)
         for cid in js["functionalChannels"]:
             c = js["functionalChannels"][cid]
             type = c["functionalChannelType"]
