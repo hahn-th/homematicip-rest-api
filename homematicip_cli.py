@@ -33,6 +33,7 @@ def main():
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
     group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
     group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
+    group.add_argument("--list-rssi", action="store_true", dest="list_rssi", help="list the reception quality of all devices")
     group.add_argument("--list-events", action="store_true", dest="list_events", help="prints all the events")
     group.add_argument("--list-last-status-update", action="store_true", dest="list_last_status_update", help="prints the last status update of all systems")
 
@@ -164,6 +165,20 @@ def main():
         for d in sortedDevices:
             print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                       d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None", d.updateState)))
+
+    if args.list_rssi:
+        command_entered = True
+
+        print(str("{:45s} - Duty cycle: {:2}".format("HmIP AccessPoint",
+                                                     home.dutyCycle if home.dutyCycle is not None else "None")))
+
+        sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
+        for d in sortedDevices:
+            print(str("{:45s} - RSSI: {:4} - Peer RSSI: {:4} - {} {}".format(d.label,
+                                                                             d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
+                                                                             d.rssiPeerValue if d.rssiPeerValue is not None else "None",
+                                                                             getRssiBarString(d.rssiDeviceValue),
+                                                                             "Unreachable" if d.unreach else "")))
 
     if args.device:
         command_entered = False
@@ -300,6 +315,17 @@ def main():
 def printEvents(eventList):
     for event in eventList:
         print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
+
+
+def getRssiBarString(rssiValue):
+    # Observerd values: -93..-47
+    width = 10
+    dots = 0
+    if (rssiValue is not None) and (rssiValue is not 0):
+        dots = int(round((100 + rssiValue) / 5))
+        dots = max(0, min(width, dots))
+
+    return "[{}{}]".format('*' * dots, '_' * (width - dots))
 
 
 if __name__ == "__main__":
