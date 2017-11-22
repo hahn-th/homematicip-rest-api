@@ -6,12 +6,10 @@ import re
 ATTR_AUTH_TOKEN = 'AUTHTOKEN'
 ATTR_CLIENT_AUTH = 'CLIENTAUTH'
 
-
-class HmipWrongHttpStatusError(Exception):
+class HmipConnectionError(Exception):
     pass
 
-
-class HmipConnectionError(Exception):
+class HmipWrongHttpStatusError(HmipConnectionError):
     pass
 
 
