@@ -12,6 +12,18 @@ from datetime import datetime
 import websocket
 import logging
 
+EVENT_SECURITY_JOURNAL_CHANGED = "SECURITY_JOURNAL_CHANGED"
+EVENT_GROUP_ADDED = "GROUP_ADDED"
+EVENT_GROUP_REMOVED = "GROUP_REMOVED"
+EVENT_DEVICE_REMOVED = "DEVICE_REMOVED"
+EVENT_DEVICE_CHANGED = "DEVICE_CHANGED"
+EVENT_DEVICE_ADDED = "DEVICE_ADDED"
+EVENT_CLIENT_REMOVED = "CLIENT_REMOVED"
+EVENT_CLIENT_CHANGED = "CLIENT_CHANGED"
+EVENT_CLIENT_ADDED = "CLIENT_ADDED"
+EVENT_HOME_CHANGED = "HOME_CHANGED"
+EVENT_GROUP_CHANGED = "GROUP_CHANGED"
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -375,7 +387,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 pushEventType = event["pushEventType"]
                 LOGGER.debug(pushEventType)
                 obj = None
-                if pushEventType == "GROUP_CHANGED":
+                if pushEventType == EVENT_GROUP_CHANGED:
                     data = event["group"]
                     obj = self.search_group_by_id(data["id"])
                     if type(obj) is MetaGroup:
@@ -383,28 +395,28 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     else:
                         obj.from_json(data, self.devices)
                     obj.fire_update_event(data)
-                elif pushEventType == "HOME_CHANGED":
+                elif pushEventType == EVENT_HOME_CHANGED:
                     data = event["home"]
                     obj = self
                     obj.from_json(data)
                     obj.fire_update_event(data)
-                elif pushEventType == "CLIENT_ADDED":
+                elif pushEventType == EVENT_CLIENT_ADDED:
                     data = event["client"]
                     obj = Client(self._connection)
                     obj.from_json(data)
                     self.clients.append(obj)
-                elif pushEventType == "CLIENT_CHANGED":
+                elif pushEventType == EVENT_CLIENT_CHANGED:
                     data = event["client"]
                     obj = self.search_client_by_id(data["id"])
                     obj.from_json(data)
-                elif pushEventType == "CLIENT_REMOVED":
+                elif pushEventType == EVENT_CLIENT_REMOVED:
                     obj = self.search_client_by_id(event["id"])
                     self.clients.remove(obj)
-                elif pushEventType == "DEVICE_ADDED":
+                elif pushEventType == EVENT_DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)
                     self.devices.append(obj)
-                elif pushEventType == "DEVICE_CHANGED":
+                elif pushEventType == EVENT_DEVICE_CHANGED:
                     data = event["device"]
                     obj = self.search_device_by_id(data["id"])
                     if obj is None:  # no DEVICE_ADDED Event?
@@ -413,17 +425,17 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     else:
                         obj.from_json(data)
                     obj.fire_update_event(data)
-                elif pushEventType == "DEVICE_REMOVED":
+                elif pushEventType == EVENT_DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
                     self.devices.remove(obj)
-                elif pushEventType == "GROUP_REMOVED":
+                elif pushEventType == EVENT_GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
                     self.groups.remove(obj)
-                elif pushEventType == "GROUP_ADDED":
+                elif pushEventType == EVENT_GROUP_ADDED:
                     group = event["group"]
                     obj = self._parse_group(group, self.groups)
                     self.groups.append(obj)
-                elif pushEventType == "SECURITY_JOURNAL_CHANGED":
+                elif pushEventType == EVENT_SECURITY_JOURNAL_CHANGED:
                     pass  # data is just none so nothing to do here
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
