@@ -140,4 +140,5 @@ class AsyncConnection(BaseConnection):
         except CancelledError:
             logger.debug('stopping websocket incoming listener')
         finally:
-            self._loop.create_task(self.socket_connection.close())
+            if self.socket_connection:
+                self._loop.create_task(self.socket_connection.close())
