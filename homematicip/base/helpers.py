@@ -1,6 +1,13 @@
 from datetime import datetime
 
 
+def get_functional_channel(channel_type, js):
+    for channel in js['functionalChannels'].values():
+        if channel['functionalChannelType'] == channel_type:
+            return channel
+    return None
+
+
 class Weather:
     temperature = 0.0
     weatherCondition = "CLEAR"
@@ -34,8 +41,8 @@ class Location:
 
     def __str__(self):
         return "city({}) latitude({}) longitude({})".format(self.city,
-                                                             self.latitude,
-                                                             self.longitude)
+                                                            self.latitude,
+                                                            self.longitude)
 
 
 class Client:
