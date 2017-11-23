@@ -3,6 +3,8 @@ from homematicip import HomeMaticIPObject
 import json
 from datetime import datetime
 
+from homematicip.base.helpers import get_functional_channel
+
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
@@ -46,20 +48,19 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.manufacturerCode = js['manufacturerCode']
         self.serializedGlobalTradeItemNumber = js['serializedGlobalTradeItemNumber']
 
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.routerModuleSupported = c["routerModuleSupported"]
-                self.routerModuleEnabled = c["routerModuleEnabled"]
-                self.rssiDeviceValue = c["rssiDeviceValue"]
-                self.rssiPeerValue = c["rssiPeerValue"]
-                break
+        c = get_functional_channel("DEVICE_BASE", js)
+        if c:
+            self.unreach = c["unreach"]
+            self.lowBat = c["lowBat"]
+            self.routerModuleSupported = c["routerModuleSupported"]
+            self.routerModuleEnabled = c["routerModuleEnabled"]
+            self.rssiDeviceValue = c["rssiDeviceValue"]
+            self.rssiPeerValue = c["rssiPeerValue"]
 
     def __str__(self):
-        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({})".format(self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue, self.rssiPeerValue)
+        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({})".format(
+            self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue,
+            self.rssiPeerValue)
 
     def set_label(self, label):
         data = {"deviceId": self.id, "label": label}
@@ -98,16 +99,13 @@ class SabotageDevice(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_SABOTAGE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.sabotage = c["sabotage"]
-                self.rssiDeviceValue = c["rssiDeviceValue"]
-                self.rssiPeerValue = c["rssiPeerValue"]
-                break  # not needed to check the other channels
+        c = get_functional_channel("DEVICE_SABOTAGE", js)
+        if c:
+            self.unreach = c["unreach"]
+            self.lowBat = c["lowBat"]
+            self.sabotage = c["sabotage"]
+            self.rssiDeviceValue = c["rssiDeviceValue"]
+            self.rssiPeerValue = c["rssiPeerValue"]
 
     def __str__(self):
         return "{}: sabotage({})".format(super().__str__(), self.sabotage)
@@ -118,16 +116,13 @@ class OperationLockableDevice(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_OPERATIONLOCK":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
-                self.operationLockActive = c["operationLockActive"]
-                self.rssiDeviceValue = c["rssiDeviceValue"]
-                self.rssiPeerValue = c["rssiPeerValue"]
-                break  # not needed to check the other channels
+        c = get_functional_channel("DEVICE_OPERATIONLOCK", js)
+        if c:
+            self.unreach = c["unreach"]
+            self.lowBat = c["lowBat"]
+            self.operationLockActive = c["operationLockActive"]
+            self.rssiDeviceValue = c["rssiDeviceValue"]
+            self.rssiPeerValue = c["rssiPeerValue"]
 
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
@@ -135,7 +130,7 @@ class OperationLockableDevice(Device):
 
     def __str__(self):
         return "{}: operationLockActive({})".format(super().__str__(),
-            self.operationLockActive)
+                                                    self.operationLockActive)
 
 
 class HeatingThermostat(OperationLockableDevice):
@@ -147,16 +142,15 @@ class HeatingThermostat(OperationLockableDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "HEATING_THERMOSTAT_CHANNEL":
-                self.temperatureOffset = c["temperatureOffset"]
-                self.valvePosition = c["valvePosition"]
-                self.valveState = c["valveState"]
+        c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
+        if c:
+            self.temperatureOffset = c["temperatureOffset"]
+            self.valvePosition = c["valvePosition"]
+            self.valveState = c["valveState"]
 
     def __str__(self):
-        return "{} valvePosition({}) valveState({})".format(super().__str__(), self.valvePosition, self.valveState)
+        return "{} valvePosition({}) valveState({})".format(super().__str__(), self.valvePosition,
+                                                            self.valveState)
 
 
 class ShutterContact(SabotageDevice):
@@ -166,15 +160,14 @@ class ShutterContact(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "SHUTTER_CONTACT_CHANNEL":
-                self.windowState = c["windowState"]
-                self.eventDelay = c["eventDelay"]
+        c = get_functional_channel("SHUTTER_CONTACT_CHANNEL", js)
+        if c:
+            self.windowState = c["windowState"]
+            self.eventDelay = c["eventDelay"]
 
     def __str__(self):
         return "{} windowState({})".format(super().__str__(), self.windowState)
+
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
@@ -185,18 +178,17 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL":
-                self.temperatureOffset = c["temperatureOffset"]
-                self.actualTemperature = c["actualTemperature"]
-                self.humidity = c["humidity"]
+        c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL", js)
+        if c:
+            self.temperatureOffset = c["temperatureOffset"]
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
 
     def __str__(self):
         return u"{}: actualTemperature({}) humidity({})".format(
-               super().__str__(), self.actualTemperature, self.humidity)
-                                       
+            super().__str__(), self.actualTemperature, self.humidity)
+
+
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
 
@@ -211,21 +203,21 @@ class TemperatureHumiditySensorDisplay(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL":
-                self.temperatureOffset = c["temperatureOffset"]
-                self.display = c["display"]
-                self.actualTemperature = c["actualTemperature"]
-                self.humidity = c["humidity"]
+        c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL", js)
+        if c:
+            self.temperatureOffset = c["temperatureOffset"]
+            self.display = c["display"]
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
 
     def set_display(self, display=DISPLAY_ACTUAL):
         data = {"channelIndex": 1, "deviceId": self.id, "display": display}
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
-        return "{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return "{}: actualTemperature({}) humidity({})".format(super().__str__(),
+                                                               self.actualTemperature,
+                                                               self.humidity)
 
 
 class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
@@ -234,14 +226,12 @@ class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL":
-                self.temperatureOffset = c["temperatureOffset"]
-                self.display = c["display"]
-                self.actualTemperature = c["actualTemperature"]
-                self.humidity = c["humidity"]
+        c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL", js)
+        if c:
+            self.temperatureOffset = c["temperatureOffset"]
+            self.display = c["display"]
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
 
 
 class SmokeDetector(Device):
@@ -251,15 +241,13 @@ class SmokeDetector(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "SMOKE_DETECTOR_CHANNEL":
-                self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
+        c = get_functional_channel("SMOKE_DETECTOR_CHANNEL", js)
+        if c:
+            self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
 
     def __str__(self):
         return "{}: smokeDetectorAlarmType({})".format(super().__str__(),
-            self.smokeDetectorAlarmType)
+                                                       self.smokeDetectorAlarmType)
 
 
 class FloorTerminalBlock6(Device):
@@ -270,17 +258,15 @@ class FloorTerminalBlock6(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_GLOBAL_PUMP_CONTROL":
-                self.unreach = c["unreach"]
-                self.globalPumpControl = c["globalPumpControl"]
-                self.heatingValveType = c["heatingValveType"]
+        c = get_functional_channel("DEVICE_GLOBAL_PUMP_CONTROL", js)
+        if c:
+            self.unreach = c["unreach"]
+            self.globalPumpControl = c["globalPumpControl"]
+            self.heatingValveType = c["heatingValveType"]
 
     def __str__(self):
         return "{}: globalPumpControl({})".format(super().__str__(),
-            self.globalPumpControl)
+                                                  self.globalPumpControl)
 
 
 class PlugableSwitch(Device):
@@ -290,15 +276,12 @@ class PlugableSwitch(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "SWITCH_CHANNEL":
-                self.on = c["on"]
+        c = get_functional_channel("SWITCH_CHANNEL", js)
+        if c:
+            self.on = c["on"]
 
     def __str__(self):
-        return "{}: on({})".format(super().__str__(),
-                                    self.on)
+        return "{}: on({})".format(super().__str__(), self.on)
 
     def set_switch_state(self, on=True):
         data = {"channelIndex": 1, "deviceId": self.id, "on": on}
@@ -319,17 +302,15 @@ class PlugableSwitchMeasuring(PlugableSwitch):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "SWITCH_MEASURING_CHANNEL":
-                self.on = c["on"]
-                self.energyCounter = c["energyCounter"]
-                self.currentPowerConsumption = c["currentPowerConsumption"]
+        c = get_functional_channel("SWITCH_MEASURING_CHANNEL", js)
+        if c:
+            self.on = c["on"]
+            self.energyCounter = c["energyCounter"]
+            self.currentPowerConsumption = c["currentPowerConsumption"]
 
     def __str__(self):
-        return "{} energyCounter({}) currentPowerConsumption({}W)".format(super().__str__()
-            , self.energyCounter, self.currentPowerConsumption)
+        return "{} energyCounter({}) currentPowerConsumption({}W)".format(
+            super().__str__(), self.energyCounter, self.currentPowerConsumption)
 
 
 class PushButton(Device):
@@ -348,15 +329,15 @@ class MotionDetectorIndoor(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "MOTION_DETECTION_CHANNEL":
-                self.motionDetected = c["motionDetected"]
-                self.illumination = c["illumination"]
+        c = get_functional_channel("MOTION_DETECTION_CHANNEL", js)
+        if c:
+            self.motionDetected = c["motionDetected"]
+            self.illumination = c["illumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(), self.motionDetected, self.illumination)
+        return "{} motionDetected({}) illumination({})".format(super().__str__(),
+                                                               self.motionDetected,
+                                                               self.illumination)
 
 
 class PresenceDetectorIndoor(SabotageDevice):
@@ -367,34 +348,33 @@ class PresenceDetectorIndoor(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "PRESENCE_DETECTION_CHANNEL":
-                self.presenceDetected = c["presenceDetected"]
-                self.illumination = c["illumination"]
+        c = get_functional_channel("PRESENCE_DETECTION_CHANNEL", js)
+        if c:
+            self.presenceDetected = c["presenceDetected"]
+            self.illumination = c["illumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(), self.presenceDetected, self.illumination)
+        return "{} motionDetected({}) illumination({})".format(super().__str__(),
+                                                               self.presenceDetected,
+                                                               self.illumination)
+
 
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DEVICE_BASE":
-                self.unreach = c["unreach"]
-                self.lowBat = c["lowBat"]
+        c = get_functional_channel("DEVICE_BASE", js)
+        if c:
+            self.unreach = c["unreach"]
+            self.lowBat = c["lowBat"]
 
     def __str__(self):
         return "{}".format(super().__str__())
 
 
 class FullFlushShutter(Device):
-    """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
+    """HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)"""
 
     shutterLevel = None
     bottomToTopReferenceTime = None
@@ -402,17 +382,15 @@ class FullFlushShutter(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "SHUTTER_CHANNEL":
-                self.shutterLevel = c["shutterLevel"]
-                self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
-                self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+        c = get_functional_channel("SHUTTER_CHANNEL", js)
+        if c:
+            self.shutterLevel = c["shutterLevel"]
+            self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
+            self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
 
     def __str__(self):
-        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(super().__str__(),
-            self.shutterLevel, self.topToBottomReferenceTime,
+        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
+            super().__str__(), self.shutterLevel, self.topToBottomReferenceTime,
             self.bottomToTopReferenceTime)
 
     def set_shutter_level(self, level):
@@ -432,17 +410,16 @@ class PluggableDimmer(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        for cid in js["functionalChannels"]:
-            c = js["functionalChannels"][cid]
-            type = c["functionalChannelType"]
-            if type == "DIMMER_CHANNEL":
-                self.dimLevel = c["dimLevel"]
-                self.profileMode = c["profileMode"]
-                self.userDesiredProfileMode = c["userDesiredProfileMode"]
+        c = get_functional_channel("DIMMER_CHANNEL", js)
+        if c:
+            self.dimLevel = c["dimLevel"]
+            self.profileMode = c["profileMode"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} dimLevel({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.dimLevel, self.profileMode, self.userDesiredProfileMode)
+        return "{} dimLevel({}) profileMode({}) userDesiredProfileMode({})".format(
+            super().__str__(), self.dimLevel, self.profileMode, self.userDesiredProfileMode)
 
-    def set_dim_level(self, dimLevel = 0.0):
+    def set_dim_level(self, dimLevel=0.0):
         data = {"channelIndex": 1, "deviceId": self.id, "dimLevel": dimLevel}
         return self._restCall("device/control/setDimLevel", json.dumps(data))
