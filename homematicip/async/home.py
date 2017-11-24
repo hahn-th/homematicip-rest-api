@@ -21,7 +21,7 @@ class AsyncHome(Home):
         await self._connection.init(access_point_id, lookup)
 
     async def get_current_state(self):
-        #todo: a download_configuration method has been added. This can simplify this one.
+        # todo: a download_configuration method has been added. This can simplify this one.
         json_state = await self._connection.api_call(
             'home/getCurrentState', json.dumps(self._connection.clientCharacteristics))
         if "errorCode" in json_state:
@@ -42,6 +42,9 @@ class AsyncHome(Home):
     def enable_events(self):
         """Starts listening for incoming websocket data."""
         self._connection.listen_for_websocket_data(self._ws_on_message)
+
+    def on_connection_lost(self, connection_lost_handler):
+        self._connection._socket_task.add_done_callback(connection_lost_handler)
 
     def disable_events(self):
         self._connection.close_websocket_connection()
