@@ -19,3 +19,9 @@ def fake_connection(event_loop):
     _connection = AsyncConnection(event_loop)
     _connection.api_call = AsyncMock(return_value='called')
     return _connection
+
+@pytest.fixture
+def async_connection(event_loop):
+    _connection = AsyncConnection(event_loop)
+    yield _connection
+    _connection._websession.close()
