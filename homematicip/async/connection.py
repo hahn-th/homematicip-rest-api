@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class AsyncConnection(BaseConnection):
-    reconnect_timeout = 1800
+    reconnect_timeout = 120
 
     def __init__(self, loop, session=None):
         super().__init__()
@@ -88,8 +88,7 @@ class AsyncConnection(BaseConnection):
                 self._urlWebSocket,
                 headers={
                     ATTR_AUTH_TOKEN: self._auth_token,
-                    ATTR_CLIENT_AUTH: self._clientauth_token},
-                heartbeat=1
+                    ATTR_CLIENT_AUTH: self._clientauth_token}
             )
 
     def close_websocket_connection(self):
@@ -100,22 +99,24 @@ class AsyncConnection(BaseConnection):
         uses the incoming parser to parse the incoming data.
         """
         try:
-            while True:
-                for i in range(self._restCallRequestCounter):
-                    try:
-                        await self._connect_to_websocket()
-                        break
-                    except (asyncio.TimeoutError,
-                            aiohttp.ClientConnectionError):
-                        logger.warning(
-                            'websocket connection timed-out. or other connection error occurred.')
-                        await asyncio.sleep(self._restCallTimout)
-                else:
-                    # exit while loop without break. Raising error which
-                    # should be handled by user.
-                    raise HmipConnectionError("Problem connecting to hmip websocket connection")
+            for i in range(self._restCallRequestCounter):
+                try:
+                    await self._connect_to_websocket()
+                    break
+                except (asyncio.TimeoutError,
+                        aiohttp.ClientConnectionError):
+                    logger.warning(
+                        'websocket connection timed-out. or other connection error occurred.')
+                    await asyncio.sleep(self._restCallTimout)
+            else:
+                # exit while loop without break. Raising error which
+                # should be handled by user.
+                raise HmipConnectionError("Problem connecting to hmip websocket connection")
 
-                logger.info('Connected to HMIP websocket.')
+            logger.info('Connected to HMIP websocket.')
+
+
+            while True:
                 try:
                     # It doesn't seem to be possible to observe an unexpected
                     # internet disconnect. To keep the connection persistent
@@ -124,6 +125,7 @@ class AsyncConnection(BaseConnection):
 
                     with async_timeout.timeout(self.reconnect_timeout, loop=self._loop):
                         async for msg in self.socket_connection:
+                            logger.debug(msg)
                             if msg.tp == aiohttp.WSMsgType.BINARY:
                                 message = str(msg.data, 'utf-8')
                                 incoming_parser(None, message)
@@ -133,12 +135,16 @@ class AsyncConnection(BaseConnection):
                                 # Server has closed the connection.
                                 # Raising error which should be handled by
                                 # user.
-                                raise HmipConnectionError("Connection closed")
+                                raise HmipConnectionError("Server closed websocket connection")
                 except asyncio.TimeoutError:
-                    await self.socket_connection.close()
+                    #await self.socket_connection.close()
                     logger.debug('controlled stopping of websocket. Reconnecting')
         except CancelledError:
             logger.debug('stopping websocket incoming listener')
-        finally:
-            if self.socket_connection:
-                self._loop.create_task(self.socket_connection.close())
+        # except Exception as err:
+        #     logger.exception(err)
+        # finally:
+        #
+        #     if self.socket_connection:
+        #         await self.socket_connection.close()
+        #         #self._loop.create_task(self.socket_connection.close())
