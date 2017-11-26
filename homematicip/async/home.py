@@ -14,8 +14,8 @@ class AsyncHome(Home):
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
-    def __init__(self, loop):
-        super().__init__(connection=AsyncConnection(loop))
+    def __init__(self, loop,websession=None):
+        super().__init__(connection=AsyncConnection(loop,websession))
 
     async def init(self, access_point_id, lookup=True):
         await self._connection.init(access_point_id, lookup)
