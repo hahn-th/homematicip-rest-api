@@ -174,10 +174,11 @@ def main():
 
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(str("{:45s} - RSSI: {:4} - Peer RSSI: {:4} - {} {}".format(d.label,
+            print(str("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {}".format(d.label,
                                                                              d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
-                                                                             d.rssiPeerValue if d.rssiPeerValue is not None else "None",
                                                                              getRssiBarString(d.rssiDeviceValue),
+                                                                             d.rssiPeerValue if d.rssiPeerValue is not None else "None",
+                                                                             getRssiBarString(d.rssiPeerValue),
                                                                              "Unreachable" if d.unreach else "")))
 
     if args.device:
@@ -321,7 +322,7 @@ def getRssiBarString(rssiValue):
     # Observerd values: -93..-47
     width = 10
     dots = 0
-    if (rssiValue is not None) and (rssiValue is not 0):
+    if rssiValue:
         dots = int(round((100 + rssiValue) / 5))
         dots = max(0, min(width, dots))
 
