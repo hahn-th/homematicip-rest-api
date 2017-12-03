@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--list-devices</CommandLineArguments>
+    <CommandLineArguments>--list-rssi</CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -39,13 +39,17 @@
     <Compile Include="homematicip\async\class_maps.py" />
     <Compile Include="homematicip\async\connection.py" />
     <Compile Include="homematicip\async\device.py" />
+    <Compile Include="homematicip\async\group.py" />
     <Compile Include="homematicip\async\home.py" />
+    <Compile Include="homematicip\async\securityEvent.py" />
+    <Compile Include="homematicip\async\__init__.py" />
     <Compile Include="homematicip\auth.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\base\base_connection.py" />
     <Compile Include="homematicip\base\constants.py" />
     <Compile Include="homematicip\base\helpers.py" />
+    <Compile Include="homematicip\base\__init__.py" />
     <Compile Include="homematicip\class_maps.py" />
     <Compile Include="homematicip\connection.py" />
     <Compile Include="homematicip\EventHook.py">
