@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class AsyncConnection(BaseConnection):
+    """Handles async http and websocket traffic."""
     reconnect_timeout = 120
 
     def __init__(self, loop, session=None):
@@ -114,7 +115,6 @@ class AsyncConnection(BaseConnection):
                 raise HmipConnectionError("Problem connecting to hmip websocket connection")
 
             logger.info('Connected to HMIP websocket.')
-
 
             while True:
                 try:
