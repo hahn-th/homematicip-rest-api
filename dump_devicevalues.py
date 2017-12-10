@@ -14,25 +14,25 @@ home.get_current_state()
 
 def write_shutter(device):
     if not os.path.isfile("shutter.csv"):
-        with open("shutter.csv", "w") as csv:
+        with open("shutter.csv", "w", encoding='utf-8') as csv:
             csv.write("name;timestamp;open/close\n")
-    with open("shutter.csv", "a") as csv:
+    with open("shutter.csv", "a", encoding='utf-8') as csv:
         csv.write("{};{};{}\n".format(device.id, str(device.lastStatusUpdate), d.windowState))
 
 
 def write_heatingthermostat(device):
     if not os.path.isfile("heatingthermostat.csv"):
-        with open("heatingthermostat.csv", "w") as csv:
+        with open("heatingthermostat.csv", "w", encoding='utf-8') as csv:
             csv.write("name;timestamp;valveposition\n")
-    with open("heatingthermostat.csv", "a") as csv:
+    with open("heatingthermostat.csv", "a", encoding='utf-8') as csv:
         csv.write("{};{};{}\n".format(device.id, str(device.lastStatusUpdate), d.valvePosition))
 
 
 def write_plugableswitchmeasuring(device):
     if not os.path.isfile("plugableswitchmeasuring.csv"):
-        with open("plugableswitchmeasuring.csv", "w") as csv:
+        with open("plugableswitchmeasuring.csv", "w", encoding='utf-8') as csv:
             csv.write("name;timestamp;on;currentPowerConsumption;energyCounter\n")
-    with open("plugableswitchmeasuring.csv", "a") as csv:
+    with open("plugableswitchmeasuring.csv", "a", encoding='utf-8') as csv:
         csv.write(
             "{};{};{};{};{}\n".format(device.id, str(device.lastStatusUpdate), d.on, d.currentPowerConsumption,
                                       d.energyCounter))
@@ -40,9 +40,9 @@ def write_plugableswitchmeasuring(device):
 
 def write_wallmountedthermostatpro(device):
     if not os.path.isfile("wallmountedthermostatpro.csv"):
-        with open("wallmountedthermostatpro.csv", "w") as csv:
+        with open("wallmountedthermostatpro.csv", "w", encoding='utf-8') as csv:
             csv.write("name;timestamp;humidity;actualTemperature\n")
-    with open("wallmountedthermostatpro.csv", "a") as csv:
+    with open("wallmountedthermostatpro.csv", "a", encoding='utf-8') as csv:
         csv.write(
             "{};{};{}%;{}°C\n".format(device.id, str(device.lastStatusUpdate), d.humidity, d.actualTemperature))
 
