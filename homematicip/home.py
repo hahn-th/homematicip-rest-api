@@ -394,12 +394,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                         obj.from_json(data, self.devices, self.groups)
                     else:
                         obj.from_json(data, self.devices)
-                    obj.fire_update_event(data)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EVENT_HOME_CHANGED:
                     data = event["home"]
                     obj = self
                     obj.from_json(data)
-                    obj.fire_update_event(data)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EVENT_CLIENT_ADDED:
                     data = event["client"]
                     obj = Client(self._connection)
@@ -424,7 +424,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                         self.devices.append(obj)
                     else:
                         obj.from_json(data)
-                    obj.fire_update_event(data)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EVENT_DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
                     self.devices.remove(obj)
