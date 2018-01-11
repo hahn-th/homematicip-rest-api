@@ -87,10 +87,6 @@ class AsyncConnection(BaseConnection):
                     await result.release()
         raise HmipConnectionError("Failed to connect to HomeMaticIp server")
 
-    # def listen_for_websocket_data(self, incoming_parser):
-    #     self._socket_task = self._loop.create_task(
-    #         self._listen_for_incoming_websocket_data(incoming_parser))
-
     async def _connect_to_websocket(self):
         try:
             with async_timeout.timeout(self._restCallTimout, loop=self._loop):
@@ -109,14 +105,6 @@ class AsyncConnection(BaseConnection):
         self.ws_reader_task = self._loop.create_task(self._ws_loop(incoming_parser))
         return self.ws_reader_task
 
-    # async def close_websocket_connection(self):
-    #     if not self.ws_connected:
-    #         return
-    #     #with asyncio.wait_for()
-    #     val = await self.socket_connection.close()
-    #     logger.debug("Socket close message sent.")
-    #     self.socket_connection = None
-
     @asyncio.coroutine
     def close_websocket_connection(self):
         if not self.ws_connected:
@@ -124,25 +112,6 @@ class AsyncConnection(BaseConnection):
         self.ws_reader_task.cancel()
         yield from self.socket_connection.close()
         self.socket_connection = None
-
-    # async def _ws_connect(self, incoming_parser):
-    #     """Creates a websocket connection, listens for incoming data and
-    #     uses the incoming parser to parse the incoming data.
-    #     """
-    #             try:
-    #                 await self._connect_to_websocket()
-    #                 break
-    #             except (asyncio.TimeoutError,
-    #                     aiohttp.ClientConnectionError):
-    #                 logger.warning(
-    #                     'websocket connection timed-out. or other connection error occurred.')
-    #                 await asyncio.sleep(self._restCallTimout)
-    #         else:
-    #             # exit while loop without break. Raising error which
-    #             # should be handled by user.
-    #             raise HmipConnectionError("Problem connecting to hmip websocket connection")
-    #
-    #         logger.info('Connected to HMIP websocket.')
 
     async def _ws_loop(self, incoming_parser):
         try:
