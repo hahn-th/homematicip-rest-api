@@ -12,6 +12,8 @@ class HmipConnectionError(Exception):
 class HmipWrongHttpStatusError(HmipConnectionError):
     pass
 
+class HmipServerCloseError(HmipConnectionError):
+    pass
 
 class BaseConnection:
     """Base connection class.
