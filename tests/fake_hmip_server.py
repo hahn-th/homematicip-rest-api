@@ -32,6 +32,31 @@ class FakeResolver:
             return await self._resolver.resolve(host, port, family)
 
 
+class FakeServer:
+    def __init__(self, loop, base_url=None, port=None):
+        self.loop = loop
+        self.app = web.Application(loop=loop)
+        if base_url:
+            self.base_url = base_url
+        else:
+            self.base_url = 'http://127.0.0.1:8080'
+        self.add_routes()
+
+    def add_routes(self):
+        self.app.router.add_get('/', self.websocket_handler)
+
+    async def websocket_handler(self, request):
+        self.ws = web.WebSocketResponse()
+        await self.ws.prepare(request)
+        async for msg in self.ws:
+            await asyncio.sleep(2)
+
+        return self.ws
+
+    async def start_server(self):
+        self.loop.create_task(self.app.startup())
+
+
 class BaseFakeHmip:
     def __init__(self, *, loop, base_url, port=None):
         self.loop = loop
@@ -107,69 +132,77 @@ class FakeConnectionHmip(BaseFakeHmip):
 class FakeWebsocketHmip(BaseFakeHmip):
     retry = 0
 
+    def __init__(self, loop, base_url, port=None):
+        super().__init__(loop=loop, base_url=base_url, port=port)
+        self.connections = []
+
     def add_routes(self):
         self.app.router.add_routes([
-            web.get('/', self.websocket_handler)])
+            web.get('/', self.websocket_handler),
+            web.get('/nopong',self.no_pong_handler),
+            web.get('/servershutdown',self.server_shutdown),
+            web.get('/clientclose',self.client_shutdown)
+        ])
 
     async def websocket_handler(self, request):
-        self.ws = web.WebSocketResponse()
-        await self.ws.prepare(request)
-
-        async for msg in self.ws:
-            pass
-
+        ws = web.WebSocketResponse()
+        self.connections.append(ws)
+        await ws.prepare(request)
+        ws.send_bytes(b'abc')
+        await asyncio.sleep(2)
         print('websocket connection closed')
 
-        return self.ws
+        return ws
 
-    async def timeout_socket_handler(self, request):
-        # self.retry += 1
-        # if self.retry == 4:
-        #     pass
-        # else:
-        #     await asyncio.sleep(5)
-        self.ws = web.WebSocketResponse()
-        await self.ws.prepare(request)
+    async def no_pong_handler(self, request):
+        ws = web.WebSocketResponse(autoping=False)
+        self.connections.append(ws)
+        await ws.prepare(request)
+        await asyncio.sleep(20)
+        return ws
 
-        async for msg in self.ws:
-            print("messsage received")
-            # if msg.type == aiohttp.WSMsgType.TEXT:
-            #     if msg.data == 'close':
-            #         await self.ws.close()
-            #     else:
-            #         await self.ws.send_str(msg.data + '/answer')
-            # elif msg.type == aiohttp.WSMsgType.ERROR:
-            #     print('ws connection closed with exception %s' %
-            #           self.ws.exception())
+    async def server_shutdown(self,request):
+        ws = web.WebSocketResponse()
+        self.connections.append(ws)
+        await ws.prepare(request)
+        self.loop.create_task(self.stop())
+        await asyncio.sleep(10)
+        #await self.stop()
+        return ws
 
-        print('websocket connection closed')
+    async def client_shutdown(self,request):
+        ws = web.WebSocketResponse()
+        self.connections.append(ws)
+        await ws.prepare(request)
+        await asyncio.sleep(10)
 
-        return self.ws
-
-    async def close_connection(self):
-        await self.ws.close()
-
+    async def stop(self):
+        # for _ws in self.connections:
+        #     await _ws.close()
+        await super().stop()
 
 async def main(loop):
     logging.basicConfig(level=logging.DEBUG)
     fake_ws = FakeWebsocketHmip(loop=loop, base_url='ws.homematic.com')
     connector = await fake_ws.start()
 
+    incoming = {}
+
+    def parser(*args, **kwargs):
+        incoming['test'] = None
+
     async with aiohttp.ClientSession(connector=connector, loop=loop) as session:
         connection = AsyncConnection(loop, session)
 
-        # async with session.get('https://lookup.homematic.com:48335/getHost',
-        #                        params={'access_token': token}) as resp:
-        #     print(await resp.json())
         connection.headers[ATTR_AUTH_TOKEN] = 'auth_token'
         connection.headers[ATTR_CLIENT_AUTH] = 'client_auth'
         connection._urlWebSocket = 'wss://ws.homematic.com/'
-        # await connection._listen_for_incoming_websocket_data(
-        #     lambda x: print(x))
-        connection.listen_for_websocket_data(lambda x: print(x))
-        # await asyncio.sleep(1)
-        # await fake_ws.close_connection()
-        await asyncio.sleep(600)
+        try:
+            ws_loop = await connection.ws_connect(parser)
+            await ws_loop
+        except Exception as err:
+            pass
+        print(incoming)
 
         await fake_ws.stop()
 

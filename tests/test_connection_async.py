@@ -6,8 +6,8 @@ import pytest
 from homematicip.async.connection import AsyncConnection
 from homematicip.base.base_connection import HmipWrongHttpStatusError, \
     HmipConnectionError, \
-    ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
-from tests.fake_hmip_server import FakeLookupHmip, FakeConnectionHmip
+    ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipServerCloseError
+from tests.fake_hmip_server import FakeLookupHmip, FakeConnectionHmip, FakeWebsocketHmip
 from tests.helpers import mockreturn
 
 
@@ -35,6 +35,12 @@ async def fake_server(event_loop):
         connection.headers[ATTR_CLIENT_AUTH] = ''
         yield connection
     await server.stop()
+
+
+@pytest.fixture
+async def fake_websocket_server(event_loop):
+    server = FakeWebsocketHmip(loop=event_loop, base_url='ws.homematic.com')
+    return server
 
 
 @pytest.mark.asyncio
@@ -95,4 +101,126 @@ async def test_websocket_exhaustive_timeout(monkeypatch, async_connection):
                         raise_timeout)
     async_connection._restCallTimout = 0.01
     with pytest.raises(HmipConnectionError):
-        await async_connection._listen_for_incoming_websocket_data(None)
+        await async_connection.ws_connect(None)
+
+async def start_fake_server(loop,base_url):
+    fake_ws = FakeWebsocketHmip(loop=loop,base_url=base_url)
+    connector = await fake_ws.start()
+    return connector
+
+async def start_async_client_connection(connector,loop,base_url,url):
+    session = aiohttp.ClientSession(connector=connector,loop=loop)
+    #async with aiohttp.ClientSession(connector=connector,loop=loop) as session:
+    connection=AsyncConnection(loop,session)
+    connection._urlWebSocket = 'wss://' + base_url + url
+    return connection
+
+async def ws_listen(future,connection):
+    def parser(*args, **kwargs):
+        future.set_result(args)
+    ws_loop = await connection.ws_connect(parser)
+    try:
+        await ws_loop
+    except HmipServerCloseError as err:
+        future.set_exception(HmipServerCloseError)
+    except HmipConnectionError as err:
+        future.set_exception(HmipConnectionError)
+
+
+async def do_test(future, loop, url, base_url='ws.homematic.com'):
+    connector = await start_fake_server(loop,base_url)
+    connection = await  start_async_client_connection(connector,loop,base_url,url)
+    await ws_listen(future,connection)
+
+
+# async def do_test(future, loop, url, base_url='ws.homematic.com'):
+#     """Setup the fake websocket server."""
+#     try:
+#         connector = await start_fake_server(loop,base_url)
+#         async with aiohttp.ClientSession(connector=connector, loop=loop) as session:
+#
+#             def parser(*args, **kwargs):
+#                 future.set_result(args)
+#
+#             connection = AsyncConnection(loop, session)
+#             connection._urlWebSocket = 'wss://' + base_url + url
+#             ws_loop = await connection.ws_connect(parser)
+#             try:
+#                 await ws_loop
+#             except HmipServerCloseError as err:
+#                 future.set_exception(HmipServerCloseError)
+#             except HmipConnectionError as err:
+#                 future.set_exception(HmipConnectionError)
+#
+#     except CancelledError as err:
+#         print("task cancelled.")
+
+
+def finish_all(loop):
+    async def finish():
+        all_finished = False
+        while not all_finished:
+            await asyncio.sleep(1)
+            all_finished = True
+            _all_tasks = [_task for _task in asyncio.Task.all_tasks(loop) if
+                          not asyncio.Task.current_task(loop) == _task]
+            for task in _all_tasks:
+                task.cancel()
+                _done = task.done()
+                all_finished = all_finished and _done
+
+    loop.run_until_complete(finish())
+    print("finished")
+
+
+def test_ws_message():
+    loop = asyncio.get_event_loop()
+    future = asyncio.Future()
+    asyncio.ensure_future(do_test(future, loop, '/'))
+    loop.run_until_complete(future)
+
+    _res = future.result()
+
+    assert _res[1] == 'abc'
+
+    finish_all(loop)
+    # loop.close()
+
+
+def test_ws_ping_pong():
+    loop = asyncio.get_event_loop()
+    future = asyncio.Future()
+    asyncio.ensure_future(do_test(future, loop, '/nopong'))
+
+    with pytest.raises(HmipConnectionError):
+        loop.run_until_complete(future)
+        # _res = future.result()
+    finish_all(loop)
+
+
+def test_ws_server_shutdown():
+    loop = asyncio.get_event_loop()
+    future = asyncio.Future()
+    asyncio.ensure_future(do_test(future, loop, '/servershutdown'))
+
+    with pytest.raises(HmipServerCloseError):
+        loop.run_until_complete(future)
+    finish_all(loop)
+
+def test_ws_client_shutdown():
+    loop = asyncio.get_event_loop()
+    future = asyncio.Future()
+    async def close_client(connection):
+        await asyncio.sleep(2)
+        await connection.close_websocket_connection()
+        return
+
+    async def start(url,base_url='ws.homematic.com'):
+        connector = await start_fake_server(loop, base_url)
+        connection = await  start_async_client_connection(connector, loop, base_url, url)
+        asyncio.ensure_future(ws_listen(future,connection))
+        await close_client(connection)
+
+
+    loop.run_until_complete(start('/clientclose'))
+    finish_all(loop)

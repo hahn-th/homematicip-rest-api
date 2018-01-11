@@ -1,5 +1,6 @@
 import json
 import logging
+import asyncio
 
 from homematicip.async.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP
 from homematicip.async.connection import AsyncConnection
@@ -9,13 +10,13 @@ LOGGER = logging.getLogger(__name__)
 
 
 class AsyncHome(Home):
-    """this class represents the 'Home' of the homematic ip"""
+    """this class represents the 'Async Home' of the homematic ip"""
     _typeClassMap = TYPE_CLASS_MAP
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
-    def __init__(self, loop,websession=None):
-        super().__init__(connection=AsyncConnection(loop,websession))
+    def __init__(self, loop, websession=None):
+        super().__init__(connection=AsyncConnection(loop, websession))
 
     async def init(self, access_point_id, lookup=True):
         await self._connection.init(access_point_id, lookup)
@@ -39,15 +40,17 @@ class AsyncHome(Home):
 
         return True
 
-    def enable_events(self):
-        """Starts listening for incoming websocket data."""
-        self._connection.listen_for_websocket_data(self._ws_on_message)
+    async def enable_events(self) -> asyncio.Task:
+        """Connects to the websocket. Returns a listening task."""
+        return await self._connection.ws_connect(self._ws_on_message)
+        #self._connection.listen_for_websocket_data(self._ws_on_message)
 
-    def on_connection_lost(self, connection_lost_handler):
-        self._connection._socket_task.add_done_callback(connection_lost_handler)
+    # def on_connection_lost(self, connection_lost_handler):
+    #     self._connection._socket_task.add_done_callback(connection_lost_handler)
 
+    @asyncio.coroutine
     def disable_events(self):
-        self._connection.close_websocket_connection()
+        yield from self._connection.close_websocket_connection()
 
     def get_OAuth_OTK(self):
         pass
