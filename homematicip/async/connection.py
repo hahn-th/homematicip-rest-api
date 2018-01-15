@@ -117,17 +117,23 @@ class AsyncConnection(BaseConnection):
         try:
             while True:
                 async for msg in self.socket_connection:
-                    logger.debug(msg)
+                    logger.debug("incoming hmip message")
                     if msg.tp == aiohttp.WSMsgType.BINARY:
                         message = str(msg.data, 'utf-8')
                         incoming_parser(None, message)
                     elif msg.tp in [aiohttp.WSMsgType.CLOSE,
                                     aiohttp.WSMsgType.CLOSED,
                                     aiohttp.WSMsgType.ERROR]:
-                        raise HmipServerCloseError("Server closed. close code: %s", self.socket_connection.close_code)
+                        raise HmipServerCloseError("Server closed. close code: {}".format(self.socket_connection.close_code))
+                    else:
+                        raise HmipServerCloseError("Unknown incoming message: {} {}".format(msg.tp,msg.data))
+                        #logger.warning("unknown incoming message: {} {}".format(msg.tp,msg.data))
         except (ClientError, HttpProcessingError) as err:
             raise HmipConnectionError(err)
         except CancelledError:
             return
+        except Exception as err:
+            logger.exception(err)
+            raise HmipConnectionError(err)
         finally:
             await self.close_websocket_connection()
