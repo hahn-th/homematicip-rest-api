@@ -39,7 +39,7 @@ def main():
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
-    parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
+    parser.add_argument("-d", "--device", dest="device", action='append', help="the device you want to modify (see \"Device Settings\").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
 
 
@@ -59,6 +59,7 @@ def main():
                        help="enables the router module of the device", default=None)
     group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module",
                        help="disables the router module of the device", default=None)
+
 
     group = parser.add_argument_group("Home Settings")
     group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
@@ -183,52 +184,59 @@ def main():
 
     if args.device:
         command_entered = False
-        device = None
-        for d in home.devices:
-            if d.id == args.device:
-                device = d
+        devices = []
+        for argdevice in args.device:
+            if argdevice == '*':
+                devices = home.devices
                 break
-        if device == None:
-            logger.error("Could not find device {}".format(args.device))
-            return
-
-        if args.device_new_label:
-            device.set_label(args.device_new_label)
-            command_entered = True
-        if args.device_switch_state != None:
-            if isinstance(device, homematicip.PlugableSwitch):
-                device.set_switch_state(args.device_switch_state)
-                command_entered = True
             else:
-                logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
+                d = home.search_device_by_id(argdevice)
+                if d == None:
+                    logger.error("Could not find device {}".format(argdevice))
+                else:
+                    devices.append(d)
 
-        if args.device_shutter_level is not None:
-            if isinstance(device, homematicip.FullFlushShutter):
-                device.set_shutter_level(args.device_shutter_level)
-                command_entered = True
-            else:
-                logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
+        for device in devices:
 
-        if args.device_shutter_stop is not None:
-            if isinstance(device, homematicip.FullFlushShutter):
-                device.set_shutter_stop()
-                command_entered = True
-            else:
-                logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
 
-        if args.device_display != None:
-            if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):
-                device.set_display(args.device_display.upper())
+            if args.device_new_label:
+                device.set_label(args.device_new_label)
                 command_entered = True
-            else:
-                logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+            if args.device_switch_state != None:
+                if isinstance(device, homematicip.PlugableSwitch):
+                    device.set_switch_state(args.device_switch_state)
+                    command_entered = True
+                else:
+                    logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
 
-        if args.device_enable_router_module != None:
-            if device.routerModuleSupported or True:
-                device.set_router_module_enabled(args.device_enable_router_module)
-                command_entered = True
-            else:
-                logger.error("the device {} doesn't support the router module".format(device.id))
+            if args.device_shutter_level is not None:
+                if isinstance(device, homematicip.FullFlushShutter):
+                    device.set_shutter_level(args.device_shutter_level)
+                    command_entered = True
+                else:
+                    logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
+
+            if args.device_shutter_stop is not None:
+                if isinstance(device, homematicip.FullFlushShutter):
+                    device.set_shutter_stop()
+                    command_entered = True
+                else:
+                    logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
+
+            if args.device_display != None:
+                if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):
+                    device.set_display(args.device_display.upper())
+                    command_entered = True
+                else:
+                    logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+
+            if args.device_enable_router_module != None:
+                if device.routerModuleSupported:
+                    device.set_router_module_enabled(args.device_enable_router_module)
+                    print("{} the router module for device {}".format("Enabled" if args.device_enable_router_module else "Disabled", device.id))
+                    command_entered = True
+                else:
+                    logger.error("the device {} doesn't support the router module".format(device.id))
 
 
     if args.set_zones_device_assignment:
