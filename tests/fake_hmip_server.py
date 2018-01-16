@@ -139,9 +139,10 @@ class FakeWebsocketHmip(BaseFakeHmip):
     def add_routes(self):
         self.app.router.add_routes([
             web.get('/', self.websocket_handler),
-            web.get('/nopong',self.no_pong_handler),
-            web.get('/servershutdown',self.server_shutdown),
-            web.get('/clientclose',self.client_shutdown)
+            web.get('/nopong', self.no_pong_handler),
+            web.get('/servershutdown', self.server_shutdown),
+            web.get('/clientclose', self.client_shutdown),
+            web.get('/recover', self.recover_handler)
         ])
 
     async def websocket_handler(self, request):
@@ -154,6 +155,18 @@ class FakeWebsocketHmip(BaseFakeHmip):
 
         return ws
 
+    async def recover_handler(self, request):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+        ws.send_bytes(b'abc')
+
+        await asyncio.sleep(2)
+
+
+
+        ws.send_bytes(b'resumed')
+
+
     async def no_pong_handler(self, request):
         ws = web.WebSocketResponse(autoping=False)
         self.connections.append(ws)
@@ -161,16 +174,16 @@ class FakeWebsocketHmip(BaseFakeHmip):
         await asyncio.sleep(20)
         return ws
 
-    async def server_shutdown(self,request):
+    async def server_shutdown(self, request):
         ws = web.WebSocketResponse()
         self.connections.append(ws)
         await ws.prepare(request)
         self.loop.create_task(self.stop())
         await asyncio.sleep(10)
-        #await self.stop()
+        # await self.stop()
         return ws
 
-    async def client_shutdown(self,request):
+    async def client_shutdown(self, request):
         ws = web.WebSocketResponse()
         self.connections.append(ws)
         await ws.prepare(request)
@@ -180,6 +193,7 @@ class FakeWebsocketHmip(BaseFakeHmip):
         # for _ws in self.connections:
         #     await _ws.close()
         await super().stop()
+
 
 async def main(loop):
     logging.basicConfig(level=logging.DEBUG)
