@@ -116,7 +116,8 @@ class AsyncConnection(BaseConnection):
     async def _ws_loop(self, incoming_parser):
         try:
             while True:
-                async for msg in self.socket_connection:
+                with async_timeout.timeout(300):
+                    msg = self.socket_connection.receive()
                     logger.debug("incoming hmip message")
                     if msg.tp == aiohttp.WSMsgType.BINARY:
                         message = str(msg.data, 'utf-8')
@@ -128,6 +129,8 @@ class AsyncConnection(BaseConnection):
                     else:
                         raise HmipServerCloseError("Unknown incoming message: {} {}".format(msg.tp,msg.data))
                         #logger.warning("unknown incoming message: {} {}".format(msg.tp,msg.data))
+        except asyncio.TimeoutError:
+            raise HmipConnectionError("Connection timed out. Reconnecting.")
         except (ClientError, HttpProcessingError) as err:
             raise HmipConnectionError(err)
         except CancelledError:
