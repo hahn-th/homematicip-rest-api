@@ -117,7 +117,7 @@ class AsyncConnection(BaseConnection):
         try:
             while True:
                 with async_timeout.timeout(300):
-                    msg = self.socket_connection.receive()
+                    msg = await self.socket_connection.receive()
                     logger.debug("incoming hmip message")
                     if msg.tp == aiohttp.WSMsgType.BINARY:
                         message = str(msg.data, 'utf-8')
