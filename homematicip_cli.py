@@ -10,7 +10,7 @@ import json
 from builtins import str
 
 from homematicip.home import Home
-
+from homematicip.device import *
 
 def create_logger():
   logger = logging.getLogger()
@@ -203,28 +203,28 @@ def main():
                 device.set_label(args.device_new_label)
                 command_entered = True
             if args.device_switch_state != None:
-                if isinstance(device, homematicip.PlugableSwitch):
+                if isinstance(device, PlugableSwitch):
                     device.set_switch_state(args.device_switch_state)
                     command_entered = True
                 else:
                     logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
 
             if args.device_shutter_level is not None:
-                if isinstance(device, homematicip.FullFlushShutter):
+                if isinstance(device, FullFlushShutter):
                     device.set_shutter_level(args.device_shutter_level)
                     command_entered = True
                 else:
                     logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
 
             if args.device_shutter_stop is not None:
-                if isinstance(device, homematicip.FullFlushShutter):
+                if isinstance(device, FullFlushShutter):
                     device.set_shutter_stop()
                     command_entered = True
                 else:
                     logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
 
             if args.device_display != None:
-                if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):
+                if isinstance(device, TemperatureHumiditySensorDisplay):
                     device.set_display(args.device_display.upper())
                     command_entered = True
                 else:
