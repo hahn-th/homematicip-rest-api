@@ -3,3 +3,4 @@ websocket-client
 future
 aiohttp
 async_timeout
+websockets
