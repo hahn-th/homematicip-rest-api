@@ -54,7 +54,7 @@ async def main():
     for d in home.groups:
         d.on_update(on_update_handler)
 
-    await home.disable_events()
+    #await home.disable_events()
     print("test")
 
 
