@@ -129,7 +129,7 @@ class AsyncConnection(BaseConnection):
                         raise HmipConnectionError
                 else:
                     logger.debug("incoming hmip message")
-                    incoming_parser(None, msg)
+                    incoming_parser(None, msg.decode())
         except ConnectionClosed as err:
             logger.exception(err)
             raise HmipConnectionError
