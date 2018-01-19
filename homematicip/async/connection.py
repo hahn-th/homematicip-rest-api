@@ -1,5 +1,6 @@
 import json
 import logging
+from asyncio import Lock
 from asyncio.futures import CancelledError
 from json.decoder import JSONDecodeError
 
@@ -21,7 +22,8 @@ logger = logging.getLogger(__name__)
 class AsyncConnection(BaseConnection):
     """Handles async http and websocket traffic."""
     reconnect_timeout = 120
-    heartbeat = 2
+    ping_timeout = 2
+    ping_loop = 20
 
     def __init__(self, loop, session=None):
         super().__init__()
@@ -32,6 +34,7 @@ class AsyncConnection(BaseConnection):
             self._websession = session
         self.socket_connection = None  # ClientWebSocketResponse
         self.ws_reader_task = None
+        self.ws_close_lock = Lock()
 
     @property
     def ws_connected(self):
@@ -104,41 +107,56 @@ class AsyncConnection(BaseConnection):
 
     async def ws_connect(self, incoming_parser):
         await self._connect_to_websocket()
+        self.ping_pong_task = self._loop.create_task(self._ws_ping_loop())
         self.ws_reader_task = self._loop.create_task(self._ws_loop(incoming_parser))
         return self.ws_reader_task
 
     async def close_websocket_connection(self):
-        if not self.ws_connected:
+        async with self.ws_close_lock:
+            if not self.ws_connected:
+                return
+            logger.debug("Closing connection")
+            try:
+                await self.socket_connection.close()
+            except Exception as err:
+                logger.debug(err)
+            # self.ws_reader_task.cancel()
+            # self.ping_pong_task.cancel()
+
+            self.socket_connection = None
+
+    async def _ws_ping_loop(self):
+        try:
+            while True:
+                logger.debug("Sending out ping request.")
+                pong_waiter = await self.socket_connection.ping()
+                await asyncio.wait_for(pong_waiter, timeout=self.ping_timeout)
+                logger.debug("Pong received.")
+                await asyncio.sleep(self.ping_loop)
+        except (asyncio.TimeoutError, ConnectionClosed, TypeError):
+            logger.error("Ping request timed out.")
+        except CancelledError:
+            logger.debug("Closing ping pong task.")
             return
-        self.ws_reader_task.cancel()
-        await self.socket_connection.close()
-        self.socket_connection = None
+        except Exception as err:
+            logger.exception(err)
+        finally:
+            await self.close_websocket_connection()
 
     async def _ws_loop(self, incoming_parser):
         try:
             while True:
-                try:
-                    msg = await asyncio.wait_for(self.socket_connection.recv(), timeout=300)
-                except asyncio.TimeoutError:
-                    # no data in 20 seconds, check the connection.
-                    try:
-                        pong_waiter = await self.socket_connection.ping()
-                        await asyncio.wait_for(pong_waiter, timeout=10)
-                    except asyncio.TimeoutError:
-                        logger.debug("No pong received. Disconnecting")
-                        raise HmipConnectionError
-                else:
-                    logger.debug("incoming hmip message")
-                    incoming_parser(None, msg.decode())
-        except ConnectionClosed as err:
-            logger.exception(err)
-            raise HmipConnectionError
-        except (ClientError, HttpProcessingError) as err:
-            raise HmipConnectionError(err)
+                msg = await self.socket_connection.recv()
+                logger.debug("incoming hmip message")
+                incoming_parser(None, msg.decode())
+        except (ConnectionClosed, TypeError) as err:
+            logger.debug("Connection closed.")
+            #raise HmipConnectionError
         except CancelledError:
             return
         except Exception as err:
             logger.exception(err)
-            raise HmipConnectionError(err)
+            #raise HmipConnectionError
         finally:
             await self.close_websocket_connection()
+            raise HmipConnectionError

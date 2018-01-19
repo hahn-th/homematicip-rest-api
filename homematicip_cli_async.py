@@ -38,24 +38,32 @@ async def main():
     home = AsyncHome(loop)
     home.set_auth_token(config.AUTH_TOKEN)
     await home.init(config.ACCESS_POINT)
-
     await home.get_current_state()
     #await home._connection._connect_to_websocket()
-    reader = await home.enable_events()
-    # try:
-    #     reader.cancel()
-    # except Exception as err:
-    #     pass
-    #_socket = asyncio.ensure_future(enable_websocket(home))
-    # home.start_incoming_websocket_data()
-    for d in home.devices:
-        print('{} {} {}'.format(d.id, d.label, str(d)))
-        d.on_update(on_update_handler)
-    for d in home.groups:
-        d.on_update(on_update_handler)
+    try:
+        reader = await home.enable_events()
+    except HmipConnectionError:
+        print("Error connecting")
 
-    #await home.disable_events()
-    print("test")
+    try:
+        await reader
+    except HmipConnectionError:
+        print("caught hmip error")
+        pass
+    # # try:
+    # #     reader.cancel()
+    # # except Exception as err:
+    # #     pass
+    # #_socket = asyncio.ensure_future(enable_websocket(home))
+    # # home.start_incoming_websocket_data()
+    # for d in home.devices:
+    #     print('{} {} {}'.format(d.id, d.label, str(d)))
+    #     d.on_update(on_update_handler)
+    # for d in home.groups:
+    #     d.on_update(on_update_handler)
+    #
+    # #await home.disable_events()
+    # print("test")
 
 
 if __name__ == "__main__":

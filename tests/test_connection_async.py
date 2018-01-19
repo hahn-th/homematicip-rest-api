@@ -113,7 +113,7 @@ async def start_fake_server(loop, base_url):
 async def start_async_client_connection(connector, loop, base_url, url):
     session = aiohttp.ClientSession(connector=connector, loop=loop)
     connection = AsyncConnection(loop, session)
-    connection._urlWebSocket = 'wss://' + base_url + url
+    connection._urlWebSocket = 'ws://' + base_url + url
     return connection
 
 
