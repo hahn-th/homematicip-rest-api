@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 class AsyncConnection(BaseConnection):
     """Handles async http and websocket traffic."""
-    reconnect_timeout = 120
+    connect_timeout = 20
     ping_timeout = 2
     ping_loop = 20
 
@@ -95,12 +95,14 @@ class AsyncConnection(BaseConnection):
 
     async def _connect_to_websocket(self):
         try:
-            self.socket_connection = await websockets.connect(
+            self.socket_connection = await asyncio.wait_for(websockets.connect(
                 self._urlWebSocket,
                 extra_headers={
                     ATTR_AUTH_TOKEN: self._auth_token,
                     ATTR_CLIENT_AUTH: self._clientauth_token}
-            )
+            ),timeout=self.connect_timeout)
+        except asyncio.TimeoutError:
+            raise HmipConnectionError("Connecting to hmip ws socket timed out.")
         except Exception as err:
             logger.exception(err)
             raise HmipConnectionError()
