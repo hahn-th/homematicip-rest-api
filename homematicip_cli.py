@@ -46,20 +46,14 @@ def main():
 
 
     group = parser.add_argument_group("Device Settings")
-    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on",
-                       default=None)
-    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off",
-                       default=None)
-    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level",
-                       help="set shutter to level (0..1)")
-    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter",
-                       default=None)
+    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on", default=None)
+    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off", default=None)
+    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level", help="set shutter to level (0..1)")
+    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter", default=None)
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
     group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
-    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module",
-                       help="enables the router module of the device", default=None)
-    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module",
-                       help="disables the router module of the device", default=None)
+    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device", default=None)
+    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device", default=None)
 
 
     group = parser.add_argument_group("Home Settings")
@@ -79,6 +73,9 @@ def main():
     group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level", help="set all shutters in group to level (0..1)")
     group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop", help="stop all shutters in group", default=None)
     group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature", help="sets the temperature for the given group. The group must be of the type \"HEATING\"", default=None, type=float)
+
+    group.add_argument("--set-boost", action="store_true", dest="group_boost", help="activates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost-stop", action="store_false", dest="group_boost", help="deactivates the boost mode for a HEATING group", default=None)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -320,6 +317,14 @@ def main():
                 group.set_active_profile(index)
             else:
                 logger.error("Group {} isn't a HEATING group".format(g.id))
+
+        if args.group_boost is not None:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                group.set_boost(args.group_boost)
+            else:
+                logger.error("Group {} isn't a HEATING group".format(g.id))
+
     if args.list_events:
         command_entered = True
         home.onEvent += printEvents
