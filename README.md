@@ -5,7 +5,7 @@ Use at your own risk.
 
 
 #Installation
-Just run **pip install homematicip** to get the package
+Just run **pip3 install homematicip** to get the package
 
 # Usage #
 first download and run generate_auth_token.py to get an auth token for your access point.
