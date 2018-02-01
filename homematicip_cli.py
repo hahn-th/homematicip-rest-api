@@ -11,6 +11,7 @@ from builtins import str
 
 from homematicip.home import Home
 from homematicip.device import *
+from homematicip.group import *
 
 def create_logger():
   logger = logging.getLogger()
@@ -75,16 +76,19 @@ def main():
     group = parser.add_argument_group("Group Settings")
     group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
     group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
-    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level",
-                       help="set all shutters in group to level (0..1)")
-    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop",
-                       help="stop all shutters in group", default=None)
+    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level", help="set all shutters in group to level (0..1)")
+    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop", help="stop all shutters in group", default=None)
+    group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature", help="sets the temperature for the given group. The group must be of the type \"HEATING\"", default=None, type=float)
 
     if len(sys.argv) == 1:
         parser.print_help()
         return
 
-    args = parser.parse_args()
+    args = None
+    try:
+        args = parser.parse_args()
+    except:
+        return
 
     logger.setLevel(args.debug_level)
 
@@ -284,15 +288,6 @@ def main():
             logger.error("Could not find group {}".format(args.group))
             return
 
-        if args.group_activate_profile:
-            command_entered = True
-            index = args.group_activate_profile
-            for p in group.profiles:
-                if p.name == args.group_activate_profile:
-                    index = p.index
-                    break
-            group.set_active_profile(index)
-
         if args.group_list_profiles:
             command_entered = True
             for p in group.profiles:
@@ -307,6 +302,24 @@ def main():
             command_entered = True
             group.set_shutter_stop()
 
+        if args.group_set_point_temperature:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                group.set_point_temperature(args.group_set_point_temperature)
+            else:
+                logger.error("Group {} isn't a HEATING group".format(g.id))
+
+        if args.group_activate_profile:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                index = args.group_activate_profile
+                for p in group.profiles:
+                    if p.name == args.group_activate_profile:
+                        index = p.index
+                        break
+                group.set_active_profile(index)
+            else:
+                logger.error("Group {} isn't a HEATING group".format(g.id))
     if args.list_events:
         command_entered = True
         home.onEvent += printEvents
