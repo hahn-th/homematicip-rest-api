@@ -44,6 +44,8 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-BROLL (Shutter Actuator - brand-mount)
 - [X] HMIP-SPI (Precence Sensor - indoor)
 - [X] HmIP-PDT (Pluggable Dimmer)
+- [X] HMIP-BSM (Brand Switch and Meter)
+- [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 
 ## Groups ##
 - [X] Meta (Rooms)
