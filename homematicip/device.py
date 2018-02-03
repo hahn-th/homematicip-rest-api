@@ -269,19 +269,23 @@ class FloorTerminalBlock6(Device):
                                                   self.globalPumpControl)
 
 
-class PlugableSwitch(Device):
-    """ HMIP-PS (Pluggable Switch) """
+class Switch(Device):
+    """ Generic Switch class """
 
     on = None
+    profileMode = None
+    userDesiredProfileMode = None
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SWITCH_CHANNEL", js)
         if c:
             self.on = c["on"]
+            self.profileMode = c["profileMode"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{}: on({})".format(super().__str__(), self.on)
+        return "{}: on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
 
     def set_switch_state(self, on=True):
         data = {"channelIndex": 1, "deviceId": self.id, "on": on}
@@ -294,9 +298,14 @@ class PlugableSwitch(Device):
     def turn_off(self):
         return self.set_switch_state(False)
 
+class PlugableSwitch(Switch):
+    """ HMIP-PS (Pluggable Switch) """
 
-class PlugableSwitchMeasuring(PlugableSwitch):
-    """ HMIP-PSM (Pluggable Switch and Meter) """
+class PrintedCircuitBoardSwitchBattery(Switch):
+    """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+
+class SwitchMeasuring(Switch):
+    """ Generic class for Switch and Meter """
     energyCounter = None
     currentPowerConsumption = None
 
@@ -307,10 +316,18 @@ class PlugableSwitchMeasuring(PlugableSwitch):
             self.on = c["on"]
             self.energyCounter = c["energyCounter"]
             self.currentPowerConsumption = c["currentPowerConsumption"]
+            self.profileMode = c["profileMode"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
         return "{} energyCounter({}) currentPowerConsumption({}W)".format(
             super().__str__(), self.energyCounter, self.currentPowerConsumption)
+
+class PlugableSwitchMeasuring(SwitchMeasuring):
+    """ HMIP-PSM (Pluggable Switch and Meter) """
+
+class BrandSwitchMeasuring(SwitchMeasuring):
+    """ HMIP-BSM (Brand Switch and Meter) """
 
 
 class PushButton(Device):

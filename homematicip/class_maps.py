@@ -1,23 +1,10 @@
 import homematicip.base.constants as cn
 
-from homematicip.device import HeatingThermostat, ShutterContact, \
-    WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, \
-    PlugableSwitchMeasuring, TemperatureHumiditySensorDisplay, PushButton, \
-    AlarmSirenIndoor, MotionDetectorIndoor, KeyRemoteControlAlarm, \
-    PlugableSwitch, FullFlushShutter, TemperatureHumiditySensorWithoutDisplay, \
-    PresenceDetectorIndoor, PluggableDimmer, Device
-from homematicip.group import SecurityGroup, SwitchingGroup, \
-    ExtendedLinkedSwitchingGroup, LinkedSwitchingGroup, AlarmSwitchingGroup, \
-    HeatingHumidyLimiterGroup, HeatingTemperatureLimiterGroup, \
-    HeatingChangeoverGroup, InboxGroup, SecurityZoneGroup, HeatingGroup, \
-    HeatingCoolingDemandGroup, HeatingExternalClockGroup, \
-    HeatingDehumidifierGroup, HeatingCoolingDemandBoilerGroup, \
-    HeatingCoolingDemandPumpGroup, SwitchingProfileGroup, \
-    OverHeatProtectionRule, SmokeAlarmDetectionRule, LockOutProtectionRule, \
-    ShutterWindProtectionRule, ExtendedLinkedShutterGroup
-from homematicip.securityEvent import SilenceChangedEvent, \
-    ActivationChangedEvent, AccessPointConnectedEvent, \
-    AccessPointDisconnectedEvent, SensorEvent
+from homematicip.device import *
+
+from homematicip.group import *
+
+from homematicip.securityEvent import *
 
 TYPE_CLASS_MAP = {
     cn.DEVICE: Device,
@@ -39,7 +26,9 @@ TYPE_CLASS_MAP = {
     cn.FULL_FLUSH_SHUTTER: FullFlushShutter,
     cn.BRAND_SHUTTER: FullFlushShutter,
     cn.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
-    cn.PLUGGABLE_DIMMER: PluggableDimmer
+    cn.PLUGGABLE_DIMMER: PluggableDimmer,
+    cn.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
+    cn.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery
 }
 
 TYPE_GROUP_MAP = {
