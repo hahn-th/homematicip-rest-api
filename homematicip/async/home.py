@@ -43,10 +43,6 @@ class AsyncHome(Home):
     async def enable_events(self) -> asyncio.Task:
         """Connects to the websocket. Returns a listening task."""
         return await self._connection.ws_connect(self._ws_on_message)
-        #self._connection.listen_for_websocket_data(self._ws_on_message)
-
-    # def on_connection_lost(self, connection_lost_handler):
-    #     self._connection._socket_task.add_done_callback(connection_lost_handler)
 
     @asyncio.coroutine
     def disable_events(self):

@@ -380,7 +380,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def _ws_on_message(self, ws, message):
         js = json.loads(message)
-        LOGGER.debug(js)
+        #LOGGER.debug(js)
         eventList = []
         try:
             for event in js["events"].values():

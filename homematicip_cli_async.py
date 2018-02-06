@@ -23,44 +23,47 @@ def on_update_handler(data, event_type, obj):
         json.dump(data, fl, indent=4)
 
 
-async def enable_websocket(home):
-    ws = await home.enable_events()
-    try:
-        await ws
-    except HmipConnectionError as err:
-        pass
-
-
-
-
-async def main():
-    loop = asyncio.get_event_loop()
+async def get_home(loop):
     home = AsyncHome(loop)
     home.set_auth_token(config.AUTH_TOKEN)
     await home.init(config.ACCESS_POINT)
+    return home
 
+
+async def update_state(home):
     await home.get_current_state()
-    #await home._connection._connect_to_websocket()
-    reader = await home.enable_events()
-    # try:
-    #     reader.cancel()
-    # except Exception as err:
-    #     pass
-    #_socket = asyncio.ensure_future(enable_websocket(home))
-    # home.start_incoming_websocket_data()
     for d in home.devices:
         print('{} {} {}'.format(d.id, d.label, str(d)))
+    for d in home.groups:
+        print('{} {} {}'.format(d.id, d.label, str(d)))
+
+
+async def wait_for_ws_incoming(home):
+    await home.get_current_state()
+    for d in home.devices:
         d.on_update(on_update_handler)
     for d in home.groups:
         d.on_update(on_update_handler)
-
-    await home.disable_events()
-    print("test")
+    reader = await home.enable_events()
+    await reader
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     loop = asyncio.get_event_loop()
-    loop.create_task(main())
-    # loop.run_until_complete(main(loop))
-    loop.run_forever()
+    home = None
+    try:
+        home = loop.run_until_complete(get_home(loop))
+    except HmipConnectionError:
+        print("Problem connecting")
+    if home:
+        try:
+            loop.run_until_complete(update_state(home))
+        except HmipConnectionError:
+            print("Problem connecting")
+        try:
+            loop.run_until_complete(wait_for_ws_incoming(home))
+        except HmipConnectionError:
+            print("Problem connecting")
+        except KeyboardInterrupt:
+            loop.run_until_complete(home.close_websocket_connection())

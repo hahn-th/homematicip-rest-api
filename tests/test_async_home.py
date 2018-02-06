@@ -25,9 +25,12 @@ async def test_on_connection_lost(fake_async_home, monkeypatch):
         with pytest.raises(HmipConnectionError):
             _result = future_.result()
 
-    fake_async_home.enable_events()
+    ws_connection = fake_async_home.enable_events()
 
-    fake_async_home.on_connection_lost(connection_handler)
+    with pytest.raises(HmipConnectionError):
+        await ws_connection
+    #
+    # fake_async_home.on_connection_lost(connection_handler)
 
 
 

@@ -1,13 +1,15 @@
 import json
 import logging
+from asyncio import Lock
 from asyncio.futures import CancelledError
 from json.decoder import JSONDecodeError
 
 import aiohttp
-from aiohttp import ClientError
-from aiohttp.http_exceptions import HttpProcessingError
+import websockets
 import async_timeout
 import asyncio
+
+from websockets import ConnectionClosed
 
 from homematicip.base.base_connection import BaseConnection, HmipWrongHttpStatusError, \
     ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipConnectionError, HmipServerCloseError
@@ -17,8 +19,9 @@ logger = logging.getLogger(__name__)
 
 class AsyncConnection(BaseConnection):
     """Handles async http and websocket traffic."""
-    reconnect_timeout = 120
-    heartbeat = 2
+    connect_timeout = 20
+    ping_timeout = 3
+    ping_loop = 60
 
     def __init__(self, loop, session=None):
         super().__init__()
@@ -29,6 +32,8 @@ class AsyncConnection(BaseConnection):
             self._websession = session
         self.socket_connection = None  # ClientWebSocketResponse
         self.ws_reader_task = None
+        self.ping_pong_task = None
+        self.ws_close_lock = Lock()
 
     @property
     def ws_connected(self):
@@ -89,45 +94,66 @@ class AsyncConnection(BaseConnection):
 
     async def _connect_to_websocket(self):
         try:
-            with async_timeout.timeout(self._restCallTimout, loop=self._loop):
-                self.socket_connection = await self._websession.ws_connect(
-                    self._urlWebSocket,
-                    headers={
-                        ATTR_AUTH_TOKEN: self._auth_token,
-                        ATTR_CLIENT_AUTH: self._clientauth_token},
-                    heartbeat=self.heartbeat
-                )
-        except (asyncio.TimeoutError, aiohttp.ClientConnectionError)as err:
-            raise HmipConnectionError(err)
+            self.socket_connection = await asyncio.wait_for(websockets.connect(
+                self._urlWebSocket,
+                extra_headers={
+                    ATTR_AUTH_TOKEN: self._auth_token,
+                    ATTR_CLIENT_AUTH: self._clientauth_token}
+            ), timeout=self.connect_timeout)
+        except asyncio.TimeoutError:
+            raise HmipConnectionError("Connecting to hmip ws socket timed out.")
+        except Exception as err:
+            logger.exception(err)
+            raise HmipConnectionError()
 
     async def ws_connect(self, incoming_parser):
         await self._connect_to_websocket()
+        self.ping_pong_task = self._loop.create_task(self._ws_ping_loop())
         self.ws_reader_task = self._loop.create_task(self._ws_loop(incoming_parser))
         return self.ws_reader_task
 
-    @asyncio.coroutine
-    def close_websocket_connection(self):
-        if not self.ws_connected:
+    async def close_websocket_connection(self):
+        async with self.ws_close_lock:
+            if not self.ws_connected:
+                return
+            logger.debug("Closing connection")
+            try:
+                await self.socket_connection.close()
+            except Exception as err:
+                logger.debug(err)
+
+            self.socket_connection = None
+
+    async def _ws_ping_loop(self):
+        try:
+            while True:
+                logger.debug("Sending out ping request.")
+                pong_waiter = await self.socket_connection.ping()
+                await asyncio.wait_for(pong_waiter, timeout=self.ping_timeout)
+                logger.debug("Pong received.")
+                await asyncio.sleep(self.ping_loop)
+        except (asyncio.TimeoutError, ConnectionClosed, TypeError):
+            logger.error("Ping request timed out.")
+        except CancelledError:
+            logger.debug("Closing ping pong task.")
             return
-        self.ws_reader_task.cancel()
-        yield from self.socket_connection.close()
-        self.socket_connection = None
+        except Exception as err:
+            logger.exception(err)
+        finally:
+            await self.close_websocket_connection()
 
     async def _ws_loop(self, incoming_parser):
         try:
             while True:
-                async for msg in self.socket_connection:
-                    logger.debug(msg)
-                    if msg.tp == aiohttp.WSMsgType.BINARY:
-                        message = str(msg.data, 'utf-8')
-                        incoming_parser(None, message)
-                    elif msg.tp in [aiohttp.WSMsgType.CLOSE,
-                                    aiohttp.WSMsgType.CLOSED,
-                                    aiohttp.WSMsgType.ERROR]:
-                        raise HmipServerCloseError("Server closed. close code: %s", self.socket_connection.close_code)
-        except (ClientError, HttpProcessingError) as err:
-            raise HmipConnectionError(err)
+                msg = await self.socket_connection.recv()
+                logger.debug("incoming hmip message")
+                incoming_parser(None, msg.decode())
+        except (ConnectionClosed, TypeError) as err:
+            logger.debug("Connection closed.")
         except CancelledError:
             return
+        except Exception as err:
+            logger.exception(err)
         finally:
             await self.close_websocket_connection()
+            raise HmipConnectionError
