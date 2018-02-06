@@ -6,8 +6,6 @@ from json.decoder import JSONDecodeError
 
 import aiohttp
 import websockets
-from aiohttp import ClientError
-from aiohttp.http_exceptions import HttpProcessingError
 import async_timeout
 import asyncio
 
@@ -22,8 +20,8 @@ logger = logging.getLogger(__name__)
 class AsyncConnection(BaseConnection):
     """Handles async http and websocket traffic."""
     connect_timeout = 20
-    ping_timeout = 2
-    ping_loop = 20
+    ping_timeout = 3
+    ping_loop = 60
 
     def __init__(self, loop, session=None):
         super().__init__()
@@ -34,6 +32,7 @@ class AsyncConnection(BaseConnection):
             self._websession = session
         self.socket_connection = None  # ClientWebSocketResponse
         self.ws_reader_task = None
+        self.ping_pong_task = None
         self.ws_close_lock = Lock()
 
     @property
@@ -100,7 +99,7 @@ class AsyncConnection(BaseConnection):
                 extra_headers={
                     ATTR_AUTH_TOKEN: self._auth_token,
                     ATTR_CLIENT_AUTH: self._clientauth_token}
-            ),timeout=self.connect_timeout)
+            ), timeout=self.connect_timeout)
         except asyncio.TimeoutError:
             raise HmipConnectionError("Connecting to hmip ws socket timed out.")
         except Exception as err:
@@ -122,8 +121,6 @@ class AsyncConnection(BaseConnection):
                 await self.socket_connection.close()
             except Exception as err:
                 logger.debug(err)
-            # self.ws_reader_task.cancel()
-            # self.ping_pong_task.cancel()
 
             self.socket_connection = None
 
@@ -153,12 +150,10 @@ class AsyncConnection(BaseConnection):
                 incoming_parser(None, msg.decode())
         except (ConnectionClosed, TypeError) as err:
             logger.debug("Connection closed.")
-            #raise HmipConnectionError
         except CancelledError:
             return
         except Exception as err:
             logger.exception(err)
-            #raise HmipConnectionError
         finally:
             await self.close_websocket_connection()
             raise HmipConnectionError

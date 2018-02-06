@@ -16,6 +16,7 @@ class HomeMaticIPObject:
         """Adds an event handler to the update method. Fires when a device
         is updated."""
         self._on_update.append(handler)
+        pass
 
     def fire_update_event(self, *args, **kwargs):
         """Trigger the method tied to _on_update"""
