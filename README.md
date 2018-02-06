@@ -1,10 +1,11 @@
 # homematicip-rest-api #
-A python wrapper for the homematicIP REST API (Access Point Based)
+A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was done via reverse engineering
 Use at your own risk.
 
+
 #Installation
-Just run **pip install homematicip** to get the package
+Just run **pip3 install homematicip** to get the package
 
 # Usage #
 first download and run generate_auth_token.py to get an auth token for your access point.
@@ -43,6 +44,8 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HMIP-BROLL (Shutter Actuator - brand-mount)
 - [X] HMIP-SPI (Precence Sensor - indoor)
 - [X] HmIP-PDT (Pluggable Dimmer)
+- [X] HMIP-BSM (Brand Switch and Meter)
+- [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 
 ## Groups ##
 - [X] Meta (Rooms)
@@ -94,6 +97,7 @@ home.disable_events()
 ```
 
 ## Implemented Functions: ##
+(list not completed)
 ### General ###
 - [X] getCurrentState (this reads the base configuration for the whole AP)
 - [X] setZonesActivation (activates the alarm zones (internal and/or external))

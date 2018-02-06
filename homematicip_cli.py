@@ -10,7 +10,8 @@ import json
 from builtins import str
 
 from homematicip.home import Home
-
+from homematicip.device import *
+from homematicip.group import *
 
 def create_logger():
   logger = logging.getLogger()
@@ -39,26 +40,21 @@ def main():
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
 
-    parser.add_argument("-d", "--device", dest="device", help="the device you want to modify (see \"Device Settings\")")
+    parser.add_argument("-d", "--device", dest="device", action='append', help="the device you want to modify (see \"Device Settings\").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
 
 
 
     group = parser.add_argument_group("Device Settings")
-    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on",
-                       default=None)
-    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off",
-                       default=None)
-    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level",
-                       help="set shutter to level (0..1)")
-    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter",
-                       default=None)
+    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on", default=None)
+    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off", default=None)
+    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level", help="set shutter to level (0..1)")
+    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter", default=None)
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
     group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
-    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module",
-                       help="enables the router module of the device", default=None)
-    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module",
-                       help="disables the router module of the device", default=None)
+    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device", default=None)
+    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device", default=None)
+
 
     group = parser.add_argument_group("Home Settings")
     group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
@@ -74,16 +70,22 @@ def main():
     group = parser.add_argument_group("Group Settings")
     group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
     group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
-    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level",
-                       help="set all shutters in group to level (0..1)")
-    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop",
-                       help="stop all shutters in group", default=None)
+    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level", help="set all shutters in group to level (0..1)")
+    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop", help="stop all shutters in group", default=None)
+    group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature", help="sets the temperature for the given group. The group must be of the type \"HEATING\"", default=None, type=float)
+
+    group.add_argument("--set-boost", action="store_true", dest="group_boost", help="activates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost-stop", action="store_false", dest="group_boost", help="deactivates the boost mode for a HEATING group", default=None)
 
     if len(sys.argv) == 1:
         parser.print_help()
         return
 
-    args = parser.parse_args()
+    args = None
+    try:
+        args = parser.parse_args()
+    except:
+        return
 
     logger.setLevel(args.debug_level)
 
@@ -183,52 +185,59 @@ def main():
 
     if args.device:
         command_entered = False
-        device = None
-        for d in home.devices:
-            if d.id == args.device:
-                device = d
+        devices = []
+        for argdevice in args.device:
+            if argdevice == '*':
+                devices = home.devices
                 break
-        if device == None:
-            logger.error("Could not find device {}".format(args.device))
-            return
-
-        if args.device_new_label:
-            device.set_label(args.device_new_label)
-            command_entered = True
-        if args.device_switch_state != None:
-            if isinstance(device, homematicip.PlugableSwitch):
-                device.set_switch_state(args.device_switch_state)
-                command_entered = True
             else:
-                logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
+                d = home.search_device_by_id(argdevice)
+                if d == None:
+                    logger.error("Could not find device {}".format(argdevice))
+                else:
+                    devices.append(d)
 
-        if args.device_shutter_level is not None:
-            if isinstance(device, homematicip.FullFlushShutter):
-                device.set_shutter_level(args.device_shutter_level)
-                command_entered = True
-            else:
-                logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
+        for device in devices:
 
-        if args.device_shutter_stop is not None:
-            if isinstance(device, homematicip.FullFlushShutter):
-                device.set_shutter_stop()
-                command_entered = True
-            else:
-                logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
 
-        if args.device_display != None:
-            if isinstance(device, homematicip.TemperatureHumiditySensorDisplay):
-                device.set_display(args.device_display.upper())
+            if args.device_new_label:
+                device.set_label(args.device_new_label)
                 command_entered = True
-            else:
-                logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+            if args.device_switch_state != None:
+                if isinstance(device, PlugableSwitch):
+                    device.set_switch_state(args.device_switch_state)
+                    command_entered = True
+                else:
+                    logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
 
-        if args.device_enable_router_module != None:
-            if device.routerModuleSupported or True:
-                device.set_router_module_enabled(args.device_enable_router_module)
-                command_entered = True
-            else:
-                logger.error("the device {} doesn't support the router module".format(device.id))
+            if args.device_shutter_level is not None:
+                if isinstance(device, FullFlushShutter):
+                    device.set_shutter_level(args.device_shutter_level)
+                    command_entered = True
+                else:
+                    logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
+
+            if args.device_shutter_stop is not None:
+                if isinstance(device, FullFlushShutter):
+                    device.set_shutter_stop()
+                    command_entered = True
+                else:
+                    logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
+
+            if args.device_display != None:
+                if isinstance(device, TemperatureHumiditySensorDisplay):
+                    device.set_display(args.device_display.upper())
+                    command_entered = True
+                else:
+                    logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+
+            if args.device_enable_router_module != None:
+                if device.routerModuleSupported:
+                    device.set_router_module_enabled(args.device_enable_router_module)
+                    print("{} the router module for device {}".format("Enabled" if args.device_enable_router_module else "Disabled", device.id))
+                    command_entered = True
+                else:
+                    logger.error("the device {} doesn't support the router module".format(device.id))
 
 
     if args.set_zones_device_assignment:
@@ -276,15 +285,6 @@ def main():
             logger.error("Could not find group {}".format(args.group))
             return
 
-        if args.group_activate_profile:
-            command_entered = True
-            index = args.group_activate_profile
-            for p in group.profiles:
-                if p.name == args.group_activate_profile:
-                    index = p.index
-                    break
-            group.set_active_profile(index)
-
         if args.group_list_profiles:
             command_entered = True
             for p in group.profiles:
@@ -298,6 +298,32 @@ def main():
         if args.group_shutter_stop:
             command_entered = True
             group.set_shutter_stop()
+
+        if args.group_set_point_temperature:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                group.set_point_temperature(args.group_set_point_temperature)
+            else:
+                logger.error("Group {} isn't a HEATING group".format(g.id))
+
+        if args.group_activate_profile:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                index = args.group_activate_profile
+                for p in group.profiles:
+                    if p.name == args.group_activate_profile:
+                        index = p.index
+                        break
+                group.set_active_profile(index)
+            else:
+                logger.error("Group {} isn't a HEATING group".format(g.id))
+
+        if args.group_boost is not None:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                group.set_boost(args.group_boost)
+            else:
+                logger.error("Group {} isn't a HEATING group".format(g.id))
 
     if args.list_events:
         command_entered = True
