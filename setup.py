@@ -13,6 +13,6 @@ setup(
     url='https://github.com/coreGreenberet/homematicip-rest-api',
     download_url='https://github.com/coreGreenberet/homematicip-rest-api/tarball/' + VERSION,
     keywords=['homematicip'],  # arbitrary keywords
-    classifiers=[],
-    install_requires=["requests", "websocket-client", "future", "websockets","aiohttp"]
+    classifiers=['Development Status :: 4 - Beta', 'Programming Language :: Python :: 3 :: Only'],
+    install_requires=["requests", "websocket-client", "future", "websockets", "aiohttp"]
 )

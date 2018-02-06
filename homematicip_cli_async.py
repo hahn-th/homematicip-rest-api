@@ -48,31 +48,6 @@ async def wait_for_ws_incoming(home):
     await reader
 
 
-# async def main():
-#     # loop = asyncio.get_event_loop()
-#     # home = AsyncHome(loop)
-#     # home.set_auth_token(config.AUTH_TOKEN)
-#     # await home.init(config.ACCESS_POINT)
-#     await home.get_current_state()
-#     try:
-#         reader = await home.enable_events()
-#     except HmipConnectionError:
-#         print("Error connecting")
-#
-#     # Adding update handlers to each device.
-#     for d in home.devices:
-#         print('{} {} {}'.format(d.id, d.label, str(d)))
-#         d.on_update(on_update_handler)
-#     for d in home.groups:
-#         d.on_update(on_update_handler)
-#
-#     try:
-#         await reader
-#     except HmipConnectionError as err:
-#         print("caught hmip error")
-#         pass
-
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     loop = asyncio.get_event_loop()
