@@ -2,3 +2,4 @@ requests>=2.4.3
 websocket-client
 async_timeout
 websockets
+aiohttp
