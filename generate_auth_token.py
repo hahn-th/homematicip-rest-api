@@ -1,4 +1,4 @@
-mport homematicip
+import homematicip
 import homematicip.auth
 import time
 from builtins import input
