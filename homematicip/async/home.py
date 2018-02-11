@@ -34,9 +34,9 @@ class AsyncHome(Home):
 
         self.from_json(js_home)
 
-        self.devices = self._get_devices(json_state)
-        self.clients = self._get_clients(json_state)
-        self.groups = self._get_groups(json_state)
+        self._get_devices(json_state)
+        self._get_clients(json_state)
+        self._get_groups(json_state)
 
         return True
 
