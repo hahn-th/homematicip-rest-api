@@ -93,7 +93,6 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
-    devices = None
     groups = None
     weather = None
     location = None
@@ -124,6 +123,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         if connection is None:
             connection = Connection()
         super().__init__(connection)
+        self.devices = []
+        self.clients = []
 
     def init(self, access_point_id, lookup=True):
         self._connection.init(access_point_id, lookup)
@@ -133,6 +134,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def from_json(self, js_home):
         super().from_json(js_home)
+
         self.weather = Weather(self._connection)
         self.weather.from_json(js_home["weather"])
         self.location = Location(self._connection)
@@ -170,8 +172,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
         self.from_json(js_home)
 
-        self.devices = self._get_devices(json_state)
-        self.clients = self._get_clients(json_state)
+        self._get_devices(json_state)
+        self._get_clients(json_state)
         self.groups = self._get_groups(json_state)
 
         return True
@@ -189,15 +191,22 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             return d
 
     def _get_devices(self, json_state):
-        return [self._parse_device(device) for device in json_state["devices"].values()]
+        for id_, raw in json_state["devices"].items():
+            _device = self.search_device_by_id(id_)
+            if _device:
+                _device.from_json(raw)
+            else:
+                self.devices.append(self._parse_device(raw))
 
     def _get_clients(self, json_state):
-        ret = []
-        for client in json_state["clients"].values():
-            c = Client(self._connection)
-            c.from_json(client)
-            ret.append(c)
-        return ret
+        for id_, raw in json_state["clients"].items():
+            _client = self.search_client_by_id(id_)
+            if _client:
+                _client.from_json(raw)
+            else:
+                c = Client(self._connection)
+                c.from_json(raw)
+                self.clients.append(c)
 
     def _parse_group(self, json_state, groups=None):
         groupType = json_state["type"]
@@ -380,7 +389,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def _ws_on_message(self, ws, message):
         js = json.loads(message)
-        #LOGGER.debug(js)
+        # LOGGER.debug(js)
         eventList = []
         try:
             for event in js["events"].values():
