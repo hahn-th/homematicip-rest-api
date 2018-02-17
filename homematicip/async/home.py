@@ -44,9 +44,8 @@ class AsyncHome(Home):
         """Connects to the websocket. Returns a listening task."""
         return await self._connection.ws_connect(self._ws_on_message)
 
-    @asyncio.coroutine
-    def disable_events(self):
-        yield from self._connection.close_websocket_connection()
+    async def disable_events(self):
+        await self._connection.close_websocket_connection()
 
     def get_OAuth_OTK(self):
         pass
