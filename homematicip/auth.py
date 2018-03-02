@@ -8,13 +8,11 @@ from homematicip.home import Home
 
 
 class Auth(object):
-    uuid = None
-    headers = None
-    pin = None
     def __init__(self,home:Home):
         self.uuid = str(uuid.uuid4())
         self.headers = {'content-type': 'application/json', 'accept': 'application/json', 'VERSION': '12', 'CLIENTAUTH' : home._connection.clientauth_token }
         self.url_rest = home._connection.urlREST
+        self.pin = None
 
 
     def connectionRequest(self, access_point, devicename = "homematicip-python"):
