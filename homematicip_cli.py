@@ -1,97 +1,199 @@
-import config
+import configparser
 import logging
-from logging import handlers
-from operator import attrgetter
-from argparse import ArgumentParser
 import sys
-import homematicip
 import time
-import json
-from builtins import str
+import platform
+import os
 
-from homematicip.home import Home
+from argparse import ArgumentParser
+from builtins import str
+from collections import namedtuple
+from logging.handlers import TimedRotatingFileHandler
+
 from homematicip.device import *
 from homematicip.group import *
+from homematicip.home import Home
 
-def create_logger():
-  logger = logging.getLogger()
-  logger.setLevel(config.LOGGING_LEVEL)
-  handler = logging.handlers.TimedRotatingFileHandler(config.LOGGING_FILENAME, when='midnight', backupCount=5) if config.LOGGING_FILENAME else logging.StreamHandler()
-  handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
-  logger.addHandler(handler)
-  return logger
+logger = None
 
-logger = create_logger()
+
+def create_logger(level, file_name):
+    logger = logging.getLogger()
+    logger.setLevel(level)
+    handler = TimedRotatingFileHandler(file_name, when='midnight',
+                                                        backupCount=5) if file_name else logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    logger.addHandler(handler)
+    return logger
+
+
+HmipConfig = namedtuple('HmipConfig', ['auth_token', 'access_point', 'log_level', 'log_file'])
+
+def convert_config2ini():
+    """converts the old config.py to ./config.ini"""
+    try:
+        import config
+        _config = configparser.ConfigParser()
+        _config.add_section("AUTH")
+        _config.add_section('LOGGING')
+        _config['AUTH'] = { 'AuthToken' : config.AUTH_TOKEN, 'AccessPoint': config.ACCESS_POINT }
+        _config.set('LOGGING','Level', str(config.LOGGING_LEVEL))
+        _config.set('LOGGING', 'FileName', str(config.LOGGING_FILENAME))
+        with open('./config.ini', 'w') as configfile:
+            _config.write(configfile)
+        #os.remove('config.py')
+    except ImportError:
+        pass 
+
+
+
+def load_config_file(config_file: str) -> HmipConfig:
+    """Loads the config ini file.
+    :raises a FileNotFoundError when the config file does not exist."""
+    _config = configparser.ConfigParser()
+    with open(config_file, 'r') as fl:
+        _config.read_file(fl)
+        _hmip_config = HmipConfig(
+            _config['AUTH']['AuthToken'],
+            _config['AUTH']['AccessPoint'],
+            _config.get('LOGGING', {}).get('Level', None),
+            _config.get('LOGGING', {}).get('FileName', None)
+        )
+        return _hmip_config
+
+def get_config_file_locations() -> []:
+    search_locations = ["./config.ini"]
+
+    os_name = platform.system()
+
+    if os_name == "Windows":
+        appdata = os.getenv("appdata")
+        programdata = os.getenv("programdata")
+        search_locations.append(os.path.join(appdata,"homematicip-rest-api\\config.ini"))
+        search_locations.append(os.path.join(programdata,"homematicip-rest-api\\config.ini"))
+    elif os_name == "Linux":
+        search_locations.append("~/.homematicip-rest-api/config.ini")
+        search_locations.append("/etc/homematicip-rest-api/config.ini")
+    elif os_name == "Darwin": #MAC
+        #are these folders right?
+        search_locations.append("~/Library/Preferences/homematicip-rest-api/config.ini")
+        search_locations.append("~/Library/Application Support/homematicip-rest-api/config.ini")
+    return search_locations
+
 
 
 def main():
     parser = ArgumentParser(description="a cli wrapper for the homematicip API")
-    parser.add_argument("--debug-level", dest="debug_level", type=int, default=30, help="the debug level which should get used(Critical=50, DEBUG=10)")
+    parser.add_argument("--config_file", type=str, help="the configuration file. If nothing is specified the script will search for it.")
 
     group = parser.add_argument_group("Display Configuration")
-    group.add_argument("--dump-configuration", action="store_true", dest="dump_config", help="dumps the current configuration from the AP")
+    group.add_argument("--dump-configuration", action="store_true", dest="dump_config",
+                       help="dumps the current configuration from the AP")
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
-    group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids", help="list all groups and their ids")
-    group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
-    group.add_argument("--list-rssi", action="store_true", dest="list_rssi", help="list the reception quality of all devices")
+    group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids",
+                       help="list all groups and their ids")
+    group.add_argument("--list-firmware", action="store_true", dest="list_firmware",
+                       help="list the firmware of all devices")
+    group.add_argument("--list-rssi", action="store_true", dest="list_rssi",
+                       help="list the reception quality of all devices")
     group.add_argument("--list-events", action="store_true", dest="list_events", help="prints all the events")
-    group.add_argument("--list-last-status-update", action="store_true", dest="list_last_status_update", help="prints the last status update of all systems")
+    group.add_argument("--list-last-status-update", action="store_true", dest="list_last_status_update",
+                       help="prints the last status update of all systems")
 
-    parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
+    parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal",
+                        help="display the security journal")
 
-    parser.add_argument("-d", "--device", dest="device", action='append', help="the device you want to modify (see \"Device Settings\").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices")
+    parser.add_argument("-d", "--device", dest="device", action='append',
+                        help="the device you want to modify (see \"Device Settings\").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
 
-
-
     group = parser.add_argument_group("Device Settings")
-    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on", default=None)
-    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off", default=None)
-    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level", help="set shutter to level (0..1)")
-    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter", default=None)
+    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on",
+                       default=None)
+    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off",
+                       default=None)
+    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level",
+                       help="set shutter to level (0..1)")
+    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter",
+                       default=None)
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
-    group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual","setpoint", "actual_humidity"])
-    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device", default=None)
-    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device", default=None)
-
+    group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode",
+                       choices=["actual", "setpoint", "actual_humidity"])
+    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module",
+                       help="enables the router module of the device", default=None)
+    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module",
+                       help="disables the router module of the device", default=None)
 
     group = parser.add_argument_group("Home Settings")
-    group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence","absence", "disable"])
+    group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode",
+                       choices=["presence", "absence", "disable"])
     group.add_argument("--set-pin", dest="new_pin", action="store", help="set a new pin")
     group.add_argument("--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin")
-    group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
-    group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true", help="sets the zones devices assignment")
-    group.add_argument("--external-devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
-    group.add_argument("--internal-devices", dest="internal_devices", nargs='+', help="sets the devices for the internal zone")
-    group.add_argument("--activate-absence", dest="activate_absence", action="store", help="activates absence for provided amount of minutes", default=None, type=int)
-    group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
+    group.add_argument("--old-pin", dest="old_pin", action="store",
+                       help="the current pin. used together with --set-pin or --delete-pin", default=None)
+    group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true",
+                       help="sets the zones devices assignment")
+    group.add_argument("--external-devices", dest="external_devices", nargs='+',
+                       help="sets the devices for the external zone")
+    group.add_argument("--internal-devices", dest="internal_devices", nargs='+',
+                       help="sets the devices for the internal zone")
+    group.add_argument("--activate-absence", dest="activate_absence", action="store",
+                       help="activates absence for provided amount of minutes", default=None, type=int)
+    group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence",
+                       help="deactivates absence")
 
     group = parser.add_argument_group("Group Settings")
-    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
-    group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
-    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level", help="set all shutters in group to level (0..1)")
-    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop", help="stop all shutters in group", default=None)
-    group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature", help="sets the temperature for the given group. The group must be of the type \"HEATING\"", default=None, type=float)
+    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true",
+                       help="displays all profiles for a group")
+    group.add_argument("--activate-profile", dest="group_activate_profile",
+                       help="activates a profile by using its index or its name")
+    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level",
+                       help="set all shutters in group to level (0..1)")
+    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop",
+                       help="stop all shutters in group", default=None)
+    group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature",
+                       help="sets the temperature for the given group. The group must be of the type \"HEATING\"",
+                       default=None, type=float)
 
-    group.add_argument("--set-boost", action="store_true", dest="group_boost", help="activates the boost mode for a HEATING group", default=None)
-    group.add_argument("--set-boost-stop", action="store_false", dest="group_boost", help="deactivates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost", action="store_true", dest="group_boost",
+                       help="activates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost-stop", action="store_false", dest="group_boost",
+                       help="deactivates the boost mode for a HEATING group", default=None)
 
     if len(sys.argv) == 1:
         parser.print_help()
         return
 
-    args = None
+    # todo: You're absorbing an exception without mentioning/logging it. The function just returns without message and leaves the user without any info why.
     try:
         args = parser.parse_args()
     except:
         return
+    _config = None
 
-    logger.setLevel(args.debug_level)
+    if args.config_file:
+        try:
+            _config = load_config_file(args.config_file)
+        except FileNotFoundError:
+            print("##### CONFIG FILE NOT FOUND: {} #####".format(args.config_file))
+            return
+    else:
+        convert_config2ini()
+        for f in get_config_file_locations():
+            try:
+                _config = load_config_file(f)
+            except FileNotFoundError:
+                pass
+
+    if _config is None:
+        print("Could not find configuration file. Script will exit")
+        return
+
 
     home = Home()
-    home.set_auth_token(config.AUTH_TOKEN)
-    home.init(config.ACCESS_POINT)
+    home.set_auth_token(_config.auth_token)
+    home.init(_config.access_point)
 
     if not home.get_current_state():
         return
@@ -138,18 +240,18 @@ def main():
     if args.protectionmode:
         command_entered = True
         if args.protectionmode == "presence":
-            home.set_security_zones_activation(False,True)
+            home.set_security_zones_activation(False, True)
         elif args.protectionmode == "absence":
-            home.set_security_zones_activation(True,True)
+            home.set_security_zones_activation(True, True)
         elif args.protectionmode == "disable":
-            home.set_security_zones_activation(False,False)
+            home.set_security_zones_activation(False, False)
 
     if args.new_pin:
         command_entered = True
-        home.set_pin(args.new_pin,args.old_pin)
+        home.set_pin(args.new_pin, args.old_pin)
     if args.delete_pin:
         command_entered = True
-        home.set_pin(None,args.old_pin)
+        home.set_pin(None, args.old_pin)
 
     if args.list_security_journal:
         command_entered = True
@@ -160,13 +262,15 @@ def main():
     if args.list_firmware:
         command_entered = True
         print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format("HmIP AccessPoint",
-                                                                                        home.currentAPVersion if home.currentAPVersion is not None else "None",
-                                                                                        home.availableAPVersion if home.availableAPVersion is not None else "None",
-                                                                                        home.updateState)))
+                                                                                              home.currentAPVersion if home.currentAPVersion is not None else "None",
+                                                                                              home.availableAPVersion if home.availableAPVersion is not None else "None",
+                                                                                              home.updateState)))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
-                                                                                      d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None", d.updateState)))
+            print(str(
+                "{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
+                                                                                            d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None",
+                                                                                            d.updateState)))
 
     if args.list_rssi:
         command_entered = True
@@ -177,11 +281,11 @@ def main():
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
             print(str("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {}".format(d.label,
-                                                                             d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
-                                                                             getRssiBarString(d.rssiDeviceValue),
-                                                                             d.rssiPeerValue if d.rssiPeerValue is not None else "None",
-                                                                             getRssiBarString(d.rssiPeerValue),
-                                                                             "Unreachable" if d.unreach else "")))
+                                                                                d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
+                                                                                getRssiBarString(d.rssiDeviceValue),
+                                                                                d.rssiPeerValue if d.rssiPeerValue is not None else "None",
+                                                                                getRssiBarString(d.rssiPeerValue),
+                                                                                "Unreachable" if d.unreach else "")))
 
     if args.device:
         command_entered = False
@@ -199,7 +303,6 @@ def main():
 
         for device in devices:
 
-
             if args.device_new_label:
                 device.set_label(args.device_new_label)
                 command_entered = True
@@ -208,7 +311,7 @@ def main():
                     device.set_switch_state(args.device_switch_state)
                     command_entered = True
                 else:
-                    logger.error("can't turn on/off device {} of type {}".format(device.id,device.deviceType))
+                    logger.error("can't turn on/off device {} of type {}".format(device.id, device.deviceType))
 
             if args.device_shutter_level is not None:
                 if isinstance(device, FullFlushShutter):
@@ -229,16 +332,16 @@ def main():
                     device.set_display(args.device_display.upper())
                     command_entered = True
                 else:
-                    logger.error("can't set display of device {} of type {}".format(device.id,device.deviceType))
+                    logger.error("can't set display of device {} of type {}".format(device.id, device.deviceType))
 
             if args.device_enable_router_module != None:
                 if device.routerModuleSupported:
                     device.set_router_module_enabled(args.device_enable_router_module)
-                    print("{} the router module for device {}".format("Enabled" if args.device_enable_router_module else "Disabled", device.id))
+                    print("{} the router module for device {}".format(
+                        "Enabled" if args.device_enable_router_module else "Disabled", device.id))
                     command_entered = True
                 else:
                     logger.error("the device {} doesn't support the router module".format(device.id))
-
 
     if args.set_zones_device_assignment:
         internal = []
@@ -261,18 +364,15 @@ def main():
             else:
                 internal.append(d)
         if not error:
-            home.set_zones_device_assignment(internal,external)
-
+            home.set_zones_device_assignment(internal, external)
 
     if args.activate_absence:
         command_entered = True
         home.activate_absence_with_duration(args.activate_absence)
 
-
     if args.deactivate_absence:
         command_entered = True
         home.deactivate_absence()
-
 
     if args.group:
         command_entered = False
@@ -357,3 +457,4 @@ def getRssiBarString(rssiValue):
 
 if __name__ == "__main__":
     main()
+
