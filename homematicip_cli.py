@@ -33,6 +33,7 @@ def convert_config2ini():
     """converts the old config.py to ./config.ini"""
     try:
         import config
+        print('converting config.py to config.ini')
         _config = configparser.ConfigParser()
         _config.add_section("AUTH")
         _config.add_section('LOGGING')
@@ -41,7 +42,7 @@ def convert_config2ini():
         _config.set('LOGGING', 'FileName', str(config.LOGGING_FILENAME))
         with open('./config.ini', 'w') as configfile:
             _config.write(configfile)
-        #os.remove('config.py')
+        os.remove('./config.py')
     except ImportError:
         pass 
 
@@ -53,11 +54,15 @@ def load_config_file(config_file: str) -> HmipConfig:
     _config = configparser.ConfigParser()
     with open(config_file, 'r') as fl:
         _config.read_file(fl)
+        logging_filename = _config.get('LOGGING', 'FileName', fallback='hmip.log')
+        if logging_filename == 'None':
+            logging_filename = None
+
         _hmip_config = HmipConfig(
             _config['AUTH']['AuthToken'],
             _config['AUTH']['AccessPoint'],
-            _config.get('LOGGING', {}).get('Level', None),
-            _config.get('LOGGING', {}).get('FileName', None)
+            int(_config.get('LOGGING', 'Level', fallback=30)),
+            logging_filename
         )
         return _hmip_config
 
@@ -85,6 +90,7 @@ def get_config_file_locations() -> []:
 def main():
     parser = ArgumentParser(description="a cli wrapper for the homematicip API")
     parser.add_argument("--config_file", type=str, help="the configuration file. If nothing is specified the script will search for it.")
+    parser.add_argument("--debug-level", dest="debug_level", type=int, help="the debug level which should get used(Critical=50, DEBUG=10)")
 
     group = parser.add_argument_group("Display Configuration")
     group.add_argument("--dump-configuration", action="store_true", dest="dump_config",
@@ -165,11 +171,13 @@ def main():
         parser.print_help()
         return
 
-    # todo: You're absorbing an exception without mentioning/logging it. The function just returns without message and leaves the user without any info why.
     try:
         args = parser.parse_args()
     except:
+        print('could not parse arguments')
+        parser.print_help()
         return
+
     _config = None
 
     if args.config_file:
@@ -189,6 +197,9 @@ def main():
     if _config is None:
         print("Could not find configuration file. Script will exit")
         return
+
+    global logger
+    logger = create_logger(args.debug_level if args.debug_level else _config.log_level, _config.log_file)
 
 
     home = Home()
