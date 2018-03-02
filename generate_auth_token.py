@@ -5,6 +5,8 @@ from builtins import input
 import json
 
 from homematicip.home import Home
+import configparser
+
 
 
 def main():
@@ -53,8 +55,16 @@ def main():
 
     print(u'-----------------------------------------------------------------------------')
     print(u'Token successfully registered!')
-    print(u'AUTH_TOKEN:\t{}\nACCESS_POINT:\t{}\nClient ID:\t{}'.format(auth_token,access_point,clientId))
-
+    print(u'AUTH_TOKEN:\t{}\nACCESS_POINT:\t{}\nClient ID:\t{}\nsaving configuration to ./config.ini'.format(auth_token,access_point,clientId))
+    
+    _config = configparser.ConfigParser()
+    _config.add_section("AUTH")
+    _config.add_section('LOGGING')
+    _config['AUTH'] = { 'AuthToken' : auth_token, 'AccessPoint': access_point }
+    _config.set('LOGGING','Level', '30')
+    _config.set('LOGGING', 'FileName', 'None')
+    with open('./config.ini', 'w') as configfile:
+        _config.write(configfile)
 
 if __name__ == "__main__":
     main()
