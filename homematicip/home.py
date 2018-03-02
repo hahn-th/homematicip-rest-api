@@ -28,14 +28,17 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
-    temperature = 0.0
-    weatherCondition = "CLEAR"
-    weatherDayTime = "DAY"
-    minTemperature = 0.0
-    maxTemperature = 0.0
-    humidity = 0
-    windSpeed = 0.0
-    windDirection = 0
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.temperature = 0.0
+        self.weatherCondition = "CLEAR"
+        self.weatherDayTime = "DAY"
+        self.minTemperature = 0.0
+        self.maxTemperature = 0.0
+        self.humidity = 0
+        self.windSpeed = 0.0
+        self.windDirection = 0
 
     def from_json(self, js):
         self.temperature = js["temperature"]
@@ -49,9 +52,11 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class Location(HomeMaticIPObject.HomeMaticIPObject):
-    city = "London"
-    latitude = "51.509865"
-    longitude = "-0.118092"
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.city = "London"
+        self.latitude = "51.509865"
+        self.longitude = "-0.118092"
 
     def from_json(self, js):
         self.city = js["city"]
@@ -65,9 +70,12 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class Client(HomeMaticIPObject.HomeMaticIPObject):
-    id = None
-    label = None
-    homeId = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.id = None
+        self.label = None
+        self.homeId = None
 
     def from_json(self, js):
         self.id = js["id"]
@@ -79,8 +87,11 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
-    authToken = None
-    expirationTimestamp = None
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.authToken = None
+        self.expirationTimestamp = None
 
     def from_json(self, js):
         self.authToken = js["authToken"]
@@ -93,36 +104,38 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
-    groups = None
-    weather = None
-    location = None
-    connected = None
-    currentAPVersion = None
-    availableAPVersion = None
-    timeZoneId = None
-    pinAssigned = None
-    dutyCycle = None
-    updateState = None
-    powerMeterUnitPrice = None
-    powerMeterCurrency = None
-    deviceUpdateStrategy = None
-    lastReadyForUpdateTimestamp = None
-    apExchangeClientId = None
-    apExchangeState = None
-    id = None
 
-    __webSocket = None
-    __webSocketThread = None
-    onEvent = EventHook()
-
-    _typeClassMap = TYPE_CLASS_MAP
-    _typeGroupMap = TYPE_GROUP_MAP
-    _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
     def __init__(self, connection=None):
         if connection is None:
             connection = Connection()
         super().__init__(connection)
+
+        self.weather = None
+        self.location = None
+        self.connected = None
+        self.currentAPVersion = None
+        self.availableAPVersion = None
+        self.timeZoneId = None
+        self.pinAssigned = None
+        self.dutyCycle = None
+        self.updateState = None
+        self.powerMeterUnitPrice = None
+        self.powerMeterCurrency = None
+        self.deviceUpdateStrategy = None
+        self.lastReadyForUpdateTimestamp = None
+        self.apExchangeClientId = None
+        self.apExchangeState = None
+        self.id = None
+
+        self.__webSocket = None
+        self.__webSocketThread = None
+        self.onEvent = EventHook()
+
+        self._typeClassMap = TYPE_CLASS_MAP
+        self._typeGroupMap = TYPE_GROUP_MAP
+        self._typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+
         self.devices = []
         self.clients = []
         self.groups = []
