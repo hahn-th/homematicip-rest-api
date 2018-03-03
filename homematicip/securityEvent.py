@@ -6,9 +6,14 @@ from datetime import datetime
 
 class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents a security event """
-    eventTimestamp = None
-    eventType = None
-    label = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.eventTimestamp = None
+        self.eventType = None
+        self.label = None
+
     def from_json(self, js):
         self.label = js["label"]
         time = js["eventTimestamp"]
@@ -24,8 +29,12 @@ class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
 
 class SecurityZoneEvent(SecurityEvent):
     """ This class will be used by other events which are just adding "securityZoneValues" """
-    external_zone = None
-    internal_zone = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.external_zone = None
+        self.internal_zone = None
 
     def from_json(self, js):
         super().from_json(js)

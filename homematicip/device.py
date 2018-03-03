@@ -8,25 +8,27 @@ from homematicip.base.helpers import get_functional_channel
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
-    id = None
-    homeId = None
-    label = None
-    lastStatusUpdate = None
-    deviceType = None
-    updateState = None
-    firmwareVersion = None
-    availableFirmwareVersion = None
-    unreach = None
-    lowBat = None
-    routerModuleSupported = False
-    routerModuleEnabled = False
-    modelType = ""
-    modelId = 0
-    oem = ""
-    manufacturerCode = 0
-    serializedGlobalTradeItemNumber = ""
-    rssiDeviceValue = 0
-    rssiPeerValue = 0
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.id = None
+        self.homeId = None
+        self.label = None
+        self.lastStatusUpdate = None
+        self.deviceType = None
+        self.updateState = None
+        self.firmwareVersion = None
+        self.availableFirmwareVersion = None
+        self.unreach = None
+        self.lowBat = None
+        self.routerModuleSupported = False
+        self.routerModuleEnabled = False
+        self.modelType = ""
+        self.modelId = 0
+        self.oem = ""
+        self.manufacturerCode = 0
+        self.serializedGlobalTradeItemNumber = ""
+        self.rssiDeviceValue = 0
+        self.rssiPeerValue = 0
 
     def from_json(self, js):
         self.id = js["id"]
@@ -95,7 +97,9 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class SabotageDevice(Device):
-    sabotage = None
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.sabotage = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -112,7 +116,9 @@ class SabotageDevice(Device):
 
 
 class OperationLockableDevice(Device):
-    operationLockActive = None
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.operationLockActive = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -136,9 +142,11 @@ class OperationLockableDevice(Device):
 class HeatingThermostat(OperationLockableDevice):
     """ HMIP-eTRV (Radiator Thermostat) """
 
-    temperatureOffset = 0
-    valvePosition = 0.0
-    valveState = ""
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.temperatureOffset = 0
+        self.valvePosition = 0.0
+        self.valveState = ""
 
     def from_json(self, js):
         super().from_json(js)
@@ -155,8 +163,10 @@ class HeatingThermostat(OperationLockableDevice):
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
-    windowState = None
-    eventDelay = None
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.windowState = None
+        self.eventDelay = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -171,10 +181,12 @@ class ShutterContact(SabotageDevice):
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
-
-    temperatureOffset = None
-    actualTemperature = None
-    humidity = None
+    
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.temperatureOffset = None
+        self.actualTemperature = None
+        self.humidity = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -196,10 +208,12 @@ class TemperatureHumiditySensorDisplay(Device):
     DISPLAY_SETPOINT = "SETPOINT"
     DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
 
-    temperatureOffset = None
-    display = None
-    actualTemperature = None
-    humidity = None
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.temperatureOffset = None
+        self.display = None
+        self.actualTemperature = None
+        self.humidity = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -237,7 +251,9 @@ class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
 class SmokeDetector(Device):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
 
-    smokeDetectorAlarmType = None
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.smokeDetectorAlarmType = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -253,8 +269,11 @@ class SmokeDetector(Device):
 class FloorTerminalBlock6(Device):
     """ HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V) """
 
-    globalPumpControl = None
-    heatingValveType = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.globalPumpControl = None
+        self.heatingValveType = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -272,9 +291,12 @@ class FloorTerminalBlock6(Device):
 class Switch(Device):
     """ Generic Switch class """
 
-    on = None
-    profileMode = None
-    userDesiredProfileMode = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.profileMode = None
+        self.userDesiredProfileMode = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -306,8 +328,11 @@ class PrintedCircuitBoardSwitchBattery(Switch):
 
 class SwitchMeasuring(Switch):
     """ Generic class for Switch and Meter """
-    energyCounter = None
-    currentPowerConsumption = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.energyCounter = None
+        self.currentPowerConsumption = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -341,8 +366,11 @@ class AlarmSirenIndoor(SabotageDevice):
 class MotionDetectorIndoor(SabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
 
-    motionDetected = None
-    illumination = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.motionDetected = None
+        self.illumination = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -360,8 +388,11 @@ class MotionDetectorIndoor(SabotageDevice):
 class PresenceDetectorIndoor(SabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
 
-    presenceDetected = None
-    illumination = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.presenceDetected = None
+        self.illumination = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -393,9 +424,12 @@ class KeyRemoteControlAlarm(Device):
 class FullFlushShutter(Device):
     """HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)"""
 
-    shutterLevel = None
-    bottomToTopReferenceTime = None
-    topToBottomReferenceTime = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.shutterLevel = None
+        self.bottomToTopReferenceTime = None
+        self.topToBottomReferenceTime = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -421,9 +455,12 @@ class FullFlushShutter(Device):
 
 class PluggableDimmer(Device):
     """HmIP-PDT Pluggable Dimmer"""
-    dimLevel = 0.0
-    profileMode = ""
-    userDesiredProfileMode = ""
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.dimLevel = 0.0
+        self.profileMode = ""
+        self.userDesiredProfileMode = ""
 
     def from_json(self, js):
         super().from_json(js)

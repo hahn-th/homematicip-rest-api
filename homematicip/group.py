@@ -8,16 +8,19 @@ from operator import attrgetter
 
 class Group(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents a group """
-    id = None
-    homeId = None
-    label = None
-    lastStatusUpdate = None
-    groupType = None
-    updateState = None
-    unreach = None
-    lowBat = None
-    metaGroup = None
-    devices = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.id = None
+        self.homeId = None
+        self.label = None
+        self.lastStatusUpdate = None
+        self.groupType = None
+        self.updateState = None
+        self.unreach = None
+        self.lowBat = None
+        self.metaGroup = None
+        self.devices = None
 
 
     def from_json(self, js, devices):
@@ -49,7 +52,10 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
 class MetaGroup(Group):
     """ a meta group is a "Room" inside the homematic configuration """
 
-    groups = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.groups = None
 
     def from_json(self, js, devices, groups):
         self.id = js["id"]
@@ -77,10 +83,14 @@ class MetaGroup(Group):
 
 
 class SecurityGroup(Group):
-    windowState = None
-    motionDetected = None
-    sabotage = None
-    smokeDetectorAlarmType = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.windowState = None
+        self.motionDetected = None
+        self.sabotage = None
+        self.smokeDetectorAlarmType = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -97,11 +107,15 @@ class SecurityGroup(Group):
 
 
 class SwitchingGroup(Group):
-    on = None
-    dimLevel = None
-    processing = None
-    shutterLevel = None
-    slatsLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.dimLevel = None
+        self.processing = None
+        self.shutterLevel = None
+        self.slatsLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -150,9 +164,13 @@ class LinkedSwitchingGroup(SwitchingGroup):
 
 
 class ExtendedLinkedSwitchingGroup(SwitchingGroup):
-    onTime = None
-    onLevel = None
-    sensorSpecificParameters = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.onTime = None
+        self.onLevel = None
+        self.sensorSpecificParameters = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -170,7 +188,11 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
         return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
 
 class ExtendedLinkedShutterGroup(Group):
-    shutterLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.shutterLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -200,13 +222,17 @@ class AlarmSwitchingGroup(Group):
     SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_1 = "CONFIRMATION_SIGNAL_1"
     SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_2 = "CONFIRMATION_SIGNAL_2"
 
-    on = None
-    dimLevel = None
-    onTime = None
-    signalAcoustic = None
-    signalOptical = None
-    smokeDetectorAlarmType = None
-    acousticFeedbackEnabled = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.dimLevel = None
+        self.onTime = None
+        self.signalAcoustic = None
+        self.signalOptical = None
+        self.smokeDetectorAlarmType = None
+        self.acousticFeedbackEnabled = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -255,8 +281,12 @@ class HeatingTemperatureLimiterGroup(Group):
 
 
 class HeatingChangeoverGroup(Group):
-    on = None
-    dimLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -274,13 +304,17 @@ class InboxGroup(Group):
 
 
 class SecurityZoneGroup(Group):
-    active = False
-    silent = False
-    ignorableDevices = []
-    windowState = ""
-    motionDetected = None
-    sabotage = None
-    presenceDetected = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.active = False
+        self.silent = False
+        self.ignorableDevices = []
+        self.windowState = ""
+        self.motionDetected = None
+        self.sabotage = None
+        self.presenceDetected = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -302,9 +336,13 @@ class SecurityZoneGroup(Group):
 
 
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
-    starttime = None
-    endtime = None
-    value = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.starttime = None
+        self.endtime = None
+        self.value = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -314,8 +352,12 @@ class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
-    baseValue = None
-    periods = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.baseValue = None
+        self.periods = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -328,17 +370,21 @@ class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
-    id = None
-    homeId = None
+    
 
-    groupId = None
-    index = None
-    visible = None
-    enabled = None
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.id = None
+        self.homeId = None
 
-    name = None
-    type = None
-    profileDays = None
+        self.groupId = None
+        self.index = None
+        self.visible = None
+        self.enabled = None
+
+        self.name = None
+        self.type = None
+        self.profileDays = None
 
     def get_details(self):
         data = {"groupId": self.groupId, "profileIndex": self.index,
@@ -395,31 +441,35 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingGroup(Group):
-    windowOpenTemperature = None
-    setPointTemperature = None
-    windowState = None
-    maxTemperature = None
-    minTemperature = None
-    cooling = None
-    partyMode = None
-    controlMode = None
-    activeProfile = None
-    boostMode = None
-    boostDuration = None
-    actualTemperature = None
-    humidity = None
-    coolingAllowed = None
-    coolingIgnored = None
-    ecoAllowed = None
-    ecoIgnored = None
-    controllable = None
-    floorHeatingMode = None
-    humidityLimitEnabled = None
-    humidityLimitValue = None
-    externalClockEnabled = None
-    externalClockHeatingTemperature = None
-    externalClockCoolingTemperature = None
-    profiles = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.windowOpenTemperature = None
+        self.setPointTemperature = None
+        self.windowState = None
+        self.maxTemperature = None
+        self.minTemperature = None
+        self.cooling = None
+        self.partyMode = None
+        self.controlMode = None
+        self.activeProfile = None
+        self.boostMode = None
+        self.boostDuration = None
+        self.actualTemperature = None
+        self.humidity = None
+        self.coolingAllowed = None
+        self.coolingIgnored = None
+        self.ecoAllowed = None
+        self.ecoIgnored = None
+        self.controllable = None
+        self.floorHeatingMode = None
+        self.humidityLimitEnabled = None
+        self.humidityLimitValue = None
+        self.externalClockEnabled = None
+        self.externalClockHeatingTemperature = None
+        self.externalClockCoolingTemperature = None
+        self.profiles = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -481,8 +531,12 @@ class HeatingGroup(Group):
 
 
 class HeatingDehumidifierGroup(Group):
-    on = None
-    dimLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -494,8 +548,12 @@ class HeatingDehumidifierGroup(Group):
 
 
 class HeatingCoolingDemandGroup(Group):
-    on = None
-    dimLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -516,10 +574,14 @@ class HeatingExternalClockGroup(Group):
 
 
 class HeatingCoolingDemandBoilerGroup(Group):
-    boilerFollowUpTime = None
-    boilerLeadTime = None
-    on = None
-    dimLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.boilerFollowUpTime = None
+        self.boilerLeadTime = None
+        self.on = None
+        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -534,12 +596,16 @@ class HeatingCoolingDemandBoilerGroup(Group):
 
 
 class HeatingCoolingDemandPumpGroup(Group):
-    pumpProtectionDuration = None
-    pumpProtectionSwitchingInterval = None
-    pumpFollowUpTime = None
-    pumpLeadTime = None
-    on = None
-    dimLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.pumpProtectionDuration = None
+        self.pumpProtectionSwitchingInterval = None
+        self.pumpFollowUpTime = None
+        self.pumpLeadTime = None
+        self.on = None
+        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -560,14 +626,18 @@ class HeatingCoolingDemandPumpGroup(Group):
 
 
 class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
-    weekdays = []
-    hour = 0
-    minute = 0
-    astroOffset = 0
-    astroLimitationType = "NO_LIMITATION"  # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
-    switchTimeMode = "REGULAR_SWITCH_TIME"  # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
-    dimLevel = 1.0
-    rampTime = 0
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.weekdays = []
+        self.hour = 0
+        self.minute = 0
+        self.astroOffset = 0
+        self.astroLimitationType = "NO_LIMITATION"  # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
+        self.switchTimeMode = "REGULAR_SWITCH_TIME"  # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
+        self.dimLevel = 1.0
+        self.rampTime = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -582,11 +652,15 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
-    id = None
-    homeId = None
-    groupId = None
-    type = None
-    periods = []
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.id = None
+        self.homeId = None
+        self.groupId = None
+        self.type = None
+        self.periods = []
 
     def get_details(self):
         data = {"groupId": self.groupId}
@@ -602,10 +676,14 @@ class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class SwitchingProfileGroup(Group):
-    on = None
-    dimLevel = None
-    profileId = None  # Not sure why it is there. You can't use it to query something.
-    profileMode = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.on = None
+        self.dimLevel = None
+        self.profileId = None  # Not sure why it is there. You can't use it to query something.
+        self.profileMode = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -644,16 +722,20 @@ class SwitchingProfileGroup(Group):
 
 
 class OverHeatProtectionRule(Group):
-    temperatureLowerThreshold = None
-    temperatureUpperThreshold = None
-    targetShutterLevel = None
-    targetSlatsLevel = None
-    startHour = None
-    startMinute = None
-    startSunrise = None
-    endHour = None
-    endMinute = None
-    endSunset = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.temperatureLowerThreshold = None
+        self.temperatureUpperThreshold = None
+        self.targetShutterLevel = None
+        self.targetSlatsLevel = None
+        self.startHour = None
+        self.startMinute = None
+        self.startSunrise = None
+        self.endHour = None
+        self.endMinute = None
+        self.endSunset = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -676,7 +758,11 @@ class OverHeatProtectionRule(Group):
 
 
 class SmokeAlarmDetectionRule(Group):
-    smokeDetectorAlarmType = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.smokeDetectorAlarmType = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -689,8 +775,12 @@ class SmokeAlarmDetectionRule(Group):
 
 
 class ShutterWindProtectionRule(Group):
-    windSpeedThreshold = None
-    targetShutterLevel = None
+    
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.windSpeedThreshold = None
+        self.targetShutterLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -704,8 +794,11 @@ class ShutterWindProtectionRule(Group):
 
 
 class LockOutProtectionRule(Group):
-    triggered = None
-    windowState = None
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.triggered = None
+        self.windowState = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
