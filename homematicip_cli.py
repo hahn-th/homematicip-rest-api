@@ -82,7 +82,7 @@ def get_config_file_locations() -> []:
     elif os_name == "Darwin": #MAC
         #are these folders right?
         search_locations.append("~/Library/Preferences/homematicip-rest-api/config.ini")
-        search_locations.append("~/Library/Application Support/homematicip-rest-api/config.ini")
+        search_locations.append("/Library/Application Support/homematicip-rest-api/config.ini")
     return search_locations
 
 
