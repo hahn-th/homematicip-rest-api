@@ -17,6 +17,7 @@ TYPE_CLASS_MAP = {
     cn.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
     cn.PLUGABLE_SWITCH_MEASURING: PlugableSwitchMeasuring,
     cn.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
+    cn.ROOM_CONTROL_DEVICE: TemperatureHumiditySensorDisplay,
     cn.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
     cn.PUSH_BUTTON: PushButton,
     cn.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
