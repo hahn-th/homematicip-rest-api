@@ -214,6 +214,7 @@ class TemperatureHumiditySensorDisplay(Device):
         self.display = None
         self.actualTemperature = None
         self.humidity = None
+        self.setPointTemperature = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -223,15 +224,17 @@ class TemperatureHumiditySensorDisplay(Device):
             self.display = c["display"]
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
+            self.setPointTemperature = c["setPointTemperature"]
 
     def set_display(self, display=DISPLAY_ACTUAL):
         data = {"channelIndex": 1, "deviceId": self.id, "display": display}
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
-        return "{}: actualTemperature({}) humidity({})".format(super().__str__(),
-                                                               self.actualTemperature,
-                                                               self.humidity)
+        return "{}: actualTemperature({}) humidity({}) setPointTemperature({})".format(super().__str__(),
+                                                                                self.actualTemperature,
+                                                                                self.humidity,
+                                                                                self.setPointTemperature)
 
 
 class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
@@ -246,7 +249,7 @@ class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
             self.display = c["display"]
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
-
+            self.setPointTemperature = c["setPointTemperature"]
 
 class SmokeDetector(Device):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
