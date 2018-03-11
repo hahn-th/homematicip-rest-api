@@ -542,7 +542,14 @@ class WeatherSensorPro(Device):
         return ("{} humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({})"
                 "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({})"
                 "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({})"
-                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.humidity,self.illumination,self.illuminationThresholdSunshine,self.raining,self.storm,self.sunshine,self.todayRainCounter,self.todaySunshineDuration,self.totalRainCounter,self.totalSunshineDuration,self.weathervaneAlignmentNeeded,self.windDirection,self.windDirectionVariation,self.windSpeed,self.windValueType,self.yesterdayRainCounter,self.yesterdaySunshineDuration)
+                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.humidity,self.illumination,
+                                                                                 self.illuminationThresholdSunshine,self.raining,
+                                                                                 self.storm,self.sunshine,self.todayRainCounter,
+                                                                                 self.todaySunshineDuration,self.totalRainCounter,
+                                                                                 self.totalSunshineDuration,self.weathervaneAlignmentNeeded,
+                                                                                 self.windDirection,self.windDirectionVariation,self.windSpeed,
+                                                                                 self.windValueType,self.yesterdayRainCounter,
+                                                                                 self.yesterdaySunshineDuration)
     
     #Any set/calibration functions?
 
