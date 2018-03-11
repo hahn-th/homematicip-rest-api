@@ -29,7 +29,9 @@ TYPE_CLASS_MAP = {
     cn.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
     cn.PLUGGABLE_DIMMER: PluggableDimmer,
     cn.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
-    cn.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery
+    cn.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
+    cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
+    cn.WEATHER_SENSOR_PRO: WeatherSensorPro
 }
 
 TYPE_GROUP_MAP = {

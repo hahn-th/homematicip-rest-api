@@ -60,8 +60,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             self.rssiPeerValue = c["rssiPeerValue"]
 
     def __str__(self):
-        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({})".format(
-            self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue,
+        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({})".format(self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue,
             self.rssiPeerValue)
 
     def set_label(self, label):
@@ -178,6 +177,23 @@ class ShutterContact(SabotageDevice):
     def __str__(self):
         return "{} windowState({})".format(super().__str__(), self.windowState)
 
+class TemperatureHumiditySensorOutdoor(Device):
+    """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
+    
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.actualTemperature = None
+        self.humidity = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("CLIMATE_SENSOR_CHANNEL", js)
+        if c:
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
+
+    def __str__(self):
+        return u"{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
@@ -197,8 +213,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(
-            super().__str__(), self.actualTemperature, self.humidity)
+        return u"{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 
 class TemperatureHumiditySensorDisplay(Device):
@@ -348,8 +363,7 @@ class SwitchMeasuring(Switch):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} energyCounter({}) currentPowerConsumption({}W)".format(
-            super().__str__(), self.energyCounter, self.currentPowerConsumption)
+        return "{} energyCounter({}) currentPowerConsumption({}W)".format(super().__str__(), self.energyCounter, self.currentPowerConsumption)
 
 class PlugableSwitchMeasuring(SwitchMeasuring):
     """ HMIP-PSM (Pluggable Switch and Meter) """
@@ -443,8 +457,7 @@ class FullFlushShutter(Device):
             self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
 
     def __str__(self):
-        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
-            super().__str__(), self.shutterLevel, self.topToBottomReferenceTime,
+        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(super().__str__(), self.shutterLevel, self.topToBottomReferenceTime,
             self.bottomToTopReferenceTime)
 
     def set_shutter_level(self, level):
@@ -474,9 +487,62 @@ class PluggableDimmer(Device):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} dimLevel({}) profileMode({}) userDesiredProfileMode({})".format(
-            super().__str__(), self.dimLevel, self.profileMode, self.userDesiredProfileMode)
+        return "{} dimLevel({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.dimLevel, self.profileMode, self.userDesiredProfileMode)
 
     def set_dim_level(self, dimLevel=0.0):
         data = {"channelIndex": 1, "deviceId": self.id, "dimLevel": dimLevel}
         return self._restCall("device/control/setDimLevel", json.dumps(data))
+
+class WeatherSensorPro(Device):
+    """ HmIP-SWO-PR """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.humidity = 0
+        self.illumination = 0
+        self.illuminationThresholdSunshine = 0
+        self.raining = False
+        self.storm = False
+        self.sunshine = False
+        self.todayRainCounter = 0
+        self.todaySunshineDuration = 0
+        self.totalRainCounter = 0
+        self.totalSunshineDuration = 0
+        self.weathervaneAlignmentNeeded = False
+        self.windDirection = 0
+        self.windDirectionVariation = 0
+        self.windSpeed = 0
+        self.windValueType = "AVERAGE_VALUE"
+        self.yesterdayRainCounter = 0
+        self.yesterdaySunshineDuration = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+
+        c = get_functional_channel("WEATHER_SENSOR_PRO_CHANNEL")
+        if c:
+            self.humidity = c["humidity"]
+            self.illumination = c["illumination"]
+            self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]
+            self.raining = c["raining"]
+            self.storm = c["storm"]
+            self.sunshine = c["sunshine"]
+            self.todayRainCounter = c["todayRainCounter"]
+            self.todaySunshineDuration = c["todaySunshineDuration"]
+            self.totalRainCounter = c["totalRainCounter"]
+            self.totalSunshineDuration = c["totalSunshineDuration"]
+            self.weathervaneAlignmentNeeded = c["weathervaneAlignmentNeeded"]
+            self.windDirection = c["windDirection"]
+            self.windDirectionVariation = c["windDirectionVariation"]
+            self.windSpeed = c["windSpeed"]
+            self.windValueType = c["windValueType"]
+            self.yesterdayRainCounter = c["yesterdayRainCounter"]
+            self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+
+    def __str__(self):
+        return ("{} humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({})"
+                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({})"
+                "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({})"
+                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.humidity,self.illumination,self.illuminationThresholdSunshine,self.raining,self.storm,self.sunshine,self.todayRainCounter,self.todaySunshineDuration,self.totalRainCounter,self.totalSunshineDuration,self.weathervaneAlignmentNeeded,self.windDirection,self.windDirectionVariation,self.windSpeed,self.windValueType,self.yesterdayRainCounter,self.yesterdaySunshineDuration)
+    
+    #Any set/calibration functions?
+
