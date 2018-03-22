@@ -1,16 +1,14 @@
+import logging
 import threading
+import websocket
 
+from homematicip.EventHook import *
 from homematicip.base.constants import DEVICE
 from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, \
     TYPE_SECURITY_EVENT_MAP
 from homematicip.connection import Connection
 from homematicip.group import *
 from homematicip.securityEvent import *
-from homematicip.EventHook import *
-
-from datetime import datetime
-import websocket
-import logging
 
 EVENT_SECURITY_JOURNAL_CHANGED = "SECURITY_JOURNAL_CHANGED"
 EVENT_GROUP_ADDED = "GROUP_ADDED"
@@ -71,7 +69,7 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
 
 class Client(HomeMaticIPObject.HomeMaticIPObject):
 
-    def __init__(self,connection):
+    def __init__(self, connection):
         super().__init__(connection)
         self.id = None
         self.label = None
@@ -104,7 +102,9 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
-
+    _typeClassMap = TYPE_CLASS_MAP
+    _typeGroupMap = TYPE_GROUP_MAP
+    _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
     def __init__(self, connection=None):
         if connection is None:
@@ -132,10 +132,6 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocket = None
         self.__webSocketThread = None
         self.onEvent = EventHook()
-
-        self._typeClassMap = TYPE_CLASS_MAP
-        self._typeGroupMap = TYPE_GROUP_MAP
-        self._typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
 
         self.devices = []
         self.clients = []
