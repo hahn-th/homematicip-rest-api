@@ -46,6 +46,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HmIP-PDT (Pluggable Dimmer)
 - [X] HMIP-BSM (Brand Switch and Meter)
 - [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
+- [X] HmIP-STHO (Temperature and Humidity Sensor outdoor)
 
 ## Groups ##
 - [X] Meta (Rooms)
