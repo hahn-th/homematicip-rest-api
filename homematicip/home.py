@@ -1,7 +1,5 @@
 import logging
 import threading
-from datetime import datetime
-
 import websocket
 
 from homematicip.EventHook import *
