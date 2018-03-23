@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f1c8abac-037e-4d87-b604-119b6cda9be0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>homematicip_cli.py</StartupFile>
+    <StartupFile>hmip_cli.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="dump_devicevalues.py" />
+    <Compile Include="hmip_generate_auth_token.py" />
     <Compile Include="homematicip\async\class_maps.py" />
     <Compile Include="homematicip\async\connection.py" />
     <Compile Include="homematicip\async\device.py" />
@@ -71,8 +72,7 @@
     <Compile Include="homematicip\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="generate_auth_token.py" />
-    <Compile Include="homematicip_cli.py">
+    <Compile Include="hmip_cli.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
