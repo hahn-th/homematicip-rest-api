@@ -17,7 +17,8 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments></CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -32,9 +33,6 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="config.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="dump_devicevalues.py" />
     <Compile Include="homematicip\async\class_maps.py" />
     <Compile Include="homematicip\async\connection.py" />
@@ -78,6 +76,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
+    <Compile Include="security_ping.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />
