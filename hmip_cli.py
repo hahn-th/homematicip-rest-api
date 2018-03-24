@@ -4,7 +4,6 @@ import sys
 import time
 
 from argparse import ArgumentParser
-from builtins import str
 from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
 
