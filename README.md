@@ -1,7 +1,8 @@
 # homematicip-samples
 A collection of samples and simple scripts for the homematicip rest api wrapper
+each sample requires at least the homematicip package
 
-##PULL Requests##
+## PULL Requests ##
 Use the SampleTemplate folder as a base for your requests. 
 The script must work.
 Also modify this Readme.md to add a short summary of your Project.
