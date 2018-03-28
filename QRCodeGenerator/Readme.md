@@ -1,8 +1,8 @@
-#QRCodeGenerator#
+# QRCodeGenerator #
 This script will create QRCodes for all configured devices and a webpage for easier browsing
 
-##Requirements##
+## Requirements ##
 nothing special
 
-##Python Requirements##
+## Python Requirements ##
 see requirements.txt

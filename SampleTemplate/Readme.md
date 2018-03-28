@@ -1,8 +1,8 @@
-#SampleTemplate#
+# SampleTemplate #
 This is just a template for future samples
 
-##Requirements##
+## Requirements ##
 nothing special
 
-##Python Requirements##
+## Python Requirements ##
 see requirements.txt
