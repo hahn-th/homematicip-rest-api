@@ -15,3 +15,6 @@ The usage for this folder is intended as a template for other examples
 
 ##CheckPresenceOnPing##
 This script will ping (ICMP) all configured IP addresses (e.g. mobile phones which are connected over WiFi). If no device answers the ping, it will activate the security zones
+
+#QRCodeGenerator#
+This script will create QRCodes for all configured devices and a webpage for easier browsing
