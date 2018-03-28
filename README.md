@@ -12,7 +12,8 @@ first download and run generate_auth_token.py to get an auth token for your acce
 copy the generated auth token from the window config.py and add also the Access Point ID
 
 # Examples #
-* homematicip_cli.py list devices,groups,securityJournal; set label, turn switches on/off
+* hmip_cli.py for list devices,groups,securityJournal; set label, turn switches on/off
+* Sample Projects are under https://github.com/coreGreenberet/homematicip-samples
 
 # Implemented Stuff #
 - [X] generate authentication token
