@@ -18,14 +18,18 @@ def main():
     home = Home()
     home.set_auth_token(config.auth_token)
     home.init(config.access_point)
+    print("Downloading configuration")
     home.get_current_state()
     if not os.path.exists("./img/"):
         os.makedirs("./img/")
+    
+    print("Generating QRCodes")
     for d in home.devices:
         img = qrcode.make(d.id)
         img.save("./img/{}.PNG".format(d.id))
 
     
+    print("Creating website")
     with open("qrcodes.html", "w") as f:
         f.write("""<html><style>
 table, th, td {
@@ -47,6 +51,6 @@ th, td {
 
         f.write("</table>")
         f.write("</body></html>")
-
+    print("Finished")
 if __name__ == "__main__":
     main()
