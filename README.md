@@ -1,6 +1,7 @@
 # homematicip-samples
-A collection of samples and simple scripts for the homematicip rest api wrapper
-each sample requires at least the homematicip package
+A collection of samples and simple scripts for the homematicip rest api wrapper.
+Each sample requires at least the homematicip package
+```pip install homematicip```
 
 ## PULL Requests ##
 Use the SampleTemplate folder as a base for your requests. 
