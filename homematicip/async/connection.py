@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 from asyncio import Lock
@@ -5,14 +6,12 @@ from asyncio.futures import CancelledError
 from json.decoder import JSONDecodeError
 
 import aiohttp
-import websockets
 import async_timeout
-import asyncio
-
+import websockets
 from websockets import ConnectionClosed
 
 from homematicip.base.base_connection import BaseConnection, HmipWrongHttpStatusError, \
-    ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipConnectionError, HmipServerCloseError
+    ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipConnectionError
 
 logger = logging.getLogger(__name__)
 
@@ -106,10 +105,10 @@ class AsyncConnection(BaseConnection):
             logger.exception(err)
             raise HmipConnectionError()
 
-    async def ws_connect(self, incoming_parser):
+    async def ws_connect(self, *, on_message, on_error):
         await self._connect_to_websocket()
         self.ping_pong_task = self._loop.create_task(self._ws_ping_loop())
-        self.ws_reader_task = self._loop.create_task(self._ws_loop(incoming_parser))
+        self.ws_reader_task = self._loop.create_task(self._ws_loop(on_message, on_error))
         return self.ws_reader_task
 
     async def close_websocket_connection(self):
@@ -142,12 +141,12 @@ class AsyncConnection(BaseConnection):
         finally:
             await self.close_websocket_connection()
 
-    async def _ws_loop(self, incoming_parser):
+    async def _ws_loop(self, on_message, on_error):
         try:
             while True:
                 msg = await self.socket_connection.recv()
                 logger.debug("incoming hmip message")
-                incoming_parser(None, msg.decode())
+                on_message(None, msg.decode())
         except (ConnectionClosed, TypeError) as err:
             logger.debug("Connection closed.")
         except CancelledError:
@@ -155,5 +154,6 @@ class AsyncConnection(BaseConnection):
         except Exception as err:
             logger.exception(err)
         finally:
+            on_error()
             await self.close_websocket_connection()
             raise HmipConnectionError

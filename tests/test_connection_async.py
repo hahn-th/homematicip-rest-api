@@ -175,6 +175,7 @@ def finish_all(loop):
     loop.run_until_complete(finish())
     print("finished")
 
+#todo: tests break. fix this.
 
 def test_ws_message():
     loop = asyncio.get_event_loop()

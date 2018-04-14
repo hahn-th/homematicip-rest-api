@@ -1,6 +1,6 @@
+import asyncio
 import json
 import logging
-import asyncio
 
 from homematicip.async.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP
 from homematicip.async.connection import AsyncConnection
@@ -42,7 +42,8 @@ class AsyncHome(Home):
 
     async def enable_events(self) -> asyncio.Task:
         """Connects to the websocket. Returns a listening task."""
-        return await self._connection.ws_connect(self._ws_on_message)
+        return await self._connection.ws_connect(
+            on_message=self._ws_on_message, on_error=self._ws_on_error)
 
     async def disable_events(self):
         await self._connection.close_websocket_connection()
