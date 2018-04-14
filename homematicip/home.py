@@ -400,7 +400,14 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocket.close()
 
     def _ws_on_error(self, ws, message):
+        """Websocket connection lost. Device states are unreliable, setting them as
+        unreachable."""
+
         LOGGER.error("Websocket error: %s", message)
+
+        for _device in self.devices:
+            _device.unreach = True
+            _device.fire_update_event()
 
     def _ws_on_message(self, ws, message):
         js = json.loads(message)
