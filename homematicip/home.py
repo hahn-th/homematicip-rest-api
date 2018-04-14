@@ -1,5 +1,6 @@
 import logging
 import threading
+
 import websocket
 
 from homematicip.EventHook import *
@@ -165,7 +166,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeClientId = js_home["apExchangeClientId"]
         self.apExchangeState = js_home["apExchangeState"]
         self.id = js_home["id"]
-        self.carrierSense =js_home["carrierSense"]
+        self.carrierSense = js_home["carrierSense"]
 
     def download_configuration(self):
         return self._restCall('home/getCurrentState',
@@ -404,10 +405,6 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         unreachable."""
 
         LOGGER.error("Websocket error: %s", message)
-
-        for _device in self.devices:
-            _device.unreach = True
-            _device.fire_update_event()
 
     def _ws_on_message(self, ws, message):
         js = json.loads(message)
