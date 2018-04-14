@@ -1,54 +1,53 @@
-# # coding=utf-8
-# import platform
-# import locale
-# import logging
-# import hashlib
-#
-# from .home import *
-# from .device import *
-# from .auth import *
-# from .group import *
-# from .securityEvent import *
-#
-# import requests
-#
-#
-#
-#
-#
-#
-# def set_auth_token(token):
-#     global auth_token
-#     auth_token = token
-#
-#
-# def get_auth_token():
-#     global auth_token
-#     return auth_token
-#
-# def get_clientauth_token():
-#     global clientauth_token
-#     return clientauth_token
-#
-#
-# def get_clientCharacteristics():
-#     return clientCharacteristics
-#
-#
-#
-#
-# def get_urlREST():
-#     return urlREST
-#
-#
-# def get_urlWebSocket():
-#     return urlWebSocket
-#
-# #adding a new "trace" log level
-# TRACE_LEVEL_NUM = 5
-# logging.addLevelName(TRACE_LEVEL_NUM, "TRACE")
-# def trace(self, message, *args, **kws):
-#     # Yes, logger takes its '*args' as 'args'.
-#     if self.isEnabledFor(TRACE_LEVEL_NUM):
-#         self._log(TRACE_LEVEL_NUM, message, args, **kws)
-# logging.Logger.trace = trace
+# coding=utf-8
+import platform
+import configparser
+import os
+from collections import namedtuple
+
+HmipConfig = namedtuple('HmipConfig', ['auth_token', 'access_point', 'log_level', 'log_file'])
+
+def find_and_load_config_file() -> HmipConfig:
+    for f in get_config_file_locations():
+        try:
+            return load_config_file(f)
+        except FileNotFoundError:
+            pass
+    return None
+
+
+def load_config_file(config_file: str ) -> HmipConfig:
+    """Loads the config ini file.
+    :raises a FileNotFoundError when the config file does not exist."""
+    _config = configparser.ConfigParser()
+    with open(config_file, 'r') as fl:
+        _config.read_file(fl)
+        logging_filename = _config.get('LOGGING', 'FileName', fallback='hmip.log')
+        if logging_filename == 'None':
+            logging_filename = None
+
+        _hmip_config = HmipConfig(
+            _config['AUTH']['AuthToken'],
+            _config['AUTH']['AccessPoint'],
+            int(_config.get('LOGGING', 'Level', fallback=30)),
+            logging_filename
+        )
+        return _hmip_config
+
+def get_config_file_locations() -> []:
+    search_locations = ["./config.ini"]
+
+    os_name = platform.system()
+
+    if os_name == "Windows":
+        appdata = os.getenv("appdata")
+        programdata = os.getenv("programdata")
+        search_locations.append(os.path.join(appdata,"homematicip-rest-api\\config.ini"))
+        search_locations.append(os.path.join(programdata,"homematicip-rest-api\\config.ini"))
+    elif os_name == "Linux":
+        search_locations.append("~/.homematicip-rest-api/config.ini")
+        search_locations.append("/etc/homematicip-rest-api/config.ini")
+    elif os_name == "Darwin": #MAC
+        #are these folders right?
+        search_locations.append("~/Library/Preferences/homematicip-rest-api/config.ini")
+        search_locations.append("/Library/Application Support/homematicip-rest-api/config.ini")
+    return search_locations

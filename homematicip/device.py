@@ -29,6 +29,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.serializedGlobalTradeItemNumber = ""
         self.rssiDeviceValue = 0
         self.rssiPeerValue = 0
+        self.dutyCycle = False
+        self.configPending = False
 
     def from_json(self, js):
         self.id = js["id"]
@@ -58,10 +60,12 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             self.routerModuleEnabled = c["routerModuleEnabled"]
             self.rssiDeviceValue = c["rssiDeviceValue"]
             self.rssiPeerValue = c["rssiPeerValue"]
+            self.dutyCycle = c["dutyCycle"]
+            self.configPending = c["configPending"]
 
     def __str__(self):
-        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({})".format(self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue,
-            self.rssiPeerValue)
+        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({}) configPending({}) dutyCycle({})".format(self.modelType, self.label, self.lowBat, self.unreach, self.rssiDeviceValue,
+            self.rssiPeerValue, self.configPending, self.dutyCycle)
 
     def set_label(self, label):
         data = {"deviceId": self.id, "label": label}
@@ -109,6 +113,8 @@ class SabotageDevice(Device):
             self.sabotage = c["sabotage"]
             self.rssiDeviceValue = c["rssiDeviceValue"]
             self.rssiPeerValue = c["rssiPeerValue"]
+            self.dutyCycle = c["dutyCycle"]
+            self.configPending = c["configPending"]
 
     def __str__(self):
         return "{}: sabotage({})".format(super().__str__(), self.sabotage)
@@ -128,6 +134,8 @@ class OperationLockableDevice(Device):
             self.operationLockActive = c["operationLockActive"]
             self.rssiDeviceValue = c["rssiDeviceValue"]
             self.rssiPeerValue = c["rssiPeerValue"]
+            self.dutyCycle = c["dutyCycle"]
+            self.configPending = c["configPending"]
 
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}

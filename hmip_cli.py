@@ -1,15 +1,13 @@
-import configparser
+#!/usr/bin/env python3
 import logging
 import sys
 import time
-import platform
-import os
 
 from argparse import ArgumentParser
-from builtins import str
 from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
 
+import homematicip
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.home import Home
@@ -25,9 +23,6 @@ def create_logger(level, file_name):
     handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
     logger.addHandler(handler)
     return logger
-
-
-HmipConfig = namedtuple('HmipConfig', ['auth_token', 'access_point', 'log_level', 'log_file'])
 
 def convert_config2ini():
     """converts the old config.py to ./config.ini"""
@@ -45,47 +40,6 @@ def convert_config2ini():
         os.remove('./config.py')
     except ImportError:
         pass 
-
-
-
-def load_config_file(config_file: str) -> HmipConfig:
-    """Loads the config ini file.
-    :raises a FileNotFoundError when the config file does not exist."""
-    _config = configparser.ConfigParser()
-    with open(config_file, 'r') as fl:
-        _config.read_file(fl)
-        logging_filename = _config.get('LOGGING', 'FileName', fallback='hmip.log')
-        if logging_filename == 'None':
-            logging_filename = None
-
-        _hmip_config = HmipConfig(
-            _config['AUTH']['AuthToken'],
-            _config['AUTH']['AccessPoint'],
-            int(_config.get('LOGGING', 'Level', fallback=30)),
-            logging_filename
-        )
-        return _hmip_config
-
-def get_config_file_locations() -> []:
-    search_locations = ["./config.ini"]
-
-    os_name = platform.system()
-
-    if os_name == "Windows":
-        appdata = os.getenv("appdata")
-        programdata = os.getenv("programdata")
-        search_locations.append(os.path.join(appdata,"homematicip-rest-api\\config.ini"))
-        search_locations.append(os.path.join(programdata,"homematicip-rest-api\\config.ini"))
-    elif os_name == "Linux":
-        search_locations.append("~/.homematicip-rest-api/config.ini")
-        search_locations.append("/etc/homematicip-rest-api/config.ini")
-    elif os_name == "Darwin": #MAC
-        #are these folders right?
-        search_locations.append("~/Library/Preferences/homematicip-rest-api/config.ini")
-        search_locations.append("/Library/Application Support/homematicip-rest-api/config.ini")
-    return search_locations
-
-
 
 def main():
     parser = ArgumentParser(description="a cli wrapper for the homematicip API")
@@ -182,17 +136,14 @@ def main():
 
     if args.config_file:
         try:
-            _config = load_config_file(args.config_file)
+            _config = homematicip.load_config_file(args.config_file)
         except FileNotFoundError:
             print("##### CONFIG FILE NOT FOUND: {} #####".format(args.config_file))
             return
     else:
         convert_config2ini()
-        for f in get_config_file_locations():
-            try:
-                _config = load_config_file(f)
-            except FileNotFoundError:
-                pass
+        _config = homematicip.find_and_load_config_file()
+
 
     if _config is None:
         print("Could not find configuration file. Script will exit")

@@ -1,7 +1,7 @@
 from distutils.core import setup
 from setuptools import find_packages
 
-VERSION = '0.8'
+VERSION = '0.9.1'
 
 setup(
     name='homematicip',
@@ -14,5 +14,6 @@ setup(
     download_url='https://github.com/coreGreenberet/homematicip-rest-api/tarball/' + VERSION,
     keywords=['homematicip'],  # arbitrary keywords
     classifiers=['Development Status :: 4 - Beta', 'Programming Language :: Python :: 3 :: Only'],
-    install_requires=["requests", "websocket-client", "future", "websockets", "aiohttp"]
+    install_requires=["requests", "websocket-client", "future", "websockets", "aiohttp"],
+    scripts=['hmip_cli.py', 'hmip_generate_auth_token.py']
 )

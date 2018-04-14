@@ -4,15 +4,28 @@ Since there is no official documentation about this API everything was done via 
 Use at your own risk.
 
 
-#Installation
+# Installation #
 Just run **pip3 install homematicip** to get the package
 
 # Usage #
-first download and run generate_auth_token.py to get an auth token for your access point.
-copy the generated auth token from the window config.py and add also the Access Point ID
+first run hmip_generate_auth_token.py (from the command line) to get an auth token for your access point.
+it will generate a "config.ini" in your current directory. The scripts will look for a config.ini in 3 different locations depending on your OS. Copy the file to one of these locations so that it will be accessable for the scripts.
+
+* General
+    * current working directory
+* Windows
+    * %APPDATA%\homematicip-rest-api\
+    * %PROGRAMDATA%\homematicip-rest-api\
+* Linux
+    * ~/.homematicip-rest-api/
+    * /etc/homematicip-rest-api/
+* MAC OS
+    * ~/Library/Preferences/homematicip-rest-api/
+    * /Library/Application Support/homematicip-rest-api/
 
 # Examples #
-* homematicip_cli.py list devices,groups,securityJournal; set label, turn switches on/off
+* hmip_cli.py for list devices,groups,securityJournal; set label, turn switches on/off
+* Sample Projects are under https://github.com/coreGreenberet/homematicip-samples
 
 # Implemented Stuff #
 - [X] generate authentication token
@@ -46,6 +59,7 @@ copy the generated auth token from the window config.py and add also the Access 
 - [X] HmIP-PDT (Pluggable Dimmer)
 - [X] HMIP-BSM (Brand Switch and Meter)
 - [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
+- [X] HmIP-STHO (Temperature and Humidity Sensor outdoor)
 
 ## Groups ##
 - [X] Meta (Rooms)

@@ -127,6 +127,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeClientId = None
         self.apExchangeState = None
         self.id = None
+        self.carrierSense = None
 
         self.__webSocket = None
         self.__webSocketThread = None
@@ -160,11 +161,11 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.powerMeterUnitPrice = js_home["powerMeterUnitPrice"]
         self.powerMeterCurrency = js_home["powerMeterCurrency"]
         self.deviceUpdateStrategy = js_home["deviceUpdateStrategy"]
-        self.lastReadyForUpdateTimestamp = js_home[
-            "lastReadyForUpdateTimestamp"]
+        self.lastReadyForUpdateTimestamp = js_home["lastReadyForUpdateTimestamp"]
         self.apExchangeClientId = js_home["apExchangeClientId"]
         self.apExchangeState = js_home["apExchangeState"]
         self.id = js_home["id"]
+        self.carrierSense =js_home["carrierSense"]
 
     def download_configuration(self):
         return self._restCall('home/getCurrentState',
