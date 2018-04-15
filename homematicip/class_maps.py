@@ -5,6 +5,8 @@ from homematicip.device import *
 from homematicip.group import *
 
 from homematicip.securityEvent import *
+from homematicip.rule import *
+
 
 TYPE_CLASS_MAP = {
     cn.DEVICE: Device,
@@ -65,4 +67,8 @@ TYPE_SECURITY_EVENT_MAP = {
     cn.ACCESS_POINT_CONNECTED: AccessPointConnectedEvent,
     cn.ACCESS_POINT_DISCONNECTED: AccessPointDisconnectedEvent,
     cn.SENSOR_EVENT: SensorEvent
+}
+
+TYPE_RULE_MAP = {
+    cn.SIMPLE_RULE : SimpleRule
 }

@@ -4,11 +4,11 @@ import websocket
 
 from homematicip.EventHook import *
 from homematicip.base.constants import DEVICE
-from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, \
-    TYPE_SECURITY_EVENT_MAP
+from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP, TYPE_RULE_MAP
 from homematicip.connection import Connection
 from homematicip.group import *
 from homematicip.securityEvent import *
+from homematicip.rule import *
 
 EVENT_SECURITY_JOURNAL_CHANGED = "SECURITY_JOURNAL_CHANGED"
 EVENT_GROUP_ADDED = "GROUP_ADDED"
@@ -105,6 +105,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     _typeClassMap = TYPE_CLASS_MAP
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+    _typeRuleMap = TYPE_RULE_MAP
 
     def __init__(self, connection=None):
         if connection is None:
@@ -136,6 +137,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.devices = []
         self.clients = []
         self.groups = []
+        self.rules = []
 
     def init(self, access_point_id, lookup=True):
         self._connection.init(access_point_id, lookup)
@@ -167,6 +169,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js_home["id"]
         self.carrierSense =js_home["carrierSense"]
 
+        
+        self._get_rules(js_home)
+
     def download_configuration(self):
         return self._restCall('home/getCurrentState',
                               json.dumps(self._connection.clientCharacteristics))
@@ -189,6 +194,14 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
         return True
 
+    def _get_devices(self, json_state):
+        for id_, raw in json_state["devices"].items():
+            _device = self.search_device_by_id(id_)
+            if _device:
+                _device.from_json(raw)
+            else:
+                self.devices.append(self._parse_device(raw))
+
     def _parse_device(self, json_state):
         deviceType = json_state["type"]
         if deviceType in self._typeClassMap:
@@ -201,13 +214,24 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             LOGGER.warning("There is no class for %s yet", deviceType)
             return d
 
-    def _get_devices(self, json_state):
-        for id_, raw in json_state["devices"].items():
-            _device = self.search_device_by_id(id_)
-            if _device:
-                _device.from_json(raw)
+    def _get_rules(self, json_state):
+        for id_, raw in json_state["ruleMetaDatas"].items():
+            _rule = self.search_rule_by_id(id_)
+            if _rule:
+                _rule.from_json(raw)
             else:
-                self.devices.append(self._parse_device(raw))
+                self.rules.append(self._parse_rule(raw))
+
+    def _parse_rule(self, json_state):
+        ruleType = json_state["type"]
+        if ruleType in self._typeRuleMap:
+            r = self._typeRuleMap[ruleType](self._connection)
+            r.from_json(json_state)
+        else:
+            r = Rule(self._connection)
+            r.from_json(json_state)
+            LOGGER.warning("There is no class for %s yet", ruleType)
+        return r
 
     def _get_clients(self, json_state):
         for id_, raw in json_state["clients"].items():
@@ -279,6 +303,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for c in self.clients:
             if c.id == clientID:
                 return c
+        return None
+
+    def search_rule_by_id(self, ruleID):
+        """ searches a rule by given id
+        :param ruleID the device to search for
+        :return the rule object or None if it couldn't find a rule
+        """
+        for r in self.rules:
+            if r.id == ruleID:
+                return r
         return None
 
     def set_security_zones_activation(self, internal=True, external=True):

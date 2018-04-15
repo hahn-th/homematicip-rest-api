@@ -17,8 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>
-    </CommandLineArguments>
+    <CommandLineArguments>--list-rules</CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -66,6 +65,9 @@
     <Compile Include="homematicip\HomeMaticIPObject.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\rule.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="homematicip\securityEvent.py">
       <SubType>Code</SubType>
     </Compile>
@@ -76,9 +78,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
-    <Compile Include="security_ping.py">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />

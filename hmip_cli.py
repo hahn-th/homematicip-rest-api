@@ -18,8 +18,7 @@ logger = None
 def create_logger(level, file_name):
     logger = logging.getLogger()
     logger.setLevel(level)
-    handler = TimedRotatingFileHandler(file_name, when='midnight',
-                                                        backupCount=5) if file_name else logging.StreamHandler()
+    handler = TimedRotatingFileHandler(file_name, when='midnight', backupCount=5) if file_name else logging.StreamHandler()
     handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
     logger.addHandler(handler)
     return logger
@@ -63,6 +62,7 @@ def main():
 
     parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal",
                         help="display the security journal")
+    parser.add_argument("--list-rules", action="store_true", dest="list_rules", help="display all automation rules")
 
     parser.add_argument("-d", "--device", dest="device", action='append',
                         help="the device you want to modify (see \"Device Settings\").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices")
@@ -248,6 +248,11 @@ def main():
                                                                                 d.rssiPeerValue if d.rssiPeerValue is not None else "None",
                                                                                 getRssiBarString(d.rssiPeerValue),
                                                                                 "Unreachable" if d.unreach else "")))
+    if args.list_rules:
+        command_entered = True
+        sortedRules = sorted(home.rules, key=attrgetter('ruleType', 'label'))
+        for d in sortedRules:
+            print(u'{} {}'.format(d.id, str(d)))
 
     if args.device:
         command_entered = False
