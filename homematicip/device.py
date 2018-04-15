@@ -154,6 +154,7 @@ class HeatingThermostat(OperationLockableDevice):
         self.temperatureOffset = 0
         self.valvePosition = 0.0
         self.valveState = ""
+        self.setPointTemperature = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -162,6 +163,7 @@ class HeatingThermostat(OperationLockableDevice):
             self.temperatureOffset = c["temperatureOffset"]
             self.valvePosition = c["valvePosition"]
             self.valveState = c["valveState"]
+            self.setPointTemperature = c["setPointTemperature"]
 
     def __str__(self):
         return "{} valvePosition({}) valveState({})".format(super().__str__(), self.valvePosition,
