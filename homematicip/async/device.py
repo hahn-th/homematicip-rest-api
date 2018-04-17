@@ -1,10 +1,11 @@
 import logging
+
 from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, \
     SabotageDevice, ShutterContact, OperationLockableDevice, HeatingThermostat, \
     TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
     MotionDetectorIndoor, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
-    PluggableDimmer
+    PluggableDimmer, BrandSwitchMeasuring
 
 ERROR_CODE = "errorCode"
 
@@ -55,6 +56,10 @@ class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
 class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncPlugableSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
     pass
+
+
+class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncPlugableSwitchMeasuring):
+    """ HMIP-BSM (Brand Switch and Meter) """
 
 
 class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):

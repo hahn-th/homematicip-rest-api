@@ -167,7 +167,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeClientId = js_home["apExchangeClientId"]
         self.apExchangeState = js_home["apExchangeState"]
         self.id = js_home["id"]
-        self.carrierSense =js_home["carrierSense"]
+        self.carrierSense = js_home["carrierSense"]
 
         
         self._get_rules(js_home)

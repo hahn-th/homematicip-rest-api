@@ -5,7 +5,7 @@ from homematicip.async.device import AsyncPlugableSwitch, \
     AsyncWallMountedThermostatPro, AsyncSmokeDetector, AsyncFloorTerminalBlock6, \
     AsyncTemperatureHumiditySensorDisplay, AsyncTemperatureHumiditySensorWithoutDisplay, \
     AsyncPushButton, AsyncAlarmSirenIndoor, AsyncMotionDetectorIndoor, AsyncKeyRemoteControlAlarm, \
-    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice
+    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice, AsyncBrandSwitchMeasuring
 from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncExtendedLinkedSwitchingGroup, AsyncLinkedSwitchingGroup, AsyncAlarmSwitchingGroup, \
     AsyncHeatingHumidyLimiterGroup, AsyncHeatingTemperatureLimiterGroup, \
@@ -27,6 +27,7 @@ TYPE_CLASS_MAP = {
     cn.SMOKE_DETECTOR: AsyncSmokeDetector,
     cn.FLOOR_TERMINAL_BLOCK_6: AsyncFloorTerminalBlock6,
     cn.PLUGABLE_SWITCH_MEASURING: AsyncPlugableSwitchMeasuring,
+    cn.BRAND_SWITCH_MEASURING:AsyncBrandSwitchMeasuring,
     cn.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: AsyncTemperatureHumiditySensorDisplay,
     cn.TEMPERATURE_HUMIDITY_SENSOR: AsyncTemperatureHumiditySensorWithoutDisplay,
     cn.PUSH_BUTTON: AsyncPushButton,
