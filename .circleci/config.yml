@@ -50,7 +50,7 @@ jobs:
           command: |
             . venv/bin/activate
             export PYTHONPATH=`pwd`;
-            pytest tests\test_base_connection.py
+            pytest tests/test_base_connection.py
 
       - store_artifacts:
           path: test-reports
