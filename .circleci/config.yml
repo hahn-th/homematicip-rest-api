@@ -49,6 +49,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
+            export PYTHONPATH=`pwd`;
             pytest tests\test_base_connection.py
 
       - store_artifacts:
