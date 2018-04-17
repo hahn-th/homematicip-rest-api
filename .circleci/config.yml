@@ -49,7 +49,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python tests/test_home.py
+            pytest tests\test_base_connection.py
 
       - store_artifacts:
           path: test-reports
