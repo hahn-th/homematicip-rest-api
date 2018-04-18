@@ -52,7 +52,7 @@ jobs:
       - store_artifacts:
           path: test-reports
           destination: test-reports
-deploy:
+  deploy:
     docker:
       - image: circleci/python:3.6
     steps:
