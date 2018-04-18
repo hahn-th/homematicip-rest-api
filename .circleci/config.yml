@@ -45,7 +45,8 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py test
+            export PYTHONPATH=`pwd`;
+            pytest tests/test_base_connection.py
 
       - store_artifacts:
           path: test-reports
