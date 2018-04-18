@@ -1,6 +1,8 @@
 from distutils.core import setup
 from setuptools import find_packages
 from setuptools.command.install import install
+import os
+import sys
 
 VERSION = '0.9.1'
 
