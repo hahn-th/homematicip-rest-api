@@ -33,19 +33,16 @@ class Connection(BaseConnection):
     def _restCall(self, path, body=None):
         result = None
         requestPath = '{}/hmip/{}'.format(self._urlREST, path)
-        logger.debug("_restcall path({}) body({})".format(requestPath, body))
+        logger.debug("_restcall path(%s) body(%s)", requestPath, body)
         for i in range(0, self._restCallRequestCounter):
             try:
                 result = requests.post(requestPath, data=body,
                                        headers=self.headers,
                                        timeout=self._restCallTimout)
                 ret = (result.json() if len(result.content) != 0 else "")
-                logger.debug(
-                    "_restcall result: Errorcode={} content({})".format(
-                        result.status_code, ret))
+                logger.debug("_restcall result: Errorcode=%s content(%s)",result.status_code, ret)
                 return ret
             except requests.Timeout:
-                logger.error(
-                    "call to '{}' failed due Timeout".format(requestPath))
+                logger.error("call to '%s' failed due Timeout",requestPath)
                 pass
         return {"errorCode": "TIMEOUT"}
