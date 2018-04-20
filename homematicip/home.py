@@ -374,7 +374,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for entry in journal["entries"]:
             eventType = entry["eventType"]
             if eventType in self._typeSecurityEventMap:
-                j = self._typeSecurityEventMap[eventType]()
+                j = self._typeSecurityEventMap[eventType](self._connection)
                 j.from_json(entry)
                 ret.append(j)
             else:
