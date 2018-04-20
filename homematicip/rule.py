@@ -41,12 +41,15 @@ class SimpleRule(Rule):
 
     def enable(self):
         """ enables the rule """
-        data = {"ruleId": self.id, "enabled": True }
-        return self._restCall("rule/enableSimpleRule", json.dumps(data))
+        return self.set_rule_enabled_state(True)
 
     def disable(self):
         """ disables the rule """
-        data = {"ruleId": self.id, "enabled": False }
+        return self.set_rule_enabled_state(False)
+
+    def set_rule_enabled_state(self, enabled):
+        """ enables/disables this rule"""
+        data = {"ruleId": self.id, "enabled": enabled }
         return self._restCall("rule/enableSimpleRule", json.dumps(data))
 
     def from_json(self, js):

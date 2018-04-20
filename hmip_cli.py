@@ -10,6 +10,7 @@ from logging.handlers import TimedRotatingFileHandler
 import homematicip
 from homematicip.device import *
 from homematicip.group import *
+from homematicip.rule import *
 from homematicip.home import Home
 
 logger = None
@@ -46,80 +47,58 @@ def main():
     parser.add_argument("--debug-level", dest="debug_level", type=int, help="the debug level which should get used(Critical=50, DEBUG=10)")
 
     group = parser.add_argument_group("Display Configuration")
-    group.add_argument("--dump-configuration", action="store_true", dest="dump_config",
-                       help="dumps the current configuration from the AP")
+    group.add_argument("--dump-configuration", action="store_true", dest="dump_config",help="dumps the current configuration from the AP")
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
-    group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids",
-                       help="list all groups and their ids")
-    group.add_argument("--list-firmware", action="store_true", dest="list_firmware",
-                       help="list the firmware of all devices")
-    group.add_argument("--list-rssi", action="store_true", dest="list_rssi",
-                       help="list the reception quality of all devices")
+    group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids",help="list all groups and their ids")
+    group.add_argument("--list-firmware", action="store_true", dest="list_firmware", help="list the firmware of all devices")
+    group.add_argument("--list-rssi", action="store_true", dest="list_rssi", help="list the reception quality of all devices")
     group.add_argument("--list-events", action="store_true", dest="list_events", help="prints all the events")
-    group.add_argument("--list-last-status-update", action="store_true", dest="list_last_status_update",
-                       help="prints the last status update of all systems")
+    group.add_argument("--list-last-status-update", action="store_true", dest="list_last_status_update", help="prints the last status update of all systems")
 
-    parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal",
-                        help="display the security journal")
+    parser.add_argument("--list-security-journal", action="store_true", dest="list_security_journal", help="display the security journal")
     parser.add_argument("--list-rules", action="store_true", dest="list_rules", help="display all automation rules")
 
-    parser.add_argument("-d", "--device", dest="device", action='append',
+    parser.add_argument("-d", "--device", dest="device", action='append', 
                         help="the device you want to modify (see \"Device Settings\").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices")
     parser.add_argument("-g", "--group", dest="group", help="the group you want to modify (see \"Group Settings\")")
+    parser.add_argument("-r", "--rule", dest="rules", action='append', 
+                        help="the automation you want to modify (see \"Automation Rule Settings\").\nYou can use * to modify all automations or enter the parameter multiple times to modify more automations")
 
     group = parser.add_argument_group("Device Settings")
-    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on",
-                       default=None)
-    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off",
-                       default=None)
-    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level",
-                       help="set shutter to level (0..1)")
-    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter",
-                       default=None)
+    group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on", default=None)
+    group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off", default=None)
+    group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level", help="set shutter to level (0..1)")
+    group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter", default=None)
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
-    group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode",
-                       choices=["actual", "setpoint", "actual_humidity"])
-    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module",
-                       help="enables the router module of the device", default=None)
-    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module",
-                       help="disables the router module of the device", default=None)
+    group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual", "setpoint", "actual_humidity"])
+    group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device", default=None)
+    group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device", default=None)
 
     group = parser.add_argument_group("Home Settings")
-    group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode",
-                       choices=["presence", "absence", "disable"])
+    group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence", "absence", "disable"])
     group.add_argument("--set-pin", dest="new_pin", action="store", help="set a new pin")
     group.add_argument("--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin")
-    group.add_argument("--old-pin", dest="old_pin", action="store",
-                       help="the current pin. used together with --set-pin or --delete-pin", default=None)
-    group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true",
-                       help="sets the zones devices assignment")
-    group.add_argument("--external-devices", dest="external_devices", nargs='+',
-                       help="sets the devices for the external zone")
-    group.add_argument("--internal-devices", dest="internal_devices", nargs='+',
-                       help="sets the devices for the internal zone")
-    group.add_argument("--activate-absence", dest="activate_absence", action="store",
-                       help="activates absence for provided amount of minutes", default=None, type=int)
-    group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence",
-                       help="deactivates absence")
+    group.add_argument("--old-pin", dest="old_pin", action="store", help="the current pin. used together with --set-pin or --delete-pin", default=None)
+    group.add_argument("--set-zones-device-assignment", dest="set_zones_device_assignment", action="store_true", help="sets the zones devices assignment")
+    group.add_argument("--external-devices", dest="external_devices", nargs='+', help="sets the devices for the external zone")
+    group.add_argument("--internal-devices", dest="internal_devices", nargs='+', help="sets the devices for the internal zone")
+    group.add_argument("--activate-absence", dest="activate_absence", action="store", help="activates absence for provided amount of minutes", default=None, type=int)
+    group.add_argument("--deactivate-absence", action="store_true", dest="deactivate_absence", help="deactivates absence")
 
     group = parser.add_argument_group("Group Settings")
-    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true",
-                       help="displays all profiles for a group")
-    group.add_argument("--activate-profile", dest="group_activate_profile",
-                       help="activates a profile by using its index or its name")
-    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level",
-                       help="set all shutters in group to level (0..1)")
-    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop",
-                       help="stop all shutters in group", default=None)
-    group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature",
-                       help="sets the temperature for the given group. The group must be of the type \"HEATING\"",
-                       default=None, type=float)
+    group.add_argument("--list-profiles", dest="group_list_profiles", action="store_true", help="displays all profiles for a group")
+    group.add_argument("--activate-profile", dest="group_activate_profile", help="activates a profile by using its index or its name")
+    group.add_argument("--set-group-shutter-level", action="store", dest="group_shutter_level", help="set all shutters in group to level (0..1)")
+    group.add_argument("--set-group-shutter-stop", action="store_true", dest="group_shutter_stop", help="stop all shutters in group", default=None)
+    group.add_argument("--set-point-temperature", action="store", dest="group_set_point_temperature", help="sets the temperature for the given group. The group must be of the type \"HEATING\"", default=None, type=float)
 
-    group.add_argument("--set-boost", action="store_true", dest="group_boost",
-                       help="activates the boost mode for a HEATING group", default=None)
-    group.add_argument("--set-boost-stop", action="store_false", dest="group_boost",
-                       help="deactivates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost", action="store_true", dest="group_boost", help="activates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost-stop", action="store_false", dest="group_boost", help="deactivates the boost mode for a HEATING group", default=None)
+
+    group = parser.add_argument_group("Automation Rule Settings")
+    group.add_argument("--enable-rule", action="store_true", dest="rule_activation", help="activates the automation rules", default=None)
+    group.add_argument("--disable-rule", action="store_false", dest="rule_activation", help="deactivates the automation rules", default=None)
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -174,24 +153,24 @@ def main():
         command_entered = True
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(u'{} {}'.format(d.id, str(d)))
+            print('{} {}'.format(d.id, str(d)))
 
     if args.list_groups:
         command_entered = True
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print(str(g))
+            print(g)
 
     if args.list_last_status_update:
         command_entered = True
-        print(u'Devices:')
+        print('Devices:')
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(u'\t{}\t{}\t{}'.format(d.id, d.label, d.lastStatusUpdate))
-        print(u'Groups:')
+            print('\t{}\t{}\t{}'.format(d.id, d.label, d.lastStatusUpdate))
+        print('Groups:')
         sortedGroups = sorted(home.groups, key=attrgetter('groupType', 'label'))
         for g in sortedGroups:
-            print(u'\t{}\t{}\t{}'.format(g.groupType, g.label, g.lastStatusUpdate))
+            print('\t{}\t{}\t{}'.format(g.groupType, g.label, g.lastStatusUpdate))
 
     if args.list_group_ids:
         command_entered = True
@@ -389,6 +368,32 @@ def main():
                 group.set_boost(args.group_boost)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
+
+
+
+    if args.rules:
+        command_entered = False
+        rules = []
+        for argrule in args.rules:
+            if argrule == '*':
+                rules = home.rules
+                break
+            else:
+                r = home.search_rule_by_id(argrule)
+                if r == None:
+                    logger.error("Could not find automation rule %s", argrule)
+                else:
+                    rules.append(r)
+
+        for rule in rules:
+             if args.rule_activation != None:
+                if isinstance(rule, SimpleRule):
+                    rule.set_rule_enabled_state(args.rule_activation)
+                    command_entered = True  
+                else:
+                    logger.error("can't enable/disable rule %s of type %s", rule.id, rule.ruleType)         
+
+
 
     if args.list_events:
         command_entered = True
