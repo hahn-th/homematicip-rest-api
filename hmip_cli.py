@@ -166,7 +166,7 @@ def main():
         command_entered = True
         json_state = home.download_configuration()
         if "errorCode" in json_state:
-            logger.error("Could not get the current configuration. Error: {}".format(json_state["errorCode"]))
+            logger.error("Could not get the current configuration. Error: %s",json_state["errorCode"])
         else:
             print(json.dumps(json_state, indent=4, sort_keys=True))
 
@@ -219,40 +219,39 @@ def main():
         command_entered = True
         journal = home.get_security_journal()
         for entry in journal:
-            print(str(entry))
+            print(entry)
 
     if args.list_firmware:
         command_entered = True
-        print(str("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format("HmIP AccessPoint",
+        print("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format("HmIP AccessPoint",
                                                                                               home.currentAPVersion if home.currentAPVersion is not None else "None",
                                                                                               home.availableAPVersion if home.availableAPVersion is not None else "None",
-                                                                                              home.updateState)))
+                                                                                              home.updateState))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(str(
-                "{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
+            print("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                             d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None",
-                                                                                            d.updateState)))
+                                                                                            d.updateState))
 
     if args.list_rssi:
         command_entered = True
 
-        print(str("{:45s} - Duty cycle: {:2}".format("HmIP AccessPoint",
-                                                     home.dutyCycle if home.dutyCycle is not None else "None")))
+        print("{:45s} - Duty cycle: {:2}".format("HmIP AccessPoint",
+                                                     home.dutyCycle if home.dutyCycle is not None else "None"))
 
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print(str("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {}".format(d.label,
+            print("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {}".format(d.label,
                                                                                 d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
                                                                                 getRssiBarString(d.rssiDeviceValue),
                                                                                 d.rssiPeerValue if d.rssiPeerValue is not None else "None",
                                                                                 getRssiBarString(d.rssiPeerValue),
-                                                                                "Unreachable" if d.unreach else "")))
+                                                                                "Unreachable" if d.unreach else ""))
     if args.list_rules:
         command_entered = True
         sortedRules = sorted(home.rules, key=attrgetter('ruleType', 'label'))
         for d in sortedRules:
-            print(u'{} {}'.format(d.id, str(d)))
+            print('{} {}'.format(d.id, str(d)))
 
     if args.device:
         command_entered = False
@@ -264,7 +263,7 @@ def main():
             else:
                 d = home.search_device_by_id(argdevice)
                 if d == None:
-                    logger.error("Could not find device {}".format(argdevice))
+                    logger.error("Could not find device %s", argdevice)
                 else:
                     devices.append(d)
 
@@ -278,37 +277,36 @@ def main():
                     device.set_switch_state(args.device_switch_state)
                     command_entered = True
                 else:
-                    logger.error("can't turn on/off device {} of type {}".format(device.id, device.deviceType))
+                    logger.error("can't turn on/off device %s of type %s", device.id, device.deviceType)
 
             if args.device_shutter_level is not None:
                 if isinstance(device, FullFlushShutter):
                     device.set_shutter_level(args.device_shutter_level)
                     command_entered = True
                 else:
-                    logger.error("can't set shutter level of device {} of type {}".format(device.id, device.deviceType))
+                    logger.error("can't set shutter level of device %s of type %s", device.id, device.deviceType)
 
             if args.device_shutter_stop is not None:
                 if isinstance(device, FullFlushShutter):
                     device.set_shutter_stop()
                     command_entered = True
                 else:
-                    logger.error("can't stop shutter of device {} of type {}".format(device.id, device.deviceType))
+                    logger.error("can't stop shutter of device %s of type %s", device.id, device.deviceType)
 
             if args.device_display != None:
                 if isinstance(device, TemperatureHumiditySensorDisplay):
                     device.set_display(args.device_display.upper())
                     command_entered = True
                 else:
-                    logger.error("can't set display of device {} of type {}".format(device.id, device.deviceType))
+                    logger.error("can't set display of device %s of type %s", device.id, device.deviceType)
 
             if args.device_enable_router_module != None:
                 if device.routerModuleSupported:
                     device.set_router_module_enabled(args.device_enable_router_module)
-                    print("{} the router module for device {}".format(
-                        "Enabled" if args.device_enable_router_module else "Disabled", device.id))
+                    print("{} the router module for device {}". format("Enabled" if args.device_enable_router_module else "Disabled", device.id))
                     command_entered = True
                 else:
-                    logger.error("the device {} doesn't support the router module".format(device.id))
+                    logger.error("the device %s doesn't support the router module", device.id)
 
     if args.set_zones_device_assignment:
         internal = []
@@ -318,7 +316,7 @@ def main():
         for id in args.external_devices:
             d = home.search_device_by_id(id)
             if d == None:
-                logger.error("Device {} is not registered on this Access Point".format(id))
+                logger.error("Device %s is not registered on this Access Point",id)
                 error = True
             else:
                 external.append(d)
@@ -326,7 +324,7 @@ def main():
         for id in args.internal_devices:
             d = home.search_device_by_id(id)
             if d == None:
-                logger.error("Device {} is not registered on this Access Point".format(id))
+                logger.error("Device %s is not registered on this Access Point",id)
                 error = True
             else:
                 internal.append(d)
@@ -349,7 +347,7 @@ def main():
                 group = g
                 break
         if group == None:
-            logger.error("Could not find group {}".format(args.group))
+            logger.error("Could not find group %s",args.group)
             return
 
         if args.group_list_profiles:
@@ -371,7 +369,7 @@ def main():
             if isinstance(group, HeatingGroup):
                 group.set_point_temperature(args.group_set_point_temperature)
             else:
-                logger.error("Group {} isn't a HEATING group".format(g.id))
+                logger.error("Group %s isn't a HEATING group", g.id)
 
         if args.group_activate_profile:
             command_entered = True
@@ -383,14 +381,14 @@ def main():
                         break
                 group.set_active_profile(index)
             else:
-                logger.error("Group {} isn't a HEATING group".format(g.id))
+                logger.error("Group %s isn't a HEATING group", g.id)
 
         if args.group_boost is not None:
             command_entered = True
             if isinstance(group, HeatingGroup):
                 group.set_boost(args.group_boost)
             else:
-                logger.error("Group {} isn't a HEATING group".format(g.id))
+                logger.error("Group %s isn't a HEATING group", g.id)
 
     if args.list_events:
         command_entered = True
