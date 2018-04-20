@@ -53,9 +53,9 @@ def main():
     auth_token = auth.requestAuthToken()
     clientId = auth.confirmAuthToken(auth_token)
 
-    print(u'-----------------------------------------------------------------------------')
-    print(u'Token successfully registered!')
-    print(u'AUTH_TOKEN:\t{}\nACCESS_POINT:\t{}\nClient ID:\t{}\nsaving configuration to ./config.ini'.format(auth_token,access_point,clientId))
+    print('-----------------------------------------------------------------------------')
+    print('Token successfully registered!')
+    print('AUTH_TOKEN:\t{}\nACCESS_POINT:\t{}\nClient ID:\t{}\nsaving configuration to ./config.ini'.format(auth_token,access_point,clientId))
     
     _config = configparser.ConfigParser()
     _config.add_section("AUTH")
