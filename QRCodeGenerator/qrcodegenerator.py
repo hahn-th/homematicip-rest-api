@@ -26,7 +26,7 @@ def main():
     print("Generating QRCodes")
     for d in home.devices:
         img = qrcode.make(d.id)
-        img.save("./img/{}.PNG".format(d.id))
+        img.save("./img/{}.png".format(d.id))
 
     
     print("Creating website")
