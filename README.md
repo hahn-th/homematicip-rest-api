@@ -3,7 +3,7 @@ A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was done via reverse engineering
 Use at your own risk.
 
-Build [![CircleCI](https://circleci.com/gh/coreGreenberet/homematicip-rest-api.svg?style=svg)](https://circleci.com/gh/coreGreenberet/homematicip-rest-api)
+[![CircleCI](https://circleci.com/gh/coreGreenberet/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/coreGreenberet/homematicip-rest-api)
 [![PyPi](https://badge.fury.io/py/homematicip.svg)](https://badge.fury.io/py//homematicip) [![codecov](https://codecov.io/gh/coreGreenberet/homematicip-rest-api/branch/master/graph/badge.svg)](https://codecov.io/gh/coreGreenberet/homematicip-rest-api)
 
 
