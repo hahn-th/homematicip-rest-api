@@ -315,6 +315,17 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 return r
         return None
 
+    def get_security_zones_activation(self):
+        internal_active = False
+        external_active = False
+        for g in self.groups:
+            if isinstance(g, SecurityZoneGroup):
+                if g.label == 'EXTERNAL':
+                    external_active = g.active
+                elif g.label == 'INTERNAL':
+                    internal_active = g.active
+        return internal_active, external_active
+
     def set_security_zones_activation(self, internal=True, external=True):
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return self._restCall("home/security/setZonesActivation", json.dumps(data))
