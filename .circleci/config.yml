@@ -32,7 +32,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install pytest
+            pip install pytest pytest-cov
             pip install -r requirements.txt
 
       - save_cache:
@@ -47,7 +47,8 @@ jobs:
           command: |
             . venv/bin/activate
             export PYTHONPATH=`pwd`;
-            pytest tests/test_base_connection.py
+            pytest --cov=./ tests/test_base_connection.py
+            bash <(curl -s https://codecov.io/bash)
 
       - store_artifacts:
           path: test-reports
