@@ -4,7 +4,7 @@ Since there is no official documentation about this API everything was done via 
 Use at your own risk.
 
 Build [![CircleCI](https://circleci.com/gh/coreGreenberet/homematicip-rest-api.svg?style=svg)](https://circleci.com/gh/coreGreenberet/homematicip-rest-api)
-[![CircleCI](https://badge.fury.io/py/homematicip.svg)](https://badge.fury.io/py//homematicip)
+[![PyPi](https://badge.fury.io/py/homematicip.svg)](https://badge.fury.io/py//homematicip) [![codecov](https://codecov.io/gh/coreGreenberet/homematicip-rest-api/branch/master/graph/badge.svg)](https://codecov.io/gh/coreGreenberet/homematicip-rest-api)
 
 
 # Installation #
