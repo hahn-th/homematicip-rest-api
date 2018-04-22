@@ -6,7 +6,7 @@ from socket import gaierror
 
 config = homematicip.find_and_load_config_file()
 
-SCANABLE_DEVICES = ['192.168.0.1', '<PHONE_IP_2>', '<PHONE_IP_3>']
+SCANABLE_DEVICES = ['<PHONE_IP_1>', '<PHONE_IP_2>', '<PHONE_IP_3>']
 ACTIVATE_EXTERNAL_ZONE = True
 ACTIVATE_INTERNAL_ZONE = True
 
