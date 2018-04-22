@@ -6,7 +6,12 @@ from socket import gaierror
 
 config = homematicip.find_and_load_config_file()
 
-SCANABLE_DEVICES = ['<PHONE_IP_1>', '<PHONE_IP_2>', '<PHONE_IP_3>']
+SCANABLE_DEVICES = ['192.168.0.1', '<PHONE_IP_2>', '<PHONE_IP_3>']
+ACTIVATE_EXTERNAL_ZONE = True
+ACTIVATE_INTERNAL_ZONE = True
+
+
+DEACTIVATE_ON_PRESENCE = True
 
 def main():
     if config is None:
@@ -24,13 +29,21 @@ def main():
         try:
             res = ping3.ping(ip)
             if res != None:
-                print("someone is at home -> do nothing")
+                if DEACTIVATE_ON_PRESENCE:
+                    for g in home.groups:
+                        if isinstance(g, homematicip.group.SecurityZoneGroup) and g.active:
+                            print("someone is at home. Deactivating security zones")
+                            home.set_security_zones_activation(False,False)
+                            return
+                    print("someone is at home and security zones are deactivated -> do nothing")
+                else:
+                    print("someone is at home -> do nothing")
                 return
         except gaierror:
             print("could not resolve {}. Marking it as \"not at home\"".format(ip))
 
     print("Noone is home -> activating security zones")
-    home.set_security_zones_activation(True,True)
+    home.set_security_zones_activation(ACTIVATE_INTERNAL_ZONE,ACTIVATE_EXTERNAL_ZONE)
 
 if __name__ == "__main__":
     main()
