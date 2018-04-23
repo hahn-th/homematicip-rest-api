@@ -2,7 +2,7 @@
 import logging
 import sys
 import time
-
+import re
 from argparse import ArgumentParser
 from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
@@ -41,6 +41,24 @@ def convert_config2ini():
     except ImportError:
         pass 
 
+def anonymizeConfig(config, pattern, format):
+    m = re.findall(pattern, config, flags=re.IGNORECASE)
+    if m == None:
+        return config
+    map = {}
+    i = 0
+    for s in m:
+        if s in map.keys():
+            continue
+        map[s] = format.format(i)
+        i = i + 1
+
+    for k,v in map.items():
+        config = config.replace(k,v)
+    return config
+    
+
+
 def main():
     parser = ArgumentParser(description="a cli wrapper for the homematicip API")
     parser.add_argument("--config_file", type=str, help="the configuration file. If nothing is specified the script will search for it.")
@@ -48,6 +66,7 @@ def main():
 
     group = parser.add_argument_group("Display Configuration")
     group.add_argument("--dump-configuration", action="store_true", dest="dump_config",help="dumps the current configuration from the AP")
+    group.add_argument("--anonymize", action="store_true", dest="anonymize",help="used together with --dump-configuration to anonymize the output")
     group.add_argument("--list-devices", action="store_true", dest="list_devices", help="list all devices")
     group.add_argument("--list-groups", action="store_true", dest="list_groups", help="list all groups")
     group.add_argument("--list-group-ids", action="store_true", dest="list_group_ids",help="list all groups and their ids")
@@ -147,7 +166,13 @@ def main():
         if "errorCode" in json_state:
             logger.error("Could not get the current configuration. Error: %s",json_state["errorCode"])
         else:
-            print(json.dumps(json_state, indent=4, sort_keys=True))
+            c = json.dumps(json_state, indent=4, sort_keys=True)
+            if args.anonymize:
+                # generate dummy guids
+                c = anonymizeConfig(c,'[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}','00000000-0000-0000-0000-{0:0>12}')
+                #generate dummy SGTIN
+                c = anonymizeConfig(c,'3014F711[A-Z0-9]{16}','3014F711{0:0>16}')
+            print(c)
 
     if args.list_devices:
         command_entered = True
