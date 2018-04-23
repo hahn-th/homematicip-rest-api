@@ -252,7 +252,7 @@ def main():
                 device.set_label(args.device_new_label)
                 command_entered = True
             if args.device_switch_state != None:
-                if isinstance(device, PlugableSwitch):
+                if isinstance(device, Switch):
                     device.set_switch_state(args.device_switch_state)
                     command_entered = True
                 else:
