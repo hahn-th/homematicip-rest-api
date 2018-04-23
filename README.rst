@@ -86,6 +86,7 @@ Devices:
 -  [X] HMIP-BSM (Brand Switch and Meter)
 -  [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HmIP-STHO (Temperature and Humidity Sensor outdoor)
+-  [X] HmIP-SWO-PR (Weather Sensor – pro)
 
 Events
 ------
