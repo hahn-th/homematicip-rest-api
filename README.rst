@@ -16,7 +16,7 @@ Usage
 =====
 
 first run hmip_generate_auth_token.py (from the command line) to get an
-auth token for your access point. it will generate a ìconfig.iniî in
+auth token for your access point. it will generate a ‚Äúconfig.ini‚Äù in
 your current directory. The scripts will look for a config.ini in 3
 different locations depending on your OS. Copy the file to one of these
 locations so that it will be accessable for the scripts.
@@ -55,7 +55,7 @@ Implemented Stuff
 -  [X] Read current state of the Environment
 -  [X] Weather
 -  [X] Location
--  [X] Basic Informations( apversion, pinAssigned, timeZone, Ö )
+-  [X] Basic Informations( apversion, pinAssigned, timeZone, ‚Ä¶ )
 -  [X] Devices (partly)
 -  [X] Client
 -  [X] Groups
@@ -86,12 +86,12 @@ Devices:
 -  [X] HMIP-BSM (Brand Switch and Meter)
 -  [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HmIP-STHO (Temperature and Humidity Sensor outdoor)
--  [X] HmIP-SWO-PR (Weather Sensor ñ pro)
+-  [X] HmIP-SWO-PR (Weather Sensor ‚Äì pro)
 
 Events
 ------
 
-Itís also possible to use push notifications based on a websocket
+It‚Äôs also possible to use push notifications based on a websocket
 connection
 
 .. code:: python
