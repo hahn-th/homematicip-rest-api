@@ -479,8 +479,8 @@ class FullFlushShutter(Device):
         return self._restCall("device/control/stop", body=json.dumps(data))
 
 
-class PluggableDimmer(Device):
-    """HmIP-PDT Pluggable Dimmer"""
+class Dimmer(Device):
+    """Base dimmer device class"""
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -502,6 +502,13 @@ class PluggableDimmer(Device):
     def set_dim_level(self, dimLevel=0.0):
         data = {"channelIndex": 1, "deviceId": self.id, "dimLevel": dimLevel}
         return self._restCall("device/control/setDimLevel", json.dumps(data))
+
+class PluggableDimmer(Dimmer):
+    """HmIP-PDT Pluggable Dimmer"""
+
+class BrandDimmer(Dimmer):
+    """HmIP-BDT Brand Dimmer"""
+
 
 class WeatherSensorPro(Device):
     """ HmIP-SWO-PR """
