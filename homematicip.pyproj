@@ -85,7 +85,7 @@
     <Folder Include="homematicip\base\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="README.md" />
+    <Content Include="README.rst" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
