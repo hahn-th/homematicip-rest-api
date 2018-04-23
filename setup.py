@@ -3,8 +3,12 @@ from setuptools import find_packages
 from setuptools.command.install import install
 import os
 import sys
+import io
 
 VERSION = '0.9.2.4'
+
+with io.open(os.path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = '\n' + f.read()
 
 class VerifyVersionCommand(install):
     """Custom command to verify that the git tag matches our version"""
@@ -19,7 +23,8 @@ class VerifyVersionCommand(install):
 
 setup(
     name='homematicip',
-    packages=find_packages(exclude='tests'),
+    packages=find_packages(exclude='tests'),	
+    long_description=long_description,
     version=VERSION,
     description='An API for the homematicip cloud',
     author='Heimo Stieg',
