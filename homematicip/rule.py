@@ -54,7 +54,7 @@ class SimpleRule(Rule):
 
     def from_json(self, js):
         super().from_json(js)
-        self.get_simple_rule()
+        #self.get_simple_rule()
 
     def get_simple_rule(self):
         data = {"ruleId": self.id }
