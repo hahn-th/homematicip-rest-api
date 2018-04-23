@@ -47,8 +47,7 @@ jobs:
           command: |
             . venv/bin/activate
             export PYTHONPATH=`pwd`;
-            pytest --cov=./ tests/test_base_connection.py
-            pytest --cov=./ tests/test_home.py
+            pytest --cov=./ tests/test_base_connection.py tests/test_home.py
             bash <(curl -s https://codecov.io/bash)
 
       - store_artifacts:
