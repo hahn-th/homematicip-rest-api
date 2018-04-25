@@ -202,8 +202,8 @@ def test_heating_thermostat(fake_home):
 def test_temperature_humidity_sensor_outdoor(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000002')
     assert isinstance(d, TemperatureHumiditySensorOutdoor)
-    assert d.label == "Temperatur- und Luftfeuchtigkeitssensor \u2013 au\u00dfen"
-    assert d.lastStatusUpdate == datetime(2018, 3, 11, 11, 8, 6, 465000) + timedelta(0,utc_offset)
+    assert d.label == "Temperatur- und Luftfeuchtigkeitssensor - au\u00dfen"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
     assert d.manufacturerCode == 1
     assert d.modelId == 314
     assert d.modelType == "HmIP-STHO"
@@ -220,14 +220,14 @@ def test_temperature_humidity_sensor_outdoor(fake_home):
     assert d.unreach == False
     assert d.configPending == False
     assert d.dutyCycle == False
-    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor – außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
+    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
                     ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
 
 def test_weather_sensor_pro(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000001')
     assert isinstance(d, WeatherSensorPro)
-    assert d.label == "Wettersensor – pro"
-    assert d.lastStatusUpdate == datetime(2018, 3, 11, 11, 10, 14, 834000) + timedelta(0,utc_offset)
+    assert d.label == "Wettersensor - pro"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
     assert d.manufacturerCode == 1
     assert d.modelId == 352
     assert d.modelType == "HmIP-SWO-PR"
@@ -262,7 +262,7 @@ def test_weather_sensor_pro(fake_home):
     assert d.unreach == False
     assert d.configPending == False
     assert d.dutyCycle == False
-    assert str(d) == ('HmIP-SWO-PR Wettersensor – pro lowbat(False) unreach(False) rssiDeviceValue(-68) rssiPeerValue(None) configPending(False) dutyCycle(False) humidity(65)'
+    assert str(d) == ('HmIP-SWO-PR Wettersensor - pro lowbat(False) unreach(False) rssiDeviceValue(-68) rssiPeerValue(None) configPending(False) dutyCycle(False) humidity(65)'
                       ' illumination(4153.0) illuminationThresholdSunshine(10.0) raining(False) storm(False) sunshine(True)todayRainCounter(6.5) todaySunshineDuration(100)'
                       ' totalRainCounter(6.5) totalSunshineDuration(100)weathervaneAlignmentNeeded(False) windDirection(295.0) windDirectionVariation(56.25) windSpeed(2.6)'
                       ' windValueType(AVERAGE_VALUE)yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)')
