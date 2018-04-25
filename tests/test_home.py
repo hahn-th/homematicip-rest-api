@@ -82,10 +82,12 @@ def test_shutter_device(fake_home):
     assert d.rssiDeviceValue == -64
     assert d.rssiPeerValue == None
     assert d.dutyCycle == False
+    assert str(d) == 'HMIP-SWDO Fenster lowbat(False) unreach(False) rssiDeviceValue(-64) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False) windowState(CLOSED)'
+
 
     d = fake_home.search_device_by_id('3014F7110000000000000005')
-
     assert d.windowState == "OPEN"
+    assert d.lastStatusUpdate == None
 
 def test_pluggable_switch_measuring(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000009')
@@ -112,6 +114,8 @@ def test_pluggable_switch_measuring(fake_home):
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "2.6.2"
     assert d.dutyCycle == False
+
+    assert str(d) == 'HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)'
 
 #def test__parse_device(fake_home):
 #    assert False
