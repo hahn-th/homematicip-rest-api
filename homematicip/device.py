@@ -155,9 +155,11 @@ class HeatingThermostat(OperationLockableDevice):
         self.valvePosition = 0.0
         self.valveState = ""
         self.setPointTemperature = 0.0
+        self.automaticValveAdaptionNeeded = False
 
     def from_json(self, js):
         super().from_json(js)
+        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
