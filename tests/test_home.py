@@ -6,11 +6,14 @@ from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
 from homematicip.device import *
 import json
-import datetime
+from datetime import datetime, timedelta, timezone
 
+dt = datetime.now(timezone.utc).astimezone()
+utc_offset = dt.utcoffset() // timedelta(seconds=1)
 
 def fake_home_download_configuration():
     return json.load(open("tests/json_data/home.json"))
+
 
 @pytest.fixture
 def fake_home():
@@ -64,7 +67,7 @@ def test_shutter_device(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000001')
     assert isinstance(d, ShutterContact)
     assert d.label == "Fenster"
-    assert d.lastStatusUpdate == datetime.datetime(2018, 4, 23, 22, 37, 34, 304000)
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(0,utc_offset)
     assert d.manufacturerCode == 1
     assert d.modelId == 258
     assert d.modelType == "HMIP-SWDO"
@@ -88,24 +91,24 @@ def test_pluggable_switch_measuring(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000009')
     assert isinstance(d, PlugableSwitchMeasuring)
     assert d.label == "Brunnen"
-    assert d.lastStatusUpdate == datetime.datetime(2018, 4, 23, 22, 36, 26, 303000)
+    assert d.lastStatusUpdate == (datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0,utc_offset))
     assert d.manufacturerCode == 1
     assert d.modelId == 262
     assert d.modelType == "HMIP-PSM"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000009"
     assert d.updateState == "UP_TO_DATE"
-    assert d.on == false
+    assert d.on == False
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
     assert d.currentPowerConsumption == 0.0
     assert d.energyCounter == 0.4754
-    assert d.lowBat == null
-    assert d.routerModuleEnabled == true
-    assert d.routerModuleSupported == true
+    assert d.lowBat == None
+    assert d.routerModuleEnabled == True
+    assert d.routerModuleSupported == True
     assert d.rssiDeviceValue == -60
     assert d.rssiPeerValue == -66
-    assert d.unreach == false
+    assert d.unreach == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "2.6.2"
     assert d.dutyCycle == False
