@@ -142,6 +142,32 @@ def test_smoke_detector(fake_home):
     assert d.configPending == False
     assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): smokeDetectorAlarmType(IDLE_OFF)'
 
+def test_smoke_detector(fake_home):
+    d = fake_home.search_device_by_id('3014F7110000000000000022')
+    assert isinstance(d, WallMountedThermostatPro)
+    assert d.id == "3014F7110000000000000022"
+    assert d.label == "Wandthermostat"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 297
+    assert d.modelType == "HmIP-WTH-2"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000022"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.humidity == 43
+    assert d.setPointTemperature == 5.0
+    assert d.temperatureOffset == 0.0
+    assert d.lowBat == False
+    assert d.operationLockActive == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -76
+    assert d.rssiPeerValue == -63
+    assert d.unreach == False
+    assert d.dutyCycle == False
+    assert d.availableFirmwareVersion == "0.0.0"
+    assert d.firmwareVersion == "1.8.0"
+    assert str(d)
 
 #def test__parse_device(fake_home):
 #    assert False
