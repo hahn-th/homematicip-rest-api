@@ -142,7 +142,7 @@ def test_smoke_detector(fake_home):
     assert d.configPending == False
     assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): smokeDetectorAlarmType(IDLE_OFF)'
 
-def test_smoke_detector(fake_home):
+def test_wall_mounted_thermostat_pro(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000022')
     assert isinstance(d, WallMountedThermostatPro)
     assert d.id == "3014F7110000000000000022"
@@ -168,6 +168,35 @@ def test_smoke_detector(fake_home):
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.8.0"
     assert str(d)
+
+def test_heating_thermostat(fake_home):
+    d = fake_home.search_device_by_id('3014F7110000000000000015')
+    assert isinstance(d, HeatingThermostat)
+    assert d.label == "Wohnzimmer-Heizung"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 269
+    assert d.modelType == "HMIP-eTRV"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000015"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.setPointTemperature == 5.0
+    assert d.temperatureOffset == 0.0
+    assert d.valvePosition == 0.0
+    assert d.valveState == "ADAPTION_DONE"
+    assert d.lowBat == False
+    assert d.operationLockActive == True
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -65
+    assert d.rssiPeerValue == -66
+    assert d.unreach == False
+    assert d.automaticValveAdaptionNeeded == False
+    assert d.availableFirmwareVersion == "2.0.2"
+    assert d.firmwareVersion == "2.0.2"
+
+    assert str(d) == 'HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True) valvePosition(0.0) valveState(ADAPTION_DONE)'
+
 
 #def test__parse_device(fake_home):
 #    assert False
