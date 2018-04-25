@@ -117,7 +117,8 @@ def test_pluggable_switch_measuring(fake_home):
     assert d.dutyCycle == False
     assert d.configPending == False
 
-    assert str(d) == 'HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)'
+    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC)'
+                     ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
 
 def test_smoke_detector(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000020')
@@ -195,8 +196,76 @@ def test_heating_thermostat(fake_home):
     assert d.availableFirmwareVersion == "2.0.2"
     assert d.firmwareVersion == "2.0.2"
 
-    assert str(d) == 'HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True) valvePosition(0.0) valveState(ADAPTION_DONE)'
+    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
+                    ' valvePosition(0.0) valveState(ADAPTION_DONE)')
 
+def test_temperature_humidity_sensor_outdoor(fake_home):
+    d = fake_home.search_device_by_id('3014F711AAAA000000000002')
+    assert isinstance(d, TemperatureHumiditySensorOutdoor)
+    assert d.label == "Temperatur- und Luftfeuchtigkeitssensor \u2013 au\u00dfen"
+    assert d.lastStatusUpdate == datetime(2018, 3, 11, 11, 8, 6, 465000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 314
+    assert d.modelType == "HmIP-STHO"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000002"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.humidity == 70
+    assert d.actualTemperature == 15.1
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -55
+    assert d.rssiPeerValue == None
+    assert d.unreach == False
+    assert d.configPending == False
+    assert d.dutyCycle == False
+    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor – außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
+                    ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
+
+def test_weather_sensor_pro(fake_home):
+    d = fake_home.search_device_by_id('3014F711AAAA000000000001')
+    assert isinstance(d, WeatherSensorPro)
+    assert d.label == "Wettersensor – pro"
+    assert d.lastStatusUpdate == datetime(2018, 3, 11, 11, 10, 14, 834000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 352
+    assert d.modelType == "HmIP-SWO-PR"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000001"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.availableFirmwareVersion == "0.0.0"
+    assert d.firmwareVersion == "1.0.10"
+    assert d.humidity == 65
+    assert d.illumination == 4153.0
+    assert d.illuminationThresholdSunshine == 10.0
+    assert d.raining == False
+    assert d.storm == False
+    assert d.sunshine == True
+    assert d.todayRainCounter == 6.5
+    assert d.todaySunshineDuration == 100
+    assert d.totalRainCounter == 6.5
+    assert d.totalSunshineDuration == 100
+    assert d.weathervaneAlignmentNeeded == False
+    assert d.windDirection == 295.0
+    assert d.windDirectionVariation == 56.25
+    assert d.windSpeed == 2.6
+    assert d.windValueType == "AVERAGE_VALUE"
+    assert d.yesterdayRainCounter == 0.0
+    assert d.yesterdaySunshineDuration == 0
+    assert d.actualTemperature == 15.4
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -68
+    assert d.rssiPeerValue == None
+    assert d.unreach == False
+    assert d.configPending == False
+    assert d.dutyCycle == False
+    assert str(d) == ('HmIP-SWO-PR Wettersensor – pro lowbat(False) unreach(False) rssiDeviceValue(-68) rssiPeerValue(None) configPending(False) dutyCycle(False) humidity(65)'
+                      ' illumination(4153.0) illuminationThresholdSunshine(10.0) raining(False) storm(False) sunshine(True)todayRainCounter(6.5) todaySunshineDuration(100)'
+                      ' totalRainCounter(6.5) totalSunshineDuration(100)weathervaneAlignmentNeeded(False) windDirection(295.0) windDirectionVariation(56.25) windSpeed(2.6)'
+                      ' windValueType(AVERAGE_VALUE)yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)')
 
 #def test__parse_device(fake_home):
 #    assert False

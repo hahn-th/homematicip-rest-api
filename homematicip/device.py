@@ -516,6 +516,7 @@ class WeatherSensorPro(Device):
     """ HmIP-SWO-PR """
     def __init__(self,connection):
         super().__init__(connection)
+        self.actualTemperature = 0
         self.humidity = 0
         self.illumination = 0
         self.illuminationThresholdSunshine = 0
@@ -537,8 +538,9 @@ class WeatherSensorPro(Device):
     def from_json(self, js):
         super().from_json(js)
 
-        c = get_functional_channel("WEATHER_SENSOR_PRO_CHANNEL")
+        c = get_functional_channel("WEATHER_SENSOR_PRO_CHANNEL", js)
         if c:
+            self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
             self.illumination = c["illumination"]
             self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]

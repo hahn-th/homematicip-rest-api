@@ -49,7 +49,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000000",
-            "label": "Balkont\u00fcre",
+            "label": "Balkontüre",
             "lastStatusUpdate": 1524516526498,
             "manufacturerCode": 1,
             "modelId": 258,
@@ -202,7 +202,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000003",
-            "label": "K\u00fcche",
+            "label": "Küche",
             "lastStatusUpdate": 1524514836466,
             "manufacturerCode": 1,
             "modelId": 258,
@@ -354,7 +354,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000006",
-            "label": "Wohnungst\u00fcre",
+            "label": "Wohnungstüre",
             "lastStatusUpdate": 1524516489316,
             "manufacturerCode": 1,
             "modelId": 258,
@@ -554,7 +554,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000010",
-            "label": "B\u00fcro",
+            "label": "Büro",
             "lastStatusUpdate": 1524513613922,
             "manufacturerCode": 1,
             "modelId": 262,
@@ -656,7 +656,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000012",
-            "label": "Heizk\u00f6rperthermostat",
+            "label": "Heizkörperthermostat",
             "lastStatusUpdate": 1524514105832,
             "manufacturerCode": 1,
             "modelId": 269,
@@ -707,7 +707,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000013",
-            "label": "Heizk\u00f6rperthermostat",
+            "label": "Heizkörperthermostat",
             "lastStatusUpdate": 1524514007132,
             "manufacturerCode": 1,
             "modelId": 269,
@@ -758,7 +758,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000014",
-            "label": "K\u00fcche-Heizung",
+            "label": "Küche-Heizung",
             "lastStatusUpdate": 1524513898337,
             "manufacturerCode": 1,
             "modelId": 269,
@@ -860,7 +860,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000016",
-            "label": "Heizk\u00f6rperthermostat",
+            "label": "Heizkörperthermostat",
             "lastStatusUpdate": 1524514626157,
             "manufacturerCode": 1,
             "modelId": 269,
@@ -1316,6 +1316,116 @@
             "serializedGlobalTradeItemNumber": "3014F7110000000000000025",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F711AAAA000000000001": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.10",
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAA000000000001",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000008"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -68,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "actualTemperature": 15.4,
+                    "deviceId": "3014F711AAAA000000000001",
+                    "functionalChannelType": "WEATHER_SENSOR_PRO_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-AAAA-0000-0000-000000000001"
+                    ],
+                    "humidity": 65,
+                    "illumination": 4153.0,
+                    "illuminationThresholdSunshine": 10.0,
+                    "index": 1,
+                    "label": "",
+                    "raining": false,
+                    "storm": false,
+                    "sunshine": true,
+                    "todayRainCounter": 6.5,
+                    "todaySunshineDuration": 100,
+                    "totalRainCounter": 6.5,
+                    "totalSunshineDuration": 100,
+                    "weathervaneAlignmentNeeded": false,
+                    "windDirection": 295.0,
+                    "windDirectionVariation": 56.25,
+                    "windSpeed": 2.6,
+                    "windValueType": "AVERAGE_VALUE",
+                    "yesterdayRainCounter": 0.0,
+                    "yesterdaySunshineDuration": 0
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAA000000000001",
+            "label": "Wettersensor – pro",
+            "lastStatusUpdate": 1520770214834,
+            "manufacturerCode": 1,
+            "modelId": 352,
+            "modelType": "HmIP-SWO-PR",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F711AAAA000000000001",
+            "type": "WEATHER_SENSOR_PRO",
+            "updateState": "UP_TO_DATE"
+        },        
+        "3014F711AAAA000000000002": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.6",
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAA000000000002",
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "dutyCycle": false,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000008"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -55,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "actualTemperature": 15.1,
+                    "deviceId": "3014F711AAAA000000000002",
+                    "functionalChannelType": "CLIMATE_SENSOR_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-AAAA-0000-0000-000000000001"
+                    ],
+                    "humidity": 70,
+                    "index": 1,
+                    "label": ""
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAA000000000002",
+            "label": "Temperatur- und Luftfeuchtigkeitssensor \u2013 au\u00dfen",
+            "lastStatusUpdate": 1520770086465,
+            "manufacturerCode": 1,
+            "modelId": 314,
+            "modelType": "HmIP-STHO",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F711AAAA000000000002",
+            "type": "TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {
@@ -1587,7 +1697,7 @@
             "humidityLimitEnabled": true,
             "humidityLimitValue": 60,
             "id": "00000000-0000-0000-0000-000000000010",
-            "label": "B\u00fcro",
+            "label": "Büro",
             "lastStatusUpdate": 1524516454116,
             "lowBat": false,
             "maxTemperature": 30.0,
@@ -1695,7 +1805,7 @@
             "dutyCycle": false,
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "00000000-0000-0000-0000-000000000009",
-            "label": "B\u00fcro",
+            "label": "Büro",
             "lastStatusUpdate": 1524515854304,
             "lowBat": false,
             "metaGroupId": "00000000-0000-0000-0000-000000000008",
@@ -2046,7 +2156,7 @@
             ],
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "00000000-0000-0000-0000-000000000008",
-            "label": "B\u00fcro",
+            "label": "Büro",
             "lastStatusUpdate": 1524516454116,
             "lowBat": false,
             "metaGroupId": null,
@@ -2511,6 +2621,32 @@
             "valvePosition": 0.0,
             "windowOpenTemperature": 5.0,
             "windowState": null
+        },
+
+        "00000000-AAAA-0000-0000-000000000001": {
+            "actualTemperature": 15.4,
+            "channels": [
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F711AAAA000000000002"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F711AAAA000000000001"
+                }
+            ],
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "humidity": 65,
+            "id": "00000000-AAAA-0000-0000-000000000001",
+            "illumination": 4703.0,
+            "label": "Terrasse",
+            "lastStatusUpdate": 1520770214834,
+            "lowBat": false,
+            "metaGroupId": "76df95a5-afa5-45ee-b817-f724ffaf04a1",
+            "raining": false,
+            "type": "ENVIRONMENT",
+            "unreach": false,
+            "windSpeed": 29.1
         }
     },
     "home": {
@@ -2592,8 +2728,10 @@
                 "zoneActivationDelay": 0.0
             },
             "WEATHER_AND_ENVIRONMENT": {
-                "active": false,
-                "functionalGroups": [],
+                "active": true,
+                "functionalGroups": [
+                    "00000000-AAAA-0000-0000-000000000001"
+                ],
                 "solution": "WEATHER_AND_ENVIRONMENT"
             }
         },
