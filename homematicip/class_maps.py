@@ -34,6 +34,7 @@ TYPE_CLASS_MAP = {
     cn.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
     cn.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
     cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
+    cn.WEATHER_SENSOR: WeatherSensor,
     cn.WEATHER_SENSOR_PRO: WeatherSensorPro
 }
 
