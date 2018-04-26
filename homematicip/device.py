@@ -168,8 +168,10 @@ class HeatingThermostat(OperationLockableDevice):
             self.setPointTemperature = c["setPointTemperature"]
 
     def __str__(self):
-        return "{} valvePosition({}) valveState({})".format(super().__str__(), self.valvePosition,
-                                                            self.valveState)
+        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({})".format(super().__str__(), self.valvePosition,
+                                                                                                                             self.valveState,
+                                                                                                                             self.temperatureOffset,
+                                                                                                                             self.setPointTemperature)
 
 
 class ShutterContact(SabotageDevice):
