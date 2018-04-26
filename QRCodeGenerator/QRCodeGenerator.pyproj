@@ -21,6 +21,7 @@
     <Compile Include="qrcodegenerator.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="qrcodes_template.html" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

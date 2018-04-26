@@ -28,29 +28,21 @@ def main():
         img = qrcode.make(d.id)
         img.save("./img/{}.png".format(d.id))
 
-    
     print("Creating website")
+    templatePath = os.path.join(os.path.dirname(__file__), 'qrcodes_template.html')
+    template = None
+    tableText = ""
+    with open(templatePath, "r") as t:
+        template = t.read()
+    for g in home.groups:
+        if not isinstance(g, MetaGroup):
+            continue;
+        for d in g.devices:
+            tableText = tableText + "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td><img src=\"img/{}.png\"></td></tr>\n".format(g.label, d.label, d.id, d.modelType, d.id)
+    result = template.replace("##QRROWS##", tableText)
     with open("qrcodes.html", "w") as f:
-        f.write("""<html><style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-</style><body>""")
-        f.write("<table style=\"width:100%\">")
-        f.write("<tr><th>Room</th><th>Device</th><th>DeviceID</th><th>Model</th><th>QRCode</tr>")
-        for g in home.groups:
-            if not isinstance(g, MetaGroup):
-                continue;
-            for d in g.devices:
-                f.write("<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td><img src=\"img/{}.png\"></td></tr>".format(g.label, d.label, d.id, d.modelType, d.id))
+        f.write(result)
 
-        f.write("</table>")
-        f.write("</body></html>")
     print("Finished")
 if __name__ == "__main__":
     main()
