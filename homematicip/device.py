@@ -191,7 +191,7 @@ class ShutterContact(SabotageDevice):
 
 class TemperatureHumiditySensorOutdoor(Device):
     """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
-    
+
     def __init__(self,connection):
         super().__init__(connection)
         self.actualTemperature = None
@@ -209,7 +209,7 @@ class TemperatureHumiditySensorOutdoor(Device):
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
-    
+
     def __init__(self,connection):
         super().__init__(connection)
         self.temperatureOffset = None
@@ -512,6 +512,56 @@ class BrandDimmer(Dimmer):
     """HmIP-BDT Brand Dimmer"""
 
 
+class WeatherSensor(Device):
+    """ HmIP-SWO-B """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.illumination = 0
+        self.illuminationThresholdSunshine = 0
+        self.storm = False
+        self.sunshine = False
+        self.todaySunshineDuration = 0
+        self.totalSunshineDuration = 0
+        self.windSpeed = 0
+        self.windValueType = "AVERAGE_VALUE"
+        self.yesterdaySunshineDuration = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+
+        c = get_functional_channel("WEATHER_SENSOR_CHANNEL", js)
+        if c:
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
+            self.illumination = c["illumination"]
+            self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]
+            self.storm = c["storm"]
+            self.sunshine = c["sunshine"]
+            self.todaySunshineDuration = c["todaySunshineDuration"]
+            self.totalSunshineDuration = c["totalSunshineDuration"]
+            self.windSpeed = c["windSpeed"]
+            self.windValueType = c["windValueType"]
+            self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+
+    def __str__(self):
+        return ("{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) storm({}) sunshine({}) "
+                "todaySunshineDuration({}) totalSunshineDuration({}) "
+                "windSpeed({}) windValueType({}) "
+                "yesterdaySunshineDuration({})").format(super().__str__(), self.actualTemperature,
+                                                                            self.humidity,
+                                                                            self.illumination,
+                                                                            self.illuminationThresholdSunshine,
+                                                                            self.storm,
+                                                                            self.sunshine,
+                                                                            self.todaySunshineDuration,
+                                                                            self.totalSunshineDuration,
+                                                                            self.windSpeed,
+                                                                            self.windValueType,
+                                                                            self.yesterdaySunshineDuration)
+
+
 class WeatherSensorPro(Device):
     """ HmIP-SWO-PR """
     def __init__(self,connection):
@@ -571,6 +621,5 @@ class WeatherSensorPro(Device):
                                                                                  self.windDirection,self.windDirectionVariation,self.windSpeed,
                                                                                  self.windValueType,self.yesterdayRainCounter,
                                                                                  self.yesterdaySunshineDuration)
-    
-    #Any set/calibration functions?
 
+    #Any set/calibration functions?
