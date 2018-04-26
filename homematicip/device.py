@@ -379,10 +379,37 @@ class SwitchMeasuring(Switch):
 
 class PlugableSwitchMeasuring(SwitchMeasuring):
     """ HMIP-PSM (Pluggable Switch and Meter) """
+    energyCounter = None
+    currentPowerConsumption = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("SWITCH_MEASURING_CHANNEL", js)
+        if c:
+            self.on = c["on"]
+            self.energyCounter = c["energyCounter"]
+            self.currentPowerConsumption = c["currentPowerConsumption"]
+
+    def __str__(self):
+        return "{} energyCounter({}) currentPowerConsumption({}W)".format(
+            super().__str__(), self.energyCounter, self.currentPowerConsumption)
 
 class BrandSwitchMeasuring(SwitchMeasuring):
     """ HMIP-BSM (Brand Switch and Meter) """
+    energyCounter = None
+    currentPowerConsumption = None
 
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("SWITCH_MEASURING_CHANNEL", js)
+        if c:
+            self.on = c["on"]
+            self.energyCounter = c["energyCounter"]
+            self.currentPowerConsumption = c["currentPowerConsumption"]
+
+    def __str__(self):
+        return "{} energyCounter({}) currentPowerConsumption({}W)".format(
+            super().__str__(), self.energyCounter, self.currentPowerConsumption)
 
 class PushButton(Device):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
