@@ -1426,6 +1426,58 @@
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000002",
             "type": "TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F711AAAA000000000003": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.10",
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAA000000000003",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [ "00000000-0000-0000-0000-000000000008" ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -77,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "actualTemperature": 15.2,
+                    "deviceId": "3014F711AAAA000000000003",
+                    "functionalChannelType": "WEATHER_SENSOR_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [ "00000000-AAAA-0000-0000-000000000001" ],
+                    "humidity": 42,
+                    "illumination": 4890.0,
+                    "illuminationThresholdSunshine": 3500.0,
+                    "index": 1,
+                    "label": "",
+                    "storm": false,
+                    "sunshine": true,
+                    "todaySunshineDuration": 51,
+                    "totalSunshineDuration": 54,
+                    "windSpeed": 6.6,
+                    "windValueType": "MAX_VALUE",
+                    "yesterdaySunshineDuration": 3
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAA000000000003",
+            "label": "Wettersensor",
+            "lastStatusUpdate": 1524513950325,
+            "manufacturerCode": 1,
+            "modelId": 350,
+            "modelType": "HmIP-SWO-B",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F711AAAA000000000003",
+            "type": "WEATHER_SENSOR",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {
@@ -2622,10 +2674,13 @@
             "windowOpenTemperature": 5.0,
             "windowState": null
         },
-
         "00000000-AAAA-0000-0000-000000000001": {
             "actualTemperature": 15.4,
             "channels": [
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F711AAAA000000000003"
+                },
                 {
                     "channelIndex": 1,
                     "deviceId": "3014F711AAAA000000000002"
