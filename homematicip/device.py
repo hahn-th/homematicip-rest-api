@@ -191,6 +191,23 @@ class ShutterContact(SabotageDevice):
     def __str__(self):
         return "{} windowState({})".format(super().__str__(), self.windowState)
 
+class RotaryHandleSensor(SabotageDevice):
+    """ HmIP-SRH """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.windowState = None
+        self.eventDelay = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ROTARY_HANDLE_CHANNEL", js)
+        if c:
+            self.windowState = c["windowState"]
+            self.eventDelay = c["eventDelay"]
+
+    def __str__(self):
+        return "{} windowState({})".format(super().__str__(), self.windowState)
+
 class TemperatureHumiditySensorOutdoor(Device):
     """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
 

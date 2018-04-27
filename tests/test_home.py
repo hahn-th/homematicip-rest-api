@@ -220,7 +220,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home):
     assert d.unreach == False
     assert d.configPending == False
     assert d.dutyCycle == False
-    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
+    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - au\u00dfen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
                     ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
 
 def test_weather_sensor_pro(fake_home):
@@ -302,6 +302,28 @@ def test_weather_sensor(fake_home):
     assert str(d) == ('HmIP-SWO-B Wettersensor lowbat(False) unreach(False) rssiDeviceValue(-77) rssiPeerValue(None) configPending(False) dutyCycle(False)'
                      ' actualTemperature(15.2) humidity(42) illumination(4890.0) illuminationThresholdSunshine(3500.0) storm(False) sunshine(True)'
                      ' todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6) windValueType(MAX_VALUE) yesterdaySunshineDuration(3)')
+
+def test_rotary_handle_sensor(fake_home):
+    d = fake_home.search_device_by_id('3014F711AAAA000000000004')
+    assert isinstance(d, RotaryHandleSensor)
+    assert d.label == "Fenstergriffsensor"
+    assert d.lastStatusUpdate == datetime(2018, 4, 27, 8, 6, 25, 462000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 286
+    assert d.modelType == "HmIP-SRH"
+    assert d.oem == "eQ-3"
+    assert d.windowState == "CLOSED"
+    assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000004"
+    assert d.availableFirmwareVersion == "1.2.10"
+    assert d.firmwareVersion == "1.2.10"
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -54
+    assert d.rssiPeerValue == None
+    assert d.dutyCycle == False
+    assert d.configPending == False
+    assert str(d) == 'HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False) windowState(CLOSED)'
 
 #def test__parse_device(fake_home):
 #    assert False

@@ -1478,6 +1478,50 @@
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000003",
             "type": "WEATHER_SENSOR",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F711AAAA000000000004": {
+            "availableFirmwareVersion": "1.2.10",
+            "firmwareVersion": "1.2.10",
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAA000000000004",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [ "00000000-0000-0000-0000-000000000008" ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -54,
+                    "rssiPeerValue": null,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711AAAA000000000004",
+                    "eventDelay": 0,
+                    "functionalChannelType": "ROTARY_HANDLE_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [ "00000000-0000-0000-0000-000000000009" ],
+                    "index": 1,
+                    "label": "",
+                    "windowState": "CLOSED"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAA000000000004",
+            "label": "Fenstergriffsensor",
+            "lastStatusUpdate": 1524816385462,
+            "manufacturerCode": 1,
+            "modelId": 286,
+            "modelType": "HmIP-SRH",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F711AAAA000000000004",
+            "type": "ROTARY_HANDLE_SENSOR",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {

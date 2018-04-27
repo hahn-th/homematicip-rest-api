@@ -35,7 +35,8 @@ TYPE_CLASS_MAP = {
     cn.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
     cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
     cn.WEATHER_SENSOR: WeatherSensor,
-    cn.WEATHER_SENSOR_PRO: WeatherSensorPro
+    cn.WEATHER_SENSOR_PRO: WeatherSensorPro,
+    cn.ROTARY_HANDLE_SENSOR: RotaryHandleSensor
 }
 
 TYPE_GROUP_MAP = {

@@ -87,6 +87,8 @@ Devices:
 -  [X] HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HmIP-STHO (Temperature and Humidity Sensor outdoor)
 -  [X] HmIP-SWO-PR (Weather Sensor – pro)
+-  [X] HmIP-SWO-B (Weather Sensor)
+-  [X] HmIP-SRH (Rotary Handle Sensor )
 
 Events
 ------
