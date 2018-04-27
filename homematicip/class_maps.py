@@ -60,7 +60,8 @@ TYPE_GROUP_MAP = {
     cn.SMOKE_ALARM_DETECTION_RULE: SmokeAlarmDetectionRule,
     cn.LOCK_OUT_PROTECTION_RULE: LockOutProtectionRule,
     cn.SHUTTER_WIND_PROTECTION_RULE: ShutterWindProtectionRule,
-    cn.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup
+    cn.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,
+    cn.ENVIRONMENT:EnvironmentGroup
 }
 
 TYPE_SECURITY_EVENT_MAP = {

@@ -809,3 +809,25 @@ class LockOutProtectionRule(Group):
         return "{}: triggered({}) windowState({})".format(
             super().__str__(), self.triggered,
             self.windowState)
+
+class EnvironmentGroup(Group):
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.actualTemperature = 0.0
+        self.illumination = 0.0
+        self.raining = False
+        self.windSpeed = 0.0
+        self.humidity = 0.0
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.actualTemperature = js["actualTemperature"]
+        self.illumination = js["illumination"]
+        self.raining = js["raining"]
+        self.windSpeed = js["windSpeed"]
+        self.humidity = js["humidity"]
+
+    def __str__(self):
+        return "{}: actualTemperature({}) illumination({}) raining({}) windSpeed({}) humidity({})".format(
+            super().__str__(),
+            self.actualTemperature, self.illumination, self.raining, self.windSpeed, self.humidity)
