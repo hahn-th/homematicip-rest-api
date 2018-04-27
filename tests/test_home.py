@@ -197,7 +197,7 @@ def test_heating_thermostat(fake_home):
     assert d.firmwareVersion == "2.0.2"
 
     assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
-                    ' valvePosition(0.0) valveState(ADAPTION_DONE)')
+                    ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
 
 def test_temperature_humidity_sensor_outdoor(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000002')
