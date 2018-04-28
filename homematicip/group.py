@@ -466,6 +466,9 @@ class HeatingGroup(Group):
         self.externalClockHeatingTemperature = None
         self.externalClockCoolingTemperature = None
         self.profiles = None
+        self.dutyCycle = False
+        self.lowBat = False
+        self.valvePosition = 0.0
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -490,10 +493,11 @@ class HeatingGroup(Group):
         self.humidityLimitEnabled = js["humidityLimitEnabled"]
         self.humidityLimitValue = js["humidityLimitValue"]
         self.externalClockEnabled = js["externalClockEnabled"]
-        self.externalClockHeatingTemperature = js[
-            "externalClockHeatingTemperature"]
-        self.externalClockCoolingTemperature = js[
-            "externalClockCoolingTemperature"]
+        self.externalClockHeatingTemperature = js["externalClockHeatingTemperature"]
+        self.externalClockCoolingTemperature = js["externalClockCoolingTemperature"]
+        self.dutyCycle = js["dutyCycle"]
+        self.lowBat = js["lowBat"]
+        self.valvePosition = js["valvePosition"]
 
         profiles = []
         activeProfile = js["activeProfile"]  # not self.!!!!
@@ -506,12 +510,12 @@ class HeatingGroup(Group):
         self.profiles = sorted(profiles, key=attrgetter('index'))
 
     def __str__(self):
-        return "{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({})".format(
+        return "{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({}) valvePosition({})".format(
             super().__str__(),
             self.windowOpenTemperature, self.setPointTemperature,
             self.windowState, self.maxTemperature, self.minTemperature,
             self.cooling, self.partyMode, self.controlMode,
-            self.actualTemperature)
+            self.actualTemperature, self.valvePosition)
 
     def set_point_temperature(self, temperature):
         data = {"groupId": self.id, "setPointTemperature": temperature}
