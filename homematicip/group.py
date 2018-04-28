@@ -16,9 +16,7 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
         self.label = None
         self.lastStatusUpdate = None
         self.groupType = None
-        self.updateState = None
         self.unreach = None
-        self.lowBat = None
         self.metaGroup = None
         self.devices = None
 
@@ -27,6 +25,8 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
+        self.unreach = js["unreach"]
+
         time = js["lastStatusUpdate"]
         if time > 0:
             self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
@@ -56,23 +56,19 @@ class MetaGroup(Group):
     def __init__(self,connection):
         super().__init__(connection)
         self.groups = None
+        self.lowBat = False
+        self.sabotage = False
+        self.configPending = False
+        self.dutyCycle = False
 
     def from_json(self, js, devices, groups):
-        self.id = js["id"]
-        self.homeId = js["homeId"]
-        self.label = js["label"]
-        time = js["lastStatusUpdate"]
-        if time > 0:
-            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
-        else:
-            self.lastStatusUpdate = None
-        self.groupType = js["type"]
 
-        self.devices = []
-        for channel in js["channels"]:
-            for d in devices:
-                if d.id == channel["deviceId"]:
-                    self.devices.append(d)
+        super().from_json(js, devices)
+
+        self.lowBat = js["lowBat"]
+        self.sabotage = js["sabotage"]
+        self.configPending = js["configPending"]
+        self.dutyCycle = js["dutyCycle"]
 
         self.groups = []
         for group in js["groups"]:

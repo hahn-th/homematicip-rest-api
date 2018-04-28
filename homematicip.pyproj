@@ -88,6 +88,8 @@
     <Compile Include="tests\json_data\plugable_switch_measuring.py" />
     <Compile Include="tests\json_data\wall_mount_remote_control.py" />
     <Compile Include="tests\test_base_connection.py" />
+    <Compile Include="tests\test_groups.py" />
+    <Compile Include="tests\test_devices.py" />
     <Compile Include="tests\test_home.py">
       <SubType>Code</SubType>
     </Compile>
