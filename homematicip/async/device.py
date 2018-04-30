@@ -5,7 +5,7 @@ from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, 
     TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
     MotionDetectorIndoor, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
-    PluggableDimmer, BrandSwitchMeasuring
+    PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch
 
 ERROR_CODE = "errorCode"
 
@@ -31,16 +31,22 @@ class AsyncDevice(Device):
         pass
 
 
-class AsyncPlugableSwitch(PlugableSwitch, AsyncDevice):
-    """ Async implementation of HMIP-PS (Pluggable Switch) """
+class AsyncSwitch(Switch, AsyncDevice):
+    """ Generic async switch """
 
     async def turn_on(self):
+        _LOGGER.debug("Async switch turn_on")
         url, data = super().turn_on()
         return await self._connection.api_call(url, data)
 
     async def turn_off(self):
+        _LOGGER.debug("Async switch turn_off")
         url, data = super().turn_off()
         return await self._connection.api_call(url, data)
+
+
+class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
+    """ Async implementation of HMIP-PS (Pluggable Switch) """
 
 
 class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
@@ -53,13 +59,17 @@ class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
             *super().set_operation_lock(operationLock=operationLock))
 
 
-class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncPlugableSwitch):
+class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
     pass
 
 
-class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncPlugableSwitchMeasuring):
+class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncSwitch):
     """ HMIP-BSM (Brand Switch and Meter) """
+
+
+class AsyncFullFlushSwitchMeasuring(FullFlushSwitchMeasuring, AsyncSwitch):
+    """ HmIP-FSM (Full flush Switch and Meter) """
 
 
 class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):

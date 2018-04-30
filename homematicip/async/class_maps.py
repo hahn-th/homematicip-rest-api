@@ -5,7 +5,8 @@ from homematicip.async.device import AsyncPlugableSwitch, \
     AsyncWallMountedThermostatPro, AsyncSmokeDetector, AsyncFloorTerminalBlock6, \
     AsyncTemperatureHumiditySensorDisplay, AsyncTemperatureHumiditySensorWithoutDisplay, \
     AsyncPushButton, AsyncAlarmSirenIndoor, AsyncMotionDetectorIndoor, AsyncKeyRemoteControlAlarm, \
-    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice, AsyncBrandSwitchMeasuring
+    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice, AsyncBrandSwitchMeasuring, \
+    AsyncFullFlushSwitchMeasuring
 from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncExtendedLinkedSwitchingGroup, AsyncLinkedSwitchingGroup, AsyncAlarmSwitchingGroup, \
     AsyncHeatingHumidyLimiterGroup, AsyncHeatingTemperatureLimiterGroup, \
@@ -38,7 +39,8 @@ TYPE_CLASS_MAP = {
     cn.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,
     cn.BRAND_SHUTTER: AsyncFullFlushShutter,
     cn.PRECENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
-    cn.PLUGGABLE_DIMMER: AsyncPluggableDimmer
+    cn.PLUGGABLE_DIMMER: AsyncPluggableDimmer,
+    cn.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring
 }
 
 TYPE_GROUP_MAP = {

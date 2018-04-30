@@ -36,7 +36,8 @@ TYPE_CLASS_MAP = {
     cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
     cn.WEATHER_SENSOR: WeatherSensor,
     cn.WEATHER_SENSOR_PRO: WeatherSensorPro,
-    cn.ROTARY_HANDLE_SENSOR: RotaryHandleSensor
+    cn.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
+    cn.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring
 }
 
 TYPE_GROUP_MAP = {
