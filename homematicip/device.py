@@ -403,6 +403,9 @@ class BrandSwitchMeasuring(SwitchMeasuring):
     """ HMIP-BSM (Brand Switch and Meter) """
 
 
+class FullFlushSwitchMeasuring(SwitchMeasuring):
+    """ HmIP-FSM (Full flush Switch and Meter) """
+
 class PushButton(Device):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
