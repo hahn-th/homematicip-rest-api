@@ -41,6 +41,8 @@ def test_meta_group(fake_home):
 
     assert str(g) == "META Badezimmer"
 
+    assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000020"]
+
 def test_heating_group(fake_home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
     assert isinstance(g, HeatingGroup)
@@ -92,3 +94,5 @@ def test_heating_group(fake_home):
 
     assert str(g) == ('HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
                       ' sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)')
+
+    assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]

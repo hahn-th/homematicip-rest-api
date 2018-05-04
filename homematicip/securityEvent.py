@@ -15,6 +15,7 @@ class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
         self.label = None
 
     def from_json(self, js):
+        super().from_json(js)
         self.label = js["label"]
         time = js["eventTimestamp"]
         if time > 0:

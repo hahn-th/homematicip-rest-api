@@ -39,6 +39,7 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         self.windDirection = 0
 
     def from_json(self, js):
+        super().from_json(js)
         self.temperature = js["temperature"]
         self.weatherCondition = js["weatherCondition"]
         self.weatherDayTime = js["weatherDayTime"]
@@ -57,6 +58,7 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         self.longitude = "-0.118092"
 
     def from_json(self, js):
+        super().from_json(js)
         self.city = js["city"]
         self.latitude = js["latitude"]
         self.longitude = js["longitude"]
@@ -76,6 +78,7 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.homeId = None
 
     def from_json(self, js):
+        super().from_json(js)
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
@@ -92,6 +95,7 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
         self.expirationTimestamp = None
 
     def from_json(self, js):
+        super().from_json(js)
         self.authToken = js["authToken"]
         time = js["expirationTimestamp"]
         if time > 0:

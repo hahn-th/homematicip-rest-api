@@ -45,6 +45,7 @@ def test_home(fake_home: Home):
     assert fake_home.location.city == "1010  Wien, \u00d6sterreich"
     assert fake_home.location.latitude == "48.208088"
     assert fake_home.location.longitude == "16.358608"
+    assert fake_home.location._rawJSONData == fake_home_download_configuration()["home"]["location"]
 
     #weather
     assert fake_home.weather.humidity == 54
@@ -55,6 +56,9 @@ def test_home(fake_home: Home):
     assert fake_home.weather.weatherDayTime == "NIGHT"
     assert fake_home.weather.windDirection == 294
     assert fake_home.weather.windSpeed == 8.568 
+    assert fake_home.weather._rawJSONData == fake_home_download_configuration()["home"]["weather"]
+
+    assert fake_home._rawJSONData == fake_home_download_configuration()["home"]
 
 
 def test_clients(fake_home):
@@ -63,4 +67,5 @@ def test_clients(fake_home):
     assert client.homeId == '00000000-0000-0000-0000-000000000001'
     assert client.id == '00000000-0000-0000-0000-000000000000'
 
+    assert client._rawJSONData == fake_home_download_configuration()["clients"]['00000000-0000-0000-0000-000000000000']
 

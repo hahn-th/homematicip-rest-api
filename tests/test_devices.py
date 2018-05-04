@@ -44,7 +44,7 @@ def test_shutter_device(fake_home):
     assert d.dutyCycle == False
     assert d.configPending == False
     assert str(d) == 'HMIP-SWDO Fenster lowbat(False) unreach(False) rssiDeviceValue(-64) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False) windowState(CLOSED)'
-
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000001"]
 
     d = fake_home.search_device_by_id('3014F7110000000000000005')
     assert d.windowState == "OPEN"
@@ -79,6 +79,7 @@ def test_pluggable_switch_measuring(fake_home):
 
     assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC)'
                      ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000009"]
 
 def test_smoke_detector(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000020')
@@ -102,6 +103,7 @@ def test_smoke_detector(fake_home):
     assert d.firmwareVersion == "1.0.11"
     assert d.configPending == False
     assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): smokeDetectorAlarmType(IDLE_OFF)'
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000020"]
 
 def test_wall_mounted_thermostat_pro(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000022')
@@ -128,7 +130,9 @@ def test_wall_mounted_thermostat_pro(fake_home):
     assert d.dutyCycle == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.8.0"
-    assert str(d)
+    assert str(d) == ('HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63) configPending(False) dutyCycle(False): operationLockActive(False):'
+                      ' actualTemperature(24.7) humidity(43) setPointTemperature(5.0)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000022"]
 
 def test_heating_thermostat(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000015')
@@ -158,6 +162,7 @@ def test_heating_thermostat(fake_home):
 
     assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
                     ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000015"]
 
 def test_temperature_humidity_sensor_outdoor(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000002')
@@ -182,6 +187,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home):
     assert d.dutyCycle == False
     assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - au\u00dfen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
                     ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000002"]
 
 def test_weather_sensor_pro(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000001')
@@ -226,6 +232,7 @@ def test_weather_sensor_pro(fake_home):
                       ' illumination(4153.0) illuminationThresholdSunshine(10.0) raining(False) storm(False) sunshine(True)todayRainCounter(6.5) todaySunshineDuration(100)'
                       ' totalRainCounter(6.5) totalSunshineDuration(100)weathervaneAlignmentNeeded(False) windDirection(295.0) windDirectionVariation(56.25) windSpeed(2.6)'
                       ' windValueType(AVERAGE_VALUE)yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000001"]
 
 def test_weather_sensor(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000003')
@@ -262,6 +269,7 @@ def test_weather_sensor(fake_home):
     assert str(d) == ('HmIP-SWO-B Wettersensor lowbat(False) unreach(False) rssiDeviceValue(-77) rssiPeerValue(None) configPending(False) dutyCycle(False)'
                      ' actualTemperature(15.2) humidity(42) illumination(4890.0) illuminationThresholdSunshine(3500.0) storm(False) sunshine(True)'
                      ' todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6) windValueType(MAX_VALUE) yesterdaySunshineDuration(3)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000003"]
 
 def test_rotary_handle_sensor(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000004')
@@ -284,6 +292,7 @@ def test_rotary_handle_sensor(fake_home):
     assert d.dutyCycle == False
     assert d.configPending == False
     assert str(d) == 'HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False) windowState(CLOSED)'
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000004"]
 
 #def test__parse_device(fake_home):
 #    assert False

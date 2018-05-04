@@ -22,6 +22,7 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
 
 
     def from_json(self, js, devices):
+        super().from_json(js)
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]

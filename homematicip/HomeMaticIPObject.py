@@ -11,6 +11,7 @@ class HomeMaticIPObject:
         self._connection = connection
         # List with update handlers.
         self._on_update = []
+        self._rawJSONData = {}
 
     def on_update(self, handler):
         """Adds an event handler to the update method. Fires when a device
@@ -27,6 +28,7 @@ class HomeMaticIPObject:
 
     def from_json(self, js):
         #LOGGER.debug("from_json call HomeMaticIpObject")
+        self._rawJSONData = js
         pass
 
     def __str__(self):

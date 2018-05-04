@@ -33,6 +33,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.configPending = False
 
     def from_json(self, js):
+        super().from_json(js)
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
