@@ -30,7 +30,7 @@ def test_update_event(fake_home: Home):
     fake_home.fire_update_event()
     fake_handler.method.assert_called()
 
-def test_home(fake_home: Home):
+def test_home_base(fake_home: Home):
     assert fake_home.connected == True
     assert fake_home.currentAPVersion == "1.2.4"
     assert fake_home.deviceUpdateStrategy == "AUTOMATICALLY_IF_POSSIBLE"
@@ -40,14 +40,17 @@ def test_home(fake_home: Home):
     assert fake_home.powerMeterUnitPrice == 0.0
     assert fake_home.timeZoneId == "Europe/Vienna"
     assert fake_home.updateState == "UP_TO_DATE"
-    
-    #location
+
+    assert fake_home._rawJSONData == fake_home_download_configuration()["home"]
+
+def test_home_location(fake_home: Home):
     assert fake_home.location.city == "1010  Wien, \u00d6sterreich"
     assert fake_home.location.latitude == "48.208088"
     assert fake_home.location.longitude == "16.358608"
     assert fake_home.location._rawJSONData == fake_home_download_configuration()["home"]["location"]
+    assert str(fake_home.location) == "city(1010  Wien, \u00d6sterreich) latitude(48.208088) longitude(16.358608)"
 
-    #weather
+def test_home_weather(fake_home: Home):
     assert fake_home.weather.humidity == 54
     assert fake_home.weather.maxTemperature == 16.6
     assert fake_home.weather.minTemperature == 16.6
@@ -57,8 +60,7 @@ def test_home(fake_home: Home):
     assert fake_home.weather.windDirection == 294
     assert fake_home.weather.windSpeed == 8.568 
     assert fake_home.weather._rawJSONData == fake_home_download_configuration()["home"]["weather"]
-
-    assert fake_home._rawJSONData == fake_home_download_configuration()["home"]
+    assert str(fake_home.weather) == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) windSpeed(8.568) windDirection(294)"
 
 
 def test_clients(fake_home):
@@ -69,4 +71,5 @@ def test_clients(fake_home):
     assert client.refreshToken == None
 
     assert client._rawJSONData == fake_home_download_configuration()["clients"]['00000000-0000-0000-0000-000000000000']
+    assert str(client) == "label(TEST-Client)"
 

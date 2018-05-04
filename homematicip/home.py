@@ -48,6 +48,15 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         self.humidity = js["humidity"]
         self.windSpeed = js["windSpeed"]
         self.windDirection = js["windDirection"]
+    def __str__(self):
+        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) windSpeed({}) windDirection({})".format(self.temperature,
+                                                                                                                                                                    self.weatherCondition,
+                                                                                                                                                                    self.weatherDayTime,
+                                                                                                                                                                    self.minTemperature,
+                                                                                                                                                                    self.maxTemperature,
+                                                                                                                                                                    self.humidity,
+                                                                                                                                                                    self.windSpeed,
+                                                                                                                                                                    self.windDirection)
 
 
 class Location(HomeMaticIPObject.HomeMaticIPObject):
