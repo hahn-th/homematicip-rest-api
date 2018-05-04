@@ -73,15 +73,17 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
 
     def __init__(self, connection):
         super().__init__(connection)
-        self.id = None
-        self.label = None
-        self.homeId = None
+        self.id = ""
+        self.label = ""
+        self.homeId = ""
+        self.refreshToken = None
 
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
+        self.refreshToken = js["refreshToken"]
 
     def __str__(self):
         return "label({})".format(self.label)

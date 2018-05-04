@@ -66,6 +66,7 @@ def test_clients(fake_home):
     assert client.label == 'TEST-Client'
     assert client.homeId == '00000000-0000-0000-0000-000000000001'
     assert client.id == '00000000-0000-0000-0000-000000000000'
+    assert client.refreshToken == None
 
     assert client._rawJSONData == fake_home_download_configuration()["clients"]['00000000-0000-0000-0000-000000000000']
 
