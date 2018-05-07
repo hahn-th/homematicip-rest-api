@@ -43,6 +43,7 @@ def hmip_events(eventList):
             group = event["data"]
             if isinstance(group, homematicip.group.SecurityGroup):
                 send = False
+                forceSend = False
                 msg = "Security Breach:\nRoom {}\n".format(group.label)
                 if group.windowState == 'OPEN':
                     msg += "Windows are OPEN\n"
@@ -55,8 +56,9 @@ def hmip_events(eventList):
                     send = True
                 if group.smokeDetectorAlarmType and group.smokeDetectorAlarmType != 'IDLE_OFF':
                     msg += "SMOKE ALARM: {}\n".format(group.smokeDetectorAlarmType)
-                    send = True
-                if send:
+                    forceSend = True
+
+                if forceSend or (send and True in HMIP_Home.get_security_zones_activation()):
                     tg_send_notifications(msg)
 
 ### MAIN ###
