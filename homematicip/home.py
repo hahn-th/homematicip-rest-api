@@ -9,6 +9,7 @@ from homematicip.connection import Connection
 from homematicip.group import *
 from homematicip.securityEvent import *
 from homematicip.rule import *
+from homematicip.base.helpers import bytes2str
 
 EVENT_SECURITY_JOURNAL_CHANGED = "SECURITY_JOURNAL_CHANGED"
 EVENT_GROUP_ADDED = "GROUP_ADDED"
@@ -460,10 +461,11 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocket.close()
 
     def _ws_on_error(self, ws, message):
-        LOGGER.error("Websocket error: %s", message)
+        LOGGER.error("Websocket error: %s", bytes2str(message))
 
     def _ws_on_message(self, ws, message):
-        js = json.loads(message)
+        #json.loads doesn't support bytes as parameter before python 3.6
+        js = json.loads(bytes2str(message))
         # LOGGER.debug(js)
         eventList = []
         try:
