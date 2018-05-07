@@ -4,7 +4,7 @@ import configparser
 import os
 from collections import namedtuple
 
-HmipConfig = namedtuple('HmipConfig', ['auth_token', 'access_point', 'log_level', 'log_file'])
+HmipConfig = namedtuple('HmipConfig', ['auth_token', 'access_point', 'log_level', 'log_file', 'raw_config'])
 
 def find_and_load_config_file() -> HmipConfig:
     for f in get_config_file_locations():
@@ -29,7 +29,8 @@ def load_config_file(config_file: str ) -> HmipConfig:
             _config['AUTH']['AuthToken'],
             _config['AUTH']['AccessPoint'],
             int(_config.get('LOGGING', 'Level', fallback=30)),
-            logging_filename
+            logging_filename,
+            _config._sections
         )
         return _hmip_config
 
