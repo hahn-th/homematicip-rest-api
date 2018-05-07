@@ -82,3 +82,5 @@ def test_rules(fake_home):
     assert rule.errorRuleTriggerItems == []
     assert rule.errorRuleConditionItems == []
     assert rule.errorRuleActionItems == []
+
+    assert str(rule) == "SIMPLE Alarmanlage active(True)"
