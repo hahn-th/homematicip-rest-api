@@ -1522,6 +1522,54 @@
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000004",
             "type": "ROTARY_HANDLE_SENSOR",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F711AAAA000000000005": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.4.8",
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAA000000000005",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000008"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -44,
+                    "rssiPeerValue": -42,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711AAAA000000000005",
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "DIMMER_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000008"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAA000000000005",
+            "label": "Schlafzimmerlicht",
+            "lastStatusUpdate": 1524816385462,
+            "manufacturerCode": 1,
+            "modelId": 290,
+            "modelType": "HmIP-BDT",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F711AAAA000000000005",
+            "type": "BRAND_DIMMER",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {

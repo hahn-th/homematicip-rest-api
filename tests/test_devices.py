@@ -291,24 +291,33 @@ def test_rotary_handle_sensor(fake_home):
     assert d.rssiPeerValue == None
     assert d.dutyCycle == False
     assert d.configPending == False
-    assert str(d) == 'HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False) windowState(CLOSED)'
+    assert str(d) == ('HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False):'
+                      ' sabotage(False) windowState(CLOSED)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000004"]
 
-#def test__parse_device(fake_home):
-#    assert False
-#
-#
-#def test_get_devices(fake_home):
-#    assert False
-#
-#
-#def test__get_clients(fake_home):
-#    assert False
-#
-#
-#def test__parse_group(fake_home):
-#    assert False
-#
-#
-#def test__get_groups(fake_home):
-#    assert False
+def test_dimmer(fake_home):
+    d = fake_home.search_device_by_id('3014F711AAAA000000000005')
+    assert isinstance(d, BrandDimmer)
+    assert d.label == "Schlafzimmerlicht"
+    assert d.lastStatusUpdate == datetime(2018, 4, 27, 8, 6, 25, 462000) + timedelta(0,utc_offset)
+    assert d.modelId == 290
+    assert d.modelType == "HmIP-BDT"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000005"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.profileMode == "AUTOMATIC"
+    assert d.userDesiredProfileMode == "AUTOMATIC"
+    assert d.dimLevel == 0.0
+    assert d.lowBat == None
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -44
+    assert d.rssiPeerValue == -42
+    assert d.unreach == False
+    assert d.dutyCycle == False
+    assert d.configPending == False
+    assert d.availableFirmwareVersion == "0.0.0"
+    assert d.firmwareVersion == "1.4.8"
+
+    assert str(d) == ('HmIP-BDT Schlafzimmerlicht lowbat(None) unreach(False) rssiDeviceValue(-44) rssiPeerValue(-42) configPending(False) dutyCycle(False) dimLevel(0.0)'
+                      ' profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)')
