@@ -13,7 +13,7 @@ TG_BOT = None
 TG_USERS = []
 logger = None
 
-home = Home()
+HMIP_Home = Home()
 
 def create_logger(level, file_name):
     logger = logging.getLogger()
@@ -51,7 +51,10 @@ def hmip_events(eventList):
                     msg += "Sabotage on one of the devices\n"
                     send = True
                 if group.motionDetected:
-                    msg += "Motion Detected: {}\n".format(motionDetected)
+                    msg += "Motion Detected: {}\n".format(group.motionDetected)
+                    send = True
+                if group.smokeDetectorAlarmType and group.smokeDetectorAlarmType != 'IDLE_OFF':
+                    msg += "SMOKE ALARM: {}\n".format(group.smokeDetectorAlarmType)
                     send = True
                 if send:
                     tg_send_notifications(msg)
@@ -66,14 +69,14 @@ def main():
     global logger
     logger = create_logger(config.log_level, config.log_file)
 
-    global home
+    global HMIP_Home
 
-    home.set_auth_token(config.auth_token)
-    home.init(config.access_point)
+    HMIP_Home.set_auth_token(config.auth_token)
+    HMIP_Home.init(config.access_point)
 
-    home.get_current_state()
-    home.onEvent += hmip_events
-    home.enable_events()
+    HMIP_Home.get_current_state()
+    HMIP_Home.onEvent += hmip_events
+    HMIP_Home.enable_events()
 
     global TG_TOKEN
     if TG_TOKEN is None:
@@ -89,9 +92,9 @@ def main():
     dispatcher.add_handler(CommandHandler('start', tg_start_handler))
 
     tg_updater.start_polling()
-    home.enable_events()
+    HMIP_Home.enable_events()
     tg_updater.idle()
-    home.disable_events()
+    HMIP_Home.disable_events()
 
 if __name__ == "__main__":
     main()

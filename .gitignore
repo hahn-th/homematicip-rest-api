@@ -102,3 +102,4 @@ ENV/
 .vs
 /QRCodeGenerator/qrcodes.html
 /QRCodeGenerator/img
+**/config.ini
