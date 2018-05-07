@@ -96,3 +96,26 @@ def test_heating_group(fake_home):
                       ' sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)')
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]
+
+def test_security_group(fake_home):
+    g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000009')
+    assert isinstance(g, SecurityGroup)
+    for d in g.devices:
+        assert d.id in ['3014F7110000000000000001', '3014F7110000000000000019']
+
+    assert g.dutyCycle == False
+    assert g.homeId == "00000000-0000-0000-0000-000000000001"
+    assert g.id == "00000000-0000-0000-0000-000000000009"
+    assert g.label == "B\xc3\xbcro"
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(0,utc_offset)
+    assert g.lowBat == False
+    assert g.metaGroup.id == "00000000-0000-0000-0000-000000000008"
+    assert g.motionDetected == None
+    assert g.presenceDetected == None
+    assert g.sabotage == False
+    assert g.smokeDetectorAlarmType == "IDLE_OFF"
+    assert g.unreach == False
+    assert g.windowState == "CLOSED"
+
+    assert str(g) == ('SECURITY B\xc3\xbcro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
+                      ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False)')

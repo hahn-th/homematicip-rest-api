@@ -86,21 +86,27 @@ class SecurityGroup(Group):
         super().__init__(connection)
         self.windowState = None
         self.motionDetected = None
+        self.presenceDetected = None
         self.sabotage = None
         self.smokeDetectorAlarmType = None
+        self.dutyCycle = None
+        self.lowBat = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
         self.windowState = js["windowState"]
         self.motionDetected = js["motionDetected"]
+        self.presenceDetected = js["presenceDetected"]
         self.sabotage = js["sabotage"]
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
+        self.dutyCycle = js["dutyCycle"]
+        self.lowBat = js["lowBat"]
 
     def __str__(self):
-        return "{}: windowState({}) motionDetected({}) sabotage({}) smokeDetectorAlarmType({})".format(
+        return "{}: windowState({}) motionDetected({}) presenceDetected({}) sabotage({}) smokeDetectorAlarmType({}) dutyCycle({}) lowBat({})".format(
             super().__str__(),
-            self.windowState, self.motionDetected, self.sabotage,
-            self.smokeDetectorAlarmType)
+            self.windowState, self.motionDetected, self.presenceDetected, self.sabotage,
+            self.smokeDetectorAlarmType, self.dutyCycle, self.lowBat)
 
 
 class SwitchingGroup(Group):
