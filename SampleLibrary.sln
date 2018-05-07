@@ -9,6 +9,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CheckPresenceOnPing", "Chec
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "QRCodeGenerator", "QRCodeGenerator\QRCodeGenerator.pyproj", "{C156BB38-6D66-4790-8F5E-BCCA5755451E}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TelegramNotificationBot", "TelegramNotificationBot\TelegramNotificationBot.pyproj", "{87E7A3B8-96E1-4954-B053-BE05A3585C94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{3173CC74-73C8-474D-93AE-309618AB1514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C156BB38-6D66-4790-8F5E-BCCA5755451E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C156BB38-6D66-4790-8F5E-BCCA5755451E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E7A3B8-96E1-4954-B053-BE05A3585C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E7A3B8-96E1-4954-B053-BE05A3585C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
