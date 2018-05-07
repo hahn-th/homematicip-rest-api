@@ -90,6 +90,9 @@
     <Compile Include="tests\test_base_connection.py" />
     <Compile Include="tests\test_groups.py" />
     <Compile Include="tests\test_devices.py" />
+    <Compile Include="tests\test_hmip_cli.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_home.py">
       <SubType>Code</SubType>
     </Compile>
