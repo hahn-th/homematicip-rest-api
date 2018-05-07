@@ -78,7 +78,6 @@ def main():
 
     HMIP_Home.get_current_state()
     HMIP_Home.onEvent += hmip_events
-    HMIP_Home.enable_events()
 
     global TG_TOKEN
     if TG_TOKEN is None:
