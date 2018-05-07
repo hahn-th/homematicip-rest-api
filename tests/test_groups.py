@@ -106,7 +106,7 @@ def test_security_group(fake_home):
     assert g.dutyCycle == False
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000009"
-    assert g.label == "B\xc3\xbcro"
+    assert g.label == "B\u00FCro"
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(0,utc_offset)
     assert g.lowBat == False
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000008"
@@ -117,7 +117,7 @@ def test_security_group(fake_home):
     assert g.unreach == False
     assert g.windowState == "CLOSED"
 
-    assert str(g) == ('SECURITY B\xc3\xbcro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
+    assert str(g) == ('SECURITY B\u00FCro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
                       ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False)')
 
 def test_switching_group(fake_home):
