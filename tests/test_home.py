@@ -4,7 +4,7 @@ import pytest
 
 from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
-from homematicip.device import *
+from homematicip.rule import *
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -62,7 +62,6 @@ def test_home_weather(fake_home: Home):
     assert fake_home.weather._rawJSONData == fake_home_download_configuration()["home"]["weather"]
     assert str(fake_home.weather) == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) windSpeed(8.568) windDirection(294)"
 
-
 def test_clients(fake_home):
     client = fake_home.clients[0]
     assert client.label == 'TEST-Client'
@@ -73,3 +72,12 @@ def test_clients(fake_home):
     assert client._rawJSONData == fake_home_download_configuration()["clients"]['00000000-0000-0000-0000-000000000000']
     assert str(client) == "label(TEST-Client)"
 
+def test_rules(fake_home):
+    rule = fake_home.search_rule_by_id('00000000-0000-0000-0000-000000000065')
+    assert rule.active == True
+    assert rule.label == 'Alarmanlage'
+    assert isinstance(rule,SimpleRule)
+    assert rule.ruleErrorCategories == []
+    assert rule.errorRuleTriggerItems == []
+    assert rule.errorRuleConditionItems == []
+    assert rule.errorRuleActionItems == []

@@ -10,7 +10,7 @@ class Rule(HomeMaticIPObject.HomeMaticIPObject):
         self.label = ""
         self.active = False
         self.ruleErrorCategories = []
-        self.type = ""
+        self.ruleType = ""
         #these 3 fill be filled from subclasses
         self.errorRuleTriggerItems = []
         self.errorRuleConditionItems = []

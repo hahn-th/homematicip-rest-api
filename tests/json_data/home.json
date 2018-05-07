@@ -2858,7 +2858,15 @@
             "00000000-0000-0000-0000-000000000030"
         ],
         "ruleMetaDatas": {
-        },
+        "00000000-0000-0000-0000-000000000065": {
+            "active": true,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000065",
+            "label": "Alarmanlage",
+            "ruleErrorCategories": [],
+            "type": "SIMPLE"
+        }
+    },
         "timeZoneId": "Europe/Vienna",
         "updateState": "UP_TO_DATE",
         "voiceControlSettings": {
