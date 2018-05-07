@@ -82,18 +82,3 @@ def test_rules(fake_home):
     assert rule.errorRuleTriggerItems == []
     assert rule.errorRuleConditionItems == []
     assert rule.errorRuleActionItems == []
-
-
-def event_hook_handler2(mustBe2):
-    assert mustBe2 == 2
-
-def event_hook_handler3(mustBe3):
-    assert mustBe3 == 3
-
-def test_event_hook():
-    eh = EventHook()
-    eh += event_hook_handler2
-    eh.fire(2)
-    eh += event_hook_handler3
-    eh -= event_hook_handler2
-    eh.fire(3)

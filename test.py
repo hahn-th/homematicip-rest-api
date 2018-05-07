@@ -5,3 +5,4 @@ if __name__ == '__main__':
     pytest.main('tests/test_devices.py')
     pytest.main('tests/test_groups.py')
     pytest.main('tests/test_hmip_cli.py')
+    pytest.main('tests/test_misc.py')
