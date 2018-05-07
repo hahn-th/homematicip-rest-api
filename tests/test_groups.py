@@ -119,3 +119,26 @@ def test_security_group(fake_home):
 
     assert str(g) == ('SECURITY B\xc3\xbcro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
                       ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False)')
+
+def test_switching_group(fake_home):
+    g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
+    assert isinstance(g, SwitchingGroup)
+    for d in g.devices:
+        assert d.id in ['3014F7110000000000000010', '3014F7110000000000000009', '3014F7110000000000000008']
+
+    assert g.dimLevel == None
+    assert g.dutyCycle == False
+    assert g.homeId == "00000000-0000-0000-0000-000000000001"
+    assert g.id == "00000000-0000-0000-0000-000000000018"
+    assert g.label == "Strom"
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 14, 56000) + timedelta(0,utc_offset)
+    assert g.lowBat == None
+    assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
+    assert g.on == True
+    assert g.processing == None
+    assert g.shutterLevel == None
+    assert g.slatsLevel == None
+    assert g.unreach == False
+
+    assert str(g) == ('SWITCHING Strom: on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)'
+                      ' dutyCycle(False) lowBat(None)')

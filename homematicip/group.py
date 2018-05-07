@@ -119,11 +119,15 @@ class SwitchingGroup(Group):
         self.processing = None
         self.shutterLevel = None
         self.slatsLevel = None
+        self.dutyCycle = None
+        self.lowBat = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
+        self.dutyCycle = js["dutyCycle"]
+        self.lowBat = js["lowBat"]
         try:  # TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
             self.processing = js["processing"]
             self.shutterLevel = js["shutterLevel"]
@@ -150,10 +154,10 @@ class SwitchingGroup(Group):
         return self._restCall("group/switching/stop", body=json.dumps(data))
 
     def __str__(self):
-        return "{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({})".format(
+        return "{}: on({}) dimLevel({}) processing({}) shutterLevel({}) slatsLevel({}) dutyCycle({}) lowBat({})".format(
             super().__str__(),
             self.on, self.dimLevel, self.processing, self.shutterLevel,
-            self.slatsLevel)
+            self.slatsLevel, self.dutyCycle, self.lowBat)
 
 
 class LinkedSwitchingGroup(SwitchingGroup):
