@@ -70,14 +70,8 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            pip install coverage codecov pylint twine sphinx sphinx-autobuild sphinx_rtd_theme
             pip install -r requirements.txt
-            pip install coverage
-            pip install codecov
-            pip install pylint
-            pip install twine
-            pip install sphinx
-            pip install sphinx-autobuild
-            pip install sphinx_rtd_theme
             pip install -e .
             
       - save_cache:
