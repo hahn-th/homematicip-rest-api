@@ -2,26 +2,14 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 
-from homematicip.home import Home
-from homematicip.base.base_connection import BaseConnection
 from homematicip.group import *
 import json
 from datetime import datetime, timedelta, timezone
 
+from conftest import fake_home_download_configuration
+
 dt = datetime.now(timezone.utc).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
-
-def fake_home_download_configuration():
-    return json.load(open("tests/json_data/home.json"))
-
-
-@pytest.fixture
-def fake_home():
-    home = Home()
-    home.download_configuration = fake_home_download_configuration
-    home._connection = BaseConnection()
-    home.get_current_state()
-    return home
 
 def test_meta_group(fake_home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000020')
@@ -106,7 +94,7 @@ def test_security_group(fake_home):
     assert g.dutyCycle == False
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000009"
-    assert g.label == "B\u00FCro"
+    assert g.label == "Büro"
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(0,utc_offset)
     assert g.lowBat == False
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000008"
@@ -117,7 +105,7 @@ def test_security_group(fake_home):
     assert g.unreach == False
     assert g.windowState == "CLOSED"
 
-    assert str(g) == ('SECURITY B\u00FCro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
+    assert str(g) == ('SECURITY Büro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
                       ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False)')
 
 def test_switching_group(fake_home):
