@@ -8,22 +8,11 @@ from homematicip.rule import *
 from homematicip.EventHook import EventHook
 import json
 from datetime import datetime, timedelta, timezone
+from conftest import fake_home_download_configuration
+
 
 dt = datetime.now(timezone.utc).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
-
-def fake_home_download_configuration():
-    return json.load(open("tests/json_data/home.json"))
-
-
-@pytest.fixture
-def fake_home():
-    home = Home()
-    home.download_configuration = fake_home_download_configuration
-    home._connection = BaseConnection()
-    home.get_current_state()
-    return home
-
 
 def test_update_event(fake_home: Home):
     fake_handler = Mock()
