@@ -157,7 +157,7 @@ def test_heating_thermostat(fake_home):
 def test_temperature_humidity_sensor_outdoor(fake_home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000002')
     assert isinstance(d, TemperatureHumiditySensorOutdoor)
-    assert d.label == "Temperatur- und Luftfeuchtigkeitssensor - au\u00dfen"
+    assert d.label == "Temperatur- und Luftfeuchtigkeitssensor - außen"
     assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
     assert d.manufacturerCode == 1
     assert d.modelId == 314
@@ -175,7 +175,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home):
     assert d.unreach == False
     assert d.configPending == False
     assert d.dutyCycle == False
-    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - au\u00dfen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
+    assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
                     ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000002"]
 
