@@ -5,7 +5,7 @@ A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
 done via reverse engineering Use at your own risk.
 
-|CircleCI| |PyPi| |codecov| |Average time to resolve an issue|
+|CircleCI| |PyPi| |codecov| |Average time to resolve an issue| |commits-since-latest-release|
 
 Installation
 ============
@@ -124,3 +124,4 @@ connection
    :target: https://codecov.io/gh/coreGreenberet/homematicip-rest-api
 .. |Average time to resolve an issue| image:: http://isitmaintained.com/badge/resolution/coreGreenberet/homematicip-rest-api.svg
    :target: http://isitmaintained.com/project/coreGreenberet/homematicip-rest-api
+.. |commits-since-latest-release| image:: https://img.shields.io/github/commits-since/coreGreenberet/homematicip-rest-api/latest.svg 
