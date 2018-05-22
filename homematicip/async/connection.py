@@ -39,12 +39,11 @@ class AsyncConnection(BaseConnection):
         """Websocket is connected."""
         return self.socket_connection is not None
 
-    async def init(self, accesspoint_id, lookup=True, **kwargs):
+    async def init(self, accesspoint_id, lookup=True, lookup_url="https://lookup.homematic.com:48335/getHost", **kwargs):
         self.set_token_and_characteristics(accesspoint_id)
 
         if lookup:
-            result = await self.api_call("https://lookup.homematic.com:48335/getHost",
-                                         json.dumps(self.clientCharacteristics), full_url=True)
+            result = await self.api_call(lookup_url, json.dumps(self.clientCharacteristics), full_url=True)
 
             self._urlREST = result["urlREST"]
             self._urlWebSocket = result["urlWebSocket"]

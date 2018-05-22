@@ -11,15 +11,13 @@ logger = logging.getLogger(__name__)
 
 
 class Connection(BaseConnection):
-    def init(self, accesspoint_id, lookup=True, **kwargs):
+    def init(self, accesspoint_id, lookup=True, lookup_url="https://lookup.homematic.com:48335/getHost",**kwargs):
         self.set_token_and_characteristics(accesspoint_id)
 
         if lookup:
             while True:
                 try:
-                    result = requests.post(
-                        "https://lookup.homematic.com:48335/getHost",
-                        json=self.clientCharacteristics, timeout=3)
+                    result = requests.post(lookup_url, json=self.clientCharacteristics, timeout=3)
                     js = json.loads(result.text)
                     self._urlREST = js["urlREST"]
                     self._urlWebSocket = js["urlWebSocket"]
