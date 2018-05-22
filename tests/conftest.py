@@ -9,7 +9,7 @@ import contextlib
 from unittest.mock import MagicMock
 from homematicip.async.connection import AsyncConnection
 from homematicip.home import Home
-from homematicip.base.base_connection import BaseConnection
+from homematicip.connection import Connection
 
 from pytest_localserver.http import WSGIServer
 from fake_cloud_server import FakeCloudServer
@@ -24,7 +24,8 @@ def AsyncMock(*args, **kwargs):
     return mock_coro
 
 def fake_home_download_configuration():
-    return json.load(open("tests/json_data/home.json", encoding="UTF-8"))
+    with open("tests/json_data/home.json", encoding="UTF-8") as f:
+        return json.load(f)
 
 @contextlib.contextmanager
 def no_ssl_verification():
@@ -38,12 +39,27 @@ def no_ssl_verification():
     requests.Session.request = old_request
 
 
+
 @pytest.fixture
-def fake_home():
+def fake_cloud(request):
+    """Defines the testserver funcarg"""
+    app = FakeCloudServer()
+    server = WSGIServer(application = app, ssl_context=('./tests/server.crt','./tests/server.key'))
+    app.url = server.url
+    server.start()
+    request.addfinalizer(server.stop)
+    return server
+
+@pytest.fixture
+def fake_home(fake_cloud):
     home = Home()
-    home.download_configuration = fake_home_download_configuration
-    home._connection = BaseConnection()
-    home.get_current_state()
+    with no_ssl_verification():
+        lookup_url = "{}/getHost".format(fake_cloud.url)
+    #    home.download_configuration = fake_home_download_configuration
+        home._connection = Connection()
+        home.set_auth_token("AUTH_TOKEN")
+        home._connection.init(accesspoint_id="ASDF", lookup_url=lookup_url)
+        home.get_current_state()
     return home
 
 @pytest.fixture
@@ -57,14 +73,3 @@ def async_connection(event_loop):
     _connection = AsyncConnection(event_loop)
     yield _connection
     _connection._websession.close()
-
-
-@pytest.fixture
-def fake_cloud(request):
-    """Defines the testserver funcarg"""
-    app = FakeCloudServer()
-    server = WSGIServer(application = app, port=8443, ssl_context=('./tests/server.crt','./tests/server.key'))
-    app.url = server.url
-    server.start()
-    request.addfinalizer(server.stop)
-    return server

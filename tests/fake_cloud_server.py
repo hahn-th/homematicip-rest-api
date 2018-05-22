@@ -17,8 +17,12 @@ class FakeCloudServer():
             respone=self.call_method(methodname,request,response)
         except NameError as e:
             response.status_code = 404
-            response.data = json.dumps( { "Error" : str(e) })
+            response.data = json.dumps( { "errorCode" : str(e) })
         return response(environ,start_response)
+
+    def post_hmip_home_getCurrentState(self,request : Request ,response : Response):
+        response.data = json.dumps(self.data)
+        return response
 
 
     def post_getHost(self,request : Request ,response : Response):
