@@ -53,7 +53,7 @@ def test_home_weather(fake_home: Home):
     assert str(fake_home.weather) == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) windSpeed(8.568) windDirection(294)"
 
 def test_clients(fake_home):
-    client = fake_home.clients[0]
+    client = fake_home.search_client_by_id('00000000-0000-0000-0000-000000000000')
     assert client.label == 'TEST-Client'
     assert client.homeId == '00000000-0000-0000-0000-000000000001'
     assert client.id == '00000000-0000-0000-0000-000000000000'
