@@ -1,9 +1,18 @@
 import pytest
 import json
+
+from functools import partialmethod
+import warnings
+import requests
+import contextlib
+
 from unittest.mock import MagicMock
 from homematicip.async.connection import AsyncConnection
 from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
+
+from pytest_localserver.http import WSGIServer
+from fake_cloud_server import FakeCloudServer
 
 def AsyncMock(*args, **kwargs):
     m = MagicMock(*args, **kwargs)
@@ -16,6 +25,18 @@ def AsyncMock(*args, **kwargs):
 
 def fake_home_download_configuration():
     return json.load(open("tests/json_data/home.json", encoding="UTF-8"))
+
+@contextlib.contextmanager
+def no_ssl_verification():
+    old_request = requests.Session.request
+    requests.Session.request = partialmethod(old_request, verify=False)
+
+    warnings.filterwarnings('ignore', 'Unverified HTTPS request')
+    yield
+    warnings.resetwarnings()
+
+    requests.Session.request = old_request
+
 
 @pytest.fixture
 def fake_home():
@@ -36,3 +57,14 @@ def async_connection(event_loop):
     _connection = AsyncConnection(event_loop)
     yield _connection
     _connection._websession.close()
+
+
+@pytest.fixture
+def fake_cloud(request):
+    """Defines the testserver funcarg"""
+    app = FakeCloudServer()
+    server = WSGIServer(application = app, port=8443, ssl_context=('./tests/server.crt','./tests/server.key'))
+    app.url = server.url
+    server.start()
+    request.addfinalizer(server.stop)
+    return server
