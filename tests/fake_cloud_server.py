@@ -24,6 +24,14 @@ class FakeCloudServer():
         response.data = json.dumps(self.data)
         return response
 
+    def post_hmip_home_setLocation(self,request : Request ,response : Response):
+        js = json.loads(request.data)
+
+        self.data["home"]["location"]["city"] = js["city"]
+        self.data["home"]["location"]["latitude"] = js["latitude"]
+        self.data["home"]["location"]["longitude"] = js["longitude"]
+
+        return response
 
     def post_getHost(self,request : Request ,response : Response):
         data = {
