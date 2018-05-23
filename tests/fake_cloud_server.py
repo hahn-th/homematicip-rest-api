@@ -1,5 +1,6 @@
 from werkzeug.wrappers import Response, Request
 import json
+import hashlib
 
 
 class FakeCloudServer():
@@ -7,6 +8,10 @@ class FakeCloudServer():
 
     def __init__(self):
         self.data = json.load(open("tests/json_data/home.json", encoding="UTF-8"))
+        self.sgtin = '3014F711A000000BAD0C0DED'
+        self.client_auth_token = hashlib.sha512(str(self.sgtin + "jiLpVitHvWnIGD1yo7MA").encode('utf-8')).hexdigest().upper()
+
+        self.client_token_map = { '00000000-0000-0000-0000-000000000000' : '8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE' }
 
     def __call__(self,environ, start_response):
         request = Request(environ)
@@ -20,11 +25,28 @@ class FakeCloudServer():
             response.data = json.dumps( { "errorCode" : str(e) })
         return response(environ,start_response)
 
+    def validate_authorization(func):
+        def func_wrapper(self,request : Request ,response : Response):
+            if request.headers["CLIENTAUTH"] == self.client_auth_token:
+                for v in self.client_token_map.values():
+                    if v == request.headers["AUTHTOKEN"]:
+                        return func(self,request,response)
+
+
+            response.data = { "errorCode" : "INVALID_AUTHORIZATION" }
+            response.status_code = 403
+
+            return response
+        return func_wrapper
+
+    @validate_authorization
     def post_hmip_home_getCurrentState(self,request : Request ,response : Response):
         response.data = json.dumps(self.data)
         return response
 
+    @validate_authorization
     def post_hmip_home_setLocation(self,request : Request ,response : Response):
+
         js = json.loads(request.data)
 
         self.data["home"]["location"]["city"] = js["city"]

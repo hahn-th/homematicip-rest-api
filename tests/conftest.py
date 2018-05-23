@@ -57,8 +57,8 @@ def fake_home(fake_cloud):
         lookup_url = "{}/getHost".format(fake_cloud.url)
     #    home.download_configuration = fake_home_download_configuration
         home._connection = Connection()
-        home.set_auth_token("AUTH_TOKEN")
-        home._connection.init(accesspoint_id="ASDF", lookup_url=lookup_url)
+        home.set_auth_token("8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE")
+        home._connection.init(accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url)
         home.get_current_state()
     return home
 
