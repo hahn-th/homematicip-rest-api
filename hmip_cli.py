@@ -155,9 +155,6 @@ def main():
     home.set_auth_token(_config.auth_token)
     home.init(_config.access_point)
 
-    if not home.get_current_state():
-        return
-
     command_entered = False
 
     if args.dump_config:
@@ -180,6 +177,10 @@ def main():
                 c = anonymizeConfig(c,'"longitude": ?"[^"]+"','"longitude": "16.358608"')
 
             print(c)
+
+
+    if not home.get_current_state():
+        return
 
     if args.list_devices:
         command_entered = True
