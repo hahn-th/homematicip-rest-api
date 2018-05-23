@@ -86,14 +86,14 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = ""
         self.label = ""
         self.homeId = ""
-        self.refreshToken = None
+        # refreshToken is not in the configuration from the webserver anymore. It will be removed in a future release
+        self.refreshToken = None 
 
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
-        self.refreshToken = js["refreshToken"]
 
     def __str__(self):
         return "label({})".format(self.label)
