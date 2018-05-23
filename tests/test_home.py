@@ -8,7 +8,7 @@ from homematicip.rule import *
 from homematicip.EventHook import EventHook
 import json
 from datetime import datetime, timedelta, timezone
-from conftest import fake_home_download_configuration
+from conftest import fake_home_download_configuration, no_ssl_verification
 
 
 dt = datetime.now(timezone.utc).astimezone()
@@ -40,6 +40,15 @@ def test_home_location(fake_home: Home):
     assert fake_home.location._rawJSONData == fake_home_download_configuration()["home"]["location"]
     assert str(fake_home.location) == "city(1010  Wien, österreich) latitude(48.208088) longitude(16.358608)"
 
+def test_home_set_location(fake_home: Home):
+    with no_ssl_verification():
+        fake_home.set_location("Berlin, Germany", "52.530644", "13.383068")
+        fake_home.get_current_state()
+        assert fake_home.location.city == "Berlin, Germany"
+        assert fake_home.location.latitude == "52.530644"
+        assert fake_home.location.longitude == "13.383068"
+        assert str(fake_home.location) == "city(Berlin, Germany) latitude(52.530644) longitude(13.383068)"
+
 def test_home_weather(fake_home: Home):
     assert fake_home.weather.humidity == 54
     assert fake_home.weather.maxTemperature == 16.6
@@ -53,7 +62,7 @@ def test_home_weather(fake_home: Home):
     assert str(fake_home.weather) == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) windSpeed(8.568) windDirection(294)"
 
 def test_clients(fake_home):
-    client = fake_home.clients[0]
+    client = fake_home.search_client_by_id('00000000-0000-0000-0000-000000000000')
     assert client.label == 'TEST-Client'
     assert client.homeId == '00000000-0000-0000-0000-000000000001'
     assert client.id == '00000000-0000-0000-0000-000000000000'
@@ -73,3 +82,16 @@ def test_rules(fake_home):
     assert rule.errorRuleActionItems == []
 
     assert str(rule) == "SIMPLE Alarmanlage active(True)"
+
+def test_security_zones_activation(fake_home):
+    with no_ssl_verification():
+        internal, external = fake_home.get_security_zones_activation()
+        assert internal == False
+        assert external == False
+
+        fake_home.set_security_zones_activation(True,True)
+        fake_home.get_current_state()
+
+        internal, external = fake_home.get_security_zones_activation()
+        assert internal == True
+        assert external == True
