@@ -55,6 +55,24 @@ class FakeCloudServer():
 
         return response
 
+    @validate_authorization
+    def post_hmip_home_security_setZonesActivation(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        
+        external = js["zonesActivation"]["EXTERNAL"]
+        internal = js["zonesActivation"]["INTERNAL"]
+
+        for g_id in self.data["groups"]:
+            g = self.data["groups"][g_id]
+            if g["type"] == "SECURITY_ZONE":
+                if g["label"] == "INTERNAL":
+                    g["active"] = internal
+                elif g["label"] == "EXTERNAL":
+                    g["active"] = external
+
+        return response
+
     def post_getHost(self,request : Request ,response : Response):
         data = {
             "urlREST" : self.url,

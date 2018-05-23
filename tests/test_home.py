@@ -82,3 +82,16 @@ def test_rules(fake_home):
     assert rule.errorRuleActionItems == []
 
     assert str(rule) == "SIMPLE Alarmanlage active(True)"
+
+def test_security_zones_activation(fake_home):
+    with no_ssl_verification():
+        internal, external = fake_home.get_security_zones_activation()
+        assert internal == False
+        assert external == False
+
+        fake_home.set_security_zones_activation(True,True)
+        fake_home.get_current_state()
+
+        internal, external = fake_home.get_security_zones_activation()
+        assert internal == True
+        assert external == True
