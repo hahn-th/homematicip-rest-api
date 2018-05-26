@@ -87,7 +87,7 @@ class AsyncHome(Home):
     def set_zone_activation_delay(self, delay):
         pass
 
-    def set_security_zones_activation(self, internal=True, external=True):
+    async def set_security_zones_activation(self, internal=True, external=True):
         return await self._connection.api_call(*super().set_security_zones_activation(internal, external))
 
     def delete_group(self, group):
