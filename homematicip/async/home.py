@@ -51,8 +51,8 @@ class AsyncHome(Home):
     def get_OAuth_OTK(self):
         pass
 
-    def activate_absence_with_duration(self, duration):
-        pass
+    async def activate_absence_with_duration(self, duration):
+        return await self._connection.api_call(*super().activate_absence_with_duration(duration))
 
     def set_powermeter_unit_price(self, price):
         pass
@@ -69,26 +69,26 @@ class AsyncHome(Home):
     def set_pin(self, newPin, oldPin=None):
         pass
 
-    def get_security_journal(self):
-        pass
+    async def get_security_journal(self):
+        return await self._connection.api_call(*super().get_security_journal())
 
-    def activate_absence_with_period(self, endtime):
-        pass
+    async def activate_absence_with_period(self, endtime):
+        return await self._connection.api_call(*super().activate_absence_with_period(endtime))
 
-    def deactivate_absence(self):
-        pass
+    async def deactivate_absence(self):
+        return await self._connection.api_call(*super().deactivate_absence())
 
-    def activate_vacation(self, endtime, temperature):
-        pass
+    async def activate_vacation(self, endtime, temperature):
+        return await self._connection.api_call(*super().activate_vacation(endtime, temperature))
 
-    def deactivate_vacation(self):
-        pass
+    async def deactivate_vacation(self):
+        return await self._connection.api_call(*super().deactivate_vacation())
 
     def set_zone_activation_delay(self, delay):
         pass
 
     def set_security_zones_activation(self, internal=True, external=True):
-        pass
+        return await self._connection.api_call(*super().set_security_zones_activation(internal, external))
 
     def delete_group(self, group):
         pass
