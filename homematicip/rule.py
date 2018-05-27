@@ -31,7 +31,7 @@ class Rule(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_label(self, label ):
         """ sets the label of the rule """
-        data = {"ruleId": self.id, "label": self.label }
+        data = {"ruleId": self.id, "label": label }
         return self._restCall("rule/setRuleLabel", json.dumps(data))
 
     def __str__(self):

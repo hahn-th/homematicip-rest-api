@@ -8,7 +8,7 @@ from homematicip.device import *
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration
+from conftest import fake_home_download_configuration,no_ssl_verification
 
 dt = datetime.now(timezone.utc).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
@@ -311,3 +311,29 @@ def test_dimmer(fake_home):
 
     assert str(d) == ('HmIP-BDT Schlafzimmerlicht lowbat(None) unreach(False) rssiDeviceValue(-44) rssiPeerValue(-42) configPending(False) dutyCycle(False) dimLevel(0.0)'
                       ' profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)')
+
+def test_basic_device_functions(fake_home:Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.label == "Brunnen"
+        assert d.routerModuleEnabled == True
+
+        d.set_label("new label")
+        d.set_router_module_enabled(False)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.label == "new label"
+        assert d.routerModuleEnabled == False
+
+        d.set_label("other label")
+        d.set_router_module_enabled(True)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.label == "other label"
+        assert d.routerModuleEnabled == True
+
+        d.delete()
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d == None
+

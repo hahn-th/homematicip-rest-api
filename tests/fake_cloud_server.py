@@ -5,7 +5,7 @@ import hashlib
 
 class FakeCloudServer():
     """ a fake server to act as the HMIP cloud"""
-
+#region __init__ & helper functions
     def __init__(self):
         self.data = json.load(open("tests/json_data/home.json", encoding="UTF-8"))
         self.sgtin = '3014F711A000000BAD0C0DED'
@@ -25,6 +25,14 @@ class FakeCloudServer():
             response.data = json.dumps( { "errorCode" : str(e) })
         return response(environ,start_response)
 
+    def call_method(self,func_name,*args,**kwargs):
+        if func_name[0] == '_':
+            raise NameError('Can\'t call internal function {}'.format(func_name))
+        def func_not_found(*args,**kwargs): # just in case we dont have the function
+            raise NameError('Can\'t find method {}'.format(func_name))
+        func = getattr(self,func_name,func_not_found) 
+        return func(*args,**kwargs) # <-- this should work!
+
     def validate_authorization(func):
         def func_wrapper(self,request : Request ,response : Response):
             try:
@@ -35,12 +43,16 @@ class FakeCloudServer():
             except:
                 pass
 
-            response.data = json.dumps({ "errorCode" : "INVALID_AUTHORIZATION" })
-            response.status_code = 403
-
-            return response
+            return self.errorCode(response, "INVALID_AUTHORIZATION", 403)
         return func_wrapper
 
+    def errorCode(self,response : Response, message, status_code):
+        response.data = json.dumps({ "errorCode" : message })
+        response.status_code = status_code
+        return response
+#endregion
+
+#region home
     @validate_authorization
     def post_hmip_home_getCurrentState(self,request : Request ,response : Response):
         response.data = json.dumps(self.data)
@@ -56,7 +68,9 @@ class FakeCloudServer():
         self.data["home"]["location"]["longitude"] = js["longitude"]
 
         return response
+#endregion
 
+#region home/security
     @validate_authorization
     def post_hmip_home_security_setZonesActivation(self,request : Request ,response : Response):
 
@@ -74,6 +88,72 @@ class FakeCloudServer():
                     g["active"] = external
 
         return response
+#endregion
+
+#region rule
+    @validate_authorization
+    def post_hmip_rule_enableSimpleRule(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            rule = self.data["home"]["ruleMetaDatas"][js["ruleId"]]
+            rule["active"] = js["enabled"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_RULE", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_rule_setRuleLabel(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            rule = self.data["home"]["ruleMetaDatas"][js["ruleId"]]
+            rule["label"] = js["label"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_RULE", 404)
+        return response
+#endregion
+
+#region device
+
+    @validate_authorization
+    def post_hmip_device_setDeviceLabel(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            d["label"] = js["label"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_device_configuration_setRouterModuleEnabled(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["routerModuleEnabled"] = js["routerModuleEnabled"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_device_deleteDevice(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            self.data["devices"].pop(js["deviceId"], None)
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+#endregion
 
     def post_getHost(self,request : Request ,response : Response):
         data = {
@@ -83,15 +163,6 @@ class FakeCloudServer():
             }
         response.data = json.dumps(data)
         return response
-
-
-    def call_method(self,func_name,*args,**kwargs):
-        if func_name[0] == '_':
-            raise NameError('Can\'t call internal function {}'.format(func_name))
-        def func_not_found(*args,**kwargs): # just in case we dont have the function
-            raise NameError('Can\'t find method {}'.format(func_name))
-        func = getattr(self,func_name,func_not_found) 
-        return func(*args,**kwargs) # <-- this should work!
 
 
 

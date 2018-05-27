@@ -71,17 +71,34 @@ def test_clients(fake_home):
     assert client._rawJSONData == fake_home_download_configuration()["clients"]['00000000-0000-0000-0000-000000000000']
     assert str(client) == "label(TEST-Client)"
 
-def test_rules(fake_home):
-    rule = fake_home.search_rule_by_id('00000000-0000-0000-0000-000000000065')
-    assert rule.active == True
-    assert rule.label == 'Alarmanlage'
-    assert isinstance(rule,SimpleRule)
-    assert rule.ruleErrorCategories == []
-    assert rule.errorRuleTriggerItems == []
-    assert rule.errorRuleConditionItems == []
-    assert rule.errorRuleActionItems == []
+def test_rules(fake_home : Home):
+    with no_ssl_verification():
+        rule = fake_home.search_rule_by_id('00000000-0000-0000-0000-000000000065')
+        assert rule.active == True
+        assert rule.label == 'Alarmanlage'
+        assert isinstance(rule,SimpleRule)
+        assert rule.ruleErrorCategories == []
+        assert rule.errorRuleTriggerItems == []
+        assert rule.errorRuleConditionItems == []
+        assert rule.errorRuleActionItems == []
 
-    assert str(rule) == "SIMPLE Alarmanlage active(True)"
+        assert str(rule) == "SIMPLE Alarmanlage active(True)"
+
+        #disable test
+        rule.disable()
+        rule.set_label("DISABLED_RULE")
+        fake_home.get_current_state()
+        rule = fake_home.search_rule_by_id('00000000-0000-0000-0000-000000000065')
+        assert rule.active == False
+        assert rule.label == "DISABLED_RULE"
+
+        #endable test
+        rule.enable()
+        rule.set_label("ENABLED_RULE")
+        fake_home.get_current_state()
+        rule = fake_home.search_rule_by_id('00000000-0000-0000-0000-000000000065')
+        assert rule.active == True
+        assert rule.label == "ENABLED_RULE"
 
 def test_security_zones_activation(fake_home):
     with no_ssl_verification():

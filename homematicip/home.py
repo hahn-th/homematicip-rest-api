@@ -7,6 +7,7 @@ from homematicip.base.constants import DEVICE
 from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP, TYPE_RULE_MAP
 from homematicip.connection import Connection
 from homematicip.group import *
+from homematicip.device import *
 from homematicip.securityEvent import *
 from homematicip.rule import *
 from homematicip.base.helpers import bytes2str
@@ -211,6 +212,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return True
 
     def _get_devices(self, json_state):
+        self.devices = []
         for id_, raw in json_state["devices"].items():
             _device = self.search_device_by_id(id_)
             if _device:
@@ -231,6 +233,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             return d
 
     def _get_rules(self, json_state):
+        self.rules = []
         for id_, raw in json_state["ruleMetaDatas"].items():
             _rule = self.search_rule_by_id(id_)
             if _rule:
@@ -250,6 +253,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return r
 
     def _get_clients(self, json_state):
+        self.clients = []
         for id_, raw in json_state["clients"].items():
             _client = self.search_client_by_id(id_)
             if _client:
@@ -274,6 +278,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return g
 
     def _get_groups(self, json_state):
+        self.groups = []
         metaGroups = []
         for id_, raw in json_state["groups"].items():
             _group = self.search_group_by_id(id_)
@@ -291,7 +296,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for mg in metaGroups:
             self.groups.append(self._parse_group(mg))
 
-    def search_device_by_id(self, deviceID):
+    def search_device_by_id(self, deviceID) -> Device:
         """ searches a device by given id
         :param deviceID the device to search for
         :return the Device object or None if it couldn't find a device
@@ -301,7 +306,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 return d
         return None
 
-    def search_group_by_id(self, groupID):
+    def search_group_by_id(self, groupID) -> Group:
         """ searches a group by given id
         :param groupID the device to search for
         :return the group object or None if it couldn't find a group
@@ -311,7 +316,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 return g
         return None
 
-    def search_client_by_id(self, clientID):
+    def search_client_by_id(self, clientID) -> Client:
         """ searches a client by given id
         :param clientID the device to search for
         :return the client object or None if it couldn't find a client
@@ -321,7 +326,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 return c
         return None
 
-    def search_rule_by_id(self, ruleID):
+    def search_rule_by_id(self, ruleID) -> Rule:
         """ searches a rule by given id
         :param ruleID the device to search for
         :return the rule object or None if it couldn't find a rule
