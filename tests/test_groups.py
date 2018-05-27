@@ -22,6 +22,7 @@ def test_meta_group(fake_home):
     assert g.configPending == False
     assert g.unreach == False
     assert g.dutyCycle == False
+    assert g.incorrectPositioned == None
     for d in g.devices:
         assert d.id in ['3014F7110000000000000025', '3014F7110000000000000016']
     for g_sub in g.groups:
@@ -106,7 +107,7 @@ def test_security_group(fake_home):
     assert g.windowState == "CLOSED"
 
     assert str(g) == ('SECURITY Büro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
-                      ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False)')
+                      ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False) powerMainsFailure(None) moistureDetected(None) waterlevelDetected(None)')
 
 def test_switching_group(fake_home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')

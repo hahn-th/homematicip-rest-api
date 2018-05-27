@@ -61,6 +61,7 @@ class MetaGroup(Group):
         self.sabotage = False
         self.configPending = False
         self.dutyCycle = False
+        self.incorrectPositioned = None
 
     def from_json(self, js, devices, groups):
 
@@ -70,6 +71,7 @@ class MetaGroup(Group):
         self.sabotage = js["sabotage"]
         self.configPending = js["configPending"]
         self.dutyCycle = js["dutyCycle"]
+        self.incorrectPositioned = js["incorrectPositioned"]
 
         self.groups = []
         for group in js["groups"]:
@@ -91,6 +93,9 @@ class SecurityGroup(Group):
         self.smokeDetectorAlarmType = None
         self.dutyCycle = None
         self.lowBat = None
+        self.moistureDetected = None
+        self.powerMainsFailure = None
+        self.waterlevelDetected = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -101,12 +106,15 @@ class SecurityGroup(Group):
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
         self.dutyCycle = js["dutyCycle"]
         self.lowBat = js["lowBat"]
+        self.moistureDetected = js["moistureDetected"]
+        self.powerMainsFailure = js["powerMainsFailure"]
+        self.waterlevelDetected = js["waterlevelDetected"]
 
     def __str__(self):
-        return "{}: windowState({}) motionDetected({}) presenceDetected({}) sabotage({}) smokeDetectorAlarmType({}) dutyCycle({}) lowBat({})".format(
+        return "{}: windowState({}) motionDetected({}) presenceDetected({}) sabotage({}) smokeDetectorAlarmType({}) dutyCycle({}) lowBat({}) powerMainsFailure({}) moistureDetected({}) waterlevelDetected({})".format(
             super().__str__(),
             self.windowState, self.motionDetected, self.presenceDetected, self.sabotage,
-            self.smokeDetectorAlarmType, self.dutyCycle, self.lowBat)
+            self.smokeDetectorAlarmType, self.dutyCycle, self.lowBat, self.powerMainsFailure, self.moistureDetected, self.waterlevelDetected)
 
 
 class SwitchingGroup(Group):
