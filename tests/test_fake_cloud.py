@@ -20,3 +20,17 @@ def test_calling_internal_func():
 def test_calling_invalid_func():
     with pytest.raises(NameError):
         FakeCloudServer().call_method("get_this_function_does_not_exist")
+
+def test_invlid_authorization(fake_cloud):
+    with no_ssl_verification():
+        response = requests.post("{}/hmip/home/getCurrentState".format(fake_cloud.url))
+        js = json.loads(response.text)
+        assert js["errorCode"] == "INVALID_AUTHORIZATION"
+        assert response.status_code == 403
+
+def test_invalid_url(fake_cloud):
+    with no_ssl_verification():
+        response = requests.post("{}/hmip/invalid/path".format(fake_cloud.url))
+        js = json.loads(response.text)
+        assert js["errorCode"] == "Can\'t find method post_hmip_invalid_path"
+        assert response.status_code == 404

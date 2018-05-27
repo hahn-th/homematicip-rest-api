@@ -19,7 +19,7 @@ class FakeCloudServer():
         methodname = "{}{}".format(request.method.lower(), request.path.replace('/','_'))
         response.content_type = 'application/json;charset=UTF-8'
         try:
-            respone=self.call_method(methodname,request,response)
+            response=self.call_method(methodname,request,response)
         except NameError as e:
             response.status_code = 404
             response.data = json.dumps( { "errorCode" : str(e) })
@@ -27,13 +27,15 @@ class FakeCloudServer():
 
     def validate_authorization(func):
         def func_wrapper(self,request : Request ,response : Response):
-            if request.headers["CLIENTAUTH"] == self.client_auth_token:
-                for v in self.client_token_map.values():
-                    if v == request.headers["AUTHTOKEN"]:
-                        return func(self,request,response)
+            try:
+                if request.headers["CLIENTAUTH"] == self.client_auth_token:
+                    for v in self.client_token_map.values():
+                        if v == request.headers["AUTHTOKEN"]:
+                            return func(self,request,response)  
+            except:
+                pass
 
-
-            response.data = { "errorCode" : "INVALID_AUTHORIZATION" }
+            response.data = json.dumps({ "errorCode" : "INVALID_AUTHORIZATION" })
             response.status_code = 403
 
             return response
