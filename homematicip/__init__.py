@@ -4,6 +4,10 @@ import configparser
 import os
 from collections import namedtuple
 
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
 HmipConfig = namedtuple('HmipConfig', ['auth_token', 'access_point', 'log_level', 'log_file', 'raw_config'])
 
 def find_and_load_config_file() -> HmipConfig:

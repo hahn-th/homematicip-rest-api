@@ -32,13 +32,12 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install pytest pytest-cov pytest-localserver pytest-xdist
-            pip install -r requirements.txt
+            pip install -r requirements_dev.txt
 
       - save_cache:
           paths:
             - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v1-dependencies-{{ checksum "requirements_dev.txt" }}
         
       # run tests!
       # https://pytest.org

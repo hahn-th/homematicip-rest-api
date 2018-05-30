@@ -13,6 +13,7 @@ from homematicip.group import *
 from homematicip.rule import *
 from homematicip.home import Home
 
+
 logger = None
 
 
@@ -63,7 +64,8 @@ def main():
     parser = ArgumentParser(description="a cli wrapper for the homematicip API")
     parser.add_argument("--config_file", type=str, help="the configuration file. If nothing is specified the script will search for it.")
     parser.add_argument("--debug-level", dest="debug_level", type=int, help="the debug level which should get used(Critical=50, DEBUG=10)")
-
+    parser.add_argument("--version", action="version", version='%(prog)s {}'.format(homematicip.__version__))
+	
     group = parser.add_argument_group("Display Configuration")
     group.add_argument("--dump-configuration", action="store_true", dest="dump_config",help="dumps the current configuration from the AP")
     group.add_argument("--anonymize", action="store_true", dest="anonymize",help="used together with --dump-configuration to anonymize the output")
@@ -125,6 +127,8 @@ def main():
 
     try:
         args = parser.parse_args()
+    except SystemExit:
+        return
     except:
         print('could not parse arguments')
         parser.print_help()

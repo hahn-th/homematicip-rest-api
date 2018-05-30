@@ -1,1 +1,3 @@
 include README.rst LICENSE.txt
+include versioneer.py
+include homematicip/_version.py
