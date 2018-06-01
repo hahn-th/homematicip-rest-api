@@ -32,7 +32,6 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="dump_devicevalues.py" />
     <Compile Include="hmip_generate_auth_token.py" />
     <Compile Include="homematicip\async\class_maps.py" />
     <Compile Include="homematicip\async\connection.py" />
