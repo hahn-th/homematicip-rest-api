@@ -212,7 +212,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return True
 
     def _get_devices(self, json_state):
-        self.devices = []
+        self.devices = [x for x in self.devices if x.id in json_state["devices"].keys()]
         for id_, raw in json_state["devices"].items():
             _device = self.search_device_by_id(id_)
             if _device:
@@ -233,7 +233,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             return d
 
     def _get_rules(self, json_state):
-        self.rules = []
+        self.rules = [x for x in self.rules if x.id in json_state["ruleMetaDatas"].keys()]
         for id_, raw in json_state["ruleMetaDatas"].items():
             _rule = self.search_rule_by_id(id_)
             if _rule:
@@ -253,7 +253,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return r
 
     def _get_clients(self, json_state):
-        self.clients = []
+        self.clients = [x for x in self.clients if x.id in json_state["clients"].keys()]
         for id_, raw in json_state["clients"].items():
             _client = self.search_client_by_id(id_)
             if _client:
@@ -278,7 +278,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return g
 
     def _get_groups(self, json_state):
-        self.groups = []
+        self.groups = [x for x in self.groups if x.id in json_state["groups"].keys()]
         metaGroups = []
         for id_, raw in json_state["groups"].items():
             _group = self.search_group_by_id(id_)

@@ -65,7 +65,7 @@ def main():
     parser.add_argument("--config_file", type=str, help="the configuration file. If nothing is specified the script will search for it.")
     parser.add_argument("--debug-level", dest="debug_level", type=int, help="the debug level which should get used(Critical=50, DEBUG=10)")
     parser.add_argument("--version", action="version", version='%(prog)s {}'.format(homematicip.__version__))
-	
+    
     group = parser.add_argument_group("Display Configuration")
     group.add_argument("--dump-configuration", action="store_true", dest="dump_config",help="dumps the current configuration from the AP")
     group.add_argument("--anonymize", action="store_true", dest="anonymize",help="used together with --dump-configuration to anonymize the output")

@@ -332,8 +332,10 @@ def test_basic_device_functions(fake_home:Home):
         assert d.label == "other label"
         assert d.routerModuleEnabled == True
 
+        d2 = fake_home.search_device_by_id('3014F7110000000000000005')
         d.delete()
         fake_home.get_current_state()
         d = fake_home.search_device_by_id('3014F7110000000000000009')
         assert d == None
+        assert d2 is fake_home.search_device_by_id('3014F7110000000000000005') # make sure that the objects got updated and not completely renewed
 
