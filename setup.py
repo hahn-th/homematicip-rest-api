@@ -14,7 +14,6 @@ setup(
     name='homematicip',
     packages=find_packages(exclude='tests'),	
     long_description=long_description,
-    version=versioneer.get_version(),
     description='An API for the homematicip cloud',
     author='Heimo Stieg',
     author_email='stieg@corona-bytes.net',
@@ -24,7 +23,7 @@ setup(
     classifiers=['Development Status :: 4 - Beta', 'Programming Language :: Python :: 3 :: Only'],
     install_requires=["requests>=2.4.3", "websocket-client", "websockets", "aiohttp", "async_timeout"],
     scripts=['hmip_cli.py', 'hmip_generate_auth_token.py'],
-	python_requires='>=3',
-	version=versioneer.get_version(),
-	cmdclass=versioneer.get_cmdclass(),
+    python_requires='>=3',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass()
 )
