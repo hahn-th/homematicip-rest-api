@@ -70,7 +70,24 @@ class AsyncHome(Home):
         pass
 
     async def get_security_journal(self):
-        return await self._connection.api_call(*super().get_security_journal())
+        journal = await self._connection.api_call(
+            'home/security/getSecurityJournal', json.dumps(self._connection.clientCharacteristics))
+        if (journal is None or "errorCode" in journal):
+            LOGGER.error("Could not get the security journal. Error: %s", journal["errorCode"])
+            return None
+        ret = []
+        for entry in journal["entries"]:
+            eventType = entry["eventType"]
+            if eventType in self._typeSecurityEventMap:
+                j = self._typeSecurityEventMap[eventType](self._connection)
+                j.from_json(entry)
+                ret.append(j)
+            else:
+                j = SecurityEvent(self._connection)
+                j.from_json(entry)
+                ret.append(j)
+                LOGGER.warning("There is no class for %s yet", eventType)
+        return ret
 
     async def activate_absence_with_period(self, endtime):
         return await self._connection.api_call(*super().activate_absence_with_period(endtime))
