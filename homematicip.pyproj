@@ -77,6 +77,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
+    <Compile Include="tests\async_tests\helpers.py" />
+    <Compile Include="tests\async_tests\notest_async_heating_group.py" />
+    <Compile Include="tests\async_tests\notest_connection_async.py" />
+    <Compile Include="tests\async_tests\notest_plugable_switch_measuring_async.py" />
+    <Compile Include="tests\async_tests\test_async_home.py" />
     <Compile Include="tests\test_fake_cloud.py">
       <SubType>Code</SubType>
     </Compile>
@@ -107,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="tests\" />
+    <Folder Include="tests\async_tests\" />
     <Folder Include="tests\json_data\" />
   </ItemGroup>
   <ItemGroup>

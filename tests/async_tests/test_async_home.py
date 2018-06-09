@@ -13,9 +13,12 @@ utc_offset = dt.utcoffset() // timedelta(seconds=1)
 @pytest.mark.asyncio
 async def test_async_home_base(fake_async_home: AsyncHome):
     with no_ssl_verification():
-        fake_async_home.set_location("Berlin, Germany", "52.530644", "13.383068")
-        result = await fake_async_home.get_current_state()
-        assert fake_async_home.location.city == "Berlin, Germany"
-        assert fake_async_home.location.latitude == "52.530644"
-        assert fake_async_home.location.longitude == "13.383068"
-        assert str(fake_async_home.location) == "city(Beggrlin, Germany) latitude(52.530644) longitude(13.383068)"
+        assert fake_async_home.connected == True
+        assert fake_async_home.currentAPVersion == "1.2.4"
+        assert fake_async_home.deviceUpdateStrategy == "AUTOMATICALLY_IF_POSSIBLE"
+        assert fake_async_home.dutyCycle == 8.0
+        assert fake_async_home.pinAssigned == False
+        assert fake_async_home.powerMeterCurrency == "EUR"
+        assert fake_async_home.powerMeterUnitPrice == 0.0
+        assert fake_async_home.timeZoneId == "Europe/Vienna"
+        assert fake_async_home.updateState == "UP_TO_DATE"
