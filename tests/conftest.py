@@ -95,6 +95,6 @@ async def fake_async_home(fake_cloud,event_loop):
     #    home.download_configuration = fake_home_download_configuration
         home._connection = AsyncConnection(event_loop)
         home.set_auth_token("8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE")
-        home._connection.init(accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url)
+        await home._connection.init(accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url)
         await home.get_current_state()
     yield home
