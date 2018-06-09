@@ -74,11 +74,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
 
     def is_update_applicable(self):
         data = {"deviceId": self.id}
-        result = self._restCall("device/isUpdateApplicable", json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result["errorCode"]
+        return self._restCall("device/isUpdateApplicable", json.dumps(data))
 
     def authorizeUpdate(self):
         data = {"deviceId": self.id}
@@ -93,11 +89,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             return False
         data = {"deviceId": self.id, "channelIndex": 0,
                 "routerModuleEnabled": enabled}
-        result = self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
-        if result == "":
-            return True
-        else:
-            return result["errorCode"]
+        return self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
 
 
 class SabotageDevice(Device):

@@ -15,20 +15,20 @@ _LOGGER = logging.getLogger(__name__)
 class AsyncDevice(Device):
     """ Async implementation of a genereric homematic ip device """
 
-    def set_label(self, label):
-        pass
+    async def set_label(self, label):
+        return await self._connection.api_call(*super().set_label(label))
 
-    def authorizeUpdate(self):
-        pass
+    async def authorizeUpdate(self):
+        return await self._connection.api_call(*super().authorizeUpdate())
 
-    def delete(self):
-        pass
+    async def delete(self):
+        return await self._connection.api_call(*super().delete())
 
-    def set_router_module_enabled(self, enabled=True):
-        pass
+    async def set_router_module_enabled(self, enabled=True):
+        return await self._connection.api_call(*super().set_router_module_enabled(enabled))
 
-    def is_update_applicable(self):
-        pass
+    async def is_update_applicable(self):
+        return await self._connection.api_call(*super().is_update_applicable())
 
 
 class AsyncSwitch(Switch, AsyncDevice):
