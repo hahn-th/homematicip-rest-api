@@ -10,6 +10,7 @@ from homematicip.base.base_connection import BaseConnection, HmipWrongHttpStatus
 
 LOGGER = logging.getLogger(__name__)
 
+
 class AsyncAuthConnection(AsyncConnection):
     def __init__(self, loop, session=None):
         super().__init__(loop, session)
@@ -21,36 +22,30 @@ class AsyncAuth(Auth):
 
     def __init__(self, loop, websession=None):
         self.uuid = str(uuid.uuid4())
+        self.pin = None
         self._connection=AsyncAuthConnection(loop, websession)
 
     async def init(self, access_point_id, lookup=True):
+        self.accesspoint = access_point_id
         await self._connection.init(access_point_id, lookup)
 
-# not yet touched
-
-    def connectionRequest(self, access_point, devicename = "homematicip-python"):
-        data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": access_point}
-        headers = self.headers
+    async def connectionRequest(self, devicename = "homematicip-async"):
+        data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": self.accesspoint}
         if self.pin != None:
-            headers["PIN"] = self.pin
-        response = requests.post("{}/hmip/auth/connectionRequest".format(self.url_rest), json=data,
-                                 headers=headers)
-        return response
+            self._connection.headers["PIN"] = self.pin
+        json_state =  await self._connection.api_call('auth/connectionRequest', json.dumps(data))
+        return json_state
 
-    def isRequestAcknowledged(self):
+    async def isRequestAcknowledged(self):
         data = {"deviceId": self.uuid}
-        response = requests.post("{}/hmip/auth/isRequestAcknowledged".format(self.url_rest), json=data,
-                                 headers=self.headers)
-        return response.status_code == 200
+        return await self._connection.api_call('auth/isRequestAcknowledged', json.dumps(data))
 
-    def requestAuthToken(self):
+    async def requestAuthToken(self):
         data = {"deviceId": self.uuid}
-        response = requests.post("{}/hmip/auth/requestAuthToken".format(self.url_rest), json=data,
-                                 headers=self.headers)
-        return json.loads(response.text)["authToken"]
+        json_state = await self._connection.api_call('auth/requestAuthToken', json.dumps(data))
+        return json_state["authToken"]
 
-    def confirmAuthToken(self, authToken):
+    async def confirmAuthToken(self, authToken):
         data = {"deviceId": self.uuid, "authToken": authToken}
-        response = requests.post("{}/hmip/auth/confirmAuthToken".format(self.url_rest), json=data,
-                                 headers=self.headers)
-        return json.loads(response.text)["clientId"]
+        json_state = await self._connection.api_call('auth/confirmAuthToken', json.dumps(data))
+        return json_state["clientId"]
