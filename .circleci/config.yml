@@ -77,7 +77,7 @@ jobs:
           key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
-			
+
       - run:
           name: init .pypirc
           command: |
