@@ -1,13 +1,13 @@
 import homematicip.base.constants as cn
 
-from homematicip.async.device import AsyncPlugableSwitch, \
+from homematicip.aio.device import AsyncPlugableSwitch, \
     AsyncPlugableSwitchMeasuring, AsyncShutterContact, AsyncHeatingThermostat, \
     AsyncWallMountedThermostatPro, AsyncSmokeDetector, AsyncFloorTerminalBlock6, \
     AsyncTemperatureHumiditySensorDisplay, AsyncTemperatureHumiditySensorWithoutDisplay, \
     AsyncPushButton, AsyncAlarmSirenIndoor, AsyncMotionDetectorIndoor, AsyncKeyRemoteControlAlarm, \
     AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice, AsyncBrandSwitchMeasuring, \
     AsyncFullFlushSwitchMeasuring
-from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
+from homematicip.aio.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncExtendedLinkedSwitchingGroup, AsyncLinkedSwitchingGroup, AsyncAlarmSwitchingGroup, \
     AsyncHeatingHumidyLimiterGroup, AsyncHeatingTemperatureLimiterGroup, \
     AsyncHeatingChangeoverGroup, AsyncInboxGroup, AsyncSecurityZoneGroup, AsyncHeatingGroup, \
@@ -15,7 +15,7 @@ from homematicip.async.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
     AsyncHeatingCoolingDemandBoilerGroup, AsyncHeatingCoolingDemandPumpGroup, \
     AsyncSwitchingProfileGroup, AsyncOverHeatProtectionRule, AsyncSmokeAlarmDetectionRule, \
     AsyncLockOutProtectionRule, AsyncShutterWindProtectionRule, AsyncExtendedLinkedShutterGroup
-from homematicip.async.securityEvent import AsyncSilenceChangedEvent, AsyncActivationChangedEvent, \
+from homematicip.aio.securityEvent import AsyncSilenceChangedEvent, AsyncActivationChangedEvent, \
     AsyncAccessPointConnectedEvent, AsyncAccessPointDisconnectedEvent, AsyncSensorEvent
 
 TYPE_CLASS_MAP = {

@@ -7,7 +7,7 @@ import config
 import logging
 import datetime
 from pprint import pprint
-from homematicip.async.home import AsyncHome
+from homematicip.aio.home import AsyncHome
 from homematicip.base.base_connection import HmipConnectionError
 
 
