@@ -9,7 +9,7 @@ from aiohttp import web
 from aiohttp.resolver import DefaultResolver
 from aiohttp.test_utils import unused_port
 
-from homematicip.async.connection import AsyncConnection
+from homematicip.aio.connection import AsyncConnection
 from homematicip.base.base_connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
 
 

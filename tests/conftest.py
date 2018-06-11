@@ -7,7 +7,7 @@ import requests
 import contextlib
 
 from unittest.mock import MagicMock
-from homematicip.async.connection import AsyncConnection
+from homematicip.aio.connection import AsyncConnection
 from homematicip.home import Home
 from homematicip.connection import Connection
 

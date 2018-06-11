@@ -1,6 +1,6 @@
 import pytest
 import asyncio
-from homematicip.async.home import AsyncHome
+from homematicip.aio.home import AsyncHome
 from homematicip.base.base_connection import HmipConnectionError
 
 

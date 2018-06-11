@@ -3,7 +3,7 @@ import asyncio
 import aiohttp
 import pytest
 
-from homematicip.async.connection import AsyncConnection
+from homematicip.aio.connection import AsyncConnection
 from homematicip.base.base_connection import HmipWrongHttpStatusError, \
     HmipConnectionError, \
     ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipServerCloseError

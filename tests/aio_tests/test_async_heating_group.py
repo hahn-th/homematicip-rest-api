@@ -1,6 +1,6 @@
 import pytest
 
-from homematicip.async.group import AsyncHeatingGroup
+from homematicip.aio.group import AsyncHeatingGroup
 
 
 @pytest.mark.asyncio
