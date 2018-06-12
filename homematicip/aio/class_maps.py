@@ -1,22 +1,8 @@
 import homematicip.base.constants as cn
 
-from homematicip.aio.device import AsyncPlugableSwitch, \
-    AsyncPlugableSwitchMeasuring, AsyncShutterContact, AsyncHeatingThermostat, \
-    AsyncWallMountedThermostatPro, AsyncSmokeDetector, AsyncFloorTerminalBlock6, \
-    AsyncTemperatureHumiditySensorDisplay, AsyncTemperatureHumiditySensorWithoutDisplay, \
-    AsyncPushButton, AsyncAlarmSirenIndoor, AsyncMotionDetectorIndoor, AsyncKeyRemoteControlAlarm, \
-    AsyncFullFlushShutter, AsyncPresenceDetectorIndoor, AsyncPluggableDimmer, AsyncDevice, AsyncBrandSwitchMeasuring, \
-    AsyncFullFlushSwitchMeasuring
-from homematicip.aio.group import AsyncSecurityGroup, AsyncSwitchingGroup, \
-    AsyncExtendedLinkedSwitchingGroup, AsyncLinkedSwitchingGroup, AsyncAlarmSwitchingGroup, \
-    AsyncHeatingHumidyLimiterGroup, AsyncHeatingTemperatureLimiterGroup, \
-    AsyncHeatingChangeoverGroup, AsyncInboxGroup, AsyncSecurityZoneGroup, AsyncHeatingGroup, \
-    AsyncHeatingCoolingDemandGroup, AsyncHeatingExternalClockGroup, AsyncHeatingDehumidifierGroup, \
-    AsyncHeatingCoolingDemandBoilerGroup, AsyncHeatingCoolingDemandPumpGroup, \
-    AsyncSwitchingProfileGroup, AsyncOverHeatProtectionRule, AsyncSmokeAlarmDetectionRule, \
-    AsyncLockOutProtectionRule, AsyncShutterWindProtectionRule, AsyncExtendedLinkedShutterGroup
-from homematicip.aio.securityEvent import AsyncSilenceChangedEvent, AsyncActivationChangedEvent, \
-    AsyncAccessPointConnectedEvent, AsyncAccessPointDisconnectedEvent, AsyncSensorEvent
+from homematicip.aio.device import *
+from homematicip.aio.group import *
+from homematicip.aio.securityEvent import *
 
 TYPE_CLASS_MAP = {
     cn.DEVICE: AsyncDevice,
@@ -40,7 +26,12 @@ TYPE_CLASS_MAP = {
     cn.BRAND_SHUTTER: AsyncFullFlushShutter,
     cn.PRECENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
     cn.PLUGGABLE_DIMMER: AsyncPluggableDimmer,
-    cn.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring
+    cn.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring,
+    cn.WEATHER_SENSOR: AsyncWeatherSensor,
+    cn.WEATHER_SENSOR_PRO: AsyncWeatherSensorPro,
+    cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: AsyncTemperatureHumiditySensorOutdoor,
+    cn.BRAND_DIMMER: AsyncBrandDimmer,
+    cn.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor
 }
 
 TYPE_GROUP_MAP = {
