@@ -16,14 +16,6 @@ from homematicip.connection import Connection
 from pytest_localserver.http import WSGIServer
 from fake_cloud_server import FakeCloudServer
 
-def AsyncMock(*args, **kwargs):
-    m = MagicMock(*args, **kwargs)
-
-    async def mock_coro(*args, **kwargs):
-        return m(*args, **kwargs)
-
-    mock_coro.mock = m
-    return mock_coro
 
 def fake_home_download_configuration():
     with open("tests/json_data/home.json", encoding="UTF-8") as f:
@@ -75,17 +67,19 @@ def fake_home(fake_cloud):
         home.get_current_state()
     return home
 
-@pytest.fixture
-def fake_connection(event_loop):
-    _connection = AsyncConnection(event_loop)
-    _connection.api_call = AsyncMock(return_value='called')
-    return _connection
 
-@pytest.fixture
-def async_connection(event_loop):
-    _connection = AsyncConnection(event_loop)
-    yield _connection
-    _connection._websession.close()
+#are these still needed?
+#@pytest.fixture
+#def fake_connection(event_loop):
+#    _connection = AsyncConnection(event_loop)
+#    _connection.api_call = AsyncMock(return_value='called')
+#    return _connection
+
+#@pytest.fixture
+#def async_connection(event_loop):
+#    _connection = AsyncConnection(event_loop)
+#    yield _connection
+#    _connection._websession.close()
 
 @pytest.fixture
 async def fake_async_home(fake_cloud,event_loop):
