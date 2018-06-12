@@ -39,6 +39,7 @@ async def test_basic_device_functions(fake_async_home:AsyncHome):
         assert d == None
         assert d2 is fake_async_home.search_device_by_id('3014F7110000000000000005') # make sure that the objects got updated and not completely renewed
 
+
 def test_all_devices_implemented(fake_async_home:AsyncHome):
     for d in fake_async_home.devices:
         assert type(d) != AsyncDevice

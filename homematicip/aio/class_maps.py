@@ -56,7 +56,8 @@ TYPE_GROUP_MAP = {
     cn.SMOKE_ALARM_DETECTION_RULE: AsyncSmokeAlarmDetectionRule,
     cn.LOCK_OUT_PROTECTION_RULE: AsyncLockOutProtectionRule,
     cn.SHUTTER_WIND_PROTECTION_RULE: AsyncShutterWindProtectionRule,
-    cn.EXTENDED_LINKED_SHUTTER: AsyncExtendedLinkedShutterGroup
+    cn.EXTENDED_LINKED_SHUTTER: AsyncExtendedLinkedShutterGroup,
+    cn.ENVIRONMENT: AsyncEnvironmentGroup
 }
 
 TYPE_SECURITY_EVENT_MAP = {
