@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, Mock
 import pytest
 
 from homematicip.group import *
+from homematicip.home import Home
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -131,3 +132,8 @@ def test_switching_group(fake_home):
 
     assert str(g) == ('SWITCHING Strom: on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)'
                       ' dutyCycle(False) lowBat(None)')
+
+def test_all_groups_implemented(fake_home : Home):
+    for g in fake_home.groups:
+        assert type(g) != Group
+

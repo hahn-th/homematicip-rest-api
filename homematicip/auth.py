@@ -15,7 +15,7 @@ class Auth(object):
         self.pin = None
 
 
-    def connectionRequest(self, access_point, devicename = "homematicip-python"):
+    def connectionRequest(self, access_point, devicename = "homematicip-python") -> requests.Response:
         data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": access_point}
         headers = self.headers
         if self.pin != None:

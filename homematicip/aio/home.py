@@ -110,6 +110,5 @@ class AsyncHome(Home):
     def delete_group(self, group):
         pass
 
-    def set_location(self, city, latitude, longitude):
-        LOGGER.warning('set_location not implemented.')
-        pass
+    async def set_location(self, city, latitude, longitude):
+        return await self._connection.api_call(*super().set_location(city, latitude, longitude))

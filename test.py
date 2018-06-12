@@ -1,3 +1,5 @@
 if __name__ == '__main__':
     import pytest
-    pytest.main('tests --ignore=tests/aio_tests/')
+    from homematicip import __version__
+    print("HMIP Version ", __version__)
+    pytest.main('tests')

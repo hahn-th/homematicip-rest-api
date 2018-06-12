@@ -6,7 +6,7 @@ from homematicip.group import Group, MetaGroup, SecurityGroup, SwitchingGroup, L
     SecurityZoneGroup, HeatingGroup, HeatingDehumidifierGroup, HeatingCoolingDemandGroup, \
     HeatingExternalClockGroup, HeatingCoolingDemandBoilerGroup, HeatingCoolingDemandPumpGroup, \
     SwitchingProfileGroup, OverHeatProtectionRule, SmokeAlarmDetectionRule, \
-    ShutterWindProtectionRule, LockOutProtectionRule
+    ShutterWindProtectionRule, LockOutProtectionRule, EnvironmentGroup
 
 
 class AsyncGroup(Group):
@@ -177,4 +177,7 @@ class AsyncShutterWindProtectionRule(ShutterWindProtectionRule, AsyncGroup):
 
 
 class AsyncLockOutProtectionRule(LockOutProtectionRule, AsyncGroup):
+    pass
+
+class AsyncEnvironmentGroup(EnvironmentGroup, AsyncGroup):
     pass

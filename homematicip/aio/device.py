@@ -5,7 +5,8 @@ from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, 
     TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
     MotionDetectorIndoor, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
-    PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch
+    Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
+    WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor
 
 ERROR_CODE = "errorCode"
 
@@ -15,20 +16,20 @@ _LOGGER = logging.getLogger(__name__)
 class AsyncDevice(Device):
     """ Async implementation of a genereric homematic ip device """
 
-    def set_label(self, label):
-        pass
+    async def set_label(self, label):
+        return await self._connection.api_call(*super().set_label(label))
 
-    def authorizeUpdate(self):
-        pass
+    async def authorizeUpdate(self):
+        return await self._connection.api_call(*super().authorizeUpdate())
 
-    def delete(self):
-        pass
+    async def delete(self):
+        return await self._connection.api_call(*super().delete())
 
-    def set_router_module_enabled(self, enabled=True):
-        pass
+    async def set_router_module_enabled(self, enabled=True):
+        return await self._connection.api_call(*super().set_router_module_enabled(enabled))
 
-    def is_update_applicable(self):
-        pass
+    async def is_update_applicable(self):
+        return await self._connection.api_call(*super().is_update_applicable())
 
 
 class AsyncSwitch(Switch, AsyncDevice):
@@ -78,6 +79,11 @@ class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
 
     pass
 
+class AsyncRotaryHandleSensor(RotaryHandleSensor, AsyncSabotageDevice):
+    """ HmIP-SRH """
+
+class AsyncTemperatureHumiditySensorOutdoor(TemperatureHumiditySensorOutdoor, AsyncDevice):
+    """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
 
 class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
     """ HMIP-eTRV (Radiator Thermostat) """
@@ -151,8 +157,20 @@ class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
         return await self._connection.api_call(*super().set_shutter_stop())
 
 
-class AsyncPluggableDimmer(PluggableDimmer, AsyncDevice):
-    """HmIP-PDT Pluggable Dimmer"""
+class AsyncDimmer(Dimmer, AsyncDevice):
+    """Base dimmer device class"""
 
     async def set_dim_level(self, dimLevel=0.0):
         return await self._connection.api_call(*super().set_dim_level(dimLevel=dimLevel))
+
+class AsyncPluggableDimmer(AsyncDimmer):
+    """HmIP-PDT Pluggable Dimmer"""
+
+class AsyncBrandDimmer(AsyncDimmer):
+    """HmIP-BDT Brand Dimmer"""
+
+class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
+    """ HmIP-SWO-B """
+
+class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
+    """ HmIP-SWO-PR """

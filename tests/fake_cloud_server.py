@@ -13,6 +13,11 @@ class FakeCloudServer():
 
         self.client_token_map = { '00000000-0000-0000-0000-000000000000' : '8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE' }
 
+        self.pin = None
+
+        self.client_auth_waiting = None #used in auth 
+        self.home_id = "00000000-0000-0000-0000-000000000001"
+
     def __call__(self,environ, start_response):
         request = Request(environ)
         response = Response()
@@ -53,6 +58,7 @@ class FakeCloudServer():
 #endregion
 
 #region home
+
     @validate_authorization
     def post_hmip_home_getCurrentState(self,request : Request ,response : Response):
         response.data = json.dumps(self.data)
@@ -154,6 +160,73 @@ class FakeCloudServer():
             response = self.errorCode(response, "INVALID_DEVICE", 404)
         return response
 #endregion
+
+#region auth
+    #there is no 100% secure auth code here -> its a fake server...who cares =)
+
+    def post_hmip_auth_connectionRequest(self,request : Request ,response : Response):
+        if request.headers["CLIENTAUTH"] != self.client_auth_token:
+            response = self.errorCode(response, "INVALID_AUTH_TOKEN", 403) # error responses must be validated against the real cloud
+        elif self.client_auth_waiting is not None :
+            response = self.errorCode(response, "AUTH_IN_PROCESS", 403)  # error responses must be validated against the real cloud
+        else:
+            pin = request.headers.get("PIN",None)
+            if pin != self.pin:
+                response = self.errorCode(response, "INVALID_PIN", 403) # error responses must be validated against the real cloud
+            else:
+                js = json.loads(request.data)
+                #TODO: add sgtin check
+                self.client_auth_waiting = js
+                response.status_code = 200
+        return response
+
+    def post_hmip_auth_isRequestAcknowledged(self,request : Request ,response : Response):
+        if request.headers["CLIENTAUTH"] != self.client_auth_token:
+            response = self.errorCode(response, "INVALID_AUTH_TOKEN", 403) # error responses must be validated against the real cloud
+        else:
+            js = json.loads(request.data)
+            c_id = js["deviceId"]
+            for c in self.data["clients"]:
+                if c == c_id:
+                    response = self.errorCode(response,"",200)
+                    return response
+        response = self.errorCode(response,"INVALID_AUTH_CHALLANGE",403)
+        return response
+
+    def post_hmip_auth_simulateBlueButton(self,request : Request ,response : Response):
+        client = {"homeId" : self.home_id, "id" : self.client_auth_waiting["deviceId"], "label" : self.client_auth_waiting["deviceName"]}
+        self.data["clients"][ self.client_auth_waiting["deviceId"]] = client
+        self.client_auth_waiting = None
+        return response
+
+    def post_hmip_auth_requestAuthToken(self,request : Request ,response : Response):
+        if request.headers["CLIENTAUTH"] != self.client_auth_token:
+            response = self.errorCode(response, "INVALID_AUTH_TOKEN", 403) # error responses must be validated against the real cloud
+        else:
+            js = json.loads(request.data)
+            c_id = js["deviceId"]
+            token = hashlib.sha512(c_id.encode('utf-8')).hexdigest().upper()
+            self.client_token_map[c_id] = token
+            response.data = json.dumps( {"authToken" : token})
+            response.status_code = 200
+        
+        return response
+
+    def post_hmip_auth_confirmAuthToken(self,request : Request ,response : Response):
+        if request.headers["CLIENTAUTH"] != self.client_auth_token:
+            response = self.errorCode(response, "INVALID_AUTH_TOKEN", 403) # error responses must be validated against the real cloud
+        else:
+            js = json.loads(request.data)
+            c_id = js["deviceId"]
+            token = js["authToken"]
+            if self.client_token_map[c_id] == token:
+                response.data = json.dumps( {"clientId" : c_id})
+                response.status_code = 200
+            else:
+                response = self.errorCode(response, "INVALID_AUTH_TOKEN", 403) # error responses must be validated against the real cloud
+        return response
+#endregion
+
 
     def post_getHost(self,request : Request ,response : Response):
         data = {

@@ -339,3 +339,7 @@ def test_basic_device_functions(fake_home:Home):
         assert d == None
         assert d2 is fake_home.search_device_by_id('3014F7110000000000000005') # make sure that the objects got updated and not completely renewed
 
+
+def test_all_devices_implemented(fake_home : Home):
+    for d in fake_home.devices:
+        assert type(d) != Device

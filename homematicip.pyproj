@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>f1c8abac-037e-4d87-b604-119b6cda9be0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>hmip_cli.py</StartupFile>
+    <StartupFile>test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="hmip_generate_auth_token.py" />
+    <Compile Include="homematicip\aio\auth.py" />
     <Compile Include="homematicip\aio\class_maps.py" />
     <Compile Include="homematicip\aio\connection.py" />
     <Compile Include="homematicip\aio\device.py" />
@@ -77,6 +78,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
+    <Compile Include="tests\aio_tests\helpers.py" />
+    <Compile Include="tests\aio_tests\notest_async_heating_group.py" />
+    <Compile Include="tests\aio_tests\notest_connection_async.py" />
+    <Compile Include="tests\aio_tests\notest_plugable_switch_measuring_async.py" />
+    <Compile Include="tests\aio_tests\test_async_auth.py" />
+    <Compile Include="tests\aio_tests\test_async_groups.py" />
+    <Compile Include="tests\aio_tests\test_async_device.py" />
+    <Compile Include="tests\aio_tests\test_async_home.py" />
+    <Compile Include="tests\test_auth.py" />
     <Compile Include="tests\test_fake_cloud.py">
       <SubType>Code</SubType>
     </Compile>
@@ -107,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="tests\" />
+    <Folder Include="tests\aio_tests\" />
     <Folder Include="tests\json_data\" />
   </ItemGroup>
   <ItemGroup>

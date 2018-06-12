@@ -34,11 +34,11 @@ def test_home_base(fake_home: Home):
     assert fake_home._rawJSONData == fake_home_download_configuration()["home"]
 
 def test_home_location(fake_home: Home):
-    assert fake_home.location.city == "1010  Wien, österreich"
+    assert fake_home.location.city == "1010  Wien, Österreich"
     assert fake_home.location.latitude == "48.208088"
     assert fake_home.location.longitude == "16.358608"
     assert fake_home.location._rawJSONData == fake_home_download_configuration()["home"]["location"]
-    assert str(fake_home.location) == "city(1010  Wien, österreich) latitude(48.208088) longitude(16.358608)"
+    assert str(fake_home.location) == "city(1010  Wien, Österreich) latitude(48.208088) longitude(16.358608)"
 
 def test_home_set_location(fake_home: Home):
     with no_ssl_verification():
