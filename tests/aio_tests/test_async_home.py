@@ -1,6 +1,6 @@
 import pytest
 
-from homematicip.async.home import AsyncHome
+from homematicip.aio.home import AsyncHome
 from homematicip.EventHook import EventHook
 import json
 from datetime import datetime, timedelta, timezone
@@ -25,11 +25,11 @@ async def test_async_home_base(fake_async_home: AsyncHome):
 
 @pytest.mark.asyncio
 async def test_home_location(fake_async_home: AsyncHome):
-    assert fake_async_home.location.city == "1010  Wien, Ã¶sterreich"
+    assert fake_async_home.location.city == "1010  Wien, österreich"
     assert fake_async_home.location.latitude == "48.208088"
     assert fake_async_home.location.longitude == "16.358608"
     assert fake_async_home.location._rawJSONData == fake_home_download_configuration()["home"]["location"]
-    assert str(fake_async_home.location) == "city(1010  Wien, Ã¶sterreich) latitude(48.208088) longitude(16.358608)"
+    assert str(fake_async_home.location) == "city(1010  Wien, österreich) latitude(48.208088) longitude(16.358608)"
 
 @pytest.mark.asyncio
 async def test_home_set_location(fake_async_home: AsyncHome):

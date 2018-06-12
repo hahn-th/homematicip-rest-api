@@ -3,7 +3,7 @@ import json
 import uuid
 import logging
 
-from homematicip.async.connection import AsyncConnection
+from homematicip.aio.connection import AsyncConnection
 from homematicip.auth import Auth
 from homematicip.base.base_connection import BaseConnection, HmipWrongHttpStatusError, \
     ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, HmipConnectionError

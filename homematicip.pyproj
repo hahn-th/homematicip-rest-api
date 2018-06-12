@@ -33,13 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="hmip_generate_auth_token.py" />
-    <Compile Include="homematicip\async\class_maps.py" />
-    <Compile Include="homematicip\async\connection.py" />
-    <Compile Include="homematicip\async\device.py" />
-    <Compile Include="homematicip\async\group.py" />
-    <Compile Include="homematicip\async\home.py" />
-    <Compile Include="homematicip\async\securityEvent.py" />
-    <Compile Include="homematicip\async\__init__.py" />
+    <Compile Include="homematicip\aio\class_maps.py" />
+    <Compile Include="homematicip\aio\connection.py" />
+    <Compile Include="homematicip\aio\device.py" />
+    <Compile Include="homematicip\aio\group.py" />
+    <Compile Include="homematicip\aio\home.py" />
+    <Compile Include="homematicip\aio\securityEvent.py" />
+    <Compile Include="homematicip\aio\__init__.py" />
     <Compile Include="homematicip\auth.py">
       <SubType>Code</SubType>
     </Compile>
@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />
-    <Folder Include="homematicip\async\" />
+    <Folder Include="homematicip\aio\" />
     <Folder Include="homematicip\base\" />
   </ItemGroup>
   <ItemGroup>
