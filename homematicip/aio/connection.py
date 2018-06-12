@@ -41,6 +41,7 @@ class AsyncConnection(BaseConnection):
 
     async def init(self, accesspoint_id, lookup=True, lookup_url="https://lookup.homematic.com:48335/getHost", **kwargs):
         self.set_token_and_characteristics(accesspoint_id)
+        self._lookup_url = lookup_url #needed for testcases
 
         if lookup:
             result = await self.api_call(lookup_url, json.dumps(self.clientCharacteristics), full_url=True)

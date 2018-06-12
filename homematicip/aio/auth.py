@@ -25,9 +25,12 @@ class AsyncAuth(Auth):
         self.pin = None
         self._connection=AsyncAuthConnection(loop, websession)
 
-    async def init(self, access_point_id, lookup=True):
+    async def init(self, access_point_id, lookup=True, lookup_url = None):
         self.accesspoint = access_point_id
-        await self._connection.init(access_point_id, lookup)
+        if lookup_url:
+            await self._connection.init(access_point_id, lookup, lookup_url)
+        else:
+            await self._connection.init(access_point_id, lookup)
 
     async def connectionRequest(self, devicename = "homematicip-async"):
         data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": self.accesspoint}
