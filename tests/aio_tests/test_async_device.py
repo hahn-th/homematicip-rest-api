@@ -1,6 +1,6 @@
 import pytest
 
-from homematicip.async.home import AsyncHome
+from homematicip.aio.home import AsyncHome
 from homematicip.EventHook import EventHook
 import json
 from datetime import datetime, timedelta, timezone

@@ -9,7 +9,7 @@ import aiohttp
 
 from unittest.mock import MagicMock
 from homematicip.aio.connection import AsyncConnection
-from homematicip.async.home import AsyncHome
+from homematicip.aio.home import AsyncHome
 from homematicip.home import Home
 from homematicip.connection import Connection
 
