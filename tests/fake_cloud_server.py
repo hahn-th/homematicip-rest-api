@@ -89,6 +89,19 @@ class FakeCloudServer():
             self.pin = None
         return response
 
+    
+    @validate_authorization
+    def post_hmip_home_setTimezone(self,request : Request ,response : Response):
+        js = json.loads(request.data)
+        self.data["home"]["timeZoneId"] = js["timezoneId"]
+        return response
+    
+    @validate_authorization
+    def post_hmip_home_setPowerMeterUnitPrice(self,request : Request ,response : Response):
+        js = json.loads(request.data)
+        self.data["home"]["powerMeterUnitPrice"] = js["powerMeterUnitPrice"]
+        return response
+
 #endregion
 
 #region home/security

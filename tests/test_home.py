@@ -129,3 +129,26 @@ def test_set_pin(fake_home : Home):
 
         fake_home.set_pin(None, 5555)
         assert fake_home._fake_cloud.app.pin == None
+
+def test_set_timezone(fake_home : Home):
+    with no_ssl_verification():
+        assert fake_home.timeZoneId == "Europe/Vienna"
+        fake_home.set_timezone("Europe/Berlin")
+        fake_home.get_current_state()
+        assert fake_home.timeZoneId == "Europe/Berlin"
+
+        fake_home.set_timezone("Europe/Vienna")
+        fake_home.get_current_state()
+        assert fake_home.timeZoneId == "Europe/Vienna"
+
+def test_set_powermeter_unit_price(fake_home : Home):
+    with no_ssl_verification():
+        fake_home.set_powermeter_unit_price(12.0)
+        fake_home.get_current_state()
+        assert fake_home.powerMeterUnitPrice == 12.0
+        fake_home.set_powermeter_unit_price(8.5)
+        fake_home.get_current_state()
+        assert fake_home.powerMeterUnitPrice == 8.5
+
+
+        
