@@ -2,3 +2,4 @@ ignore:
  - "versioneer.py"
  - "test.py"
  - "setup.py"
+ - "homematicip/_version.py"
