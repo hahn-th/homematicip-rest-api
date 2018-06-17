@@ -74,6 +74,21 @@ class FakeCloudServer():
         self.data["home"]["location"]["longitude"] = js["longitude"]
 
         return response
+    
+    @validate_authorization
+    def post_hmip_home_setPin(self,request : Request ,response : Response):
+        js = json.loads(request.data)
+
+        if self.pin:
+            if request.headers["PIN"] != str(self.pin):
+                response = self.errorCode(response, "INVALID_PIN", 403 )
+                return response
+
+        self.pin = js["pin"] 
+        if self.pin == "":
+            self.pin = None
+        return response
+
 #endregion
 
 #region home/security

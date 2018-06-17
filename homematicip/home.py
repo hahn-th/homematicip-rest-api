@@ -385,7 +385,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             newPin = ""
         data = {"pin": newPin}
         if oldPin:
-            self._connection.headers["PIN"] = oldPin
+            self._connection.headers["PIN"] = str(oldPin)
         result = self._restCall('home/setPin', body=json.dumps(data))
         if oldPin:
             del self._connection.headers["PIN"]

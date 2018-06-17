@@ -100,7 +100,7 @@ def test_rules(fake_home : Home):
         assert rule.active == True
         assert rule.label == "ENABLED_RULE"
 
-def test_security_zones_activation(fake_home):
+def test_security_zones_activation(fake_home : Home):
     with no_ssl_verification():
         internal, external = fake_home.get_security_zones_activation()
         assert internal == False
@@ -112,3 +112,20 @@ def test_security_zones_activation(fake_home):
         internal, external = fake_home.get_security_zones_activation()
         assert internal == True
         assert external == True
+
+def test_set_pin(fake_home : Home):
+    with no_ssl_verification():
+        
+        assert fake_home._fake_cloud.app.pin == None
+
+        fake_home.set_pin(1234)
+        assert fake_home._fake_cloud.app.pin == 1234
+        
+        fake_home.set_pin(5555) # ignore errors. just check if the old pin is still active
+        assert fake_home._fake_cloud.app.pin == 1234
+        
+        fake_home.set_pin(5555,1234)
+        assert fake_home._fake_cloud.app.pin == 5555
+
+        fake_home.set_pin(None, 5555)
+        assert fake_home._fake_cloud.app.pin == None
