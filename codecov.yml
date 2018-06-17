@@ -1,0 +1,4 @@
+ignore:
+ - "versioneer.py"
+ - "test.py"
+ - "setup.py"
