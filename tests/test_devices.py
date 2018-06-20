@@ -335,9 +335,15 @@ def test_basic_device_functions(fake_home:Home):
         d2 = fake_home.search_device_by_id('3014F7110000000000000005')
         d.delete()
         fake_home.get_current_state()
-        d = fake_home.search_device_by_id('3014F7110000000000000009')
-        assert d == None
+        dNotFound = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert dNotFound == None
         assert d2 is fake_home.search_device_by_id('3014F7110000000000000005') # make sure that the objects got updated and not completely renewed
+
+        #check if the server is answering properly
+        result = d.set_label("BLa")
+        assert result["errorCode"] == "INVALID_DEVICE"
+        result = d.delete()
+        assert result["errorCode"] == "INVALID_DEVICE"
 
 
 def test_all_devices_implemented(fake_home : Home):

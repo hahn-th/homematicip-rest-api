@@ -80,7 +80,7 @@ class FakeCloudServer():
         js = json.loads(request.data)
 
         if self.pin:
-            if request.headers["PIN"] != str(self.pin):
+            if request.headers.get("PIN",None) != str(self.pin):
                 response = self.errorCode(response, "INVALID_PIN", 403 )
                 return response
 
@@ -181,10 +181,10 @@ class FakeCloudServer():
     def post_hmip_device_deleteDevice(self,request : Request ,response : Response):
 
         js = json.loads(request.data)
-        try:
-            self.data["devices"].pop(js["deviceId"], None)
+        if js["deviceId"] in self.data["devices"]:
+            self.data["devices"].pop(js["deviceId"])
             response.status_code = 200
-        except:
+        else:
             response = self.errorCode(response, "INVALID_DEVICE", 404)
         return response
 #endregion
@@ -255,6 +255,44 @@ class FakeCloudServer():
         return response
 #endregion
 
+#region Group
+
+    @validate_authorization
+    def post_hmip_group_setGroupLabel(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["label"] = js["label"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_switching_setState(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["on"] = js["on"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_switching_setShutterLevel(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["shutterLevel"] = js["shutterLevel"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+#endregion
 
     def post_getHost(self,request : Request ,response : Response):
         data = {

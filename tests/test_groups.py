@@ -7,7 +7,7 @@ from homematicip.home import Home
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration
+from conftest import fake_home_download_configuration, no_ssl_verification
 
 dt = datetime.now(timezone.utc).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
@@ -110,28 +110,45 @@ def test_security_group(fake_home):
     assert str(g) == ('SECURITY Büro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)'
                       ' smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False) powerMainsFailure(None) moistureDetected(None) waterlevelDetected(None)')
 
-def test_switching_group(fake_home):
-    g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
-    assert isinstance(g, SwitchingGroup)
-    for d in g.devices:
-        assert d.id in ['3014F7110000000000000010', '3014F7110000000000000009', '3014F7110000000000000008']
+def test_switching_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
+        assert isinstance(g, SwitchingGroup)
+        for d in g.devices:
+            assert d.id in ['3014F7110000000000000010', '3014F7110000000000000009', '3014F7110000000000000008']
 
-    assert g.dimLevel == None
-    assert g.dutyCycle == False
-    assert g.homeId == "00000000-0000-0000-0000-000000000001"
-    assert g.id == "00000000-0000-0000-0000-000000000018"
-    assert g.label == "Strom"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 14, 56000) + timedelta(0,utc_offset)
-    assert g.lowBat == None
-    assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
-    assert g.on == True
-    assert g.processing == None
-    assert g.shutterLevel == None
-    assert g.slatsLevel == None
-    assert g.unreach == False
+        assert g.dimLevel == None
+        assert g.dutyCycle == False
+        assert g.homeId == "00000000-0000-0000-0000-000000000001"
+        assert g.id == "00000000-0000-0000-0000-000000000018"
+        assert g.label == "Strom"
+        assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 14, 56000) + timedelta(0,utc_offset)
+        assert g.lowBat == None
+        assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
+        assert g.on == True
+        assert g.processing == None
+        assert g.shutterLevel == None
+        assert g.slatsLevel == None
+        assert g.unreach == False
 
-    assert str(g) == ('SWITCHING Strom: on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)'
-                      ' dutyCycle(False) lowBat(None)')
+        assert str(g) == ('SWITCHING Strom: on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)'
+                          ' dutyCycle(False) lowBat(None)')
+
+        g.turn_off()
+        g.set_label("NEW GROUP")
+        g.set_shutter_level(50)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
+        assert g.on == False
+        assert g.label == "NEW GROUP"
+        assert g.shutterLevel == 50
+
+        assert str(g) == ('SWITCHING NEW GROUP: on(False) dimLevel(None) processing(None) shutterLevel(50) slatsLevel(None)'
+                          ' dutyCycle(False) lowBat(None)')
+        g.turn_on()
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
+        assert g.on == True
 
 def test_all_groups_implemented(fake_home : Home):
     for g in fake_home.groups:

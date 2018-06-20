@@ -314,8 +314,7 @@ class HeatingChangeoverGroup(Group):
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class InboxGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 class SecurityZoneGroup(Group):
