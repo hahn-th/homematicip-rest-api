@@ -7,6 +7,7 @@ from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, 
     MotionDetectorIndoor, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
     Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
     WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor
+from homematicip.base.base_connection import HmipConnectionError
 
 ERROR_CODE = "errorCode"
 
@@ -38,13 +39,18 @@ class AsyncSwitch(Switch, AsyncDevice):
     async def turn_on(self):
         _LOGGER.debug("Async switch turn_on")
         url, data = super().turn_on()
-        return await self._connection.api_call(url, data)
+        try:
+            return await self._connection.api_call(url, data)
+        except HmipConnectionError:
+            return False
 
     async def turn_off(self):
         _LOGGER.debug("Async switch turn_off")
         url, data = super().turn_off()
-        return await self._connection.api_call(url, data)
-
+        try:
+            return await self._connection.api_call(url, data)
+        except HmipConnectionError:
+            return False
 
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
     """ Async implementation of HMIP-PS (Pluggable Switch) """
