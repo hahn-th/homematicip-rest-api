@@ -154,6 +154,5 @@ class AsyncConnection(BaseConnection):
         except Exception as err:
             logger.exception(err)
         finally:
-            on_error()
             await self.close_websocket_connection()
             raise HmipConnectionError
