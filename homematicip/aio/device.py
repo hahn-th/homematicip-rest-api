@@ -4,7 +4,7 @@ from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, 
     SabotageDevice, ShutterContact, OperationLockableDevice, HeatingThermostat, \
     TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, \
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
-    MotionDetectorIndoor, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
+    MotionDetectorIndoor, MotionDetectorPushButton, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
     Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
     WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor
 
@@ -134,6 +134,11 @@ class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
 
 class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
+    pass
+
+
+class AsyncMotionDetectorPushButton(MotionDetectorPushButton, AsyncSabotageDevice):
+    """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
     pass
 
 
