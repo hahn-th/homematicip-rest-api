@@ -6,7 +6,8 @@ from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, 
     WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
     MotionDetectorIndoor, MotionDetectorPushButton, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
     Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
-    WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor
+    WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor, \
+    WaterSensor
 
 ERROR_CODE = "errorCode"
 
@@ -179,3 +180,6 @@ class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
 
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
     """ HmIP-SWO-PR """
+
+class AsyncWaterSensor(WaterSensor, AsyncDevice):
+    """ HmIP-SWD """

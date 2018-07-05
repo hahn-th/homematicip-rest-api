@@ -25,7 +25,7 @@ def test_meta_group(fake_home):
     assert g.dutyCycle == False
     assert g.incorrectPositioned == None
     for d in g.devices:
-        assert d.id in ['3014F7110000000000000025', '3014F7110000000000000016']
+        assert d.id in ['3014F7110000000000000025', '3014F7110000000000000016', '3014F7110000000000000050']
     for g_sub in g.groups:
         assert g_sub.id in ['00000000-0000-0000-0000-000000000021', '00000000-0000-0000-0000-000000000021']
 

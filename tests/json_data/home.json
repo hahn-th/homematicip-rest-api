@@ -7,6 +7,60 @@
         }
     },
     "devices": {
+        "3014F7110000000000000050": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.2",
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000050",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_INCORRECT_POSITIONED",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000020"
+                    ],
+                    "incorrectPositioned": true,
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -65,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "acousticAlarmSignal": "FREQUENCY_RISING",
+                    "acousticAlarmTiming": "ONCE_PER_MINUTE",
+                    "acousticWaterAlarmTrigger": "WATER_DETECTION",
+                    "deviceId": "3014F7110000000000000050",
+                    "functionalChannelType": "WATER_SENSOR_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000023"
+                    ],
+                    "inAppWaterAlarmTrigger": "WATER_MOISTURE_DETECTION",
+                    "index": 1,
+                    "label": "",
+                    "moistureDetected": false,
+                    "sirenWaterAlarmTrigger": "WATER_MOISTURE_DETECTION",
+                    "waterlevelDetected": false
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000050",
+            "label": "Wassersensor",
+            "lastStatusUpdate": 1530802738493,
+            "manufacturerCode": 1,
+            "modelId": 353,
+            "modelType": "HmIP-SWD",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
+            "type": "WATER_SENSOR",
+            "updateState": "UP_TO_DATE"
+
+        },
         "3014F7110000000000000000": {
             "availableFirmwareVersion": "1.16.8",
             "firmwareVersion": "1.16.8",
@@ -1581,6 +1635,10 @@
                 {
                     "channelIndex": 0,
                     "deviceId": "3014F7110000000000000016"
+                },
+                {
+                    "channelIndex": 0,
+                    "deviceId": "3014F7110000000000000050"
                 }
             ],
             "configPending": false,
@@ -2923,15 +2981,15 @@
             "00000000-0000-0000-0000-000000000030"
         ],
         "ruleMetaDatas": {
-        "00000000-0000-0000-0000-000000000065": {
-            "active": true,
-            "homeId": "00000000-0000-0000-0000-000000000001",
-            "id": "00000000-0000-0000-0000-000000000065",
-            "label": "Alarmanlage",
-            "ruleErrorCategories": [],
-            "type": "SIMPLE"
-        }
-    },
+            "00000000-0000-0000-0000-000000000065": {
+                "active": true,
+                "homeId": "00000000-0000-0000-0000-000000000001",
+                "id": "00000000-0000-0000-0000-000000000065",
+                "label": "Alarmanlage",
+                "ruleErrorCategories": [],
+                "type": "SIMPLE"
+            }
+        },
         "timeZoneId": "Europe/Vienna",
         "updateState": "UP_TO_DATE",
         "voiceControlSettings": {
