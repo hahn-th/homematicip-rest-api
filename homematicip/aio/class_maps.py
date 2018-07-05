@@ -32,6 +32,7 @@ TYPE_CLASS_MAP = {
     cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: AsyncTemperatureHumiditySensorOutdoor,
     cn.BRAND_DIMMER: AsyncBrandDimmer,
     cn.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
+    cn.MOTION_DETECTOR_PUSH_BUTTON: AsyncMotionDetectorPushButton,
     cn.WATER_SENSOR: AsyncWaterSensor
 }
 

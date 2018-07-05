@@ -429,6 +429,10 @@ class MotionDetectorIndoor(SabotageDevice):
                                                                self.illumination)
 
 
+class MotionDetectorPushButton(MotionDetectorIndoor):
+    """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
+
+
 class PresenceDetectorIndoor(SabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
 
