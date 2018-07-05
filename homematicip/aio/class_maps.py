@@ -31,7 +31,8 @@ TYPE_CLASS_MAP = {
     cn.WEATHER_SENSOR_PRO: AsyncWeatherSensorPro,
     cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: AsyncTemperatureHumiditySensorOutdoor,
     cn.BRAND_DIMMER: AsyncBrandDimmer,
-    cn.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor
+    cn.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
+    cn.WATER_SENSOR: AsyncWaterSensor
 }
 
 TYPE_GROUP_MAP = {

@@ -73,8 +73,7 @@ Devices:
 -  [X] HMIP-PS (Plugable Switch)
 -  [X] HMIP-PSM (Plugable Switch Measuring)
 -  [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
--  [X] HMIP-STH (Temperature and Humidity Sensor without display -
-   indoor)
+-  [X] HMIP-STH (Temperature and Humidity Sensor without display - indoor)
 -  [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
 -  [X] HMIP-ASIR (Alarm Siren)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
@@ -88,7 +87,8 @@ Devices:
 -  [X] HmIP-STHO (Temperature and Humidity Sensor outdoor)
 -  [X] HmIP-SWO-PR (Weather Sensor – pro)
 -  [X] HmIP-SWO-B (Weather Sensor)
--  [X] HmIP-SRH (Rotary Handle Sensor )
+-  [X] HmIP-SRH (Rotary Handle Sensor)
+-  [X] HmIP-SWD (Water Sensor)
 
 Events
 ------

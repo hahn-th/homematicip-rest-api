@@ -37,7 +37,8 @@ TYPE_CLASS_MAP = {
     cn.WEATHER_SENSOR: WeatherSensor,
     cn.WEATHER_SENSOR_PRO: WeatherSensorPro,
     cn.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
-    cn.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring
+    cn.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
+    cn.WATER_SENSOR: WaterSensor
 }
 
 TYPE_GROUP_MAP = {

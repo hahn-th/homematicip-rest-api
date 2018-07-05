@@ -349,3 +349,20 @@ def test_basic_device_functions(fake_home:Home):
 def test_all_devices_implemented(fake_home : Home):
     for d in fake_home.devices:
         assert type(d) != Device
+
+def test_water_sensor(fake_home : Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000050")
+        assert d.label == "Wassersensor"
+        assert d.routerModuleEnabled == False
+        assert d.routerModuleSupported == False
+
+        assert d.incorrectPositioned == True
+        assert d.acousticAlarmSignal == "FREQUENCY_RISING"
+        assert d.acousticAlarmTiming == "ONCE_PER_MINUTE"
+        assert d.acousticWaterAlarmTrigger == "WATER_DETECTION"
+        assert d.inAppWaterAlarmTrigger == "WATER_MOISTURE_DETECTION"
+        assert d.moistureDetected == False
+        assert d.sirenWaterAlarmTrigger == "WATER_MOISTURE_DETECTION"
+        assert d.waterlevelDetected == False
+    

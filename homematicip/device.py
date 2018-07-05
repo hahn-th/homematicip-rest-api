@@ -638,3 +638,55 @@ class WeatherSensorPro(Device):
                                                                                  self.yesterdaySunshineDuration)
 
     #Any set/calibration functions?
+
+
+class WaterSensor(Device):
+    """ HmIP-SWD ( Water Sensor ) """
+
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.incorrectPositioned = False
+        self.acousticAlarmSignal = "FREQUENCY_RISING"
+        self.acousticAlarmTiming = "ONCE_PER_MINUTE"
+        self.acousticWaterAlarmTrigger = "WATER_DETECTION"
+        self.inAppWaterAlarmTrigger = "WATER_MOISTURE_DETECTION"
+        self.moistureDetected = False
+        self.sirenWateralarmTrigger = "WATER_MOISTURE_DETECTION"
+        self.waterlevelDetected = False
+        
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_INCORRECT_POSITIONED", js)
+        if c:
+            self.unreach = c["unreach"]
+            self.lowBat = c["lowBat"]
+            self.routerModuleSupported = c["routerModuleSupported"]
+            self.routerModuleEnabled = c["routerModuleEnabled"]
+            self.rssiDeviceValue = c["rssiDeviceValue"]
+            self.rssiPeerValue = c["rssiPeerValue"]
+            self.dutyCycle = c["dutyCycle"]
+            self.configPending = c["configPending"]
+            self.incorrectPositioned = c["incorrectPositioned"]
+
+        c = get_functional_channel("WATER_SENSOR_CHANNEL", js)
+        if c:
+            self.acousticAlarmSignal = c["acousticAlarmSignal"]
+            self.acousticAlarmTiming = c["acousticAlarmTiming"]
+            self.acousticWaterAlarmTrigger = c["acousticWaterAlarmTrigger"]
+            self.inAppWaterAlarmTrigger = c["inAppWaterAlarmTrigger"]
+            self.moistureDetected = c["moistureDetected"]
+            self.sirenWaterAlarmTrigger = c["sirenWaterAlarmTrigger"]
+            self.waterlevelDetected = c["waterlevelDetected"]
+
+    def __str__(self):
+        return ("{} incorrectPositioned({}) acousticAlarmSignal({}) acousticAlarmSignal({}) acousticAlarmTiming({}) acousticWaterAlarmTrigger({})"
+               " inAppWaterAlarmTrigger({}) inAppWaterAlarmTrigger({}) moistureDetected({}) sirenWaterAlarmTrigger({}) waterlevelDetected({})").format(super().__str__()
+                                                                                                                           , self.incorrectPositioned
+                                                                                                                           , self.acousticAlarmSignal
+                                                                                                                           , self.acousticAlarmTiming
+                                                                                                                           , self.acousticWaterAlarmTrigger
+                                                                                                                           , self.inAppWaterAlarmTrigger
+                                                                                                                           , self.moistureDetected
+                                                                                                                           , self.sirenWaterAlarmTrigger
+                                                                                                                           , self.waterlevelDetected)
