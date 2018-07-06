@@ -6,6 +6,8 @@ from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
 from homematicip.rule import *
 from homematicip.EventHook import EventHook
+from homematicip.base.enums import *
+
 import json
 from datetime import datetime, timedelta, timezone
 from conftest import fake_home_download_configuration, no_ssl_verification
@@ -23,13 +25,14 @@ def test_update_event(fake_home: Home):
 def test_home_base(fake_home: Home):
     assert fake_home.connected == True
     assert fake_home.currentAPVersion == "1.2.4"
-    assert fake_home.deviceUpdateStrategy == "AUTOMATICALLY_IF_POSSIBLE"
+    assert fake_home.deviceUpdateStrategy == DeviceUpdateStrategy.AUTOMATICALLY_IF_POSSIBLE
     assert fake_home.dutyCycle == 8.0
     assert fake_home.pinAssigned == False
     assert fake_home.powerMeterCurrency == "EUR"
     assert fake_home.powerMeterUnitPrice == 0.0
     assert fake_home.timeZoneId == "Europe/Vienna"
-    assert fake_home.updateState == "UP_TO_DATE"
+    assert fake_home.updateState == HomeUpdateState.UP_TO_DATE
+    assert fake_home.apExchangeState == ApExchangeState.NONE
 
     assert fake_home._rawJSONData == fake_home_download_configuration()["home"]
 

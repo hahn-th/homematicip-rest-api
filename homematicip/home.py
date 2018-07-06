@@ -137,13 +137,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.timeZoneId = None
         self.pinAssigned = None
         self.dutyCycle = None
-        self.updateState = None
+        self.updateState = HomeUpdateState.UP_TO_DATE
         self.powerMeterUnitPrice = None
         self.powerMeterCurrency = None
-        self.deviceUpdateStrategy = None
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
         self.lastReadyForUpdateTimestamp = None
         self.apExchangeClientId = None
-        self.apExchangeState = None
+        self.apExchangeState = ApExchangeState.NONE
         self.id = None
         self.carrierSense = None
 
@@ -176,13 +176,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.timeZoneId = js_home["timeZoneId"]
         self.pinAssigned = js_home["pinAssigned"]
         self.dutyCycle = js_home["dutyCycle"]
-        self.updateState = js_home["updateState"]
+        self.updateState = HomeUpdateState(js_home["updateState"])
         self.powerMeterUnitPrice = js_home["powerMeterUnitPrice"]
         self.powerMeterCurrency = js_home["powerMeterCurrency"]
-        self.deviceUpdateStrategy = js_home["deviceUpdateStrategy"]
+        self.deviceUpdateStrategy = DeviceUpdateStrategy(js_home["deviceUpdateStrategy"])
         self.lastReadyForUpdateTimestamp = js_home["lastReadyForUpdateTimestamp"]
         self.apExchangeClientId = js_home["apExchangeClientId"]
-        self.apExchangeState = js_home["apExchangeState"]
+        self.apExchangeState = ApExchangeState(js_home["apExchangeState"])
         self.id = js_home["id"]
         self.carrierSense = js_home["carrierSense"]
 

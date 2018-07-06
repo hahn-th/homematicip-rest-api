@@ -67,3 +67,20 @@ class RGBColorState(AutoNameEnum):
     PURPLE = auto()
     YELLOW = auto()
     WHITE = auto()
+
+class DeviceUpdateStrategy(AutoNameEnum):
+    MANUALLY = auto()
+    AUTOMATICALLY_IF_POSSIBLE = auto()
+
+class ApExchangeState(AutoNameEnum):
+    NONE = auto()
+    REQUESTED = auto()
+    IN_PROGRESS = auto()
+    DONE = auto()
+    REJECTED = auto()
+
+class HomeUpdateState(AutoNameEnum):
+    UP_TO_DATE = auto()
+    UPDATE_AVAILABLE = auto()
+    PERFORM_UPDATE_SENT = auto()
+    PERFORMING_UPDATE = auto()
