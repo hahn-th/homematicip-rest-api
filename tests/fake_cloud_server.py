@@ -187,6 +187,71 @@ class FakeCloudServer():
         else:
             response = self.errorCode(response, "INVALID_DEVICE", 404)
         return response
+
+    @validate_authorization
+    def post_hmip_device_configuration_setAcousticAlarmTiming(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["acousticAlarmTiming"] = js["acousticAlarmTiming"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_device_configuration_setAcousticAlarmSignal(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["acousticAlarmSignal"] = js["acousticAlarmSignal"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_device_configuration_setInAppWaterAlarmTrigger(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["inAppWaterAlarmTrigger"] = js["inAppWaterAlarmTrigger"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_device_configuration_setAcousticWaterAlarmTrigger(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["acousticWaterAlarmTrigger"] = js["acousticWaterAlarmTrigger"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
+    @validate_authorization
+
+    def post_hmip_device_configuration_setSirenWaterAlarmTrigger(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["sirenWaterAlarmTrigger"] = js["sirenWaterAlarmTrigger"]
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
 #endregion
 
 #region auth

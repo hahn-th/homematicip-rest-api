@@ -353,6 +353,7 @@ def test_all_devices_implemented(fake_home : Home):
 
 def test_water_sensor(fake_home : Home):
     with no_ssl_verification():
+        d = WaterSensor(fake_home._connection) # just needed for intellisense
         d = fake_home.search_device_by_id("3014F7110000000000000050")
         assert d.label == "Wassersensor"
         assert d.routerModuleEnabled == False
@@ -366,4 +367,24 @@ def test_water_sensor(fake_home : Home):
         assert d.moistureDetected == False
         assert d.sirenWaterAlarmTrigger ==WaterAlarmTrigger.WATER_MOISTURE_DETECTION
         assert d.waterlevelDetected == False
+
+        d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
+        d.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+        d.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
+        d.set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+        d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+
+        assert str(d) == ("HmIP-SWD Wassersensor lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(None) configPending(False) "
+                          "dutyCycle(False) incorrectPositioned(True) acousticAlarmSignal(FREQUENCY_RISING) acousticAlarmTiming(ONCE_PER_MINUTE) "
+                          "acousticWaterAlarmTrigger(WATER_DETECTION) inAppWaterAlarmTrigger(WATER_MOISTURE_DETECTION) moistureDetected(False) "
+                          "sirenWaterAlarmTrigger(WATER_MOISTURE_DETECTION) waterlevelDetected(False)" )
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000050")
+
+        assert d.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
+        assert d.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
+        assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
+        assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
+        assert d.sirenWaterAlarmTrigger ==WaterAlarmTrigger.NO_ALARM
     

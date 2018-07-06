@@ -8,6 +8,7 @@ from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, 
     Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
     WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor, \
     WaterSensor
+from homematicip.base.enums import *
 
 ERROR_CODE = "errorCode"
 
@@ -183,3 +184,17 @@ class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
 
 class AsyncWaterSensor(WaterSensor, AsyncDevice):
     """ HmIP-SWD """
+    async def set_acoustic_alarm_signal(self, acousticAlarmSignal : AcousticAlarmSignal):
+        return await self._connection.api_call(*super().set_acoustic_alarm_signal(acousticAlarmSignal=acousticAlarmSignal))
+
+    async def set_acoustic_alarm_timing(self, acousticAlarmTiming : AcousticAlarmTiming):
+        return await self._connection.api_call(*super().set_acoustic_alarm_timing(acousticAlarmTiming=acousticAlarmTiming))
+    
+    async def set_acoustic_water_alarm_trigger(self, acousticWaterAlarmTrigger : WaterAlarmTrigger):
+        return await self._connection.api_call(*super().set_acoustic_water_alarm_trigger(acousticWaterAlarmTrigger=acousticWaterAlarmTrigger))
+
+    async def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger : WaterAlarmTrigger):
+        return await self._connection.api_call(*super().set_inapp_water_alarm_trigger(inAppWaterAlarmTrigger=inAppWaterAlarmTrigger))
+
+    async def set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger : WaterAlarmTrigger):
+        return await self._connection.api_call(*super().set_siren_water_alarm_trigger(sirenWaterAlarmTrigger=sirenWaterAlarmTrigger))

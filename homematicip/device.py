@@ -1,10 +1,13 @@
 # coding=utf-8
 import json
 from datetime import datetime
+import logging
 
 from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
 from homematicip import HomeMaticIPObject
+
+LOGGER = logging.getLogger(__name__)
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
@@ -683,8 +686,8 @@ class WaterSensor(Device):
             self.waterlevelDetected = c["waterlevelDetected"]
 
     def __str__(self):
-        return ("{} incorrectPositioned({}) acousticAlarmSignal({}) acousticAlarmSignal({}) acousticAlarmTiming({}) acousticWaterAlarmTrigger({})"
-               " inAppWaterAlarmTrigger({}) inAppWaterAlarmTrigger({}) moistureDetected({}) sirenWaterAlarmTrigger({}) waterlevelDetected({})").format(super().__str__()
+        return ("{} incorrectPositioned({}) acousticAlarmSignal({}) acousticAlarmTiming({}) acousticWaterAlarmTrigger({})"
+               " inAppWaterAlarmTrigger({}) moistureDetected({}) sirenWaterAlarmTrigger({}) waterlevelDetected({})").format(super().__str__()
                                                                                                                            , self.incorrectPositioned
                                                                                                                            , self.acousticAlarmSignal
                                                                                                                            , self.acousticAlarmTiming
@@ -693,3 +696,24 @@ class WaterSensor(Device):
                                                                                                                            , self.moistureDetected
                                                                                                                            , self.sirenWaterAlarmTrigger
                                                                                                                            , self.waterlevelDetected)
+
+    def set_acoustic_alarm_signal(self, acousticAlarmSignal : AcousticAlarmSignal):
+        data = {"channelIndex": 1, "deviceId": self.id, "acousticAlarmSignal": str(acousticAlarmSignal)}
+        return self._restCall("device/configuration/setAcousticAlarmSignal", json.dumps(data))
+
+    def set_acoustic_alarm_timing(self, acousticAlarmTiming : AcousticAlarmTiming):
+        data = {"channelIndex": 1, "deviceId": self.id, "acousticAlarmTiming": str(acousticAlarmTiming)}
+        return self._restCall("device/configuration/setAcousticAlarmTiming", json.dumps(data))
+    
+    def set_acoustic_water_alarm_trigger(self, acousticWaterAlarmTrigger : WaterAlarmTrigger):
+        data = {"channelIndex": 1, "deviceId": self.id, "acousticWaterAlarmTrigger": str(acousticWaterAlarmTrigger)}
+        return self._restCall("device/configuration/setAcousticWaterAlarmTrigger", json.dumps(data))
+
+    def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger : WaterAlarmTrigger):
+        data = {"channelIndex": 1, "deviceId": self.id, "inAppWaterAlarmTrigger": str(inAppWaterAlarmTrigger)}
+        return self._restCall("device/configuration/setInAppWaterAlarmTrigger", json.dumps(data))
+
+    def set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger : WaterAlarmTrigger):
+        LOGGER.warning("set_siren_water_alarm_trigger is currently not available in the HMIP App. It might not be available in the cloud yet")
+        data = {"channelIndex": 1, "deviceId": self.id, "sirenWaterAlarmTrigger": str(sirenWaterAlarmTrigger)}
+        return self._restCall("device/configuration/setSirenWaterAlarmTrigger", json.dumps(data))

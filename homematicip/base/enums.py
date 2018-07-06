@@ -6,6 +6,8 @@ class AutoNameEnum(Enum):
     """ auto() will generate the name of the attribute as value """
     def _generate_next_value_(name, start, count, last_values):
         return name
+    def __str__(self):
+        return self.value
 
 class AcousticAlarmTiming(AutoNameEnum):
     PERMANENT = auto()
