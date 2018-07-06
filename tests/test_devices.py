@@ -23,7 +23,7 @@ def test_shutter_device(fake_home):
     assert d.modelId == 258
     assert d.modelType == "HMIP-SWDO"
     assert d.oem == "eQ-3"
-    assert d.windowState == "CLOSED"
+    assert d.windowState == WindowState.CLOSED
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000001"
     assert d.availableFirmwareVersion == "1.16.8"
     assert d.firmwareVersion == "1.16.8"
@@ -38,7 +38,7 @@ def test_shutter_device(fake_home):
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000001"]
 
     d = fake_home.search_device_by_id('3014F7110000000000000005')
-    assert d.windowState == "OPEN"
+    assert d.windowState == WindowState.OPEN
     assert d.lastStatusUpdate == None
 
 def test_pluggable_switch_measuring(fake_home):
@@ -96,7 +96,7 @@ def test_smoke_detector(fake_home):
     assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): smokeDetectorAlarmType(IDLE_OFF)'
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000020"]
 
-def test_wall_mounted_thermostat_pro(fake_home):
+def test_wall_mounted_thermostat_pro(fake_home : Home ):
     d = fake_home.search_device_by_id('3014F7110000000000000022')
     assert isinstance(d, WallMountedThermostatPro)
     assert d.id == "3014F7110000000000000022"
@@ -110,6 +110,7 @@ def test_wall_mounted_thermostat_pro(fake_home):
     assert d.updateState == "UP_TO_DATE"
     assert d.humidity == 43
     assert d.setPointTemperature == 5.0
+    assert d.display == ClimateControlDisplay.ACTUAL_HUMIDITY
     assert d.temperatureOffset == 0.0
     assert d.lowBat == False
     assert d.operationLockActive == False
@@ -124,6 +125,12 @@ def test_wall_mounted_thermostat_pro(fake_home):
     assert str(d) == ('HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63) configPending(False) dutyCycle(False): operationLockActive(False):'
                       ' actualTemperature(24.7) humidity(43) setPointTemperature(5.0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000022"]
+
+    with no_ssl_verification():
+        d.set_display( ClimateControlDisplay.ACTUAL)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000022')
+    assert d.display == ClimateControlDisplay.ACTUAL
 
 def test_heating_thermostat(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000015')
@@ -271,7 +278,7 @@ def test_rotary_handle_sensor(fake_home):
     assert d.modelId == 286
     assert d.modelType == "HmIP-SRH"
     assert d.oem == "eQ-3"
-    assert d.windowState == "CLOSED"
+    assert d.windowState == WindowState.TILTED
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000004"
     assert d.availableFirmwareVersion == "1.2.10"
     assert d.firmwareVersion == "1.2.10"
@@ -283,7 +290,7 @@ def test_rotary_handle_sensor(fake_home):
     assert d.dutyCycle == False
     assert d.configPending == False
     assert str(d) == ('HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False):'
-                      ' sabotage(False) windowState(CLOSED)')
+                      ' sabotage(False) windowState(TILTED)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000004"]
 
 def test_dimmer(fake_home):
@@ -387,4 +394,3 @@ def test_water_sensor(fake_home : Home):
         assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
         assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
         assert d.sirenWaterAlarmTrigger ==WaterAlarmTrigger.NO_ALARM
-    

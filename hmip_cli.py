@@ -311,7 +311,7 @@ def main():
 
             if args.device_display != None:
                 if isinstance(device, TemperatureHumiditySensorDisplay):
-                    device.set_display(args.device_display.upper())
+                    device.set_display(ClimateControlDisplay(args.device_display.upper()))
                     command_entered = True
                 else:
                     logger.error("can't set display of device %s of type %s", device.id, device.deviceType)

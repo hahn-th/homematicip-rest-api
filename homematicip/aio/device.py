@@ -100,12 +100,7 @@ class AsyncTemperatureHumiditySensorWithoutDisplay(TemperatureHumiditySensorWith
 
 class AsyncTemperatureHumiditySensorDisplay(TemperatureHumiditySensorDisplay, AsyncDevice):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
-    # todo: need override these otherwise cannot use them as method parameters. Fix this.
-    DISPLAY_ACTUAL = "ACTUAL"
-    DISPLAY_SETPOINT = "SETPOINT"
-    DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
-
-    async def set_display(self, display=DISPLAY_ACTUAL):
+    async def set_display(self, display : ClimateControlDisplay = ClimateControlDisplay.ACTUAL):
         await self._connection.api_call(*super().set_display(display=display))
 
 

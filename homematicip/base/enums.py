@@ -32,3 +32,13 @@ class AcousticAlarmSignal(AutoNameEnum):
     FREQUENCY_HIGHON_LONGOFF = auto()
     FREQUENCY_LOWON_OFF_HIGHON_OFF = auto()
     FREQUENCY_LOWON_LONGOFF_HIGHON_LONGOFF = auto()
+
+class ClimateControlDisplay(AutoNameEnum):
+    ACTUAL = auto()
+    SETPOINT = auto()
+    ACTUAL_HUMIDITY = auto()
+
+class WindowState(AutoNameEnum):
+    OPEN = auto()
+    CLOSED = auto()
+    TILTED = auto()

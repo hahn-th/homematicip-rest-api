@@ -174,14 +174,14 @@ class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
     def __init__(self,connection):
         super().__init__(connection)
-        self.windowState = None
+        self.windowState = WindowState.CLOSED
         self.eventDelay = None
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SHUTTER_CONTACT_CHANNEL", js)
         if c:
-            self.windowState = c["windowState"]
+            self.windowState = WindowState(c["windowState"])
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
@@ -191,14 +191,14 @@ class RotaryHandleSensor(SabotageDevice):
     """ HmIP-SRH """
     def __init__(self,connection):
         super().__init__(connection)
-        self.windowState = None
+        self.windowState = WindowState.CLOSED
         self.eventDelay = None
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("ROTARY_HANDLE_CHANNEL", js)
         if c:
-            self.windowState = c["windowState"]
+            self.windowState = WindowState(c["windowState"])
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
@@ -246,14 +246,10 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
 class TemperatureHumiditySensorDisplay(Device):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
 
-    DISPLAY_ACTUAL = "ACTUAL"
-    DISPLAY_SETPOINT = "SETPOINT"
-    DISPLAY_ACTUAL_HUMIDITY = "ACTUAL_HUMIDITY"
-
     def __init__(self,connection):
         super().__init__(connection)
         self.temperatureOffset = None
-        self.display = None
+        self.display = ClimateControlDisplay.ACTUAL
         self.actualTemperature = None
         self.humidity = None
         self.setPointTemperature = None
@@ -263,13 +259,13 @@ class TemperatureHumiditySensorDisplay(Device):
         c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
-            self.display = c["display"]
+            self.display = ClimateControlDisplay(c["display"])
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
 
-    def set_display(self, display=DISPLAY_ACTUAL):
-        data = {"channelIndex": 1, "deviceId": self.id, "display": display}
+    def set_display(self, display : ClimateControlDisplay = ClimateControlDisplay.ACTUAL):
+        data = {"channelIndex": 1, "deviceId": self.id, "display": str(display)}
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
@@ -288,7 +284,7 @@ class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
         c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
-            self.display = c["display"]
+            self.display = ClimateControlDisplay(c["display"])
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]

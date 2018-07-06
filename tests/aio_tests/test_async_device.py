@@ -2,7 +2,7 @@ import pytest
 
 from homematicip.aio.home import AsyncHome
 from homematicip.EventHook import EventHook
-from homematicip.aio.device import AsyncDevice
+from homematicip.aio.device import AsyncDevice, AsyncWallMountedThermostatPro
 from homematicip.base.enums import *
 
 import json
@@ -77,3 +77,37 @@ async def test_water_sensor(fake_async_home: AsyncHome):
 def test_all_devices_implemented(fake_async_home:AsyncHome):
     for d in fake_async_home.devices:
         assert type(d) != AsyncDevice
+
+@pytest.mark.asyncio
+async def test_wall_mounted_thermostat_pro(fake_async_home : AsyncHome ):
+    d = fake_async_home.search_device_by_id('3014F7110000000000000022')
+    assert isinstance(d, AsyncWallMountedThermostatPro)
+    assert d.id == "3014F7110000000000000022"
+    assert d.label == "Wandthermostat"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 297
+    assert d.modelType == "HmIP-WTH-2"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000022"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.humidity == 43
+    assert d.setPointTemperature == 5.0
+    assert d.display == ClimateControlDisplay.ACTUAL_HUMIDITY
+    assert d.temperatureOffset == 0.0
+    assert d.lowBat == False
+    assert d.operationLockActive == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -76
+    assert d.rssiPeerValue == -63
+    assert d.unreach == False
+    assert d.dutyCycle == False
+    assert d.availableFirmwareVersion == "0.0.0"
+    assert d.firmwareVersion == "1.8.0"
+
+    with no_ssl_verification():
+        await d.set_display( ClimateControlDisplay.ACTUAL)
+        await fake_async_home.get_current_state()
+        d = fake_async_home.search_device_by_id('3014F7110000000000000022')
+        assert d.display == ClimateControlDisplay.ACTUAL
