@@ -4,6 +4,7 @@ import pytest
 
 from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
+from homematicip.base.enums import *
 from homematicip.device import *
 import json
 from datetime import datetime, timedelta, timezone
@@ -358,11 +359,11 @@ def test_water_sensor(fake_home : Home):
         assert d.routerModuleSupported == False
 
         assert d.incorrectPositioned == True
-        assert d.acousticAlarmSignal == "FREQUENCY_RISING"
-        assert d.acousticAlarmTiming == "ONCE_PER_MINUTE"
-        assert d.acousticWaterAlarmTrigger == "WATER_DETECTION"
-        assert d.inAppWaterAlarmTrigger == "WATER_MOISTURE_DETECTION"
+        assert d.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
+        assert d.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
+        assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.WATER_DETECTION
+        assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
         assert d.moistureDetected == False
-        assert d.sirenWaterAlarmTrigger == "WATER_MOISTURE_DETECTION"
+        assert d.sirenWaterAlarmTrigger ==WaterAlarmTrigger.WATER_MOISTURE_DETECTION
         assert d.waterlevelDetected == False
     

@@ -47,6 +47,9 @@
     </Compile>
     <Compile Include="homematicip\base\base_connection.py" />
     <Compile Include="homematicip\base\constants.py" />
+    <Compile Include="homematicip\base\enums.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="homematicip\base\helpers.py" />
     <Compile Include="homematicip\base\__init__.py" />
     <Compile Include="homematicip\class_maps.py" />
@@ -72,6 +75,7 @@
     <Compile Include="homematicip\securityEvent.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\_version.py" />
     <Compile Include="homematicip\__init__.py">
       <SubType>Code</SubType>
     </Compile>

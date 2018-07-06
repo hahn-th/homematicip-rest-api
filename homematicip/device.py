@@ -1,10 +1,10 @@
 # coding=utf-8
-from homematicip import HomeMaticIPObject
 import json
 from datetime import datetime
 
 from homematicip.base.helpers import get_functional_channel
-
+from homematicip.base.enums import *
+from homematicip import HomeMaticIPObject
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
@@ -643,7 +643,6 @@ class WeatherSensorPro(Device):
 
     #Any set/calibration functions?
 
-
 class WaterSensor(Device):
     """ HmIP-SWD ( Water Sensor ) """
 
@@ -651,12 +650,12 @@ class WaterSensor(Device):
     def __init__(self,connection):
         super().__init__(connection)
         self.incorrectPositioned = False
-        self.acousticAlarmSignal = "FREQUENCY_RISING"
-        self.acousticAlarmTiming = "ONCE_PER_MINUTE"
-        self.acousticWaterAlarmTrigger = "WATER_DETECTION"
-        self.inAppWaterAlarmTrigger = "WATER_MOISTURE_DETECTION"
+        self.acousticAlarmSignal = AcousticAlarmSignal.DISABLE_ACOUSTIC_SIGNAL
+        self.acousticAlarmTiming = AcousticAlarmTiming.PERMANENT
+        self.acousticWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.inAppWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.moistureDetected = False
-        self.sirenWateralarmTrigger = "WATER_MOISTURE_DETECTION"
+        self.sirenWateralarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.waterlevelDetected = False
         
     def from_json(self, js):
@@ -675,12 +674,12 @@ class WaterSensor(Device):
 
         c = get_functional_channel("WATER_SENSOR_CHANNEL", js)
         if c:
-            self.acousticAlarmSignal = c["acousticAlarmSignal"]
-            self.acousticAlarmTiming = c["acousticAlarmTiming"]
-            self.acousticWaterAlarmTrigger = c["acousticWaterAlarmTrigger"]
-            self.inAppWaterAlarmTrigger = c["inAppWaterAlarmTrigger"]
+            self.acousticAlarmSignal = AcousticAlarmSignal(c["acousticAlarmSignal"])
+            self.acousticAlarmTiming = AcousticAlarmTiming(c["acousticAlarmTiming"])
+            self.acousticWaterAlarmTrigger = WaterAlarmTrigger(c["acousticWaterAlarmTrigger"])
+            self.inAppWaterAlarmTrigger = WaterAlarmTrigger(c["inAppWaterAlarmTrigger"])
             self.moistureDetected = c["moistureDetected"]
-            self.sirenWaterAlarmTrigger = c["sirenWaterAlarmTrigger"]
+            self.sirenWaterAlarmTrigger = WaterAlarmTrigger(c["sirenWaterAlarmTrigger"])
             self.waterlevelDetected = c["waterlevelDetected"]
 
     def __str__(self):
