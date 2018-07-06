@@ -89,6 +89,7 @@ Devices:
 -  [X] HmIP-SWO-B (Weather Sensor)
 -  [X] HmIP-SRH (Rotary Handle Sensor)
 -  [X] HmIP-SWD (Water Sensor)
+-  [X] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)
 
 Events
 ------
