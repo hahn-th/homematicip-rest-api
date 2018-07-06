@@ -43,3 +43,6 @@ def test_bytes2str():
     assert bytes2str(testString.encode('utf-32-be')) == testString
     assert bytes2str(testString.encode('utf-16-le')) == testString
     assert bytes2str(testString.encode('utf-32-le')) == testString
+    assert bytes2str(testString) == testString
+    with pytest.raises(TypeError):
+        assert bytes2str(44) == testString
