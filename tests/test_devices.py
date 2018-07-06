@@ -146,7 +146,7 @@ def test_heating_thermostat(fake_home):
     assert d.setPointTemperature == 5.0
     assert d.temperatureOffset == 0.0
     assert d.valvePosition == 0.0
-    assert d.valveState == "ADAPTION_DONE"
+    assert d.valveState == ValveState.ADAPTION_DONE
     assert d.lowBat == False
     assert d.operationLockActive == True
     assert d.routerModuleEnabled == False

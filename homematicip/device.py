@@ -149,7 +149,7 @@ class HeatingThermostat(OperationLockableDevice):
         super().__init__(connection)
         self.temperatureOffset = 0
         self.valvePosition = 0.0
-        self.valveState = ""
+        self.valveState = ValveState.ERROR_POSITION
         self.setPointTemperature = 0.0
         self.automaticValveAdaptionNeeded = False
 
@@ -160,7 +160,7 @@ class HeatingThermostat(OperationLockableDevice):
         if c:
             self.temperatureOffset = c["temperatureOffset"]
             self.valvePosition = c["valvePosition"]
-            self.valveState = c["valveState"]
+            self.valveState = ValveState(c["valveState"])
             self.setPointTemperature = c["setPointTemperature"]
 
     def __str__(self):
@@ -314,7 +314,7 @@ class FloorTerminalBlock6(Device):
     def __init__(self,connection):
         super().__init__(connection)
         self.globalPumpControl = None
-        self.heatingValveType = None
+        self.heatingValveType = HeatingValveType.NORMALLY_CLOSE
 
     def from_json(self, js):
         super().from_json(js)
@@ -322,7 +322,7 @@ class FloorTerminalBlock6(Device):
         if c:
             self.unreach = c["unreach"]
             self.globalPumpControl = c["globalPumpControl"]
-            self.heatingValveType = c["heatingValveType"]
+            self.heatingValveType = HeatingValveType(c["heatingValveType"])
 
     def __str__(self):
         return "{}: globalPumpControl({})".format(super().__str__(),

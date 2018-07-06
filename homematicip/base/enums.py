@@ -42,3 +42,28 @@ class WindowState(AutoNameEnum):
     OPEN = auto()
     CLOSED = auto()
     TILTED = auto()
+
+class ValveState(AutoNameEnum):
+    STATE_NOT_AVAILABLE = auto()
+    RUN_TO_START = auto()
+    WAIT_FOR_ADAPTION = auto()
+    ADAPTION_IN_PROGRESS = auto()
+    ADAPTION_DONE = auto()
+    TOO_TIGHT = auto()
+    ADJUSTMENT_TOO_BIG = auto()
+    ADJUSTMENT_TOO_SMALL = auto()
+    ERROR_POSITION = auto()
+
+class HeatingValveType(AutoNameEnum):
+    NORMALLY_CLOSE = auto()
+    NORMALLY_OPEN = auto()
+
+class RGBColorState(AutoNameEnum):
+    BLACK = auto()
+    BLUE = auto()
+    GREEN = auto()
+    TURQUOISE = auto()
+    RED = auto()
+    PURPLE = auto()
+    YELLOW = auto()
+    WHITE = auto()
