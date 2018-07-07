@@ -84,3 +84,38 @@ class HomeUpdateState(AutoNameEnum):
     UPDATE_AVAILABLE = auto()
     PERFORM_UPDATE_SENT = auto()
     PERFORMING_UPDATE = auto()
+
+class WeatherCondition(AutoNameEnum):
+    CLEAR = auto()
+    LIGHT_CLOUDY = auto()
+    CLOUDY = auto()
+    CLOUDY_WITH_RAIN = auto()
+    CLOUDY_WITH_SNOW_RAIN = auto()
+    HEAVILY_CLOUDY = auto()
+    HEAVILY_CLOUDY_WITH_RAIN = auto()
+    HEAVILY_CLOUDY_WITH_STRONG_RAIN = auto()
+    HEAVILY_CLOUDY_WITH_SNOW = auto()
+    HEAVILY_CLOUDY_WITH_SNOW_RAIN = auto()
+    HEAVILY_CLOUDY_WITH_THUNDER = auto()
+    HEAVILY_CLOUDY_WITH_RAIN_AND_THUNDER = auto()
+    FOGGY = auto()
+    UNKNOWN = auto()
+
+class WeatherDayTime(AutoNameEnum):
+    DAY = auto()
+    TWILIGHT = auto()
+    NIGHT = auto()
+
+class AbsenceType(AutoNameEnum):
+    NOT_ABSENT = auto()
+    PERIOD = auto()
+    PERMANENT = auto()
+    VACATION = auto()
+    PARTY = auto()
+
+class EcoDuration(AutoNameEnum):
+    ONE = auto()
+    TWO = auto()
+    FOUR = auto()
+    SIX = auto()
+    PERMANENT = auto()

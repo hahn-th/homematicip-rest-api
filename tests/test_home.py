@@ -57,8 +57,8 @@ def test_home_weather(fake_home: Home):
     assert fake_home.weather.maxTemperature == 16.6
     assert fake_home.weather.minTemperature == 16.6
     assert fake_home.weather.temperature == 16.6
-    assert fake_home.weather.weatherCondition == "LIGHT_CLOUDY"
-    assert fake_home.weather.weatherDayTime == "NIGHT"
+    assert fake_home.weather.weatherCondition == WeatherCondition.LIGHT_CLOUDY
+    assert fake_home.weather.weatherDayTime == WeatherDayTime.NIGHT
     assert fake_home.weather.windDirection == 294
     assert fake_home.weather.windSpeed == 8.568 
     assert fake_home.weather._rawJSONData == fake_home_download_configuration()["home"]["weather"]

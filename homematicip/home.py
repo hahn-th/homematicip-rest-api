@@ -1,10 +1,11 @@
 import logging
 import threading
 import websocket
+from typing import List
 
 from homematicip.EventHook import *
 from homematicip.base.constants import DEVICE
-from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP, TYPE_RULE_MAP
+from homematicip.class_maps import *
 from homematicip.connection import Connection
 from homematicip.group import *
 from homematicip.device import *
@@ -32,7 +33,7 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.temperature = 0.0
-        self.weatherCondition = "CLEAR"
+        self.weatherCondition = WeatherCondition.UNKNOWN
         self.weatherDayTime = "DAY"
         self.minTemperature = 0.0
         self.maxTemperature = 0.0
@@ -43,8 +44,8 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
     def from_json(self, js):
         super().from_json(js)
         self.temperature = js["temperature"]
-        self.weatherCondition = js["weatherCondition"]
-        self.weatherDayTime = js["weatherDayTime"]
+        self.weatherCondition = WeatherCondition(js["weatherCondition"])
+        self.weatherDayTime = WeatherDayTime(js["weatherDayTime"])
         self.minTemperature = js["minTemperature"]
         self.maxTemperature = js["maxTemperature"]
         self.humidity = js["humidity"]
@@ -87,7 +88,8 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = ""
         self.label = ""
         self.homeId = ""
-        # refreshToken is not in the configuration from the webserver anymore. It will be removed in a future release
+        # refreshToken is not in the configuration from the webserver anymore.
+        # It will be removed in a future release
         self.refreshToken = None 
 
     def from_json(self, js):
@@ -110,12 +112,7 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
     def from_json(self, js):
         super().from_json(js)
         self.authToken = js["authToken"]
-        time = js["expirationTimestamp"]
-        if time > 0:
-            self.expirationTimestamp = datetime.fromtimestamp(time / 1000.0)
-        else:
-            self.expirationTimestamp = None
-
+        self.expirationTimestamp = self.fromtimestamp(js["expirationTimestamp"])
 
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
@@ -123,6 +120,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
     _typeRuleMap = TYPE_RULE_MAP
+    _typeFunctionalHomeMap = TYPE_FUNCTIONALHOME_MAP
 
     def __init__(self, connection=None):
         if connection is None:
@@ -155,6 +153,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.clients = []
         self.groups = []
         self.rules = []
+        self.functionalHomes = []
 
     def init(self, access_point_id, lookup=True):
         self._connection.init(access_point_id, lookup)
@@ -208,6 +207,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self._get_devices(json_state)
         self._get_clients(json_state)
         self._get_groups(json_state)
+
+        self._get_functionalHomes(js_home)
 
         return True
 
@@ -295,6 +296,20 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     self.groups.append(self._parse_group(raw))
         for mg in metaGroups:
             self.groups.append(self._parse_group(mg))
+
+    def _get_functionalHomes(self, json_state):
+        self.functionalHomes = []
+        for solution, functionalHome in json_state["functionalHomes"].items():
+            if solution in self._typeFunctionalHomeMap:
+                h = self._typeFunctionalHomeMap[solution](self._connection)
+                h.from_json(functionalHome, self.groups)
+                self.functionalHomes.append(h)
+            else:
+                h = FunctionalHome(self._connection)
+                h.from_json(functionalHome, self.groups)
+                LOGGER.warning("There is no class for %s yet", solution)
+                self.functionalHomes.append(h)
+
 
     def search_device_by_id(self, deviceID) -> Device:
         """ searches a device by given id
@@ -399,8 +414,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
         if "errorCode" in journal:
-            LOGGER.error(
-                "Could not get the security journal. Error: %s", journal["errorCode"])
+            LOGGER.error("Could not get the security journal. Error: %s", journal["errorCode"])
             return None
         ret = []
         for entry in journal["entries"]:
@@ -450,15 +464,11 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def enable_events(self):
         websocket.enableTrace(True)
-        self.__webSocket = websocket.WebSocketApp(
-            self._connection.urlWebSocket, header=[
-                'AUTHTOKEN: {}'.format(self._connection.auth_token),
-                'CLIENTAUTH: {}'.format(self._connection.clientauth_token)
-            ],
+        self.__webSocket = websocket.WebSocketApp(self._connection.urlWebSocket, header=['AUTHTOKEN: {}'.format(self._connection.auth_token),
+                'CLIENTAUTH: {}'.format(self._connection.clientauth_token)],
             on_message=self._ws_on_message,
             on_error=self._ws_on_error)
-        self.__webSocketThread = threading.Thread(
-            target=self.__webSocket.run_forever)
+        self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
         self.__webSocketThread.daemon = True
         self.__webSocketThread.start()
 
