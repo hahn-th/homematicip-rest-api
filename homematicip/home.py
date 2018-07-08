@@ -298,12 +298,17 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             self.groups.append(self._parse_group(mg))
 
     def _get_functionalHomes(self, json_state):
-        self.functionalHomes = []
         for solution, functionalHome in json_state["functionalHomes"].items():
             if solution in self._typeFunctionalHomeMap:
-                h = self._typeFunctionalHomeMap[solution](self._connection)
+                h = None
+                for fh in self.functionalHomes:
+                    if fh.solution == solution:
+                        h = fh
+                        break
+                if h is None:
+                    h = self._typeFunctionalHomeMap[solution](self._connection)
+                    self.functionalHomes.append(h)
                 h.from_json(functionalHome, self.groups)
-                self.functionalHomes.append(h)
             else:
                 h = FunctionalHome(self._connection)
                 h.from_json(functionalHome, self.groups)
@@ -375,7 +380,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return self._restCall("home/security/setIntrusionAlertThroughSmokeDetectors",
                               json.dumps(data))
 
-    def activate_absence_with_period(self, endtime):
+    def activate_absence_with_period(self, endtime : datetime):
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
         return self._restCall("home/heating/activateAbsenceWithPeriod", json.dumps(data))
 

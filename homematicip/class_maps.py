@@ -82,5 +82,7 @@ TYPE_RULE_MAP = {
 
 TYPE_FUNCTIONALHOME_MAP = {
     cn.INDOOR_CLIMATE: IndoorClimateHome,
-    cn.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome
+    cn.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
+    cn.LIGHT_AND_SHADOW: LightAndShadowHome,
+    cn.SECURITY_AND_ALARM: SecurityAndAlarmHome
 }

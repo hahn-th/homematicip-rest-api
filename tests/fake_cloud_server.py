@@ -2,6 +2,7 @@ from werkzeug.wrappers import Response, Request
 import json
 import hashlib
 
+from datetime import datetime, timedelta
 
 class FakeCloudServer():
     """ a fake server to act as the HMIP cloud"""
@@ -45,8 +46,8 @@ class FakeCloudServer():
                     for v in self.client_token_map.values():
                         if v == request.headers["AUTHTOKEN"]:
                             return func(self,request,response)  
-            except:
-                pass
+            except Exception as e:
+                return self.errorCode(response, str(e), 500)
 
             return self.errorCode(response, "INVALID_AUTHORIZATION", 403)
         return func_wrapper
@@ -124,6 +125,37 @@ class FakeCloudServer():
         return response
 #endregion
 
+#region home/heating
+    @validate_authorization
+    def post_hmip_home_heating_activateAbsenceWithDuration(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        
+        minutes = js["duration"]
+        absence_end = datetime.now() + timedelta(minutes=minutes)
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = absence_end.strftime("%Y_%m_%d %H:%M")
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceType"] = "PERIOD"
+
+
+        return response
+
+    @validate_authorization
+    def post_hmip_home_heating_activateAbsenceWithPeriod(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = js["endTime"]
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceType"] = "PERIOD"
+
+        return response
+
+    @validate_authorization
+    def post_hmip_home_heating_deactivateAbsence(self,request : Request ,response : Response):
+
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = None
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceType"] = "NOT_ABSENT"
+
+        return response
 #region rule
     @validate_authorization
     def post_hmip_rule_enableSimpleRule(self,request : Request ,response : Response):

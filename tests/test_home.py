@@ -7,6 +7,7 @@ from homematicip.base.base_connection import BaseConnection
 from homematicip.rule import *
 from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
+from homematicip.functionalHomes import *
 
 import json
 from datetime import datetime, timedelta, timezone
@@ -154,4 +155,41 @@ def test_set_powermeter_unit_price(fake_home : Home):
         assert fake_home.powerMeterUnitPrice == 8.5
 
 
-        
+def test_indoor_climate_home(fake_home : Home):
+    with no_ssl_verification():
+        for fh in fake_home.functionalHomes:
+            if not isinstance(fh,IndoorClimateHome):
+                continue
+            assert fh.active == True
+            assert fh.absenceType == AbsenceType.NOT_ABSENT
+            assert fh.coolingEnabled == False
+            assert fh.ecoDuration == EcoDuration.PERMANENT
+            assert fh.ecoTemperature == 17.0
+            assert fh.optimumStartStopEnabled == False
+
+
+            minutes = 20
+            fake_home.activate_absence_with_duration(minutes)
+            absence_end = datetime.now() + timedelta(minutes=minutes)
+            absence_end = absence_end.replace(second=0,microsecond=0)
+
+            fake_home.get_current_state()
+
+            assert fh.absenceType == AbsenceType.PERIOD
+            assert fh.absenceEndTime == absence_end
+
+            absence_end = datetime.strptime("2100_01_01 22:22","%Y_%m_%d %H:%M")
+
+            fake_home.activate_absence_with_period(absence_end)
+
+            fake_home.get_current_state()
+
+            assert fh.absenceType == AbsenceType.PERIOD
+            assert fh.absenceEndTime == absence_end           
+
+            fake_home.deactivate_absence()
+
+            fake_home.get_current_state()
+            assert fh.absenceType == AbsenceType.NOT_ABSENT
+            assert fh.absenceEndTime == None
+
