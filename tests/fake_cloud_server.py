@@ -46,8 +46,8 @@ class FakeCloudServer():
                     for v in self.client_token_map.values():
                         if v == request.headers["AUTHTOKEN"]:
                             return func(self,request,response)  
-            except Exception as e:
-                return self.errorCode(response, str(e), 500)
+            except:
+                pass
 
             return self.errorCode(response, "INVALID_AUTHORIZATION", 403)
         return func_wrapper
