@@ -181,7 +181,8 @@ class ShutterContact(SabotageDevice):
         super().from_json(js)
         c = get_functional_channel("SHUTTER_CONTACT_CHANNEL", js)
         if c:
-            self.windowState = WindowState(c["windowState"])
+            if c["windowState"]:
+                self.windowState = WindowState(c["windowState"])
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
