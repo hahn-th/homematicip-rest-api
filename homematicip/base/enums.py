@@ -1,5 +1,5 @@
 # coding=utf-8
-from enum import auto, Enum
+from aenum import auto, Enum
 
 
 class AutoNameEnum(Enum):
