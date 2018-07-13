@@ -3,3 +3,4 @@ websocket-client
 async_timeout
 websockets
 aiohttp
+aenum
