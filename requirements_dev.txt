@@ -9,3 +9,4 @@ pytest-cov
 pytest-localserver
 pytest-xdist
 versioneer
+aenum
