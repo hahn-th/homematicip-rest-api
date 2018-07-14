@@ -157,7 +157,7 @@ class HeatingThermostat(OperationLockableDevice):
         if c:
             self.temperatureOffset = c["temperatureOffset"]
             self.valvePosition = c["valvePosition"]
-            self.valveState = ValveState(c["valveState"])
+            self.valveState = ValveState.from_str(c["valveState"])
             self.setPointTemperature = c["setPointTemperature"]
 
     def __str__(self):
@@ -178,7 +178,7 @@ class ShutterContact(SabotageDevice):
         super().from_json(js)
         c = get_functional_channel("SHUTTER_CONTACT_CHANNEL", js)
         if c:
-            self.windowState = WindowState(c["windowState"])
+            self.windowState = WindowState.from_str(c["windowState"])
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
@@ -195,7 +195,7 @@ class RotaryHandleSensor(SabotageDevice):
         super().from_json(js)
         c = get_functional_channel("ROTARY_HANDLE_CHANNEL", js)
         if c:
-            self.windowState = WindowState(c["windowState"])
+            self.windowState = WindowState.from_str(c["windowState"])
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
@@ -256,7 +256,7 @@ class TemperatureHumiditySensorDisplay(Device):
         c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
-            self.display = ClimateControlDisplay(c["display"])
+            self.display = ClimateControlDisplay.from_str(c["display"])
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
@@ -281,7 +281,7 @@ class WallMountedThermostatPro(TemperatureHumiditySensorDisplay,
         c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
-            self.display = ClimateControlDisplay(c["display"])
+            self.display = ClimateControlDisplay.from_str(c["display"])
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
@@ -319,7 +319,7 @@ class FloorTerminalBlock6(Device):
         if c:
             self.unreach = c["unreach"]
             self.globalPumpControl = c["globalPumpControl"]
-            self.heatingValveType = HeatingValveType(c["heatingValveType"])
+            self.heatingValveType = HeatingValveType.from_str(c["heatingValveType"])
 
     def __str__(self):
         return "{}: globalPumpControl({})".format(super().__str__(),
@@ -670,12 +670,12 @@ class WaterSensor(Device):
 
         c = get_functional_channel("WATER_SENSOR_CHANNEL", js)
         if c:
-            self.acousticAlarmSignal = AcousticAlarmSignal(c["acousticAlarmSignal"])
-            self.acousticAlarmTiming = AcousticAlarmTiming(c["acousticAlarmTiming"])
-            self.acousticWaterAlarmTrigger = WaterAlarmTrigger(c["acousticWaterAlarmTrigger"])
-            self.inAppWaterAlarmTrigger = WaterAlarmTrigger(c["inAppWaterAlarmTrigger"])
+            self.acousticAlarmSignal = AcousticAlarmSignal.from_str(c["acousticAlarmSignal"])
+            self.acousticAlarmTiming = AcousticAlarmTiming.from_str(c["acousticAlarmTiming"])
+            self.acousticWaterAlarmTrigger = WaterAlarmTrigger.from_str(c["acousticWaterAlarmTrigger"])
+            self.inAppWaterAlarmTrigger = WaterAlarmTrigger.from_str(c["inAppWaterAlarmTrigger"])
             self.moistureDetected = c["moistureDetected"]
-            self.sirenWaterAlarmTrigger = WaterAlarmTrigger(c["sirenWaterAlarmTrigger"])
+            self.sirenWaterAlarmTrigger = WaterAlarmTrigger.from_str(c["sirenWaterAlarmTrigger"])
             self.waterlevelDetected = c["waterlevelDetected"]
 
     def __str__(self):

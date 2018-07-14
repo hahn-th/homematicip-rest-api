@@ -1,5 +1,5 @@
 # coding=utf-8
-from enum import auto, Enum
+from aenum import auto, Enum
 
 
 class AutoNameEnum(Enum):
@@ -8,6 +8,13 @@ class AutoNameEnum(Enum):
         return name
     def __str__(self):
         return self.value
+
+    @classmethod
+    def from_str(cls, text):
+        if text is None:
+            return None
+        return cls(text)
+
 
 class AcousticAlarmTiming(AutoNameEnum):
     PERMANENT = auto()
