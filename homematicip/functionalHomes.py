@@ -48,9 +48,9 @@ class IndoorClimateHome(FunctionalHome):
         else:
             #Why can't EQ-3 use the timestamp here like everywhere else -.-
             self.absenceEndTime = datetime.strptime(js["absenceEndTime"], "%Y_%m_%d %H:%M")
-        self.absenceType = AbsenceType(js["absenceType"])
+        self.absenceType = AbsenceType.from_str(js["absenceType"])
         self.coolingEnabled = js["coolingEnabled"]
-        self.ecoDuration = EcoDuration(js["ecoDuration"])
+        self.ecoDuration = EcoDuration.from_str(js["ecoDuration"])
         self.ecoTemperature = js["ecoTemperature"]
         self.optimumStartStopEnabled = js["optimumStartStopEnabled"]
         
@@ -101,7 +101,7 @@ class SecurityAndAlarmHome(FunctionalHome):
         self.alarmEventTimestamp = self.fromtimestamp(js["alarmEventTimestamp"])
         self.intrusionAlertThroughSmokeDetectors = js["intrusionAlertThroughSmokeDetectors"]
         self.zoneActivationDelay = js["zoneActivationDelay"]
-        self.securityZoneActivationMode = SecurityZoneActivationMode(js["securityZoneActivationMode"])
+        self.securityZoneActivationMode = SecurityZoneActivationMode.from_str(js["securityZoneActivationMode"])
 
         self.securitySwitchingGroups = self.assignGroups(js["securitySwitchingGroups"].values(),groups)
         self.securityZones = self.assignGroups(js["securityZones"].values(),groups)

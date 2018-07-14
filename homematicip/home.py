@@ -44,8 +44,8 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
     def from_json(self, js):
         super().from_json(js)
         self.temperature = js["temperature"]
-        self.weatherCondition = WeatherCondition(js["weatherCondition"])
-        self.weatherDayTime = WeatherDayTime(js["weatherDayTime"])
+        self.weatherCondition = WeatherCondition.from_str(js["weatherCondition"])
+        self.weatherDayTime = WeatherDayTime.from_str(js["weatherDayTime"])
         self.minTemperature = js["minTemperature"]
         self.maxTemperature = js["maxTemperature"]
         self.humidity = js["humidity"]
@@ -175,13 +175,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.timeZoneId = js_home["timeZoneId"]
         self.pinAssigned = js_home["pinAssigned"]
         self.dutyCycle = js_home["dutyCycle"]
-        self.updateState = HomeUpdateState(js_home["updateState"])
+        self.updateState = HomeUpdateState.from_str(js_home["updateState"])
         self.powerMeterUnitPrice = js_home["powerMeterUnitPrice"]
         self.powerMeterCurrency = js_home["powerMeterCurrency"]
-        self.deviceUpdateStrategy = DeviceUpdateStrategy(js_home["deviceUpdateStrategy"])
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.from_str(js_home["deviceUpdateStrategy"])
         self.lastReadyForUpdateTimestamp = js_home["lastReadyForUpdateTimestamp"]
         self.apExchangeClientId = js_home["apExchangeClientId"]
-        self.apExchangeState = ApExchangeState(js_home["apExchangeState"])
+        self.apExchangeState = ApExchangeState.from_str(js_home["apExchangeState"])
         self.id = js_home["id"]
         self.carrierSense = js_home["carrierSense"]
 
