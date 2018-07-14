@@ -60,6 +60,9 @@
     <Compile Include="homematicip\device.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\functionalHomes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="homematicip\group.py">
       <SubType>Code</SubType>
     </Compile>

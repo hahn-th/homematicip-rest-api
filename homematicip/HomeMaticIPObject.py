@@ -1,3 +1,4 @@
+from datetime import datetime
 import logging
 
 LOGGER = logging.getLogger(__name__)
@@ -30,6 +31,12 @@ class HomeMaticIPObject:
         #LOGGER.debug("from_json call HomeMaticIpObject")
         self._rawJSONData = js
         pass
+
+    def fromtimestamp(self, timestamp):
+        """ internal helper function which will create a datetime object from a timestamp """
+        if timestamp == None or timestamp <= 0:
+            return None
+        return datetime.fromtimestamp(timestamp / 1000.0)
 
     def __str__(self):
         return 'id({})'.format(self.id)

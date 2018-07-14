@@ -40,11 +40,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.id = js["id"]
         self.homeId = js["homeId"]
         self.label = js["label"]
-        time = js["lastStatusUpdate"]
-        if time > 0:
-            self.lastStatusUpdate = datetime.fromtimestamp(time / 1000.0)
-        else:
-            self.lastStatusUpdate = None
+
+        self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
 
         self.deviceType = js["type"]
         self.updateState = js["updateState"]

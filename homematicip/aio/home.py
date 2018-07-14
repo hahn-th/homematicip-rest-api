@@ -38,6 +38,8 @@ class AsyncHome(Home):
         self._get_clients(json_state)
         self._get_groups(json_state)
 
+        self._get_functionalHomes(js_home)
+
         return True
 
     async def enable_events(self) -> asyncio.Task:
