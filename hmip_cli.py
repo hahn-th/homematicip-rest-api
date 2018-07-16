@@ -25,23 +25,6 @@ def create_logger(level, file_name):
     logger.addHandler(handler)
     return logger
 
-def convert_config2ini():
-    """converts the old config.py to ./config.ini"""
-    try:
-        import config
-        print('converting config.py to config.ini')
-        _config = configparser.ConfigParser()
-        _config.add_section("AUTH")
-        _config.add_section('LOGGING')
-        _config['AUTH'] = { 'AuthToken' : config.AUTH_TOKEN, 'AccessPoint': config.ACCESS_POINT }
-        _config.set('LOGGING','Level', str(config.LOGGING_LEVEL))
-        _config.set('LOGGING', 'FileName', str(config.LOGGING_FILENAME))
-        with open('./config.ini', 'w') as configfile:
-            _config.write(configfile)
-        os.remove('./config.py')
-    except ImportError:
-        pass 
-
 def anonymizeConfig(config, pattern, format):
     m = re.findall(pattern, config, flags=re.IGNORECASE)
     if m == None:
@@ -143,7 +126,6 @@ def main():
             print("##### CONFIG FILE NOT FOUND: {} #####".format(args.config_file))
             return
     else:
-        convert_config2ini()
         _config = homematicip.find_and_load_config_file()
 
 
