@@ -47,6 +47,9 @@ jobs:
             . venv/bin/activate
             export PYTHONPATH=`pwd`;
             pytest -n auto --cov=./ --junitxml=test-reports/junit.xml tests
+      - run:
+          name: upload to codecov
+          command: |
             bash <(curl -s https://codecov.io/bash)
 
       - store_test_results:
