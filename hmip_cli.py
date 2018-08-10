@@ -72,6 +72,7 @@ def main():
     group = parser.add_argument_group("Device Settings")
     group.add_argument("--turn-on", action="store_true", dest="device_switch_state", help="turn the switch on", default=None)
     group.add_argument("--turn-off", action="store_false", dest="device_switch_state", help="turn the switch off", default=None)
+    group.add_argument("--set-dim-level", action="store", dest="device_dim_level", help="set dimmer to level (0..1)", default=None)
     group.add_argument("--set-shutter-level", action="store", dest="device_shutter_level", help="set shutter to level (0..1)")
     group.add_argument("--set-shutter-stop", action="store_true", dest="device_shutter_stop", help="stop shutter", default=None)
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
@@ -276,6 +277,13 @@ def main():
                     command_entered = True
                 else:
                     logger.error("can't turn on/off device %s of type %s", device.id, device.deviceType)
+
+            if args.device_dim_level is not None:
+                if isinstance(device, Dimmer):
+                    device.set_dim_level(args.device_dim_level)
+                    command_entered = True
+                else:
+                    logger.error("can't set dim level of device %s of type %s", device.id, device.deviceType)
 
             if args.device_shutter_level is not None:
                 if isinstance(device, FullFlushShutter):
