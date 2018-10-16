@@ -36,12 +36,16 @@ class AsyncAuth(Auth):
         data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": self.accesspoint}
         if self.pin != None:
             self._connection.headers["PIN"] = self.pin
-        json_state =  await self._connection.api_call('auth/connectionRequest', json.dumps(data))
+        json_state = await self._connection.api_call('auth/connectionRequest', json.dumps(data))
         return json_state
 
     async def isRequestAcknowledged(self):
         data = {"deviceId": self.uuid}
-        return await self._connection.api_call('auth/isRequestAcknowledged', json.dumps(data))
+        try:
+            await self._connection.api_call('auth/isRequestAcknowledged', json.dumps(data))
+            return True
+        except HmipWrongHttpStatusError:
+            return False
 
     async def requestAuthToken(self):
         data = {"deviceId": self.uuid}
