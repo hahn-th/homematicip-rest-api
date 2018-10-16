@@ -88,15 +88,17 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         self.id = ""
         self.label = ""
         self.homeId = ""
-        # refreshToken is not in the configuration from the webserver anymore.
-        # It will be removed in a future release
-        self.refreshToken = None 
+        self.c2cServiceIdentifier = ""
+        self.clientType = ClientType.APP
 
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
         self.label = js["label"]
         self.homeId = js["homeId"]
+        self.clientType = ClientType.from_str(js["clientType"])
+        if "c2cServiceIdentifier" in js:
+            self.c2cServiceIdentifier = js["c2cServiceIdentifier"]
 
     def __str__(self):
         return "label({})".format(self.label)
@@ -127,23 +129,23 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             connection = Connection()
         super().__init__(connection)
 
-        self.weather = None
-        self.location = None
-        self.connected = None
-        self.currentAPVersion = None
-        self.availableAPVersion = None
-        self.timeZoneId = None
-        self.pinAssigned = None
-        self.dutyCycle = None
-        self.updateState = HomeUpdateState.UP_TO_DATE
-        self.powerMeterUnitPrice = None
-        self.powerMeterCurrency = None
-        self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
-        self.lastReadyForUpdateTimestamp = None
         self.apExchangeClientId = None
         self.apExchangeState = ApExchangeState.NONE
-        self.id = None
+        self.availableAPVersion = None
         self.carrierSense = None
+        self.connected = None
+        self.currentAPVersion = None
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
+        self.dutyCycle = None
+        self.id = None
+        self.lastReadyForUpdateTimestamp = None
+        self.location = None
+        self.pinAssigned = None
+        self.powerMeterCurrency = None
+        self.powerMeterUnitPrice = None
+        self.timeZoneId = None
+        self.updateState = HomeUpdateState.UP_TO_DATE
+        self.weather = None
 
         self.__webSocket = None
         self.__webSocketThread = None

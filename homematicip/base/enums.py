@@ -131,3 +131,7 @@ class EcoDuration(AutoNameEnum):
 class SecurityZoneActivationMode(AutoNameEnum):
     ACTIVATION_WITH_DEVICE_IGNORELIST = auto()
     ACTIVATION_IF_ALL_IN_VALID_STATE = auto()
+
+class ClientType(AutoNameEnum):
+    APP = auto()
+    C2C = auto()

@@ -5,6 +5,8 @@ import hashlib
 
 from homematicip.home import Home
 from homematicip.auth import Auth
+from homematicip.base.enums import ClientType
+
 from conftest import no_ssl_verification
 
 
@@ -32,5 +34,6 @@ def test_auth_challenge_no_pin(fake_home: Home):
         client = fake_home.search_client_by_id(resultId)
         assert client != None
         assert client.label == devicename
+        assert client.clientType == ClientType.APP
 
 

@@ -27,6 +27,8 @@ def test_shutter_device(fake_home):
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000001"
     assert d.availableFirmwareVersion == "1.16.8"
     assert d.firmwareVersion == "1.16.8"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert d.lowBat == False
     assert d.routerModuleEnabled == False
     assert d.routerModuleSupported == False
@@ -65,6 +67,8 @@ def test_pluggable_switch_measuring(fake_home):
     assert d.unreach == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "2.6.2"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert d.dutyCycle == False
     assert d.configPending == False
 
@@ -92,6 +96,8 @@ def test_smoke_detector(fake_home):
     assert d.smokeDetectorAlarmType == "IDLE_OFF"
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.11"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert d.configPending == False
     assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): smokeDetectorAlarmType(IDLE_OFF)'
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000020"]
@@ -122,6 +128,8 @@ def test_wall_mounted_thermostat_pro(fake_home : Home ):
     assert d.dutyCycle == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.8.0"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert str(d) == ('HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63) configPending(False) dutyCycle(False): operationLockActive(False):'
                       ' actualTemperature(24.7) humidity(43) setPointTemperature(5.0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000022"]
@@ -157,6 +165,8 @@ def test_heating_thermostat(fake_home):
     assert d.automaticValveAdaptionNeeded == False
     assert d.availableFirmwareVersion == "2.0.2"
     assert d.firmwareVersion == "2.0.2"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
 
     assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
                     ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
@@ -200,6 +210,8 @@ def test_weather_sensor_pro(fake_home):
     assert d.updateState == "UP_TO_DATE"
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.10"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert d.humidity == 65
     assert d.illumination == 4153.0
     assert d.illuminationThresholdSunshine == 10.0
@@ -246,6 +258,8 @@ def test_weather_sensor(fake_home):
     assert d.dutyCycle == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.10"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert d.humidity == 42
     assert d.illumination == 4890.0
     assert d.illuminationThresholdSunshine == 3500.0
@@ -282,6 +296,9 @@ def test_rotary_handle_sensor(fake_home):
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000004"
     assert d.availableFirmwareVersion == "1.2.10"
     assert d.firmwareVersion == "1.2.10"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
+
     assert d.lowBat == False
     assert d.routerModuleEnabled == False
     assert d.routerModuleSupported == False
@@ -316,6 +333,8 @@ def test_dimmer(fake_home):
     assert d.configPending == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.4.8"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
 
     assert str(d) == ('HmIP-BDT Schlafzimmerlicht lowbat(None) unreach(False) rssiDeviceValue(-44) rssiPeerValue(-42) configPending(False) dutyCycle(False) dimLevel(0.0)'
                       ' profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)')

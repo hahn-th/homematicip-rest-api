@@ -337,7 +337,7 @@ class FakeCloudServer():
         return response
 
     def post_hmip_auth_simulateBlueButton(self,request : Request ,response : Response):
-        client = {"homeId" : self.home_id, "id" : self.client_auth_waiting["deviceId"], "label" : self.client_auth_waiting["deviceName"]}
+        client = {"homeId" : self.home_id, "id" : self.client_auth_waiting["deviceId"], "label" : self.client_auth_waiting["deviceName"], "clientType" : "APP" }
         self.data["clients"][ self.client_auth_waiting["deviceId"]] = client
         self.client_auth_waiting = None
         return response

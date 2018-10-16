@@ -65,12 +65,12 @@ def test_home_weather(fake_home: Home):
     assert fake_home.weather._rawJSONData == fake_home_download_configuration()["home"]["weather"]
     assert str(fake_home.weather) == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) windSpeed(8.568) windDirection(294)"
 
-def test_clients(fake_home):
+def test_clients(fake_home : Home):
     client = fake_home.search_client_by_id('00000000-0000-0000-0000-000000000000')
     assert client.label == 'TEST-Client'
     assert client.homeId == '00000000-0000-0000-0000-000000000001'
     assert client.id == '00000000-0000-0000-0000-000000000000'
-    assert client.refreshToken == None
+    assert client.clientType == ClientType.APP
 
     assert client._rawJSONData == fake_home_download_configuration()["clients"]['00000000-0000-0000-0000-000000000000']
     assert str(client) == "label(TEST-Client)"

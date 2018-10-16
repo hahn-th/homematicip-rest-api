@@ -20,6 +20,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.deviceType = None
         self.updateState = None
         self.firmwareVersion = None
+        self.firmwareVersionInteger = 0 # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
         self.availableFirmwareVersion = None
         self.unreach = None
         self.lowBat = None
@@ -46,6 +47,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.deviceType = js["type"]
         self.updateState = js["updateState"]
         self.firmwareVersion = js["firmwareVersion"]
+        self.firmwareVersionInteger = js["firmwareVersionInteger"]
         self.availableFirmwareVersion = js["availableFirmwareVersion"]
         self.modelType = js['modelType']
         self.modelId = js['modelId']
