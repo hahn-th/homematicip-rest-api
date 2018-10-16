@@ -1,14 +1,18 @@
+import os
+from pathlib import Path
+
 from werkzeug.wrappers import Response, Request
 import json
 import hashlib
 
 from datetime import datetime, timedelta
 
+
 class FakeCloudServer():
     """ a fake server to act as the HMIP cloud"""
 #region __init__ & helper functions
     def __init__(self):
-        self.data = json.load(open("tests/json_data/home.json", encoding="UTF-8"))
+        self.data = json.load(open(Path(__file__).parent.joinpath("json_data/home.json"), encoding="UTF-8"))
         self.sgtin = '3014F711A000000BAD0C0DED'
         self.client_auth_token = hashlib.sha512(str(self.sgtin + "jiLpVitHvWnIGD1yo7MA").encode('utf-8')).hexdigest().upper()
 

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 import json
 
@@ -20,6 +22,13 @@ from fake_cloud_server import FakeCloudServer
 def fake_home_download_configuration():
     with open("tests/json_data/home.json", encoding="UTF-8") as f:
         return json.load(f)
+
+def get_full_path(name):
+    """Returns full path of incoming relative path.
+    Relative path is relative to the script location.
+    """
+    pth = Path(__file__).parent.joinpath(name)
+    return pth
 
 @contextlib.contextmanager
 def no_ssl_verification():
@@ -49,7 +58,7 @@ def no_ssl_verification():
 def fake_cloud(request):
     """Defines the testserver funcarg"""
     app = FakeCloudServer()
-    server = WSGIServer(application = app, ssl_context=('./tests/server.crt','./tests/server.key'))
+    server = WSGIServer(application = app, ssl_context=(get_full_path("server.crt"),get_full_path("server.key")))
     app.url = server.url
     server.start()
     request.addfinalizer(server.stop)
