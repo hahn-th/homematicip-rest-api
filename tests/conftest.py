@@ -7,12 +7,8 @@ from functools import partialmethod, partial
 import warnings
 import requests
 import contextlib
-import aiohttp
 
-from unittest.mock import MagicMock
-
-from aio.auth import AsyncAuth
-from homematicip.aio.connection import AsyncConnection
+from homematicip.aio.auth import AsyncAuth
 from homematicip.aio.home import AsyncHome
 from homematicip.home import Home
 from homematicip.connection import Connection
