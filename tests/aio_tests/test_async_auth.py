@@ -1,45 +1,41 @@
 import hashlib
 
 import pytest
-from conftest import no_ssl_verification
-
-from homematicip.aio.auth import AsyncAuth
-from homematicip.aio.home import AsyncHome
 
 
 @pytest.mark.asyncio
 async def test_async_auth_challenge_no_pin(
-    event_loop, fake_async_home: AsyncHome
+    no_ssl_fake_async_auth, no_ssl_fake_async_home
 ):
-    with no_ssl_verification():
-        auth = AsyncAuth(event_loop)
 
-        sgtin = "3014F711A000000BAD0C0DED"
-        devicename = "auth_test"
+    auth = no_ssl_fake_async_auth
 
-        await auth.init(
-            sgtin, lookup_url=fake_async_home._connection._lookup_url
-        )
-        result = await auth.connectionRequest(devicename)
+    sgtin = "3014F711A000000BAD0C0DED"
+    devicename = "auth_test"
 
-        # TODO: Investigate why result is always None
-        # The response to the request should be a json data type (as indicated in the header of
-        # the response). But it is actually not. So the return value is none. If there were to be any
-        # an exception would be thrown.
-        assert result is None
+    await auth.init(
+        sgtin, lookup_url=no_ssl_fake_async_home._connection._lookup_url
+    )
+    result = await auth.connectionRequest(devicename)
 
-        assert (await auth.isRequestAcknowledged()) is False
-        assert (await auth.isRequestAcknowledged()) is False
+    # The response to the request should be a json data type (as indicated in the header of
+    # the response). But it is actually not. So the return value is none. If there were to be any error
+    # an exception would be thrown.
+    assert result is None
 
-        await fake_async_home._connection.api_call("auth/simulateBlueButton")
+    assert (await auth.isRequestAcknowledged()) is False
+    assert (await auth.isRequestAcknowledged()) is False
 
-        assert await auth.isRequestAcknowledged() is True
+    await no_ssl_fake_async_home._connection.api_call(
+        "auth/simulateBlueButton"
+    )
 
-        token = await auth.requestAuthToken()
-        assert (
-            token
-            == hashlib.sha512(auth.uuid.encode("utf-8")).hexdigest().upper()
-        )
+    assert await auth.isRequestAcknowledged() is True
 
-        resultId = await auth.confirmAuthToken(token)
-        assert resultId == auth.uuid
+    token = await auth.requestAuthToken()
+    assert (
+        token == hashlib.sha512(auth.uuid.encode("utf-8")).hexdigest().upper()
+    )
+
+    result_id = await auth.confirmAuthToken(token)
+    assert result_id == auth.uuid

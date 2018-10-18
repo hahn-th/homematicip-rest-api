@@ -1,10 +1,10 @@
 import asyncio
+import logging
 import pathlib
 import socket
 import ssl
 
 import aiohttp
-import logging
 from aiohttp import web
 from aiohttp.resolver import DefaultResolver
 from aiohttp.test_utils import unused_port
