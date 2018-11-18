@@ -79,6 +79,7 @@ def main():
     group.add_argument("--set-display", dest="device_display", action="store", help="set the display mode", choices=["actual", "setpoint", "actual_humidity"])
     group.add_argument("--enable-router-module", action="store_true", dest="device_enable_router_module", help="enables the router module of the device", default=None)
     group.add_argument("--disable-router-module", action="store_false", dest="device_enable_router_module", help="disables the router module of the device", default=None)
+    group.add_argument("--reset-energy-counter", action="store_true", dest="reset_energy_counter", help="resets the energy counter")
 
     group = parser.add_argument_group("Home Settings")
     group.add_argument("--set-protection-mode", dest="protectionmode", action="store", help="set the protection mode", choices=["presence", "absence", "disable"])
@@ -271,48 +272,57 @@ def main():
             if args.device_new_label:
                 device.set_label(args.device_new_label)
                 command_entered = True
-            if args.device_switch_state != None:
+
+            if args.device_switch_state is not None:
                 if isinstance(device, Switch):
                     device.set_switch_state(args.device_switch_state)
-                    command_entered = True
                 else:
                     logger.error("can't turn on/off device %s of type %s", device.id, device.deviceType)
+                command_entered = True
 
             if args.device_dim_level is not None:
                 if isinstance(device, Dimmer):
                     device.set_dim_level(args.device_dim_level)
-                    command_entered = True
                 else:
                     logger.error("can't set dim level of device %s of type %s", device.id, device.deviceType)
+                command_entered = True
 
             if args.device_shutter_level is not None:
                 if isinstance(device, FullFlushShutter):
                     device.set_shutter_level(args.device_shutter_level)
-                    command_entered = True
                 else:
                     logger.error("can't set shutter level of device %s of type %s", device.id, device.deviceType)
+                command_entered = True
 
             if args.device_shutter_stop is not None:
                 if isinstance(device, FullFlushShutter):
                     device.set_shutter_stop()
-                    command_entered = True
                 else:
                     logger.error("can't stop shutter of device %s of type %s", device.id, device.deviceType)
+                command_entered = True
 
-            if args.device_display != None:
+            if args.device_display is not None:
                 if isinstance(device, TemperatureHumiditySensorDisplay):
                     device.set_display(ClimateControlDisplay(args.device_display.upper()))
-                    command_entered = True
                 else:
                     logger.error("can't set display of device %s of type %s", device.id, device.deviceType)
+                command_entered = True
 
-            if args.device_enable_router_module != None:
+            if args.device_enable_router_module is not None:
                 if device.routerModuleSupported:
                     device.set_router_module_enabled(args.device_enable_router_module)
                     print("{} the router module for device {}". format("Enabled" if args.device_enable_router_module else "Disabled", device.id))
-                    command_entered = True
                 else:
                     logger.error("the device %s doesn't support the router module", device.id)
+                command_entered = True
+
+            if args.reset_energy_counter:
+                if isinstance(device, SwitchMeasuring):
+                    device.reset_energy_counter()
+                    print("reset energycounter {}". format(device.id))
+                else:
+                    logger.error("can't reset energy counter for device %s of type %s", device.id, device.deviceType)
+                command_entered = True
 
     if args.set_zones_device_assignment:
         internal = []
@@ -413,7 +423,7 @@ def main():
                     rules.append(r)
 
         for rule in rules:
-             if args.rule_activation != None:
+             if args.rule_activation is not None:
                 if isinstance(rule, SimpleRule):
                     rule.set_rule_enabled_state(args.rule_activation)
                     command_entered = True  

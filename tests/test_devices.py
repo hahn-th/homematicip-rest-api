@@ -344,6 +344,7 @@ def test_basic_device_functions(fake_home:Home):
         d = fake_home.search_device_by_id('3014F7110000000000000009')
         assert d.label == "Brunnen"
         assert d.routerModuleEnabled == True
+        assert d.energyCounter == 0.4754
 
         d.set_label("new label")
         d.set_router_module_enabled(False)
@@ -354,10 +355,12 @@ def test_basic_device_functions(fake_home:Home):
 
         d.set_label("other label")
         d.set_router_module_enabled(True)
+        d.reset_energy_counter()
         fake_home.get_current_state()
         d = fake_home.search_device_by_id('3014F7110000000000000009')
         assert d.label == "other label"
         assert d.routerModuleEnabled == True
+        assert d.energyCounter == 0
 
         d2 = fake_home.search_device_by_id('3014F7110000000000000005')
         d.delete()

@@ -301,7 +301,19 @@ class FakeCloudServer():
         except:
             response = self.errorCode(response, "INVALID_DEVICE", 404)
         return response
-    
+
+    @validate_authorization
+    def post_hmip_device_control_resetEnergyCounter(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = "{}".format(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["energyCounter"] = 0
+            response.status_code = 200
+        except:
+            response = self.errorCode(response, "INVALID_DEVICE", 404)
+        return response
 #endregion
 
 #region auth

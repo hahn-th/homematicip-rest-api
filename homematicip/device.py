@@ -374,6 +374,11 @@ class SwitchMeasuring(Switch):
         self.energyCounter = None
         self.currentPowerConsumption = None
 
+    def reset_energy_counter(self):
+        data = {"channelIndex": 1, "deviceId": self.id}
+        return self._restCall("device/control/resetEnergyCounter", body=json.dumps(data))
+
+
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SWITCH_MEASURING_CHANNEL", js)
