@@ -64,7 +64,8 @@ class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
 
 class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
-    pass
+    async def reset_energy_counter(self):
+        return await self._connection.api_call(*super().reset_energy_counter())
 
 
 class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncSwitch):
