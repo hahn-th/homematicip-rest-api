@@ -1,3 +1,8 @@
+import logging
+LOGGER = logging.getLogger(__name__)
+
+LOGGER.warn("constants.py is deprecated. Please use the corresponding enums in enums.py")
+
 # DEVICES
 DEVICE = "DEVICE"
 FULL_FLUSH_SHUTTER = "FULL_FLUSH_SHUTTER"

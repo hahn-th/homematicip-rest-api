@@ -1,7 +1,6 @@
 # coding=utf-8
 from aenum import auto, Enum
 
-
 class AutoNameEnum(Enum):
     """ auto() will generate the name of the attribute as value """
     def _generate_next_value_(name, start, count, last_values):
@@ -135,3 +134,78 @@ class SecurityZoneActivationMode(AutoNameEnum):
 class ClientType(AutoNameEnum):
     APP = auto()
     C2C = auto()
+
+class DeviceType(AutoNameEnum):
+    DEVICE = auto()
+    FULL_FLUSH_SHUTTER = auto()
+    PLUGABLE_SWITCH = auto()
+    KEY_REMOTE_CONTROL_ALARM = auto()
+    MOTION_DETECTOR_INDOOR = auto()
+    ALARM_SIREN_INDOOR = auto()
+    PUSH_BUTTON = auto()
+    TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()
+    PLUGABLE_SWITCH_MEASURING = auto()
+    FLOOR_TERMINAL_BLOCK_6 = auto()
+    SMOKE_DETECTOR = auto()
+    WALL_MOUNTED_THERMOSTAT_PRO = auto()
+    SHUTTER_CONTACT = auto()
+    HEATING_THERMOSTAT = auto()
+    SHUTTER_CONTACT_INVISIBLE = auto()
+    BRAND_WALL_MOUNTED_THERMOSTAT = auto()
+    TEMPERATURE_HUMIDITY_SENSOR = auto()
+    BRAND_SHUTTER = auto()
+    PRECENCE_DETECTOR_INDOOR = auto()
+    PLUGGABLE_DIMMER = auto()
+    BRAND_DIMMER = auto()
+    BRAND_SWITCH_MEASURING = auto()
+    PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY = auto()
+    ROOM_CONTROL_DEVICE = auto()
+    TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR = auto()
+    WEATHER_SENSOR = auto()
+    WEATHER_SENSOR_PRO = auto()
+    ROTARY_HANDLE_SENSOR = auto()
+    FULL_FLUSH_SWITCH_MEASURING = auto()
+    MOTION_DETECTOR_PUSH_BUTTON = auto()
+    WATER_SENSOR = auto()
+
+class GroupType(AutoNameEnum):
+    GROUP = auto()
+    EXTENDED_LINKED_SHUTTER = auto()
+    SHUTTER_WIND_PROTECTION_RULE = auto()
+    LOCK_OUT_PROTECTION_RULE = auto()
+    SMOKE_ALARM_DETECTION_RULE = auto()
+    OVER_HEAT_PROTECTION_RULE = auto()
+    SWITCHING_PROFILE = auto()
+    HEATING_COOLING_DEMAND_PUMP = auto()
+    HEATING_COOLING_DEMAND_BOILER = auto()
+    HEATING_DEHUMIDIFIER = auto()
+    HEATING_EXTERNAL_CLOCK = auto()
+    HEATING_COOLING_DEMAND = auto()
+    HEATING = auto()
+    SECURITY_ZONE = auto()
+    INBOX = auto()
+    HEATING_CHANGEOVER = auto()
+    HEATING_TEMPERATURE_LIMITER = auto()
+    HEATING_HUMIDITY_LIMITER = auto()
+    ALARM_SWITCHING = auto()
+    LINKED_SWITCHING = auto()
+    EXTENDED_LINKED_SWITCHING = auto()
+    SWITCHING = auto()
+    SECURITY = auto()
+    ENVIRONMENT = auto()
+
+class SecurityEventType(AutoNameEnum):
+    SENSOR_EVENT = auto()
+    ACCESS_POINT_DISCONNECTED = auto()
+    ACCESS_POINT_CONNECTED = auto()
+    ACTIVATION_CHANGED = auto()
+    SILENCE_CHANGED = auto()
+
+class AutomationRuleType(AutoNameEnum):
+    SIMPLE = auto()
+
+class FunctionalHomeType(AutoNameEnum):
+    INDOOR_CLIMATE = auto()
+    LIGHT_AND_SHADOW = auto()
+    SECURITY_AND_ALARM = auto()
+    WEATHER_AND_ENVIRONMENT = auto()

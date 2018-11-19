@@ -4,7 +4,7 @@ import websocket
 from typing import List
 
 from homematicip.EventHook import *
-from homematicip.base.constants import DEVICE
+from homematicip.base.enums import *
 from homematicip.class_maps import *
 from homematicip.connection import Connection
 from homematicip.group import *
@@ -224,13 +224,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 self.devices.append(self._parse_device(raw))
 
     def _parse_device(self, json_state):
-        deviceType = json_state["type"]
-        if deviceType in self._typeClassMap:
+        try:
+            deviceType = DeviceType.from_str(json_state["type"])
             d = self._typeClassMap[deviceType](self._connection)
             d.from_json(json_state)
             return d
-        else:
-            d = self._typeClassMap[DEVICE](self._connection)
+        except:
+            d = self._typeClassMap[DeviceType.DEVICE](self._connection)
             d.from_json(json_state)
             LOGGER.warning("There is no class for %s yet", deviceType)
             return d
@@ -245,15 +245,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 self.rules.append(self._parse_rule(raw))
 
     def _parse_rule(self, json_state):
-        ruleType = json_state["type"]
-        if ruleType in self._typeRuleMap:
+        try:
+            ruleType = AutomationRuleType.from_str(json_state["type"])
             r = self._typeRuleMap[ruleType](self._connection)
             r.from_json(json_state)
-        else:
+            return r
+        except:
             r = Rule(self._connection)
             r.from_json(json_state)
             LOGGER.warning("There is no class for %s yet", ruleType)
-        return r
+            return r
 
     def _get_clients(self, json_state):
         self.clients = [x for x in self.clients if x.id in json_state["clients"].keys()]
@@ -267,17 +268,19 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 self.clients.append(c)
 
     def _parse_group(self, json_state):
-        groupType = json_state["type"]
-        if groupType in self._typeGroupMap:
-            g = self._typeGroupMap[groupType](self._connection)
-            g.from_json(json_state, self.devices)
-        elif groupType == "META":
+        g = None
+        if json_state["type"] == "META":
             g = MetaGroup(self._connection)
             g.from_json(json_state, self.devices, self.groups)
         else:
-            g = Group(self._connection)
-            g.from_json(json_state, self.devices)
-            LOGGER.warning("There is no class for %s yet", groupType)
+            try:
+                groupType = GroupType.from_str(json_state["type"])
+                g = self._typeGroupMap[groupType](self._connection)
+                g.from_json(json_state, self.devices)
+            except:
+                g = self._typeGroupMap[GroupType.GROUP](self._connection)
+                g.from_json(json_state, self.devices)
+                LOGGER.warning("There is no class for %s yet", groupType)
         return g
 
     def _get_groups(self, json_state):
@@ -301,17 +304,18 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def _get_functionalHomes(self, json_state):
         for solution, functionalHome in json_state["functionalHomes"].items():
-            if solution in self._typeFunctionalHomeMap:
+            try:
+                solutionType = FunctionalHomeType.from_str(solution)
                 h = None
                 for fh in self.functionalHomes:
                     if fh.solution == solution:
                         h = fh
                         break
                 if h is None:
-                    h = self._typeFunctionalHomeMap[solution](self._connection)
+                    h = self._typeFunctionalHomeMap[solutionType](self._connection)
                     self.functionalHomes.append(h)
                 h.from_json(functionalHome, self.groups)
-            else:
+            except:
                 h = FunctionalHome(self._connection)
                 h.from_json(functionalHome, self.groups)
                 LOGGER.warning("There is no class for %s yet", solution)

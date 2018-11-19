@@ -1,4 +1,4 @@
-import homematicip.base.constants as cn
+from homematicip.base.enums import *
 
 from homematicip.device import *
 
@@ -9,80 +9,81 @@ from homematicip.rule import *
 from homematicip.functionalHomes import *
 
 TYPE_CLASS_MAP = {
-    cn.DEVICE: Device,
-    cn.HEATING_THERMOSTAT: HeatingThermostat,
-    cn.SHUTTER_CONTACT: ShutterContact,
-    cn.SHUTTER_CONTACT_INVISIBLE: ShutterContact,
-    cn.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
-    cn.BRAND_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
-    cn.SMOKE_DETECTOR: SmokeDetector,
-    cn.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
-    cn.PLUGABLE_SWITCH_MEASURING: PlugableSwitchMeasuring,
-    cn.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
-    cn.ROOM_CONTROL_DEVICE: TemperatureHumiditySensorDisplay,
-    cn.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
-    cn.PUSH_BUTTON: PushButton,
-    cn.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
-    cn.MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
-    cn.KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
-    cn.PLUGABLE_SWITCH: PlugableSwitch,
-    cn.FULL_FLUSH_SHUTTER: FullFlushShutter,
-    cn.BRAND_SHUTTER: FullFlushShutter,
-    cn.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
-    cn.PLUGGABLE_DIMMER: PluggableDimmer,
-    cn.BRAND_DIMMER: BrandDimmer,
-    cn.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
-    cn.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
-    cn.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
-    cn.WEATHER_SENSOR: WeatherSensor,
-    cn.WEATHER_SENSOR_PRO: WeatherSensorPro,
-    cn.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
-    cn.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
-    cn.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
-    cn.WATER_SENSOR: WaterSensor
+    DeviceType.DEVICE: Device,
+    DeviceType.HEATING_THERMOSTAT: HeatingThermostat,
+    DeviceType.SHUTTER_CONTACT: ShutterContact,
+    DeviceType.SHUTTER_CONTACT_INVISIBLE: ShutterContact,
+    DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
+    DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
+    DeviceType.SMOKE_DETECTOR: SmokeDetector,
+    DeviceType.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
+    DeviceType.PLUGABLE_SWITCH_MEASURING: PlugableSwitchMeasuring,
+    DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
+    DeviceType.ROOM_CONTROL_DEVICE: TemperatureHumiditySensorDisplay,
+    DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
+    DeviceType.PUSH_BUTTON: PushButton,
+    DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
+    DeviceType.MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
+    DeviceType.KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
+    DeviceType.PLUGABLE_SWITCH: PlugableSwitch,
+    DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,
+    DeviceType.BRAND_SHUTTER: FullFlushShutter,
+    DeviceType.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
+    DeviceType.PLUGGABLE_DIMMER: PluggableDimmer,
+    DeviceType.BRAND_DIMMER: BrandDimmer,
+    DeviceType.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
+    DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
+    DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
+    DeviceType.WEATHER_SENSOR: WeatherSensor,
+    DeviceType.WEATHER_SENSOR_PRO: WeatherSensorPro,
+    DeviceType.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
+    DeviceType.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
+    DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
+    DeviceType.WATER_SENSOR: WaterSensor
 }
 
 TYPE_GROUP_MAP = {
-    cn.SECURITY: SecurityGroup,
-    cn.SWITCHING: SwitchingGroup,
-    cn.EXTENDED_LINKED_SWITCHING: ExtendedLinkedSwitchingGroup,
-    cn.LINKED_SWITCHING: LinkedSwitchingGroup,
-    cn.ALARM_SWITCHING: AlarmSwitchingGroup,
-    cn.HEATING_HUMIDITY_LIMITER: HeatingHumidyLimiterGroup,
-    cn.HEATING_TEMPERATURE_LIMITER: HeatingTemperatureLimiterGroup,
-    cn.HEATING_CHANGEOVER: HeatingChangeoverGroup,
-    cn.INBOX: InboxGroup,
-    cn.SECURITY_ZONE: SecurityZoneGroup,
-    cn.HEATING: HeatingGroup,
-    cn.HEATING_COOLING_DEMAND: HeatingCoolingDemandGroup,
-    cn.HEATING_EXTERNAL_CLOCK: HeatingExternalClockGroup,
-    cn.HEATING_DEHUMIDIFIER: HeatingDehumidifierGroup,
-    cn.HEATING_COOLING_DEMAND_BOILER: HeatingCoolingDemandBoilerGroup,
-    cn.HEATING_COOLING_DEMAND_PUMP: HeatingCoolingDemandPumpGroup,
-    cn.SWITCHING_PROFILE: SwitchingProfileGroup,
-    cn.OVER_HEAT_PROTECTION_RULE: OverHeatProtectionRule,
-    cn.SMOKE_ALARM_DETECTION_RULE: SmokeAlarmDetectionRule,
-    cn.LOCK_OUT_PROTECTION_RULE: LockOutProtectionRule,
-    cn.SHUTTER_WIND_PROTECTION_RULE: ShutterWindProtectionRule,
-    cn.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,
-    cn.ENVIRONMENT:EnvironmentGroup
+    GroupType.GROUP: Group,
+    GroupType.SECURITY: SecurityGroup,
+    GroupType.SWITCHING: SwitchingGroup,
+    GroupType.EXTENDED_LINKED_SWITCHING: ExtendedLinkedSwitchingGroup,
+    GroupType.LINKED_SWITCHING: LinkedSwitchingGroup,
+    GroupType.ALARM_SWITCHING: AlarmSwitchingGroup,
+    GroupType.HEATING_HUMIDITY_LIMITER: HeatingHumidyLimiterGroup,
+    GroupType.HEATING_TEMPERATURE_LIMITER: HeatingTemperatureLimiterGroup,
+    GroupType.HEATING_CHANGEOVER: HeatingChangeoverGroup,
+    GroupType.INBOX: InboxGroup,
+    GroupType.SECURITY_ZONE: SecurityZoneGroup,
+    GroupType.HEATING: HeatingGroup,
+    GroupType.HEATING_COOLING_DEMAND: HeatingCoolingDemandGroup,
+    GroupType.HEATING_EXTERNAL_CLOCK: HeatingExternalClockGroup,
+    GroupType.HEATING_DEHUMIDIFIER: HeatingDehumidifierGroup,
+    GroupType.HEATING_COOLING_DEMAND_BOILER: HeatingCoolingDemandBoilerGroup,
+    GroupType.HEATING_COOLING_DEMAND_PUMP: HeatingCoolingDemandPumpGroup,
+    GroupType.SWITCHING_PROFILE: SwitchingProfileGroup,
+    GroupType.OVER_HEAT_PROTECTION_RULE: OverHeatProtectionRule,
+    GroupType.SMOKE_ALARM_DETECTION_RULE: SmokeAlarmDetectionRule,
+    GroupType.LOCK_OUT_PROTECTION_RULE: LockOutProtectionRule,
+    GroupType.SHUTTER_WIND_PROTECTION_RULE: ShutterWindProtectionRule,
+    GroupType.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,
+    GroupType.ENVIRONMENT:EnvironmentGroup
 }
 
 TYPE_SECURITY_EVENT_MAP = {
-    cn.SILENCE_CHANGED: SilenceChangedEvent,
-    cn.ACTIVATION_CHANGED: ActivationChangedEvent,
-    cn.ACCESS_POINT_CONNECTED: AccessPointConnectedEvent,
-    cn.ACCESS_POINT_DISCONNECTED: AccessPointDisconnectedEvent,
-    cn.SENSOR_EVENT: SensorEvent
+    SecurityEventType.SILENCE_CHANGED: SilenceChangedEvent,
+    SecurityEventType.ACTIVATION_CHANGED: ActivationChangedEvent,
+    SecurityEventType.ACCESS_POINT_CONNECTED: AccessPointConnectedEvent,
+    SecurityEventType.ACCESS_POINT_DISCONNECTED: AccessPointDisconnectedEvent,
+    SecurityEventType.SENSOR_EVENT: SensorEvent
 }
 
 TYPE_RULE_MAP = {
-    cn.SIMPLE_RULE : SimpleRule
+    AutomationRuleType.SIMPLE : SimpleRule
 }
 
 TYPE_FUNCTIONALHOME_MAP = {
-    cn.INDOOR_CLIMATE: IndoorClimateHome,
-    cn.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
-    cn.LIGHT_AND_SHADOW: LightAndShadowHome,
-    cn.SECURITY_AND_ALARM: SecurityAndAlarmHome
+    FunctionalHomeType.INDOOR_CLIMATE: IndoorClimateHome,
+    FunctionalHomeType.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
+    FunctionalHomeType.LIGHT_AND_SHADOW: LightAndShadowHome,
+    FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome
 }
