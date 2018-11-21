@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import homematicip
 import homematicip.auth
 import time
