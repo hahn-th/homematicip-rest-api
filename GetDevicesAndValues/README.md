@@ -1,5 +1,5 @@
 # GetDevicesAndValues
-Get´s (all) devices and lists value
+Get´s (all) devices and values.
 Fore more devices see: https://www.pydoc.io/pypi/homematicip-0.9.3.3/index.html
 
 
