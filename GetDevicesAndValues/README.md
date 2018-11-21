@@ -1,5 +1,7 @@
 # GetDevicesAndValues
-Get´s all (imported) devices and lists value
+Get´s (all) devices and lists value
+Fore more devices see: https://www.pydoc.io/pypi/homematicip-0.9.3.3/index.html
+
 
 ## Examples
  - api.py - Get (all) devices and values
@@ -8,5 +10,3 @@ Get´s all (imported) devices and lists value
 ## Requirements
  - api.py - NONE
  - api_with_url.py - requests (http://docs.python-requests.org/en/latest/)
-
-Fore more devices see: https://www.pydoc.io/pypi/homematicip-0.9.3.3/index.html
