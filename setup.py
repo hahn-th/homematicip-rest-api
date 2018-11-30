@@ -21,7 +21,7 @@ setup(
     download_url='https://github.com/coreGreenberet/homematicip-rest-api/tarball/' + versioneer.get_version(),
     keywords=['homematicip'],  # arbitrary keywords
     classifiers=['Development Status :: 4 - Beta', 'Programming Language :: Python :: 3 :: Only'],
-    install_requires=["requests>=2.4.3", "websocket-client", "websockets", "aiohttp>3", "async_timeout", "aenum"],
+    install_requires=["requests>=2.4.3", "websocket-client>=0.54.0", "websockets", "aiohttp>3", "async_timeout", "aenum"],
     scripts=['hmip_cli.py', 'hmip_generate_auth_token.py'],
     python_requires='>=3',
     version=versioneer.get_version(),
