@@ -486,10 +486,10 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def disable_events(self):
         self.__webSocket.close()
 
-    def _ws_on_error(self, ws, message):
+    def _ws_on_error(self, message):
         LOGGER.error("Websocket error: %s", bytes2str(message))
 
-    def _ws_on_message(self, ws, message):
+    def _ws_on_message(self, message ):
         #json.loads doesn't support bytes as parameter before python 3.6
         js = json.loads(bytes2str(message))
         # LOGGER.debug(js)

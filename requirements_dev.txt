@@ -1,5 +1,5 @@
 requests>=2.4.3
-websocket-client
+websocket-client>=0.54.0
 async_timeout
 websockets
 aiohttp
