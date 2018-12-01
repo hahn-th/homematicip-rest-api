@@ -33,6 +33,10 @@ class BaseConnection:
                         'VERSION': '12',
                         ATTR_AUTH_TOKEN: None,
                         ATTR_CLIENT_AUTH: None}
+        lang = 'en_US'
+        def_locale = locale.getdefaultlocale()
+        if def_locale != None:
+            lang = def_locale[0]
 
         self._clientCharacteristics = {"clientCharacteristics":
             {
@@ -41,7 +45,7 @@ class BaseConnection:
                 "applicationVersion": "1.0",
                 "deviceManufacturer": "none",
                 "deviceType": "Computer",
-                "language": locale.getdefaultlocale()[0],
+                "language": lang,
                 "osType": platform.system(),
                 "osVersion": platform.release(),
             },
