@@ -201,6 +201,13 @@ class SecurityEventType(AutoNameEnum):
     ACTIVATION_CHANGED = auto()
     SILENCE_CHANGED = auto()
     SABOTAGE = auto()
+    MOISTURE_DETECTION_EVENT = auto()
+    SMOKE_ALARM = auto()
+    EXTERNAL_TRIGGERED = auto()
+    OFFLINE_ALARM = auto()
+    WATER_DETECTION_EVENT = auto()
+    MAINS_FAILURE_EVENT = auto()
+    OFFLINE_WATER_DETECTION_EVENT = auto()
 
 class AutomationRuleType(AutoNameEnum):
     SIMPLE = auto()

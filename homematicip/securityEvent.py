@@ -64,3 +64,24 @@ class SilenceChangedEvent(SecurityZoneEvent):
 
 class SabotageEvent(SecurityEvent):
     pass
+
+class MoistureDetectionEvent(SecurityEvent):
+    pass
+
+class SmokeAlarmEvent(SecurityEvent):
+    pass
+
+class ExternalTriggeredEvent(SecurityEvent):
+    pass
+
+class OfflineAlarmEvent(SecurityEvent):
+    pass
+
+class WaterDetectionEvent(SecurityEvent):
+    pass
+
+class MainsFailureEvent(SecurityEvent):
+    pass
+
+class OfflineWaterDetectionEvent(SecurityEvent):
+    pass

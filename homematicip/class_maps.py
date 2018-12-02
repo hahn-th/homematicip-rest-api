@@ -75,7 +75,14 @@ TYPE_SECURITY_EVENT_MAP = {
     SecurityEventType.ACCESS_POINT_CONNECTED: AccessPointConnectedEvent,
     SecurityEventType.ACCESS_POINT_DISCONNECTED: AccessPointDisconnectedEvent,
     SecurityEventType.SENSOR_EVENT: SensorEvent,
-    SecurityEventType.SABOTAGE: SabotageEvent
+    SecurityEventType.SABOTAGE: SabotageEvent,
+    SecurityEventType.MOISTURE_DETECTION_EVENT : MoistureDetectionEvent,
+    SecurityEventType.SMOKE_ALARM : SmokeAlarmEvent,
+    SecurityEventType.EXTERNAL_TRIGGERED : ExternalTriggeredEvent,
+    SecurityEventType.OFFLINE_ALARM : OfflineAlarmEvent,
+    SecurityEventType.WATER_DETECTION_EVENT : WaterDetectionEvent,
+    SecurityEventType.MAINS_FAILURE_EVENT : MainsFailureEvent,
+    SecurityEventType.OFFLINE_WATER_DETECTION_EVENT : OfflineWaterDetectionEvent
 }
 
 TYPE_RULE_MAP = {
