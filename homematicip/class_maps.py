@@ -74,7 +74,8 @@ TYPE_SECURITY_EVENT_MAP = {
     SecurityEventType.ACTIVATION_CHANGED: ActivationChangedEvent,
     SecurityEventType.ACCESS_POINT_CONNECTED: AccessPointConnectedEvent,
     SecurityEventType.ACCESS_POINT_DISCONNECTED: AccessPointDisconnectedEvent,
-    SecurityEventType.SENSOR_EVENT: SensorEvent
+    SecurityEventType.SENSOR_EVENT: SensorEvent,
+    SecurityEventType.SABOTAGE: SabotageEvent
 }
 
 TYPE_RULE_MAP = {

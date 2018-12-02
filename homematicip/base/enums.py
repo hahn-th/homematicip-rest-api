@@ -200,6 +200,7 @@ class SecurityEventType(AutoNameEnum):
     ACCESS_POINT_CONNECTED = auto()
     ACTIVATION_CHANGED = auto()
     SILENCE_CHANGED = auto()
+    SABOTAGE = auto()
 
 class AutomationRuleType(AutoNameEnum):
     SIMPLE = auto()
@@ -209,3 +210,16 @@ class FunctionalHomeType(AutoNameEnum):
     LIGHT_AND_SHADOW = auto()
     SECURITY_AND_ALARM = auto()
     WEATHER_AND_ENVIRONMENT = auto()
+
+class EventType(AutoNameEnum):
+    SECURITY_JOURNAL_CHANGED = auto()
+    GROUP_ADDED = auto()
+    GROUP_REMOVED = auto()
+    DEVICE_REMOVED = auto()
+    DEVICE_CHANGED = auto()
+    DEVICE_ADDED = auto()
+    CLIENT_REMOVED = auto()
+    CLIENT_CHANGED = auto()
+    CLIENT_ADDED = auto()
+    HOME_CHANGED = auto()
+    GROUP_CHANGED = auto()

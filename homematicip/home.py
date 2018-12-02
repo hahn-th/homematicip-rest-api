@@ -13,18 +13,6 @@ from homematicip.securityEvent import *
 from homematicip.rule import *
 from homematicip.base.helpers import bytes2str
 
-EVENT_SECURITY_JOURNAL_CHANGED = "SECURITY_JOURNAL_CHANGED"
-EVENT_GROUP_ADDED = "GROUP_ADDED"
-EVENT_GROUP_REMOVED = "GROUP_REMOVED"
-EVENT_DEVICE_REMOVED = "DEVICE_REMOVED"
-EVENT_DEVICE_CHANGED = "DEVICE_CHANGED"
-EVENT_DEVICE_ADDED = "DEVICE_ADDED"
-EVENT_CLIENT_REMOVED = "CLIENT_REMOVED"
-EVENT_CLIENT_CHANGED = "CLIENT_CHANGED"
-EVENT_CLIENT_ADDED = "CLIENT_ADDED"
-EVENT_HOME_CHANGED = "HOME_CHANGED"
-EVENT_GROUP_CHANGED = "GROUP_CHANGED"
-
 LOGGER = logging.getLogger(__name__)
 
 
@@ -429,16 +417,17 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             return None
         ret = []
         for entry in journal["entries"]:
-            eventType = entry["eventType"]
-            if eventType in self._typeSecurityEventMap:
-                j = self._typeSecurityEventMap[eventType](self._connection)
-                j.from_json(entry)
-                ret.append(j)
-            else:
+            try:
+                eventType = SecurityEventType(entry["eventType"])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
                 j = SecurityEvent(self._connection)
-                j.from_json(entry)
-                ret.append(j)
-                LOGGER.warning("There is no class for %s yet", eventType)
+                LOGGER.warning("There is no class for %s yet", entry["eventType"])
+            
+            j.from_json(entry)
+            ret.append(j)
+
         return ret
 
     def delete_group(self, group):
@@ -494,12 +483,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         js = json.loads(bytes2str(message))
         # LOGGER.debug(js)
         eventList = []
-        try:
-            for event in js["events"].values():
-                pushEventType = event["pushEventType"]
+        for event in js["events"].values():
+            try:
+                pushEventType = EventType(event["pushEventType"])
                 LOGGER.debug(pushEventType)
                 obj = None
-                if pushEventType == EVENT_GROUP_CHANGED:
+                if pushEventType == EventType.GROUP_CHANGED:
                     data = event["group"]
                     obj = self.search_group_by_id(data["id"])
                     if type(obj) is MetaGroup:
@@ -507,28 +496,28 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     else:
                         obj.from_json(data, self.devices)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
-                elif pushEventType == EVENT_HOME_CHANGED:
+                elif pushEventType == EventType.HOME_CHANGED:
                     data = event["home"]
                     obj = self
                     obj.from_json(data)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
-                elif pushEventType == EVENT_CLIENT_ADDED:
+                elif pushEventType == EventType.CLIENT_ADDED:
                     data = event["client"]
                     obj = Client(self._connection)
                     obj.from_json(data)
                     self.clients.append(obj)
-                elif pushEventType == EVENT_CLIENT_CHANGED:
+                elif pushEventType == EventType.CLIENT_CHANGED:
                     data = event["client"]
                     obj = self.search_client_by_id(data["id"])
                     obj.from_json(data)
-                elif pushEventType == EVENT_CLIENT_REMOVED:
+                elif pushEventType == EventType.CLIENT_REMOVED:
                     obj = self.search_client_by_id(event["id"])
                     self.clients.remove(obj)
-                elif pushEventType == EVENT_DEVICE_ADDED:
+                elif pushEventType == EventType.DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)
                     self.devices.append(obj)
-                elif pushEventType == EVENT_DEVICE_CHANGED:
+                elif pushEventType == EventType.DEVICE_CHANGED:
                     data = event["device"]
                     obj = self.search_device_by_id(data["id"])
                     if obj is None:  # no DEVICE_ADDED Event?
@@ -537,23 +526,24 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     else:
                         obj.from_json(data)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
-                elif pushEventType == EVENT_DEVICE_REMOVED:
+                elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
                     self.devices.remove(obj)
-                elif pushEventType == EVENT_GROUP_REMOVED:
+                elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
                     self.groups.remove(obj)
-                elif pushEventType == EVENT_GROUP_ADDED:
+                elif pushEventType == EventType.GROUP_ADDED:
                     group = event["group"]
                     obj = self._parse_group(group)
                     self.groups.append(obj)
-                elif pushEventType == EVENT_SECURITY_JOURNAL_CHANGED:
+                elif pushEventType == EventType.SECURITY_JOURNAL_CHANGED:
                     pass  # data is just none so nothing to do here
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
-                else:
-                    LOGGER.warning("Uknown EventType '%s' Data: %s", pushEventType, event)
                 eventList.append({"eventType": pushEventType, "data": obj})
-        except Exception as err:
-            LOGGER.exception(err)
+            except ValueError as valerr:
+                    LOGGER.warning("Uknown EventType '%s' Data: %s", event["pushEventType"], event)
+
+            except Exception as err:
+                LOGGER.exception(err)
         self.onEvent.fire(eventList)

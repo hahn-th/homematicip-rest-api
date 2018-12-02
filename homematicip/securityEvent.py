@@ -47,20 +47,20 @@ class SecurityZoneEvent(SecurityEvent):
                                                 self.external_zone, self.internal_zone)
 
 class SensorEvent(SecurityEvent):
-    def from_json(self, js):
-        super().from_json(js)
+    pass
 
 class AccessPointDisconnectedEvent(SecurityEvent):
-    def from_json(self, js):
-        super().from_json(js)
+    pass
 
 class AccessPointConnectedEvent(SecurityEvent):
-    def from_json(self, js):
-        super().from_json(js)
+    pass
 
 
 class ActivationChangedEvent(SecurityZoneEvent):
     pass
 
 class SilenceChangedEvent(SecurityZoneEvent):
+    pass
+
+class SabotageEvent(SecurityEvent):
     pass
