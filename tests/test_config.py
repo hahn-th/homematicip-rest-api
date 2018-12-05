@@ -34,8 +34,8 @@ def test_get_config_file_locations_win():
     os.getenv = fake_getenv
     locations = homematicip.get_config_file_locations()
     assert locations[0] == "./config.ini"
-    assert locations[1] == "C:\\APPDATA\\homematicip-rest-api\\config.ini"
-    assert locations[2] == "C:\\PROGRAMDATA\\homematicip-rest-api\\config.ini"
+    assert locations[1].replace('/', '\\') == "C:\\APPDATA\\homematicip-rest-api\\config.ini"
+    assert locations[2].replace('/', '\\') == "C:\\PROGRAMDATA\\homematicip-rest-api\\config.ini"
    
 def test_get_config_file_locations_linux():
     platform.system = fake_linux
