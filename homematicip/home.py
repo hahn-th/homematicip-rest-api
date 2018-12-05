@@ -220,7 +220,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         except:
             d = self._typeClassMap[DeviceType.DEVICE](self._connection)
             d.from_json(json_state)
-            LOGGER.warning("There is no class for %s yet", deviceType)
+            LOGGER.warning("There is no class for %s yet", json_state["type"])
             return d
 
     def _get_rules(self, json_state):
@@ -241,7 +241,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         except:
             r = Rule(self._connection)
             r.from_json(json_state)
-            LOGGER.warning("There is no class for %s yet", ruleType)
+            LOGGER.warning("There is no class for %s yet", json_state["type"])
             return r
 
     def _get_clients(self, json_state):
@@ -268,7 +268,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except:
                 g = self._typeGroupMap[GroupType.GROUP](self._connection)
                 g.from_json(json_state, self.devices)
-                LOGGER.warning("There is no class for %s yet", groupType)
+                LOGGER.warning("There is no class for %s yet", json_state["type"])
         return g
 
     def _get_groups(self, json_state):
