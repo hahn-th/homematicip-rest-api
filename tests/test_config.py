@@ -14,6 +14,12 @@ def fake_linux():
 def fake_mac():
     return "Darwin"
 
+def fake_getenv(var):
+    if var == "appdata":
+        return "C:\\APPDATA"
+    if var == "programdata":
+        return "C:\\PROGRAMDATA"
+
 def test_find_and_load_config_file():
     with io.open("./config.ini", mode="w") as f:
         f.write("[AUTH]\nauthtoken = TEMP_TOKEN\naccesspoint = TEMP_AP")
@@ -25,8 +31,11 @@ def test_find_and_load_config_file():
 
 def test_get_config_file_locations_win():
     platform.system = fake_windows
+    os.getenv = fake_getenv
     locations = homematicip.get_config_file_locations()
-    assert len(locations) == 3 #nothing more checkable here
+    assert locations[0] == "./config.ini"
+    assert locations[1] == "C:\\APPDATA\\homematicip-rest-api\\config.ini"
+    assert locations[2] == "C:\\PROGRAMDATA\\homematicip-rest-api\\config.ini"
    
 def test_get_config_file_locations_linux():
     platform.system = fake_linux
