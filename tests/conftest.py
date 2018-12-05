@@ -53,6 +53,7 @@ def fake_cloud(request):
         ssl_context=(get_full_path("server.crt"), get_full_path("server.key")),
     )
     app.url = server.url
+    server._server._timeout = 5 # added to allow timeouts in the fake server
     server.start()
     request.addfinalizer(server.stop)
     return server

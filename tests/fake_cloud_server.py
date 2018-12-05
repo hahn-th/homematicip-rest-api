@@ -6,6 +6,7 @@ import json
 import hashlib
 
 from datetime import datetime, timedelta
+import time
 
 
 class FakeCloudServer():
@@ -472,7 +473,11 @@ class FakeCloudServer():
         response.data = json.dumps(data)
         return response
 
-
-
+#region Fake Server settings
+    def post_hmip_fake_timeout(self,request : Request ,response : Response):
+        time.sleep(2)
+        response.data = json.dumps( { "TIMEOUT" : "TIMEOUT" } )
+        return response
+#endregion
 
 

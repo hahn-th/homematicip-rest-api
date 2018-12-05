@@ -1,7 +1,9 @@
 import pytest
 
 from homematicip.base.base_connection import BaseConnection, ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
-
+from homematicip.connection import Connection
+from homematicip.home import Home
+from conftest import no_ssl_verification
 
 @pytest.fixture
 def get_tokens():
@@ -42,3 +44,17 @@ def test_set_token_and_characteristics(get_base_connection, get_tokens):
     get_base_connection.set_token_and_characteristics(get_tokens[1])
     assert get_base_connection.headers[ATTR_CLIENT_AUTH] is not None
     assert get_base_connection.clientauth_token == AUTH_TOKEN_RESULT
+
+
+def test_connection_nolookup():
+    conn = Connection()
+    conn.init('2114-F711-A123-0FF3-A634-32AB', False)
+    assert conn._urlREST == "https://ps1.homematic.com:6969"
+    assert conn._urlWebSocket == "wss://ps1.homematic.com:8888"
+
+def test_connection_timeout(fake_home:Home):
+    with no_ssl_verification():
+        fake_home._connection._restCallRequestCounter = 2
+        fake_home._connection._restCallTimout = 1
+        result = fake_home._restCall("fake/timeout")
+        assert result["errorCode"] == "TIMEOUT"
