@@ -8,6 +8,7 @@ from homematicip.rule import *
 from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
 from homematicip.functionalHomes import *
+from homematicip.securityEvent import *
 
 import json
 from datetime import datetime, timedelta, timezone
@@ -259,3 +260,15 @@ def test_security_setZoneActivationDelay( fake_home :Home):
         securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)   
         assert securityAlarmHome.zoneActivationDelay == 0.0
 
+
+def test_home_getSecurityJournal( fake_home: Home):
+    with no_ssl_verification():
+        journal = fake_home.get_security_journal()
+        #todo make more advanced tests
+        assert isinstance(journal[0], ActivationChangedEvent)
+        assert isinstance(journal[1], ActivationChangedEvent)
+        assert isinstance(journal[2], AccessPointDisconnectedEvent)
+        assert isinstance(journal[3], AccessPointConnectedEvent)
+        assert isinstance(journal[4], SensorEvent)
+        assert isinstance(journal[5], SabotageEvent)
+        assert isinstance(journal[6], MoistureDetectionEvent)
