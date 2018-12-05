@@ -309,6 +309,13 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 LOGGER.warning("There is no class for %s yet", solution)
                 self.functionalHomes.append(h)
 
+    def get_functionalHome(self, functionalHomeType ):
+        """ returns the functionalHome from the given type or None if the functional home couldn't be found"""
+        for x in self.functionalHomes:
+            if isinstance(x, functionalHomeType):
+                return x
+
+        return None
 
     def search_device_by_id(self, deviceID) -> Device:
         """ searches a device by given id
@@ -385,7 +392,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def deactivate_absence(self):
         return self._restCall("home/heating/deactivateAbsence")
 
-    def activate_vacation(self, endtime, temperature):
+    def activate_vacation(self, endtime : datetime, temperature):
         data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M"),
                 "temperature": temperature}
         return self._restCall("home/heating/activateVacation",
