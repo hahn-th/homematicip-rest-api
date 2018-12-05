@@ -127,6 +127,30 @@ class FakeCloudServer():
                     g["active"] = external
 
         return response
+
+    @validate_authorization
+    def post_hmip_home_security_setIntrusionAlertThroughSmokeDetectors(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        
+        activate = js["intrusionAlertThroughSmokeDetectors"]
+
+        self.data["home"]["functionalHomes"]["SECURITY_AND_ALARM"]["intrusionAlertThroughSmokeDetectors"] = activate
+
+        return response
+
+    @validate_authorization
+    def post_hmip_home_security_setZoneActivationDelay(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        
+        delay = js["zoneActivationDelay"]
+
+        self.data["home"]["functionalHomes"]["SECURITY_AND_ALARM"]["zoneActivationDelay"] = delay
+
+        return response
+
+    
 #endregion
 
 #region home/heating
@@ -155,6 +179,24 @@ class FakeCloudServer():
 
     @validate_authorization
     def post_hmip_home_heating_deactivateAbsence(self,request : Request ,response : Response):
+
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = None
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceType"] = "NOT_ABSENT"
+
+        return response
+
+    @validate_authorization
+    def post_hmip_home_heating_activateVacation(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = js["endtime"]
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceType"] = "VACATION"
+
+        return response
+
+    @validate_authorization
+    def post_hmip_home_heating_deactivateVacation(self,request : Request ,response : Response):
 
         self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = None
         self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceType"] = "NOT_ABSENT"

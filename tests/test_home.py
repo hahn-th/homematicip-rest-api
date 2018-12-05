@@ -193,3 +193,69 @@ def test_indoor_climate_home(fake_home : Home):
             assert fh.absenceType == AbsenceType.NOT_ABSENT
             assert fh.absenceEndTime == None
 
+
+def test_get_functionalHome(fake_home : Home):
+        functionalHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert isinstance(functionalHome, SecurityAndAlarmHome)
+
+        functionalHome = fake_home.get_functionalHome(IndoorClimateHome)
+        assert isinstance(functionalHome, IndoorClimateHome)
+
+        functionalHome = fake_home.get_functionalHome(WeatherAndEnvironmentHome)
+        assert isinstance(functionalHome, WeatherAndEnvironmentHome)
+
+        functionalHome = fake_home.get_functionalHome(Home)
+        assert functionalHome == None
+
+
+
+
+def test_security_setIntrusionAlertThroughSmokeDetectors(fake_home : Home):
+    with no_ssl_verification():
+        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)        
+        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False 
+
+        fake_home.set_intrusion_alert_through_smoke_detectors(True)
+        fake_home.get_current_state()
+        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)        
+        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == True 
+
+        fake_home.set_intrusion_alert_through_smoke_detectors(False)
+        fake_home.get_current_state()
+        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)        
+        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False 
+
+def test_heating_vacation( fake_home :Home):
+    with no_ssl_verification():
+        tomorrow = datetime.now() + timedelta(days=1)
+        tomorrow = tomorrow.replace(second=0, microsecond=0)
+
+        fake_home.activate_vacation(tomorrow, 12)
+        
+        fake_home.get_current_state()
+        heatingHome = fake_home.get_functionalHome(IndoorClimateHome)
+        assert heatingHome.absenceEndTime == tomorrow
+        assert heatingHome.absenceType == AbsenceType.VACATION
+
+        fake_home.deactivate_vacation()
+        
+        fake_home.get_current_state()
+        heatingHome = fake_home.get_functionalHome(IndoorClimateHome)
+        assert heatingHome.absenceEndTime == None
+        assert heatingHome.absenceType == AbsenceType.NOT_ABSENT
+
+def test_security_setZoneActivationDelay( fake_home :Home):
+    with no_ssl_verification():
+        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)   
+        assert securityAlarmHome.zoneActivationDelay == 0.0
+
+        fake_home.set_zone_activation_delay(5.0)
+        fake_home.get_current_state()
+        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)   
+        assert securityAlarmHome.zoneActivationDelay == 5.0
+
+        fake_home.set_zone_activation_delay(0.0)
+        fake_home.get_current_state()
+        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)   
+        assert securityAlarmHome.zoneActivationDelay == 0.0
+
