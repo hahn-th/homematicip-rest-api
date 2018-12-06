@@ -1,0 +1,109 @@
+{
+    "clients": {
+        "00000000-0000-0000-0000-000000000000": {
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000000",
+            "label": "TEST-Client",
+            "clientType" : "APP"
+        }
+    },
+    "devices": {
+        "3014F7110000000000000050": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.2",
+            "firmwareVersionInteger": "65538",
+            "functionalChannels": {            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000050",
+            "label": "DUMMY_DEVICE",
+            "lastStatusUpdate": 1530802738493,
+            "manufacturerCode": 1,
+            "modelId": 353,
+            "modelType": "HmIP-DUMMY",
+            "oem": "eQ-3",
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
+            "type": "DUMMY_DEVICE",
+            "updateState": "UP_TO_DATE"
+
+        }
+    },
+    "groups": {
+        "00000000-0000-0000-0000-000000000020": {
+            "channels": [],
+            "configPending": false,
+            "dutyCycle": false,
+            "groups": [ ],
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000020",
+            "incorrectPositioned": null,
+            "label": "DUMMY_GROUP",
+            "lastStatusUpdate": 1524516556479,
+            "lowBat": false,
+            "metaGroupId": null,
+            "sabotage": null,
+            "type": "DUMMY_GROUP",
+            "unreach": false
+        }
+    },
+    "home": {
+        "apExchangeClientId": null,
+        "apExchangeState": "NONE",
+        "availableAPVersion": null,
+        "carrierSense": null,
+        "clients": [
+            "00000000-0000-0000-0000-000000000000"
+        ],
+        "connected": true,
+        "currentAPVersion": "1.2.4",
+        "deviceUpdateStrategy": "AUTOMATICALLY_IF_POSSIBLE",
+        "dutyCycle": 8.0,
+        "functionalHomes": {
+            "DUMMY_FUNCTIONAL_HOME": {
+                "absenceEndTime": null,
+                "absenceType": "NOT_ABSENT",
+                "active": true,
+                "coolingEnabled": false,
+                "ecoDuration": "PERMANENT",
+                "ecoTemperature": 17.0,
+                "floorHeatingSpecificGroups": {
+                },
+                "functionalGroups": [
+                ],
+                "optimumStartStopEnabled": false,
+                "solution": "DUMMY_FUNCTIONAL_HOME"
+            }
+        },
+        "id": "00000000-0000-0000-0000-000000000001",
+        "inboxGroup": "00000000-0000-0000-0000-000000000044",
+        "lastReadyForUpdateTimestamp": 1522319489138,
+        "location": {
+            "city": "1010  Wien, Österreich",
+            "latitude": "48.208088",
+            "longitude": "16.358608"
+        },
+        "metaGroups": [
+        ],
+        "pinAssigned": false,
+        "powerMeterCurrency": "EUR",
+        "powerMeterUnitPrice": 0.0,
+        "ruleGroups": [
+        ],
+        "ruleMetaDatas": {
+        },
+        "timeZoneId": "Europe/Vienna",
+        "updateState": "UP_TO_DATE",
+        "voiceControlSettings": {
+            "allowedActiveSecurityZoneIds": []
+        },
+        "weather": {
+            "humidity": 54,
+            "maxTemperature": 16.6,
+            "minTemperature": 16.6,
+            "temperature": 16.6,
+            "weatherCondition": "LIGHT_CLOUDY",
+            "weatherDayTime": "NIGHT",
+            "windDirection": 294,
+            "windSpeed": 8.568
+        }
+    }
+}

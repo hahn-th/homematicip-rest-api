@@ -136,6 +136,7 @@
   <ItemGroup>
     <Content Include="README.rst" />
     <Content Include="requirements.txt" />
+    <Content Include="tests\json_data\unknown_types.json" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.6" />

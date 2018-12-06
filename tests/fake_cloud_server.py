@@ -7,6 +7,7 @@ import hashlib
 
 from datetime import datetime, timedelta
 import time
+from homematicip.base.helpers import detect_encoding
 
 
 class FakeCloudServer():
@@ -484,8 +485,15 @@ class FakeCloudServer():
 
 #region Fake Server settings
     def post_hmip_fake_timeout(self,request : Request ,response : Response):
+        """this function forces a timeout on the request (2 seconds)"""
         time.sleep(2)
         response.data = json.dumps( { "TIMEOUT" : "TIMEOUT" } )
+        return response
+
+    def post_hmip_fake_loadConfig(self,request : Request ,response : Response):
+        js = json.loads(request.data)
+        with open(Path(__file__).parent.joinpath("json_data",js["file"])) as file:
+            self.data = json.load(file,encoding="UTF-8")
         return response
 #endregion
 

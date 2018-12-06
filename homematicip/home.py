@@ -182,13 +182,21 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return self._restCall('home/getCurrentState',
                               json.dumps(self._connection.clientCharacteristics))
 
-    def get_current_state(self):
+    def get_current_state(self, clearConfig = False):
+
         json_state = self.download_configuration()
 
         if "errorCode" in json_state:
             LOGGER.error("Could not get the current configuration. Error: %s",
                          json_state["errorCode"])
             return False
+
+        if clearConfig:
+            self.devices = []
+            self.clients = []
+            self.groups = []
+            self.rules = []
+            self.functionalHomes = []
 
         js_home = json_state["home"]
 

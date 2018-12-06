@@ -9,6 +9,8 @@ from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
 from homematicip.functionalHomes import *
 from homematicip.securityEvent import *
+from homematicip.group import Group
+from homematicip.device import Device
 
 import json
 from datetime import datetime, timedelta, timezone
@@ -272,3 +274,21 @@ def test_home_getSecurityJournal( fake_home: Home):
         assert isinstance(journal[4], SensorEvent)
         assert isinstance(journal[5], SabotageEvent)
         assert isinstance(journal[6], MoistureDetectionEvent)
+
+
+def test_home_unknown_types( fake_home: Home):
+    with no_ssl_verification():
+        fake_home._restCall("fake/loadConfig", json.dumps({"file":"unknown_types.json"}))
+        fake_home.get_current_state(clearConfig=True)
+        group = fake_home.groups[0]
+        assert type(group) == Group
+        assert group.groupType == "DUMMY_GROUP" 
+
+        device = fake_home.devices[0]
+        assert type(device) == Device
+        assert device.deviceType == "DUMMY_DEVICE" 
+
+        funcHome = fake_home.functionalHomes[0]
+        assert type(funcHome) == FunctionalHome
+        assert funcHome.solution == "DUMMY_FUNCTIONAL_HOME" 
+    
