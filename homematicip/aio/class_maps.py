@@ -33,7 +33,8 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_DIMMER: AsyncBrandDimmer,
     DeviceType.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: AsyncMotionDetectorPushButton,
-    DeviceType.WATER_SENSOR: AsyncWaterSensor
+    DeviceType.WATER_SENSOR: AsyncWaterSensor,
+    DeviceType.SHUTTER_CONTACT_MAGNETIC: AsyncShutterContact
 }
 
 TYPE_GROUP_MAP = {
