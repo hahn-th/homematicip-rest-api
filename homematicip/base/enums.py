@@ -167,6 +167,7 @@ class DeviceType(AutoNameEnum):
     FULL_FLUSH_SWITCH_MEASURING = auto()
     MOTION_DETECTOR_PUSH_BUTTON = auto()
     WATER_SENSOR = auto()
+    SHUTTER_CONTACT_MAGNETIC = auto()
 
 class GroupType(AutoNameEnum):
     GROUP = auto()
