@@ -78,7 +78,8 @@ class AsyncFullFlushSwitchMeasuring(FullFlushSwitchMeasuring, AsyncSwitch):
 
 class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) /
-    HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
+    HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 
+    HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic"""
 
     pass
 
