@@ -170,7 +170,8 @@ class HeatingThermostat(OperationLockableDevice):
 
 
 class ShutterContact(SabotageDevice):
-    """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
+    """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 
+         HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic"""
     def __init__(self,connection):
         super().__init__(connection)
         self.windowState = WindowState.CLOSED
