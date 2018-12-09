@@ -7,12 +7,10 @@ from homematicip.home import Home
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration, no_ssl_verification
+from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
 
-def test_meta_group(fake_home):
+def test_meta_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000020')
     assert isinstance(g, MetaGroup)
     assert g.label == "Badezimmer"
@@ -33,7 +31,7 @@ def test_meta_group(fake_home):
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000020"]
 
-def test_heating_group(fake_home):
+def test_heating_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
     assert isinstance(g, HeatingGroup)
     for d in g.devices:
@@ -87,7 +85,7 @@ def test_heating_group(fake_home):
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]
 
-def test_security_group(fake_home):
+def test_security_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000009')
     assert isinstance(g, SecurityGroup)
     for d in g.devices:
@@ -149,6 +147,25 @@ def test_switching_group(fake_home : Home):
         fake_home.get_current_state()
         g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
         assert g.on == True
+
+        
+        fake_home.delete_group(g)
+        fake_home.get_current_state()
+        gNotFound = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
+        assert gNotFound == None
+
+        result = g.delete()
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.set_label('LABEL')
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.turn_off()
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.set_shutter_level(50)
+        assert result["errorCode"] == 'INVALID_GROUP'
+
 
 def test_all_groups_implemented(fake_home : Home):
     for g in fake_home.groups:

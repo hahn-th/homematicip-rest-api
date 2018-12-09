@@ -446,8 +446,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return ret
 
     def delete_group(self, group):
-        data = {"groupId": group.id}
-        return self._restCall("home/group/deleteGroup", body=json.dumps(data))
+        """this function will delete the given group from the cloud"""
+        return group.delete()
 
     def get_OAuth_OTK(self):
         token = OAuthOTK(self._connection)

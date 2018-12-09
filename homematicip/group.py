@@ -49,6 +49,10 @@ class Group(HomeMaticIPObject.HomeMaticIPObject):
         data = {"groupId": self.id, "label": label}
         return self._restCall("group/setGroupLabel", json.dumps(data))
 
+    def delete(self):
+        data = {"groupId": self.id}
+        return self._restCall("group/deleteGroup", body=json.dumps(data))
+
 
 class MetaGroup(Group):
     """ a meta group is a "Room" inside the homematic configuration """

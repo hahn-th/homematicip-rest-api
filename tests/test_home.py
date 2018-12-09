@@ -14,11 +14,7 @@ from homematicip.device import Device
 
 import json
 from datetime import datetime, timedelta, timezone
-from conftest import fake_home_download_configuration, no_ssl_verification
-
-
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
+from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
 def test_update_event(fake_home: Home):
     fake_handler = Mock()
@@ -106,6 +102,13 @@ def test_rules(fake_home : Home):
         rule = fake_home.search_rule_by_id('00000000-0000-0000-0000-000000000065')
         assert rule.active == True
         assert rule.label == "ENABLED_RULE"
+
+        rule.id = 'INVALID_ID'
+        result = rule.disable()
+        assert result['errorCode'] == 'INVALID_RULE'
+        result = rule.set_label('NEW LABEL')
+        assert result['errorCode'] == 'INVALID_RULE'
+
 
 def test_security_zones_activation(fake_home : Home):
     with no_ssl_verification():

@@ -9,12 +9,10 @@ from homematicip.device import *
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration,no_ssl_verification
+from conftest import fake_home_download_configuration,no_ssl_verification, utc_offset
 
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
 
-def test_shutter_device(fake_home):
+def test_shutter_device(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000001')
     assert isinstance(d, ShutterContact)
     assert d.label == "Fenster"
@@ -43,7 +41,9 @@ def test_shutter_device(fake_home):
     assert d.windowState == WindowState.OPEN
     assert d.lastStatusUpdate == None
 
-def test_pluggable_switch_measuring(fake_home):
+    assert d.set_router_module_enabled(True) == False # Shutter contact won't support this
+
+def test_pluggable_switch_measuring(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000009')
     assert isinstance(d, PlugableSwitchMeasuring)
     assert d.label == "Brunnen"
@@ -76,7 +76,22 @@ def test_pluggable_switch_measuring(fake_home):
                      ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000009"]
 
-def test_smoke_detector(fake_home):
+    with no_ssl_verification():
+        d.turn_on()
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.on == True
+
+        d.turn_off()
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.on == False
+
+        d.id = 'INVALID_ID'
+        result = d.turn_off()
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
+def test_smoke_detector(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000020')
     assert isinstance(d, SmokeDetector)
     assert d.label == "Rauchwarnmelder"
@@ -138,9 +153,13 @@ def test_wall_mounted_thermostat_pro(fake_home : Home ):
         d.set_display( ClimateControlDisplay.ACTUAL)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id('3014F7110000000000000022')
-    assert d.display == ClimateControlDisplay.ACTUAL
+        assert d.display == ClimateControlDisplay.ACTUAL
 
-def test_heating_thermostat(fake_home):
+        d.id = 'INVALID_ID'
+        result = d.set_display( ClimateControlDisplay.ACTUAL)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
+def test_heating_thermostat(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000015')
     assert isinstance(d, HeatingThermostat)
     assert d.label == "Wohnzimmer-Heizung"
@@ -172,7 +191,17 @@ def test_heating_thermostat(fake_home):
                     ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000015"]
 
-def test_temperature_humidity_sensor_outdoor(fake_home):
+    with no_ssl_verification():
+        d.set_operation_lock(False)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F7110000000000000015')
+        assert d.operationLockActive == False
+
+        d.id = 'INVALID_ID'
+        result = d.set_operation_lock(True)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
+def test_temperature_humidity_sensor_outdoor(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000002')
     assert isinstance(d, TemperatureHumiditySensorOutdoor)
     assert d.label == "Temperatur- und Luftfeuchtigkeitssensor - außen"
@@ -197,7 +226,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home):
                     ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000002"]
 
-def test_weather_sensor_pro(fake_home):
+def test_weather_sensor_pro(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000001')
     assert isinstance(d, WeatherSensorPro)
     assert d.label == "Wettersensor - pro"
@@ -244,7 +273,7 @@ def test_weather_sensor_pro(fake_home):
                       ' windValueType(AVERAGE_VALUE)yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000001"]
 
-def test_weather_sensor(fake_home):
+def test_weather_sensor(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000003')
     assert isinstance(d, WeatherSensor)
     assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
@@ -283,7 +312,7 @@ def test_weather_sensor(fake_home):
                      ' todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6) windValueType(MAX_VALUE) yesterdaySunshineDuration(3)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000003"]
 
-def test_rotary_handle_sensor(fake_home):
+def test_rotary_handle_sensor(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000004')
     assert isinstance(d, RotaryHandleSensor)
     assert d.label == "Fenstergriffsensor"
@@ -310,7 +339,7 @@ def test_rotary_handle_sensor(fake_home):
                       ' sabotage(False) windowState(TILTED)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000004"]
 
-def test_dimmer(fake_home):
+def test_dimmer(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000005')
     assert isinstance(d, BrandDimmer)
     assert d.label == "Schlafzimmerlicht"
@@ -338,6 +367,21 @@ def test_dimmer(fake_home):
 
     assert str(d) == ('HmIP-BDT Schlafzimmerlicht lowbat(None) unreach(False) rssiDeviceValue(-44) rssiPeerValue(-42) configPending(False) dutyCycle(False) dimLevel(0.0)'
                       ' profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)')
+
+    with no_ssl_verification():
+        d.set_dim_level(1.0)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F711AAAA000000000005')
+        assert d.dimLevel == 1.0
+
+        d.set_dim_level(0.5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id('3014F711AAAA000000000005')
+        assert d.dimLevel == 0.5
+
+        d.id = 'INVALID_ID'
+        result = d.set_dim_level(0.5)
+        assert result['errorCode'] == 'INVALID_DEVICE'
 
 def test_basic_device_functions(fake_home:Home):
     with no_ssl_verification():
@@ -374,6 +418,12 @@ def test_basic_device_functions(fake_home:Home):
         assert result["errorCode"] == "INVALID_DEVICE"
         result = d.delete()
         assert result["errorCode"] == "INVALID_DEVICE"
+
+        result = d.reset_energy_counter()
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
+        result = d.set_router_module_enabled(False)
+        assert result['errorCode'] == 'INVALID_DEVICE'
 
 
 def test_all_devices_implemented(fake_home : Home):
@@ -416,3 +466,15 @@ def test_water_sensor(fake_home : Home):
         assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
         assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
         assert d.sirenWaterAlarmTrigger ==WaterAlarmTrigger.NO_ALARM
+
+        d.id = 'INVALID_ID'
+        result = d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+        assert result['errorCode'] == 'INVALID_DEVICE'
