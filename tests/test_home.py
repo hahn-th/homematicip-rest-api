@@ -103,6 +103,13 @@ def test_rules(fake_home : Home):
         assert rule.active == True
         assert rule.label == "ENABLED_RULE"
 
+        rule.id = 'INVALID_ID'
+        result = rule.disable()
+        assert result['errorCode'] == 'INVALID_RULE'
+        result = rule.set_label('NEW LABEL')
+        assert result['errorCode'] == 'INVALID_RULE'
+
+
 def test_security_zones_activation(fake_home : Home):
     with no_ssl_verification():
         internal, external = fake_home.get_security_zones_activation()

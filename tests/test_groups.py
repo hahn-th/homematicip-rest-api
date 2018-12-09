@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 
 from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
+
 def test_meta_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000020')
     assert isinstance(g, MetaGroup)
@@ -146,6 +147,23 @@ def test_switching_group(fake_home : Home):
         fake_home.get_current_state()
         g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
         assert g.on == True
+
+        
+        fake_home.delete_group(g)
+        fake_home.get_current_state()
+        gNotFound = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
+        assert gNotFound == None
+
+        
+        result = g.set_label('LABEL')
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.turn_off()
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.set_shutter_level(50)
+        assert result["errorCode"] == 'INVALID_GROUP'
+
 
 def test_all_groups_implemented(fake_home : Home):
     for g in fake_home.groups:

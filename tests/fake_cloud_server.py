@@ -475,6 +475,16 @@ class FakeCloudServer():
 #endregion
 
 #region Group
+    @validate_authorization
+    def post_hmip_group_deleteGroup(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            self.data["groups"].pop(js["groupId"])
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
 
     @validate_authorization
     def post_hmip_group_setGroupLabel(self,request : Request ,response : Response):

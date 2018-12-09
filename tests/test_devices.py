@@ -87,6 +87,10 @@ def test_pluggable_switch_measuring(fake_home : Home):
         d = fake_home.search_device_by_id('3014F7110000000000000009')
         assert d.on == False
 
+        d.id = 'INVALID_ID'
+        result = d.turn_off()
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
 def test_smoke_detector(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000020')
     assert isinstance(d, SmokeDetector)
@@ -151,6 +155,10 @@ def test_wall_mounted_thermostat_pro(fake_home : Home ):
         d = fake_home.search_device_by_id('3014F7110000000000000022')
         assert d.display == ClimateControlDisplay.ACTUAL
 
+        d.id = 'INVALID_ID'
+        result = d.set_display( ClimateControlDisplay.ACTUAL)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
 def test_heating_thermostat(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000015')
     assert isinstance(d, HeatingThermostat)
@@ -188,6 +196,10 @@ def test_heating_thermostat(fake_home : Home):
         fake_home.get_current_state()
         d = fake_home.search_device_by_id('3014F7110000000000000015')
         assert d.operationLockActive == False
+
+        d.id = 'INVALID_ID'
+        result = d.set_operation_lock(True)
+        assert result['errorCode'] == 'INVALID_DEVICE'
 
 def test_temperature_humidity_sensor_outdoor(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000002')
@@ -367,6 +379,10 @@ def test_dimmer(fake_home : Home):
         d = fake_home.search_device_by_id('3014F711AAAA000000000005')
         assert d.dimLevel == 0.5
 
+        d.id = 'INVALID_ID'
+        result = d.set_dim_level(0.5)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
 def test_basic_device_functions(fake_home:Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id('3014F7110000000000000009')
@@ -402,6 +418,9 @@ def test_basic_device_functions(fake_home:Home):
         assert result["errorCode"] == "INVALID_DEVICE"
         result = d.delete()
         assert result["errorCode"] == "INVALID_DEVICE"
+
+        result = d.reset_energy_counter()
+        assert result['errorCode'] == 'INVALID_DEVICE'
 
 
 def test_all_devices_implemented(fake_home : Home):
@@ -444,3 +463,15 @@ def test_water_sensor(fake_home : Home):
         assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
         assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
         assert d.sirenWaterAlarmTrigger ==WaterAlarmTrigger.NO_ALARM
+
+        d.id = 'INVALID_ID'
+        result = d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+        result = d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+        assert result['errorCode'] == 'INVALID_DEVICE'
