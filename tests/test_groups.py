@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 
 from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
-def test_meta_group(fake_home):
+def test_meta_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000020')
     assert isinstance(g, MetaGroup)
     assert g.label == "Badezimmer"
@@ -30,7 +30,7 @@ def test_meta_group(fake_home):
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000020"]
 
-def test_heating_group(fake_home):
+def test_heating_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
     assert isinstance(g, HeatingGroup)
     for d in g.devices:
@@ -84,7 +84,7 @@ def test_heating_group(fake_home):
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]
 
-def test_security_group(fake_home):
+def test_security_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000009')
     assert isinstance(g, SecurityGroup)
     for d in g.devices:

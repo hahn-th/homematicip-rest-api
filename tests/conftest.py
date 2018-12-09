@@ -113,5 +113,7 @@ async def no_ssl_fake_async_auth(event_loop):
 
 dt = datetime.now(timezone.utc).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1) 
+#the timestamp of the tests were written during DST so utc_offset is one hour less outside of DST
+# -> adding one hour extra
 if not time.localtime().tm_isdst:
     utc_offset = utc_offset + 3600
