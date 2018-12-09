@@ -17,7 +17,8 @@ from pytest_localserver.http import WSGIServer
 from fake_cloud_server import FakeCloudServer
 
 
-
+from datetime import datetime, timedelta, timezone
+import time
 
 def get_full_path(name):
     """Returns full path of incoming relative path.
@@ -108,3 +109,9 @@ async def no_ssl_fake_async_auth(event_loop):
     yield auth
 
     await auth._connection._websession.close()
+
+
+dt = datetime.now(timezone.utc).astimezone()
+utc_offset = dt.utcoffset() // timedelta(seconds=1) 
+if not time.localtime().tm_isdst:
+    utc_offset = utc_offset + 3600

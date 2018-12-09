@@ -6,8 +6,7 @@ from homematicip.aio.device import AsyncDevice, AsyncWallMountedThermostatPro
 from homematicip.aio.home import AsyncHome
 from homematicip.base.enums import *
 
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
+from conftest import utc_offset
 
 @pytest.mark.asyncio
 async def test_basic_device_functions(no_ssl_fake_async_home:AsyncHome):

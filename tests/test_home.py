@@ -14,11 +14,7 @@ from homematicip.device import Device
 
 import json
 from datetime import datetime, timedelta, timezone
-from conftest import fake_home_download_configuration, no_ssl_verification
-
-
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
+from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
 def test_update_event(fake_home: Home):
     fake_handler = Mock()

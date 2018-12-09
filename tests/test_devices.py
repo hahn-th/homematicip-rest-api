@@ -9,10 +9,8 @@ from homematicip.device import *
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration,no_ssl_verification
+from conftest import fake_home_download_configuration,no_ssl_verification, utc_offset
 
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
 
 def test_shutter_device(fake_home):
     d = fake_home.search_device_by_id('3014F7110000000000000001')

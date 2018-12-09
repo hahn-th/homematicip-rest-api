@@ -7,10 +7,7 @@ from homematicip.home import Home
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration, no_ssl_verification
-
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
+from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
 def test_meta_group(fake_home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000020')
