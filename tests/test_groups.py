@@ -154,7 +154,9 @@ def test_switching_group(fake_home : Home):
         gNotFound = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000018')
         assert gNotFound == None
 
-        
+        result = g.delete()
+        assert result["errorCode"] == 'INVALID_GROUP'
+
         result = g.set_label('LABEL')
         assert result["errorCode"] == 'INVALID_GROUP'
 
