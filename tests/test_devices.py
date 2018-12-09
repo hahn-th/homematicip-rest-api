@@ -422,6 +422,9 @@ def test_basic_device_functions(fake_home:Home):
         result = d.reset_energy_counter()
         assert result['errorCode'] == 'INVALID_DEVICE'
 
+        result = d.set_router_module_enabled(False)
+        assert result['errorCode'] == 'INVALID_DEVICE'
+
 
 def test_all_devices_implemented(fake_home : Home):
     for d in fake_home.devices:

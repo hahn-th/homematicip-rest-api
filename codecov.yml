@@ -4,3 +4,4 @@ ignore:
  - "setup.py"
  - "homematicip/_version.py"
  - "homematicip_cli_async.py"
+ - "homematicip/base/constants.py"
