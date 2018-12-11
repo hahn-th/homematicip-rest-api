@@ -21,6 +21,7 @@
             "modelId": 353,
             "modelType": "HmIP-DUMMY",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
             "type": "DUMMY_DEVICE",
             "updateState": "UP_TO_DATE"

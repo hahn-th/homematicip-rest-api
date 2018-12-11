@@ -8,6 +8,57 @@
         }
     },
     "devices": {
+        "3014F711000000000000BB11": {
+            "availableFirmwareVersion": "1.4.8",
+            "firmwareVersion": "1.4.8",
+            "firmwareVersionInteger": 66568,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711000000000000BB11",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -56,
+                    "rssiPeerValue": -52,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "currentIllumination": null,
+                    "deviceId": "3014F711000000000000BB11",
+                    "functionalChannelType": "MOTION_DETECTION_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "illumination": 0.1,
+                    "index": 1,
+                    "label": "",
+                    "motionBufferActive": false,
+                    "motionDetected": true,
+                    "motionDetectionSendInterval": "SECONDS_480",
+                    "numberOfBrightnessMeasurements": 7
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000000000000BB11",
+            "label": "Wohnzimmer",
+            "lastStatusUpdate": 1544480290322,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 291,
+            "modelType": "HmIP-SMI",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000011",
+            "type": "MOTION_DETECTOR_INDOOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000050": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.2",
@@ -58,6 +109,7 @@
             "modelId": 353,
             "modelType": "HmIP-SWD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
             "type": "WATER_SENSOR",
             "updateState": "UP_TO_DATE"
@@ -111,6 +163,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000000",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -163,6 +216,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000001",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -215,6 +269,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000002",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -267,6 +322,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000003",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -319,6 +375,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000004",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -371,6 +428,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000005",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -422,6 +480,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000006",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -473,6 +532,7 @@
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000007",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -524,6 +584,7 @@
             "modelId": 262,
             "modelType": "HMIP-PSM",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000008",
             "type": "PLUGABLE_SWITCH_MEASURING",
             "updateState": "UP_TO_DATE"
@@ -575,6 +636,7 @@
             "modelId": 262,
             "modelType": "HMIP-PSM",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000009",
             "type": "PLUGABLE_SWITCH_MEASURING",
             "updateState": "UP_TO_DATE"
@@ -626,6 +688,7 @@
             "modelId": 262,
             "modelType": "HMIP-PSM",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000010",
             "type": "PLUGABLE_SWITCH_MEASURING",
             "updateState": "UP_TO_DATE"
@@ -678,6 +741,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000011",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -730,6 +794,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000012",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -782,6 +847,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000013",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -834,6 +900,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000014",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -886,6 +953,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000015",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -938,6 +1006,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000016",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -990,6 +1059,7 @@
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000017",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -1039,6 +1109,7 @@
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000018",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1088,6 +1159,7 @@
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000019",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1137,6 +1209,7 @@
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000020",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1186,6 +1259,7 @@
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000021",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1238,6 +1312,7 @@
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000022",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1290,6 +1365,7 @@
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000023",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1342,6 +1418,7 @@
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000024",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1394,6 +1471,7 @@
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000025",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1458,6 +1536,7 @@
             "modelId": 352,
             "modelType": "HmIP-SWO-PR",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000001",
             "type": "WEATHER_SENSOR_PRO",
             "updateState": "UP_TO_DATE"
@@ -1506,6 +1585,7 @@
             "modelId": 314,
             "modelType": "HmIP-STHO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000002",
             "type": "TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR",
             "updateState": "UP_TO_DATE"
@@ -1559,6 +1639,7 @@
             "modelId": 350,
             "modelType": "HmIP-SWO-B",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000003",
             "type": "WEATHER_SENSOR",
             "updateState": "UP_TO_DATE"
@@ -1604,6 +1685,7 @@
             "modelId": 286,
             "modelType": "HmIP-SRH",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000004",
             "type": "ROTARY_HANDLE_SENSOR",
             "updateState": "UP_TO_DATE"
@@ -1653,6 +1735,7 @@
             "modelId": 290,
             "modelType": "HmIP-BDT",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000005",
             "type": "BRAND_DIMMER",
             "updateState": "UP_TO_DATE"

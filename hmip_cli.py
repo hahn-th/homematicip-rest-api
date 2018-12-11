@@ -241,12 +241,13 @@ def main():
 
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {}".format(d.label,
+            print("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {} permanentlyReachable: {}".format(d.label,
                                                                                 d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
                                                                                 getRssiBarString(d.rssiDeviceValue),
                                                                                 d.rssiPeerValue if d.rssiPeerValue is not None else "None",
                                                                                 getRssiBarString(d.rssiPeerValue),
-                                                                                "Unreachable" if d.unreach else ""))
+                                                                                "Unreachable" if d.unreach else "",
+                                                                                d.permanentlyReachable) )
     if args.list_rules:
         command_entered = True
         sortedRules = sorted(home.rules, key=attrgetter('ruleType', 'label'))

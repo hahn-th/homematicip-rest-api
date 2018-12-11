@@ -35,6 +35,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.rssiPeerValue = 0
         self.dutyCycle = False
         self.configPending = False
+        self.permanentlyReachable = False
 
     def from_json(self, js):
         super().from_json(js)
@@ -54,6 +55,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.oem = js['oem']
         self.manufacturerCode = js['manufacturerCode']
         self.serializedGlobalTradeItemNumber = js['serializedGlobalTradeItemNumber']
+        self.permanentlyReachable = js["permanentlyReachable"]
 
         c = get_functional_channel("DEVICE_BASE", js)
         if c:
@@ -417,8 +419,13 @@ class MotionDetectorIndoor(SabotageDevice):
 
     def __init__(self,connection):
         super().__init__(connection)
+        self.currentIllumination = None
         self.motionDetected = None
         self.illumination = None
+        self.motionBufferActive = False
+        self.motionDetected = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -426,11 +433,20 @@ class MotionDetectorIndoor(SabotageDevice):
         if c:
             self.motionDetected = c["motionDetected"]
             self.illumination = c["illumination"]
+            self.motionBufferActive = c["motionBufferActive"]
+            self.motionDetected = c["motionDetected"]
+            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
+            self.currentIllumination = c["currentIllumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(),
+        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetected({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
                                                                self.motionDetected,
-                                                               self.illumination)
+                                                               self.illumination,
+                                                               self.motionBufferActive,
+                                                               self.motionDetected,
+                                                               self.motionDetectionSendInterval,
+                                                               self.numberOfBrightnessMeasurements)
 
 
 class MotionDetectorPushButton(MotionDetectorIndoor):

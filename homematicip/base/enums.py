@@ -231,3 +231,11 @@ class EventType(AutoNameEnum):
     CLIENT_ADDED = auto()
     HOME_CHANGED = auto()
     GROUP_CHANGED = auto()
+
+
+class MotionDetectionSendInterval(AutoNameEnum):
+        SECONDS_30  = auto()
+        SECONDS_60  = auto()
+        SECONDS_120 = auto()
+        SECONDS_240 = auto()
+        SECONDS_480 = auto()

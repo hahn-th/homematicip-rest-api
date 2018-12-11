@@ -386,6 +386,7 @@ def test_dimmer(fake_home : Home):
 def test_basic_device_functions(fake_home:Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.permanentlyReachable == True
         assert d.label == "Brunnen"
         assert d.routerModuleEnabled == True
         assert d.energyCounter == 0.4754
@@ -478,3 +479,15 @@ def test_water_sensor(fake_home : Home):
         assert result['errorCode'] == 'INVALID_DEVICE'
         result = d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
         assert result['errorCode'] == 'INVALID_DEVICE'
+
+
+def test_motion_detector_indoor(fake_home:Home):
+    d = MotionDetectorIndoor(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711000000000000BB11")
+    
+    assert d.illumination == 0.1
+    assert d.currentIllumination == None
+    assert d.motionBufferActive == False
+    assert d.motionDetected == True
+    assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_480
+    assert d.numberOfBrightnessMeasurements == 7
