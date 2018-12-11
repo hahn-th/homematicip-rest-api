@@ -108,7 +108,7 @@ def test_smoke_detector(fake_home : Home):
     assert d.rssiDeviceValue == -54
     assert d.rssiPeerValue == None
     assert d.unreach == False
-    assert d.smokeDetectorAlarmType == "IDLE_OFF"
+    assert d.smokeDetectorAlarmType == SmokeDetectorAlarmType.IDLE_OFF
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.11"
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
@@ -491,3 +491,7 @@ def test_motion_detector_indoor(fake_home:Home):
     assert d.motionDetected == True
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_480
     assert d.numberOfBrightnessMeasurements == 7
+
+    assert str(d) == ("HmIP-SMI Wohnzimmer lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
+                      "dutyCycle(False): sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
+                      "motionDetected(True) motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")

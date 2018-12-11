@@ -173,6 +173,9 @@ class AsyncPluggableDimmer(AsyncDimmer):
 class AsyncBrandDimmer(AsyncDimmer):
     """HmIP-BDT Brand Dimmer"""
 
+class AsyncFullFlushDimmer(AsyncDimmer):
+    """HmIP-FDT Dimming Actuator flush-mount"""
+
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """ HmIP-SWO-B """
 

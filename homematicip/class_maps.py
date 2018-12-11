@@ -40,7 +40,8 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
     DeviceType.WATER_SENSOR: WaterSensor,
-    DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact
+    DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact,
+    DeviceType.FULL_FLUSH_DIMMER : FullFlushDimmer
 }
 
 TYPE_GROUP_MAP = {

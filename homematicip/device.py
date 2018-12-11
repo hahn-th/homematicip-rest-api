@@ -302,7 +302,7 @@ class SmokeDetector(Device):
         super().from_json(js)
         c = get_functional_channel("SMOKE_DETECTOR_CHANNEL", js)
         if c:
-            self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
+            self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(c["smokeDetectorAlarmType"])
 
     def __str__(self):
         return "{}: smokeDetectorAlarmType({})".format(super().__str__(),
@@ -550,6 +550,8 @@ class PluggableDimmer(Dimmer):
 class BrandDimmer(Dimmer):
     """HmIP-BDT Brand Dimmer"""
 
+class FullFlushDimmer(Dimmer):
+    """HmIP-FDT Dimming Actuator flush-mount"""
 
 class WeatherSensor(Device):
     """ HmIP-SWO-B """

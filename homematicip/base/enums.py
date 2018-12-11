@@ -168,6 +168,7 @@ class DeviceType(AutoNameEnum):
     MOTION_DETECTOR_PUSH_BUTTON = auto()
     WATER_SENSOR = auto()
     SHUTTER_CONTACT_MAGNETIC = auto()
+    FULL_FLUSH_DIMMER = auto()
 
 class GroupType(AutoNameEnum):
     GROUP = auto()
@@ -234,8 +235,14 @@ class EventType(AutoNameEnum):
 
 
 class MotionDetectionSendInterval(AutoNameEnum):
-        SECONDS_30  = auto()
-        SECONDS_60  = auto()
-        SECONDS_120 = auto()
-        SECONDS_240 = auto()
-        SECONDS_480 = auto()
+    SECONDS_30 = auto()
+    SECONDS_60 = auto()
+    SECONDS_120 = auto()
+    SECONDS_240 = auto()
+    SECONDS_480 = auto()
+
+class SmokeDetectorAlarmType(AutoNameEnum):
+    IDLE_OFF = auto()
+    PRIMARY_ALARM = auto()
+    INTRUSION_ALARM = auto()
+    SECONDARY_ALARM = auto()
