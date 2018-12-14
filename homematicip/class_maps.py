@@ -53,6 +53,7 @@ TYPE_GROUP_MAP = {
     GroupType.EXTENDED_LINKED_SWITCHING: ExtendedLinkedSwitchingGroup,
     GroupType.LINKED_SWITCHING: LinkedSwitchingGroup,
     GroupType.ALARM_SWITCHING: AlarmSwitchingGroup,
+    GroupType.SECURITY_BACKUP_ALARM_SWITCHING : AlarmSwitchingGroup,
     GroupType.HEATING_HUMIDITY_LIMITER: HeatingHumidyLimiterGroup,
     GroupType.HEATING_TEMPERATURE_LIMITER: HeatingTemperatureLimiterGroup,
     GroupType.HEATING_CHANGEOVER: HeatingChangeoverGroup,

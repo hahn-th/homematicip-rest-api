@@ -101,7 +101,7 @@ def test_security_group(fake_home : Home):
     assert g.motionDetected == None
     assert g.presenceDetected == None
     assert g.sabotage == False
-    assert g.smokeDetectorAlarmType == "IDLE_OFF"
+    assert g.smokeDetectorAlarmType == SmokeDetectorAlarmType.IDLE_OFF
     assert g.unreach == False
     assert g.windowState == "CLOSED"
 

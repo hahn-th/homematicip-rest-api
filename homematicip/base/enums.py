@@ -197,6 +197,7 @@ class GroupType(AutoNameEnum):
     SWITCHING = auto()
     SECURITY = auto()
     ENVIRONMENT = auto()
+    SECURITY_BACKUP_ALARM_SWITCHING = auto()
 
 class SecurityEventType(AutoNameEnum):
     SENSOR_EVENT = auto()
@@ -254,3 +255,14 @@ class LiveUpdateState(AutoNameEnum):
     UPDATE_AVAILABLE            = auto()
     UPDATE_INCOMPLETE           = auto()
     LIVE_UPDATE_NOT_SUPPORTED   = auto()
+
+class OpticalAlarmSignal(AutoNameEnum):
+    DISABLE_OPTICAL_SIGNAL = auto()
+    BLINKING_ALTERNATELY_REPEATING = auto()
+    BLINKING_BOTH_REPEATING = auto()
+    DOUBLE_FLASHING_REPEATING = auto()
+    FLASHING_BOTH_REPEATING = auto()
+    CONFIRMATION_SIGNAL_0 = auto()
+    CONFIRMATION_SIGNAL_1 = auto()
+    CONFIRMATION_SIGNAL_2 = auto()
+
