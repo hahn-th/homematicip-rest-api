@@ -266,3 +266,7 @@ class OpticalAlarmSignal(AutoNameEnum):
     CONFIRMATION_SIGNAL_1 = auto()
     CONFIRMATION_SIGNAL_2 = auto()
 
+
+class FunctionalChanelType(AutoNameEnum):
+    FUNCTIONAL_CHANEL = auto()
+

@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--list-events</CommandLineArguments>
+    <CommandLineArguments>-g 678bb392-4e08-4072-8a15-b5471d8a218b --set-boost-duration 30</CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -57,6 +57,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\device.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="homematicip\functionalChannels.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\functionalHomes.py">

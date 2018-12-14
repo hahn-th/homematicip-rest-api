@@ -7,6 +7,8 @@ from homematicip.group import *
 from homematicip.securityEvent import *
 from homematicip.rule import *
 from homematicip.functionalHomes import *
+from homematicip.functionalChanels import *
+
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
@@ -99,4 +101,8 @@ TYPE_FUNCTIONALHOME_MAP = {
     FunctionalHomeType.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
     FunctionalHomeType.LIGHT_AND_SHADOW: LightAndShadowHome,
     FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome
+}
+
+TYPE_FUNCTIONALCHANEL_MAP = {
+    FunctionalChanelType.FUNCTIONAL_CHANEL : FunctionalChanel
 }

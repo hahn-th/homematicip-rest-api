@@ -6,6 +6,10 @@ import logging
 from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
 from homematicip import HomeMaticIPObject
+from homematicip.group import Group
+from homematicip.class_maps import TYPE_FUNCTIONALCHANEL_MAP
+
+from typing import Iterable
 
 LOGGER = logging.getLogger(__name__)
 
@@ -96,6 +100,21 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         data = {"deviceId": self.id, "channelIndex": 0,
                 "routerModuleEnabled": enabled}
         return self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
+
+    def load_functionalChanels(groups : Iterable[Group]):
+        """ this function will load the functionalChanels into the device """
+
+    def _parse_functionalChanel(self,json_state,groups : Iterable[Group])
+        try:
+            chanelType = FunctionalChanelType.from_str(json_state["type"])
+            fc = self._typeClassMap[chanelType](self._connection)
+            fc.from_json(json_state,groups)
+            return fc
+        except:
+            fc = self._typeClassMap[FunctionalChanelType.FUNCTIONAL_CHANEL](self._connection)
+            fc.from_json(json_state,groups)
+            LOGGER.warning("There is no class for %s yet", json_state["type"])
+            return fc
 
 
 class SabotageDevice(Device):
