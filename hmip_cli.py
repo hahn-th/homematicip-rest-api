@@ -229,9 +229,9 @@ def main():
                                                                                               home.updateState))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
+            print("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {} LiveUpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                             d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None",
-                                                                                            d.updateState))
+                                                                                            d.updateState, d.liveUpdateState))
 
     if args.list_rssi:
         command_entered = True

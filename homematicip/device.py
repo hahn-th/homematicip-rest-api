@@ -36,6 +36,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.dutyCycle = False
         self.configPending = False
         self.permanentlyReachable = False
+        self.liveUpdateState = LiveUpdateState.LIVE_UPDATE_NOT_SUPPORTED
 
     def from_json(self, js):
         super().from_json(js)
@@ -56,6 +57,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.manufacturerCode = js['manufacturerCode']
         self.serializedGlobalTradeItemNumber = js['serializedGlobalTradeItemNumber']
         self.permanentlyReachable = js["permanentlyReachable"]
+        self.liveUpdateState = LiveUpdateState.from_str(js["liveUpdateState"])
 
         c = get_functional_channel("DEVICE_BASE", js)
         if c:

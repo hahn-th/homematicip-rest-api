@@ -169,6 +169,7 @@ class DeviceType(AutoNameEnum):
     WATER_SENSOR = auto()
     SHUTTER_CONTACT_MAGNETIC = auto()
     FULL_FLUSH_DIMMER = auto()
+    PUSH_BUTTON_6 = auto()
 
 class GroupType(AutoNameEnum):
     GROUP = auto()
@@ -246,3 +247,9 @@ class SmokeDetectorAlarmType(AutoNameEnum):
     PRIMARY_ALARM = auto()
     INTRUSION_ALARM = auto()
     SECONDARY_ALARM = auto()
+
+class LiveUpdateState(AutoNameEnum):
+    UP_TO_DATE                  = auto()
+    UPDATE_AVAILABLE            = auto()
+    UPDATE_INCOMPLETE           = auto()
+    LIVE_UPDATE_NOT_SUPPORTED   = auto()
