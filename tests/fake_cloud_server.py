@@ -521,6 +521,54 @@ class FakeCloudServer():
         else:
             response = self.errorCode(response, "INVALID_GROUP", 404)
         return response
+
+    @validate_authorization
+    def post_hmip_group_heating_setBoost(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["boostMode"] = js["boost"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_heating_setBoost(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["boostMode"] = js["boost"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_heating_setBoostDuration(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["boostDuration"] = js["boostDuration"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_heating_setActiveProfile(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["activeProfile"] = "PROFILE_{}".format(int(js["profileIndex"])+1)
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
 #endregion
 
     def post_getHost(self,request : Request ,response : Response):

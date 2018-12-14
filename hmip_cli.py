@@ -101,6 +101,7 @@ def main():
 
     group.add_argument("--set-boost", action="store_true", dest="group_boost", help="activates the boost mode for a HEATING group", default=None)
     group.add_argument("--set-boost-stop", action="store_false", dest="group_boost", help="deactivates the boost mode for a HEATING group", default=None)
+    group.add_argument("--set-boost-duration", dest="group_boost_duration", action="store", help="sets the boost duration for a HEATING group in minutes", default=None, type=int)
 
     group = parser.add_argument_group("Automation Rule Settings")
     group.add_argument("--enable-rule", action="store_true", dest="rule_activation", help="activates the automation rules", default=None)
@@ -406,6 +407,14 @@ def main():
                 group.set_boost(args.group_boost)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
+
+        if args.group_boost_duration is not None:
+            command_entered = True
+            if isinstance(group, HeatingGroup):
+                group.set_boost_duration(args.group_boost_duration)
+            else:
+                logger.error("Group %s isn't a HEATING group", g.id)
+                
 
 
 
