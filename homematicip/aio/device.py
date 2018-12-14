@@ -29,15 +29,19 @@ class AsyncDevice(Device):
 
 class AsyncSwitch(Switch, AsyncDevice):
     """ Generic async switch """
-
-    async def turn_on(self):
-        _LOGGER.debug("Async switch turn_on")
-        url, data = super().turn_on()
+    async def set_switch_state(self, on=True, channelIndex = 1):
+        _LOGGER.debug("Async switch set_switch_state")
+        url, data = super().set_switch_state(on,channelIndex)
         return await self._connection.api_call(url, data)
 
-    async def turn_off(self):
+    async def turn_on(self,channelIndex=1):
+        _LOGGER.debug("Async switch turn_on")
+        url, data = super().turn_on(channelIndex)
+        return await self._connection.api_call(url, data)
+
+    async def turn_off(self,channelIndex=1):
         _LOGGER.debug("Async switch turn_off")
-        url, data = super().turn_off()
+        url, data = super().turn_off(channelIndex)
         return await self._connection.api_call(url, data)
 
 

@@ -354,16 +354,16 @@ class Switch(Device):
     def __str__(self):
         return "{}: on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
 
-    def set_switch_state(self, on=True):
-        data = {"channelIndex": 1, "deviceId": self.id, "on": on}
+    def set_switch_state(self, on=True, channelIndex = 1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
         return self._restCall("device/control/setSwitchState",
                               body=json.dumps(data))
 
-    def turn_on(self):
-        return self.set_switch_state(True)
+    def turn_on(self, channelIndex = 1):
+        return self.set_switch_state(True,channelIndex)
 
-    def turn_off(self):
-        return self.set_switch_state(False)
+    def turn_off(self, channelIndex = 1):
+        return self.set_switch_state(False,channelIndex)
 
 class PlugableSwitch(Switch):
     """ HMIP-PS (Pluggable Switch) """
