@@ -3219,6 +3219,25 @@
             "type": "ENVIRONMENT",
             "unreach": false,
             "windSpeed": 29.1
+        },
+        "00000000-AAAA-0000-0000-000000000068": {
+            "acousticFeedbackEnabled": true,
+            "channels": [],
+            "dimLevel": null,
+            "dutyCycle": null,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-AAAA-0000-0000-000000000068",
+            "label": "BACKUP_ALARM_SIREN",
+            "lastStatusUpdate": 0,
+            "lowBat": null,
+            "metaGroupId": null,
+            "on": null,
+            "onTime": 180.0,
+            "signalAcoustic": "FREQUENCY_RISING",
+            "signalOptical": "DISABLE_OPTICAL_SIGNAL",
+            "smokeDetectorAlarmType": null,
+            "type": "SECURITY_BACKUP_ALARM_SWITCHING",
+            "unreach": null
         }
     },
     "home": {
@@ -3287,6 +3306,7 @@
                 "intrusionAlertThroughSmokeDetectors": false,
                 "securitySwitchingGroups": {
                     "ALARM": "00000000-0000-0000-0000-000000000056",
+                    "BACKUP_ALARM_SIREN": "00000000-AAAA-0000-0000-000000000068",
                     "COMING_HOME": "00000000-0000-0000-0000-000000000037",
                     "PANIC": "00000000-0000-0000-0000-000000000053",
                     "SIREN": "00000000-0000-0000-0000-000000000022"
