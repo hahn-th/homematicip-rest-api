@@ -502,3 +502,10 @@ def test_push_button_6(fake_home:Home):
     
     assert d.modelId == 300
     assert d.label == "Wandtaster - 6-fach"
+
+def test_remote_control_8(fake_home:Home):
+    d = PushButton6(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB016")
+    
+    assert d.modelId == 299
+    assert d.label == "Fernbedienung - 8 Tasten"

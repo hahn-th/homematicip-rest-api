@@ -175,7 +175,7 @@ class HeatingThermostat(OperationLockableDevice):
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 
-         HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic"""
+         HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic )"""
     def __init__(self,connection):
         super().__init__(connection)
         self.windowState = WindowState.CLOSED
@@ -418,6 +418,9 @@ class PushButton6(PushButton):
         #TODO: PUSH_BUTTON_6 has 6 functional Channels of "SINGLE_KEY_CHANNEL"
         #They don't provide any information except for the groups. 
         #Maybe the functional channels should get there own class and be added as class member?
+
+class RemoteControl8(PushButton):
+    """ HmIP-RC8 (Remote Control - 8 buttons) """
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """

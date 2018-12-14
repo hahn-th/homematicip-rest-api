@@ -72,6 +72,7 @@ Devices:
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
+-  [X] HMIP-RC8 (Remote Control - 8 buttons)
 -  [X] HMIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HMIP-PDT (Pluggable Dimmer)
 -  [X] HMIP-PS (Plugable Switch)
@@ -86,11 +87,15 @@ Devices:
 -  [X] HMIP-SWD (Water Sensor)
 -  [X] HMIP-SWDO (Shutter Contact)
 -  [X] HMIP-SWDO-I (Shutter Contact Invisible)
+-  [X] HMIP-SWDM (Door / Window Contact - magnetic )
+-  [X] HMIP-SWDM-B2  (Door / Window Contact - magnetic )
 -  [X] HMIP-SWO-B (Weather Sensor)
 -  [X] HMIP-SWO-PR (Weather Sensor – pro)
 -  [X] HMIP-SWSD (Smoke Detector)
 -  [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
+-  [X] HMIP-WRC6 (Wall-mount Remote Control - 6-button)
 -  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro)
+
 
 Events
 ------

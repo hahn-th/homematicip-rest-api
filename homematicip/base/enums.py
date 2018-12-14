@@ -170,6 +170,7 @@ class DeviceType(AutoNameEnum):
     SHUTTER_CONTACT_MAGNETIC = auto()
     FULL_FLUSH_DIMMER = auto()
     PUSH_BUTTON_6 = auto()
+    REMOTE_CONTROL_8 = auto()
 
 class GroupType(AutoNameEnum):
     GROUP = auto()

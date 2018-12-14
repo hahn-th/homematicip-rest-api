@@ -42,7 +42,8 @@ TYPE_CLASS_MAP = {
     DeviceType.WATER_SENSOR: WaterSensor,
     DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact,
     DeviceType.FULL_FLUSH_DIMMER : FullFlushDimmer,
-    DeviceType.PUSH_BUTTON_6: PushButton6
+    DeviceType.PUSH_BUTTON_6: PushButton6,
+    DeviceType.REMOTE_CONTROL_8 : RemoteControl8
 }
 
 TYPE_GROUP_MAP = {

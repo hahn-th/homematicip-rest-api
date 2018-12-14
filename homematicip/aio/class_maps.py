@@ -36,7 +36,8 @@ TYPE_CLASS_MAP = {
     DeviceType.WATER_SENSOR: AsyncWaterSensor,
     DeviceType.SHUTTER_CONTACT_MAGNETIC: AsyncShutterContact,
     DeviceType.FULL_FLUSH_DIMMER : AsyncFullFlushDimmer,
-    DeviceType.PUSH_BUTTON_6 : AsyncPushButton6
+    DeviceType.PUSH_BUTTON_6 : AsyncPushButton6,
+    DeviceType.REMOTE_CONTROL_8 : AsyncRemoteControl8
 }
 
 TYPE_GROUP_MAP = {
