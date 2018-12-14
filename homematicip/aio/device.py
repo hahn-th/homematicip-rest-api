@@ -1,13 +1,6 @@
 import logging
 
-from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, \
-    SabotageDevice, ShutterContact, OperationLockableDevice, HeatingThermostat, \
-    TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, \
-    WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
-    MotionDetectorIndoor, MotionDetectorPushButton, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
-    Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
-    WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor, \
-    WaterSensor
+from homematicip.device import *
 from homematicip.base.enums import *
 
 ERROR_CODE = "errorCode"
@@ -126,6 +119,8 @@ class AsyncFloorTerminalBlock6(FloorTerminalBlock6, AsyncDevice):
 class AsyncPushButton(PushButton, AsyncDevice):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
+class AsyncPushButton6(PushButton6, AsyncPushButton):
+    """ HMIP-WRC6 (Wall-mount Remote Control - 6-button)  """
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """

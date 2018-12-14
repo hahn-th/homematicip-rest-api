@@ -495,3 +495,10 @@ def test_motion_detector_indoor(fake_home:Home):
     assert str(d) == ("HmIP-SMI Wohnzimmer lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
                       "dutyCycle(False): sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
                       "motionDetected(True) motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")
+
+def test_push_button_6(fake_home:Home):
+    d = PushButton6(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB017")
+    
+    assert d.modelId == 300
+    assert d.label == "Wandtaster - 6-fach"
