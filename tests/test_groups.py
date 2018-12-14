@@ -85,6 +85,18 @@ def test_heating_group(fake_home : Home):
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]
 
+    with no_ssl_verification():
+        g.set_boost_duration(20)
+        g.set_boost(True)
+        g.set_active_profile(3)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
+        assert g.boostDuration == 20
+        assert g.boostMode == True
+        assert g.activeProfile.index == "PROFILE_4"
+
+
+
 def test_security_group(fake_home : Home):
     g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000009')
     assert isinstance(g, SecurityGroup)

@@ -547,6 +547,10 @@ class HeatingGroup(Group):
         data = {"groupId": self.id, "boost": enable}
         return self._restCall("group/heating/setBoost", body=json.dumps(data))
 
+    def set_boost_duration(self, duration: int):
+        data = {"groupId": self.id, "boostDuration": duration}
+        return self._restCall("group/heating/setBoostDuration", body=json.dumps(data))
+
     def set_active_profile(self, index):
         data = {"groupId": self.id, "profileIndex": index}
         return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
