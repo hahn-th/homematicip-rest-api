@@ -536,6 +536,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 elif pushEventType == EventType.DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)
+                    obj.load_functionalChannels(self.groups)
                     self.devices.append(obj)
                 elif pushEventType == EventType.DEVICE_CHANGED:
                     data = event["device"]
@@ -545,6 +546,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                         self.devices.append(obj)
                     else:
                         obj.from_json(data)
+                    obj.load_functionalChannels(self.groups)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
