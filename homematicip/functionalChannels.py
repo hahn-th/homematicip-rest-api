@@ -343,17 +343,17 @@ class WeatherSensorChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.actualTemperature = c["actualTemperature"]
-        self.humidity = c["humidity"]
-        self.illumination = c["illumination"]
-        self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]
-        self.storm = c["storm"]
-        self.sunshine = c["sunshine"]
-        self.todaySunshineDuration = c["todaySunshineDuration"]
-        self.totalSunshineDuration = c["totalSunshineDuration"]
-        self.windSpeed = c["windSpeed"]
-        self.windValueType = WindValueType.from_str(c["windValueType"])
-        self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+        self.actualTemperature = js["actualTemperature"]
+        self.humidity = js["humidity"]
+        self.illumination = js["illumination"]
+        self.illuminationThresholdSunshine = js["illuminationThresholdSunshine"]
+        self.storm = js["storm"]
+        self.sunshine = js["sunshine"]
+        self.todaySunshineDuration = js["todaySunshineDuration"]
+        self.totalSunshineDuration = js["totalSunshineDuration"]
+        self.windSpeed = js["windSpeed"]
+        self.windValueType = WindValueType.from_str(js["windValueType"])
+        self.yesterdaySunshineDuration = js["yesterdaySunshineDuration"]
 
 class WeatherSensorProChannel(WeatherSensorChannel):
     """ this is the representive of the WEATHER_SENSOR_PRO_CHANNEL channel"""
@@ -371,13 +371,13 @@ class WeatherSensorProChannel(WeatherSensorChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.raining = c["raining"]
-        self.todayRainCounter = c["todayRainCounter"]
-        self.totalRainCounter = c["totalRainCounter"]
-        self.weathervaneAlignmentNeeded = c["weathervaneAlignmentNeeded"]
-        self.windDirection = c["windDirection"]
-        self.windDirectionVariation = c["windDirectionVariation"]
-        self.yesterdayRainCounter = c["yesterdayRainCounter"]
+        self.raining = js["raining"]
+        self.todayRainCounter = js["todayRainCounter"]
+        self.totalRainCounter = js["totalRainCounter"]
+        self.weathervaneAlignmentNeeded = js["weathervaneAlignmentNeeded"]
+        self.windDirection = js["windDirection"]
+        self.windDirectionVariation = js["windDirectionVariation"]
+        self.yesterdayRainCounter = js["yesterdayRainCounter"]
 
 class SingleKeyChannel(FunctionalChannel):
     """ this is the representive of the SINGLE_KEY_CHANNEL channel"""
