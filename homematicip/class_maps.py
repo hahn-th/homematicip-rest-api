@@ -7,7 +7,7 @@ from homematicip.group import *
 from homematicip.securityEvent import *
 from homematicip.rule import *
 from homematicip.functionalHomes import *
-from homematicip.functionalChanels import *
+from homematicip.functionalChannels import *
 
 
 TYPE_CLASS_MAP = {
@@ -103,6 +103,9 @@ TYPE_FUNCTIONALHOME_MAP = {
     FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome
 }
 
-TYPE_FUNCTIONALCHANEL_MAP = {
-    FunctionalChanelType.FUNCTIONAL_CHANEL : FunctionalChanel
+TYPE_FUNCTIONALCHANNEL_MAP = {
+    FunctionalChannelType.FUNCTIONAL_CHANNEL : FunctionalChannel,
+    FunctionalChannelType.DEVICE_BASE : DeviceBaseChannel,
+    FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
+    FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel
 }

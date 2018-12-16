@@ -7,7 +7,6 @@ from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
 from homematicip import HomeMaticIPObject
 from homematicip.group import Group
-from homematicip.class_maps import TYPE_FUNCTIONALCHANEL_MAP
 
 from typing import Iterable
 
@@ -15,6 +14,7 @@ LOGGER = logging.getLogger(__name__)
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
+
     def __init__(self,connection):
         super().__init__(connection)
         self.id = None
@@ -41,6 +41,11 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.configPending = False
         self.permanentlyReachable = False
         self.liveUpdateState = LiveUpdateState.LIVE_UPDATE_NOT_SUPPORTED
+        self.functionalChannels = []
+        
+        #must be imported in init. otherwise we have cross import issues
+        from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+        self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
 
     def from_json(self, js):
         super().from_json(js)
@@ -101,20 +106,24 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
                 "routerModuleEnabled": enabled}
         return self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
 
-    def load_functionalChanels(groups : Iterable[Group]):
-        """ this function will load the functionalChanels into the device """
+    def load_functionalChannels(self, groups : Iterable[Group]):
+        """ this function will load the functionalChannels into the device """
+        self.functionalChannels = []
+        for channel in self._rawJSONData['functionalChannels'].values():
+            fc = self._parse_functionalChannel(channel,groups)
+            self.functionalChannels.append(fc)
 
-    def _parse_functionalChanel(self,json_state,groups : Iterable[Group])
+    def _parse_functionalChannel(self,json_state,groups : Iterable[Group]):
+        fc = None
         try:
-            chanelType = FunctionalChanelType.from_str(json_state["type"])
-            fc = self._typeClassMap[chanelType](self._connection)
+            channelType = FunctionalChannelType.from_str(json_state["functionalChannelType"])
+            fc = self._typeFunctionalChannelMap[channelType]()
             fc.from_json(json_state,groups)
-            return fc
         except:
-            fc = self._typeClassMap[FunctionalChanelType.FUNCTIONAL_CHANEL](self._connection)
+            fc = self._typeFunctionalChannelMap[FunctionalChannelType.FUNCTIONAL_CHANNEL]()
             fc.from_json(json_state,groups)
-            LOGGER.warning("There is no class for %s yet", json_state["type"])
-            return fc
+            LOGGER.warning("There is no class for %s yet", json_state["functionalChannelType"])
+        return fc
 
 
 class SabotageDevice(Device):
@@ -136,7 +145,6 @@ class SabotageDevice(Device):
 
     def __str__(self):
         return "{}: sabotage({})".format(super().__str__(), self.sabotage)
-
 
 class OperationLockableDevice(Device):
     def __init__(self,connection):
