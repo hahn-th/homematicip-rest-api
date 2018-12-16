@@ -255,7 +255,7 @@ def test_weather_sensor_pro(fake_home : Home):
     assert d.windDirection == 295.0
     assert d.windDirectionVariation == 56.25
     assert d.windSpeed == 2.6
-    assert d.windValueType == "AVERAGE_VALUE"
+    assert d.windValueType == WindValueType.AVERAGE_VALUE
     assert d.yesterdayRainCounter == 0.0
     assert d.yesterdaySunshineDuration == 0
     assert d.actualTemperature == 15.4
