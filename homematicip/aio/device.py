@@ -52,6 +52,9 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
 class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
     pass
 
+class AsyncOpenCollector8Module(OpenCollector8Module, AsyncSwitch):
+    """ Async implementation of HmIP-MOD-OC8 ( Open Collector Module ) """
+
 
 class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
     async def set_operation_lock(self, operationLock=True):

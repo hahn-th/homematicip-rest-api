@@ -72,6 +72,7 @@ Devices:
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
+-  [X] HmIP-MOD-OC8 ( Open Collector Module )
 -  [X] HMIP-RC8 (Remote Control - 8 buttons)
 -  [X] HMIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HMIP-PDT (Pluggable Dimmer)

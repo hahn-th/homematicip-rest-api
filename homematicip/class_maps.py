@@ -45,7 +45,8 @@ TYPE_CLASS_MAP = {
     DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact,
     DeviceType.FULL_FLUSH_DIMMER : FullFlushDimmer,
     DeviceType.PUSH_BUTTON_6: PushButton6,
-    DeviceType.REMOTE_CONTROL_8 : RemoteControl8
+    DeviceType.REMOTE_CONTROL_8 : RemoteControl8,
+    DeviceType.OPEN_COLLECTOR_8_MODULE : OpenCollector8Module,
 }
 
 TYPE_GROUP_MAP = {

@@ -171,6 +171,7 @@ class DeviceType(AutoNameEnum):
     FULL_FLUSH_DIMMER = auto()
     PUSH_BUTTON_6 = auto()
     REMOTE_CONTROL_8 = auto()
+    OPEN_COLLECTOR_8_MODULE = auto()
 
 class GroupType(AutoNameEnum):
     GROUP = auto()

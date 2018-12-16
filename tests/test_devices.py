@@ -6,6 +6,7 @@ from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
 from homematicip.device import *
+from homematicip.functionalChannels import *
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -509,3 +510,29 @@ def test_remote_control_8(fake_home:Home):
     
     assert d.modelId == 299
     assert d.label == "Fernbedienung - 8 Tasten"
+
+def test_open_collector_8(fake_home:Home):
+    with no_ssl_verification():
+        d = OpenCollector8Module(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
+
+        c = d.functionalChannels[2]
+
+        assert isinstance(c,SwitchChannel)
+        assert c.index == 2
+        assert c.on == False
+        assert c.profileMode == "AUTOMATIC"
+
+        c = d.functionalChannels[8]
+
+        assert isinstance(c,SwitchChannel)
+        assert c.index == 8
+        assert c.on == True
+        assert c.profileMode == "AUTOMATIC"
+
+        d.turn_off(8)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
+        c = d.functionalChannels[8]
+        assert c.on == False
+

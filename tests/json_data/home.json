@@ -1973,6 +1973,149 @@
             "serializedGlobalTradeItemNumber": "3014F711BBBBBBBBBBBBB016",
             "type": "REMOTE_CONTROL_8",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F711BBBBBBBBBBBBB18": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.8.12",
+            "firmwareVersionInteger": 67596,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000041"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -35,
+                    "rssiPeerValue": -36,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "2": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042",
+                        "00000000-0000-0000-0000-000000000040"
+                    ],
+                    "index": 2,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "3": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 3,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "4": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 4,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "5": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 5,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "6": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 6,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "7": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 7,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 7,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "8": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 8,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 8,
+                    "label": "",
+                    "on": true,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711BBBBBBBBBBBBB18",
+            "label": "ioBroker",
+            "lastStatusUpdate": 1543746604446,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 307,
+            "modelType": "HmIP-MOD-OC8",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711BBBBBBBBBBBBB18",
+            "type": "OPEN_COLLECTOR_8_MODULE",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {
