@@ -217,9 +217,9 @@ class SwitchChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.on = c["on"]
-        self.profileMode = c["profileMode"]
-        self.userDesiredProfileMode = c["userDesiredProfileMode"]
+        self.on = js["on"]
+        self.profileMode = js["profileMode"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
 
 
@@ -248,8 +248,8 @@ class DeviceGlobalPumpControlChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.globalPumpControl = c["globalPumpControl"]
-        self.heatingValveType = HeatingValveType.from_str(c["heatingValveType"])
+        self.globalPumpControl = js["globalPumpControl"]
+        self.heatingValveType = HeatingValveType.from_str(js["heatingValveType"])
 
 
 class MotionDetectionChannel(FunctionalChannel):
@@ -268,13 +268,13 @@ class MotionDetectionChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.motionDetected = c["motionDetected"]
-        self.illumination = c["illumination"]
-        self.motionBufferActive = c["motionBufferActive"]
-        self.motionDetected = c["motionDetected"]
-        self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
-        self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
-        self.currentIllumination = c["currentIllumination"]
+        self.motionDetected = js["motionDetected"]
+        self.illumination = js["illumination"]
+        self.motionBufferActive = js["motionBufferActive"]
+        self.motionDetected = js["motionDetected"]
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(js["motionDetectionSendInterval"])
+        self.numberOfBrightnessMeasurements = js["numberOfBrightnessMeasurements"]
+        self.currentIllumination = js["currentIllumination"]
 
 
 class PresenceDetectionChannel(FunctionalChannel):
@@ -288,8 +288,8 @@ class PresenceDetectionChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.presenceDetected = c["presenceDetected"]
-        self.illumination = c["illumination"]
+        self.presenceDetected = js["presenceDetected"]
+        self.illumination = js["illumination"]
 
 class ShutterChannel(FunctionalChannel):
     """ this is the representive of the SHUTTER_CHANNEL channel"""
@@ -303,6 +303,6 @@ class ShutterChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.shutterLevel = c["shutterLevel"]
-        self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
-        self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+        self.shutterLevel = js["shutterLevel"]
+        self.bottomToTopReferenceTime = js["bottomToTopReferenceTime"]
+        self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
