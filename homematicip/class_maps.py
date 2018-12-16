@@ -111,6 +111,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
     FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel,
     FunctionalChannelType.DEVICE_INCORRECT_POSITIONED : DeviceIncorrectPositionedChannel,
+    FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL : HeatingThermostatChannel,
     FunctionalChannelType.MOTION_DETECTION_CHANNEL : MotionDetectionChannel,
     FunctionalChannelType.PRESENCE_DETECTION_CHANNEL : PresenceDetectionChannel,
@@ -123,4 +124,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL : WallMountedThermostatWithoutDisplayChannel,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL : WallMountedThermostatProChannel,
     FunctionalChannelType.WATER_SENSOR_CHANNEL : WaterSensorChannel,
+    FunctionalChannelType.WEATHER_SENSOR_CHANNEL : WeatherSensorChannel,
+    FunctionalChannelType.WEATHER_SENSOR_PRO_CHANNEL : WeatherSensorProChannel,
+
 }

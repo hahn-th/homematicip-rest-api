@@ -606,7 +606,7 @@ class WeatherSensor(Device):
         self.todaySunshineDuration = 0
         self.totalSunshineDuration = 0
         self.windSpeed = 0
-        self.windValueType = "AVERAGE_VALUE"
+        self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdaySunshineDuration = 0
 
     def from_json(self, js):
@@ -623,7 +623,7 @@ class WeatherSensor(Device):
             self.todaySunshineDuration = c["todaySunshineDuration"]
             self.totalSunshineDuration = c["totalSunshineDuration"]
             self.windSpeed = c["windSpeed"]
-            self.windValueType = c["windValueType"]
+            self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
 
     def __str__(self):
@@ -662,7 +662,7 @@ class WeatherSensorPro(Device):
         self.windDirection = 0
         self.windDirectionVariation = 0
         self.windSpeed = 0
-        self.windValueType = "AVERAGE_VALUE"
+        self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdayRainCounter = 0
         self.yesterdaySunshineDuration = 0
 
@@ -686,7 +686,7 @@ class WeatherSensorPro(Device):
             self.windDirection = c["windDirection"]
             self.windDirectionVariation = c["windDirectionVariation"]
             self.windSpeed = c["windSpeed"]
-            self.windValueType = c["windValueType"]
+            self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdayRainCounter = c["yesterdayRainCounter"]
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
 

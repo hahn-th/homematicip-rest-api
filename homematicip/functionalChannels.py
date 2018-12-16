@@ -306,3 +306,75 @@ class ShutterChannel(FunctionalChannel):
         self.shutterLevel = js["shutterLevel"]
         self.bottomToTopReferenceTime = js["bottomToTopReferenceTime"]
         self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
+
+class DimmerChannel(FunctionalChannel):
+    """ this is the representive of the DIMMER_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.dimLevel = 0
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.dimLevel = js["dimLevel"]
+        self.profileMode = js["profileMode"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+
+class WeatherSensorChannel(FunctionalChannel):
+    """ this is the representive of the WEATHER_SENSOR_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.illumination = 0
+        self.illuminationThresholdSunshine = 0
+        self.storm = False
+        self.sunshine = False
+        self.todaySunshineDuration = 0
+        self.totalSunshineDuration = 0
+        self.windSpeed = 0
+        self.windValueType = WindValueType.AVERAGE_VALUE
+        self.yesterdaySunshineDuration = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.actualTemperature = c["actualTemperature"]
+        self.humidity = c["humidity"]
+        self.illumination = c["illumination"]
+        self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]
+        self.storm = c["storm"]
+        self.sunshine = c["sunshine"]
+        self.todaySunshineDuration = c["todaySunshineDuration"]
+        self.totalSunshineDuration = c["totalSunshineDuration"]
+        self.windSpeed = c["windSpeed"]
+        self.windValueType = WindValueType.from_str(c["windValueType"])
+        self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+
+class WeatherSensorProChannel(WeatherSensorChannel):
+    """ this is the representive of the WEATHER_SENSOR_PRO_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.raining = False
+        self.todayRainCounter = 0
+        self.totalRainCounter = 0
+        self.weathervaneAlignmentNeeded = False
+        self.windDirection = 0
+        self.windDirectionVariation = 0
+        self.yesterdayRainCounter = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.raining = c["raining"]
+        self.todayRainCounter = c["todayRainCounter"]
+        self.totalRainCounter = c["totalRainCounter"]
+        self.weathervaneAlignmentNeeded = c["weathervaneAlignmentNeeded"]
+        self.windDirection = c["windDirection"]
+        self.windDirectionVariation = c["windDirectionVariation"]
+        self.yesterdayRainCounter = c["yesterdayRainCounter"]

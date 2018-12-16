@@ -297,7 +297,7 @@ def test_weather_sensor(fake_home : Home):
     assert d.todaySunshineDuration == 51
     assert d.totalSunshineDuration == 54
     assert d.windSpeed == 6.6
-    assert d.windValueType == "MAX_VALUE"
+    assert d.windValueType == WindValueType.MAX_VALUE
     assert d.yesterdaySunshineDuration == 3
     assert d.actualTemperature == 15.2
     assert d.label == "Wettersensor"

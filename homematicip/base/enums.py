@@ -266,6 +266,11 @@ class OpticalAlarmSignal(AutoNameEnum):
     CONFIRMATION_SIGNAL_1 = auto()
     CONFIRMATION_SIGNAL_2 = auto()
 
+class WindValueType(AutoNameEnum):
+    CURRENT_VALUE = auto()
+    MIN_VALUE     = auto()
+    MAX_VALUE     = auto()
+    AVERAGE_VALUE = auto()
 
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
@@ -275,6 +280,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEVICE_INCORRECT_POSITIONED         = auto()
     DEVICE_OPERATIONLOCK                = auto()
     DEVICE_SABOTAGE                     = auto()
+    DIMMER_CHANNEL                      = auto()
     HEATING_THERMOSTAT_CHANNEL          = auto()
     MOTION_DETECTION_CHANNEL            = auto()
     PRESENCE_DETECTION_CHANNEL          = auto()
@@ -287,5 +293,6 @@ class FunctionalChannelType(AutoNameEnum):
     WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL = auto()
     WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL = auto()
     WATER_SENSOR_CHANNEL                = auto()
-
+    WEATHER_SENSOR_CHANNEL              = auto()
+    WEATHER_SENSOR_PRO_CHANNEL          = auto()
 
