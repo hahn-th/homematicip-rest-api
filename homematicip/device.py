@@ -460,7 +460,6 @@ class MotionDetectorIndoor(SabotageDevice):
         self.motionDetected = None
         self.illumination = None
         self.motionBufferActive = False
-        self.motionDetected = False
         self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
         self.numberOfBrightnessMeasurements = 0
 
@@ -471,17 +470,15 @@ class MotionDetectorIndoor(SabotageDevice):
             self.motionDetected = c["motionDetected"]
             self.illumination = c["illumination"]
             self.motionBufferActive = c["motionBufferActive"]
-            self.motionDetected = c["motionDetected"]
             self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
             self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
             self.currentIllumination = c["currentIllumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetected({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
+        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
                                                                self.motionDetected,
                                                                self.illumination,
                                                                self.motionBufferActive,
-                                                               self.motionDetected,
                                                                self.motionDetectionSendInterval,
                                                                self.numberOfBrightnessMeasurements)
 
@@ -497,19 +494,30 @@ class PresenceDetectorIndoor(SabotageDevice):
     def __init__(self,connection):
         super().__init__(connection)
         self.presenceDetected = False
+        self.currentIllumination = None
         self.illumination = 0
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("PRESENCE_DETECTION_CHANNEL", js)
         if c:
             self.presenceDetected = c["presenceDetected"]
+            self.currentIllumination = c["currentIllumination"]
             self.illumination = c["illumination"]
+            self.motionBufferActive = c["motionBufferActive"]
+            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(),
+        return "{} presenceDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
                                                                self.presenceDetected,
-                                                               self.illumination)
+                                                               self.illumination,
+                                                               self.motionBufferActive,
+                                                               self.motionDetectionSendInterval,
+                                                               self.numberOfBrightnessMeasurements)
 
 
 class KeyRemoteControlAlarm(Device):

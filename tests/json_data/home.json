@@ -1974,6 +1974,63 @@
             "type": "REMOTE_CONTROL_8",
             "updateState": "UP_TO_DATE"
         },
+        "3014F711AAAAAAAAAAAAAA51": {
+            "availableFirmwareVersion": "1.4.0",
+            "firmwareVersion": "1.4.0",
+            "firmwareVersionInteger": 66560,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAAAAAAAAAAAA51",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000021",
+                        "00000000-0000-0000-0000-000000000060"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -62,
+                    "rssiPeerValue": -61,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "currentIllumination": null,
+                    "deviceId": "3014F711AAAAAAAAAAAAAA51",
+                    "functionalChannelType": "PRESENCE_DETECTION_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000022",
+                        "00000000-0000-0000-0000-000000000060"
+                    ],
+                    "illumination": 1.8,
+                    "index": 1,
+                    "label": "",
+                    "motionBufferActive": false,
+                    "motionDetectionSendInterval": "SECONDS_240",
+                    "numberOfBrightnessMeasurements": 7,
+                    "presenceDetected": false
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAAAAAAAAAAAA51",
+            "label": "***",
+            "lastStatusUpdate": 1542758692234,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 303,
+            "modelType": "HmIP-SPI",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711AAAAAAAAAAAAAA51",
+            "type": "PRESENCE_DETECTOR_INDOOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F711BBBBBBBBBBBBB18": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.8.12",

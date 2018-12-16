@@ -30,7 +30,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PLUGABLE_SWITCH: PlugableSwitch,
     DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,
     DeviceType.BRAND_SHUTTER: FullFlushShutter,
-    DeviceType.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
+    DeviceType.PRESENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
     DeviceType.PLUGGABLE_DIMMER: PluggableDimmer,
     DeviceType.BRAND_DIMMER: BrandDimmer,
     DeviceType.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,

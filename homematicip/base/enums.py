@@ -154,7 +154,7 @@ class DeviceType(AutoNameEnum):
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     BRAND_SHUTTER = auto()
-    PRECENCE_DETECTOR_INDOOR = auto()
+    PRESENCE_DETECTOR_INDOOR = auto()
     PLUGGABLE_DIMMER = auto()
     BRAND_DIMMER = auto()
     BRAND_SWITCH_MEASURING = auto()

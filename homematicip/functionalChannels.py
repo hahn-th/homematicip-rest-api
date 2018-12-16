@@ -282,14 +282,22 @@ class PresenceDetectionChannel(FunctionalChannel):
     def __init__(self):
         super().__init__()
         self.presenceDetected = False
+        self.currentIllumination = None
         self.illumination = 0
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js, groups: Iterable[Group]):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.presenceDetected = js["presenceDetected"]
-        self.illumination = js["illumination"]
+        self.presenceDetected = c["presenceDetected"]
+        self.currentIllumination = c["currentIllumination"]
+        self.illumination = c["illumination"]
+        self.motionBufferActive = c["motionBufferActive"]
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+        self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
 
 class ShutterChannel(FunctionalChannel):
     """ this is the representive of the SHUTTER_CHANNEL channel"""

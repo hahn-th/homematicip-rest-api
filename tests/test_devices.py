@@ -495,7 +495,22 @@ def test_motion_detector_indoor(fake_home:Home):
 
     assert str(d) == ("HmIP-SMI Wohnzimmer lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
                       "dutyCycle(False): sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
-                      "motionDetected(True) motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")
+                      "motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")
+
+def test_presence_detector_indoor(fake_home:Home):
+    d = PresenceDetectorIndoor(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711AAAAAAAAAAAAAA51")
+    
+    assert d.illumination == 1.8
+    assert d.currentIllumination == None
+    assert d.motionBufferActive == False
+    assert d.presenceDetected == False
+    assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
+    assert d.numberOfBrightnessMeasurements == 7
+
+    assert str(d) == ("HmIP-SPI *** lowbat(False) unreach(False) rssiDeviceValue(-62) rssiPeerValue(-61) configPending(False) "
+                      "dutyCycle(False): sabotage(False) presenceDetected(False) illumination(1.8) motionBufferActive(False) "
+                      "motionDetectionSendInterval(SECONDS_240) numberOfBrightnessMeasurements(7)")
 
 def test_push_button_6(fake_home:Home):
     d = PushButton6(fake_home._connection)

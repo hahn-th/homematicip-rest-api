@@ -24,7 +24,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PLUGABLE_SWITCH: AsyncPlugableSwitch,
     DeviceType.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,
     DeviceType.BRAND_SHUTTER: AsyncFullFlushShutter,
-    DeviceType.PRECENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
+    DeviceType.PRESENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
     DeviceType.PLUGGABLE_DIMMER: AsyncPluggableDimmer,
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring,
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
