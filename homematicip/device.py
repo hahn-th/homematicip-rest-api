@@ -440,12 +440,6 @@ class PushButton(Device):
 class PushButton6(PushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
 
-    def from_json(self, js):
-        super().from_json(js)
-        #TODO: PUSH_BUTTON_6 has 6 functional Channels of "SINGLE_KEY_CHANNEL"
-        #They don't provide any information except for the groups. 
-        #Maybe the functional channels should get there own class and be added as class member?
-
 class RemoteControl8(PushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """
 

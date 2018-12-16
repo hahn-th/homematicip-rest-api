@@ -287,6 +287,7 @@ class FunctionalChannelType(AutoNameEnum):
     ROTARY_HANDLE_CHANNEL               = auto()
     SHUTTER_CHANNEL                     = auto()
     SHUTTER_CONTACT_CHANNEL             = auto()
+    SINGLE_KEY_CHANNEL                  = auto()
     SMOKE_DETECTOR_CHANNEL              = auto()
     SWITCH_CHANNEL                      = auto()
     SWITCH_MEASURING_CHANNEL            = auto()

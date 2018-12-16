@@ -378,3 +378,6 @@ class WeatherSensorProChannel(WeatherSensorChannel):
         self.windDirection = c["windDirection"]
         self.windDirectionVariation = c["windDirectionVariation"]
         self.yesterdayRainCounter = c["yesterdayRainCounter"]
+
+class SingleKeyChannel(FunctionalChannel):
+    """ this is the representive of the SINGLE_KEY_CHANNEL channel"""

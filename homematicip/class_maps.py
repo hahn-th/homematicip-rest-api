@@ -118,6 +118,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.ROTARY_HANDLE_CHANNEL : RotaryHandleChannel,
     FunctionalChannelType.SHUTTER_CHANNEL : ShutterChannel,
     FunctionalChannelType.SHUTTER_CONTACT_CHANNEL : ShutterContactChannel,
+    FunctionalChannelType.SINGLE_KEY_CHANNEL : SingleKeyChannel,
     FunctionalChannelType.SMOKE_DETECTOR_CHANNEL: SmokeDetectorChannel,
     FunctionalChannelType.SWITCH_CHANNEL: SwitchChannel,
     FunctionalChannelType.SWITCH_MEASURING_CHANNEL: SwitchMeasuringChannel,
