@@ -24,7 +24,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PLUGABLE_SWITCH: AsyncPlugableSwitch,
     DeviceType.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,
     DeviceType.BRAND_SHUTTER: AsyncFullFlushShutter,
-    DeviceType.PRECENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
+    DeviceType.PRESENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
     DeviceType.PLUGGABLE_DIMMER: AsyncPluggableDimmer,
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring,
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
@@ -34,7 +34,11 @@ TYPE_CLASS_MAP = {
     DeviceType.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: AsyncMotionDetectorPushButton,
     DeviceType.WATER_SENSOR: AsyncWaterSensor,
-    DeviceType.SHUTTER_CONTACT_MAGNETIC: AsyncShutterContact
+    DeviceType.SHUTTER_CONTACT_MAGNETIC: AsyncShutterContact,
+    DeviceType.FULL_FLUSH_DIMMER : AsyncFullFlushDimmer,
+    DeviceType.PUSH_BUTTON_6 : AsyncPushButton6,
+    DeviceType.REMOTE_CONTROL_8 : AsyncRemoteControl8,
+    DeviceType.OPEN_COLLECTOR_8_MODULE : AsyncOpenCollector8Module
 }
 
 TYPE_GROUP_MAP = {
@@ -44,6 +48,7 @@ TYPE_GROUP_MAP = {
     GroupType.EXTENDED_LINKED_SWITCHING: AsyncExtendedLinkedSwitchingGroup,
     GroupType.LINKED_SWITCHING: AsyncLinkedSwitchingGroup,
     GroupType.ALARM_SWITCHING: AsyncAlarmSwitchingGroup,
+    GroupType.SECURITY_BACKUP_ALARM_SWITCHING: AsyncAlarmSwitchingGroup,
     GroupType.HEATING_HUMIDITY_LIMITER: AsyncHeatingHumidyLimiterGroup,
     GroupType.HEATING_TEMPERATURE_LIMITER: AsyncHeatingTemperatureLimiterGroup,
     GroupType.HEATING_CHANGEOVER: AsyncHeatingChangeoverGroup,

@@ -6,11 +6,15 @@ import logging
 from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
 from homematicip import HomeMaticIPObject
+from homematicip.group import Group
+
+from typing import Iterable
 
 LOGGER = logging.getLogger(__name__)
 
 class Device(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
+
     def __init__(self,connection):
         super().__init__(connection)
         self.id = None
@@ -35,6 +39,13 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.rssiPeerValue = 0
         self.dutyCycle = False
         self.configPending = False
+        self.permanentlyReachable = False
+        self.liveUpdateState = LiveUpdateState.LIVE_UPDATE_NOT_SUPPORTED
+        self.functionalChannels = []
+        
+        #must be imported in init. otherwise we have cross import issues
+        from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+        self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
 
     def from_json(self, js):
         super().from_json(js)
@@ -54,6 +65,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.oem = js['oem']
         self.manufacturerCode = js['manufacturerCode']
         self.serializedGlobalTradeItemNumber = js['serializedGlobalTradeItemNumber']
+        self.permanentlyReachable = js["permanentlyReachable"]
+        self.liveUpdateState = LiveUpdateState.from_str(js["liveUpdateState"])
 
         c = get_functional_channel("DEVICE_BASE", js)
         if c:
@@ -93,6 +106,25 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
                 "routerModuleEnabled": enabled}
         return self._restCall("device/configuration/setRouterModuleEnabled", json.dumps(data))
 
+    def load_functionalChannels(self, groups : Iterable[Group]):
+        """ this function will load the functionalChannels into the device """
+        self.functionalChannels = []
+        for channel in self._rawJSONData['functionalChannels'].values():
+            fc = self._parse_functionalChannel(channel,groups)
+            self.functionalChannels.append(fc)
+
+    def _parse_functionalChannel(self,json_state,groups : Iterable[Group]):
+        fc = None
+        try:
+            channelType = FunctionalChannelType.from_str(json_state["functionalChannelType"])
+            fc = self._typeFunctionalChannelMap[channelType]()
+            fc.from_json(json_state,groups)
+        except:
+            fc = self._typeFunctionalChannelMap[FunctionalChannelType.FUNCTIONAL_CHANNEL]()
+            fc.from_json(json_state,groups)
+            LOGGER.warning("There is no class for %s yet", json_state["functionalChannelType"])
+        return fc
+
 
 class SabotageDevice(Device):
     def __init__(self,connection):
@@ -113,7 +145,6 @@ class SabotageDevice(Device):
 
     def __str__(self):
         return "{}: sabotage({})".format(super().__str__(), self.sabotage)
-
 
 class OperationLockableDevice(Device):
     def __init__(self,connection):
@@ -171,7 +202,7 @@ class HeatingThermostat(OperationLockableDevice):
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 
-         HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic"""
+         HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic )"""
     def __init__(self,connection):
         super().__init__(connection)
         self.windowState = WindowState.CLOSED
@@ -209,8 +240,8 @@ class TemperatureHumiditySensorOutdoor(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.actualTemperature = None
-        self.humidity = None
+        self.actualTemperature = 0
+        self.humidity = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -227,9 +258,9 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.temperatureOffset = None
-        self.actualTemperature = None
-        self.humidity = None
+        self.temperatureOffset = 0
+        self.actualTemperature = 0
+        self.humidity = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -248,11 +279,11 @@ class TemperatureHumiditySensorDisplay(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.temperatureOffset = None
+        self.temperatureOffset = 0
         self.display = ClimateControlDisplay.ACTUAL
-        self.actualTemperature = None
-        self.humidity = None
-        self.setPointTemperature = None
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.setPointTemperature = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -294,13 +325,13 @@ class SmokeDetector(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.smokeDetectorAlarmType = None
+        self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SMOKE_DETECTOR_CHANNEL", js)
         if c:
-            self.smokeDetectorAlarmType = c["smokeDetectorAlarmType"]
+            self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(c["smokeDetectorAlarmType"])
 
     def __str__(self):
         return "{}: smokeDetectorAlarmType({})".format(super().__str__(),
@@ -350,16 +381,16 @@ class Switch(Device):
     def __str__(self):
         return "{}: on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
 
-    def set_switch_state(self, on=True):
-        data = {"channelIndex": 1, "deviceId": self.id, "on": on}
+    def set_switch_state(self, on=True, channelIndex = 1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
         return self._restCall("device/control/setSwitchState",
                               body=json.dumps(data))
 
-    def turn_on(self):
-        return self.set_switch_state(True)
+    def turn_on(self, channelIndex = 1):
+        return self.set_switch_state(True,channelIndex)
 
-    def turn_off(self):
-        return self.set_switch_state(False)
+    def turn_off(self, channelIndex = 1):
+        return self.set_switch_state(False,channelIndex)
 
 class PlugableSwitch(Switch):
     """ HMIP-PS (Pluggable Switch) """
@@ -367,13 +398,16 @@ class PlugableSwitch(Switch):
 class PrintedCircuitBoardSwitchBattery(Switch):
     """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
 
+class OpenCollector8Module(Switch):
+    """ HmIP-MOD-OC8 ( Open Collector Module ) """
+
 class SwitchMeasuring(Switch):
     """ Generic class for Switch and Meter """
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.energyCounter = None
-        self.currentPowerConsumption = None
+        self.energyCounter = 0
+        self.currentPowerConsumption = 0
 
     def reset_energy_counter(self):
         data = {"channelIndex": 1, "deviceId": self.id}
@@ -406,6 +440,11 @@ class FullFlushSwitchMeasuring(SwitchMeasuring):
 class PushButton(Device):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
+class PushButton6(PushButton):
+    """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
+
+class RemoteControl8(PushButton):
+    """ HmIP-RC8 (Remote Control - 8 buttons) """
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
@@ -417,8 +456,12 @@ class MotionDetectorIndoor(SabotageDevice):
 
     def __init__(self,connection):
         super().__init__(connection)
+        self.currentIllumination = None
         self.motionDetected = None
         self.illumination = None
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -426,11 +469,18 @@ class MotionDetectorIndoor(SabotageDevice):
         if c:
             self.motionDetected = c["motionDetected"]
             self.illumination = c["illumination"]
+            self.motionBufferActive = c["motionBufferActive"]
+            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
+            self.currentIllumination = c["currentIllumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(),
+        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
                                                                self.motionDetected,
-                                                               self.illumination)
+                                                               self.illumination,
+                                                               self.motionBufferActive,
+                                                               self.motionDetectionSendInterval,
+                                                               self.numberOfBrightnessMeasurements)
 
 
 class MotionDetectorPushButton(MotionDetectorIndoor):
@@ -443,20 +493,31 @@ class PresenceDetectorIndoor(SabotageDevice):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.presenceDetected = None
-        self.illumination = None
+        self.presenceDetected = False
+        self.currentIllumination = None
+        self.illumination = 0
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("PRESENCE_DETECTION_CHANNEL", js)
         if c:
             self.presenceDetected = c["presenceDetected"]
+            self.currentIllumination = c["currentIllumination"]
             self.illumination = c["illumination"]
+            self.motionBufferActive = c["motionBufferActive"]
+            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({})".format(super().__str__(),
+        return "{} presenceDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
                                                                self.presenceDetected,
-                                                               self.illumination)
+                                                               self.illumination,
+                                                               self.motionBufferActive,
+                                                               self.motionDetectionSendInterval,
+                                                               self.numberOfBrightnessMeasurements)
 
 
 class KeyRemoteControlAlarm(Device):
@@ -479,17 +540,39 @@ class FullFlushShutter(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.shutterLevel = None
-        self.bottomToTopReferenceTime = None
-        self.topToBottomReferenceTime = None
+        self.shutterLevel = 0
+        self.changeOverDelay = 0.0
+        self.bottomToTopReferenceTime = 0.0
+        self.topToBottomReferenceTime = 0.0
+        self.delayCompensationValue = 0
+        self.endpositionAutoDetectionEnabled = False
+        self.previousShutterLevel = None
+        self.processing = False
+        self.profileMode = "AUTOMATIC"
+        self.selfCalibrationInProgress = None
+        self.supportingDelayCompensation = False
+        self.supportingEndpositionAutoDetection = False
+        self.supportingSelfCalibration = False
+        self.userDesiredProfileMode = "AUTOMATIC"
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SHUTTER_CHANNEL", js)
         if c:
             self.shutterLevel = c["shutterLevel"]
+            self.changeOverDelay = c["changeOverDelay"]
+            self.delayCompensationValue = c["delayCompensationValue"]
             self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
             self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+            self.endpositionAutoDetectionEnabled = c["endpositionAutoDetectionEnabled"]
+            self.previousShutterLevel = c["previousShutterLevel"]
+            self.processing = c["processing"]
+            self.profileMode = c["profileMode"]
+            self.selfCalibrationInProgress = c["selfCalibrationInProgress"]
+            self.supportingDelayCompensation = c["supportingDelayCompensation"]
+            self.supportingEndpositionAutoDetection = c["supportingEndpositionAutoDetection"]
+            self.supportingSelfCalibration = c["supportingSelfCalibration"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
         return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(super().__str__(), self.shutterLevel, self.topToBottomReferenceTime,
@@ -534,6 +617,8 @@ class PluggableDimmer(Dimmer):
 class BrandDimmer(Dimmer):
     """HmIP-BDT Brand Dimmer"""
 
+class FullFlushDimmer(Dimmer):
+    """HmIP-FDT Dimming Actuator flush-mount"""
 
 class WeatherSensor(Device):
     """ HmIP-SWO-B """
@@ -548,7 +633,7 @@ class WeatherSensor(Device):
         self.todaySunshineDuration = 0
         self.totalSunshineDuration = 0
         self.windSpeed = 0
-        self.windValueType = "AVERAGE_VALUE"
+        self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdaySunshineDuration = 0
 
     def from_json(self, js):
@@ -565,7 +650,7 @@ class WeatherSensor(Device):
             self.todaySunshineDuration = c["todaySunshineDuration"]
             self.totalSunshineDuration = c["totalSunshineDuration"]
             self.windSpeed = c["windSpeed"]
-            self.windValueType = c["windValueType"]
+            self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
 
     def __str__(self):
@@ -604,7 +689,7 @@ class WeatherSensorPro(Device):
         self.windDirection = 0
         self.windDirectionVariation = 0
         self.windSpeed = 0
-        self.windValueType = "AVERAGE_VALUE"
+        self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdayRainCounter = 0
         self.yesterdaySunshineDuration = 0
 
@@ -628,7 +713,7 @@ class WeatherSensorPro(Device):
             self.windDirection = c["windDirection"]
             self.windDirectionVariation = c["windDirectionVariation"]
             self.windSpeed = c["windSpeed"]
-            self.windValueType = c["windValueType"]
+            self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdayRainCounter = c["yesterdayRainCounter"]
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
 

@@ -4,10 +4,61 @@
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "00000000-0000-0000-0000-000000000000",
             "label": "TEST-Client",
-            "clientType" : "APP"
+            "clientType": "APP"
         }
     },
     "devices": {
+        "3014F711000000000000BB11": {
+            "availableFirmwareVersion": "1.4.8",
+            "firmwareVersion": "1.4.8",
+            "firmwareVersionInteger": 66568,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711000000000000BB11",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -56,
+                    "rssiPeerValue": -52,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "currentIllumination": null,
+                    "deviceId": "3014F711000000000000BB11",
+                    "functionalChannelType": "MOTION_DETECTION_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "illumination": 0.1,
+                    "index": 1,
+                    "label": "",
+                    "motionBufferActive": false,
+                    "motionDetected": true,
+                    "motionDetectionSendInterval": "SECONDS_480",
+                    "numberOfBrightnessMeasurements": 7
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000000000000BB11",
+            "label": "Wohnzimmer",
+            "lastStatusUpdate": 1544480290322,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 291,
+            "modelType": "HmIP-SMI",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000011",
+            "type": "MOTION_DETECTOR_INDOOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000050": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.2",
@@ -54,10 +105,12 @@
             "id": "3014F7110000000000000050",
             "label": "Wassersensor",
             "lastStatusUpdate": 1530802738493,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 353,
             "modelType": "HmIP-SWD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
             "type": "WATER_SENSOR",
             "updateState": "UP_TO_DATE"
@@ -107,10 +160,12 @@
             "id": "3014F7110000000000000000",
             "label": "Balkontüre",
             "lastStatusUpdate": 1524516526498,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000000",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -159,10 +214,12 @@
             "id": "3014F7110000000000000001",
             "label": "Fenster",
             "lastStatusUpdate": 1524515854304,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000001",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -211,10 +268,12 @@
             "id": "3014F7110000000000000002",
             "label": "Balkonfenster",
             "lastStatusUpdate": 1524516088763,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000002",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -263,10 +322,12 @@
             "id": "3014F7110000000000000003",
             "label": "Küche",
             "lastStatusUpdate": 1524514836466,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000003",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -315,10 +376,12 @@
             "id": "3014F7110000000000000004",
             "label": "Fenster",
             "lastStatusUpdate": 1524512404032,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000004",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -367,10 +430,12 @@
             "id": "3014F7110000000000000005",
             "label": "Wohnzimmer",
             "lastStatusUpdate": 0,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000005",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -418,10 +483,12 @@
             "id": "3014F7110000000000000006",
             "label": "Wohnungstüre",
             "lastStatusUpdate": 1524516489316,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000006",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -469,10 +536,12 @@
             "id": "3014F7110000000000000007",
             "label": "Vorzimmer",
             "lastStatusUpdate": 1524515489257,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 258,
             "modelType": "HMIP-SWDO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000007",
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
@@ -520,10 +589,12 @@
             "id": "3014F7110000000000000008",
             "label": "Pc",
             "lastStatusUpdate": 1524516554056,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 262,
             "modelType": "HMIP-PSM",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000008",
             "type": "PLUGABLE_SWITCH_MEASURING",
             "updateState": "UP_TO_DATE"
@@ -571,10 +642,12 @@
             "id": "3014F7110000000000000009",
             "label": "Brunnen",
             "lastStatusUpdate": 1524515786303,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 262,
             "modelType": "HMIP-PSM",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000009",
             "type": "PLUGABLE_SWITCH_MEASURING",
             "updateState": "UP_TO_DATE"
@@ -622,10 +695,12 @@
             "id": "3014F7110000000000000010",
             "label": "Büro",
             "lastStatusUpdate": 1524513613922,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 262,
             "modelType": "HMIP-PSM",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000010",
             "type": "PLUGABLE_SWITCH_MEASURING",
             "updateState": "UP_TO_DATE"
@@ -674,10 +749,12 @@
             "id": "3014F7110000000000000011",
             "label": "Heizung",
             "lastStatusUpdate": 1524516360178,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000011",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -726,10 +803,12 @@
             "id": "3014F7110000000000000012",
             "label": "Heizkörperthermostat",
             "lastStatusUpdate": 1524514105832,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000012",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -778,10 +857,12 @@
             "id": "3014F7110000000000000013",
             "label": "Heizkörperthermostat",
             "lastStatusUpdate": 1524514007132,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000013",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -830,10 +911,12 @@
             "id": "3014F7110000000000000014",
             "label": "Küche-Heizung",
             "lastStatusUpdate": 1524513898337,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000014",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -882,10 +965,12 @@
             "id": "3014F7110000000000000015",
             "label": "Wohnzimmer-Heizung",
             "lastStatusUpdate": 1524513950325,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000015",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -934,10 +1019,12 @@
             "id": "3014F7110000000000000016",
             "label": "Heizkörperthermostat",
             "lastStatusUpdate": 1524514626157,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000016",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -986,10 +1073,12 @@
             "id": "3014F7110000000000000017",
             "label": "Balkon-Heizung",
             "lastStatusUpdate": 1524511331830,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 269,
             "modelType": "HMIP-eTRV",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000017",
             "type": "HEATING_THERMOSTAT",
             "updateState": "UP_TO_DATE"
@@ -1035,10 +1124,12 @@
             "id": "3014F7110000000000000018",
             "label": "Rauchwarnmelder",
             "lastStatusUpdate": 1524461072721,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000018",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1084,10 +1175,12 @@
             "id": "3014F7110000000000000019",
             "label": "Rauchwarnmelder",
             "lastStatusUpdate": 1524480981494,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000019",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1133,10 +1226,12 @@
             "id": "3014F7110000000000000020",
             "label": "Rauchwarnmelder",
             "lastStatusUpdate": 1524456324824,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000020",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1182,10 +1277,12 @@
             "id": "3014F7110000000000000021",
             "label": "Rauchwarnmelder",
             "lastStatusUpdate": 1524443129876,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 296,
             "modelType": "HmIP-SWSD",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000021",
             "type": "SMOKE_DETECTOR",
             "updateState": "UP_TO_DATE"
@@ -1234,10 +1331,12 @@
             "id": "3014F7110000000000000022",
             "label": "Wandthermostat",
             "lastStatusUpdate": 1524516534382,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000022",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1286,10 +1385,12 @@
             "id": "3014F7110000000000000023",
             "label": "Wandthermostat",
             "lastStatusUpdate": 1524516454116,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000023",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1338,10 +1439,12 @@
             "id": "3014F7110000000000000024",
             "label": "Wandthermostat",
             "lastStatusUpdate": 1524516436601,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000024",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1390,10 +1493,12 @@
             "id": "3014F7110000000000000025",
             "label": "Wandthermostat",
             "lastStatusUpdate": 1524516556479,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 297,
             "modelType": "HmIP-WTH-2",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F7110000000000000025",
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
@@ -1454,10 +1559,12 @@
             "id": "3014F711AAAA000000000001",
             "label": "Wettersensor - pro",
             "lastStatusUpdate": 1524513950325,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 352,
             "modelType": "HmIP-SWO-PR",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000001",
             "type": "WEATHER_SENSOR_PRO",
             "updateState": "UP_TO_DATE"
@@ -1502,10 +1609,12 @@
             "id": "3014F711AAAA000000000002",
             "label": "Temperatur- und Luftfeuchtigkeitssensor - außen",
             "lastStatusUpdate": 1524513950325,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 314,
             "modelType": "HmIP-STHO",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000002",
             "type": "TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR",
             "updateState": "UP_TO_DATE"
@@ -1555,10 +1664,12 @@
             "id": "3014F711AAAA000000000003",
             "label": "Wettersensor",
             "lastStatusUpdate": 1524513950325,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 350,
             "modelType": "HmIP-SWO-B",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000003",
             "type": "WEATHER_SENSOR",
             "updateState": "UP_TO_DATE"
@@ -1600,10 +1711,12 @@
             "id": "3014F711AAAA000000000004",
             "label": "Fenstergriffsensor",
             "lastStatusUpdate": 1524816385462,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 286,
             "modelType": "HmIP-SRH",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000004",
             "type": "ROTARY_HANDLE_SENSOR",
             "updateState": "UP_TO_DATE"
@@ -1649,12 +1762,479 @@
             "id": "3014F711AAAA000000000005",
             "label": "Schlafzimmerlicht",
             "lastStatusUpdate": 1524816385462,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
             "modelId": 290,
             "modelType": "HmIP-BDT",
             "oem": "eQ-3",
+            "permanentlyReachable": true,
             "serializedGlobalTradeItemNumber": "3014F711AAAA000000000005",
             "type": "BRAND_DIMMER",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711BBBBBBBBBBBBB017": {
+            "availableFirmwareVersion": "1.0.19",
+            "firmwareVersion": "1.0.19",
+            "firmwareVersionInteger": 65555,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -61,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 1,
+                    "label": ""
+                },
+                "2": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 2,
+                    "label": ""
+                },
+                "3": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                    ],
+                    "index": 3,
+                    "label": ""
+                },
+                "4": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                    ],
+                    "index": 4,
+                    "label": ""
+                },
+                "5": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                    ],
+                    "index": 5,
+                    "label": ""
+                },
+                "6": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB017",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                    ],
+                    "index": 6,
+                    "label": ""
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711BBBBBBBBBBBBB017",
+            "label": "Wandtaster - 6-fach",
+            "lastStatusUpdate": 1544475961687,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 300,
+            "modelType": "HmIP-WRC6",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F711BBBBBBBBBBBBB017",
+            "type": "PUSH_BUTTON_6",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711BBBBBBBBBBBBB016": {
+            "availableFirmwareVersion": "1.0.19",
+            "firmwareVersion": "1.0.19",
+            "firmwareVersionInteger": 65555,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -42,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 1,
+                    "label": ""
+                },
+                "2": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 2,
+                    "label": ""
+                },
+                "3": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                    ],
+                    "index": 3,
+                    "label": ""
+                },
+                "4": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                    ],
+                    "index": 4,
+                    "label": ""
+                },
+                "5": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                    ],
+                    "index": 5,
+                    "label": ""
+                },
+                "6": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                    ],
+                    "index": 6,
+                    "label": ""
+                },
+                "7": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [
+                    ],
+                    "index": 7,
+                    "label": ""
+                },
+                "8": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB016",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [
+                    ],
+                    "index": 8,
+                    "label": ""
+                }
+
+
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711BBBBBBBBBBBBB016",
+            "label": "Fernbedienung - 8 Tasten",
+            "lastStatusUpdate": 1544479483638,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 299,
+            "modelType": "HmIP-RC8",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F711BBBBBBBBBBBBB016",
+            "type": "REMOTE_CONTROL_8",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711AAAAAAAAAAAAAA51": {
+            "availableFirmwareVersion": "1.4.0",
+            "firmwareVersion": "1.4.0",
+            "firmwareVersionInteger": 66560,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711AAAAAAAAAAAAAA51",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000021",
+                        "00000000-0000-0000-0000-000000000060"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -62,
+                    "rssiPeerValue": -61,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "currentIllumination": null,
+                    "deviceId": "3014F711AAAAAAAAAAAAAA51",
+                    "functionalChannelType": "PRESENCE_DETECTION_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000022",
+                        "00000000-0000-0000-0000-000000000060"
+                    ],
+                    "illumination": 1.8,
+                    "index": 1,
+                    "label": "",
+                    "motionBufferActive": false,
+                    "motionDetectionSendInterval": "SECONDS_240",
+                    "numberOfBrightnessMeasurements": 7,
+                    "presenceDetected": false
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711AAAAAAAAAAAAAA51",
+            "label": "***",
+            "lastStatusUpdate": 1542758692234,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 303,
+            "modelType": "HmIP-SPI",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711AAAAAAAAAAAAAA51",
+            "type": "PRESENCE_DETECTOR_INDOOR",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711ACBCDABCADCA66": {
+            "availableFirmwareVersion": "1.6.2",
+            "firmwareVersion": "1.6.2",
+            "firmwareVersionInteger": 67074,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711ACBCDABCADCA66",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000024"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -78,
+                    "rssiPeerValue": -77,
+                    "unreach": false
+                },
+                "1": {
+                    "bottomToTopReferenceTime": 30.080000000000002,
+                    "changeOverDelay": 0.5,
+                    "delayCompensationValue": 12.7,
+                    "deviceId": "3014F711ACBCDABCADCA66",
+                    "endpositionAutoDetectionEnabled": true,
+                    "functionalChannelType": "SHUTTER_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000069",
+                        "00000000-0000-0000-0000-000000000070"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "previousShutterLevel": null,
+                    "processing": false,
+                    "profileMode": "AUTOMATIC",
+                    "selfCalibrationInProgress": null,
+                    "shutterLevel": 1.0,
+                    "supportingDelayCompensation": true,
+                    "supportingEndpositionAutoDetection": true,
+                    "supportingSelfCalibration": true,
+                    "topToBottomReferenceTime": 24.68,
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711ACBCDABCADCA66",
+            "label": "***",
+            "lastStatusUpdate": 1542756558785,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 323,
+            "modelType": "HmIP-BROLL",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711ACBCDABCADCA66",
+            "type": "BRAND_SHUTTER",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711BBBBBBBBBBBBB18": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.8.12",
+            "firmwareVersionInteger": 67596,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000041"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -35,
+                    "rssiPeerValue": -36,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "2": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042",
+                        "00000000-0000-0000-0000-000000000040"
+                    ],
+                    "index": 2,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "3": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 3,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "4": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 4,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "5": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 5,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "6": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 6,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "7": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 7,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 7,
+                    "label": "",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "8": {
+                    "deviceId": "3014F711BBBBBBBBBBBBB18",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 8,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000042"
+                    ],
+                    "index": 8,
+                    "label": "",
+                    "on": true,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711BBBBBBBBBBBBB18",
+            "label": "ioBroker",
+            "lastStatusUpdate": 1543746604446,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 307,
+            "modelType": "HmIP-MOD-OC8",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711BBBBBBBBBBBBB18",
+            "type": "OPEN_COLLECTOR_8_MODULE",
             "updateState": "UP_TO_DATE"
         }
     },
@@ -2902,6 +3482,25 @@
             "type": "ENVIRONMENT",
             "unreach": false,
             "windSpeed": 29.1
+        },
+        "00000000-AAAA-0000-0000-000000000068": {
+            "acousticFeedbackEnabled": true,
+            "channels": [],
+            "dimLevel": null,
+            "dutyCycle": null,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-AAAA-0000-0000-000000000068",
+            "label": "BACKUP_ALARM_SIREN",
+            "lastStatusUpdate": 0,
+            "lowBat": null,
+            "metaGroupId": null,
+            "on": null,
+            "onTime": 180.0,
+            "signalAcoustic": "FREQUENCY_RISING",
+            "signalOptical": "DISABLE_OPTICAL_SIGNAL",
+            "smokeDetectorAlarmType": null,
+            "type": "SECURITY_BACKUP_ALARM_SWITCHING",
+            "unreach": null
         }
     },
     "home": {
@@ -2970,6 +3569,7 @@
                 "intrusionAlertThroughSmokeDetectors": false,
                 "securitySwitchingGroups": {
                     "ALARM": "00000000-0000-0000-0000-000000000056",
+                    "BACKUP_ALARM_SIREN": "00000000-AAAA-0000-0000-000000000068",
                     "COMING_HOME": "00000000-0000-0000-0000-000000000037",
                     "PANIC": "00000000-0000-0000-0000-000000000053",
                     "SIREN": "00000000-0000-0000-0000-000000000022"

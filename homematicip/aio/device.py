@@ -1,13 +1,6 @@
 import logging
 
-from homematicip.device import Device, PlugableSwitch, PlugableSwitchMeasuring, \
-    SabotageDevice, ShutterContact, OperationLockableDevice, HeatingThermostat, \
-    TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, \
-    WallMountedThermostatPro, SmokeDetector, FloorTerminalBlock6, PushButton, AlarmSirenIndoor, \
-    MotionDetectorIndoor, MotionDetectorPushButton, PresenceDetectorIndoor, KeyRemoteControlAlarm, FullFlushShutter, \
-    Dimmer, PluggableDimmer, BrandSwitchMeasuring, FullFlushSwitchMeasuring, Switch, \
-    WeatherSensor, WeatherSensorPro, RotaryHandleSensor, TemperatureHumiditySensorOutdoor, \
-    WaterSensor
+from homematicip.device import *
 from homematicip.base.enums import *
 
 ERROR_CODE = "errorCode"
@@ -36,15 +29,19 @@ class AsyncDevice(Device):
 
 class AsyncSwitch(Switch, AsyncDevice):
     """ Generic async switch """
-
-    async def turn_on(self):
-        _LOGGER.debug("Async switch turn_on")
-        url, data = super().turn_on()
+    async def set_switch_state(self, on=True, channelIndex = 1):
+        _LOGGER.debug("Async switch set_switch_state")
+        url, data = super().set_switch_state(on,channelIndex)
         return await self._connection.api_call(url, data)
 
-    async def turn_off(self):
+    async def turn_on(self,channelIndex=1):
+        _LOGGER.debug("Async switch turn_on")
+        url, data = super().turn_on(channelIndex)
+        return await self._connection.api_call(url, data)
+
+    async def turn_off(self,channelIndex=1):
         _LOGGER.debug("Async switch turn_off")
-        url, data = super().turn_off()
+        url, data = super().turn_off(channelIndex)
         return await self._connection.api_call(url, data)
 
 
@@ -54,6 +51,9 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
 
 class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
     pass
+
+class AsyncOpenCollector8Module(OpenCollector8Module, AsyncSwitch):
+    """ Async implementation of HmIP-MOD-OC8 ( Open Collector Module ) """
 
 
 class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
@@ -126,6 +126,11 @@ class AsyncFloorTerminalBlock6(FloorTerminalBlock6, AsyncDevice):
 class AsyncPushButton(PushButton, AsyncDevice):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
+class AsyncPushButton6(PushButton6, AsyncPushButton):
+    """ HMIP-WRC6 (Wall-mount Remote Control - 6-button)  """
+
+class AsyncRemoteControl8(RemoteControl8,AsyncPushButton):
+    """ HmIP-RC8 (Remote Control - 8 buttons) """
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
@@ -172,6 +177,9 @@ class AsyncPluggableDimmer(AsyncDimmer):
 
 class AsyncBrandDimmer(AsyncDimmer):
     """HmIP-BDT Brand Dimmer"""
+
+class AsyncFullFlushDimmer(AsyncDimmer):
+    """HmIP-FDT Dimming Actuator flush-mount"""
 
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """ HmIP-SWO-B """

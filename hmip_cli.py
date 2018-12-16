@@ -230,9 +230,9 @@ def main():
                                                                                               home.updateState))
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(d.label, d.firmwareVersion,
+            print("{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {} LiveUpdateState: {}".format(d.label, d.firmwareVersion,
                                                                                             d.availableFirmwareVersion if d.availableFirmwareVersion is not None else "None",
-                                                                                            d.updateState))
+                                                                                            d.updateState, d.liveUpdateState))
 
     if args.list_rssi:
         command_entered = True
@@ -242,12 +242,13 @@ def main():
 
         sortedDevices = sorted(home.devices, key=attrgetter('deviceType', 'label'))
         for d in sortedDevices:
-            print("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {}".format(d.label,
+            print("{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {} permanentlyReachable: {}".format(d.label,
                                                                                 d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
                                                                                 getRssiBarString(d.rssiDeviceValue),
                                                                                 d.rssiPeerValue if d.rssiPeerValue is not None else "None",
                                                                                 getRssiBarString(d.rssiPeerValue),
-                                                                                "Unreachable" if d.unreach else ""))
+                                                                                "Unreachable" if d.unreach else "",
+                                                                                d.permanentlyReachable) )
     if args.list_rules:
         command_entered = True
         sortedRules = sorted(home.rules, key=attrgetter('ruleType', 'label'))

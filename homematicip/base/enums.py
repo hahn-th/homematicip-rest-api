@@ -154,7 +154,7 @@ class DeviceType(AutoNameEnum):
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     BRAND_SHUTTER = auto()
-    PRECENCE_DETECTOR_INDOOR = auto()
+    PRESENCE_DETECTOR_INDOOR = auto()
     PLUGGABLE_DIMMER = auto()
     BRAND_DIMMER = auto()
     BRAND_SWITCH_MEASURING = auto()
@@ -168,6 +168,10 @@ class DeviceType(AutoNameEnum):
     MOTION_DETECTOR_PUSH_BUTTON = auto()
     WATER_SENSOR = auto()
     SHUTTER_CONTACT_MAGNETIC = auto()
+    FULL_FLUSH_DIMMER = auto()
+    PUSH_BUTTON_6 = auto()
+    REMOTE_CONTROL_8 = auto()
+    OPEN_COLLECTOR_8_MODULE = auto()
 
 class GroupType(AutoNameEnum):
     GROUP = auto()
@@ -194,6 +198,7 @@ class GroupType(AutoNameEnum):
     SWITCHING = auto()
     SECURITY = auto()
     ENVIRONMENT = auto()
+    SECURITY_BACKUP_ALARM_SWITCHING = auto()
 
 class SecurityEventType(AutoNameEnum):
     SENSOR_EVENT = auto()
@@ -231,3 +236,65 @@ class EventType(AutoNameEnum):
     CLIENT_ADDED = auto()
     HOME_CHANGED = auto()
     GROUP_CHANGED = auto()
+
+
+class MotionDetectionSendInterval(AutoNameEnum):
+    SECONDS_30 = auto()
+    SECONDS_60 = auto()
+    SECONDS_120 = auto()
+    SECONDS_240 = auto()
+    SECONDS_480 = auto()
+
+class SmokeDetectorAlarmType(AutoNameEnum):
+    IDLE_OFF = auto()
+    PRIMARY_ALARM = auto()
+    INTRUSION_ALARM = auto()
+    SECONDARY_ALARM = auto()
+
+class LiveUpdateState(AutoNameEnum):
+    UP_TO_DATE                  = auto()
+    UPDATE_AVAILABLE            = auto()
+    UPDATE_INCOMPLETE           = auto()
+    LIVE_UPDATE_NOT_SUPPORTED   = auto()
+
+class OpticalAlarmSignal(AutoNameEnum):
+    DISABLE_OPTICAL_SIGNAL = auto()
+    BLINKING_ALTERNATELY_REPEATING = auto()
+    BLINKING_BOTH_REPEATING = auto()
+    DOUBLE_FLASHING_REPEATING = auto()
+    FLASHING_BOTH_REPEATING = auto()
+    CONFIRMATION_SIGNAL_0 = auto()
+    CONFIRMATION_SIGNAL_1 = auto()
+    CONFIRMATION_SIGNAL_2 = auto()
+
+class WindValueType(AutoNameEnum):
+    CURRENT_VALUE = auto()
+    MIN_VALUE     = auto()
+    MAX_VALUE     = auto()
+    AVERAGE_VALUE = auto()
+
+class FunctionalChannelType(AutoNameEnum):
+    FUNCTIONAL_CHANNEL = auto()
+    CLIMATE_SENSOR_CHANNEL              = auto()
+    DEVICE_BASE                         = auto()
+    DEVICE_GLOBAL_PUMP_CONTROL          = auto()
+    DEVICE_INCORRECT_POSITIONED         = auto()
+    DEVICE_OPERATIONLOCK                = auto()
+    DEVICE_SABOTAGE                     = auto()
+    DIMMER_CHANNEL                      = auto()
+    HEATING_THERMOSTAT_CHANNEL          = auto()
+    MOTION_DETECTION_CHANNEL            = auto()
+    PRESENCE_DETECTION_CHANNEL          = auto()
+    ROTARY_HANDLE_CHANNEL               = auto()
+    SHUTTER_CHANNEL                     = auto()
+    SHUTTER_CONTACT_CHANNEL             = auto()
+    SINGLE_KEY_CHANNEL                  = auto()
+    SMOKE_DETECTOR_CHANNEL              = auto()
+    SWITCH_CHANNEL                      = auto()
+    SWITCH_MEASURING_CHANNEL            = auto()
+    WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL = auto()
+    WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL = auto()
+    WATER_SENSOR_CHANNEL                = auto()
+    WEATHER_SENSOR_CHANNEL              = auto()
+    WEATHER_SENSOR_PRO_CHANNEL          = auto()
+

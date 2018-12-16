@@ -12,20 +12,41 @@
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.2",
             "firmwareVersionInteger": "65538",
-            "functionalChannels": {            },
-            "homeId": "00000000-0000-0000-0000-000000000001",
-            "id": "3014F7110000000000000050",
-            "label": "DUMMY_DEVICE",
-            "lastStatusUpdate": 1530802738493,
-            "manufacturerCode": 1,
-            "modelId": 353,
-            "modelType": "HmIP-DUMMY",
-            "oem": "eQ-3",
-            "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
-            "type": "DUMMY_DEVICE",
-            "updateState": "UP_TO_DATE"
+            "functionalChannels": {
 
-        }
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000050",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_UNKNOWN",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -78,
+                    "rssiPeerValue": -77,
+                    "unreach": false
+                }
+                },
+                "homeId": "00000000-0000-0000-0000-000000000001",
+                "id": "3014F7110000000000000050",
+                "label": "DUMMY_DEVICE",
+                "lastStatusUpdate": 1530802738493,
+                "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+                "manufacturerCode": 1,
+                "modelId": 353,
+                "modelType": "HmIP-DUMMY",
+                "oem": "eQ-3",
+                "permanentlyReachable": true,
+                "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
+                "type": "DUMMY_DEVICE",
+                "updateState": "UP_TO_DATE"
+
+            }
     },
     "groups": {
         "00000000-0000-0000-0000-000000000020": {

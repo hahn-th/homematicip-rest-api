@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--list-events</CommandLineArguments>
+    <CommandLineArguments>--list-devices</CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -57,6 +57,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\device.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="homematicip\functionalChannels.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\functionalHomes.py">

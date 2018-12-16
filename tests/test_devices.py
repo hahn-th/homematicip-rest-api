@@ -6,6 +6,7 @@ from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
 from homematicip.device import *
+from homematicip.functionalChannels import *
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -108,7 +109,7 @@ def test_smoke_detector(fake_home : Home):
     assert d.rssiDeviceValue == -54
     assert d.rssiPeerValue == None
     assert d.unreach == False
-    assert d.smokeDetectorAlarmType == "IDLE_OFF"
+    assert d.smokeDetectorAlarmType == SmokeDetectorAlarmType.IDLE_OFF
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.11"
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
@@ -255,7 +256,7 @@ def test_weather_sensor_pro(fake_home : Home):
     assert d.windDirection == 295.0
     assert d.windDirectionVariation == 56.25
     assert d.windSpeed == 2.6
-    assert d.windValueType == "AVERAGE_VALUE"
+    assert d.windValueType == WindValueType.AVERAGE_VALUE
     assert d.yesterdayRainCounter == 0.0
     assert d.yesterdaySunshineDuration == 0
     assert d.actualTemperature == 15.4
@@ -297,7 +298,7 @@ def test_weather_sensor(fake_home : Home):
     assert d.todaySunshineDuration == 51
     assert d.totalSunshineDuration == 54
     assert d.windSpeed == 6.6
-    assert d.windValueType == "MAX_VALUE"
+    assert d.windValueType == WindValueType.MAX_VALUE
     assert d.yesterdaySunshineDuration == 3
     assert d.actualTemperature == 15.2
     assert d.label == "Wettersensor"
@@ -386,6 +387,7 @@ def test_dimmer(fake_home : Home):
 def test_basic_device_functions(fake_home:Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id('3014F7110000000000000009')
+        assert d.permanentlyReachable == True
         assert d.label == "Brunnen"
         assert d.routerModuleEnabled == True
         assert d.energyCounter == 0.4754
@@ -478,3 +480,97 @@ def test_water_sensor(fake_home : Home):
         assert result['errorCode'] == 'INVALID_DEVICE'
         result = d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
         assert result['errorCode'] == 'INVALID_DEVICE'
+
+
+def test_motion_detector_indoor(fake_home:Home):
+    d = MotionDetectorIndoor(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711000000000000BB11")
+    
+    assert d.illumination == 0.1
+    assert d.currentIllumination == None
+    assert d.motionBufferActive == False
+    assert d.motionDetected == True
+    assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_480
+    assert d.numberOfBrightnessMeasurements == 7
+
+    assert str(d) == ("HmIP-SMI Wohnzimmer lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
+                      "dutyCycle(False): sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
+                      "motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")
+
+def test_presence_detector_indoor(fake_home:Home):
+    d = PresenceDetectorIndoor(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711AAAAAAAAAAAAAA51")
+    
+    assert d.illumination == 1.8
+    assert d.currentIllumination == None
+    assert d.motionBufferActive == False
+    assert d.presenceDetected == False
+    assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
+    assert d.numberOfBrightnessMeasurements == 7
+
+    assert str(d) == ("HmIP-SPI *** lowbat(False) unreach(False) rssiDeviceValue(-62) rssiPeerValue(-61) configPending(False) "
+                      "dutyCycle(False): sabotage(False) presenceDetected(False) illumination(1.8) motionBufferActive(False) "
+                      "motionDetectionSendInterval(SECONDS_240) numberOfBrightnessMeasurements(7)")
+
+def test_push_button_6(fake_home:Home):
+    d = PushButton6(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB017")
+    
+    assert d.modelId == 300
+    assert d.label == "Wandtaster - 6-fach"
+
+def test_remote_control_8(fake_home:Home):
+    d = PushButton6(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB016")
+    
+    assert d.modelId == 299
+    assert d.label == "Fernbedienung - 8 Tasten"
+
+def test_open_collector_8(fake_home:Home):
+    with no_ssl_verification():
+        d = OpenCollector8Module(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
+
+        c = d.functionalChannels[2]
+
+        assert isinstance(c,SwitchChannel)
+        assert c.index == 2
+        assert c.on == False
+        assert c.profileMode == "AUTOMATIC"
+
+        c = d.functionalChannels[8]
+
+        assert isinstance(c,SwitchChannel)
+        assert c.index == 8
+        assert c.on == True
+        assert c.profileMode == "AUTOMATIC"
+
+        d.turn_off(8)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
+        c = d.functionalChannels[8]
+        assert c.on == False
+
+
+def test_full_flush_shutter(fake_home:Home):
+    with no_ssl_verification():
+        d = FullFlushShutter(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F711ACBCDABCADCA66")
+
+        assert d.bottomToTopReferenceTime == 30.080000000000002
+        assert d.changeOverDelay == 0.5
+        assert d.delayCompensationValue == 12.7
+        assert d.endpositionAutoDetectionEnabled == True
+        assert d.previousShutterLevel == None
+        assert d.processing == False
+        assert d.profileMode == "AUTOMATIC"
+        assert d.selfCalibrationInProgress == None
+        assert d.shutterLevel == 1.0
+        assert d.supportingDelayCompensation == True
+        assert d.supportingEndpositionAutoDetection == True
+        assert d.supportingSelfCalibration == True
+        assert d.topToBottomReferenceTime == 24.68
+        assert d.userDesiredProfileMode == "AUTOMATIC"
+
+        assert str(d) == ("HmIP-BROLL *** lowbat(None) unreach(False) rssiDeviceValue(-78) rssiPeerValue(-77) configPending(False)"
+                         " dutyCycle(False) shutterLevel(1.0) topToBottom(24.68) bottomToTop(30.080000000000002)")

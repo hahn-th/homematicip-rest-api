@@ -5,6 +5,8 @@ from datetime import datetime
 import calendar
 from operator import attrgetter
 
+from homematicip.base.enums import *
+
 
 class Group(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents a group """
@@ -94,7 +96,7 @@ class SecurityGroup(Group):
         self.motionDetected = None
         self.presenceDetected = None
         self.sabotage = None
-        self.smokeDetectorAlarmType = None
+        self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
         self.dutyCycle = None
         self.lowBat = None
         self.moistureDetected = None
@@ -107,7 +109,7 @@ class SecurityGroup(Group):
         self.motionDetected = js["motionDetected"]
         self.presenceDetected = js["presenceDetected"]
         self.sabotage = js["sabotage"]
-        self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
+        self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(js["smokeDetectorAlarmType"])
         self.dutyCycle = js["dutyCycle"]
         self.lowBat = js["lowBat"]
         self.moistureDetected = js["moistureDetected"]
@@ -232,25 +234,15 @@ class ExtendedLinkedShutterGroup(Group):
 
 
 class AlarmSwitchingGroup(Group):
-    SIGNAL_OPTICAL_DISABLE_OPTICAL_SIGNAL = "DISABLE_OPTICAL_SIGNAL"
-    SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING = "BLINKING_ALTERNATELY_REPEATING"
-    SIGNAL_OPTICAL_BLINKING_BOTH_REPEATING = "BLINKING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_DOUBLE_FLASHING_REPEATING = "DOUBLE_FLASHING_REPEATING"
-    SIGNAL_OPTICAL_FLASHING_BOTH_REPEATING = "FLASHING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_0 = "CONFIRMATION_SIGNAL_0"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_1 = "CONFIRMATION_SIGNAL_1"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_2 = "CONFIRMATION_SIGNAL_2"
-
-    
 
     def __init__(self,connection):
         super().__init__(connection)
         self.on = None
         self.dimLevel = None
         self.onTime = None
-        self.signalAcoustic = None
-        self.signalOptical = None
-        self.smokeDetectorAlarmType = None
+        self.signalAcoustic = AcousticAlarmSignal.DISABLE_ACOUSTIC_SIGNAL
+        self.signalOptical = OpticalAlarmSignal.DISABLE_OPTICAL_SIGNAL
+        self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
         self.acousticFeedbackEnabled = None
 
     def from_json(self, js, devices):
@@ -258,9 +250,9 @@ class AlarmSwitchingGroup(Group):
         self.onTime = js["onTime"]
         self.on = js["on"]
         self.dimLevel = js["dimLevel"]
-        self.signalAcoustic = js["signalAcoustic"]
-        self.signalOptical = js["signalOptical"]
-        self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
+        self.signalAcoustic = AcousticAlarmSignal.from_str(js["signalAcoustic"])
+        self.signalOptical = OpticalAlarmSignal.from_str(js["signalOptical"])
+        self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(js["smokeDetectorAlarmType"])
         self.acousticFeedbackEnabled = js["acousticFeedbackEnabled"]
 
     def set_on_time(self, onTimeSeconds):
@@ -275,12 +267,12 @@ class AlarmSwitchingGroup(Group):
             self.acousticFeedbackEnabled)
 
     def test_signal_optical(self,
-                            signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+                            signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
         data = {"groupId": self.id, "signalOptical": signalOptical}
         return self._restCall("group/switching/alarm/testSignalOptical", body=json.dumps(data))
 
     def set_signal_optical(self,
-                           signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+                           signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
         data = {"groupId": self.id, "signalOptical": signalOptical}
         return self._restCall("group/switching/alarm/setSignalOptical", body=json.dumps(data))
 

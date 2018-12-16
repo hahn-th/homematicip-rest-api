@@ -7,6 +7,8 @@ from homematicip.group import *
 from homematicip.securityEvent import *
 from homematicip.rule import *
 from homematicip.functionalHomes import *
+from homematicip.functionalChannels import *
+
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
@@ -28,7 +30,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PLUGABLE_SWITCH: PlugableSwitch,
     DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,
     DeviceType.BRAND_SHUTTER: FullFlushShutter,
-    DeviceType.PRECENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
+    DeviceType.PRESENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
     DeviceType.PLUGGABLE_DIMMER: PluggableDimmer,
     DeviceType.BRAND_DIMMER: BrandDimmer,
     DeviceType.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
@@ -40,7 +42,11 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
     DeviceType.WATER_SENSOR: WaterSensor,
-    DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact
+    DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact,
+    DeviceType.FULL_FLUSH_DIMMER : FullFlushDimmer,
+    DeviceType.PUSH_BUTTON_6: PushButton6,
+    DeviceType.REMOTE_CONTROL_8 : RemoteControl8,
+    DeviceType.OPEN_COLLECTOR_8_MODULE : OpenCollector8Module,
 }
 
 TYPE_GROUP_MAP = {
@@ -50,6 +56,7 @@ TYPE_GROUP_MAP = {
     GroupType.EXTENDED_LINKED_SWITCHING: ExtendedLinkedSwitchingGroup,
     GroupType.LINKED_SWITCHING: LinkedSwitchingGroup,
     GroupType.ALARM_SWITCHING: AlarmSwitchingGroup,
+    GroupType.SECURITY_BACKUP_ALARM_SWITCHING : AlarmSwitchingGroup,
     GroupType.HEATING_HUMIDITY_LIMITER: HeatingHumidyLimiterGroup,
     GroupType.HEATING_TEMPERATURE_LIMITER: HeatingTemperatureLimiterGroup,
     GroupType.HEATING_CHANGEOVER: HeatingChangeoverGroup,
@@ -95,4 +102,31 @@ TYPE_FUNCTIONALHOME_MAP = {
     FunctionalHomeType.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
     FunctionalHomeType.LIGHT_AND_SHADOW: LightAndShadowHome,
     FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome
+}
+
+TYPE_FUNCTIONALCHANNEL_MAP = {
+    FunctionalChannelType.FUNCTIONAL_CHANNEL : FunctionalChannel,
+    FunctionalChannelType.CLIMATE_SENSOR_CHANNEL : ClimateSensorChannel,
+    FunctionalChannelType.DEVICE_BASE : DeviceBaseChannel,
+    FunctionalChannelType.DEVICE_GLOBAL_PUMP_CONTROL : DeviceGlobalPumpControlChannel,
+    FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
+    FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel,
+    FunctionalChannelType.DEVICE_INCORRECT_POSITIONED : DeviceIncorrectPositionedChannel,
+    FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,
+    FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL : HeatingThermostatChannel,
+    FunctionalChannelType.MOTION_DETECTION_CHANNEL : MotionDetectionChannel,
+    FunctionalChannelType.PRESENCE_DETECTION_CHANNEL : PresenceDetectionChannel,
+    FunctionalChannelType.ROTARY_HANDLE_CHANNEL : RotaryHandleChannel,
+    FunctionalChannelType.SHUTTER_CHANNEL : ShutterChannel,
+    FunctionalChannelType.SHUTTER_CONTACT_CHANNEL : ShutterContactChannel,
+    FunctionalChannelType.SINGLE_KEY_CHANNEL : SingleKeyChannel,
+    FunctionalChannelType.SMOKE_DETECTOR_CHANNEL: SmokeDetectorChannel,
+    FunctionalChannelType.SWITCH_CHANNEL: SwitchChannel,
+    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: SwitchMeasuringChannel,
+    FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL : WallMountedThermostatWithoutDisplayChannel,
+    FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL : WallMountedThermostatProChannel,
+    FunctionalChannelType.WATER_SENSOR_CHANNEL : WaterSensorChannel,
+    FunctionalChannelType.WEATHER_SENSOR_CHANNEL : WeatherSensorChannel,
+    FunctionalChannelType.WEATHER_SENSOR_PRO_CHANNEL : WeatherSensorProChannel,
+
 }

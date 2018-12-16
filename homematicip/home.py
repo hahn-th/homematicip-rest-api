@@ -207,6 +207,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self._get_groups(json_state)
 
         self._get_functionalHomes(js_home)
+        self._load_functionalChannels()
 
         return True
 
@@ -316,6 +317,10 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 h.from_json(functionalHome, self.groups)
                 LOGGER.warning("There is no class for %s yet", solution)
                 self.functionalHomes.append(h)
+
+    def _load_functionalChannels(self):
+        for d in self.devices:
+            d.load_functionalChannels(self.groups)
 
     def get_functionalHome(self, functionalHomeType ):
         """ returns the functionalHome from the given type or None if the functional home couldn't be found"""
@@ -531,6 +536,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 elif pushEventType == EventType.DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)
+                    obj.load_functionalChannels(self.groups)
                     self.devices.append(obj)
                 elif pushEventType == EventType.DEVICE_CHANGED:
                     data = event["device"]
@@ -540,6 +546,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                         self.devices.append(obj)
                     else:
                         obj.from_json(data)
+                    obj.load_functionalChannels(self.groups)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
