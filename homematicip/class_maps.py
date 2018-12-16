@@ -105,7 +105,22 @@ TYPE_FUNCTIONALHOME_MAP = {
 
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL : FunctionalChannel,
+    FunctionalChannelType.CLIMATE_SENSOR_CHANNEL : ClimateSensorChannel,
     FunctionalChannelType.DEVICE_BASE : DeviceBaseChannel,
+    FunctionalChannelType.DEVICE_GLOBAL_PUMP_CONTROL : DeviceGlobalPumpControlChannel,
     FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
-    FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel
+    FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel,
+    FunctionalChannelType.DEVICE_INCORRECT_POSITIONED : DeviceIncorrectPositionedChannel,
+    FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL : HeatingThermostatChannel,
+    FunctionalChannelType.MOTION_DETECTION_CHANNEL : MotionDetectionChannel,
+    FunctionalChannelType.PRESENCE_DETECTION_CHANNEL : PresenceDetectionChannel,
+    FunctionalChannelType.ROTARY_HANDLE_CHANNEL : RotaryHandleChannel,
+    FunctionalChannelType.SHUTTER_CHANNEL : ShutterChannel,
+    FunctionalChannelType.SHUTTER_CONTACT_CHANNEL : ShutterContactChannel,
+    FunctionalChannelType.SMOKE_DETECTOR_CHANNEL: SmokeDetectorChannel,
+    FunctionalChannelType.SWITCH_CHANNEL: SwitchChannel,
+    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: SwitchMeasuringChannel,
+    FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL : WallMountedThermostatWithoutDisplayChannel,
+    FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL : WallMountedThermostatProChannel,
+    FunctionalChannelType.WATER_SENSOR_CHANNEL : WaterSensorChannel,
 }

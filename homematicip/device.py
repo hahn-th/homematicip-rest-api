@@ -240,8 +240,8 @@ class TemperatureHumiditySensorOutdoor(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.actualTemperature = None
-        self.humidity = None
+        self.actualTemperature = 0
+        self.humidity = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -258,9 +258,9 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.temperatureOffset = None
-        self.actualTemperature = None
-        self.humidity = None
+        self.temperatureOffset = 0
+        self.actualTemperature = 0
+        self.humidity = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -279,11 +279,11 @@ class TemperatureHumiditySensorDisplay(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.temperatureOffset = None
+        self.temperatureOffset = 0
         self.display = ClimateControlDisplay.ACTUAL
-        self.actualTemperature = None
-        self.humidity = None
-        self.setPointTemperature = None
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.setPointTemperature = 0
 
     def from_json(self, js):
         super().from_json(js)
@@ -325,7 +325,7 @@ class SmokeDetector(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.smokeDetectorAlarmType = None
+        self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
 
     def from_json(self, js):
         super().from_json(js)
@@ -403,8 +403,8 @@ class SwitchMeasuring(Switch):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.energyCounter = None
-        self.currentPowerConsumption = None
+        self.energyCounter = 0
+        self.currentPowerConsumption = 0
 
     def reset_energy_counter(self):
         data = {"channelIndex": 1, "deviceId": self.id}
@@ -499,8 +499,8 @@ class PresenceDetectorIndoor(SabotageDevice):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.presenceDetected = None
-        self.illumination = None
+        self.presenceDetected = False
+        self.illumination = 0
 
     def from_json(self, js):
         super().from_json(js)

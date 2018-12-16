@@ -269,15 +269,23 @@ class OpticalAlarmSignal(AutoNameEnum):
 
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
+    CLIMATE_SENSOR_CHANNEL              = auto()
     DEVICE_BASE                         = auto()
+    DEVICE_GLOBAL_PUMP_CONTROL          = auto()
     DEVICE_INCORRECT_POSITIONED         = auto()
     DEVICE_OPERATIONLOCK                = auto()
     DEVICE_SABOTAGE                     = auto()
     HEATING_THERMOSTAT_CHANNEL          = auto()
+    MOTION_DETECTION_CHANNEL            = auto()
+    PRESENCE_DETECTION_CHANNEL          = auto()
+    ROTARY_HANDLE_CHANNEL               = auto()
+    SHUTTER_CHANNEL                     = auto()
     SHUTTER_CONTACT_CHANNEL             = auto()
     SMOKE_DETECTOR_CHANNEL              = auto()
+    SWITCH_CHANNEL                      = auto()
     SWITCH_MEASURING_CHANNEL            = auto()
     WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL = auto()
+    WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL = auto()
     WATER_SENSOR_CHANNEL                = auto()
 
 
