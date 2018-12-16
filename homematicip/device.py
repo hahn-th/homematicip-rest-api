@@ -540,17 +540,39 @@ class FullFlushShutter(Device):
 
     def __init__(self,connection):
         super().__init__(connection)
-        self.shutterLevel = None
-        self.bottomToTopReferenceTime = None
-        self.topToBottomReferenceTime = None
+        self.shutterLevel = 0
+        self.changeOverDelay = 0.0
+        self.bottomToTopReferenceTime = 0.0
+        self.topToBottomReferenceTime = 0.0
+        self.delayCompensationValue = 0
+        self.endpositionAutoDetectionEnabled = False
+        self.previousShutterLevel = None
+        self.processing = False
+        self.profileMode = "AUTOMATIC"
+        self.selfCalibrationInProgress = None
+        self.supportingDelayCompensation = False
+        self.supportingEndpositionAutoDetection = False
+        self.supportingSelfCalibration = False
+        self.userDesiredProfileMode = "AUTOMATIC"
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SHUTTER_CHANNEL", js)
         if c:
             self.shutterLevel = c["shutterLevel"]
+            self.changeOverDelay = c["changeOverDelay"]
+            self.delayCompensationValue = c["delayCompensationValue"]
             self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
             self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+            self.endpositionAutoDetectionEnabled = c["endpositionAutoDetectionEnabled"]
+            self.previousShutterLevel = c["previousShutterLevel"]
+            self.processing = c["processing"]
+            self.profileMode = c["profileMode"]
+            self.selfCalibrationInProgress = c["selfCalibrationInProgress"]
+            self.supportingDelayCompensation = c["supportingDelayCompensation"]
+            self.supportingEndpositionAutoDetection = c["supportingEndpositionAutoDetection"]
+            self.supportingSelfCalibration = c["supportingSelfCalibration"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
         return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(super().__str__(), self.shutterLevel, self.topToBottomReferenceTime,

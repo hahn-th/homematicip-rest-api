@@ -292,28 +292,50 @@ class PresenceDetectionChannel(FunctionalChannel):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
-        self.presenceDetected = c["presenceDetected"]
-        self.currentIllumination = c["currentIllumination"]
-        self.illumination = c["illumination"]
-        self.motionBufferActive = c["motionBufferActive"]
-        self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
-        self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
+        self.presenceDetected = js["presenceDetected"]
+        self.currentIllumination = js["currentIllumination"]
+        self.illumination = js["illumination"]
+        self.motionBufferActive = js["motionBufferActive"]
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(js["motionDetectionSendInterval"])
+        self.numberOfBrightnessMeasurements = js["numberOfBrightnessMeasurements"]
 
 class ShutterChannel(FunctionalChannel):
     """ this is the representive of the SHUTTER_CHANNEL channel"""
     def __init__(self):
         super().__init__()
-        self.shutterLevel = None
-        self.bottomToTopReferenceTime = None
-        self.topToBottomReferenceTime = None
+        self.shutterLevel = 0
+        self.changeOverDelay = 0.0
+        self.bottomToTopReferenceTime = 0.0
+        self.topToBottomReferenceTime = 0.0
+        self.delayCompensationValue = 0
+        self.endpositionAutoDetectionEnabled = False
+        self.previousShutterLevel = None
+        self.processing = False
+        self.profileMode = "AUTOMATIC"
+        self.selfCalibrationInProgress = None
+        self.supportingDelayCompensation = False
+        self.supportingEndpositionAutoDetection = False
+        self.supportingSelfCalibration = False
+        self.userDesiredProfileMode = "AUTOMATIC"
 
     def from_json(self, js, groups: Iterable[Group]):
         """ this function will load the functional channel object 
         from a json object and the given groups """
         super().from_json(js,groups)
         self.shutterLevel = js["shutterLevel"]
+        self.changeOverDelay = js["changeOverDelay"]
+        self.delayCompensationValue = js["delayCompensationValue"]
         self.bottomToTopReferenceTime = js["bottomToTopReferenceTime"]
         self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
+        self.endpositionAutoDetectionEnabled = js["endpositionAutoDetectionEnabled"]
+        self.previousShutterLevel = js["previousShutterLevel"]
+        self.processing = js["processing"]
+        self.profileMode = js["profileMode"]
+        self.selfCalibrationInProgress = js["selfCalibrationInProgress"]
+        self.supportingDelayCompensation = js["supportingDelayCompensation"]
+        self.supportingEndpositionAutoDetection = js["supportingEndpositionAutoDetection"]
+        self.supportingSelfCalibration = js["supportingSelfCalibration"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
 class DimmerChannel(FunctionalChannel):
     """ this is the representive of the DIMMER_CHANNEL channel"""

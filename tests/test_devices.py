@@ -551,3 +551,26 @@ def test_open_collector_8(fake_home:Home):
         c = d.functionalChannels[8]
         assert c.on == False
 
+
+def test_full_flush_shutter(fake_home:Home):
+    with no_ssl_verification():
+        d = FullFlushShutter(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F711ACBCDABCADCA66")
+
+        assert d.bottomToTopReferenceTime == 30.080000000000002
+        assert d.changeOverDelay == 0.5
+        assert d.delayCompensationValue == 12.7
+        assert d.endpositionAutoDetectionEnabled == True
+        assert d.previousShutterLevel == None
+        assert d.processing == False
+        assert d.profileMode == "AUTOMATIC"
+        assert d.selfCalibrationInProgress == None
+        assert d.shutterLevel == 1.0
+        assert d.supportingDelayCompensation == True
+        assert d.supportingEndpositionAutoDetection == True
+        assert d.supportingSelfCalibration == True
+        assert d.topToBottomReferenceTime == 24.68
+        assert d.userDesiredProfileMode == "AUTOMATIC"
+
+        assert str(d) == ("HmIP-BROLL *** lowbat(None) unreach(False) rssiDeviceValue(-78) rssiPeerValue(-77) configPending(False)"
+                         " dutyCycle(False) shutterLevel(1.0) topToBottom(24.68) bottomToTop(30.080000000000002)")
