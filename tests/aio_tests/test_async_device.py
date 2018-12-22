@@ -14,6 +14,7 @@ async def test_basic_device_functions(no_ssl_fake_async_home:AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000009')
     assert d.label == "Brunnen"
     assert d.routerModuleEnabled is True
+    assert d.energyCounter == 0.4754
 
     await d.set_label("new label")
     await d.set_router_module_enabled(False)
@@ -24,10 +25,12 @@ async def test_basic_device_functions(no_ssl_fake_async_home:AsyncHome):
 
     await d.set_label("other label")
     await d.set_router_module_enabled(True)
+    await d.reset_energy_counter()
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000009')
     assert d.label == "other label"
     assert d.routerModuleEnabled is True
+    assert d.energyCounter == 0
 
     d2 = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000005')
     await d.delete()
@@ -105,6 +108,8 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home : AsyncHome ):
     d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000022')
 
     assert d.display == ClimateControlDisplay.ACTUAL
+
+
 @pytest.mark.asyncio
 async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
     fake_home=no_ssl_fake_async_home
@@ -152,3 +157,45 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
     d.id = 'INVALID_ID'
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
+
+@pytest.mark.asyncio
+async def test_heating_thermostat(no_ssl_fake_async_home : AsyncHome ):
+    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000015')
+    assert isinstance(d, AsyncHeatingThermostat)
+    assert d.label == "Wohnzimmer-Heizung"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
+    assert d.manufacturerCode == 1
+    assert d.modelId == 269
+    assert d.modelType == "HMIP-eTRV"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000015"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.setPointTemperature == 5.0
+    assert d.temperatureOffset == 0.0
+    assert d.valvePosition == 0.0
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.lowBat == False
+    assert d.operationLockActive == True
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -65
+    assert d.rssiPeerValue == -66
+    assert d.unreach == False
+    assert d.automaticValveAdaptionNeeded == False
+    assert d.availableFirmwareVersion == "2.0.2"
+    assert d.firmwareVersion == "2.0.2"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
+
+    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
+                    ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
+
+
+    await d.set_operation_lock(False)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000015')
+    assert d.operationLockActive == False
+
+    d.id = 'INVALID_ID'
+    with pytest.raises(HmipWrongHttpStatusError):
+        result = await d.set_operation_lock(True)
