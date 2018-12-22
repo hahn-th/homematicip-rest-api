@@ -36,13 +36,11 @@ class AsyncSwitch(Switch, AsyncDevice):
 
     async def turn_on(self,channelIndex=1):
         _LOGGER.debug("Async switch turn_on")
-        url, data = super().turn_on(channelIndex)
-        return await self._connection.api_call(url, data)
+        return await self.set_switch_state(True,channelIndex)
 
     async def turn_off(self,channelIndex=1):
         _LOGGER.debug("Async switch turn_off")
-        url, data = super().turn_off(channelIndex)
-        return await self._connection.api_call(url, data)
+        return await self.set_switch_state(False,channelIndex)
 
 
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):

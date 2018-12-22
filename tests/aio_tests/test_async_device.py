@@ -2,9 +2,10 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from homematicip.aio.device import AsyncDevice, AsyncWallMountedThermostatPro
+from homematicip.aio.device import *
 from homematicip.aio.home import AsyncHome
 from homematicip.base.enums import *
+from homematicip.base.base_connection import HmipWrongHttpStatusError
 
 from conftest import utc_offset
 
@@ -102,4 +103,52 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home : AsyncHome ):
     await d.set_display( ClimateControlDisplay.ACTUAL)
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000022')
+
     assert d.display == ClimateControlDisplay.ACTUAL
+@pytest.mark.asyncio
+async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
+    fake_home=no_ssl_fake_async_home
+    d = fake_home.search_device_by_id('3014F7110000000000000009')
+    assert isinstance(d, AsyncPlugableSwitchMeasuring)
+    assert d.label == "Brunnen"
+    assert d.lastStatusUpdate == (datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0,utc_offset))
+    assert d.manufacturerCode == 1
+    assert d.modelId == 262
+    assert d.modelType == "HMIP-PSM"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000009"
+    assert d.updateState == "UP_TO_DATE"
+    assert d.on == False
+    assert d.profileMode == "AUTOMATIC"
+    assert d.userDesiredProfileMode == "AUTOMATIC"
+    assert d.currentPowerConsumption == 0.0
+    assert d.energyCounter == 0.4754
+    assert d.lowBat == None
+    assert d.routerModuleEnabled == True
+    assert d.routerModuleSupported == True
+    assert d.rssiDeviceValue == -60
+    assert d.rssiPeerValue == -66
+    assert d.unreach == False
+    assert d.availableFirmwareVersion == "0.0.0"
+    assert d.firmwareVersion == "2.6.2"
+    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
+    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
+    assert d.dutyCycle == False
+    assert d.configPending == False
+
+    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC)'
+                     ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
+
+    await d.turn_on()
+    await fake_home.get_current_state()
+    d = fake_home.search_device_by_id('3014F7110000000000000009')
+    assert d.on == True
+
+    await d.turn_off()
+    await fake_home.get_current_state()
+    d = fake_home.search_device_by_id('3014F7110000000000000009')
+    assert d.on == False
+
+    d.id = 'INVALID_ID'
+    with pytest.raises(HmipWrongHttpStatusError):
+        result = await d.turn_off()
