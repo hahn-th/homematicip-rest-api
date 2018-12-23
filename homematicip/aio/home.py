@@ -5,7 +5,7 @@ import logging
 from homematicip.aio.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP
 from homematicip.aio.connection import AsyncConnection
 from homematicip.aio.securityEvent import AsyncSecurityEvent
-from homematicip.home import Home
+from homematicip.home import Home,OAuthOTK
 from homematicip.base.enums import *
 
 LOGGER = logging.getLogger(__name__)
@@ -52,8 +52,10 @@ class AsyncHome(Home):
     async def disable_events(self):
         await self._connection.close_websocket_connection()
 
-    def get_OAuth_OTK(self):
-        pass
+    async def get_OAuth_OTK(self):
+        token = OAuthOTK(self._connection)
+        token.from_json(await self._connection.api_call("home/getOAuthOTK"))
+        return token
 
     async def activate_absence_with_duration(self, duration):
         return await self._connection.api_call(*super().activate_absence_with_duration(duration))

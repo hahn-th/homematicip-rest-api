@@ -1,16 +1,13 @@
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from conftest import fake_home_download_configuration, no_ssl_verification
+from conftest import fake_home_download_configuration, no_ssl_verification,utc_offset
 
 from homematicip.aio.home import AsyncHome
 from homematicip.base.enums import *
 from homematicip.base.base_connection import HmipWrongHttpStatusError
 from homematicip.functionalHomes import *
 from homematicip.aio.securityEvent import *
-
-dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
 
 @pytest.mark.asyncio
 async def test_async_home_base(no_ssl_fake_async_home: AsyncHome):
@@ -197,3 +194,9 @@ async def test_home_getSecurityJournal(no_ssl_fake_async_home: AsyncHome):
     assert isinstance(journal[5], AsyncSabotageEvent)
     assert isinstance(journal[6], AsyncMoistureDetectionEvent)
     assert isinstance(journal[7], AsyncSecurityEvent)
+
+@pytest.mark.asyncio
+async def test_home_getOAuthOTK(no_ssl_fake_async_home: AsyncHome):
+    token = await no_ssl_fake_async_home.get_OAuth_OTK()
+    assert token.authToken == 'C001ED'
+    assert token.expirationTimestamp == datetime(2018, 12, 23, 11, 38, 21, 680000) + timedelta(0,utc_offset)

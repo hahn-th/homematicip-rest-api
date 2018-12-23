@@ -68,6 +68,11 @@ class FakeCloudServer():
 #region home
 
     @validate_authorization
+    def post_hmip_home_getOAuthOTK(self,request : Request ,response : Response):
+        response.data = json.dumps({"authToken": "C001ED", "expirationTimestamp": 1545568701680})
+        return response
+
+    @validate_authorization
     def post_hmip_home_getCurrentState(self,request : Request ,response : Response):
         response.data = json.dumps(self.data)
         return response
