@@ -523,6 +523,18 @@ class FakeCloudServer():
         return response
 
     @validate_authorization
+    def post_hmip_group_heating_setSetPointTemperature(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["setPointTemperature"] = js["setPointTemperature"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
     def post_hmip_group_heating_setBoost(self,request : Request ,response : Response):
 
         js = json.loads(request.data)

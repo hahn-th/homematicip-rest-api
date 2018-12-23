@@ -89,11 +89,13 @@ def test_heating_group(fake_home : Home):
         g.set_boost_duration(20)
         g.set_boost(True)
         g.set_active_profile(3)
+        g.set_point_temperature(10.5)
         fake_home.get_current_state()
         g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
         assert g.boostDuration == 20
         assert g.boostMode == True
         assert g.activeProfile.index == "PROFILE_4"
+        assert g.setPointTemperature == 10.5
 
         fake_home.delete_group(g)
         fake_home.get_current_state()
@@ -107,6 +109,9 @@ def test_heating_group(fake_home : Home):
         assert result["errorCode"] == 'INVALID_GROUP'
 
         result = g.set_active_profile(1)
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.set_point_temperature(10.5)
         assert result["errorCode"] == 'INVALID_GROUP'
 
 
