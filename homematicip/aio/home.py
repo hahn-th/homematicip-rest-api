@@ -89,16 +89,16 @@ class AsyncHome(Home):
             return None
         ret = []
         for entry in journal["entries"]:
-            eventType = SecurityEventType(entry["eventType"])
-            if eventType in self._typeSecurityEventMap:
-                j = self._typeSecurityEventMap[eventType](self._connection)
-                j.from_json(entry)
-                ret.append(j)
-            else:
+            try:
+                eventType = SecurityEventType(entry["eventType"])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
                 j = AsyncSecurityEvent(self._connection)
-                j.from_json(entry)
-                ret.append(j)
                 LOGGER.warning("There is no class for %s yet", entry["eventType"])
+            j.from_json(entry)
+            ret.append(j)
+
         return ret
 
     async def activate_absence_with_period(self, endtime):

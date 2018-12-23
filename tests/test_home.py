@@ -277,6 +277,7 @@ def test_home_getSecurityJournal( fake_home: Home):
         assert isinstance(journal[4], SensorEvent)
         assert isinstance(journal[5], SabotageEvent)
         assert isinstance(journal[6], MoistureDetectionEvent)
+        assert isinstance(journal[7], SecurityEvent)
 
 
 def test_home_unknown_types( fake_home: Home):

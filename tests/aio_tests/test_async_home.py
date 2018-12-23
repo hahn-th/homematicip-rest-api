@@ -7,7 +7,7 @@ from homematicip.aio.home import AsyncHome
 from homematicip.base.enums import *
 from homematicip.base.base_connection import HmipWrongHttpStatusError
 from homematicip.functionalHomes import *
-from homematicip.securityEvent import *
+from homematicip.aio.securityEvent import *
 
 dt = datetime.now(timezone.utc).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
@@ -189,10 +189,11 @@ async def test_security_setIntrusionAlertThroughSmokeDetectors(no_ssl_fake_async
 async def test_home_getSecurityJournal(no_ssl_fake_async_home: AsyncHome):
     journal = await no_ssl_fake_async_home.get_security_journal()
     #todo make more advanced tests
-    assert isinstance(journal[0], ActivationChangedEvent)
-    assert isinstance(journal[1], ActivationChangedEvent)
-    assert isinstance(journal[2], AccessPointDisconnectedEvent)
-    assert isinstance(journal[3], AccessPointConnectedEvent)
-    assert isinstance(journal[4], SensorEvent)
-    assert isinstance(journal[5], SabotageEvent)
-    assert isinstance(journal[6], MoistureDetectionEvent)
+    assert isinstance(journal[0], AsyncActivationChangedEvent)
+    assert isinstance(journal[1], AsyncActivationChangedEvent)
+    assert isinstance(journal[2], AsyncAccessPointDisconnectedEvent)
+    assert isinstance(journal[3], AsyncAccessPointConnectedEvent)
+    assert isinstance(journal[4], AsyncSensorEvent)
+    assert isinstance(journal[5], AsyncSabotageEvent)
+    assert isinstance(journal[6], AsyncMoistureDetectionEvent)
+    assert isinstance(journal[7], AsyncSecurityEvent)
