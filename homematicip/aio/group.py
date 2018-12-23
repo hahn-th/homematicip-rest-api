@@ -8,10 +8,14 @@ from homematicip.group import Group, MetaGroup, SecurityGroup, SwitchingGroup, L
     SwitchingProfileGroup, OverHeatProtectionRule, SmokeAlarmDetectionRule, \
     ShutterWindProtectionRule, LockOutProtectionRule, EnvironmentGroup
 
+from homematicip.base.enums import *
 
 class AsyncGroup(Group):
-    def set_label(self, label):
-        pass
+    async def set_label(self, label):
+        return await self._connection.api_call(*super().set_label(label))
+
+    async def delete(self):
+        return await self._connection.api_call(*super().delete())
 
 
 class AsyncMetaGroup(MetaGroup, AsyncGroup):
@@ -29,7 +33,7 @@ class AsyncSwitchingGroup(SwitchingGroup, AsyncGroup):
         return await self._connection.api_call(url, data)
 
     async def turn_off(self):
-        url, data = super().turn_on()
+        url, data = super().turn_off()
         return await self._connection.api_call(url, data)
 
     async def set_shutter_level(self, level):
@@ -64,26 +68,16 @@ class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):
 
 
 class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
-    # todo: extract these from the class. this needs to be defined. Can't use it from the base class.
-    SIGNAL_OPTICAL_DISABLE_OPTICAL_SIGNAL = "DISABLE_OPTICAL_SIGNAL"
-    SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING = "BLINKING_ALTERNATELY_REPEATING"
-    SIGNAL_OPTICAL_BLINKING_BOTH_REPEATING = "BLINKING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_DOUBLE_FLASHING_REPEATING = "DOUBLE_FLASHING_REPEATING"
-    SIGNAL_OPTICAL_FLASHING_BOTH_REPEATING = "FLASHING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_0 = "CONFIRMATION_SIGNAL_0"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_1 = "CONFIRMATION_SIGNAL_1"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_2 = "CONFIRMATION_SIGNAL_2"
-
     async def set_on_time(self, onTimeSeconds):
         url, data = super().set_on_time(onTimeSeconds)
         return await self._connection.api_call(url, data)
 
     async def test_signal_optical(self,
-                                  signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+                                  signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
         url, data = super().test_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
-    async def set_signal_optical(self, signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+    async def set_signal_optical(self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
         url, data = super().set_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
@@ -124,6 +118,8 @@ class AsyncHeatingGroup(HeatingGroup, AsyncGroup):
     async def set_active_profile(self, index):
         return await self._connection.api_call(*super().set_active_profile(index))
 
+    async def set_boost_duration(self, duration: int):
+        return await self._connection.api_call(*super().set_boost_duration(duration))
 
 class AsyncHeatingDehumidifierGroup(HeatingDehumidifierGroup, AsyncGroup):
     pass

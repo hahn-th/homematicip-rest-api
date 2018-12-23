@@ -42,6 +42,11 @@
             "eventTimestamp": 1543777807110,
             "eventType": "MOISTURE_DETECTION_EVENT",
             "label": "Wassersensor (Badezimmer)"
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "FLUX_CAPACITOR_OVERLOAD_EVENT",
+            "label": "Fluxkondensator"
         }
     ]
 }

@@ -1,9 +1,6 @@
 from datetime import datetime
 
-from homematicip.securityEvent import SecurityEvent, SecurityZoneEvent, SensorEvent, \
-    AccessPointDisconnectedEvent, AccessPointConnectedEvent, ActivationChangedEvent, \
-    SilenceChangedEvent
-
+from homematicip.securityEvent import *
 
 class AsyncSecurityEvent(SecurityEvent):
     """this class represents a security event """
@@ -32,4 +29,28 @@ class AsyncActivationChangedEvent(ActivationChangedEvent, AsyncSecurityZoneEvent
 
 
 class AsyncSilenceChangedEvent(SilenceChangedEvent, AsyncSecurityZoneEvent):
+    pass
+
+class AsyncSabotageEvent(SabotageEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncMoistureDetectionEvent(MoistureDetectionEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncSmokeAlarmEvent(SmokeAlarmEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncExternalTriggeredEvent(ExternalTriggeredEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncOfflineAlarmEvent(OfflineAlarmEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncWaterDetectionEvent(WaterDetectionEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncMainsFailureEvent(MainsFailureEvent,AsyncSecurityEvent):
+    pass
+
+class AsyncOfflineWaterDetectionEvent(OfflineWaterDetectionEvent,AsyncSecurityEvent):
     pass

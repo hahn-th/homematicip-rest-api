@@ -74,5 +74,14 @@ TYPE_SECURITY_EVENT_MAP = {
     SecurityEventType.ACTIVATION_CHANGED: AsyncActivationChangedEvent,
     SecurityEventType.ACCESS_POINT_CONNECTED: AsyncAccessPointConnectedEvent,
     SecurityEventType.ACCESS_POINT_DISCONNECTED: AsyncAccessPointDisconnectedEvent,
-    SecurityEventType.SENSOR_EVENT: AsyncSensorEvent
+    SecurityEventType.SENSOR_EVENT: AsyncSensorEvent,
+    SecurityEventType.SABOTAGE: AsyncSabotageEvent,
+    SecurityEventType.MOISTURE_DETECTION_EVENT : AsyncMoistureDetectionEvent,
+    SecurityEventType.SMOKE_ALARM : AsyncSmokeAlarmEvent,
+    SecurityEventType.EXTERNAL_TRIGGERED : AsyncExternalTriggeredEvent,
+    SecurityEventType.OFFLINE_ALARM : AsyncOfflineAlarmEvent,
+    SecurityEventType.WATER_DETECTION_EVENT : AsyncWaterDetectionEvent,
+    SecurityEventType.MAINS_FAILURE_EVENT : AsyncMainsFailureEvent,
+    SecurityEventType.OFFLINE_WATER_DETECTION_EVENT : AsyncOfflineWaterDetectionEvent
 }
+

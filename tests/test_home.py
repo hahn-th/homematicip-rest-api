@@ -277,6 +277,7 @@ def test_home_getSecurityJournal( fake_home: Home):
         assert isinstance(journal[4], SensorEvent)
         assert isinstance(journal[5], SabotageEvent)
         assert isinstance(journal[6], MoistureDetectionEvent)
+        assert isinstance(journal[7], SecurityEvent)
 
 
 def test_home_unknown_types( fake_home: Home):
@@ -295,3 +296,9 @@ def test_home_unknown_types( fake_home: Home):
         assert type(funcHome) == FunctionalHome
         assert funcHome.solution == "DUMMY_FUNCTIONAL_HOME" 
     
+
+def test_home_getOAuthOTK( fake_home: Home):
+    with no_ssl_verification():
+        token = fake_home.get_OAuth_OTK()
+        assert token.authToken == 'C001ED'
+        assert token.expirationTimestamp == datetime(2018, 12, 23, 11, 38, 21, 680000) + timedelta(0,utc_offset)

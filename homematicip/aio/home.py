@@ -4,7 +4,9 @@ import logging
 
 from homematicip.aio.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP
 from homematicip.aio.connection import AsyncConnection
-from homematicip.home import Home
+from homematicip.aio.securityEvent import AsyncSecurityEvent
+from homematicip.home import Home,OAuthOTK
+from homematicip.base.enums import *
 
 LOGGER = logging.getLogger(__name__)
 
@@ -50,26 +52,36 @@ class AsyncHome(Home):
     async def disable_events(self):
         await self._connection.close_websocket_connection()
 
-    def get_OAuth_OTK(self):
-        pass
+    async def get_OAuth_OTK(self):
+        token = OAuthOTK(self._connection)
+        token.from_json(await self._connection.api_call("home/getOAuthOTK"))
+        return token
 
     async def activate_absence_with_duration(self, duration):
         return await self._connection.api_call(*super().activate_absence_with_duration(duration))
 
-    def set_powermeter_unit_price(self, price):
-        pass
+    async def set_powermeter_unit_price(self, price):
+        return await self._connection.api_call(*super().set_powermeter_unit_price(price))
 
-    def set_intrusion_alert_through_smoke_detectors(self, activate=True):
-        pass
+    async def set_intrusion_alert_through_smoke_detectors(self, activate=True):
+        return await self._connection.api_call(*super().set_intrusion_alert_through_smoke_detectors(activate))
 
-    def set_timezone(self, timezone):
-        pass
+    async def set_timezone(self, timezone):
+        return await self._connection.api_call(*super().set_timezone(timezone))
 
-    def set_zones_device_assignment(self, internal_devices, external_devices):
-        pass
+    async def set_zones_device_assignment(self, internal_devices, external_devices):
+        return await self._connection.api_call(*super().set_zones_device_assignment(internal_devices, internal_devices))
 
-    def set_pin(self, newPin, oldPin=None):
-        pass
+    async def set_pin(self, newPin, oldPin=None):
+        if newPin == None:
+            newPin = ""
+        data = {"pin": newPin}
+        if oldPin:
+            self._connection.headers["PIN"] = str(oldPin)
+        result = await self._connection.api_call('home/setPin', body=json.dumps(data))
+        if oldPin:
+            del self._connection.headers["PIN"]
+        return result
 
     async def get_security_journal(self):
         journal = await self._connection.api_call(
@@ -79,16 +91,16 @@ class AsyncHome(Home):
             return None
         ret = []
         for entry in journal["entries"]:
-            eventType = entry["eventType"]
-            if eventType in self._typeSecurityEventMap:
-                j = self._typeSecurityEventMap[eventType](self._connection)
-                j.from_json(entry)
-                ret.append(j)
-            else:
-                j = SecurityEvent(self._connection)
-                j.from_json(entry)
-                ret.append(j)
-                LOGGER.warning("There is no class for %s yet", eventType)
+            try:
+                eventType = SecurityEventType(entry["eventType"])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
+                j = AsyncSecurityEvent(self._connection)
+                LOGGER.warning("There is no class for %s yet", entry["eventType"])
+            j.from_json(entry)
+            ret.append(j)
+
         return ret
 
     async def activate_absence_with_period(self, endtime):
@@ -103,14 +115,14 @@ class AsyncHome(Home):
     async def deactivate_vacation(self):
         return await self._connection.api_call(*super().deactivate_vacation())
 
-    def set_zone_activation_delay(self, delay):
-        pass
+    async def set_zone_activation_delay(self, delay):
+        return await self._connection.api_call(*super().set_zone_activation_delay(delay))
 
     async def set_security_zones_activation(self, internal=True, external=True):
         return await self._connection.api_call(*super().set_security_zones_activation(internal, external))
 
-    def delete_group(self, group):
-        pass
+    async def delete_group(self, group):
+        return await group.delete()
 
     async def set_location(self, city, latitude, longitude):
         return await self._connection.api_call(*super().set_location(city, latitude, longitude))

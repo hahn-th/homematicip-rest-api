@@ -36,7 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 - homematicip/base/constants.py -> use homematicip/base/enums.py
-
+### FIXED
+- [BUG: 141] AsyncSwitchingGroup.turn_off will turn the group on
 ## [0.9.8] - 2018-07-14
 ### Added
 - API
@@ -69,4 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.9.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.6...0.9.7
 [0.9.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.5...0.9.6
 [0.9.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.4...0.9.5
-[0.9.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.3...0.9.4
+[0.9.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.3.3...0.9.4
+
+[BUG: 141]: https://github.com/coreGreenberet/homematicip-rest-api/issues/141

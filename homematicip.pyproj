@@ -88,6 +88,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
+    <Compile Include="test_aio.py" />
     <Compile Include="tests\aio_tests\helpers.py" />
     <Compile Include="tests\aio_tests\notest_async_heating_group.py" />
     <Compile Include="tests\aio_tests\notest_connection_async.py" />

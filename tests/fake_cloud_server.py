@@ -68,6 +68,11 @@ class FakeCloudServer():
 #region home
 
     @validate_authorization
+    def post_hmip_home_getOAuthOTK(self,request : Request ,response : Response):
+        response.data = json.dumps({"authToken": "C001ED", "expirationTimestamp": 1545568701680})
+        return response
+
+    @validate_authorization
     def post_hmip_home_getCurrentState(self,request : Request ,response : Response):
         response.data = json.dumps(self.data)
         return response
@@ -523,12 +528,12 @@ class FakeCloudServer():
         return response
 
     @validate_authorization
-    def post_hmip_group_heating_setBoost(self,request : Request ,response : Response):
+    def post_hmip_group_heating_setSetPointTemperature(self,request : Request ,response : Response):
 
         js = json.loads(request.data)
         if js["groupId"] in self.data["groups"]:
             g = self.data["groups"][js["groupId"]]
-            g["boostMode"] = js["boost"]
+            g["setPointTemperature"] = js["setPointTemperature"]
             response.status_code = 200
         else:
             response = self.errorCode(response, "INVALID_GROUP", 404)
