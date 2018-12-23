@@ -56,20 +56,28 @@ class AsyncHome(Home):
     async def activate_absence_with_duration(self, duration):
         return await self._connection.api_call(*super().activate_absence_with_duration(duration))
 
-    def set_powermeter_unit_price(self, price):
-        pass
+    async def set_powermeter_unit_price(self, price):
+        return await self._connection.api_call(*super().set_powermeter_unit_price(price))
 
     def set_intrusion_alert_through_smoke_detectors(self, activate=True):
         pass
 
-    def set_timezone(self, timezone):
-        pass
+    async def set_timezone(self, timezone):
+        return await self._connection.api_call(*super().set_timezone(timezone))
 
     def set_zones_device_assignment(self, internal_devices, external_devices):
         pass
 
-    def set_pin(self, newPin, oldPin=None):
-        pass
+    async def set_pin(self, newPin, oldPin=None):
+        if newPin == None:
+            newPin = ""
+        data = {"pin": newPin}
+        if oldPin:
+            self._connection.headers["PIN"] = str(oldPin)
+        result = await self._connection.api_call('home/setPin', body=json.dumps(data))
+        if oldPin:
+            del self._connection.headers["PIN"]
+        return result
 
     async def get_security_journal(self):
         journal = await self._connection.api_call(
@@ -103,8 +111,8 @@ class AsyncHome(Home):
     async def deactivate_vacation(self):
         return await self._connection.api_call(*super().deactivate_vacation())
 
-    def set_zone_activation_delay(self, delay):
-        pass
+    async def set_zone_activation_delay(self, delay):
+        return await self._connection.api_call(*super().set_zone_activation_delay(delay))
 
     async def set_security_zones_activation(self, internal=True, external=True):
         return await self._connection.api_call(*super().set_security_zones_activation(internal, external))
