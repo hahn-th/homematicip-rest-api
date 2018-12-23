@@ -1,4 +1,6 @@
 ignore:
+ - "hmip_cli.py"
+ - "hmip_generate_auth_token.py"
  - "versioneer.py"
  - "test.py"
  - "test_aio.py"
