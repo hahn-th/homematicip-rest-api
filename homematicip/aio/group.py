@@ -8,6 +8,7 @@ from homematicip.group import Group, MetaGroup, SecurityGroup, SwitchingGroup, L
     SwitchingProfileGroup, OverHeatProtectionRule, SmokeAlarmDetectionRule, \
     ShutterWindProtectionRule, LockOutProtectionRule, EnvironmentGroup
 
+from homematicip.base.enums import *
 
 class AsyncGroup(Group):
     async def set_label(self, label):
@@ -67,26 +68,16 @@ class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):
 
 
 class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
-    # todo: extract these from the class. this needs to be defined. Can't use it from the base class.
-    SIGNAL_OPTICAL_DISABLE_OPTICAL_SIGNAL = "DISABLE_OPTICAL_SIGNAL"
-    SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING = "BLINKING_ALTERNATELY_REPEATING"
-    SIGNAL_OPTICAL_BLINKING_BOTH_REPEATING = "BLINKING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_DOUBLE_FLASHING_REPEATING = "DOUBLE_FLASHING_REPEATING"
-    SIGNAL_OPTICAL_FLASHING_BOTH_REPEATING = "FLASHING_BOTH_REPEATING"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_0 = "CONFIRMATION_SIGNAL_0"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_1 = "CONFIRMATION_SIGNAL_1"
-    SIGNAL_OPTICAL_CONFIRMATION_SIGNAL_2 = "CONFIRMATION_SIGNAL_2"
-
     async def set_on_time(self, onTimeSeconds):
         url, data = super().set_on_time(onTimeSeconds)
         return await self._connection.api_call(url, data)
 
     async def test_signal_optical(self,
-                                  signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+                                  signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
         url, data = super().test_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
-    async def set_signal_optical(self, signalOptical=SIGNAL_OPTICAL_BLINKING_ALTERNATELY_REPEATING):
+    async def set_signal_optical(self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
         url, data = super().set_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
