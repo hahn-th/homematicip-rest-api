@@ -1,6 +1,7 @@
 ignore:
  - "versioneer.py"
  - "test.py"
+ - "test_aio.py"
  - "setup.py"
  - "homematicip/_version.py"
  - "homematicip_cli_async.py"
