@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.10.0] - 2018-12-23
 ### Added
 - Devices
   - HMIP-FDT
@@ -21,14 +21,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - API
   - FunctionalChannels
+  - [Async]Home
+    - get_OAuth_OTK
+  - AsyncHome
+    - delete_group
+    - get_security_journal
+	- set_powermeter_unit_price
+	- set_timezone
+	- set_pin
+	- set_zone_activation_delay
+  - Home
+    - added clearConfig Parameter to get a "fresh" configuration
   - [Async]Switch
     - Added channelIndex Parameter to set_switch_state, turn_on, turn_off
   - [Async]PlugableSwitchMeasuring
     - Added reset_energy_counter
-  - Group
+  - [Async]Group
     - added delete method
-  - Home
-    - added clearConfig Parameter to get a "fresh" configuration
+  - AsyncGroup
+    - set_label
+  - AsyncHeatingGroup
+    - set_boost_duration
+  - [Async]SecurityEvents
+    - SensorEvent
+	- SabotageEvent
+	- MoistureDetectionEvent
+	- SmokeAlarmEvent
+	- ExternalTriggeredEvent
+	- OfflineAlarmEvent
+	- WaterDetectionEvent
+	- MainsFailureEvent
+	- OfflineWaterDetectionEvent
   
 ### Removed
 - hmip_cli.py
@@ -38,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - homematicip/base/constants.py -> use homematicip/base/enums.py
 ### FIXED
 - [BUG: 141] AsyncSwitchingGroup.turn_off will turn the group on
+
 ## [0.9.8] - 2018-07-14
 ### Added
 - API
