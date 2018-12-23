@@ -10,8 +10,11 @@ from homematicip.group import Group, MetaGroup, SecurityGroup, SwitchingGroup, L
 
 
 class AsyncGroup(Group):
-    def set_label(self, label):
-        pass
+    async def set_label(self, label):
+        return await self._connection.api_call(*super().set_label(label))
+
+    async def delete(self):
+        return await self._connection.api_call(*super().delete())
 
 
 class AsyncMetaGroup(MetaGroup, AsyncGroup):
@@ -29,7 +32,7 @@ class AsyncSwitchingGroup(SwitchingGroup, AsyncGroup):
         return await self._connection.api_call(url, data)
 
     async def turn_off(self):
-        url, data = super().turn_on()
+        url, data = super().turn_off()
         return await self._connection.api_call(url, data)
 
     async def set_shutter_level(self, level):
@@ -124,6 +127,8 @@ class AsyncHeatingGroup(HeatingGroup, AsyncGroup):
     async def set_active_profile(self, index):
         return await self._connection.api_call(*super().set_active_profile(index))
 
+    async def set_boost_duration(self, duration: int):
+        return await self._connection.api_call(*super().set_boost_duration(duration))
 
 class AsyncHeatingDehumidifierGroup(HeatingDehumidifierGroup, AsyncGroup):
     pass

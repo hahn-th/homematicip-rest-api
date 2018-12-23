@@ -121,8 +121,8 @@ class AsyncHome(Home):
     async def set_security_zones_activation(self, internal=True, external=True):
         return await self._connection.api_call(*super().set_security_zones_activation(internal, external))
 
-    def delete_group(self, group):
-        pass
+    async def delete_group(self, group):
+        return await group.delete()
 
     async def set_location(self, city, latitude, longitude):
         return await self._connection.api_call(*super().set_location(city, latitude, longitude))
