@@ -168,3 +168,31 @@ async def test_security_setZoneActivationDelay(no_ssl_fake_async_home: AsyncHome
     await no_ssl_fake_async_home.get_current_state()
     securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)   
     assert securityAlarmHome.zoneActivationDelay == 0.0
+
+
+@pytest.mark.asyncio
+async def test_security_setIntrusionAlertThroughSmokeDetectors(no_ssl_fake_async_home: AsyncHome):
+    securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)        
+    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False 
+
+    await no_ssl_fake_async_home.set_intrusion_alert_through_smoke_detectors(True)
+    await no_ssl_fake_async_home.get_current_state()
+    securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)        
+    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == True 
+
+    await no_ssl_fake_async_home.set_intrusion_alert_through_smoke_detectors(False)
+    await no_ssl_fake_async_home.get_current_state()
+    securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)        
+    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False 
+
+@pytest.mark.asyncio
+async def test_home_getSecurityJournal(no_ssl_fake_async_home: AsyncHome):
+    journal = await no_ssl_fake_async_home.get_security_journal()
+    #todo make more advanced tests
+    assert isinstance(journal[0], ActivationChangedEvent)
+    assert isinstance(journal[1], ActivationChangedEvent)
+    assert isinstance(journal[2], AccessPointDisconnectedEvent)
+    assert isinstance(journal[3], AccessPointConnectedEvent)
+    assert isinstance(journal[4], SensorEvent)
+    assert isinstance(journal[5], SabotageEvent)
+    assert isinstance(journal[6], MoistureDetectionEvent)

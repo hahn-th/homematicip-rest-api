@@ -4,7 +4,9 @@ import logging
 
 from homematicip.aio.class_maps import TYPE_CLASS_MAP, TYPE_GROUP_MAP, TYPE_SECURITY_EVENT_MAP
 from homematicip.aio.connection import AsyncConnection
+from homematicip.aio.securityEvent import AsyncSecurityEvent
 from homematicip.home import Home
+from homematicip.base.enums import *
 
 LOGGER = logging.getLogger(__name__)
 
@@ -59,14 +61,14 @@ class AsyncHome(Home):
     async def set_powermeter_unit_price(self, price):
         return await self._connection.api_call(*super().set_powermeter_unit_price(price))
 
-    def set_intrusion_alert_through_smoke_detectors(self, activate=True):
-        pass
+    async def set_intrusion_alert_through_smoke_detectors(self, activate=True):
+        return await self._connection.api_call(*super().set_intrusion_alert_through_smoke_detectors(activate))
 
     async def set_timezone(self, timezone):
         return await self._connection.api_call(*super().set_timezone(timezone))
 
-    def set_zones_device_assignment(self, internal_devices, external_devices):
-        pass
+    async def set_zones_device_assignment(self, internal_devices, external_devices):
+        return await self._connection.api_call(*super().set_zones_device_assignment(internal_devices, internal_devices))
 
     async def set_pin(self, newPin, oldPin=None):
         if newPin == None:
@@ -87,16 +89,16 @@ class AsyncHome(Home):
             return None
         ret = []
         for entry in journal["entries"]:
-            eventType = entry["eventType"]
+            eventType = SecurityEventType(entry["eventType"])
             if eventType in self._typeSecurityEventMap:
                 j = self._typeSecurityEventMap[eventType](self._connection)
                 j.from_json(entry)
                 ret.append(j)
             else:
-                j = SecurityEvent(self._connection)
+                j = AsyncSecurityEvent(self._connection)
                 j.from_json(entry)
                 ret.append(j)
-                LOGGER.warning("There is no class for %s yet", eventType)
+                LOGGER.warning("There is no class for %s yet", entry["eventType"])
         return ret
 
     async def activate_absence_with_period(self, endtime):
