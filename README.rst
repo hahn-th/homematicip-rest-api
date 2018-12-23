@@ -27,8 +27,8 @@ locations so that it will be accessable for the scripts.
 
 -  Windows
 
-   -  %APPDATA%:raw-latex:`\homematicip`-rest-api
-   -  %PROGRAMDATA%:raw-latex:`\homematicip`-rest-api
+   -  %APPDATA%\\homematicip-rest-api
+   -  %PROGRAMDATA%\\homematicip-rest-api
 
 -  Linux
 
