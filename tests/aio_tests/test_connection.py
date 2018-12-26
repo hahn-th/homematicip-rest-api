@@ -5,7 +5,7 @@ from asyncio import ensure_future
 import pytest
 from aiohttp import web
 
-from aio.connection import AsyncConnection
+from homematicip.aio.connection import AsyncConnection
 from homematicip.base.base_connection import HmipConnectionError
 
 logging.basicConfig(level=logging.DEBUG)
