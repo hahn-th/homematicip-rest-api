@@ -39,7 +39,7 @@ class FakeServer:
         self._add_route()
         self.runner = web.AppRunner(self.app)
         await self.runner.setup()
-        site = web.TCPSite(self.runner, "localhost", 80)
+        site = web.TCPSite(self.runner, "localhost", 8123)
         await site.start()
         pass
 
@@ -113,7 +113,7 @@ async def connection_lost_server():
 @pytest.fixture
 async def client_connection(event_loop):
     connection = AsyncConnection(event_loop)
-    connection._urlWebSocket = "ws://localhost/"
+    connection._urlWebSocket = "ws://localhost:8123/"
     connection.ping_timeout = 1
     yield connection
 
