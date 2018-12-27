@@ -97,6 +97,7 @@
     <Compile Include="tests\aio_tests\test_async_groups.py" />
     <Compile Include="tests\aio_tests\test_async_device.py" />
     <Compile Include="tests\aio_tests\test_async_home.py" />
+    <Compile Include="tests\aio_tests\test_connection.py" />
     <Compile Include="tests\test_auth.py" />
     <Compile Include="tests\test_config.py" />
     <Compile Include="tests\test_fake_cloud.py">
