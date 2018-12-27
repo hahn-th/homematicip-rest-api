@@ -574,3 +574,35 @@ def test_full_flush_shutter(fake_home:Home):
 
         assert str(d) == ("HmIP-BROLL *** lowbat(None) unreach(False) rssiDeviceValue(-78) rssiPeerValue(-77) configPending(False)"
                          " dutyCycle(False) shutterLevel(1.0) topToBottom(24.68) bottomToTop(30.080000000000002)")
+
+def test_alarm_siren_indoor(fake_home:Home):
+    with no_ssl_verification():
+        d = AlarmSirenIndoor(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000BBBBB8")
+
+        assert str(d) == "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False)"
+
+
+def test_floor_terminal_block(fake_home:Home):
+    with no_ssl_verification():
+        d = FloorTerminalBlock6(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000BBBBB1")
+
+        assert d.frostProtectionTemperature == 8.0
+        assert d.coolingEmergencyValue == 0.0
+        assert d.globalPumpControl == True
+        assert d.heatingEmergencyValue == 0.25
+        assert d.heatingLoadType == HeatingLoadType.LOAD_BALANCING
+        assert d.heatingValveType == HeatingValveType.NORMALLY_CLOSE
+        assert d.valveProtectionDuration == 5
+        assert d.valveProtectionSwitchingInterval == 14
+
+        assert d.pumpFollowUpTime == 2
+        assert d.pumpLeadTime == 2
+        assert d.pumpProtectionDuration == 1
+        assert d.pumpProtectionSwitchingInterval == 14
+
+        assert str(d) == ("HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False): "
+                          "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
+                          "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2) "
+                          "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)")

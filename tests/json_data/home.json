@@ -8,6 +8,180 @@
         }
     },
     "devices": {
+        "3014F7110000000000BBBBB1": {
+            "availableFirmwareVersion": "1.6.2",
+            "firmwareVersion": "1.6.2",
+            "firmwareVersionInteger": 67074,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "coolingEmergencyValue": 0.0,
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "dutyCycle": false,
+                    "frostProtectionTemperature": 8.0,
+                    "functionalChannelType": "DEVICE_GLOBAL_PUMP_CONTROL",
+                    "globalPumpControl": true,
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000007"
+                    ],
+                    "heatingEmergencyValue": 0.25,
+                    "heatingLoadType": "LOAD_BALANCING",
+                    "heatingValveType": "NORMALLY_CLOSE",
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -62,
+                    "rssiPeerValue": null,
+                    "unreach": false,
+                    "valveProtectionDuration": 5,
+                    "valveProtectionSwitchingInterval": 14
+                },
+                "1": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "index": 1,
+                    "label": "",
+                    "pumpFollowUpTime": 2,
+                    "pumpLeadTime": 2,
+                    "pumpProtectionDuration": 1,
+                    "pumpProtectionSwitchingInterval": 14
+                },
+                "2": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000008"
+                    ],
+                    "index": 2,
+                    "label": ""
+                },
+                "3": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000009"
+                    ],
+                    "index": 3,
+                    "label": ""
+                },
+                "4": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 4,
+                    "label": ""
+                },
+                "5": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000011"
+                    ],
+                    "index": 5,
+                    "label": ""
+                },
+                "6": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [],
+                    "index": 6,
+                    "label": ""
+                },
+                "7": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "HEAT_DEMAND_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000012",
+                        "00000000-0000-0000-0000-000000000013"
+                    ],
+                    "index": 7,
+                    "label": ""
+                },
+                "8": {
+                    "deviceId": "3014F7110000000000BBBBB1",
+                    "functionalChannelType": "DEHUMIDIFIER_DEMAND_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000014"
+                    ],
+                    "index": 8,
+                    "label": ""
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000BBBBB1",
+            "label": "Fu\u00dfbodenheizungsaktor",
+            "lastStatusUpdate": 1545746610807,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 277,
+            "modelType": "HmIP-FAL230-C6",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000BBBBB1",
+            "type": "FLOOR_TERMINAL_BLOCK_6",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F7110000000000BBBBB8": {
+            "availableFirmwareVersion": "1.2.16",
+            "firmwareVersion": "1.2.16",
+            "firmwareVersionInteger": 66064,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000BBBBB8",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -59,
+                    "rssiPeerValue": null,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F7110000000000BBBBB8",
+                    "functionalChannelType": "ALARM_SIREN_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 1,
+                    "label": ""
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000BBBBB8",
+            "label": "Alarmsirene",
+            "lastStatusUpdate": 1544480290322,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 298,
+            "modelType": "HmIP-ASIR",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000BBBBB8",
+            "type": "ALARM_SIREN_INDOOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F711000000000000BB11": {
             "availableFirmwareVersion": "1.4.8",
             "firmwareVersion": "1.4.8",

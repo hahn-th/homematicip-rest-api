@@ -47,6 +47,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
         self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
 
+        self._baseChannel = "DEVICE_BASE"
+
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
@@ -68,7 +70,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.permanentlyReachable = js["permanentlyReachable"]
         self.liveUpdateState = LiveUpdateState.from_str(js["liveUpdateState"])
 
-        c = get_functional_channel("DEVICE_BASE", js)
+        c = get_functional_channel(self._baseChannel, js)
         if c:
             self.unreach = c["unreach"]
             self.lowBat = c["lowBat"]
@@ -130,18 +132,13 @@ class SabotageDevice(Device):
     def __init__(self,connection):
         super().__init__(connection)
         self.sabotage = None
+        self._baseChannel = "DEVICE_SABOTAGE"
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("DEVICE_SABOTAGE", js)
         if c:
-            self.unreach = c["unreach"]
-            self.lowBat = c["lowBat"]
             self.sabotage = c["sabotage"]
-            self.rssiDeviceValue = c["rssiDeviceValue"]
-            self.rssiPeerValue = c["rssiPeerValue"]
-            self.dutyCycle = c["dutyCycle"]
-            self.configPending = c["configPending"]
 
     def __str__(self):
         return "{}: sabotage({})".format(super().__str__(), self.sabotage)
@@ -150,18 +147,13 @@ class OperationLockableDevice(Device):
     def __init__(self,connection):
         super().__init__(connection)
         self.operationLockActive = None
+        self._baseChannel = "DEVICE_OPERATIONLOCK"
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("DEVICE_OPERATIONLOCK", js)
         if c:
-            self.unreach = c["unreach"]
-            self.lowBat = c["lowBat"]
             self.operationLockActive = c["operationLockActive"]
-            self.rssiDeviceValue = c["rssiDeviceValue"]
-            self.rssiPeerValue = c["rssiPeerValue"]
-            self.dutyCycle = c["dutyCycle"]
-            self.configPending = c["configPending"]
 
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
@@ -341,23 +333,52 @@ class SmokeDetector(Device):
 class FloorTerminalBlock6(Device):
     """ HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V) """
 
-
     def __init__(self,connection):
         super().__init__(connection)
-        self.globalPumpControl = None
+        self.globalPumpControl = False
         self.heatingValveType = HeatingValveType.NORMALLY_CLOSE
+        self.heatingLoadType = HeatingLoadType.LOAD_BALANCING
+        self.frostProtectionTemperature = 0.0
+        self.heatingEmergencyValue = 0.0
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 20
+        self.coolingEmergencyValue = 0
+
+        self.pumpFollowUpTime = 0
+        self.pumpLeadTime = 0
+        self.pumpProtectionDuration = 0
+        self.pumpProtectionSwitchingInterval = 20
+
+        self._baseChannel = "DEVICE_GLOBAL_PUMP_CONTROL"
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("DEVICE_GLOBAL_PUMP_CONTROL", js)
         if c:
-            self.unreach = c["unreach"]
             self.globalPumpControl = c["globalPumpControl"]
             self.heatingValveType = HeatingValveType.from_str(c["heatingValveType"])
+            self.heatingLoadType = HeatingLoadType.from_str(c["heatingLoadType"])
+            self.coolingEmergencyValue = c["coolingEmergencyValue"]
+            
+            self.frostProtectionTemperature = c["frostProtectionTemperature"]
+            self.heatingEmergencyValue = c["heatingEmergencyValue"]
+            self.valveProtectionDuration = c["valveProtectionDuration"]
+            self.valveProtectionSwitchingInterval = c["valveProtectionSwitchingInterval"]
+
+        c = get_functional_channel("FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL", js)
+        if c:
+            self.pumpFollowUpTime = c["pumpFollowUpTime"]
+            self.pumpLeadTime = c["pumpLeadTime"]
+            self.pumpProtectionDuration = c["pumpProtectionDuration"]
+            self.pumpProtectionSwitchingInterval = c["pumpProtectionSwitchingInterval"]
 
     def __str__(self):
-        return "{}: globalPumpControl({})".format(super().__str__(),
-                                                  self.globalPumpControl)
+        return ("{}: globalPumpControl({}) heatingValveType({}) heatingLoadType({}) coolingEmergencyValue({}) frostProtectionTemperature({}) heatingEmergencyValue({}) "
+               "valveProtectionDuration({}) valveProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({}) pumpProtectionDuration({}) " 
+               "pumpProtectionSwitchingInterval({})").format(super().__str__(), self.globalPumpControl, self.heatingValveType,
+                    self.heatingLoadType, self.coolingEmergencyValue, self.frostProtectionTemperature, self.heatingEmergencyValue, self.valveProtectionDuration,
+                    self.valveProtectionSwitchingInterval, self.pumpFollowUpTime, self.pumpLeadTime, self.pumpProtectionDuration,
+                    self.pumpProtectionSwitchingInterval)
 
 
 class Switch(Device):
@@ -448,7 +469,12 @@ class RemoteControl8(PushButton):
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
-
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ALARM_SIREN_CHANNEL", js)
+        if c:
+            #The ALARM_SIREN_CHANNEL doesn't have any values yet.
+            pass
 
 class MotionDetectorIndoor(SabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
@@ -522,17 +548,6 @@ class PresenceDetectorIndoor(SabotageDevice):
 
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
-
-    def from_json(self, js):
-        super().from_json(js)
-        c = get_functional_channel("DEVICE_BASE", js)
-        if c:
-            self.unreach = c["unreach"]
-            self.lowBat = c["lowBat"]
-
-    def __str__(self):
-        return "{}".format(super().__str__())
-
 
 class FullFlushShutter(Device):
     """HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)"""
@@ -746,19 +761,12 @@ class WaterSensor(Device):
         self.moistureDetected = False
         self.sirenWateralarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.waterlevelDetected = False
+        self._baseChannel = "DEVICE_INCORRECT_POSITIONED"
         
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("DEVICE_INCORRECT_POSITIONED", js)
         if c:
-            self.unreach = c["unreach"]
-            self.lowBat = c["lowBat"]
-            self.routerModuleSupported = c["routerModuleSupported"]
-            self.routerModuleEnabled = c["routerModuleEnabled"]
-            self.rssiDeviceValue = c["rssiDeviceValue"]
-            self.rssiPeerValue = c["rssiPeerValue"]
-            self.dutyCycle = c["dutyCycle"]
-            self.configPending = c["configPending"]
             self.incorrectPositioned = c["incorrectPositioned"]
 
         c = get_functional_channel("WATER_SENSOR_CHANNEL", js)

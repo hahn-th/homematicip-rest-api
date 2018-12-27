@@ -237,7 +237,7 @@ class SwitchMeasuringChannel(SwitchChannel):
         self.energyCounter = js["energyCounter"]
         self.currentPowerConsumption = js["currentPowerConsumption"]
 
-class DeviceGlobalPumpControlChannel(FunctionalChannel):
+class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
     """ this is the representive of the DEVICE_GLOBAL_PUMP_CONTROL channel"""
     def __init__(self):
         super().__init__()
@@ -250,7 +250,13 @@ class DeviceGlobalPumpControlChannel(FunctionalChannel):
         super().from_json(js,groups)
         self.globalPumpControl = js["globalPumpControl"]
         self.heatingValveType = HeatingValveType.from_str(js["heatingValveType"])
-
+        self.heatingLoadType = HeatingLoadType.from_str(js["heatingLoadType"])
+        self.coolingEmergencyValue = js["coolingEmergencyValue"]
+            
+        self.frostProtectionTemperature = js["frostProtectionTemperature"]
+        self.heatingEmergencyValue = js["heatingEmergencyValue"]
+        self.valveProtectionDuration = js["valveProtectionDuration"]
+        self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
 
 class MotionDetectionChannel(FunctionalChannel):
     """ this is the representive of the MOTION_DETECTION_CHANNEL channel"""
@@ -411,3 +417,34 @@ class WeatherSensorProChannel(WeatherSensorChannel):
 
 class SingleKeyChannel(FunctionalChannel):
     """ this is the representive of the SINGLE_KEY_CHANNEL channel"""
+
+class AlarmSirenChannel(FunctionalChannel):
+    """ this is the representive of the ALARM_SIREN_CHANNEL channel"""
+
+class FloorTeminalBlockChannel(FunctionalChannel):
+    """ this is the representive of the FLOOR_TERMINAL_BLOCK_CHANNEL channel"""
+
+class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
+    """ this is the representive of the FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL  channel"""
+    def __init__(self):
+        super().__init__()
+        self.pumpFollowUpTime = 0
+        self.pumpLeadTime = 0
+        self.pumpProtectionDuration = 0
+        self.pumpProtectionSwitchingInterval = 20
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.pumpFollowUpTime = js["pumpFollowUpTime"]
+        self.pumpLeadTime = js["pumpLeadTime"]
+        self.pumpProtectionDuration = js["pumpProtectionDuration"]
+        self.pumpProtectionSwitchingInterval = js["pumpProtectionSwitchingInterval"]
+
+class HeatDemandChannel(FunctionalChannel):
+    """ this is the representive of the HEAT_DEMAND_CHANNEL channel"""
+
+class DehumidifierDemandChannel(FunctionalChannel):
+    """ this is the representive of the DEHUMIDIFIER_DEMAND_CHANNEL channel"""
+

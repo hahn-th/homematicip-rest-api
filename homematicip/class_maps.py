@@ -106,13 +106,18 @@ TYPE_FUNCTIONALHOME_MAP = {
 
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL : FunctionalChannel,
+    FunctionalChannelType.ALARM_SIREN_CHANNEL : AlarmSirenChannel,
     FunctionalChannelType.CLIMATE_SENSOR_CHANNEL : ClimateSensorChannel,
     FunctionalChannelType.DEVICE_BASE : DeviceBaseChannel,
+    FunctionalChannelType.DEHUMIDIFIER_DEMAND_CHANNEL : DehumidifierDemandChannel,
     FunctionalChannelType.DEVICE_GLOBAL_PUMP_CONTROL : DeviceGlobalPumpControlChannel,
     FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
     FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel,
     FunctionalChannelType.DEVICE_INCORRECT_POSITIONED : DeviceIncorrectPositionedChannel,
     FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,
+    FunctionalChannelType.FLOOR_TERMINAL_BLOCK_CHANNEL: FloorTeminalBlockChannel,
+    FunctionalChannelType.FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL: FloorTerminalBlockLocalPumpChannel,
+    FunctionalChannelType.HEAT_DEMAND_CHANNEL : HeatDemandChannel,
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL : HeatingThermostatChannel,
     FunctionalChannelType.MOTION_DETECTION_CHANNEL : MotionDetectionChannel,
     FunctionalChannelType.PRESENCE_DETECTION_CHANNEL : PresenceDetectionChannel,
