@@ -39,7 +39,7 @@ class FakeServer:
         self._add_route()
         self.runner = web.AppRunner(self.app)
         await self.runner.setup()
-        site = web.TCPSite(self.runner, "localhost", 8123)
+        site = web.TCPSite(self.runner, "127.0.0.1", 8123)
         await site.start()
         pass
 
