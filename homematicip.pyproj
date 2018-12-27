@@ -138,6 +138,7 @@
     <Folder Include="homematicip\base\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CHANGELOG.md" />
     <Content Include="README.rst" />
     <Content Include="requirements.txt" />
     <Content Include="tests\json_data\unknown_types.json" />

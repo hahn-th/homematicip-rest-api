@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### ADDED
+- API
+  - FunctionalChannels
+    - AlarmSirenChannel
+    - FloorTerminalBlockChannel
+    - FloorTerminalBlockLocalPumpChannel
+    - HeatDemandChannel
+    - DehumidifierDemandChannel
+  - Enums
+    - HeatingLoadType
+  - Devices
+    - HmIP-FAL230-C6 
+      - added missing properties
 ## [0.10.0] - 2018-12-23
 ### Added
 - Devices
@@ -26,10 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - AsyncHome
     - delete_group
     - get_security_journal
-	- set_powermeter_unit_price
-	- set_timezone
-	- set_pin
-	- set_zone_activation_delay
+    - set_powermeter_unit_price
+    - set_timezone
+    - set_pin
+    - set_zone_activation_delay
   - Home
     - added clearConfig Parameter to get a "fresh" configuration
   - [Async]Switch
@@ -44,14 +58,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - set_boost_duration
   - [Async]SecurityEvents
     - SensorEvent
-	- SabotageEvent
-	- MoistureDetectionEvent
-	- SmokeAlarmEvent
-	- ExternalTriggeredEvent
-	- OfflineAlarmEvent
-	- WaterDetectionEvent
-	- MainsFailureEvent
-	- OfflineWaterDetectionEvent
+    - SabotageEvent
+    - MoistureDetectionEvent
+    - SmokeAlarmEvent
+    - ExternalTriggeredEvent
+    - OfflineAlarmEvent
+    - WaterDetectionEvent
+    - MainsFailureEvent
+    - OfflineWaterDetectionEvent
   
 ### Removed
 - hmip_cli.py
@@ -89,7 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.8...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.0...HEAD
+[0.10.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.8...0.10.0
 [0.9.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.7...0.9.8
 [0.9.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.6...0.9.7
 [0.9.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.5...0.9.6
