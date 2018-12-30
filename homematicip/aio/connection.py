@@ -186,7 +186,7 @@ class AsyncConnection(BaseConnection):
             while True:
                 msg = await self.socket_connection.recv()
                 logger.debug("incoming hmip message")
-                on_message(None, msg.decode())
+                on_message(msg.decode())
         except TypeError:
             logger.error("Problem converting incoming bytes %s", msg)
         except ConnectionClosed:
