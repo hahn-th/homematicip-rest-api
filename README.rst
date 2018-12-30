@@ -10,7 +10,7 @@ done via reverse engineering. Use at your own risk.
 Installation
 ============
 
-Just run **pip3 install homematicip** to get the package
+Just run **pip3 install -U homematicip** to get the package
 
 Usage
 =====
