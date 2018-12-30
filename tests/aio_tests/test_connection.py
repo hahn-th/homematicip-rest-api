@@ -1,6 +1,7 @@
 import asyncio
 import logging
 from asyncio import ensure_future
+from unittest.mock import Mock
 
 import pytest
 from aiohttp import web
@@ -80,6 +81,15 @@ class NoConnectionServer(FakeServer):
         return ws
 
 
+class SingleMessageServer(FakeServer):
+    async def handler(self, request):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+        await ws.send_bytes(b"this is a message")
+        await asyncio.sleep(3)
+        return ws
+
+
 @pytest.fixture
 async def simple_server():
     simple = FakeServer()
@@ -111,6 +121,16 @@ async def connection_lost_server():
 
 
 @pytest.fixture
+async def single_message_server():
+    single_message = SingleMessageServer()
+    await single_message.serve()
+
+    yield
+
+    await single_message.runner.cleanup()
+
+
+@pytest.fixture
 async def client_connection(event_loop):
     connection = AsyncConnection(event_loop)
     connection._urlWebSocket = "ws://localhost:8123/"
@@ -120,18 +140,16 @@ async def client_connection(event_loop):
     await connection._websession.close()
 
 
-async def ws_listen(connection):
-    def parser(*args, **kwargs):
-        try:
-            pass
-        except Exception as err:
-            pass
-        pass
+async def ws_listen(connection, on_message=None):
+    if on_message is None:
+        on_message = Mock()
 
     def on_error(*args, **kwargs):
         pass
 
-    ws_loop = await connection.ws_connect(on_message=parser, on_error=on_error)
+    ws_loop = await connection.ws_connect(
+        on_message=on_message, on_error=on_error
+    )
 
     return ws_loop
 
@@ -147,6 +165,8 @@ async def test_ws_no_pong(no_ping_server, client_connection):
     assert client_connection.ping_pong_task.done()
     assert client_connection.ws_reader_task.done()
     assert not client_connection.ws_connected
+    res = listener.result
+    pass
 
 
 @pytest.mark.asyncio
@@ -189,3 +209,19 @@ async def test_user_disconnect_and_reconnect(simple_server, client_connection):
 
     with pytest.raises(HmipConnectionError):
         await listener
+
+
+@pytest.mark.asyncio
+async def test_ws_message(single_message_server, client_connection):
+    on_message_mock = Mock()
+    listener = await ws_listen(client_connection,on_message=on_message_mock)
+    assert client_connection.ws_connected
+
+    with pytest.raises(HmipConnectionError):
+        await listener
+
+    assert client_connection.ping_pong_task.done()
+    assert client_connection.ws_reader_task.done()
+    assert not client_connection.ws_connected
+
+    on_message_mock.assert_called_once_with("this is a message")
