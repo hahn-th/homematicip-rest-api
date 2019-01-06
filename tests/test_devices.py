@@ -268,10 +268,11 @@ def test_weather_sensor_pro(fake_home : Home):
     assert d.unreach == False
     assert d.configPending == False
     assert d.dutyCycle == False
-    assert str(d) == ('HmIP-SWO-PR Wettersensor - pro lowbat(False) unreach(False) rssiDeviceValue(-68) rssiPeerValue(None) configPending(False) dutyCycle(False) humidity(65)'
-                      ' illumination(4153.0) illuminationThresholdSunshine(10.0) raining(False) storm(False) sunshine(True)todayRainCounter(6.5) todaySunshineDuration(100)'
-                      ' totalRainCounter(6.5) totalSunshineDuration(100)weathervaneAlignmentNeeded(False) windDirection(295.0) windDirectionVariation(56.25) windSpeed(2.6)'
-                      ' windValueType(AVERAGE_VALUE)yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)')
+    assert str(d) == ('HmIP-SWO-PR Wettersensor - pro lowbat(False) unreach(False) rssiDeviceValue(-68) rssiPeerValue(None) configPending(False) dutyCycle(False)'
+                      ' actualTemperature(15.4) humidity(65)'
+                      ' illumination(4153.0) illuminationThresholdSunshine(10.0) raining(False) storm(False) sunshine(True) todayRainCounter(6.5) todaySunshineDuration(100)'
+                      ' totalRainCounter(6.5) totalSunshineDuration(100) weathervaneAlignmentNeeded(False) windDirection(295.0) windDirectionVariation(56.25) windSpeed(2.6)'
+                      ' windValueType(AVERAGE_VALUE) yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000001"]
 
 def test_weather_sensor(fake_home : Home):
@@ -312,6 +313,39 @@ def test_weather_sensor(fake_home : Home):
                      ' actualTemperature(15.2) humidity(42) illumination(4890.0) illuminationThresholdSunshine(3500.0) storm(False) sunshine(True)'
                      ' todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6) windValueType(MAX_VALUE) yesterdaySunshineDuration(3)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000003"]
+
+def test_weather_sensor_plus(fake_home : Home):
+    d = fake_home.search_device_by_id('3014F7110000000000000038')
+    assert isinstance(d, WeatherSensorPlus)
+    assert d.humidity == 97
+    assert d.illumination == 26.4
+    assert d.illuminationThresholdSunshine == 3500.0
+    assert d.raining == False
+    assert d.storm == False
+    assert d.sunshine == False
+    assert d.todayRainCounter == 3.8999999999999773
+    assert d.todaySunshineDuration == 0
+    assert d.totalRainCounter == 544.0999999999999
+    assert d.totalSunshineDuration == 132057
+    assert d.windSpeed == 15.0
+    assert d.windValueType == WindValueType.CURRENT_VALUE
+    assert d.yesterdayRainCounter == 25.600000000000023
+    assert d.yesterdaySunshineDuration == 0
+    assert d.actualTemperature == 4.3
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -55
+    assert d.rssiPeerValue == None
+    assert d.unreach == False
+    assert d.configPending == False
+    assert d.dutyCycle == False
+    assert str(d) == ('HmIP-SWO-PL Weather Sensor \u2013 plus lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) actualTemperature(4.3)'
+                      ' humidity(97) illumination(26.4) illuminationThresholdSunshine(3500.0) raining(False) storm(False) sunshine(False) todayRainCounter(3.8999999999999773) todaySunshineDuration(0)'
+                      ' totalRainCounter(544.0999999999999) totalSunshineDuration(132057) windSpeed(15.0)'
+                      ' windValueType(CURRENT_VALUE) yesterdayRainCounter(25.600000000000023) yesterdaySunshineDuration(0)')
+    assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000038"]
+
 
 def test_rotary_handle_sensor(fake_home : Home):
     d = fake_home.search_device_by_id('3014F711AAAA000000000004')

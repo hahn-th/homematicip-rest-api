@@ -186,6 +186,9 @@ class AsyncFullFlushDimmer(AsyncDimmer):
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """ HmIP-SWO-B """
 
+class AsyncWeatherSensorPlus(WeatherSensorPlus, AsyncDevice):
+    """ HmIP-SWO-PL """
+
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
     """ HmIP-SWO-PR """
 

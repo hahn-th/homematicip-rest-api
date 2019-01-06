@@ -164,6 +164,7 @@ class DeviceType(AutoNameEnum):
     TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR = auto()
     WEATHER_SENSOR = auto()
     WEATHER_SENSOR_PRO = auto()
+    WEATHER_SENSOR_PLUS = auto()
     ROTARY_HANDLE_SENSOR = auto()
     FULL_FLUSH_SWITCH_MEASURING = auto()
     MOTION_DETECTOR_PUSH_BUTTON = auto()
@@ -303,6 +304,7 @@ class FunctionalChannelType(AutoNameEnum):
     WATER_SENSOR_CHANNEL = auto()
     WEATHER_SENSOR_CHANNEL = auto()
     WEATHER_SENSOR_PRO_CHANNEL = auto()
+    WEATHER_SENSOR_PLUS_CHANNEL = auto()
 
 class HeatingLoadType(AutoNameEnum):
     LOAD_BALANCING = auto()

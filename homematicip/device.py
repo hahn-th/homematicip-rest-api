@@ -714,6 +714,59 @@ class WeatherSensor(Device):
                                                                             self.windValueType,
                                                                             self.yesterdaySunshineDuration)
 
+class WeatherSensorPlus(Device):
+    """ HmIP-SWO-PL """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.illumination = 0
+        self.illuminationThresholdSunshine = 0
+        self.raining = False
+        self.storm = False
+        self.sunshine = False
+        self.todayRainCounter = 0
+        self.todaySunshineDuration = 0
+        self.totalRainCounter = 0
+        self.totalSunshineDuration = 0
+        self.windSpeed = 0
+        self.windValueType = WindValueType.AVERAGE_VALUE
+        self.yesterdayRainCounter = 0
+        self.yesterdaySunshineDuration = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+
+        c = get_functional_channel("WEATHER_SENSOR_PLUS_CHANNEL", js)
+        if c:
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
+            self.illumination = c["illumination"]
+            self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]
+            self.raining = c["raining"]
+            self.storm = c["storm"]
+            self.sunshine = c["sunshine"]
+            self.todayRainCounter = c["todayRainCounter"]
+            self.todaySunshineDuration = c["todaySunshineDuration"]
+            self.totalRainCounter = c["totalRainCounter"]
+            self.totalSunshineDuration = c["totalSunshineDuration"]
+            self.windSpeed = c["windSpeed"]
+            self.windValueType = WindValueType.from_str(c["windValueType"])
+            self.yesterdayRainCounter = c["yesterdayRainCounter"]
+            self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+
+    def __str__(self):
+        return ("{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
+                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
+                "windSpeed({}) windValueType({}) yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(
+                                                                                super().__str__(),self.actualTemperature,
+                                                                                self.humidity,self.illumination,
+                                                                                self.illuminationThresholdSunshine,self.raining,
+                                                                                self.storm,self.sunshine,self.todayRainCounter,
+                                                                                self.todaySunshineDuration,self.totalRainCounter,
+                                                                                self.totalSunshineDuration,self.windSpeed,
+                                                                                self.windValueType,self.yesterdayRainCounter,
+                                                                                self.yesterdaySunshineDuration)
 
 class WeatherSensorPro(Device):
     """ HmIP-SWO-PR """
@@ -763,10 +816,11 @@ class WeatherSensorPro(Device):
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
 
     def __str__(self):
-        return ("{} humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({})"
-                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({})"
-                "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({})"
-                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.humidity,self.illumination,
+        return ("{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
+                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
+                "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({}) "
+                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.actualTemperature,
+                                                                                 self.humidity,self.illumination,
                                                                                  self.illuminationThresholdSunshine,self.raining,
                                                                                  self.storm,self.sunshine,self.todayRainCounter,
                                                                                  self.todaySunshineDuration,self.totalRainCounter,

@@ -39,6 +39,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
     DeviceType.WEATHER_SENSOR: WeatherSensor,
     DeviceType.WEATHER_SENSOR_PRO: WeatherSensorPro,
+    DeviceType.WEATHER_SENSOR_PLUS: WeatherSensorPlus,
     DeviceType.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
@@ -133,6 +134,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL : WallMountedThermostatProChannel,
     FunctionalChannelType.WATER_SENSOR_CHANNEL : WaterSensorChannel,
     FunctionalChannelType.WEATHER_SENSOR_CHANNEL : WeatherSensorChannel,
+    FunctionalChannelType.WEATHER_SENSOR_PLUS_CHANNEL : WeatherSensorPlusChannel,
     FunctionalChannelType.WEATHER_SENSOR_PRO_CHANNEL : WeatherSensorProChannel,
 
 }

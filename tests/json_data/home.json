@@ -8,6 +8,67 @@
         }
     },
     "devices": {
+        "3014F7110000000000000038": {
+            "availableFirmwareVersion": "1.0.18",
+            "firmwareVersion": "1.0.18",
+            "firmwareVersionInteger": 65554,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000038",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -55,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "actualTemperature": 4.3,
+                    "deviceId": "3014F7110000000000000038",
+                    "functionalChannelType": "WEATHER_SENSOR_PLUS_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "humidity": 97,
+                    "illumination": 26.4,
+                    "illuminationThresholdSunshine": 3500.0,
+                    "index": 1,
+                    "label": "",
+                    "raining": false,
+                    "storm": false,
+                    "sunshine": false,
+                    "todayRainCounter": 3.8999999999999773,
+                    "todaySunshineDuration": 0,
+                    "totalRainCounter": 544.0999999999999,
+                    "totalSunshineDuration": 132057,
+                    "windSpeed": 15.0,
+                    "windValueType": "CURRENT_VALUE",
+                    "yesterdayRainCounter": 25.600000000000023,
+                    "yesterdaySunshineDuration": 0
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000038",
+            "label": "Weather Sensor \u2013 plus",
+            "lastStatusUpdate": 1546789939739,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 351,
+            "modelType": "HmIP-SWO-PL",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000038",
+            "type": "WEATHER_SENSOR_PLUS",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000BBBBB1": {
             "availableFirmwareVersion": "1.6.2",
             "firmwareVersion": "1.6.2",

@@ -391,16 +391,13 @@ class WeatherSensorChannel(FunctionalChannel):
         self.windValueType = WindValueType.from_str(js["windValueType"])
         self.yesterdaySunshineDuration = js["yesterdaySunshineDuration"]
 
-class WeatherSensorProChannel(WeatherSensorChannel):
-    """ this is the representive of the WEATHER_SENSOR_PRO_CHANNEL channel"""
-    def __init__(self):
-        super().__init__()
+class WeatherSensorPlusChannel(WeatherSensorChannel):
+    """ this is the representive of the WEATHER_SENSOR_PLUS_CHANNEL channel"""
+    def __init__(self,connection):
+        super().__init__(connection)
         self.raining = False
         self.todayRainCounter = 0
         self.totalRainCounter = 0
-        self.weathervaneAlignmentNeeded = False
-        self.windDirection = 0
-        self.windDirectionVariation = 0
         self.yesterdayRainCounter = 0
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -410,10 +407,23 @@ class WeatherSensorProChannel(WeatherSensorChannel):
         self.raining = js["raining"]
         self.todayRainCounter = js["todayRainCounter"]
         self.totalRainCounter = js["totalRainCounter"]
+        self.yesterdayRainCounter = js["yesterdayRainCounter"]
+
+class WeatherSensorProChannel(WeatherSensorPlusChannel):
+    """ this is the representive of the WEATHER_SENSOR_PRO_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.weathervaneAlignmentNeeded = False
+        self.windDirection = 0
+        self.windDirectionVariation = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
         self.weathervaneAlignmentNeeded = js["weathervaneAlignmentNeeded"]
         self.windDirection = js["windDirection"]
         self.windDirectionVariation = js["windDirectionVariation"]
-        self.yesterdayRainCounter = js["yesterdayRainCounter"]
 
 class SingleKeyChannel(FunctionalChannel):
     """ this is the representive of the SINGLE_KEY_CHANNEL channel"""
