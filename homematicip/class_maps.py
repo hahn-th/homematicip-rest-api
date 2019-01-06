@@ -26,6 +26,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON: PushButton,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
     DeviceType.MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
+    DeviceType.MOTION_DETECTOR_OUTDOOR: MotionDetectorOutdoor,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
     DeviceType.PLUGABLE_SWITCH: PlugableSwitch,
     DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,

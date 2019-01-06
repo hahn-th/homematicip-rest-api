@@ -482,7 +482,7 @@ def test_water_sensor(fake_home : Home):
         assert result['errorCode'] == 'INVALID_DEVICE'
 
 
-def test_motion_detector_indoor(fake_home:Home):
+def test_motion_detector(fake_home:Home):
     d = MotionDetectorIndoor(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711000000000000BB11")
     
@@ -496,6 +496,20 @@ def test_motion_detector_indoor(fake_home:Home):
     assert str(d) == ("HmIP-SMI Wohnzimmer lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
                       "dutyCycle(False): sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
                       "motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")
+
+    d = MotionDetectorOutdoor(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711000000000000BB11")
+    
+    assert d.illumination == 233.4
+    assert d.currentIllumination == None
+    assert d.motionBufferActive == True
+    assert d.motionDetected == True
+    assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
+    assert d.numberOfBrightnessMeasurements == 7
+
+    assert str(d) == ("HmIP-SMO-A Au\u00dfen K\u00fcche lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
+                      "dutyCycle(False): sabotage(False) motionDetected(True) illumination(233.4) motionBufferActive(True) "
+                      "motionDetectionSendInterval(SECONDS_240) numberOfBrightnessMeasurements(7)")
 
 def test_presence_detector_indoor(fake_home:Home):
     d = PresenceDetectorIndoor(fake_home._connection)

@@ -233,6 +233,58 @@
             "type": "MOTION_DETECTOR_INDOOR",
             "updateState": "UP_TO_DATE"
         },
+        "3014F71100000000000BBB17": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.2",
+            "firmwareVersionInteger": 65538,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F71100000000000BBB17",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -70,
+                    "rssiPeerValue": -67,
+                    "unreach": false
+                },
+                "1": {
+                    "currentIllumination": null,
+                    "deviceId": "3014F71100000000000BBB17",
+                    "functionalChannelType": "MOTION_DETECTION_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "illumination": 233.4,
+                    "index": 1,
+                    "label": "",
+                    "motionBufferActive": true,
+                    "motionDetected": true,
+                    "motionDetectionSendInterval": "SECONDS_240",
+                    "numberOfBrightnessMeasurements": 7
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F71100000000000BBB17",
+            "label": "Au\u00dfen K\u00fcche",
+            "lastStatusUpdate": 1546776559553,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 302,
+            "modelType": "HmIP-SMO-A",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F71100000000000BBB17",
+            "type": "MOTION_DETECTOR_OUTDOOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000050": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.2",

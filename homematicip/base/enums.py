@@ -141,6 +141,7 @@ class DeviceType(AutoNameEnum):
     PLUGABLE_SWITCH = auto()
     KEY_REMOTE_CONTROL_ALARM = auto()
     MOTION_DETECTOR_INDOOR = auto()
+    MOTION_DETECTOR_OUTDOOR = auto()
     ALARM_SIREN_INDOOR = auto()
     PUSH_BUTTON = auto()
     TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()

@@ -508,6 +508,8 @@ class MotionDetectorIndoor(SabotageDevice):
                                                                self.motionDetectionSendInterval,
                                                                self.numberOfBrightnessMeasurements)
 
+class MotionDetectorOutdoor(SabotageDevice):
+    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
 
 class MotionDetectorPushButton(MotionDetectorIndoor):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
