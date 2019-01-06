@@ -393,8 +393,8 @@ class WeatherSensorChannel(FunctionalChannel):
 
 class WeatherSensorPlusChannel(WeatherSensorChannel):
     """ this is the representive of the WEATHER_SENSOR_PLUS_CHANNEL channel"""
-    def __init__(self,connection):
-        super().__init__(connection)
+    def __init__(self):
+        super().__init__()
         self.raining = False
         self.todayRainCounter = 0
         self.totalRainCounter = 0
