@@ -20,6 +20,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON: AsyncPushButton,
     DeviceType.ALARM_SIREN_INDOOR: AsyncAlarmSirenIndoor,
     DeviceType.MOTION_DETECTOR_INDOOR: AsyncMotionDetectorIndoor,
+    DeviceType.MOTION_DETECTOR_OUTDOOR: AsyncMotionDetectorOutdoor,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: AsyncKeyRemoteControlAlarm,
     DeviceType.PLUGABLE_SWITCH: AsyncPlugableSwitch,
     DeviceType.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,

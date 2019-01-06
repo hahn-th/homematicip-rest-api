@@ -508,6 +508,36 @@ class MotionDetectorIndoor(SabotageDevice):
                                                                self.motionDetectionSendInterval,
                                                                self.numberOfBrightnessMeasurements)
 
+class MotionDetectorOutdoor(Device):
+    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.currentIllumination = None
+        self.motionDetected = None
+        self.illumination = None
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MOTION_DETECTION_CHANNEL", js)
+        if c:
+            self.motionDetected = c["motionDetected"]
+            self.illumination = c["illumination"]
+            self.motionBufferActive = c["motionBufferActive"]
+            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
+            self.currentIllumination = c["currentIllumination"]
+
+    def __str__(self):
+        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
+                                                               self.motionDetected,
+                                                               self.illumination,
+                                                               self.motionBufferActive,
+                                                               self.motionDetectionSendInterval,
+                                                               self.numberOfBrightnessMeasurements)
+
 
 class MotionDetectorPushButton(MotionDetectorIndoor):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """

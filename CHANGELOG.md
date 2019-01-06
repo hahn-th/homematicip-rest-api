@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.2] - 2019-01-06
+### Added
+- Devices
+  - HmIP-SMO-A
+### Changes
+- API
+  - Small Bugfix in the aio library
+
 ## [0.10.1] - 2018-12-28
 ### Added
 - API
@@ -109,7 +117,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.1...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.2...HEAD
+[0.10.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.8...0.10.0
 [0.9.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.7...0.9.8
