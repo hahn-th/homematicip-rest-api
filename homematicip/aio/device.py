@@ -138,7 +138,7 @@ class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
     pass
 
-class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncMotionDetectorIndoor):
+class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncDevice):
     """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
     pass
 
