@@ -30,6 +30,7 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring,
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
     DeviceType.WEATHER_SENSOR_PRO: AsyncWeatherSensorPro,
+    DeviceType.WEATHER_SENSOR_PLUS: AsyncWeatherSensorPlus,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: AsyncTemperatureHumiditySensorOutdoor,
     DeviceType.BRAND_DIMMER: AsyncBrandDimmer,
     DeviceType.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
