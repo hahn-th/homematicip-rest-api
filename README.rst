@@ -80,7 +80,7 @@ Devices:
 -  [X] HMIP-PSM (Plugable Switch Measuring)
 -  [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 -  [X] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)
--  [X] HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)
+-  [X] HMIP-SMO, HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)
 -  [X] HMIP-SPI (Precence Sensor - indoor)
 -  [X] HMIP-SRH (Rotary Handle Sensor)
 -  [X] HMIP-STH (Temperature and Humidity Sensor without display - indoor)
