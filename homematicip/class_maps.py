@@ -7,7 +7,7 @@ from homematicip.group import *
 from homematicip.securityEvent import *
 from homematicip.rule import *
 from homematicip.functionalHomes import *
-from homematicip.functionalChannels import *
+from homematicip.base.functionalChannels import *
 
 
 TYPE_CLASS_MAP = {
@@ -110,12 +110,13 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL : FunctionalChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL : AlarmSirenChannel,
     FunctionalChannelType.CLIMATE_SENSOR_CHANNEL : ClimateSensorChannel,
-    FunctionalChannelType.DEVICE_BASE : DeviceBaseChannel,
     FunctionalChannelType.DEHUMIDIFIER_DEMAND_CHANNEL : DehumidifierDemandChannel,
+    FunctionalChannelType.DEVICE_BASE : DeviceBaseChannel,
     FunctionalChannelType.DEVICE_GLOBAL_PUMP_CONTROL : DeviceGlobalPumpControlChannel,
-    FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
-    FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel,
     FunctionalChannelType.DEVICE_INCORRECT_POSITIONED : DeviceIncorrectPositionedChannel,
+    FunctionalChannelType.DEVICE_OPERATIONLOCK : DeviceOperationLockChannel,
+    FunctionalChannelType.DEVICE_PERMANENT_FULL_RX: DevicePermanentFullRxChannel,
+    FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
     FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_CHANNEL: FloorTeminalBlockChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL: FloorTerminalBlockLocalPumpChannel,

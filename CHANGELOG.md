@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - API
   - DeviceUpdateState enum 
+  - functionalChannel
+    - DevicePermanentFullRxChannel
+  - Device
+    - MotionDetectorPushButton
+      - added permanentFullRx property
+### Changes
+- API
+  - moved functionalChannels to homematicip.base 
 
 ## [0.10.3] - 2019-01-06
 ### Added

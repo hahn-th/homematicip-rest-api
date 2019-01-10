@@ -156,8 +156,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
         self.weather = Weather(self._connection)
         self.weather.from_json(js_home["weather"])
-        self.location = Location(self._connection)
-        self.location.from_json(js_home["location"])
+        if js_home["location"] != None:
+            self.location = Location(self._connection)
+            self.location.from_json(js_home["location"])
 
         self.connected = js_home["connected"]
         self.currentAPVersion = js_home["currentAPVersion"]
@@ -229,7 +230,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         except:
             d = self._typeClassMap[DeviceType.DEVICE](self._connection)
             d.from_json(json_state)
-            LOGGER.warning("There is no class for %s yet", json_state["type"])
+            LOGGER.warning("There is no class for device '%s' yet", json_state["type"])
             return d
 
     def _get_rules(self, json_state):
@@ -250,7 +251,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         except:
             r = Rule(self._connection)
             r.from_json(json_state)
-            LOGGER.warning("There is no class for %s yet", json_state["type"])
+            LOGGER.warning("There is no class for rule  '%s' yet", json_state["type"])
             return r
 
     def _get_clients(self, json_state):
@@ -277,7 +278,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except:
                 g = self._typeGroupMap[GroupType.GROUP](self._connection)
                 g.from_json(json_state, self.devices)
-                LOGGER.warning("There is no class for %s yet", json_state["type"])
+                LOGGER.warning("There is no class for group '%s' yet", json_state["type"])
         return g
 
     def _get_groups(self, json_state):
@@ -315,7 +316,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except:
                 h = FunctionalHome(self._connection)
                 h.from_json(functionalHome, self.groups)
-                LOGGER.warning("There is no class for %s yet", solution)
+                LOGGER.warning("There is no class for functionalHome '%s' yet", solution)
                 self.functionalHomes.append(h)
 
     def _load_functionalChannels(self):

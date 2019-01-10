@@ -284,6 +284,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEVICE_GLOBAL_PUMP_CONTROL = auto()
     DEVICE_INCORRECT_POSITIONED = auto()
     DEVICE_OPERATIONLOCK = auto()
+    DEVICE_PERMANENT_FULL_RX = auto()
     DEVICE_SABOTAGE = auto()
     DIMMER_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()

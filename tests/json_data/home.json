@@ -8,6 +8,81 @@
         }
     },
     "devices": {
+        "3014F711000000000AAAAA25": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.12",
+            "firmwareVersionInteger": 65548,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711000000000AAAAA25",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_PERMANENT_FULL_RX",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "permanentFullRx": true,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -46,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711000000000AAAAA25",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000048",
+                        "00000000-0000-0000-0000-000000000034"
+                    ],
+                    "index": 1,
+                    "label": ""
+                },
+                "2": {
+                    "deviceId": "3014F711000000000AAAAA25",
+                    "functionalChannelType": "SINGLE_KEY_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000048",
+                        "00000000-0000-0000-0000-000000000034"
+                    ],
+                    "index": 2,
+                    "label": ""
+                },
+                "3": {
+                    "currentIllumination": null,
+                    "deviceId": "3014F711000000000AAAAA25",
+                    "functionalChannelType": "MOTION_DETECTION_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [],
+                    "illumination": 14.2,
+                    "index": 3,
+                    "label": "",
+                    "motionBufferActive": true,
+                    "motionDetected": false,
+                    "motionDetectionSendInterval": "SECONDS_240",
+                    "numberOfBrightnessMeasurements": 7
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000000000AAAAA25",
+            "label": "Bewegungsmelder f\u00fcr 55er Rahmen \u2013 innen",
+            "lastStatusUpdate": 1546776387401,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 338,
+            "modelType": "HmIP-SMI55",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F711000000000AAAAA25",
+            "type": "MOTION_DETECTOR_PUSH_BUTTON",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000038": {
             "availableFirmwareVersion": "1.0.18",
             "firmwareVersion": "1.0.18",

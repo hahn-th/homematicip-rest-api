@@ -6,7 +6,7 @@ from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
 from homematicip.device import *
-from homematicip.functionalChannels import *
+from homematicip.base.functionalChannels import *
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -515,6 +515,23 @@ def test_water_sensor(fake_home : Home):
         result = d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
         assert result['errorCode'] == 'INVALID_DEVICE'
 
+def test_motion_detector_push_button(fake_home:Home):
+    d = MotionDetectorPushButton(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711000000000AAAAA25")
+    
+    assert isinstance(d,MotionDetectorPushButton)
+    assert d.permanentFullRx == True
+    assert d.illumination == 14.2
+    assert d.currentIllumination == None
+    assert d.motionBufferActive == True
+    assert d.motionDetected == False
+    assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
+    assert d.numberOfBrightnessMeasurements == 7
+
+    assert str(d) == ("HmIP-SMI55 Bewegungsmelder für 55er Rahmen – innen lowbat(False) unreach(False) rssiDeviceValue(-46) "
+                      "rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(None) motionDetected(False) "
+                      "illumination(14.2) motionBufferActive(True) motionDetectionSendInterval(SECONDS_240) "
+                      "numberOfBrightnessMeasurements(7) permanentFullRx(True)")
 
 def test_motion_detector(fake_home:Home):
     d = MotionDetectorIndoor(fake_home._connection)

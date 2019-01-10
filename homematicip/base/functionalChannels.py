@@ -90,6 +90,19 @@ class DeviceIncorrectPositionedChannel(DeviceBaseChannel):
         super().from_json(js,groups)
         self.incorrectPositioned = js["incorrectPositioned"]
 
+class DevicePermanentFullRxChannel(DeviceBaseChannel):
+    """ this is the representive of the DEVICE_PERMANENT_FULL_RX channel"""
+    def __init__(self):
+        super().__init__()
+        self.permanentFullRx = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.permanentFullRx = js["permanentFullRx"]
+        
+
 class WaterSensorChannel(FunctionalChannel):
     """ this is the representive of the WATER_SENSOR_CHANNEL channel"""
     def __init__(self):

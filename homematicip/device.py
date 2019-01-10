@@ -124,7 +124,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         except:
             fc = self._typeFunctionalChannelMap[FunctionalChannelType.FUNCTIONAL_CHANNEL]()
             fc.from_json(json_state,groups)
-            LOGGER.warning("There is no class for %s yet", json_state["functionalChannelType"])
+            LOGGER.warning("There is no class for functionalChannel '%s' yet", json_state["functionalChannelType"])
         return fc
 
 
@@ -541,7 +541,19 @@ class MotionDetectorOutdoor(Device):
 
 class MotionDetectorPushButton(MotionDetectorIndoor):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self._baseChannel = 'DEVICE_PERMANENT_FULL_RX'
+        self.permanentFullRx = False
 
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_PERMANENT_FULL_RX", js)
+        if c:
+            self.permanentFullRx = c["permanentFullRx"]
+
+    def __str__(self):
+        return "{} permanentFullRx({})".format(super().__str__(), self.permanentFullRx)
 
 class PresenceDetectorIndoor(SabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
