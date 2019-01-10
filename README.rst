@@ -63,11 +63,11 @@ Implemented Stuff
 Devices:
 --------
 
--  [X] HMIP-ASIR (Alarm Siren)
+-  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren)
 -  [X] HMIP-BROLL (Shutter Actuator - brand-mount)
 -  [X] HMIP-BSM (Brand Switch and Meter)
 -  [X] HMIP-BWTH (Brand Wall Mounted Thermostat Pro)
--  [X] HMIP-eTRV, HMIP-eTRV2 (Heating-thermostat)
+-  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-thermostat)
 -  [X] HMIP-FAL230-C6 (Floor Terminal Block)
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)

@@ -22,7 +22,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.label = None
         self.lastStatusUpdate = None
         self.deviceType = None
-        self.updateState = None
+        self.updateState = DeviceUpdateState.UP_TO_DATE
         self.firmwareVersion = None
         self.firmwareVersionInteger = 0 # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
         self.availableFirmwareVersion = None
@@ -58,7 +58,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
 
         self.deviceType = js["type"]
-        self.updateState = js["updateState"]
+        self.updateState = DeviceUpdateState.from_str(js["updateState"])
         self.firmwareVersion = js["firmwareVersion"]
         self.firmwareVersionInteger = js["firmwareVersionInteger"]
         self.availableFirmwareVersion = js["availableFirmwareVersion"]

@@ -309,3 +309,10 @@ class FunctionalChannelType(AutoNameEnum):
 class HeatingLoadType(AutoNameEnum):
     LOAD_BALANCING = auto()
     LOAD_COLLECTION = auto()
+
+class DeviceUpdateState(AutoNameEnum):
+    UP_TO_DATE = auto()
+    TRANSFERING_UPDATE = auto()
+    UPDATE_AVAILABLE = auto()
+    UPDATE_AUTHORIZED = auto()
+    BACKGROUND_UPDATE_NOT_SUPPORTED = auto()

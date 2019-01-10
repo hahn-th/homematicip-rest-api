@@ -54,7 +54,7 @@ def test_pluggable_switch_measuring(fake_home : Home):
     assert d.modelType == "HMIP-PSM"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000009"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.on == False
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
@@ -102,7 +102,7 @@ def test_smoke_detector(fake_home : Home):
     assert d.modelType == "HmIP-SWSD"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000020"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.lowBat == False
     assert d.routerModuleEnabled == False
     assert d.routerModuleSupported == False
@@ -129,7 +129,7 @@ def test_wall_mounted_thermostat_pro(fake_home : Home ):
     assert d.modelType == "HmIP-WTH-2"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000022"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.humidity == 43
     assert d.setPointTemperature == 5.0
     assert d.display == ClimateControlDisplay.ACTUAL_HUMIDITY
@@ -170,7 +170,7 @@ def test_heating_thermostat(fake_home : Home):
     assert d.modelType == "HMIP-eTRV"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000015"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.setPointTemperature == 5.0
     assert d.temperatureOffset == 0.0
     assert d.valvePosition == 0.0
@@ -212,7 +212,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home : Home):
     assert d.modelType == "HmIP-STHO"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000002"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.humidity == 70
     assert d.actualTemperature == 15.1
     assert d.lowBat == False
@@ -237,7 +237,7 @@ def test_weather_sensor_pro(fake_home : Home):
     assert d.modelType == "HmIP-SWO-PR"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000001"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.10"
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
@@ -308,7 +308,7 @@ def test_weather_sensor(fake_home : Home):
     assert d.modelType == "HmIP-SWO-B"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000003"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert str(d) == ('HmIP-SWO-B Wettersensor lowbat(False) unreach(False) rssiDeviceValue(-77) rssiPeerValue(None) configPending(False) dutyCycle(False)'
                      ' actualTemperature(15.2) humidity(42) illumination(4890.0) illuminationThresholdSunshine(3500.0) storm(False) sunshine(True)'
                      ' todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6) windValueType(MAX_VALUE) yesterdaySunshineDuration(3)')
@@ -383,7 +383,7 @@ def test_dimmer(fake_home : Home):
     assert d.modelType == "HmIP-BDT"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000005"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
     assert d.dimLevel == 0.0
