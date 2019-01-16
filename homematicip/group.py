@@ -88,7 +88,7 @@ class MetaGroup(Group):
 
 
 class SecurityGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -124,7 +124,7 @@ class SecurityGroup(Group):
 
 
 class SwitchingGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -185,7 +185,7 @@ class LinkedSwitchingGroup(SwitchingGroup):
 
 
 class ExtendedLinkedSwitchingGroup(SwitchingGroup):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -209,7 +209,7 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
         return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
 
 class ExtendedLinkedShutterGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -292,7 +292,7 @@ class HeatingTemperatureLimiterGroup(Group):
 
 
 class HeatingChangeoverGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -314,7 +314,7 @@ class InboxGroup(Group):
 
 
 class SecurityZoneGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -346,7 +346,7 @@ class SecurityZoneGroup(Group):
 
 
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -362,7 +362,7 @@ class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -380,7 +380,7 @@ class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -451,7 +451,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -547,9 +547,13 @@ class HeatingGroup(Group):
         data = {"groupId": self.id, "profileIndex": index}
         return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
 
+    def set_control_mode(self, mode="AUTOMATIC"):
+        data = {"groupId": self.id, "controlMode": mode}
+        return self._restCall("group/heating/setControlMode", body=json.dumps(data))
+
 
 class HeatingDehumidifierGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -566,7 +570,7 @@ class HeatingDehumidifierGroup(Group):
 
 
 class HeatingCoolingDemandGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -592,7 +596,7 @@ class HeatingExternalClockGroup(Group):
 
 
 class HeatingCoolingDemandBoilerGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -614,7 +618,7 @@ class HeatingCoolingDemandBoilerGroup(Group):
 
 
 class HeatingCoolingDemandPumpGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -644,7 +648,7 @@ class HeatingCoolingDemandPumpGroup(Group):
 
 
 class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -670,7 +674,7 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -694,7 +698,7 @@ class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class SwitchingProfileGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -740,7 +744,7 @@ class SwitchingProfileGroup(Group):
 
 
 class OverHeatProtectionRule(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -776,7 +780,7 @@ class OverHeatProtectionRule(Group):
 
 
 class SmokeAlarmDetectionRule(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -793,7 +797,7 @@ class SmokeAlarmDetectionRule(Group):
 
 
 class ShutterWindProtectionRule(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
