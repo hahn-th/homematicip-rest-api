@@ -112,6 +112,10 @@ class WeatherDayTime(AutoNameEnum):
     TWILIGHT = auto()
     NIGHT = auto()
 
+class ClimateControlMode(AutoNameEnum):
+    AUTOMATIC = auto()
+    MANUAL = auto()
+
 class AbsenceType(AutoNameEnum):
     NOT_ABSENT = auto()
     PERIOD = auto()
