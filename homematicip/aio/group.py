@@ -121,8 +121,8 @@ class AsyncHeatingGroup(HeatingGroup, AsyncGroup):
     async def set_boost_duration(self, duration: int):
         return await self._connection.api_call(*super().set_boost_duration(duration))
 
-    async def set_control_mode(self, mode="AUTOMATIC"):
-        return await self._connection.api_call(*super().set_boost(mode=mode))
+    async def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
+        return await self._connection.api_call(*super().set_control_mode(mode=mode))
 
 
 class AsyncHeatingDehumidifierGroup(HeatingDehumidifierGroup, AsyncGroup):
