@@ -214,6 +214,26 @@ def test_environment_group(fake_home : Home):
 
         assert str(g) == "ENVIRONMENT Terrasse: actualTemperature(15.4) illumination(4703.0) raining(False) windSpeed(29.1) humidity(65)"
 
+def test_heating_dehumidifier_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000055')
+        assert isinstance(g, HeatingDehumidifierGroup)
+        assert g.on == None
+        assert str(g) == "HEATING_DEHUMIDIFIER HEATING_DEHUMIDIFIER: on(None)"
+
+def test_heating_cooling_demand_pump_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000057')
+        assert isinstance(g, HeatingCoolingDemandPumpGroup)
+        assert g.on == None
+        assert g.heatDemandRuleEnabled == False
+        assert g.pumpFollowUpTime == 2
+        assert g.pumpLeadTime == 2
+        assert g.pumpProtectionDuration == 1
+        assert g.pumpProtectionSwitchingInterval == 14
+        assert str(g) == ("HEATING_COOLING_DEMAND_PUMP HEATING_COOLING_DEMAND_PUMP: on(None) pumpProtectionDuration(1)"
+                         " pumpProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2)"
+                         " heatDemandRuleEnabled(False)")
 
 def test_all_groups_implemented(fake_home : Home):
     for g in fake_home.groups:

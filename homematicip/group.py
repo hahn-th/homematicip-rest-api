@@ -280,15 +280,13 @@ class AlarmSwitchingGroup(Group):
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingHumidyLimiterGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingTemperatureLimiterGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 class HeatingChangeoverGroup(Group):
@@ -558,15 +556,13 @@ class HeatingDehumidifierGroup(Group):
     def __init__(self,connection):
         super().__init__(connection)
         self.on = None
-        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
         self.on = js["on"]
 
     def __str__(self):
-        return "{}: on({})".format(
-            super().__str__(), self.on)
+        return "{}: on({})".format(super().__str__(), self.on)
 
 
 class HeatingCoolingDemandGroup(Group):
@@ -591,8 +587,7 @@ class HeatingCoolingDemandGroup(Group):
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingExternalClockGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 class HeatingCoolingDemandBoilerGroup(Group):
@@ -627,7 +622,7 @@ class HeatingCoolingDemandPumpGroup(Group):
         self.pumpFollowUpTime = None
         self.pumpLeadTime = None
         self.on = None
-        self.dimLevel = None
+        self.heatDemandRuleEnabled = False
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -637,14 +632,16 @@ class HeatingCoolingDemandPumpGroup(Group):
         self.pumpProtectionDuration = js["pumpProtectionDuration"]
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
+        self.heatDemandRuleEnabled = js["heatDemandRuleEnabled"]
 
     def __str__(self):
         return "{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) " \
-               "pumpLeadTime({})".format(
+               "pumpLeadTime({}) heatDemandRuleEnabled({})".format(
             super().__str__(),
             self.on, self.pumpProtectionDuration,
             self.pumpProtectionSwitchingInterval,
-            self.pumpFollowUpTime, self.pumpLeadTime)
+            self.pumpFollowUpTime, self.pumpLeadTime,
+            self.heatDemandRuleEnabled)
 
 
 class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
