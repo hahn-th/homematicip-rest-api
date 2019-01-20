@@ -159,6 +159,7 @@ class DeviceType(AutoNameEnum):
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     BRAND_SHUTTER = auto()
+    PASSAGE_DETECTOR = auto()
     PRESENCE_DETECTOR_INDOOR = auto()
     PLUGGABLE_DIMMER = auto()
     BRAND_DIMMER = auto()
@@ -296,6 +297,7 @@ class FunctionalChannelType(AutoNameEnum):
     HEAT_DEMAND_CHANNEL = auto()
     HEATING_THERMOSTAT_CHANNEL = auto()
     MOTION_DETECTION_CHANNEL = auto()
+    PASSAGE_DETECTOR_CHANNEL = auto()
     PRESENCE_DETECTION_CHANNEL = auto()
     ROTARY_HANDLE_CHANNEL = auto()
     SHUTTER_CHANNEL = auto()
@@ -321,3 +323,7 @@ class DeviceUpdateState(AutoNameEnum):
     UPDATE_AVAILABLE = auto()
     UPDATE_AUTHORIZED = auto()
     BACKGROUND_UPDATE_NOT_SUPPORTED = auto()
+
+class PassageDirection(AutoNameEnum):
+    LEFT = auto()
+    RIGHT = auto()

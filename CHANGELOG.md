@@ -6,13 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Devices
+  - HMIP-SPDR 
 - API
   - DeviceUpdateState enum 
   - functionalChannel
     - DevicePermanentFullRxChannel
+    - PassageDetectorChannel
+    - InternalSwitchChannel
   - Device
     - MotionDetectorPushButton
       - added permanentFullRx property
+  - Group
+    - HeatingGroup
+      - added set_control_mode method  
+- CLI
+  - added --server-config parameter. Instead of downloading the configuration from the cloud it will load a file.
+
 ### Changes
 - API
   - moved functionalChannels to homematicip.base 

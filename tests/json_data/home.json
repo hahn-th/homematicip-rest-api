@@ -8,6 +8,62 @@
         }
     },
     "devices": {
+        "3014F7110000000000000054": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.0",
+            "firmwareVersionInteger": 65536,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000054",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000053"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -76,
+                    "rssiPeerValue": null,
+                    "sabotage": false,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F7110000000000000054",
+                    "functionalChannelType": "PASSAGE_DETECTOR_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000055"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "leftCounter": 966,
+                    "leftRightCounterDelta": 164,
+                    "passageBlindtime": 1.5,
+                    "passageDirection": "LEFT",
+                    "passageSensorSensitivity": 50.0,
+                    "passageTimeout": 0.5,
+                    "rightCounter": 802
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000054",
+            "label": "***",
+            "lastStatusUpdate": 1547282742305,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 304,
+            "modelType": "HmIP-SPDR",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000054",
+            "type": "PASSAGE_DETECTOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F711000000000AAAAA25": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.12",

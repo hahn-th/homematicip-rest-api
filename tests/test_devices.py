@@ -616,6 +616,21 @@ def test_open_collector_8(fake_home:Home):
         c = d.functionalChannels[8]
         assert c.on == False
 
+def test_passage_detector(fake_home:Home):
+    with no_ssl_verification():
+        d = PassageDetector(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000000054")
+        assert d.leftCounter == 966
+        assert d.leftRightCounterDelta == 164
+        assert d.passageBlindtime == 1.5
+        assert d.passageDirection == PassageDirection.LEFT
+        assert d.passageSensorSensitivity == 50.0
+        assert d.passageTimeout == 0.5
+        assert d.rightCounter == 802
+
+        assert str(d) == ("HmIP-SPDR *** lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(None) configPending(False) dutyCycle(False):"
+                         " sabotage(False) leftCounter(966) leftRightCounterDelta(164) passageBlindtime(1.5) passageDirection(LEFT) passageSensorSensitivity(50.0)"
+                         " passageTimeout(0.5) rightCounter(802)")
 
 def test_full_flush_shutter(fake_home:Home):
     with no_ssl_verification():

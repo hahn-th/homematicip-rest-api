@@ -471,3 +471,26 @@ class HeatDemandChannel(FunctionalChannel):
 class DehumidifierDemandChannel(FunctionalChannel):
     """ this is the representive of the DEHUMIDIFIER_DEMAND_CHANNEL channel"""
 
+class PassageDetectorChannel(DeviceBaseChannel):
+    """ this is the representive of the PASSAGE_DETECTOR_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.leftCounter = 0
+        self.leftRightCounterDelta = 0
+        self.passageBlindtime = 0.0
+        self.passageDirection = PassageDirection.RIGHT
+        self.passageSensorSensitivity = 0.0
+        self.passageTimeout = 0.0
+        self.rightCounter = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.leftCounter = js["leftCounter"]
+        self.leftRightCounterDelta = js["leftRightCounterDelta"]
+        self.passageBlindtime = js["passageBlindtime"]
+        self.passageDirection = PassageDirection.from_str(js["passageDirection"])
+        self.passageSensorSensitivity = js["passageSensorSensitivity"]
+        self.passageTimeout = js["passageTimeout"]
+        self.rightCounter = js["rightCounter"]

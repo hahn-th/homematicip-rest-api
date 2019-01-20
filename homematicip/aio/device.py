@@ -152,6 +152,9 @@ class AsyncPresenceDetectorIndoor(PresenceDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
     pass
 
+class AsyncPassageDetector(PassageDetector, AsyncSabotageDevice):
+    """ HMIP-SPDR (Passage Detector) """
+    pass
 
 class AsyncKeyRemoteControlAlarm(KeyRemoteControlAlarm, AsyncDevice):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """

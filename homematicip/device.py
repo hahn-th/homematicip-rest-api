@@ -587,7 +587,41 @@ class PresenceDetectorIndoor(SabotageDevice):
                                                                self.motionDetectionSendInterval,
                                                                self.numberOfBrightnessMeasurements)
 
+class PassageDetector(SabotageDevice):
+    """ HMIP-SPDR (Passage Detector) """
 
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.leftCounter = 0
+        self.leftRightCounterDelta = 0
+        self.passageBlindtime = 0.0
+        self.passageDirection = PassageDirection.RIGHT
+        self.passageSensorSensitivity = 0.0
+        self.passageTimeout = 0.0
+        self.rightCounter = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("PASSAGE_DETECTOR_CHANNEL", js)
+        if c:
+            self.leftCounter = c["leftCounter"]
+            self.leftRightCounterDelta = c["leftRightCounterDelta"]
+            self.passageBlindtime = c["passageBlindtime"]
+            self.passageDirection = PassageDirection.from_str(c["passageDirection"])
+            self.passageSensorSensitivity = c["passageSensorSensitivity"]
+            self.passageTimeout = c["passageTimeout"]
+            self.rightCounter = c["rightCounter"]
+
+    def __str__(self):
+        return "{} leftCounter({}) leftRightCounterDelta({}) passageBlindtime({}) passageDirection({}) passageSensorSensitivity({}) passageTimeout({}) rightCounter({})".format(super().__str__(),
+                                                               self.leftCounter,
+                                                               self.leftRightCounterDelta,
+                                                               self.passageBlindtime,
+                                                               self.passageDirection,
+                                                               self.passageSensorSensitivity,
+                                                               self.passageTimeout,
+                                                               self.rightCounter)
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
 

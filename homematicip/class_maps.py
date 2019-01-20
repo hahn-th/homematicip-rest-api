@@ -49,6 +49,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON_6: PushButton6,
     DeviceType.REMOTE_CONTROL_8 : RemoteControl8,
     DeviceType.OPEN_COLLECTOR_8_MODULE : OpenCollector8Module,
+    DeviceType.PASSAGE_DETECTOR : PassageDetector
 }
 
 TYPE_GROUP_MAP = {
@@ -123,6 +124,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.HEAT_DEMAND_CHANNEL : HeatDemandChannel,
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL : HeatingThermostatChannel,
     FunctionalChannelType.MOTION_DETECTION_CHANNEL : MotionDetectionChannel,
+    FunctionalChannelType.PASSAGE_DETECTOR_CHANNEL: PassageDetectorChannel,
     FunctionalChannelType.PRESENCE_DETECTION_CHANNEL : PresenceDetectionChannel,
     FunctionalChannelType.ROTARY_HANDLE_CHANNEL : RotaryHandleChannel,
     FunctionalChannelType.SHUTTER_CHANNEL : ShutterChannel,

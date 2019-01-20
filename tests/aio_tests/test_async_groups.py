@@ -36,7 +36,7 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
     assert g.actualTemperature == 24.7
     assert g.boostDuration == 15
     assert g.boostMode == False
-    assert g.controlMode == "AUTOMATIC"
+    assert g.controlMode == ClimateControlMode.AUTOMATIC
     assert g.controllable == True
     assert g.cooling == False
     assert g.coolingAllowed == False
