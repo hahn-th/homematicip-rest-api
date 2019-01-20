@@ -8,6 +8,75 @@
         }
     },
     "devices": {
+        "3014F7110000000000000055": {
+            "availableFirmwareVersion": "1.2.4",
+            "firmwareVersion": "1.2.4",
+            "firmwareVersionInteger": 66052,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000055",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_OPERATIONLOCK",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000034"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "operationLockActive": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -76,
+                    "rssiPeerValue": -77,
+                    "unreach": false
+                },
+                "1": {
+                    "actualTemperature": 21.0,
+                    "deviceId": "3014F7110000000000000055",
+                    "display": "SETPOINT",
+                    "functionalChannelType": "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000035"
+                    ],
+                    "humidity": 40,
+                    "index": 1,
+                    "label": "",
+                    "setPointTemperature": 21.5,
+                    "temperatureOffset": 0.0
+                },
+                "2": {
+                    "deviceId": "3014F7110000000000000055",
+                    "frostProtectionTemperature": 8.0,
+                    "functionalChannelType": "INTERNAL_SWITCH_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000035"
+                    ],
+                    "heatingValveType": "NORMALLY_CLOSE",
+                    "index": 2,
+                    "internalSwitchOutputEnabled": true,
+                    "label": "",
+                    "valveProtectionDuration": 5,
+                    "valveProtectionSwitchingInterval": 14
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000055",
+            "label": "***",
+            "lastStatusUpdate": 1547283716818,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 305,
+            "modelType": "HmIP-BWTH",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000055",
+            "type": "BRAND_WALL_MOUNTED_THERMOSTAT",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000054": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.0",

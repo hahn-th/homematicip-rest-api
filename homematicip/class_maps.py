@@ -123,6 +123,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL: FloorTerminalBlockLocalPumpChannel,
     FunctionalChannelType.HEAT_DEMAND_CHANNEL : HeatDemandChannel,
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL : HeatingThermostatChannel,
+    FunctionalChannelType.INTERNAL_SWITCH_CHANNEL : InternalSwitchChannel,
     FunctionalChannelType.MOTION_DETECTION_CHANNEL : MotionDetectionChannel,
     FunctionalChannelType.PASSAGE_DETECTOR_CHANNEL: PassageDetectorChannel,
     FunctionalChannelType.PRESENCE_DETECTION_CHANNEL : PresenceDetectionChannel,

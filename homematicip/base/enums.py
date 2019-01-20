@@ -296,6 +296,7 @@ class FunctionalChannelType(AutoNameEnum):
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
     HEAT_DEMAND_CHANNEL = auto()
     HEATING_THERMOSTAT_CHANNEL = auto()
+    INTERNAL_SWITCH_CHANNEL = auto()
     MOTION_DETECTION_CHANNEL = auto()
     PASSAGE_DETECTOR_CHANNEL = auto()
     PRESENCE_DETECTION_CHANNEL = auto()

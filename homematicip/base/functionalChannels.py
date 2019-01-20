@@ -494,3 +494,23 @@ class PassageDetectorChannel(DeviceBaseChannel):
         self.passageSensorSensitivity = js["passageSensorSensitivity"]
         self.passageTimeout = js["passageTimeout"]
         self.rightCounter = js["rightCounter"]
+
+class InternalSwitchChannel(DeviceBaseChannel):
+    """ this is the representive of the INTERNAL_SWITCH_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.frostProtectionTemperature = 0
+        self.heatingValveType = HeatingValveType.NORMALLY_CLOSE
+        self.internalSwitchOutputEnabled = False
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.frostProtectionTemperature = js["frostProtectionTemperature"]
+        self.heatingValveType = HeatingValveType.from_str(js["passageDirection"])
+        self.internalSwitchOutputEnabled = js["internalSwitchOutputEnabled"]
+        self.valveProtectionDuration = js["valveProtectionDuration"]
+        self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
