@@ -548,7 +548,7 @@ class HeatingGroup(Group):
         return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
 
     def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
-        data = {"groupId": self.id, "controlMode": mode}
+        data = {"groupId": self.id, "controlMode": str(mode)}
         return self._restCall("group/heating/setControlMode", body=json.dumps(data))
 
 

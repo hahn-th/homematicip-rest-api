@@ -71,12 +71,14 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
     await g.set_boost(True)
     await g.set_active_profile(3)
     await g.set_point_temperature(10.5)
+    await g.set_control_mode(ClimateControlMode.MANUAL)
     await no_ssl_fake_async_home.get_current_state()
     g = no_ssl_fake_async_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
     assert g.boostDuration == 20
     assert g.boostMode == True
     assert g.activeProfile.index == "PROFILE_4"
     assert g.setPointTemperature == 10.5
+    assert g.controlMode == ClimateControlMode.MANUAL
 
     await no_ssl_fake_async_home.delete_group(g)
     await no_ssl_fake_async_home.get_current_state()
@@ -94,6 +96,9 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
 
     with pytest.raises(HmipWrongHttpStatusError):
         result = await g.set_point_temperature(10.5)
+    
+    with pytest.raises(HmipWrongHttpStatusError):
+        result = await g.set_control_mode(ClimateControlMode.MANUAL)
 
 
 @pytest.mark.asyncio
