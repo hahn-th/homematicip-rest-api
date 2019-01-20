@@ -141,7 +141,7 @@ class SabotageDevice(Device):
             self.sabotage = c["sabotage"]
 
     def __str__(self):
-        return "{}: sabotage({})".format(super().__str__(), self.sabotage)
+        return "{} sabotage({})".format(super().__str__(), self.sabotage)
 
 class OperationLockableDevice(Device):
     def __init__(self,connection):
@@ -160,7 +160,7 @@ class OperationLockableDevice(Device):
         return self._restCall("device/configuration/setOperationLock", json.dumps(data))
 
     def __str__(self):
-        return "{}: operationLockActive({})".format(super().__str__(),
+        return "{} operationLockActive({})".format(super().__str__(),
                                                     self.operationLockActive)
 
 
@@ -243,7 +243,7 @@ class TemperatureHumiditySensorOutdoor(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return u"{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
@@ -263,7 +263,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return u"{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 
 class TemperatureHumiditySensorDisplay(Device):
@@ -292,7 +292,7 @@ class TemperatureHumiditySensorDisplay(Device):
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
-        return "{}: actualTemperature({}) humidity({}) setPointTemperature({})".format(super().__str__(),
+        return "{} actualTemperature({}) humidity({}) setPointTemperature({})".format(super().__str__(),
                                                                                 self.actualTemperature,
                                                                                 self.humidity,
                                                                                 self.setPointTemperature)
@@ -326,7 +326,7 @@ class SmokeDetector(Device):
             self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(c["smokeDetectorAlarmType"])
 
     def __str__(self):
-        return "{}: smokeDetectorAlarmType({})".format(super().__str__(),
+        return "{} smokeDetectorAlarmType({})".format(super().__str__(),
                                                        self.smokeDetectorAlarmType)
 
 
@@ -373,7 +373,7 @@ class FloorTerminalBlock6(Device):
             self.pumpProtectionSwitchingInterval = c["pumpProtectionSwitchingInterval"]
 
     def __str__(self):
-        return ("{}: globalPumpControl({}) heatingValveType({}) heatingLoadType({}) coolingEmergencyValue({}) frostProtectionTemperature({}) heatingEmergencyValue({}) "
+        return ("{} globalPumpControl({}) heatingValveType({}) heatingLoadType({}) coolingEmergencyValue({}) frostProtectionTemperature({}) heatingEmergencyValue({}) "
                "valveProtectionDuration({}) valveProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({}) pumpProtectionDuration({}) " 
                "pumpProtectionSwitchingInterval({})").format(super().__str__(), self.globalPumpControl, self.heatingValveType,
                     self.heatingLoadType, self.coolingEmergencyValue, self.frostProtectionTemperature, self.heatingEmergencyValue, self.valveProtectionDuration,
@@ -400,7 +400,7 @@ class Switch(Device):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{}: on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
+        return "{} on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
 
     def set_switch_state(self, on=True, channelIndex = 1):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}

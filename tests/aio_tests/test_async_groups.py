@@ -64,7 +64,7 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
 
-    assert str(g) == ('HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
+    assert str(g) == ('HEATING Schlafzimmer: windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
                       ' sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)')
 
     await g.set_boost_duration(20)

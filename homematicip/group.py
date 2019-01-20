@@ -304,7 +304,7 @@ class HeatingChangeoverGroup(Group):
         self.on = js["on"]
 
     def __str__(self):
-        return "{} on({})".format( super().__str__(), self.on)
+        return "{}: on({})".format( super().__str__(), self.on)
 
 
 # at the moment it doesn't look like this class has any special properties/functions
@@ -339,7 +339,7 @@ class SecurityZoneGroup(Group):
                 [d for d in devices if d.id == device][0])
 
     def __str__(self):
-        return "{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
+        return "{}: active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
             super().__str__(),
             self.active, self.silent, self.windowState, self.motionDetected,
             self.sabotage, self.presenceDetected, len(self.ignorableDevices))
@@ -524,7 +524,7 @@ class HeatingGroup(Group):
         self.profiles = sorted(profiles, key=attrgetter('index'))
 
     def __str__(self):
-        return "{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({}) valvePosition({})".format(
+        return "{}: windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({}) valvePosition({})".format(
             super().__str__(),
             self.windowOpenTemperature, self.setPointTemperature,
             self.windowState, self.maxTemperature, self.minTemperature,

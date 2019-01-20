@@ -141,7 +141,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
     assert d.dutyCycle == False
     assert d.configPending == False
 
-    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC)'
+    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)'
                      ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
 
     await d.turn_on()
@@ -187,7 +187,7 @@ async def test_heating_thermostat(no_ssl_fake_async_home : AsyncHome ):
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
     assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
 
-    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
+    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)'
                     ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
 
 

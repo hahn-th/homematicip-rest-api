@@ -78,7 +78,7 @@ def test_heating_group(fake_home : Home):
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
 
-    assert str(g) == ('HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
+    assert str(g) == ('HEATING Schlafzimmer: windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
                       ' sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)')
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]
@@ -194,6 +194,19 @@ def test_switching_group(fake_home : Home):
 
         result = g.set_shutter_level(50)
         assert result["errorCode"] == 'INVALID_GROUP'
+
+def test_environment_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-AAAA-0000-0000-000000000001')
+        assert isinstance(g, EnvironmentGroup)
+
+        assert g.actualTemperature == 15.4
+        assert g.illumination == 4703.0
+        assert g.raining == False
+        assert g.humidity == 65
+        assert g.windSpeed == 29.1
+
+        assert str(g) == "ENVIRONMENT Terrasse: actualTemperature(15.4) illumination(4703.0) raining(False) windSpeed(29.1) humidity(65)"
 
 
 def test_all_groups_implemented(fake_home : Home):

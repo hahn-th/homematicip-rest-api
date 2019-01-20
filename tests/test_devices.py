@@ -35,7 +35,7 @@ def test_shutter_device(fake_home : Home):
     assert d.rssiPeerValue == None
     assert d.dutyCycle == False
     assert d.configPending == False
-    assert str(d) == 'HMIP-SWDO Fenster lowbat(False) unreach(False) rssiDeviceValue(-64) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False) windowState(CLOSED)'
+    assert str(d) == 'HMIP-SWDO Fenster lowbat(False) unreach(False) rssiDeviceValue(-64) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) windowState(CLOSED)'
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000001"]
 
     d = fake_home.search_device_by_id('3014F7110000000000000005')
@@ -73,7 +73,7 @@ def test_pluggable_switch_measuring(fake_home : Home):
     assert d.dutyCycle == False
     assert d.configPending == False
 
-    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC)'
+    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)'
                      ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000009"]
 
@@ -115,7 +115,7 @@ def test_smoke_detector(fake_home : Home):
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
     assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
     assert d.configPending == False
-    assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False): smokeDetectorAlarmType(IDLE_OFF)'
+    assert str(d) == 'HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False) smokeDetectorAlarmType(IDLE_OFF)'
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000020"]
 
 def test_wall_mounted_thermostat_pro(fake_home : Home ):
@@ -146,7 +146,7 @@ def test_wall_mounted_thermostat_pro(fake_home : Home ):
     assert d.firmwareVersion == "1.8.0"
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
     assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
-    assert str(d) == ('HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63) configPending(False) dutyCycle(False): operationLockActive(False):'
+    assert str(d) == ('HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63) configPending(False) dutyCycle(False) operationLockActive(False)'
                       ' actualTemperature(24.7) humidity(43) setPointTemperature(5.0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000022"]
 
@@ -188,7 +188,7 @@ def test_heating_thermostat(fake_home : Home):
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
     assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
 
-    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
+    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)'
                     ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F7110000000000000015"]
 
@@ -224,7 +224,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home : Home):
     assert d.configPending == False
     assert d.dutyCycle == False
     assert str(d)== ('HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)'
-                    ' dutyCycle(False): actualTemperature(15.1) humidity(70)')
+                    ' dutyCycle(False) actualTemperature(15.1) humidity(70)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000002"]
 
 def test_weather_sensor_pro(fake_home : Home):
@@ -370,7 +370,7 @@ def test_rotary_handle_sensor(fake_home : Home):
     assert d.rssiPeerValue == None
     assert d.dutyCycle == False
     assert d.configPending == False
-    assert str(d) == ('HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False):'
+    assert str(d) == ('HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False)'
                       ' sabotage(False) windowState(TILTED)')
     assert d._rawJSONData == fake_home_download_configuration()["devices"]["3014F711AAAA000000000004"]
 
@@ -529,7 +529,7 @@ def test_motion_detector_push_button(fake_home:Home):
     assert d.numberOfBrightnessMeasurements == 7
 
     assert str(d) == ("HmIP-SMI55 Bewegungsmelder für 55er Rahmen – innen lowbat(False) unreach(False) rssiDeviceValue(-46) "
-                      "rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(None) motionDetected(False) "
+                      "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(None) motionDetected(False) "
                       "illumination(14.2) motionBufferActive(True) motionDetectionSendInterval(SECONDS_240) "
                       "numberOfBrightnessMeasurements(7) permanentFullRx(True)")
 
@@ -545,7 +545,7 @@ def test_motion_detector(fake_home:Home):
     assert d.numberOfBrightnessMeasurements == 7
 
     assert str(d) == ("HmIP-SMI Wohnzimmer lowbat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
-                      "dutyCycle(False): sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
+                      "dutyCycle(False) sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
                       "motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)")
 
     d = MotionDetectorOutdoor(fake_home._connection)
@@ -574,7 +574,7 @@ def test_presence_detector_indoor(fake_home:Home):
     assert d.numberOfBrightnessMeasurements == 7
 
     assert str(d) == ("HmIP-SPI *** lowbat(False) unreach(False) rssiDeviceValue(-62) rssiPeerValue(-61) configPending(False) "
-                      "dutyCycle(False): sabotage(False) presenceDetected(False) illumination(1.8) motionBufferActive(False) "
+                      "dutyCycle(False) sabotage(False) presenceDetected(False) illumination(1.8) motionBufferActive(False) "
                       "motionDetectionSendInterval(SECONDS_240) numberOfBrightnessMeasurements(7)")
 
 def test_push_button_6(fake_home:Home):
@@ -628,7 +628,7 @@ def test_passage_detector(fake_home:Home):
         assert d.passageTimeout == 0.5
         assert d.rightCounter == 802
 
-        assert str(d) == ("HmIP-SPDR *** lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(None) configPending(False) dutyCycle(False):"
+        assert str(d) == ("HmIP-SPDR *** lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(None) configPending(False) dutyCycle(False)"
                          " sabotage(False) leftCounter(966) leftRightCounterDelta(164) passageBlindtime(1.5) passageDirection(LEFT) passageSensorSensitivity(50.0)"
                          " passageTimeout(0.5) rightCounter(802)")
 
@@ -660,7 +660,7 @@ def test_alarm_siren_indoor(fake_home:Home):
         d = AlarmSirenIndoor(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000BBBBB8")
 
-        assert str(d) == "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False): sabotage(False)"
+        assert str(d) == "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False)"
 
 
 def test_floor_terminal_block(fake_home:Home):
@@ -682,7 +682,7 @@ def test_floor_terminal_block(fake_home:Home):
         assert d.pumpProtectionDuration == 1
         assert d.pumpProtectionSwitchingInterval == 14
 
-        assert str(d) == ("HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False): "
+        assert str(d) == ("HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
                           "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
                           "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2) "
                           "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)")

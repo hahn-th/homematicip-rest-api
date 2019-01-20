@@ -43,7 +43,7 @@ class SecurityZoneEvent(SecurityEvent):
         self.internal_zone = js["securityZoneValues"]["INTERNAL"]
 
     def __str__(self):
-        return "{}: external_zone({}) internal_zone({}) ".format(super().__str__(),
+        return "{} external_zone({}) internal_zone({}) ".format(super().__str__(),
                                                 self.external_zone, self.internal_zone)
 
 class SensorEvent(SecurityEvent):
