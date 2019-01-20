@@ -462,7 +462,7 @@ class HeatingGroup(Group):
         self.minTemperature = None
         self.cooling = None
         self.partyMode = None
-        self.controlMode = None
+        self.controlMode = ClimateControlMode.AUTOMATIC
         self.activeProfile = None
         self.boostMode = None
         self.boostDuration = None
@@ -493,7 +493,7 @@ class HeatingGroup(Group):
         self.minTemperature = js["minTemperature"]
         self.cooling = js["cooling"]
         self.partyMode = js["partyMode"]
-        self.controlMode = js["controlMode"]
+        self.controlMode = ClimateControlMode.from_str(js["controlMode"])
         self.boostMode = js["boostMode"]
         self.boostDuration = js["boostDuration"]
         self.actualTemperature = js["actualTemperature"]
