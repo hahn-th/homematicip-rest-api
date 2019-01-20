@@ -510,7 +510,7 @@ class InternalSwitchChannel(FunctionalChannel):
         from a json object and the given groups """
         super().from_json(js,groups)
         self.frostProtectionTemperature = js["frostProtectionTemperature"]
-        self.heatingValveType = HeatingValveType.from_str(js["passageDirection"])
+        self.heatingValveType = HeatingValveType.from_str(js["heatingValveType"])
         self.internalSwitchOutputEnabled = js["internalSwitchOutputEnabled"]
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
