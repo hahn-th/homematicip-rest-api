@@ -471,7 +471,7 @@ class HeatDemandChannel(FunctionalChannel):
 class DehumidifierDemandChannel(FunctionalChannel):
     """ this is the representive of the DEHUMIDIFIER_DEMAND_CHANNEL channel"""
 
-class PassageDetectorChannel(DeviceBaseChannel):
+class PassageDetectorChannel(FunctionalChannel):
     """ this is the representive of the PASSAGE_DETECTOR_CHANNEL channel"""
     def __init__(self):
         super().__init__()
@@ -495,7 +495,7 @@ class PassageDetectorChannel(DeviceBaseChannel):
         self.passageTimeout = js["passageTimeout"]
         self.rightCounter = js["rightCounter"]
 
-class InternalSwitchChannel(DeviceBaseChannel):
+class InternalSwitchChannel(FunctionalChannel):
     """ this is the representive of the INTERNAL_SWITCH_CHANNEL channel"""
     def __init__(self):
         super().__init__()
