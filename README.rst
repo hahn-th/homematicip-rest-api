@@ -69,6 +69,7 @@ Devices:
 -  [X] HMIP-BWTH (Brand Wall Mounted Thermostat Pro)
 -  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-thermostat)
 -  [X] HMIP-FAL230-C6 (Floor Terminal Block)
+-  [X] HMIP-FCI1 (Contact Interface flush-mount – 1 channel)
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)

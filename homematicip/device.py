@@ -243,7 +243,7 @@ class TemperatureHumiditySensorOutdoor(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return "{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
@@ -263,7 +263,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return "{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 
 class TemperatureHumiditySensorDisplay(Device):
@@ -941,3 +941,23 @@ class WaterSensor(Device):
         LOGGER.warning("set_siren_water_alarm_trigger is currently not available in the HMIP App. It might not be available in the cloud yet")
         data = {"channelIndex": 1, "deviceId": self.id, "sirenWaterAlarmTrigger": str(sirenWaterAlarmTrigger)}
         return self._restCall("device/configuration/setSirenWaterAlarmTrigger", json.dumps(data))
+
+class FullFlushContactInterface(Device):
+    """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
+        self.windowState = WindowState.OPEN
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MULTI_MODE_INPUT_CHANNEL", js)
+        if c:
+            self.binaryBehaviorType = BinaryBehaviorType.from_str(c["binaryBehaviorType"])
+            self.multiModeInputMode = MultiModeInputMode.from_str(c["multiModeInputMode"])
+            self.windowState = WindowState.from_str(c["windowState"])
+
+    def __str__(self):
+        return "{} binaryBehaviorType({}) multiModeInputMode({}) windowState({})".format(super().__str__(), self.binaryBehaviorType, self.multiModeInputMode, self.windowState)

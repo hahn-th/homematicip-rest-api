@@ -514,3 +514,20 @@ class InternalSwitchChannel(FunctionalChannel):
         self.internalSwitchOutputEnabled = js["internalSwitchOutputEnabled"]
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
+
+class MultiModeInputChannel(FunctionalChannel):
+    """ this is the representive of the MULTI_MODE_INPUT_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
+        self.windowState = WindowState.OPEN
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
+        self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
+        self.windowState = WindowState.from_str(js["windowState"])

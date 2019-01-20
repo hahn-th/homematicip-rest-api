@@ -160,6 +160,9 @@ class AsyncKeyRemoteControlAlarm(KeyRemoteControlAlarm, AsyncDevice):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
     pass
 
+class AsyncFullFlushContactInterface(FullFlushContactInterface,AsyncDevice):
+    """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
+    pass
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """

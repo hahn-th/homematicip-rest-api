@@ -12,6 +12,16 @@ from datetime import datetime, timedelta, timezone
 
 from conftest import fake_home_download_configuration,no_ssl_verification, utc_offset
 
+def test_full_flush_contact_interface(fake_home : Home):
+    d = fake_home.search_device_by_id('3014F7110000000000000029')
+    assert isinstance(d, FullFlushContactInterface)
+
+    assert d.binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert d.windowState == WindowState.CLOSED
+    assert d.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
+
+    assert str(d) == ("HmIP-FCI1 Kontakt-Schnittstelle Unterputz – 1-fach lowbat(False) unreach(False) rssiDeviceValue(-46) rssiPeerValue(None) configPending(False) "
+                      "dutyCycle(False) binaryBehaviorType(NORMALLY_CLOSE) multiModeInputMode(KEY_BEHAVIOR) windowState(CLOSED)")
 
 def test_shutter_device(fake_home : Home):
     d = fake_home.search_device_by_id('3014F7110000000000000001')

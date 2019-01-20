@@ -8,15 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - HMIP-SPDR 
+  - HMIP-FCI1
 - API
   - DeviceUpdateState enum 
   - functionalChannel
     - DevicePermanentFullRxChannel
     - PassageDetectorChannel
     - InternalSwitchChannel
+    - MultiModeInputChannel
   - Device
     - MotionDetectorPushButton
       - added permanentFullRx property
+  - Enums
+    - MultiModeInputMode
+    - BinaryBehaviorType
   - Group
     - HeatingGroup
       - added set_control_mode method  

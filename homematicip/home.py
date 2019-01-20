@@ -22,7 +22,7 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         super().__init__(connection)
         self.temperature = 0.0
         self.weatherCondition = WeatherCondition.UNKNOWN
-        self.weatherDayTime = "DAY"
+        self.weatherDayTime = WeatherDayTime.DAY
         self.minTemperature = 0.0
         self.maxTemperature = 0.0
         self.humidity = 0

@@ -1990,6 +1990,57 @@
             "type": "WALL_MOUNTED_THERMOSTAT_PRO",
             "updateState": "UP_TO_DATE"
         },
+        "3014F7110000000000000029": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.14",
+            "firmwareVersionInteger": 65550,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000029",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000019"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -46,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F7110000000000000029",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000020"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "windowState": "CLOSED"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000029",
+            "label": "Kontakt-Schnittstelle Unterputz \u2013 1-fach",
+            "lastStatusUpdate": 1547923306429,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 382,
+            "modelType": "HmIP-FCI1",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000029",
+            "type": "FULL_FLUSH_CONTACT_INTERFACE",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F711AAAA000000000001": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.10",
