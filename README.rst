@@ -68,41 +68,41 @@ Devices:
 --------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren)
--  [ ] HMIP-ASIR-O
--  [ ] HMIP-BBL
+-  [ ] HMIP-ASIR-O (Alarm Siren outdoor)
+-  [ ] HMIP-BBL (Blind Actuator for brand switches)
 -  [X] HMIP-BDT (Dimming Actuator for brand switches)
--  [ ] HMIP-BRC2
+-  [ ] HMIP-BRC2 (Remote Control for brand switches – 2 channels)
 -  [X] HMIP-BROLL (Shutter Actuator - brand-mount)
--  [ ] HMIP-BSL
+-  [ ] HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
 -  [X] HMIP-BSM (Brand Switch and Meter)
--  [X] HMIP-BWTH (Brand Wall Mounted Thermostat Pro)
--  [ ] HMIP-BWTH24
--  [ ] HMIP-DBB
+-  [X] HMIP-BWTH (Wall Thermostat with switching output – for brand switches)
+-  [ ] HMIP-BWTH24 (Wall Thermostat with switching output – for brand switches, 24V)
+-  [ ] HMIP-DBB (Doorbell Push-Button)
 -  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-thermostat)
 -  [ ] HMIP-eTRV-2-UK  (not tested, but it should work)
 -  [ ] HMIP-eTRV-B     (not tested, but it should work)
 -  [ ] HMIP-eTRV-C     (not tested, but it should work)
--  [X] HMIP-FAL230-C6 (Floor Terminal Block)
--  [ ] HMIP-FAL230-C10
--  [ ] HMIP-FAL24-C6
--  [ ] HMIP-FAL24-C10
+-  [X] HMIP-FAL230-C6 (Floor Heating Actuator – 6 channels, 230V)
+-  [ ] HMIP-FAL230-C10 (Floor Heating Actuator – 10 channels, 230V)
+-  [ ] HMIP-FAL24-C6 (Floor Heating Actuator – 6 channels, 24V)
+-  [ ] HMIP-FAL24-C10 (Floor Heating Actuator – 10 channels, 24V)
 -  [X] HMIP-FCI1 (Contact Interface flush-mount – 1 channel)
--  [ ] HMIP-FCI6
+-  [ ] HMIP-FCI6 (Contact Interface flush-mount – 6 channels)
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)
--  [X] HHMIP-FSM
+-  [X] HMIP-FSM (Homematic IP Switch Actuator and Meter – flush-mount)
 -  [ ] HMIP-FSM16 (not tested, but it should work)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
--  [ ] HMIP-KRC4
--  [ ] HMIP-MIOB
--  [X] HMIP-MOD-OC8 ( Open Collector Module )
--  [ ] HMIP-MP3P
--  [ ] HMIP-PCBS 
--  [ ] HMIP-PCBS2
+-  [ ] HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
+-  [ ] HMIP-MIOB (Multi IO Box)
+-  [X] HMIP-MOD-OC8 (Open Collector Module)
+-  [ ] HMIP-MP3P (Combination Signalling Device MP3)
+-  [ ] HMIP-PCBS (Switch Circuit Board - 1 channel)
+-  [ ] HMIP-PCBS2 (Switch Circuit Board - 2 channels)
 -  [X] HMIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
--  [X] HMIP-PDT (Pluggable Dimmer)
+-  [X] HMIP-PDT (Plugable Dimmer)
 -  [ ] HMIP-PDT-UK      (not tested, but it should work)
--  [ ] HMIP-PMFS
+-  [ ] HMIP-PMFS (Plugable Power Supply Monitoring)
 -  [X] HMIP-PS (Plugable Switch)
 -  [X] HMIP-PSM (Plugable Switch Measuring)
 -  [ ] HMIP-PSM-CH      (not tested, but it should work)
@@ -110,9 +110,9 @@ Devices:
 -  [ ] HMIP-PSM-PE      (not tested, but it should work)
 -  [ ] HMIP-PSM-UK      (not tested, but it should work)
 -  [X] HMIP-RC8 (Remote Control - 8 buttons)
--  [ ] HMIP-RCB1
--  [ ] HMIP-SAM
--  [ ] HMIP-SLO
+-  [ ] HMIP-RCB1 (Remote Control - 1 button)
+-  [ ] HMIP-SAM (Acceleration Sensor)
+-  [ ] HMIP-SLO (Light Sensor outdoor)
 -  [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 -  [X] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)
 -  [X] HMIP-SMO, HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)
@@ -120,8 +120,8 @@ Devices:
 -  [X] HMIP-SRH (Rotary Handle Sensor)
 -  [X] HMIP-STH (Temperature and Humidity Sensor without display - indoor)
 -  [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
--  [X] HMIP-STHO (Temperature and Humidity Sensor outdoor)
-HMIP-STHO-A
+-  [X] HMIP-STHO (Temperature and Humidity Sensor - outdoor)
+-  [X] HMIP-STHO-A (Temperature and Humidity Sensor – outdoor, anthracite)
 -  [X] HMIP-SWD (Water Sensor)
 -  [X] HMIP-SWDO (Shutter Contact)
 -  [X] HMIP-SWDO-I (Shutter Contact Invisible)
@@ -131,12 +131,11 @@ HMIP-STHO-A
 -  [X] HMIP-SWO-PL (Weather Sensor – plus)
 -  [X] HMIP-SWO-PR (Weather Sensor – pro)
 -  [X] HMIP-SWSD (Smoke Detector)
-HMIP-WGC
-HMIP-WHS2
+-  [ ] HMIP-WGC (Garage Door Button)
+-  [ ] HMIP-WHS2 (Switch Actuator for heating systems – 2 channels)
 -  [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
 -  [X] HMIP-WRC6 (Wall-mount Remote Control - 6-button)
 -  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro)
-
 
 Events
 ------
