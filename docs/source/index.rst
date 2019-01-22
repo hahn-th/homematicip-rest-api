@@ -14,6 +14,16 @@ done via reverse engineering. Use at your own risk.
    :maxdepth: 2
 
    gettingstarted
+   hmipoverview
+   
+API Overview
+============
+
+
+.. autosummary::
+   :toctree: api
+   
+   home
    
 Indices and tables
 ==================
@@ -21,3 +31,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
