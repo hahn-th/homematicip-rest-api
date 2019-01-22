@@ -7,9 +7,11 @@ from homematicip.aio.group import AsyncHeatingGroup
 async def test_set_point_temperature(fake_connection):
     heating_group = AsyncHeatingGroup(fake_connection)
     resp = await heating_group.set_point_temperature(10)
-    assert resp == 'called'
+    assert resp == "called"
     fake_connection.api_call.mock.assert_called_once_with(
-        "group/heating/setSetPointTemperature", '{"groupId": null, "setPointTemperature": 10}')
+        "group/heating/setSetPointTemperature",
+        '{"groupId": null, "setPointTemperature": 10}',
+    )
 
 
 # @pytest.mark.asyncio

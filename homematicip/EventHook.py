@@ -1,6 +1,7 @@
-#by Michael Foord http://www.voidspace.org.uk/python/weblog/arch_d7_2007_02_03.shtml#e616
+# by Michael Foord http://www.voidspace.org.uk/python/weblog/arch_d7_2007_02_03.shtml#e616
 
-class EventHook():
+
+class EventHook:
     def __init__(self):
         self.__handlers = []
 

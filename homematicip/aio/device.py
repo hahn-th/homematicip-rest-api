@@ -21,7 +21,9 @@ class AsyncDevice(Device):
         return await self._connection.api_call(*super().delete())
 
     async def set_router_module_enabled(self, enabled=True):
-        return await self._connection.api_call(*super().set_router_module_enabled(enabled))
+        return await self._connection.api_call(
+            *super().set_router_module_enabled(enabled)
+        )
 
     async def is_update_applicable(self):
         return await self._connection.api_call(*super().is_update_applicable())
@@ -29,18 +31,19 @@ class AsyncDevice(Device):
 
 class AsyncSwitch(Switch, AsyncDevice):
     """ Generic async switch """
-    async def set_switch_state(self, on=True, channelIndex = 1):
+
+    async def set_switch_state(self, on=True, channelIndex=1):
         _LOGGER.debug("Async switch set_switch_state")
-        url, data = super().set_switch_state(on,channelIndex)
+        url, data = super().set_switch_state(on, channelIndex)
         return await self._connection.api_call(url, data)
 
-    async def turn_on(self,channelIndex=1):
+    async def turn_on(self, channelIndex=1):
         _LOGGER.debug("Async switch turn_on")
-        return await self.set_switch_state(True,channelIndex)
+        return await self.set_switch_state(True, channelIndex)
 
-    async def turn_off(self,channelIndex=1):
+    async def turn_off(self, channelIndex=1):
         _LOGGER.debug("Async switch turn_off")
-        return await self.set_switch_state(False,channelIndex)
+        return await self.set_switch_state(False, channelIndex)
 
 
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
@@ -50,6 +53,7 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
 class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
     pass
 
+
 class AsyncOpenCollector8Module(OpenCollector8Module, AsyncSwitch):
     """ Async implementation of HmIP-MOD-OC8 ( Open Collector Module ) """
 
@@ -57,11 +61,13 @@ class AsyncOpenCollector8Module(OpenCollector8Module, AsyncSwitch):
 class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
     async def set_operation_lock(self, operationLock=True):
         return await self._connection.api_call(
-            *super().set_operation_lock(operationLock=operationLock))
+            *super().set_operation_lock(operationLock=operationLock)
+        )
 
 
 class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
+
     async def reset_energy_counter(self):
         return await self._connection.api_call(*super().reset_energy_counter())
 
@@ -81,54 +87,76 @@ class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
 
     pass
 
+
 class AsyncRotaryHandleSensor(RotaryHandleSensor, AsyncSabotageDevice):
     """ HmIP-SRH """
 
-class AsyncTemperatureHumiditySensorOutdoor(TemperatureHumiditySensorOutdoor, AsyncDevice):
+
+class AsyncTemperatureHumiditySensorOutdoor(
+    TemperatureHumiditySensorOutdoor, AsyncDevice
+):
     """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
+
 
 class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
     """ HMIP-eTRV (Radiator Thermostat) """
+
     pass
 
 
-class AsyncTemperatureHumiditySensorWithoutDisplay(TemperatureHumiditySensorWithoutDisplay,
-                                                   AsyncDevice):
+class AsyncTemperatureHumiditySensorWithoutDisplay(
+    TemperatureHumiditySensorWithoutDisplay, AsyncDevice
+):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
+
     pass
 
 
-class AsyncTemperatureHumiditySensorDisplay(TemperatureHumiditySensorDisplay, AsyncDevice):
+class AsyncTemperatureHumiditySensorDisplay(
+    TemperatureHumiditySensorDisplay, AsyncDevice
+):
     """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
-    async def set_display(self, display : ClimateControlDisplay = ClimateControlDisplay.ACTUAL):
+
+    async def set_display(
+        self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
+    ):
         await self._connection.api_call(*super().set_display(display=display))
 
 
-class AsyncWallMountedThermostatPro(WallMountedThermostatPro, AsyncTemperatureHumiditySensorDisplay,
-                                    AsyncOperationLockableDevice):
+class AsyncWallMountedThermostatPro(
+    WallMountedThermostatPro,
+    AsyncTemperatureHumiditySensorDisplay,
+    AsyncOperationLockableDevice,
+):
     """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor)
     / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)"""
+
     pass
 
 
 class AsyncSmokeDetector(SmokeDetector, AsyncDevice):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
+
     pass
 
 
 class AsyncFloorTerminalBlock6(FloorTerminalBlock6, AsyncDevice):
     """ HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V) """
+
     pass
 
 
 class AsyncPushButton(PushButton, AsyncDevice):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
+
 class AsyncPushButton6(PushButton6, AsyncPushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button)  """
 
-class AsyncRemoteControl8(RemoteControl8,AsyncPushButton):
+
+class AsyncRemoteControl8(RemoteControl8, AsyncPushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """
+
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
@@ -136,33 +164,45 @@ class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
 
 class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
+
     pass
+
 
 class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncDevice):
     """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+
     pass
 
 
 class AsyncMotionDetectorPushButton(MotionDetectorPushButton, AsyncSabotageDevice):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
+
     pass
 
 
 class AsyncPresenceDetectorIndoor(PresenceDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
+
     pass
+
 
 class AsyncPassageDetector(PassageDetector, AsyncSabotageDevice):
     """ HMIP-SPDR (Passage Detector) """
+
     pass
+
 
 class AsyncKeyRemoteControlAlarm(KeyRemoteControlAlarm, AsyncDevice):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
+
     pass
 
-class AsyncFullFlushContactInterface(FullFlushContactInterface,AsyncDevice):
+
+class AsyncFullFlushContactInterface(FullFlushContactInterface, AsyncDevice):
     """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
+
     pass
+
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
@@ -178,39 +218,71 @@ class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
 
     async def set_dim_level(self, dimLevel=0.0):
-        return await self._connection.api_call(*super().set_dim_level(dimLevel=dimLevel))
+        return await self._connection.api_call(
+            *super().set_dim_level(dimLevel=dimLevel)
+        )
+
 
 class AsyncPluggableDimmer(AsyncDimmer):
     """HmIP-PDT Pluggable Dimmer"""
 
+
 class AsyncBrandDimmer(AsyncDimmer):
     """HmIP-BDT Brand Dimmer"""
+
 
 class AsyncFullFlushDimmer(AsyncDimmer):
     """HmIP-FDT Dimming Actuator flush-mount"""
 
+
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """ HmIP-SWO-B """
+
 
 class AsyncWeatherSensorPlus(WeatherSensorPlus, AsyncDevice):
     """ HmIP-SWO-PL """
 
+
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
     """ HmIP-SWO-PR """
 
+
 class AsyncWaterSensor(WaterSensor, AsyncDevice):
     """ HmIP-SWD """
-    async def set_acoustic_alarm_signal(self, acousticAlarmSignal : AcousticAlarmSignal):
-        return await self._connection.api_call(*super().set_acoustic_alarm_signal(acousticAlarmSignal=acousticAlarmSignal))
 
-    async def set_acoustic_alarm_timing(self, acousticAlarmTiming : AcousticAlarmTiming):
-        return await self._connection.api_call(*super().set_acoustic_alarm_timing(acousticAlarmTiming=acousticAlarmTiming))
-    
-    async def set_acoustic_water_alarm_trigger(self, acousticWaterAlarmTrigger : WaterAlarmTrigger):
-        return await self._connection.api_call(*super().set_acoustic_water_alarm_trigger(acousticWaterAlarmTrigger=acousticWaterAlarmTrigger))
+    async def set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
+        return await self._connection.api_call(
+            *super().set_acoustic_alarm_signal(acousticAlarmSignal=acousticAlarmSignal)
+        )
 
-    async def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger : WaterAlarmTrigger):
-        return await self._connection.api_call(*super().set_inapp_water_alarm_trigger(inAppWaterAlarmTrigger=inAppWaterAlarmTrigger))
+    async def set_acoustic_alarm_timing(self, acousticAlarmTiming: AcousticAlarmTiming):
+        return await self._connection.api_call(
+            *super().set_acoustic_alarm_timing(acousticAlarmTiming=acousticAlarmTiming)
+        )
 
-    async def set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger : WaterAlarmTrigger):
-        return await self._connection.api_call(*super().set_siren_water_alarm_trigger(sirenWaterAlarmTrigger=sirenWaterAlarmTrigger))
+    async def set_acoustic_water_alarm_trigger(
+        self, acousticWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        return await self._connection.api_call(
+            *super().set_acoustic_water_alarm_trigger(
+                acousticWaterAlarmTrigger=acousticWaterAlarmTrigger
+            )
+        )
+
+    async def set_inapp_water_alarm_trigger(
+        self, inAppWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        return await self._connection.api_call(
+            *super().set_inapp_water_alarm_trigger(
+                inAppWaterAlarmTrigger=inAppWaterAlarmTrigger
+            )
+        )
+
+    async def set_siren_water_alarm_trigger(
+        self, sirenWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        return await self._connection.api_call(
+            *super().set_siren_water_alarm_trigger(
+                sirenWaterAlarmTrigger=sirenWaterAlarmTrigger
+            )
+        )

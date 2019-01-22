@@ -3,22 +3,27 @@ import locale
 import platform
 import re
 
-ATTR_AUTH_TOKEN = 'AUTHTOKEN'
-ATTR_CLIENT_AUTH = 'CLIENTAUTH'
+ATTR_AUTH_TOKEN = "AUTHTOKEN"
+ATTR_CLIENT_AUTH = "CLIENTAUTH"
+
 
 class HmipConnectionError(Exception):
     pass
 
+
 class HmipWrongHttpStatusError(HmipConnectionError):
     pass
 
+
 class HmipServerCloseError(HmipConnectionError):
     pass
+
 
 class BaseConnection:
     """Base connection class.
 
     Threaded and Async connection class must inherit from this."""
+
     _auth_token = ""
     _clientauth_token = ""
     _urlREST = ""
@@ -28,18 +33,20 @@ class BaseConnection:
     _restCallTimout = 6
 
     def __init__(self):
-        self.headers = {'content-type': 'application/json',
-                        'accept': 'application/json',
-                        'VERSION': '12',
-                        ATTR_AUTH_TOKEN: None,
-                        ATTR_CLIENT_AUTH: None}
-        lang = 'en_US'
+        self.headers = {
+            "content-type": "application/json",
+            "accept": "application/json",
+            "VERSION": "12",
+            ATTR_AUTH_TOKEN: None,
+            ATTR_CLIENT_AUTH: None,
+        }
+        lang = "en_US"
         def_locale = locale.getdefaultlocale()
         if def_locale != None:
             lang = def_locale[0]
 
-        self._clientCharacteristics = {"clientCharacteristics":
-            {
+        self._clientCharacteristics = {
+            "clientCharacteristics": {
                 "apiVersion": "10",
                 "applicationIdentifier": "homematicip-python",
                 "applicationVersion": "1.0",
@@ -49,7 +56,7 @@ class BaseConnection:
                 "osType": platform.system(),
                 "osVersion": platform.release(),
             },
-            "id": None
+            "id": None,
         }
 
     @property
@@ -73,10 +80,13 @@ class BaseConnection:
         return self._clientauth_token
 
     def set_token_and_characteristics(self, accesspoint_id):
-        accesspoint_id = re.sub(r'[^a-fA-F0-9 ]', '', accesspoint_id).upper()
+        accesspoint_id = re.sub(r"[^a-fA-F0-9 ]", "", accesspoint_id).upper()
         self._clientCharacteristics["id"] = accesspoint_id
-        self._clientauth_token = hashlib.sha512(
-            str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode('utf-8')).hexdigest().upper()
+        self._clientauth_token = (
+            hashlib.sha512(str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode("utf-8"))
+            .hexdigest()
+            .upper()
+        )
         self.headers[ATTR_CLIENT_AUTH] = self._clientauth_token
 
     def set_auth_token(self, auth_token):

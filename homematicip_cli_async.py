@@ -13,13 +13,14 @@ from homematicip.base.base_connection import HmipConnectionError
 
 def on_update_handler(data, event_type, obj):
     if obj:
-        data['api_name'] = obj.__class__.__name__
+        data["api_name"] = obj.__class__.__name__
     pprint(data)
     # save the data.
-    _file_name = '{}_{}.json'.format(obj.__class__.__name__,
-                                     datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
-    _full_path = os.path.join('tests/json_data', _file_name)
-    with open(_full_path, 'w') as fl:
+    _file_name = "{}_{}.json".format(
+        obj.__class__.__name__, datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    )
+    _full_path = os.path.join("tests/json_data", _file_name)
+    with open(_full_path, "w") as fl:
         json.dump(data, fl, indent=4)
 
 
@@ -33,9 +34,9 @@ async def get_home(loop):
 async def update_state(home):
     await home.get_current_state()
     for d in home.devices:
-        print('{} {} {}'.format(d.id, d.label, str(d)))
+        print("{} {} {}".format(d.id, d.label, str(d)))
     for d in home.groups:
-        print('{} {} {}'.format(d.id, d.label, str(d)))
+        print("{} {} {}".format(d.id, d.label, str(d)))
 
 
 async def wait_for_ws_incoming(home):

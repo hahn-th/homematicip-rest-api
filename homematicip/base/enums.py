@@ -1,10 +1,13 @@
 # coding=utf-8
 from aenum import auto, Enum
 
+
 class AutoNameEnum(Enum):
     """ auto() will generate the name of the attribute as value """
+
     def _generate_next_value_(name, start, count, last_values):
         return name
+
     def __str__(self):
         return self.value
 
@@ -21,11 +24,13 @@ class AcousticAlarmTiming(AutoNameEnum):
     SIX_MINUTES = auto()
     ONCE_PER_MINUTE = auto()
 
+
 class WaterAlarmTrigger(AutoNameEnum):
     NO_ALARM = auto()
     MOISTURE_DETECTION = auto()
     WATER_DETECTION = auto()
     WATER_MOISTURE_DETECTION = auto()
+
 
 class AcousticAlarmSignal(AutoNameEnum):
     DISABLE_ACOUSTIC_SIGNAL = auto()
@@ -47,15 +52,18 @@ class AcousticAlarmSignal(AutoNameEnum):
     EVENT = auto()
     ERROR = auto()
 
+
 class ClimateControlDisplay(AutoNameEnum):
     ACTUAL = auto()
     SETPOINT = auto()
     ACTUAL_HUMIDITY = auto()
 
+
 class WindowState(AutoNameEnum):
     OPEN = auto()
     CLOSED = auto()
     TILTED = auto()
+
 
 class ValveState(AutoNameEnum):
     STATE_NOT_AVAILABLE = auto()
@@ -68,9 +76,11 @@ class ValveState(AutoNameEnum):
     ADJUSTMENT_TOO_SMALL = auto()
     ERROR_POSITION = auto()
 
+
 class HeatingValveType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
     NORMALLY_OPEN = auto()
+
 
 class RGBColorState(AutoNameEnum):
     BLACK = auto()
@@ -82,9 +92,11 @@ class RGBColorState(AutoNameEnum):
     YELLOW = auto()
     WHITE = auto()
 
+
 class DeviceUpdateStrategy(AutoNameEnum):
     MANUALLY = auto()
     AUTOMATICALLY_IF_POSSIBLE = auto()
+
 
 class ApExchangeState(AutoNameEnum):
     NONE = auto()
@@ -93,11 +105,13 @@ class ApExchangeState(AutoNameEnum):
     DONE = auto()
     REJECTED = auto()
 
+
 class HomeUpdateState(AutoNameEnum):
     UP_TO_DATE = auto()
     UPDATE_AVAILABLE = auto()
     PERFORM_UPDATE_SENT = auto()
     PERFORMING_UPDATE = auto()
+
 
 class WeatherCondition(AutoNameEnum):
     CLEAR = auto()
@@ -115,14 +129,17 @@ class WeatherCondition(AutoNameEnum):
     FOGGY = auto()
     UNKNOWN = auto()
 
+
 class WeatherDayTime(AutoNameEnum):
     DAY = auto()
     TWILIGHT = auto()
     NIGHT = auto()
 
+
 class ClimateControlMode(AutoNameEnum):
     AUTOMATIC = auto()
     MANUAL = auto()
+
 
 class AbsenceType(AutoNameEnum):
     NOT_ABSENT = auto()
@@ -130,6 +147,7 @@ class AbsenceType(AutoNameEnum):
     PERMANENT = auto()
     VACATION = auto()
     PARTY = auto()
+
 
 class EcoDuration(AutoNameEnum):
     ONE = auto()
@@ -143,9 +161,11 @@ class SecurityZoneActivationMode(AutoNameEnum):
     ACTIVATION_WITH_DEVICE_IGNORELIST = auto()
     ACTIVATION_IF_ALL_IN_VALID_STATE = auto()
 
+
 class ClientType(AutoNameEnum):
     APP = auto()
     C2C = auto()
+
 
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
@@ -189,6 +209,7 @@ class DeviceType(AutoNameEnum):
     WEATHER_SENSOR_PLUS = auto()
     WEATHER_SENSOR_PRO = auto()
 
+
 class GroupType(AutoNameEnum):
     GROUP = auto()
     EXTENDED_LINKED_SHUTTER = auto()
@@ -216,6 +237,7 @@ class GroupType(AutoNameEnum):
     ENVIRONMENT = auto()
     SECURITY_BACKUP_ALARM_SWITCHING = auto()
 
+
 class SecurityEventType(AutoNameEnum):
     SENSOR_EVENT = auto()
     ACCESS_POINT_DISCONNECTED = auto()
@@ -231,14 +253,17 @@ class SecurityEventType(AutoNameEnum):
     MAINS_FAILURE_EVENT = auto()
     OFFLINE_WATER_DETECTION_EVENT = auto()
 
+
 class AutomationRuleType(AutoNameEnum):
     SIMPLE = auto()
+
 
 class FunctionalHomeType(AutoNameEnum):
     INDOOR_CLIMATE = auto()
     LIGHT_AND_SHADOW = auto()
     SECURITY_AND_ALARM = auto()
     WEATHER_AND_ENVIRONMENT = auto()
+
 
 class EventType(AutoNameEnum):
     SECURITY_JOURNAL_CHANGED = auto()
@@ -261,17 +286,20 @@ class MotionDetectionSendInterval(AutoNameEnum):
     SECONDS_240 = auto()
     SECONDS_480 = auto()
 
+
 class SmokeDetectorAlarmType(AutoNameEnum):
     IDLE_OFF = auto()
     PRIMARY_ALARM = auto()
     INTRUSION_ALARM = auto()
     SECONDARY_ALARM = auto()
 
+
 class LiveUpdateState(AutoNameEnum):
     UP_TO_DATE = auto()
     UPDATE_AVAILABLE = auto()
     UPDATE_INCOMPLETE = auto()
     LIVE_UPDATE_NOT_SUPPORTED = auto()
+
 
 class OpticalAlarmSignal(AutoNameEnum):
     DISABLE_OPTICAL_SIGNAL = auto()
@@ -283,11 +311,13 @@ class OpticalAlarmSignal(AutoNameEnum):
     CONFIRMATION_SIGNAL_1 = auto()
     CONFIRMATION_SIGNAL_2 = auto()
 
+
 class WindValueType(AutoNameEnum):
     CURRENT_VALUE = auto()
     MIN_VALUE = auto()
     MAX_VALUE = auto()
     AVERAGE_VALUE = auto()
+
 
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
@@ -324,9 +354,11 @@ class FunctionalChannelType(AutoNameEnum):
     WEATHER_SENSOR_PRO_CHANNEL = auto()
     WEATHER_SENSOR_PLUS_CHANNEL = auto()
 
+
 class HeatingLoadType(AutoNameEnum):
     LOAD_BALANCING = auto()
     LOAD_COLLECTION = auto()
+
 
 class DeviceUpdateState(AutoNameEnum):
     UP_TO_DATE = auto()
@@ -334,6 +366,7 @@ class DeviceUpdateState(AutoNameEnum):
     UPDATE_AVAILABLE = auto()
     UPDATE_AUTHORIZED = auto()
     BACKGROUND_UPDATE_NOT_SUPPORTED = auto()
+
 
 class PassageDirection(AutoNameEnum):
     LEFT = auto()
@@ -344,6 +377,7 @@ class MultiModeInputMode(AutoNameEnum):
     KEY_BEHAVIOR = auto()
     SWITCH_BEHAVIOR = auto()
     BINARY_BEHAVIOR = auto()
+
 
 class BinaryBehaviorType(AutoNameEnum):
     NORMALLY_CLOSE = auto()

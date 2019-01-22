@@ -57,9 +57,7 @@ class AsyncConnection(BaseConnection):
 
         if lookup:
             result = await self.api_call(
-                lookup_url,
-                json.dumps(self.clientCharacteristics),
-                full_url=True,
+                lookup_url, json.dumps(self.clientCharacteristics), full_url=True
             )
 
             self._urlREST = result["urlREST"]
@@ -85,9 +83,7 @@ class AsyncConnection(BaseConnection):
             path = self.full_url(path)
         for i in range(self._restCallRequestCounter):
             try:
-                with async_timeout.timeout(
-                    self._restCallTimout, loop=self._loop
-                ):
+                with async_timeout.timeout(self._restCallTimout, loop=self._loop):
                     result = await self._websession.post(
                         path, data=body, headers=self.headers
                     )
@@ -102,9 +98,7 @@ class AsyncConnection(BaseConnection):
             except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
                 # Both exceptions occur when connecting to the server does
                 # somehow not work.
-                logger.debug(
-                    "Connection timed out or another error occurred %s" % path
-                )
+                logger.debug("Connection timed out or another error occurred %s" % path)
             except JSONDecodeError as err:
                 logger.exception(err)
             finally:
@@ -126,9 +120,7 @@ class AsyncConnection(BaseConnection):
                 loop=self._loop,
             )
         except asyncio.TimeoutError:
-            raise HmipConnectionError(
-                "Connecting to hmip ws socket timed out."
-            )
+            raise HmipConnectionError("Connecting to hmip ws socket timed out.")
         except Exception as err:
             logger.exception(err)
             raise HmipConnectionError()

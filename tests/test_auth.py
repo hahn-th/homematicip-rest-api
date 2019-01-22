@@ -24,7 +24,7 @@ def test_auth_challenge_no_pin(fake_home: Home):
         assert auth.isRequestAcknowledged() == True
 
         token = auth.requestAuthToken()
-        assert token == hashlib.sha512(auth.uuid.encode('utf-8')).hexdigest().upper()
+        assert token == hashlib.sha512(auth.uuid.encode("utf-8")).hexdigest().upper()
 
         resultId = auth.confirmAuthToken(token)
         assert resultId == auth.uuid
@@ -35,5 +35,3 @@ def test_auth_challenge_no_pin(fake_home: Home):
         assert client != None
         assert client.label == devicename
         assert client.clientType == ClientType.APP
-
-

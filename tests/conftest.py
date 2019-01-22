@@ -20,12 +20,14 @@ from fake_cloud_server import FakeCloudServer
 from datetime import datetime, timedelta, timezone
 import time
 
+
 def get_full_path(name):
     """Returns full path of incoming relative path.
     Relative path is relative to the script location.
     """
     pth = Path(__file__).parent.joinpath(name)
     return pth
+
 
 def fake_home_download_configuration():
     _full = get_full_path("json_data/home.json")
@@ -54,7 +56,7 @@ def fake_cloud(request):
         ssl_context=(get_full_path("server.crt"), get_full_path("server.key")),
     )
     app.url = server.url
-    server._server._timeout = 5 # added to allow timeouts in the fake server
+    server._server._timeout = 5  # added to allow timeouts in the fake server
     server.start()
     request.addfinalizer(server.stop)
     return server
@@ -112,8 +114,8 @@ async def no_ssl_fake_async_auth(event_loop):
 
 
 dt = datetime.now(timezone.utc).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1) 
-#the timestamp of the tests were written during DST so utc_offset is one hour less outside of DST
+utc_offset = dt.utcoffset() // timedelta(seconds=1)
+# the timestamp of the tests were written during DST so utc_offset is one hour less outside of DST
 # -> adding one hour extra
 if not time.localtime().tm_isdst:
     utc_offset = utc_offset + 3600

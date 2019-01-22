@@ -1,7 +1,10 @@
 import logging
+
 LOGGER = logging.getLogger(__name__)
 
-LOGGER.warn("constants.py is deprecated. Please use the corresponding enums in enums.py")
+LOGGER.warn(
+    "constants.py is deprecated. Please use the corresponding enums in enums.py"
+)
 
 # DEVICES
 DEVICE = "DEVICE"
@@ -70,10 +73,10 @@ ACCESS_POINT_CONNECTED = "ACCESS_POINT_CONNECTED"
 ACTIVATION_CHANGED = "ACTIVATION_CHANGED"
 SILENCE_CHANGED = "SILENCE_CHANGED"
 
-#Automation Rules
+# Automation Rules
 SIMPLE_RULE = "SIMPLE"
 
-#Functional Homes
+# Functional Homes
 INDOOR_CLIMATE = "INDOOR_CLIMATE"
 LIGHT_AND_SHADOW = "LIGHT_AND_SHADOW"
 SECURITY_AND_ALARM = "SECURITY_AND_ALARM"

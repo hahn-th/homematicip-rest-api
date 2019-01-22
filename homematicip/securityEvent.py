@@ -6,9 +6,8 @@ from datetime import datetime
 
 class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents a security event """
-    
 
-    def __init__(self,connection):
+    def __init__(self, connection):
         super().__init__(connection)
         self.eventTimestamp = None
         self.eventType = None
@@ -24,15 +23,18 @@ class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
             self.eventTimestamp = None
         self.eventType = js["eventType"]
 
-
     def __str__(self):
-        return "{} {} {}".format(self.eventType, self.label, self.eventTimestamp.strftime("%Y.%m.%d %H:%M:%S"))
+        return "{} {} {}".format(
+            self.eventType,
+            self.label,
+            self.eventTimestamp.strftime("%Y.%m.%d %H:%M:%S"),
+        )
+
 
 class SecurityZoneEvent(SecurityEvent):
     """ This class will be used by other events which are just adding "securityZoneValues" """
-    
 
-    def __init__(self,connection):
+    def __init__(self, connection):
         super().__init__(connection)
         self.external_zone = None
         self.internal_zone = None
@@ -43,14 +45,18 @@ class SecurityZoneEvent(SecurityEvent):
         self.internal_zone = js["securityZoneValues"]["INTERNAL"]
 
     def __str__(self):
-        return "{} external_zone({}) internal_zone({}) ".format(super().__str__(),
-                                                self.external_zone, self.internal_zone)
+        return "{} external_zone({}) internal_zone({}) ".format(
+            super().__str__(), self.external_zone, self.internal_zone
+        )
+
 
 class SensorEvent(SecurityEvent):
     pass
 
+
 class AccessPointDisconnectedEvent(SecurityEvent):
     pass
+
 
 class AccessPointConnectedEvent(SecurityEvent):
     pass
@@ -59,29 +65,38 @@ class AccessPointConnectedEvent(SecurityEvent):
 class ActivationChangedEvent(SecurityZoneEvent):
     pass
 
+
 class SilenceChangedEvent(SecurityZoneEvent):
     pass
+
 
 class SabotageEvent(SecurityEvent):
     pass
 
+
 class MoistureDetectionEvent(SecurityEvent):
     pass
+
 
 class SmokeAlarmEvent(SecurityEvent):
     pass
 
+
 class ExternalTriggeredEvent(SecurityEvent):
     pass
+
 
 class OfflineAlarmEvent(SecurityEvent):
     pass
 
+
 class WaterDetectionEvent(SecurityEvent):
     pass
 
+
 class MainsFailureEvent(SecurityEvent):
     pass
+
 
 class OfflineWaterDetectionEvent(SecurityEvent):
     pass

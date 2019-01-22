@@ -17,7 +17,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
-
     def __init__(self, connection):
         super().__init__(connection)
         self.temperature = 0.0
@@ -39,15 +38,18 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         self.humidity = js["humidity"]
         self.windSpeed = js["windSpeed"]
         self.windDirection = js["windDirection"]
+
     def __str__(self):
-        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) windSpeed({}) windDirection({})".format(self.temperature,
-                                                                                                                                                                    self.weatherCondition,
-                                                                                                                                                                    self.weatherDayTime,
-                                                                                                                                                                    self.minTemperature,
-                                                                                                                                                                    self.maxTemperature,
-                                                                                                                                                                    self.humidity,
-                                                                                                                                                                    self.windSpeed,
-                                                                                                                                                                    self.windDirection)
+        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) windSpeed({}) windDirection({})".format(
+            self.temperature,
+            self.weatherCondition,
+            self.weatherDayTime,
+            self.minTemperature,
+            self.maxTemperature,
+            self.humidity,
+            self.windSpeed,
+            self.windDirection,
+        )
 
 
 class Location(HomeMaticIPObject.HomeMaticIPObject):
@@ -64,13 +66,12 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         self.longitude = js["longitude"]
 
     def __str__(self):
-        return "city({}) latitude({}) longitude({})".format(self.city,
-                                                            self.latitude,
-                                                            self.longitude)
+        return "city({}) latitude({}) longitude({})".format(
+            self.city, self.latitude, self.longitude
+        )
 
 
 class Client(HomeMaticIPObject.HomeMaticIPObject):
-
     def __init__(self, connection):
         super().__init__(connection)
         self.id = ""
@@ -93,7 +94,6 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
-
     def __init__(self, connection):
         super().__init__(connection)
         self.authToken = None
@@ -104,8 +104,10 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
         self.authToken = js["authToken"]
         self.expirationTimestamp = self.fromtimestamp(js["expirationTimestamp"])
 
+
 class Home(HomeMaticIPObject.HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
+
     _typeClassMap = TYPE_CLASS_MAP
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
@@ -169,27 +171,31 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.updateState = HomeUpdateState.from_str(js_home["updateState"])
         self.powerMeterUnitPrice = js_home["powerMeterUnitPrice"]
         self.powerMeterCurrency = js_home["powerMeterCurrency"]
-        self.deviceUpdateStrategy = DeviceUpdateStrategy.from_str(js_home["deviceUpdateStrategy"])
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.from_str(
+            js_home["deviceUpdateStrategy"]
+        )
         self.lastReadyForUpdateTimestamp = js_home["lastReadyForUpdateTimestamp"]
         self.apExchangeClientId = js_home["apExchangeClientId"]
         self.apExchangeState = ApExchangeState.from_str(js_home["apExchangeState"])
         self.id = js_home["id"]
         self.carrierSense = js_home["carrierSense"]
 
-        
         self._get_rules(js_home)
 
     def download_configuration(self):
-        return self._restCall('home/getCurrentState',
-                              json.dumps(self._connection.clientCharacteristics))
+        return self._restCall(
+            "home/getCurrentState", json.dumps(self._connection.clientCharacteristics)
+        )
 
-    def get_current_state(self, clearConfig = False):
+    def get_current_state(self, clearConfig=False):
 
         json_state = self.download_configuration()
 
         if "errorCode" in json_state:
-            LOGGER.error("Could not get the current configuration. Error: %s",
-                         json_state["errorCode"])
+            LOGGER.error(
+                "Could not get the current configuration. Error: %s",
+                json_state["errorCode"],
+            )
             return False
 
         if clearConfig:
@@ -234,7 +240,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             return d
 
     def _get_rules(self, json_state):
-        self.rules = [x for x in self.rules if x.id in json_state["ruleMetaDatas"].keys()]
+        self.rules = [
+            x for x in self.rules if x.id in json_state["ruleMetaDatas"].keys()
+        ]
         for id_, raw in json_state["ruleMetaDatas"].items():
             _rule = self.search_rule_by_id(id_)
             if _rule:
@@ -278,7 +286,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except:
                 g = self._typeGroupMap[GroupType.GROUP](self._connection)
                 g.from_json(json_state, self.devices)
-                LOGGER.warning("There is no class for group '%s' yet", json_state["type"])
+                LOGGER.warning(
+                    "There is no class for group '%s' yet", json_state["type"]
+                )
         return g
 
     def _get_groups(self, json_state):
@@ -316,14 +326,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except:
                 h = FunctionalHome(self._connection)
                 h.from_json(functionalHome, self.groups)
-                LOGGER.warning("There is no class for functionalHome '%s' yet", solution)
+                LOGGER.warning(
+                    "There is no class for functionalHome '%s' yet", solution
+                )
                 self.functionalHomes.append(h)
 
     def _load_functionalChannels(self):
         for d in self.devices:
             d.load_functionalChannels(self.groups)
 
-    def get_functionalHome(self, functionalHomeType ):
+    def get_functionalHome(self, functionalHomeType):
         """ returns the functionalHome from the given type or None if the functional home couldn't be found"""
         for x in self.functionalHomes:
             if isinstance(x, functionalHomeType):
@@ -387,7 +399,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 return r
         return None
 
-    def get_security_zones_activation(self) -> (bool,bool):
+    def get_security_zones_activation(self) -> (bool, bool):
         """ returns the value of the security zones if they are armed or not
         
         Returns
@@ -400,9 +412,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         external_active = False
         for g in self.groups:
             if isinstance(g, SecurityZoneGroup):
-                if g.label == 'EXTERNAL':
+                if g.label == "EXTERNAL":
                     external_active = g.active
-                elif g.label == 'INTERNAL':
+                elif g.label == "INTERNAL":
                     internal_active = g.active
         return internal_active, external_active
 
@@ -435,25 +447,31 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_intrusion_alert_through_smoke_detectors(self, activate=True):
         data = {"intrusionAlertThroughSmokeDetectors": activate}
-        return self._restCall("home/security/setIntrusionAlertThroughSmokeDetectors",
-                              json.dumps(data))
+        return self._restCall(
+            "home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data)
+        )
 
-    def activate_absence_with_period(self, endtime : datetime):
+    def activate_absence_with_period(self, endtime: datetime):
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
-        return self._restCall("home/heating/activateAbsenceWithPeriod", json.dumps(data))
+        return self._restCall(
+            "home/heating/activateAbsenceWithPeriod", json.dumps(data)
+        )
 
     def activate_absence_with_duration(self, duration):
         data = {"duration": duration}
-        return self._restCall("home/heating/activateAbsenceWithDuration", json.dumps(data))
+        return self._restCall(
+            "home/heating/activateAbsenceWithDuration", json.dumps(data)
+        )
 
     def deactivate_absence(self):
         return self._restCall("home/heating/deactivateAbsence")
 
-    def activate_vacation(self, endtime : datetime, temperature):
-        data = {"endtime": endtime.strftime("%Y_%m_%d %H:%M"),
-                "temperature": temperature}
-        return self._restCall("home/heating/activateVacation",
-                              json.dumps(data))
+    def activate_vacation(self, endtime: datetime, temperature):
+        data = {
+            "endtime": endtime.strftime("%Y_%m_%d %H:%M"),
+            "temperature": temperature,
+        }
+        return self._restCall("home/heating/activateVacation", json.dumps(data))
 
     def deactivate_vacation(self):
         return self._restCall("home/heating/deactivateVacation")
@@ -464,20 +482,23 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         data = {"pin": newPin}
         if oldPin:
             self._connection.headers["PIN"] = str(oldPin)
-        result = self._restCall('home/setPin', body=json.dumps(data))
+        result = self._restCall("home/setPin", body=json.dumps(data))
         if oldPin:
             del self._connection.headers["PIN"]
         return result
 
     def set_zone_activation_delay(self, delay):
         data = {"zoneActivationDelay": delay}
-        return self._restCall("home/security/setZoneActivationDelay",
-                              body=json.dumps(data))
+        return self._restCall(
+            "home/security/setZoneActivationDelay", body=json.dumps(data)
+        )
 
     def get_security_journal(self):
         journal = self._restCall("home/security/getSecurityJournal")
         if "errorCode" in journal:
-            LOGGER.error("Could not get the security journal. Error: %s", journal["errorCode"])
+            LOGGER.error(
+                "Could not get the security journal. Error: %s", journal["errorCode"]
+            )
             return None
         ret = []
         for entry in journal["entries"]:
@@ -488,7 +509,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except:
                 j = SecurityEvent(self._connection)
                 LOGGER.warning("There is no class for %s yet", entry["eventType"])
-            
+
             j.from_json(entry)
             ret.append(j)
 
@@ -510,8 +531,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def set_powermeter_unit_price(self, price):
         data = {"powerMeterUnitPrice": price}
-        return self._restCall("home/setPowerMeterUnitPrice",
-                              body=json.dumps(data))
+        return self._restCall("home/setPowerMeterUnitPrice", body=json.dumps(data))
 
     def set_zones_device_assignment(self, internal_devices, external_devices):
         """ sets the devices for the security zones
@@ -521,17 +541,22 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         """
         internal = [x.id for x in internal_devices]
         external = [x.id for x in external_devices]
-        data = {"zonesDeviceAssignment": {"INTERNAL": internal,
-                                          "EXTERNAL": external}}
-        return self._restCall("home/security/setZonesDeviceAssignment",
-                              body=json.dumps(data))
+        data = {"zonesDeviceAssignment": {"INTERNAL": internal, "EXTERNAL": external}}
+        return self._restCall(
+            "home/security/setZonesDeviceAssignment", body=json.dumps(data)
+        )
 
     def enable_events(self):
         websocket.enableTrace(True)
-        self.__webSocket = websocket.WebSocketApp(self._connection.urlWebSocket, header=['AUTHTOKEN: {}'.format(self._connection.auth_token),
-                'CLIENTAUTH: {}'.format(self._connection.clientauth_token)],
+        self.__webSocket = websocket.WebSocketApp(
+            self._connection.urlWebSocket,
+            header=[
+                "AUTHTOKEN: {}".format(self._connection.auth_token),
+                "CLIENTAUTH: {}".format(self._connection.clientauth_token),
+            ],
             on_message=self._ws_on_message,
-            on_error=self._ws_on_error)
+            on_error=self._ws_on_error,
+        )
         self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
         self.__webSocketThread.daemon = True
         self.__webSocketThread.start()
@@ -542,8 +567,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def _ws_on_error(self, message):
         LOGGER.error("Websocket error: %s", bytes2str(message))
 
-    def _ws_on_message(self, message ):
-        #json.loads doesn't support bytes as parameter before python 3.6
+    def _ws_on_message(self, message):
+        # json.loads doesn't support bytes as parameter before python 3.6
         js = json.loads(bytes2str(message))
         # LOGGER.debug(js)
         eventList = []
@@ -608,7 +633,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 eventList.append({"eventType": pushEventType, "data": obj})
             except ValueError as valerr:
-                    LOGGER.warning("Uknown EventType '%s' Data: %s", event["pushEventType"], event)
+                LOGGER.warning(
+                    "Uknown EventType '%s' Data: %s", event["pushEventType"], event
+                )
 
             except Exception as err:
                 LOGGER.exception(err)

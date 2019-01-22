@@ -147,9 +147,7 @@ async def ws_listen(connection, on_message=None):
     def on_error(*args, **kwargs):
         pass
 
-    ws_loop = await connection.ws_connect(
-        on_message=on_message, on_error=on_error
-    )
+    ws_loop = await connection.ws_connect(on_message=on_message, on_error=on_error)
 
     return ws_loop
 
@@ -214,7 +212,7 @@ async def test_user_disconnect_and_reconnect(simple_server, client_connection):
 @pytest.mark.asyncio
 async def test_ws_message(single_message_server, client_connection):
     on_message_mock = Mock()
-    listener = await ws_listen(client_connection,on_message=on_message_mock)
+    listener = await ws_listen(client_connection, on_message=on_message_mock)
     assert client_connection.ws_connected
 
     with pytest.raises(HmipConnectionError):

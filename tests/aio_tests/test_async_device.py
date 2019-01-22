@@ -9,9 +9,10 @@ from homematicip.base.base_connection import HmipWrongHttpStatusError
 
 from conftest import utc_offset
 
+
 @pytest.mark.asyncio
-async def test_basic_device_functions(no_ssl_fake_async_home:AsyncHome):
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000009')
+async def test_basic_device_functions(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d.label == "Brunnen"
     assert d.routerModuleEnabled is True
     assert d.energyCounter == 0.4754
@@ -19,7 +20,7 @@ async def test_basic_device_functions(no_ssl_fake_async_home:AsyncHome):
     await d.set_label("new label")
     await d.set_router_module_enabled(False)
     await no_ssl_fake_async_home.get_current_state()
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000009')
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d.label == "new label"
     assert d.routerModuleEnabled is False
 
@@ -27,17 +28,19 @@ async def test_basic_device_functions(no_ssl_fake_async_home:AsyncHome):
     await d.set_router_module_enabled(True)
     await d.reset_energy_counter()
     await no_ssl_fake_async_home.get_current_state()
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000009')
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d.label == "other label"
     assert d.routerModuleEnabled is True
     assert d.energyCounter == 0
 
-    d2 = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000005')
+    d2 = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000005")
     await d.delete()
     await no_ssl_fake_async_home.get_current_state()
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000009')
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d == None
-    assert d2 is no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000005') # make sure that the objects got updated and not completely renewed
+    assert d2 is no_ssl_fake_async_home.search_device_by_id(
+        "3014F7110000000000000005"
+    )  # make sure that the objects got updated and not completely renewed
 
 
 @pytest.mark.asyncio
@@ -57,7 +60,9 @@ async def test_water_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.waterlevelDetected is False
 
     await d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
-    await d.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+    await d.set_acoustic_alarm_signal(
+        AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
+    )
     await d.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
     await d.set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
     await d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
@@ -71,17 +76,21 @@ async def test_water_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
     assert d.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
 
-def test_all_devices_implemented(no_ssl_fake_async_home:AsyncHome):
+
+def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
     for d in no_ssl_fake_async_home.devices:
         assert type(d) != AsyncDevice
 
+
 @pytest.mark.asyncio
-async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home : AsyncHome ):
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000022')
+async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000022")
     assert isinstance(d, AsyncWallMountedThermostatPro)
     assert d.id == "3014F7110000000000000022"
     assert d.label == "Wandthermostat"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(0,utc_offset)
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
+        0, utc_offset
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 297
     assert d.modelType == "HmIP-WTH-2"
@@ -103,20 +112,22 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home : AsyncHome ):
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.8.0"
 
-    await d.set_display( ClimateControlDisplay.ACTUAL)
+    await d.set_display(ClimateControlDisplay.ACTUAL)
     await no_ssl_fake_async_home.get_current_state()
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000022')
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000022")
 
     assert d.display == ClimateControlDisplay.ACTUAL
 
 
 @pytest.mark.asyncio
-async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
-    fake_home=no_ssl_fake_async_home
-    d = fake_home.search_device_by_id('3014F7110000000000000009')
+async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
+    fake_home = no_ssl_fake_async_home
+    d = fake_home.search_device_by_id("3014F7110000000000000009")
     assert isinstance(d, AsyncPlugableSwitchMeasuring)
     assert d.label == "Brunnen"
-    assert d.lastStatusUpdate == (datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0,utc_offset))
+    assert d.lastStatusUpdate == (
+        datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0, utc_offset)
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 262
     assert d.modelType == "HMIP-PSM"
@@ -136,34 +147,39 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
     assert d.unreach == False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "2.6.2"
-    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
-    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
+    a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
+    assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
     assert d.dutyCycle == False
     assert d.configPending == False
 
-    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)'
-                     ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
+    assert str(d) == (
+        "HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)"
+        " userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)"
+    )
 
     await d.turn_on()
     await fake_home.get_current_state()
-    d = fake_home.search_device_by_id('3014F7110000000000000009')
+    d = fake_home.search_device_by_id("3014F7110000000000000009")
     assert d.on == True
 
     await d.turn_off()
     await fake_home.get_current_state()
-    d = fake_home.search_device_by_id('3014F7110000000000000009')
+    d = fake_home.search_device_by_id("3014F7110000000000000009")
     assert d.on == False
 
-    d.id = 'INVALID_ID'
+    d.id = "INVALID_ID"
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+
 @pytest.mark.asyncio
-async def test_heating_thermostat(no_ssl_fake_async_home : AsyncHome ):
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000015')
+async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000015")
     assert isinstance(d, AsyncHeatingThermostat)
     assert d.label == "Wohnzimmer-Heizung"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(0,utc_offset)
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
+        0, utc_offset
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 269
     assert d.modelType == "HMIP-eTRV"
@@ -184,18 +200,19 @@ async def test_heating_thermostat(no_ssl_fake_async_home : AsyncHome ):
     assert d.automaticValveAdaptionNeeded == False
     assert d.availableFirmwareVersion == "2.0.2"
     assert d.firmwareVersion == "2.0.2"
-    a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
-    assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
+    a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
+    assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
 
-    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)'
-                    ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
-
+    assert str(d) == (
+        "HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)"
+        " valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)"
+    )
 
     await d.set_operation_lock(False)
     await no_ssl_fake_async_home.get_current_state()
-    d = no_ssl_fake_async_home.search_device_by_id('3014F7110000000000000015')
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000015")
     assert d.operationLockActive == False
 
-    d.id = 'INVALID_ID'
+    d.id = "INVALID_ID"
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.set_operation_lock(True)

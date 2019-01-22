@@ -1,14 +1,35 @@
 import json
 
-from homematicip.group import Group, MetaGroup, SecurityGroup, SwitchingGroup, LinkedSwitchingGroup, \
-    ExtendedLinkedSwitchingGroup, ExtendedLinkedShutterGroup, AlarmSwitchingGroup, \
-    HeatingHumidyLimiterGroup, HeatingTemperatureLimiterGroup, HeatingChangeoverGroup, InboxGroup, \
-    SecurityZoneGroup, HeatingGroup, HeatingDehumidifierGroup, HeatingCoolingDemandGroup, \
-    HeatingExternalClockGroup, HeatingCoolingDemandBoilerGroup, HeatingCoolingDemandPumpGroup, \
-    SwitchingProfileGroup, OverHeatProtectionRule, SmokeAlarmDetectionRule, \
-    ShutterWindProtectionRule, LockOutProtectionRule, EnvironmentGroup
+from homematicip.group import (
+    Group,
+    MetaGroup,
+    SecurityGroup,
+    SwitchingGroup,
+    LinkedSwitchingGroup,
+    ExtendedLinkedSwitchingGroup,
+    ExtendedLinkedShutterGroup,
+    AlarmSwitchingGroup,
+    HeatingHumidyLimiterGroup,
+    HeatingTemperatureLimiterGroup,
+    HeatingChangeoverGroup,
+    InboxGroup,
+    SecurityZoneGroup,
+    HeatingGroup,
+    HeatingDehumidifierGroup,
+    HeatingCoolingDemandGroup,
+    HeatingExternalClockGroup,
+    HeatingCoolingDemandBoilerGroup,
+    HeatingCoolingDemandPumpGroup,
+    SwitchingProfileGroup,
+    OverHeatProtectionRule,
+    SmokeAlarmDetectionRule,
+    ShutterWindProtectionRule,
+    LockOutProtectionRule,
+    EnvironmentGroup,
+)
 
 from homematicip.base.enums import *
+
 
 class AsyncGroup(Group):
     async def set_label(self, label):
@@ -20,6 +41,7 @@ class AsyncGroup(Group):
 
 class AsyncMetaGroup(MetaGroup, AsyncGroup):
     """ a meta group is a "Room" inside the homematic configuration """
+
     pass
 
 
@@ -51,7 +73,9 @@ class AsyncLinkedSwitchingGroup(LinkedSwitchingGroup, AsyncSwitchingGroup):
         return await self._connection.api_call(url, data)
 
 
-class AsyncExtendedLinkedSwitchingGroup(ExtendedLinkedSwitchingGroup, AsyncSwitchingGroup):
+class AsyncExtendedLinkedSwitchingGroup(
+    ExtendedLinkedSwitchingGroup, AsyncSwitchingGroup
+):
     async def set_on_time(self, onTimeSeconds):
         url, data = super().set_on_time(onTimeSeconds)
         return await self._connection.api_call(url, data)
@@ -72,21 +96,27 @@ class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
         url, data = super().set_on_time(onTimeSeconds)
         return await self._connection.api_call(url, data)
 
-    async def test_signal_optical(self,
-                                  signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
+    async def test_signal_optical(
+        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    ):
         url, data = super().test_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
-    async def set_signal_optical(self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
+    async def set_signal_optical(
+        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    ):
         url, data = super().set_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
-    async def test_signal_acoustic(self,
-                                  signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
+    async def test_signal_acoustic(
+        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+    ):
         url, data = super().test_signal_acoustic(signalAcoustic=signalAcoustic)
         return await self._connection.api_call(url, data)
 
-    async def set_signal_acoustic(self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
+    async def set_signal_acoustic(
+        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+    ):
         url, data = super().set_signal_acoustic(signalAcoustic=signalAcoustic)
         return await self._connection.api_call(url, data)
 
@@ -119,7 +149,9 @@ class AsyncSecurityZoneGroup(SecurityZoneGroup, AsyncGroup):
 
 class AsyncHeatingGroup(HeatingGroup, AsyncGroup):
     async def set_point_temperature(self, temperature):
-        return await self._connection.api_call(*super().set_point_temperature(temperature))
+        return await self._connection.api_call(
+            *super().set_point_temperature(temperature)
+        )
 
     async def set_boost(self, enable=True):
         return await self._connection.api_call(*super().set_boost(enable=enable))
@@ -162,12 +194,14 @@ class AsyncSwitchingProfileGroup(SwitchingProfileGroup, AsyncGroup):
 
     async def set_profile_mode(self, devices, automatic=True):
         return await self._connection.api_call(
-            *super().set_profile_mode(devices, automatic=automatic))
+            *super().set_profile_mode(devices, automatic=automatic)
+        )
 
     async def create(self, label):
         data = {"label": label}
         result = await self._connection.api_call(
-            "group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data))
+            "group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data)
+        )
         if "groupId" in result:
             self.id = result["groupId"]
         return result
@@ -187,6 +221,7 @@ class AsyncShutterWindProtectionRule(ShutterWindProtectionRule, AsyncGroup):
 
 class AsyncLockOutProtectionRule(LockOutProtectionRule, AsyncGroup):
     pass
+
 
 class AsyncEnvironmentGroup(EnvironmentGroup, AsyncGroup):
     pass

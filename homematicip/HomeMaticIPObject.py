@@ -28,7 +28,7 @@ class HomeMaticIPObject:
         return self._connection._restCall(path, body)
 
     def from_json(self, js):
-        #LOGGER.debug("from_json call HomeMaticIpObject")
+        # LOGGER.debug("from_json call HomeMaticIpObject")
         self._rawJSONData = js
         pass
 
@@ -39,4 +39,4 @@ class HomeMaticIPObject:
         return datetime.fromtimestamp(timestamp / 1000.0)
 
     def __str__(self):
-        return 'id({})'.format(self.id)
+        return "id({})".format(self.id)
