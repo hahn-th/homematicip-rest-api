@@ -81,6 +81,15 @@ class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
         url, data = super().set_signal_optical(signalOptical=signalOptical)
         return await self._connection.api_call(url, data)
 
+    async def test_signal_acoustic(self,
+                                  signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
+        url, data = super().test_signal_acoustic(signalAcoustic=signalAcoustic)
+        return await self._connection.api_call(url, data)
+
+    async def set_signal_acoustic(self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
+        url, data = super().set_signal_acoustic(signalAcoustic=signalAcoustic)
+        return await self._connection.api_call(url, data)
+
 
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime

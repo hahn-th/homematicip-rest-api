@@ -38,6 +38,14 @@ class AcousticAlarmSignal(AutoNameEnum):
     FREQUENCY_HIGHON_LONGOFF = auto()
     FREQUENCY_LOWON_OFF_HIGHON_OFF = auto()
     FREQUENCY_LOWON_LONGOFF_HIGHON_LONGOFF = auto()
+    LOW_BATTERY = auto()
+    DISARMED = auto()
+    INTERNALLY_ARMED = auto()
+    EXTERNALLY_ARMED = auto()
+    DELAYED_INTERNALLY_ARMED = auto()
+    DELAYED_EXTERNALLY_ARMED = auto()
+    EVENT = auto()
+    ERROR = auto()
 
 class ClimateControlDisplay(AutoNameEnum):
     ACTUAL = auto()

@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- started with documentation
+- API
+  - Groups
+    - Async/AlarmSwitchingGroup
+      - added test/set_signal_acoustic methods
 
 ## [0.10.4] - 2019-01-20
 ### Added
