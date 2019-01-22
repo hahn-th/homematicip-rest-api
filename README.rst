@@ -176,5 +176,5 @@ connection
    :target: https://paypal.me/coreGreenberet
 .. |discord| image:: https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic
    :target: https://discord.gg/mZG2myJ
-.. |Docs| image:: https://readthedocs.org/projects/homematicip-rest-api/badge/?version=documentation
+.. |Docs| image:: https://readthedocs.org/projects/homematicip-rest-api/badge/?version=latest
    :target: https://homematicip-rest-api.readthedocs.io
