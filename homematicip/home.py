@@ -347,8 +347,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def search_group_by_id(self, groupID) -> Group:
         """ searches a group by given id
-        :param groupID the device to search for
-        :return the group object or None if it couldn't find a group
+        
+        Args:
+          groupID(str): groupID the group to search for
+          
+        Returns
+          the group object or None if it couldn't find a group
         """
         for g in self.groups:
             if g.id == groupID:
@@ -357,8 +361,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def search_client_by_id(self, clientID) -> Client:
         """ searches a client by given id
-        :param clientID the device to search for
-        :return the client object or None if it couldn't find a client
+        
+        Args:
+          clientID(str): the client to search for
+        
+        Returns
+          the client object or None if it couldn't find a client
         """
         for c in self.clients:
             if c.id == clientID:
@@ -367,15 +375,27 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def search_rule_by_id(self, ruleID) -> Rule:
         """ searches a rule by given id
-        :param ruleID the device to search for
-        :return the rule object or None if it couldn't find a rule
+        
+        Args:
+          ruleID(str): the rule to search for
+        
+        Returns
+          the rule object or None if it couldn't find a rule
         """
         for r in self.rules:
             if r.id == ruleID:
                 return r
         return None
 
-    def get_security_zones_activation(self):
+    def get_security_zones_activation(self) -> (bool,bool):
+        """ returns the value of the security zones if they are armed or not
+        
+        Returns
+            internal
+              True if the internal zone is armed
+            external
+              True if the external zone is armed
+        """
         internal_active = False
         external_active = False
         for g in self.groups:
@@ -387,6 +407,25 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         return internal_active, external_active
 
     def set_security_zones_activation(self, internal=True, external=True):
+        """ this function will set the alarm system to armed or disable it
+        
+        Args:
+          internal(bool): activates/deactivates the internal zone
+          external(bool): activates/deactivates the external zone
+        
+        Examples:
+          arming while being at home
+          
+          >>> home.set_security_zones_activation(False,True)
+          
+          arming without being at home
+          
+          >>> home.set_security_zones_activation(True,True)
+          
+          disarming the alarm system
+          
+          >>> home.set_security_zones_activation(False,False)
+        """
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return self._restCall("home/security/setZonesActivation", json.dumps(data))
 
