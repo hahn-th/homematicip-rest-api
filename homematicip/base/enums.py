@@ -2,7 +2,7 @@
 from aenum import auto, Enum
 
 
-class AutoNameEnum(Enum):
+class AutoNameEnum(str,Enum):
     """ auto() will generate the name of the attribute as value """
 
     def _generate_next_value_(name, start, count, last_values):
@@ -12,7 +12,18 @@ class AutoNameEnum(Enum):
         return self.value
 
     @classmethod
-    def from_str(cls, text):
+    def from_str(cls, text:str):
+        """ this function will create the enum object based on its string value
+
+        Args:
+            text(str): the string value of the enum
+
+        Returns:
+            the enum object or None if the text is None
+
+        Raises:
+            ValueError: if the text is not a valid value of the enum
+        """
         if text is None:
             return None
         return cls(text)

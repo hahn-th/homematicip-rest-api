@@ -313,7 +313,14 @@ def test_switching_alarm_group(fake_home: Home):
         g.id = "00000000-0000-0000-0000-BADBADBADB22"
         result = g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
         assert result["errorCode"] == "INVALID_GROUP"
+
         result = g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+        assert result["errorCode"] == "INVALID_GROUP"
+
+        result = g.test_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+        assert result["errorCode"] == "INVALID_GROUP"
+
+        result = g.test_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
         assert result["errorCode"] == "INVALID_GROUP"
 
 
