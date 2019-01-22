@@ -22,7 +22,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.label = None
         self.lastStatusUpdate = None
         self.deviceType = None
-        self.updateState = None
+        self.updateState = DeviceUpdateState.UP_TO_DATE
         self.firmwareVersion = None
         self.firmwareVersionInteger = 0 # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
         self.availableFirmwareVersion = None
@@ -58,7 +58,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
 
         self.deviceType = js["type"]
-        self.updateState = js["updateState"]
+        self.updateState = DeviceUpdateState.from_str(js["updateState"])
         self.firmwareVersion = js["firmwareVersion"]
         self.firmwareVersionInteger = js["firmwareVersionInteger"]
         self.availableFirmwareVersion = js["availableFirmwareVersion"]
@@ -124,7 +124,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         except:
             fc = self._typeFunctionalChannelMap[FunctionalChannelType.FUNCTIONAL_CHANNEL]()
             fc.from_json(json_state,groups)
-            LOGGER.warning("There is no class for %s yet", json_state["functionalChannelType"])
+            LOGGER.warning("There is no class for functionalChannel '%s' yet", json_state["functionalChannelType"])
         return fc
 
 
@@ -141,7 +141,7 @@ class SabotageDevice(Device):
             self.sabotage = c["sabotage"]
 
     def __str__(self):
-        return "{}: sabotage({})".format(super().__str__(), self.sabotage)
+        return "{} sabotage({})".format(super().__str__(), self.sabotage)
 
 class OperationLockableDevice(Device):
     def __init__(self,connection):
@@ -160,7 +160,7 @@ class OperationLockableDevice(Device):
         return self._restCall("device/configuration/setOperationLock", json.dumps(data))
 
     def __str__(self):
-        return "{}: operationLockActive({})".format(super().__str__(),
+        return "{} operationLockActive({})".format(super().__str__(),
                                                     self.operationLockActive)
 
 
@@ -243,7 +243,7 @@ class TemperatureHumiditySensorOutdoor(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return "{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
@@ -263,7 +263,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
             self.humidity = c["humidity"]
 
     def __str__(self):
-        return u"{}: actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
+        return "{} actualTemperature({}) humidity({})".format(super().__str__(), self.actualTemperature, self.humidity)
 
 
 class TemperatureHumiditySensorDisplay(Device):
@@ -292,7 +292,7 @@ class TemperatureHumiditySensorDisplay(Device):
         return self._restCall("device/configuration/setClimateControlDisplay", json.dumps(data))
 
     def __str__(self):
-        return "{}: actualTemperature({}) humidity({}) setPointTemperature({})".format(super().__str__(),
+        return "{} actualTemperature({}) humidity({}) setPointTemperature({})".format(super().__str__(),
                                                                                 self.actualTemperature,
                                                                                 self.humidity,
                                                                                 self.setPointTemperature)
@@ -326,7 +326,7 @@ class SmokeDetector(Device):
             self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(c["smokeDetectorAlarmType"])
 
     def __str__(self):
-        return "{}: smokeDetectorAlarmType({})".format(super().__str__(),
+        return "{} smokeDetectorAlarmType({})".format(super().__str__(),
                                                        self.smokeDetectorAlarmType)
 
 
@@ -373,7 +373,7 @@ class FloorTerminalBlock6(Device):
             self.pumpProtectionSwitchingInterval = c["pumpProtectionSwitchingInterval"]
 
     def __str__(self):
-        return ("{}: globalPumpControl({}) heatingValveType({}) heatingLoadType({}) coolingEmergencyValue({}) frostProtectionTemperature({}) heatingEmergencyValue({}) "
+        return ("{} globalPumpControl({}) heatingValveType({}) heatingLoadType({}) coolingEmergencyValue({}) frostProtectionTemperature({}) heatingEmergencyValue({}) "
                "valveProtectionDuration({}) valveProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({}) pumpProtectionDuration({}) " 
                "pumpProtectionSwitchingInterval({})").format(super().__str__(), self.globalPumpControl, self.heatingValveType,
                     self.heatingLoadType, self.coolingEmergencyValue, self.frostProtectionTemperature, self.heatingEmergencyValue, self.valveProtectionDuration,
@@ -400,7 +400,7 @@ class Switch(Device):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{}: on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
+        return "{} on({}) profileMode({}) userDesiredProfileMode({})".format(super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode)
 
     def set_switch_state(self, on=True, channelIndex = 1):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
@@ -508,10 +508,52 @@ class MotionDetectorIndoor(SabotageDevice):
                                                                self.motionDetectionSendInterval,
                                                                self.numberOfBrightnessMeasurements)
 
+class MotionDetectorOutdoor(Device):
+    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.currentIllumination = None
+        self.motionDetected = None
+        self.illumination = None
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MOTION_DETECTION_CHANNEL", js)
+        if c:
+            self.motionDetected = c["motionDetected"]
+            self.illumination = c["illumination"]
+            self.motionBufferActive = c["motionBufferActive"]
+            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(c["motionDetectionSendInterval"])
+            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
+            self.currentIllumination = c["currentIllumination"]
+
+    def __str__(self):
+        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(super().__str__(),
+                                                               self.motionDetected,
+                                                               self.illumination,
+                                                               self.motionBufferActive,
+                                                               self.motionDetectionSendInterval,
+                                                               self.numberOfBrightnessMeasurements)
+
 
 class MotionDetectorPushButton(MotionDetectorIndoor):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self._baseChannel = 'DEVICE_PERMANENT_FULL_RX'
+        self.permanentFullRx = False
 
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_PERMANENT_FULL_RX", js)
+        if c:
+            self.permanentFullRx = c["permanentFullRx"]
+
+    def __str__(self):
+        return "{} permanentFullRx({})".format(super().__str__(), self.permanentFullRx)
 
 class PresenceDetectorIndoor(SabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
@@ -545,7 +587,41 @@ class PresenceDetectorIndoor(SabotageDevice):
                                                                self.motionDetectionSendInterval,
                                                                self.numberOfBrightnessMeasurements)
 
+class PassageDetector(SabotageDevice):
+    """ HMIP-SPDR (Passage Detector) """
 
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.leftCounter = 0
+        self.leftRightCounterDelta = 0
+        self.passageBlindtime = 0.0
+        self.passageDirection = PassageDirection.RIGHT
+        self.passageSensorSensitivity = 0.0
+        self.passageTimeout = 0.0
+        self.rightCounter = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("PASSAGE_DETECTOR_CHANNEL", js)
+        if c:
+            self.leftCounter = c["leftCounter"]
+            self.leftRightCounterDelta = c["leftRightCounterDelta"]
+            self.passageBlindtime = c["passageBlindtime"]
+            self.passageDirection = PassageDirection.from_str(c["passageDirection"])
+            self.passageSensorSensitivity = c["passageSensorSensitivity"]
+            self.passageTimeout = c["passageTimeout"]
+            self.rightCounter = c["rightCounter"]
+
+    def __str__(self):
+        return "{} leftCounter({}) leftRightCounterDelta({}) passageBlindtime({}) passageDirection({}) passageSensorSensitivity({}) passageTimeout({}) rightCounter({})".format(super().__str__(),
+                                                               self.leftCounter,
+                                                               self.leftRightCounterDelta,
+                                                               self.passageBlindtime,
+                                                               self.passageDirection,
+                                                               self.passageSensorSensitivity,
+                                                               self.passageTimeout,
+                                                               self.rightCounter)
 class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
 
@@ -684,6 +760,59 @@ class WeatherSensor(Device):
                                                                             self.windValueType,
                                                                             self.yesterdaySunshineDuration)
 
+class WeatherSensorPlus(Device):
+    """ HmIP-SWO-PL """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.illumination = 0
+        self.illuminationThresholdSunshine = 0
+        self.raining = False
+        self.storm = False
+        self.sunshine = False
+        self.todayRainCounter = 0
+        self.todaySunshineDuration = 0
+        self.totalRainCounter = 0
+        self.totalSunshineDuration = 0
+        self.windSpeed = 0
+        self.windValueType = WindValueType.AVERAGE_VALUE
+        self.yesterdayRainCounter = 0
+        self.yesterdaySunshineDuration = 0
+
+    def from_json(self, js):
+        super().from_json(js)
+
+        c = get_functional_channel("WEATHER_SENSOR_PLUS_CHANNEL", js)
+        if c:
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
+            self.illumination = c["illumination"]
+            self.illuminationThresholdSunshine = c["illuminationThresholdSunshine"]
+            self.raining = c["raining"]
+            self.storm = c["storm"]
+            self.sunshine = c["sunshine"]
+            self.todayRainCounter = c["todayRainCounter"]
+            self.todaySunshineDuration = c["todaySunshineDuration"]
+            self.totalRainCounter = c["totalRainCounter"]
+            self.totalSunshineDuration = c["totalSunshineDuration"]
+            self.windSpeed = c["windSpeed"]
+            self.windValueType = WindValueType.from_str(c["windValueType"])
+            self.yesterdayRainCounter = c["yesterdayRainCounter"]
+            self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+
+    def __str__(self):
+        return ("{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
+                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
+                "windSpeed({}) windValueType({}) yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(
+                                                                                super().__str__(),self.actualTemperature,
+                                                                                self.humidity,self.illumination,
+                                                                                self.illuminationThresholdSunshine,self.raining,
+                                                                                self.storm,self.sunshine,self.todayRainCounter,
+                                                                                self.todaySunshineDuration,self.totalRainCounter,
+                                                                                self.totalSunshineDuration,self.windSpeed,
+                                                                                self.windValueType,self.yesterdayRainCounter,
+                                                                                self.yesterdaySunshineDuration)
 
 class WeatherSensorPro(Device):
     """ HmIP-SWO-PR """
@@ -733,10 +862,11 @@ class WeatherSensorPro(Device):
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
 
     def __str__(self):
-        return ("{} humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({})"
-                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({})"
-                "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({})"
-                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.humidity,self.illumination,
+        return ("{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
+                "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
+                "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({}) "
+                "yesterdayRainCounter({}) yesterdaySunshineDuration({})").format(super().__str__(),self.actualTemperature,
+                                                                                 self.humidity,self.illumination,
                                                                                  self.illuminationThresholdSunshine,self.raining,
                                                                                  self.storm,self.sunshine,self.todayRainCounter,
                                                                                  self.todaySunshineDuration,self.totalRainCounter,
@@ -811,3 +941,23 @@ class WaterSensor(Device):
         LOGGER.warning("set_siren_water_alarm_trigger is currently not available in the HMIP App. It might not be available in the cloud yet")
         data = {"channelIndex": 1, "deviceId": self.id, "sirenWaterAlarmTrigger": str(sirenWaterAlarmTrigger)}
         return self._restCall("device/configuration/setSirenWaterAlarmTrigger", json.dumps(data))
+
+class FullFlushContactInterface(Device):
+    """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
+
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
+        self.windowState = WindowState.OPEN
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MULTI_MODE_INPUT_CHANNEL", js)
+        if c:
+            self.binaryBehaviorType = BinaryBehaviorType.from_str(c["binaryBehaviorType"])
+            self.multiModeInputMode = MultiModeInputMode.from_str(c["multiModeInputMode"])
+            self.windowState = WindowState.from_str(c["windowState"])
+
+    def __str__(self):
+        return "{} binaryBehaviorType({}) multiModeInputMode({}) windowState({})".format(super().__str__(), self.binaryBehaviorType, self.multiModeInputMode, self.windowState)

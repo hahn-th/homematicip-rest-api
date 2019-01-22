@@ -138,6 +138,10 @@ class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
     pass
 
+class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncDevice):
+    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    pass
+
 
 class AsyncMotionDetectorPushButton(MotionDetectorPushButton, AsyncSabotageDevice):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
@@ -148,11 +152,17 @@ class AsyncPresenceDetectorIndoor(PresenceDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
     pass
 
+class AsyncPassageDetector(PassageDetector, AsyncSabotageDevice):
+    """ HMIP-SPDR (Passage Detector) """
+    pass
 
 class AsyncKeyRemoteControlAlarm(KeyRemoteControlAlarm, AsyncDevice):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
     pass
 
+class AsyncFullFlushContactInterface(FullFlushContactInterface,AsyncDevice):
+    """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
+    pass
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
@@ -181,6 +191,9 @@ class AsyncFullFlushDimmer(AsyncDimmer):
 
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """ HmIP-SWO-B """
+
+class AsyncWeatherSensorPlus(WeatherSensorPlus, AsyncDevice):
+    """ HmIP-SWO-PL """
 
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
     """ HmIP-SWO-PR """

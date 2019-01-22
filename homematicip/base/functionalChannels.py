@@ -90,6 +90,19 @@ class DeviceIncorrectPositionedChannel(DeviceBaseChannel):
         super().from_json(js,groups)
         self.incorrectPositioned = js["incorrectPositioned"]
 
+class DevicePermanentFullRxChannel(DeviceBaseChannel):
+    """ this is the representive of the DEVICE_PERMANENT_FULL_RX channel"""
+    def __init__(self):
+        super().__init__()
+        self.permanentFullRx = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.permanentFullRx = js["permanentFullRx"]
+        
+
 class WaterSensorChannel(FunctionalChannel):
     """ this is the representive of the WATER_SENSOR_CHANNEL channel"""
     def __init__(self):
@@ -391,16 +404,13 @@ class WeatherSensorChannel(FunctionalChannel):
         self.windValueType = WindValueType.from_str(js["windValueType"])
         self.yesterdaySunshineDuration = js["yesterdaySunshineDuration"]
 
-class WeatherSensorProChannel(WeatherSensorChannel):
-    """ this is the representive of the WEATHER_SENSOR_PRO_CHANNEL channel"""
+class WeatherSensorPlusChannel(WeatherSensorChannel):
+    """ this is the representive of the WEATHER_SENSOR_PLUS_CHANNEL channel"""
     def __init__(self):
         super().__init__()
         self.raining = False
         self.todayRainCounter = 0
         self.totalRainCounter = 0
-        self.weathervaneAlignmentNeeded = False
-        self.windDirection = 0
-        self.windDirectionVariation = 0
         self.yesterdayRainCounter = 0
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -410,10 +420,23 @@ class WeatherSensorProChannel(WeatherSensorChannel):
         self.raining = js["raining"]
         self.todayRainCounter = js["todayRainCounter"]
         self.totalRainCounter = js["totalRainCounter"]
+        self.yesterdayRainCounter = js["yesterdayRainCounter"]
+
+class WeatherSensorProChannel(WeatherSensorPlusChannel):
+    """ this is the representive of the WEATHER_SENSOR_PRO_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.weathervaneAlignmentNeeded = False
+        self.windDirection = 0
+        self.windDirectionVariation = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
         self.weathervaneAlignmentNeeded = js["weathervaneAlignmentNeeded"]
         self.windDirection = js["windDirection"]
         self.windDirectionVariation = js["windDirectionVariation"]
-        self.yesterdayRainCounter = js["yesterdayRainCounter"]
 
 class SingleKeyChannel(FunctionalChannel):
     """ this is the representive of the SINGLE_KEY_CHANNEL channel"""
@@ -448,3 +471,63 @@ class HeatDemandChannel(FunctionalChannel):
 class DehumidifierDemandChannel(FunctionalChannel):
     """ this is the representive of the DEHUMIDIFIER_DEMAND_CHANNEL channel"""
 
+class PassageDetectorChannel(FunctionalChannel):
+    """ this is the representive of the PASSAGE_DETECTOR_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.leftCounter = 0
+        self.leftRightCounterDelta = 0
+        self.passageBlindtime = 0.0
+        self.passageDirection = PassageDirection.RIGHT
+        self.passageSensorSensitivity = 0.0
+        self.passageTimeout = 0.0
+        self.rightCounter = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.leftCounter = js["leftCounter"]
+        self.leftRightCounterDelta = js["leftRightCounterDelta"]
+        self.passageBlindtime = js["passageBlindtime"]
+        self.passageDirection = PassageDirection.from_str(js["passageDirection"])
+        self.passageSensorSensitivity = js["passageSensorSensitivity"]
+        self.passageTimeout = js["passageTimeout"]
+        self.rightCounter = js["rightCounter"]
+
+class InternalSwitchChannel(FunctionalChannel):
+    """ this is the representive of the INTERNAL_SWITCH_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.frostProtectionTemperature = 0
+        self.heatingValveType = HeatingValveType.NORMALLY_CLOSE
+        self.internalSwitchOutputEnabled = False
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.frostProtectionTemperature = js["frostProtectionTemperature"]
+        self.heatingValveType = HeatingValveType.from_str(js["heatingValveType"])
+        self.internalSwitchOutputEnabled = js["internalSwitchOutputEnabled"]
+        self.valveProtectionDuration = js["valveProtectionDuration"]
+        self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
+
+class MultiModeInputChannel(FunctionalChannel):
+    """ this is the representive of the MULTI_MODE_INPUT_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
+        self.windowState = WindowState.OPEN
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """ this function will load the functional channel object 
+        from a json object and the given groups """
+        super().from_json(js,groups)
+        self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
+        self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
+        self.windowState = WindowState.from_str(js["windowState"])

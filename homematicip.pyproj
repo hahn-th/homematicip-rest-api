@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--list-devices</CommandLineArguments>
+    <CommandLineArguments>--dump-configuration --anonymize</CommandLineArguments>
     <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -59,7 +59,7 @@
     <Compile Include="homematicip\device.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="homematicip\functionalChannels.py">
+    <Compile Include="homematicip\base\functionalChannels.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip\functionalHomes.py">

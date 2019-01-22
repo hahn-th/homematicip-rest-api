@@ -87,7 +87,7 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home : AsyncHome ):
     assert d.modelType == "HmIP-WTH-2"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000022"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.humidity == 43
     assert d.setPointTemperature == 5.0
     assert d.display == ClimateControlDisplay.ACTUAL_HUMIDITY
@@ -122,7 +122,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
     assert d.modelType == "HMIP-PSM"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000009"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.on == False
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
@@ -141,7 +141,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home : AsyncHome ):
     assert d.dutyCycle == False
     assert d.configPending == False
 
-    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False): on(False) profileMode(AUTOMATIC)'
+    assert str(d) == ('HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)'
                      ' userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)')
 
     await d.turn_on()
@@ -169,7 +169,7 @@ async def test_heating_thermostat(no_ssl_fake_async_home : AsyncHome ):
     assert d.modelType == "HMIP-eTRV"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000015"
-    assert d.updateState == "UP_TO_DATE"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.setPointTemperature == 5.0
     assert d.temperatureOffset == 0.0
     assert d.valvePosition == 0.0
@@ -187,7 +187,7 @@ async def test_heating_thermostat(no_ssl_fake_async_home : AsyncHome ):
     a,b,c= [ int(i) for i in d.firmwareVersion.split('.') ]
     assert d.firmwareVersionInteger == (a<<16)|(b<<8)|c
 
-    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False): operationLockActive(True)'
+    assert str(d) == ('HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)'
                     ' valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)')
 
 

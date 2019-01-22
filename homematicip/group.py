@@ -88,7 +88,7 @@ class MetaGroup(Group):
 
 
 class SecurityGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -124,7 +124,7 @@ class SecurityGroup(Group):
 
 
 class SwitchingGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -185,7 +185,7 @@ class LinkedSwitchingGroup(SwitchingGroup):
 
 
 class ExtendedLinkedSwitchingGroup(SwitchingGroup):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -209,7 +209,7 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
         return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
 
 class ExtendedLinkedShutterGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -280,19 +280,17 @@ class AlarmSwitchingGroup(Group):
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingHumidyLimiterGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingTemperatureLimiterGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 class HeatingChangeoverGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -304,7 +302,7 @@ class HeatingChangeoverGroup(Group):
         self.on = js["on"]
 
     def __str__(self):
-        return "{} on({})".format( super().__str__(), self.on)
+        return "{}: on({})".format( super().__str__(), self.on)
 
 
 # at the moment it doesn't look like this class has any special properties/functions
@@ -314,7 +312,7 @@ class InboxGroup(Group):
 
 
 class SecurityZoneGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -339,14 +337,14 @@ class SecurityZoneGroup(Group):
                 [d for d in devices if d.id == device][0])
 
     def __str__(self):
-        return "{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
+        return "{}: active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
             super().__str__(),
             self.active, self.silent, self.windowState, self.motionDetected,
             self.sabotage, self.presenceDetected, len(self.ignorableDevices))
 
 
 class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -362,7 +360,7 @@ class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -380,7 +378,7 @@ class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -451,7 +449,7 @@ class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class HeatingGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -462,7 +460,7 @@ class HeatingGroup(Group):
         self.minTemperature = None
         self.cooling = None
         self.partyMode = None
-        self.controlMode = None
+        self.controlMode = ClimateControlMode.AUTOMATIC
         self.activeProfile = None
         self.boostMode = None
         self.boostDuration = None
@@ -493,7 +491,7 @@ class HeatingGroup(Group):
         self.minTemperature = js["minTemperature"]
         self.cooling = js["cooling"]
         self.partyMode = js["partyMode"]
-        self.controlMode = js["controlMode"]
+        self.controlMode = ClimateControlMode.from_str(js["controlMode"])
         self.boostMode = js["boostMode"]
         self.boostDuration = js["boostDuration"]
         self.actualTemperature = js["actualTemperature"]
@@ -524,7 +522,7 @@ class HeatingGroup(Group):
         self.profiles = sorted(profiles, key=attrgetter('index'))
 
     def __str__(self):
-        return "{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({}) valvePosition({})".format(
+        return "{}: windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({}) valvePosition({})".format(
             super().__str__(),
             self.windowOpenTemperature, self.setPointTemperature,
             self.windowState, self.maxTemperature, self.minTemperature,
@@ -547,26 +545,28 @@ class HeatingGroup(Group):
         data = {"groupId": self.id, "profileIndex": index}
         return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
 
+    def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
+        data = {"groupId": self.id, "controlMode": str(mode)}
+        return self._restCall("group/heating/setControlMode", body=json.dumps(data))
+
 
 class HeatingDehumidifierGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
         self.on = None
-        self.dimLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
         self.on = js["on"]
 
     def __str__(self):
-        return "{}: on({})".format(
-            super().__str__(), self.on)
+        return "{}: on({})".format(super().__str__(), self.on)
 
 
 class HeatingCoolingDemandGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -587,12 +587,11 @@ class HeatingCoolingDemandGroup(Group):
 # at the moment it doesn't look like this class has any special properties/functions
 # keep it as a placeholder in the meantime
 class HeatingExternalClockGroup(Group):
-    def __str__(self):
-        return super().__str__()
+    pass
 
 
 class HeatingCoolingDemandBoilerGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -614,7 +613,7 @@ class HeatingCoolingDemandBoilerGroup(Group):
 
 
 class HeatingCoolingDemandPumpGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -623,7 +622,7 @@ class HeatingCoolingDemandPumpGroup(Group):
         self.pumpFollowUpTime = None
         self.pumpLeadTime = None
         self.on = None
-        self.dimLevel = None
+        self.heatDemandRuleEnabled = False
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -633,18 +632,20 @@ class HeatingCoolingDemandPumpGroup(Group):
         self.pumpProtectionDuration = js["pumpProtectionDuration"]
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
+        self.heatDemandRuleEnabled = js["heatDemandRuleEnabled"]
 
     def __str__(self):
         return "{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) " \
-               "pumpLeadTime({})".format(
+               "pumpLeadTime({}) heatDemandRuleEnabled({})".format(
             super().__str__(),
             self.on, self.pumpProtectionDuration,
             self.pumpProtectionSwitchingInterval,
-            self.pumpFollowUpTime, self.pumpLeadTime)
+            self.pumpFollowUpTime, self.pumpLeadTime,
+            self.heatDemandRuleEnabled)
 
 
 class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -670,7 +671,7 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -694,7 +695,7 @@ class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
 
 
 class SwitchingProfileGroup(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -740,7 +741,7 @@ class SwitchingProfileGroup(Group):
 
 
 class OverHeatProtectionRule(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -776,7 +777,7 @@ class OverHeatProtectionRule(Group):
 
 
 class SmokeAlarmDetectionRule(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)
@@ -793,7 +794,7 @@ class SmokeAlarmDetectionRule(Group):
 
 
 class ShutterWindProtectionRule(Group):
-    
+
 
     def __init__(self,connection):
         super().__init__(connection)

@@ -6,6 +6,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.4] - 2019-01-20
+### Added
+- Devices
+  - HMIP-SPDR 
+  - HMIP-FCI1
+- API
+  - DeviceUpdateState enum 
+  - functionalChannel
+    - DevicePermanentFullRxChannel
+    - PassageDetectorChannel
+    - InternalSwitchChannel
+    - MultiModeInputChannel
+  - Device
+    - MotionDetectorPushButton
+      - added permanentFullRx property
+  - Enums
+    - MultiModeInputMode
+    - BinaryBehaviorType
+  - Group
+    - HeatingGroup
+      - added set_control_mode method  
+- CLI
+  - added --server-config parameter. Instead of downloading the configuration from the cloud it will load a file.
+
+### Changes
+- API
+  - moved functionalChannels to homematicip.base 
+
+## [0.10.3] - 2019-01-06
+### Added
+- Devices
+  - HmIP-SWO-PL
+
+## [0.10.2] - 2019-01-06
+### Added
+- Devices
+  - HmIP-SMO-A
+### Changes
+- API
+  - Small Bugfix in the aio library
+
 ## [0.10.1] - 2018-12-28
 ### Added
 - API
@@ -20,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Devices
     - HmIP-FAL230-C6 
       - added missing properties
-	  
+      
 ### Changes
 - Stability improvements
 
@@ -109,7 +150,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.1...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.4...HEAD
+[0.10.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.4...0.10.4
+[0.10.3]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.2...0.10.3
+[0.10.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.8...0.10.0
 [0.9.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.7...0.9.8
