@@ -268,22 +268,22 @@ class AlarmSwitchingGroup(Group):
 
     def test_signal_optical(self,
                             signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
-        data = {"groupId": self.id, "signalOptical": signalOptical}
+        data = {"groupId": self.id, "signalOptical": str(signalOptical)}
         return self._restCall("group/switching/alarm/testSignalOptical", body=json.dumps(data))
 
     def set_signal_optical(self,
                            signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING):
-        data = {"groupId": self.id, "signalOptical": signalOptical}
+        data = {"groupId": self.id, "signalOptical": str(signalOptical)}
         return self._restCall("group/switching/alarm/setSignalOptical", body=json.dumps(data))
 
     def test_signal_acoustic(self,
                             signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
-        data = {"groupId": self.id, "signalAcoustic": signalAcoustic}
+        data = {"groupId": self.id, "signalAcoustic": str(signalAcoustic)}
         return self._restCall("group/switching/alarm/testSignalAcoustic", body=json.dumps(data))
 
     def set_signal_acoustic(self,
                            signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
-        data = {"groupId": self.id, "signalAcoustic": signalAcoustic}
+        data = {"groupId": self.id, "signalAcoustic": str(signalAcoustic)}
         return self._restCall("group/switching/alarm/setSignalAcoustic", body=json.dumps(data))
 
 # at the moment it doesn't look like this class has any special properties/functions

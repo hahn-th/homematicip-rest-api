@@ -586,6 +586,54 @@ class FakeCloudServer():
         else:
             response = self.errorCode(response, "INVALID_GROUP", 404)
         return response
+
+    @validate_authorization
+    def post_hmip_group_switching_alarm_testSignalAcoustic(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            assert js["signalAcoustic"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_switching_alarm_setSignalAcoustic(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["signalAcoustic"] = js["signalAcoustic"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_switching_alarm_testSignalOptical(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            assert js["signalOptical"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    def post_hmip_group_switching_alarm_setSignalOptical(self,request : Request ,response : Response):
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["signalOptical"] = js["signalOptical"]
+            response.status_code = 200
+        else:
+            response = self.errorCode(response, "INVALID_GROUP", 404)
+        return response
 #endregion
 
     def post_getHost(self,request : Request ,response : Response):

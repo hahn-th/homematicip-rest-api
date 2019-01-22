@@ -235,6 +235,38 @@ def test_heating_cooling_demand_pump_group(fake_home : Home):
                          " pumpProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2)"
                          " heatDemandRuleEnabled(False)")
 
+def test_switching_alarm_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000022')
+        assert isinstance(g, AlarmSwitchingGroup)
+
+        assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_RISING
+        assert g.signalOptical == OpticalAlarmSignal.DOUBLE_FLASHING_REPEATING
+        assert str(g) == ("ALARM_SWITCHING SIREN: on(False) dimLevel(None) onTime(180.0) "
+                          "signalAcoustic(FREQUENCY_RISING) signalOptical(DOUBLE_FLASHING_REPEATING) "
+                          "smokeDetectorAlarmType(IDLE_OFF) acousticFeedbackEnabled(True)")
+
+        g.test_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+        g.test_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+
+        g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+        g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000022')
+
+        assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
+        assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+
+        g.id = '00000000-0000-0000-0000-BADBADBADB22'
+        result = g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+        assert result["errorCode"] == 'INVALID_GROUP'
+        result = g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+
+
+
 def test_all_groups_implemented(fake_home : Home):
     for g in fake_home.groups:
         assert type(g) != Group
