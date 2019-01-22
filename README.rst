@@ -5,7 +5,11 @@ A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
 done via reverse engineering. Use at your own risk.
 
-|discord| |CircleCI| |PyPi| |codecov| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal|
+|discord| |CircleCI| |Docs| |PyPi| |codecov| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal|
+
+Documentation
+=============
+Documentation can be found under https://homematicip-rest-api.readthedocs.io
 
 Installation
 ============
@@ -172,4 +176,5 @@ connection
 .. |donate-paypal| image:: https://img.shields.io/badge/Donate-PayPal-green.svg 
    :target: https://paypal.me/coreGreenberet
 .. |discord| image:: https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic
-   :target: https://discord.gg/mZG2myJ
+   :target: https://discord.gg/mZG2myJ.. |Docs| image:: https://readthedocs.org/projects/homematicip-rest-api/badge/?version=documentation
+   :target: https://homematicip-rest-api.readthedocs.io
