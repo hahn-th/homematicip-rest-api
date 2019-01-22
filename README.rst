@@ -5,7 +5,7 @@ A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
 done via reverse engineering. Use at your own risk.
 
-|CircleCI| |PyPi| |codecov| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal|
+|discord| |CircleCI| |PyPi| |codecov| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal|
 
 Installation
 ============
@@ -66,8 +66,7 @@ Devices:
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren)
 -  [ ] HMIP-ASIR-O
 -  [ ] HMIP-BBL
--  [X] HMIP-BDT (Dimming Actuator for brand
-switches)
+-  [X] HMIP-BDT (Dimming Actuator for brand switches)
 -  [ ] HMIP-BRC2
 -  [X] HMIP-BROLL (Shutter Actuator - brand-mount)
 -  [ ] HMIP-BSL
@@ -172,3 +171,5 @@ connection
 .. |commits-since-latest-release| image:: https://img.shields.io/github/commits-since/coreGreenberet/homematicip-rest-api/latest.svg 
 .. |donate-paypal| image:: https://img.shields.io/badge/Donate-PayPal-green.svg 
    :target: https://paypal.me/coreGreenberet
+.. |discord| image:: https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic
+   :target: https://discord.gg/mZG2myJ
