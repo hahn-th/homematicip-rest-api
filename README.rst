@@ -66,7 +66,8 @@ Devices:
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren)
 -  [ ] HMIP-ASIR-O
 -  [ ] HMIP-BBL
--  [ ] HMIP-BDT
+-  [X] HMIP-BDT (Dimming Actuator for brand
+switches)
 -  [ ] HMIP-BRC2
 -  [X] HMIP-BROLL (Shutter Actuator - brand-mount)
 -  [ ] HMIP-BSL
