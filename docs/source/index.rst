@@ -15,16 +15,7 @@ done via reverse engineering. Use at your own risk.
 
    gettingstarted
    hmipoverview
-   
-API Overview
-============
-
-
-.. autosummary::
-   :toctree: api
-   
-   home
-   
+   modules
 Indices and tables
 ==================
 

@@ -333,8 +333,12 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
     def search_device_by_id(self, deviceID) -> Device:
         """ searches a device by given id
-        :param deviceID the device to search for
-        :return the Device object or None if it couldn't find a device
+        
+        Args:
+          deviceID(str): the device to search for
+          
+        Returns
+          the Device object or None if it couldn't find a device
         """
         for d in self.devices:
             if d.id == deviceID:
