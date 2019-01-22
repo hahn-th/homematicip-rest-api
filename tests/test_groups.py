@@ -50,7 +50,7 @@ def test_heating_group(fake_home : Home):
     assert g.actualTemperature == 24.7
     assert g.boostDuration == 15
     assert g.boostMode == False
-    assert g.controlMode == "AUTOMATIC"
+    assert g.controlMode == ClimateControlMode.AUTOMATIC
     assert g.controllable == True
     assert g.cooling == False
     assert g.coolingAllowed == False
@@ -78,7 +78,7 @@ def test_heating_group(fake_home : Home):
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
 
-    assert str(g) == ('HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
+    assert str(g) == ('HEATING Schlafzimmer: windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
                       ' sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)')
 
     assert g._rawJSONData == fake_home_download_configuration()["groups"]["00000000-0000-0000-0000-000000000012"]
@@ -88,12 +88,15 @@ def test_heating_group(fake_home : Home):
         g.set_boost(True)
         g.set_active_profile(3)
         g.set_point_temperature(10.5)
+        g.set_control_mode(ClimateControlMode.MANUAL)
+
         fake_home.get_current_state()
         g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
         assert g.boostDuration == 20
         assert g.boostMode == True
         assert g.activeProfile.index == "PROFILE_4"
         assert g.setPointTemperature == 10.5
+        assert g.controlMode == ClimateControlMode.MANUAL
 
         fake_home.delete_group(g)
         fake_home.get_current_state()
@@ -110,6 +113,9 @@ def test_heating_group(fake_home : Home):
         assert result["errorCode"] == 'INVALID_GROUP'
 
         result = g.set_point_temperature(10.5)
+        assert result["errorCode"] == 'INVALID_GROUP'
+
+        result = g.set_control_mode(ClimateControlMode.MANUAL)
         assert result["errorCode"] == 'INVALID_GROUP'
 
 
@@ -195,6 +201,39 @@ def test_switching_group(fake_home : Home):
         result = g.set_shutter_level(50)
         assert result["errorCode"] == 'INVALID_GROUP'
 
+def test_environment_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-AAAA-0000-0000-000000000001')
+        assert isinstance(g, EnvironmentGroup)
+
+        assert g.actualTemperature == 15.4
+        assert g.illumination == 4703.0
+        assert g.raining == False
+        assert g.humidity == 65
+        assert g.windSpeed == 29.1
+
+        assert str(g) == "ENVIRONMENT Terrasse: actualTemperature(15.4) illumination(4703.0) raining(False) windSpeed(29.1) humidity(65)"
+
+def test_heating_dehumidifier_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000055')
+        assert isinstance(g, HeatingDehumidifierGroup)
+        assert g.on == None
+        assert str(g) == "HEATING_DEHUMIDIFIER HEATING_DEHUMIDIFIER: on(None)"
+
+def test_heating_cooling_demand_pump_group(fake_home : Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id('00000000-0000-0000-0000-000000000057')
+        assert isinstance(g, HeatingCoolingDemandPumpGroup)
+        assert g.on == None
+        assert g.heatDemandRuleEnabled == False
+        assert g.pumpFollowUpTime == 2
+        assert g.pumpLeadTime == 2
+        assert g.pumpProtectionDuration == 1
+        assert g.pumpProtectionSwitchingInterval == 14
+        assert str(g) == ("HEATING_COOLING_DEMAND_PUMP HEATING_COOLING_DEMAND_PUMP: on(None) pumpProtectionDuration(1)"
+                         " pumpProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2)"
+                         " heatDemandRuleEnabled(False)")
 
 def test_all_groups_implemented(fake_home : Home):
     for g in fake_home.groups:

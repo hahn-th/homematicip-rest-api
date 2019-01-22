@@ -40,12 +40,20 @@ def anonymizeConfig(config, pattern, format):
     for k,v in map.items():
         config = config.replace(k,v)
     return config
-    
+   
+server_config = None
 
+def fake_download_configuration():
+    global server_config
+    if server_config:
+        with open(server_config) as file:
+            return json.load(file,encoding="UTF-8")
+    return None
 
 def main():
     parser = ArgumentParser(description="a cli wrapper for the homematicip API")
     parser.add_argument("--config_file", type=str, help="the configuration file. If nothing is specified the script will search for it.")
+    parser.add_argument("--server-config", type=str,dest="server_config", help="the server configuration file. e.g. output from --dump-configuration.")
     parser.add_argument("--debug-level", dest="debug_level", type=int, help="the debug level which should get used(Critical=50, DEBUG=10)")
     parser.add_argument("--version", action="version", version='%(prog)s {}'.format(homematicip.__version__))
     
@@ -145,7 +153,11 @@ def main():
     home.init(_config.access_point)
 
     command_entered = False
-
+    if args.server_config:
+        global server_config
+        server_config = args.server_config
+        home.download_configuration = fake_download_configuration
+        
     if args.dump_config:
         command_entered = True
         json_state = home.download_configuration()

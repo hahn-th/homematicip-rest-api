@@ -36,7 +36,7 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
     assert g.actualTemperature == 24.7
     assert g.boostDuration == 15
     assert g.boostMode == False
-    assert g.controlMode == "AUTOMATIC"
+    assert g.controlMode == ClimateControlMode.AUTOMATIC
     assert g.controllable == True
     assert g.cooling == False
     assert g.coolingAllowed == False
@@ -64,19 +64,21 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
 
-    assert str(g) == ('HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
+    assert str(g) == ('HEATING Schlafzimmer: windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)'
                       ' sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)')
 
     await g.set_boost_duration(20)
     await g.set_boost(True)
     await g.set_active_profile(3)
     await g.set_point_temperature(10.5)
+    await g.set_control_mode(ClimateControlMode.MANUAL)
     await no_ssl_fake_async_home.get_current_state()
     g = no_ssl_fake_async_home.search_group_by_id('00000000-0000-0000-0000-000000000012')
     assert g.boostDuration == 20
     assert g.boostMode == True
     assert g.activeProfile.index == "PROFILE_4"
     assert g.setPointTemperature == 10.5
+    assert g.controlMode == ClimateControlMode.MANUAL
 
     await no_ssl_fake_async_home.delete_group(g)
     await no_ssl_fake_async_home.get_current_state()
@@ -94,6 +96,9 @@ async def test_heating_group(no_ssl_fake_async_home:AsyncHome):
 
     with pytest.raises(HmipWrongHttpStatusError):
         result = await g.set_point_temperature(10.5)
+    
+    with pytest.raises(HmipWrongHttpStatusError):
+        result = await g.set_control_mode(ClimateControlMode.MANUAL)
 
 
 @pytest.mark.asyncio
