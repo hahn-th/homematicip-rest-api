@@ -64,21 +64,51 @@ Devices:
 --------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren)
+-  [ ] HMIP-ASIR-O
+-  [ ] HMIP-BBL
+-  [ ] HMIP-BDT
+-  [ ] HMIP-BRC2
 -  [X] HMIP-BROLL (Shutter Actuator - brand-mount)
+-  [ ] HMIP-BSL
 -  [X] HMIP-BSM (Brand Switch and Meter)
 -  [X] HMIP-BWTH (Brand Wall Mounted Thermostat Pro)
+-  [ ] HMIP-BWTH24
+-  [ ] HMIP-DBB
 -  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-thermostat)
+-  [ ] HMIP-eTRV-2-UK  (not tested, but it should work)
+-  [ ] HMIP-eTRV-B     (not tested, but it should work)
+-  [ ] HMIP-eTRV-C     (not tested, but it should work)
 -  [X] HMIP-FAL230-C6 (Floor Terminal Block)
+-  [ ] HMIP-FAL230-C10
+-  [ ] HMIP-FAL24-C6
+-  [ ] HMIP-FAL24-C10
 -  [X] HMIP-FCI1 (Contact Interface flush-mount – 1 channel)
+-  [ ] HMIP-FCI6
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)
+-  [X] HHMIP-FSM
+-  [ ] HMIP-FSM16 (not tested, but it should work)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
+-  [ ] HMIP-KRC4
+-  [ ] HMIP-MIOB
 -  [X] HMIP-MOD-OC8 ( Open Collector Module )
--  [X] HMIP-RC8 (Remote Control - 8 buttons)
+-  [ ] HMIP-MP3P
+-  [ ] HMIP-PCBS 
+-  [ ] HMIP-PCBS2
 -  [X] HMIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HMIP-PDT (Pluggable Dimmer)
+-  [ ] HMIP-PDT-UK      (not tested, but it should work)
+-  [ ] HMIP-PMFS
 -  [X] HMIP-PS (Plugable Switch)
 -  [X] HMIP-PSM (Plugable Switch Measuring)
+-  [ ] HMIP-PSM-CH      (not tested, but it should work)
+-  [ ] HMIP-PSM-IT      (not tested, but it should work)
+-  [ ] HMIP-PSM-PE      (not tested, but it should work)
+-  [ ] HMIP-PSM-UK      (not tested, but it should work)
+-  [X] HMIP-RC8 (Remote Control - 8 buttons)
+-  [ ] HMIP-RCB1
+-  [ ] HMIP-SAM
+-  [ ] HMIP-SLO
 -  [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 -  [X] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)
 -  [X] HMIP-SMO, HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)
@@ -87,6 +117,7 @@ Devices:
 -  [X] HMIP-STH (Temperature and Humidity Sensor without display - indoor)
 -  [X] HMIP-STHD (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO (Temperature and Humidity Sensor outdoor)
+HMIP-STHO-A
 -  [X] HMIP-SWD (Water Sensor)
 -  [X] HMIP-SWDO (Shutter Contact)
 -  [X] HMIP-SWDO-I (Shutter Contact Invisible)
@@ -96,6 +127,8 @@ Devices:
 -  [X] HMIP-SWO-PL (Weather Sensor – plus)
 -  [X] HMIP-SWO-PR (Weather Sensor – pro)
 -  [X] HMIP-SWSD (Smoke Detector)
+HMIP-WGC
+HMIP-WHS2
 -  [X] HMIP-WRC2 (Wall-mount Remote Control - 2-button)
 -  [X] HMIP-WRC6 (Wall-mount Remote Control - 6-button)
 -  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro)
