@@ -3,7 +3,7 @@ websocket-client>=0.54.0
 async_timeout
 websockets
 aiohttp
-pytest==4.0.2
+pytest==4.1.1
 pytest-asyncio
 pytest-cov
 pytest-localserver
