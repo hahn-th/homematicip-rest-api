@@ -17,15 +17,24 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
+    """ this class represents the weather of the home location"""
     def __init__(self, connection):
         super().__init__(connection)
+        #: the current temperature
         self.temperature = 0.0
+        #: the current weather
         self.weatherCondition = WeatherCondition.UNKNOWN
+        #: the current datime
         self.weatherDayTime = WeatherDayTime.DAY
+        #: the minimum temperature of the day
         self.minTemperature = 0.0
+        #: the maximum temperature of the day
         self.maxTemperature = 0.0
+        #: the current humidity
         self.humidity = 0
+        #: the current windspeed
         self.windSpeed = 0.0
+        #the current wind direction in 360° where 0° is north
         self.windDirection = 0
 
     def from_json(self, js):
@@ -123,28 +132,39 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.apExchangeState = ApExchangeState.NONE
         self.availableAPVersion = None
         self.carrierSense = None
+        #:bool:displays if the access point is connected to the hmip cloud or not
         self.connected = None
+        #:str:the current version of the access point
         self.currentAPVersion = None
         self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
         self.dutyCycle = None
+        #:str:the SGTIN of the access point
         self.id = None
         self.lastReadyForUpdateTimestamp = None
-        self.location = None
+        #:Location:the location of the AP
+        self.location= None
+        #:bool:determines if a pin is set on this access point
         self.pinAssigned = None
         self.powerMeterCurrency = None
         self.powerMeterUnitPrice = None
         self.timeZoneId = None
         self.updateState = HomeUpdateState.UP_TO_DATE
+        #:Weather:the current weather
         self.weather = None
 
         self.__webSocket = None
         self.__webSocketThread = None
         self.onEvent = EventHook()
-
+        
+        #:List[Device]: a collection of all devices in home
         self.devices = []
+        #:List[Client]: a collection of all clients in home
         self.clients = []
+        #:List[Group]: a collection of all groups in the home
         self.groups = []
+        #:List[Rule]: a collection of all rules in the home
         self.rules = []
+        #: a collection of all functionalHomes in the home
         self.functionalHomes = []
 
     def init(self, access_point_id, lookup=True):

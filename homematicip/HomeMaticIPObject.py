@@ -12,6 +12,8 @@ class HomeMaticIPObject:
         self._connection = connection
         # List with update handlers.
         self._on_update = []
+        
+        #:the raw json data of the object
         self._rawJSONData = {}
 
     def on_update(self, handler):
@@ -28,6 +30,11 @@ class HomeMaticIPObject:
         return self._connection._restCall(path, body)
 
     def from_json(self, js):
+        """this method will parse the homematicip object from a json object
+        
+        Args:
+          js: the json object to parse
+        """
         # LOGGER.debug("from_json call HomeMaticIpObject")
         self._rawJSONData = js
         pass
