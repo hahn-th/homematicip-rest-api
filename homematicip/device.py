@@ -527,7 +527,7 @@ class BrandSwitchMeasuring(SwitchMeasuring):
 
 
 class FullFlushSwitchMeasuring(SwitchMeasuring):
-    """ HmIP-FSM (Full flush Switch and Meter) """
+    """ HMIP-FSM, HMIP-FSM16 (Full flush Switch and Meter) """
 
 
 class PushButton(Device):

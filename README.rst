@@ -91,7 +91,7 @@ Devices:
 -  [X] HMIP-FDT (Dimming Actuator flush-mount)
 -  [X] HMIP-FROLL (Shutter Actuator - flush-mount)
 -  [X] HMIP-FSM (Homematic IP Switch Actuator and Meter – flush-mount)
--  [ ] HMIP-FSM16 (not tested, but it should work)
+-  [X] HMIP-FSM16 (Homematic IP Switch Actuator and Meter 16A – flush-mount)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
 -  [ ] HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
 -  [ ] HMIP-MIOB (Multi IO Box)
