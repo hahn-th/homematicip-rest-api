@@ -477,7 +477,7 @@ class Switch(Device):
 
 
 class PlugableSwitch(Switch):
-    """ HMIP-PS (Pluggable Switch) """
+    """ HMIP-PS (Pluggable Switch), HMIP-PCBS (Switch Circuit Board - 1 channel) """
 
 
 class PrintedCircuitBoardSwitchBattery(Switch):

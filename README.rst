@@ -97,7 +97,7 @@ Devices:
 -  [ ] HMIP-MIOB (Multi IO Box)
 -  [X] HMIP-MOD-OC8 (Open Collector Module)
 -  [ ] HMIP-MP3P (Combination Signalling Device MP3)
--  [ ] HMIP-PCBS (Switch Circuit Board - 1 channel)
+-  [X] HMIP-PCBS (Switch Circuit Board - 1 channel)
 -  [ ] HMIP-PCBS2 (Switch Circuit Board - 2 channels)
 -  [X] HMIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 -  [X] HMIP-PDT (Plugable Dimmer)
