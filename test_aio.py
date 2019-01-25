@@ -3,4 +3,4 @@ if __name__ == "__main__":
     from homematicip import __version__
 
     print("HMIP Version ", __version__)
-    pytest.main("tests/aio_tests/")
+    pytest.main("-vv tests/aio_tests/")
