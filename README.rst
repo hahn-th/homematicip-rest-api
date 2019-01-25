@@ -178,6 +178,5 @@ connection
    :target: https://discord.gg/mZG2myJ
 .. |Docs| image:: https://readthedocs.org/projects/homematicip-rest-api/badge/?version=latest
    :target: https://homematicip-rest-api.readthedocs.io
-.. |requirements| image:: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements.svg?branch=requires-io-master
-     :target: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements/?branch=requires-io-master
-     :alt: Requirements Status
+.. |requirements| image:: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements.svg?branch=master
+   :target: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements/?branch=master
