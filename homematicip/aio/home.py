@@ -28,7 +28,7 @@ class AsyncHome(Home):
     async def init(self, access_point_id, lookup=True):
         await self._connection.init(access_point_id, lookup)
 
-    async def get_current_state(self, clearConfig:bool=False):
+    async def get_current_state(self, clearConfig: bool = False):
         # todo: a download_configuration method has been added. This can simplify this one.
         json_state = await self._connection.api_call(
             "home/getCurrentState", json.dumps(self._connection.clientCharacteristics)

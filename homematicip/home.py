@@ -18,6 +18,7 @@ LOGGER = logging.getLogger(__name__)
 
 class Weather(HomeMaticIPObject.HomeMaticIPObject):
     """ this class represents the weather of the home location"""
+
     def __init__(self, connection):
         super().__init__(connection)
         #:float: the current temperature
@@ -63,6 +64,7 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
 
 class Location(HomeMaticIPObject.HomeMaticIPObject):
     """This class represents the possible location"""
+
     def __init__(self, connection):
         super().__init__(connection)
         #:str: the name of the city
@@ -88,6 +90,7 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
     """A client is an app which has access to the access point. 
     e.g. smartphone, 3th party apps, google home, conrad connect
     """
+
     def __init__(self, connection):
         super().__init__(connection)
         #:str: the unique id of the client
@@ -154,7 +157,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.id = None
         self.lastReadyForUpdateTimestamp = None
         #:Location:the location of the AP
-        self.location= None
+        self.location = None
         #:bool:determines if a pin is set on this access point
         self.pinAssigned = None
         self.powerMeterCurrency = None
@@ -167,7 +170,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocket = None
         self.__webSocketThread = None
         self.onEvent = EventHook()
-        
+
         #:List[Device]: a collection of all devices in home
         self.devices = []
         #:List[Client]: a collection of all clients in home
@@ -224,7 +227,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             "home/getCurrentState", json.dumps(self._connection.clientCharacteristics)
         )
 
-    def get_current_state(self, clearConfig:bool=False):
+    def get_current_state(self, clearConfig: bool = False):
         """downloads the current configuration and parses it into self
            
         Args:
@@ -377,7 +380,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         for d in self.devices:
             d.load_functionalChannels(self.groups)
 
-    def get_functionalHome(self, functionalHomeType:type) -> FunctionalHome:
+    def get_functionalHome(self, functionalHomeType: type) -> FunctionalHome:
         """ gets the specified functionalHome
         
         Args:
@@ -494,7 +497,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
         return self._restCall("home/setLocation", json.dumps(data))
 
-    def set_intrusion_alert_through_smoke_detectors(self, activate:bool=True):
+    def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
         """ activate or deactivate if smoke detectors should "ring" during an alarm
 
         Args:
@@ -516,7 +519,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             "home/heating/activateAbsenceWithPeriod", json.dumps(data)
         )
 
-    def activate_absence_with_duration(self, duration:int):
+    def activate_absence_with_duration(self, duration: int):
         """ activates the absence mode for a given time
 
         Args:
@@ -531,7 +534,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         """ deactivates the absence mode immediately"""
         return self._restCall("home/heating/deactivateAbsence")
 
-    def activate_vacation(self, endtime: datetime, temperature:float):
+    def activate_vacation(self, endtime: datetime, temperature: float):
         """ activates the vatation mode until the given time
 
         Args:
@@ -548,7 +551,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         """ deactivates the vacation mode immediately"""
         return self._restCall("home/heating/deactivateVacation")
 
-    def set_pin(self, newPin:str, oldPin:str=None) -> dict:
+    def set_pin(self, newPin: str, oldPin: str = None) -> dict:
         """ sets a new pin for the home
 
         Args:
@@ -597,7 +600,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
 
         return ret
 
-    def delete_group(self, group:Group):
+    def delete_group(self, group: Group):
         """deletes the given group from the cloud
         
         Args:
@@ -610,7 +613,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         token.from_json(self._restCall("home/getOAuthOTK"))
         return token
 
-    def set_timezone(self, timezone:str):
+    def set_timezone(self, timezone: str):
         """ sets the timezone for the AP. e.g. "Europe/Berlin" 
         Args:
             timezone(str): the new timezone

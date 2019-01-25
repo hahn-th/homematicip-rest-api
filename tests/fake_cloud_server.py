@@ -512,7 +512,9 @@ class FakeCloudServer:
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
         d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
-        d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js["simpleRGBColorState"]
+        d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js[
+            "simpleRGBColorState"
+        ]
         response.status_code = 200
         return response
 
@@ -525,8 +527,10 @@ class FakeCloudServer:
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
         d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
-        d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js["simpleRGBColorState"]
-        #not sure what to do with onTime and rampTime :/
+        d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js[
+            "simpleRGBColorState"
+        ]
+        # not sure what to do with onTime and rampTime :/
         response.status_code = 200
         return response
 

@@ -12,7 +12,7 @@ class HomeMaticIPObject:
         self._connection = connection
         # List with update handlers.
         self._on_update = []
-        
+
         #:the raw json data of the object
         self._rawJSONData = {}
 

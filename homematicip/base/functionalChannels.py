@@ -554,6 +554,7 @@ class MultiModeInputChannel(FunctionalChannel):
         self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
         self.windowState = WindowState.from_str(js["windowState"])
 
+
 class NotificationLightChannel(DimmerChannel):
     """ this is the representive of the NOTIFICATION_LIGHT_CHANNEL channel"""
 

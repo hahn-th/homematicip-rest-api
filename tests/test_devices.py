@@ -822,17 +822,18 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)"
         )
 
-def test_key_remote_control(fake_home:Home):
+
+def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711ABCDEF0000000014")
-        assert isinstance(d,KeyRemoteControl4)
+        assert isinstance(d, KeyRemoteControl4)
 
 
-def test_brand_switch_notification_light(fake_home:Home):
+def test_brand_switch_notification_light(fake_home: Home):
     with no_ssl_verification():
         d = BrandSwitchNotificationLight(fake_home._connection)
         d = fake_home.search_device_by_id("3014F711BSL0000000000050")
-        
+
         c = d.functionalChannels[d.topLightChannelIndex]
         assert isinstance(c, NotificationLightChannel)
         assert c.simpleRGBColorState == RGBColorState.RED
@@ -843,10 +844,10 @@ def test_brand_switch_notification_light(fake_home:Home):
         assert c.simpleRGBColorState == RGBColorState.GREEN
         assert c.dimLevel == 1.0
 
-
-        
         d.set_rgb_dim_level(d.topLightChannelIndex, RGBColorState.BLUE, 0.5)
-        d.set_rgb_dim_level_with_time(d.bottomLightChannelIndex, RGBColorState.YELLOW, 0.7, 10, 20)
+        d.set_rgb_dim_level_with_time(
+            d.bottomLightChannelIndex, RGBColorState.YELLOW, 0.7, 10, 20
+        )
 
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BSL0000000000050")
@@ -861,9 +862,10 @@ def test_brand_switch_notification_light(fake_home:Home):
         assert c.simpleRGBColorState == RGBColorState.YELLOW
         assert c.dimLevel == 0.7
 
-        assert str(d) == ("HmIP-BSL Treppe lowbat(None) unreach(False) "
-                          "rssiDeviceValue(-67) rssiPeerValue(-70) configPending(False) "
-                         "dutyCycle(False) on(True) profileMode(AUTOMATIC) "
-                         "userDesiredProfileMode(AUTOMATIC) topDimLevel(0.5) "
-                         "topColor(BLUE) bottomDimLevel(0.7) bottomColor(YELLOW)"
-                         )
+        assert str(d) == (
+            "HmIP-BSL Treppe lowbat(None) unreach(False) "
+            "rssiDeviceValue(-67) rssiPeerValue(-70) configPending(False) "
+            "dutyCycle(False) on(True) profileMode(AUTOMATIC) "
+            "userDesiredProfileMode(AUTOMATIC) topDimLevel(0.5) "
+            "topColor(BLUE) bottomDimLevel(0.7) bottomColor(YELLOW)"
+        )
