@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - started with documentation
 - Devices
+  - HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
   - HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
 - API
   - Groups

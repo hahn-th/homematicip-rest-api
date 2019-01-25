@@ -6,6 +6,7 @@ from homematicip.aio.device import *
 from homematicip.aio.home import AsyncHome
 from homematicip.base.enums import *
 from homematicip.base.base_connection import HmipWrongHttpStatusError
+from homematicip.base.functionalChannels import *
 
 from conftest import utc_offset
 
@@ -216,3 +217,43 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     d.id = "INVALID_ID"
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.set_operation_lock(True)
+
+@pytest.mark.asyncio
+async def test_brand_switch_notification_light(no_ssl_fake_async_home: AsyncHome):
+    d = AsyncBrandSwitchNotificationLight(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711BSL0000000000050")
+        
+    c = d.functionalChannels[d.topLightChannelIndex]
+    assert isinstance(c, NotificationLightChannel)
+    assert c.simpleRGBColorState == RGBColorState.RED
+    assert c.dimLevel == 0.0
+
+    c = d.functionalChannels[d.bottomLightChannelIndex]
+    assert isinstance(c, NotificationLightChannel)
+    assert c.simpleRGBColorState == RGBColorState.GREEN
+    assert c.dimLevel == 1.0
+
+
+        
+    await d.set_rgb_dim_level(d.topLightChannelIndex, RGBColorState.BLUE, 0.5)
+    await d.set_rgb_dim_level_with_time(d.bottomLightChannelIndex, RGBColorState.YELLOW, 0.7, 10, 20)
+
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711BSL0000000000050")
+
+    c = d.functionalChannels[d.topLightChannelIndex]
+    assert isinstance(c, NotificationLightChannel)
+    assert c.simpleRGBColorState == RGBColorState.BLUE
+    assert c.dimLevel == 0.5
+
+    c = d.functionalChannels[d.bottomLightChannelIndex]
+    assert isinstance(c, NotificationLightChannel)
+    assert c.simpleRGBColorState == RGBColorState.YELLOW
+    assert c.dimLevel == 0.7
+
+    assert str(d) == ("HmIP-BSL Treppe lowbat(None) unreach(False) "
+                        "rssiDeviceValue(-67) rssiPeerValue(-70) configPending(False) "
+                        "dutyCycle(False) on(True) profileMode(AUTOMATIC) "
+                        "userDesiredProfileMode(AUTOMATIC) topDimLevel(0.5) "
+                        "topColor(BLUE) bottomDimLevel(0.7) bottomColor(YELLOW)"
+                        )

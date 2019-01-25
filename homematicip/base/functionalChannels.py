@@ -17,7 +17,12 @@ class FunctionalChannel:
 
     def from_json(self, js, groups: Iterable[Group]):
         """ this function will load the functional channel object 
-        from a json object and the given groups """
+        from a json object and the given groups 
+        
+        Args:
+            js(dict): the json object
+            groups(Iterable[Group]): the groups for referencing
+        """
         self.index = js["index"]
         self.groupIndex = js["groupIndex"]
         self.label = js["label"]
@@ -45,8 +50,6 @@ class DeviceBaseChannel(FunctionalChannel):
         self.configPending = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.unreach = js["unreach"]
         self.lowBat = js["lowBat"]
@@ -66,8 +69,6 @@ class DeviceSabotageChannel(DeviceBaseChannel):
         self.sabotage = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.sabotage = js["sabotage"]
 
@@ -80,8 +81,6 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
         self.operationLockActive = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.operationLockActive = js["operationLockActive"]
 
@@ -94,8 +93,6 @@ class DeviceIncorrectPositionedChannel(DeviceBaseChannel):
         self.incorrectPositioned = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.incorrectPositioned = js["incorrectPositioned"]
 
@@ -108,8 +105,6 @@ class DevicePermanentFullRxChannel(DeviceBaseChannel):
         self.permanentFullRx = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.permanentFullRx = js["permanentFullRx"]
 
@@ -128,8 +123,6 @@ class WaterSensorChannel(FunctionalChannel):
         self.waterlevelDetected = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.acousticAlarmSignal = AcousticAlarmSignal.from_str(
             js["acousticAlarmSignal"]
@@ -162,8 +155,6 @@ class HeatingThermostatChannel(FunctionalChannel):
         self.automaticValveAdaptionNeeded = False
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.temperatureOffset = js["temperatureOffset"]
         self.valvePosition = js["valvePosition"]
@@ -180,8 +171,6 @@ class ShutterContactChannel(FunctionalChannel):
         self.eventDelay = None
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.windowState = WindowState.from_str(js["windowState"])
         self.eventDelay = js["eventDelay"]
@@ -200,8 +189,6 @@ class ClimateSensorChannel(FunctionalChannel):
         self.humidity = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.actualTemperature = js["actualTemperature"]
         self.humidity = js["humidity"]
@@ -215,8 +202,6 @@ class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
         self.temperatureOffset = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.temperatureOffset = js["temperatureOffset"]
 
@@ -230,8 +215,6 @@ class WallMountedThermostatProChannel(WallMountedThermostatWithoutDisplayChannel
         self.setPointTemperature = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.setPointTemperature = js["setPointTemperature"]
         self.display = ClimateControlDisplay.from_str(js["display"])
@@ -245,8 +228,6 @@ class SmokeDetectorChannel(FunctionalChannel):
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(
             js["smokeDetectorAlarmType"]
@@ -263,8 +244,6 @@ class SwitchChannel(FunctionalChannel):
         self.userDesiredProfileMode = None
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.on = js["on"]
         self.profileMode = js["profileMode"]
@@ -280,8 +259,6 @@ class SwitchMeasuringChannel(SwitchChannel):
         self.currentPowerConsumption = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.energyCounter = js["energyCounter"]
         self.currentPowerConsumption = js["currentPowerConsumption"]
@@ -296,8 +273,6 @@ class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
         self.heatingValveType = HeatingValveType.NORMALLY_CLOSE
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.globalPumpControl = js["globalPumpControl"]
         self.heatingValveType = HeatingValveType.from_str(js["heatingValveType"])
@@ -324,8 +299,6 @@ class MotionDetectionChannel(FunctionalChannel):
         self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.motionDetected = js["motionDetected"]
         self.illumination = js["illumination"]
@@ -351,8 +324,6 @@ class PresenceDetectionChannel(FunctionalChannel):
         self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.presenceDetected = js["presenceDetected"]
         self.currentIllumination = js["currentIllumination"]
@@ -385,8 +356,6 @@ class ShutterChannel(FunctionalChannel):
         self.userDesiredProfileMode = "AUTOMATIC"
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.shutterLevel = js["shutterLevel"]
         self.changeOverDelay = js["changeOverDelay"]
@@ -416,8 +385,6 @@ class DimmerChannel(FunctionalChannel):
         self.userDesiredProfileMode = None
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.dimLevel = js["dimLevel"]
         self.profileMode = js["profileMode"]
@@ -442,8 +409,6 @@ class WeatherSensorChannel(FunctionalChannel):
         self.yesterdaySunshineDuration = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.actualTemperature = js["actualTemperature"]
         self.humidity = js["humidity"]
@@ -469,8 +434,6 @@ class WeatherSensorPlusChannel(WeatherSensorChannel):
         self.yesterdayRainCounter = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.raining = js["raining"]
         self.todayRainCounter = js["todayRainCounter"]
@@ -488,8 +451,6 @@ class WeatherSensorProChannel(WeatherSensorPlusChannel):
         self.windDirectionVariation = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.weathervaneAlignmentNeeded = js["weathervaneAlignmentNeeded"]
         self.windDirection = js["windDirection"]
@@ -519,8 +480,6 @@ class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
         self.pumpProtectionSwitchingInterval = 20
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
@@ -550,8 +509,6 @@ class PassageDetectorChannel(FunctionalChannel):
         self.rightCounter = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.leftCounter = js["leftCounter"]
         self.leftRightCounterDelta = js["leftRightCounterDelta"]
@@ -574,8 +531,6 @@ class InternalSwitchChannel(FunctionalChannel):
         self.valveProtectionSwitchingInterval = 0
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.frostProtectionTemperature = js["frostProtectionTemperature"]
         self.heatingValveType = HeatingValveType.from_str(js["heatingValveType"])
@@ -594,9 +549,20 @@ class MultiModeInputChannel(FunctionalChannel):
         self.windowState = WindowState.OPEN
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups """
         super().from_json(js, groups)
         self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
         self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
         self.windowState = WindowState.from_str(js["windowState"])
+
+class NotificationLightChannel(DimmerChannel):
+    """ this is the representive of the NOTIFICATION_LIGHT_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.on = False
+        self.simpleRGBColorState = RGBColorState.BLACK
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.on = js["on"]
+        self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])

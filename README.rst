@@ -73,7 +73,7 @@ Devices:
 -  [X] HMIP-BDT (Dimming Actuator for brand switches)
 -  [ ] HMIP-BRC2 (Remote Control for brand switches – 2 channels)
 -  [X] HMIP-BROLL (Shutter Actuator - brand-mount)
--  [ ] HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
+-  [X] HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
 -  [X] HMIP-BSM (Brand Switch and Meter)
 -  [X] HMIP-BWTH (Wall Thermostat with switching output – for brand switches)
 -  [ ] HMIP-BWTH24 (Wall Thermostat with switching output – for brand switches, 24V)

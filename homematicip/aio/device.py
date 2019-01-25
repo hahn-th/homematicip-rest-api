@@ -65,12 +65,20 @@ class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
         )
 
 
+class AsyncBrandSwitchNotificationLight(BrandSwitchNotificationLight, AsyncSwitch):
+    """ HMIP-BSL (Switch Actuator for brand switches – with signal lamp) """
+    
+    async def set_rgb_dim_level(self, channelIndex:int, rgb : RGBColorState, dimLevel : float):
+        return await self._connection.api_call(*super().set_rgb_dim_level(channelIndex,rgb,dimLevel))
+
+    async def set_rgb_dim_level_with_time(self, channelIndex:int, rgb : RGBColorState, dimLevel : float, onTime:float, rampTime:float):
+        return await self._connection.api_call(*super().set_rgb_dim_level_with_time(channelIndex,rgb,dimLevel,onTime,rampTime))
+
 class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncSwitch):
     """ HMIP-PSM (Pluggable Switch and Meter) """
 
     async def reset_energy_counter(self):
         return await self._connection.api_call(*super().reset_energy_counter())
-
 
 class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncSwitch):
     """ HMIP-BSM (Brand Switch and Meter) """

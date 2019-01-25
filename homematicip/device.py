@@ -518,6 +518,57 @@ class SwitchMeasuring(Switch):
         )
 
 
+class BrandSwitchNotificationLight(Switch):
+    """ HMIP-BSL (Switch Actuator for brand switches – with signal lamp) """
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:int:the channel number for the top light
+        self.topLightChannelIndex = 2
+        #:int:the channel number for the bottom light
+        self.bottomLightChannelIndex = 3
+
+    def __str__(self):
+        top = self.functionalChannels[self.topLightChannelIndex]
+        bottom = self.functionalChannels[self.bottomLightChannelIndex]
+        return "{} topDimLevel({}) topColor({}) bottomDimLevel({}) bottomColor({})".format(
+            super().__str__(), top.dimLevel, top.simpleRGBColorState, bottom.dimLevel, bottom.simpleRGBColorState
+        )
+
+    def set_rgb_dim_level(self, channelIndex:int, rgb : RGBColorState, dimLevel : float):
+        """ sets the color and dimlevel of the lamp
+
+        Args:
+            channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+            rgb(RGBColorState): the color of the lamp
+            dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
+
+        Returns:
+            the result of the _restCall
+        """
+        LOGGER.warning("set_rgb_dim_level is untested. Please verify it's functionality")
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "simpleRGBColorState" : rgb, "dimLevel": dimLevel}
+        return self._restCall(
+            "device/control/setSimpleRGBColorDimLevel", body=json.dumps(data)
+        )
+
+    def set_rgb_dim_level_with_time(self, channelIndex:int, rgb : RGBColorState, dimLevel : float, onTime:float, rampTime:float):
+        """ sets the color and dimlevel of the lamp
+
+        Args:
+            channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+            rgb(RGBColorState): the color of the lamp
+            dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
+            onTime(float):
+            rampTime(float):
+        Returns:
+            the result of the _restCall
+        """
+        LOGGER.warning("set_rgb_dim_level_with_time is untested. Please verify it's functionality")
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "simpleRGBColorState" : rgb, "dimLevel": dimLevel, "onTime":onTime, "rampTime":rampTime}
+        return self._restCall(
+            "device/control/setSimpleRGBColorDimLevelWithTime", body=json.dumps(data)
+        )
+
 class PlugableSwitchMeasuring(SwitchMeasuring):
     """ HMIP-PSM (Pluggable Switch and Meter) """
 

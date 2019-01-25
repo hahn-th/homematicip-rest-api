@@ -503,6 +503,33 @@ class FakeCloudServer:
             response = self.errorCode(response, "INVALID_DEVICE", 404)
         return response
 
+    @validate_authorization
+    def post_hmip_device_control_setSimpleRGBColorDimLevel(
+        self, request: Request, response: Response
+    ):
+
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = "{}".format(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
+        d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js["simpleRGBColorState"]
+        response.status_code = 200
+        return response
+
+    @validate_authorization
+    def post_hmip_device_control_setSimpleRGBColorDimLevelWithTime(
+        self, request: Request, response: Response
+    ):
+
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = "{}".format(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
+        d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js["simpleRGBColorState"]
+        #not sure what to do with onTime and rampTime :/
+        response.status_code = 200
+        return response
+
     # endregion
 
     # region auth
