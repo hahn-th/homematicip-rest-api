@@ -93,7 +93,7 @@ Devices:
 -  [X] HMIP-FSM (Homematic IP Switch Actuator and Meter – flush-mount)
 -  [X] HMIP-FSM16 (Homematic IP Switch Actuator and Meter 16A – flush-mount)
 -  [X] HMIP-KRCA (Key Ring Remote Control & alarm)
--  [ ] HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
+-  [X] HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
 -  [ ] HMIP-MIOB (Multi IO Box)
 -  [X] HMIP-MOD-OC8 (Open Collector Module)
 -  [ ] HMIP-MP3P (Combination Signalling Device MP3)

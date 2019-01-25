@@ -537,6 +537,8 @@ class PushButton(Device):
 class PushButton6(PushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
 
+class KeyRemoteControl4(PushButton):
+    """ HMIP-KRC4 (Key Ring Remote Control - 4 buttons) """
 
 class RemoteControl8(PushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """

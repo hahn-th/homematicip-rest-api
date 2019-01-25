@@ -153,6 +153,8 @@ class AsyncPushButton(PushButton, AsyncDevice):
 class AsyncPushButton6(PushButton6, AsyncPushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button)  """
 
+class AsyncKeyRemoteControl4(KeyRemoteControl4, AsyncPushButton):
+    """ HMIP-KRC4 (Key Ring Remote Control - 4 buttons) """
 
 class AsyncRemoteControl8(RemoteControl8, AsyncPushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """

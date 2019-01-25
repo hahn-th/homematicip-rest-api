@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - started with documentation
+- Devices
+  - HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
 - API
   - Groups
     - Async/AlarmSwitchingGroup

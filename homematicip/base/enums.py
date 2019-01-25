@@ -191,6 +191,7 @@ class DeviceType(AutoNameEnum):
     FULL_FLUSH_SHUTTER = auto()
     FULL_FLUSH_SWITCH_MEASURING = auto()
     HEATING_THERMOSTAT = auto()
+    KEY_REMOTE_CONTROL_4 = auto()
     KEY_REMOTE_CONTROL_ALARM = auto()
     MOTION_DETECTOR_INDOOR = auto()
     MOTION_DETECTOR_OUTDOOR = auto()
