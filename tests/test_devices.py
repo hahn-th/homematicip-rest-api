@@ -869,3 +869,21 @@ def test_brand_switch_notification_light(fake_home: Home):
             "userDesiredProfileMode(AUTOMATIC) topDimLevel(0.5) "
             "topColor(BLUE) bottomDimLevel(0.7) bottomColor(YELLOW)"
         )
+
+
+def test_light_sensor(fake_home: Home):
+    with no_ssl_verification():
+        d = LightSensor(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F711SLO0000000000026")
+
+        assert d.averageIllumination == 807.3
+        assert d.currentIllumination == 785.2
+        assert d.highestIllumination == 837.1
+        assert d.lowestIllumination == 785.2
+
+        assert str(d) == (
+            "HmIP-SLO Lichtsensor Nord lowbat(False) unreach(False) rssiDeviceValue(-60) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "averageIllumination(807.3) currentIllumination(785.2) "
+            "highestIllumination(837.1) lowestIllumination(785.2)"
+        )

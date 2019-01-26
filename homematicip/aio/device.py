@@ -50,6 +50,10 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
     """ Async implementation of HMIP-PS (Pluggable Switch) """
 
 
+class AsyncLightSensor(LightSensor, AsyncDevice):
+    """ Async implementation of HMIP-SLO (Light Sensor outdoor) """
+
+
 class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
     pass
 

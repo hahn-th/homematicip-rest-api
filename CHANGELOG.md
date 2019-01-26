@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Devices
   - HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
   - HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
+  - HMIP-SLO (Light Sensor outdoor)
 - API
   - Groups
     - Async/AlarmSwitchingGroup

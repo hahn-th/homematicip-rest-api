@@ -147,7 +147,8 @@ class SwitchingGroup(Group):
         self.dimLevel = js["dimLevel"]
         self.dutyCycle = js["dutyCycle"]
         self.lowBat = js["lowBat"]
-        try:  # TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit anymore from switchingGroup
+        try:  # TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit
+            # anymore from switchingGroup
             self.processing = js["processing"]
             self.shutterLevel = js["shutterLevel"]
             self.slatsLevel = js["slatsLevel"]
@@ -311,13 +312,15 @@ class AlarmSwitchingGroup(Group):
         )
 
 
-# at the moment it doesn't look like this class has any special properties/functions
+# at the moment it doesn't look like this class has any special
+# properties/functions
 # keep it as a placeholder in the meantime
 class HeatingHumidyLimiterGroup(Group):
     pass
 
 
-# at the moment it doesn't look like this class has any special properties/functions
+# at the moment it doesn't look like this class has any special
+# properties/functions
 # keep it as a placeholder in the meantime
 class HeatingTemperatureLimiterGroup(Group):
     pass
@@ -337,7 +340,8 @@ class HeatingChangeoverGroup(Group):
         return "{}: on({})".format(super().__str__(), self.on)
 
 
-# at the moment it doesn't look like this class has any special properties/functions
+# at the moment it doesn't look like this class has any special
+# properties/functions
 # keep it as a placeholder in the meantime
 class InboxGroup(Group):
     pass
@@ -632,7 +636,8 @@ class HeatingCoolingDemandGroup(Group):
         )
 
 
-# at the moment it doesn't look like this class has any special properties/functions
+# at the moment it doesn't look like this class has any special
+# properties/functions
 # keep it as a placeholder in the meantime
 class HeatingExternalClockGroup(Group):
     pass
@@ -661,12 +666,11 @@ class HeatingCoolingDemandBoilerGroup(Group):
 class HeatingCoolingDemandPumpGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
-        self.pumpProtectionDuration = None
-        self.pumpProtectionSwitchingInterval = None
-        self.pumpFollowUpTime = None
-        self.pumpLeadTime = None
+        self.pumpProtectionDuration = 0
+        self.pumpProtectionSwitchingInterval = 0
+        self.pumpFollowUpTime = 0
+        self.pumpLeadTime = 0
         self.on = None
-        self.heatDemandRuleEnabled = False
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -675,19 +679,17 @@ class HeatingCoolingDemandPumpGroup(Group):
         self.pumpProtectionDuration = js["pumpProtectionDuration"]
         self.pumpFollowUpTime = js["pumpFollowUpTime"]
         self.pumpLeadTime = js["pumpLeadTime"]
-        self.heatDemandRuleEnabled = js["heatDemandRuleEnabled"]
 
     def __str__(self):
         return (
             "{}: on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) "
-            "pumpLeadTime({}) heatDemandRuleEnabled({})".format(
+            "pumpLeadTime({})".format(
                 super().__str__(),
                 self.on,
                 self.pumpProtectionDuration,
                 self.pumpProtectionSwitchingInterval,
                 self.pumpFollowUpTime,
                 self.pumpLeadTime,
-                self.heatDemandRuleEnabled,
             )
         )
 
@@ -749,7 +751,7 @@ class SwitchingProfileGroup(Group):
         self.dimLevel = None
         self.profileId = (
             None
-        )  # Not sure why it is there. You can't use it to query something.
+        )  # Not sure why it is there.  You can't use it to query something.
         self.profileMode = None
 
     def from_json(self, js, devices):

@@ -863,6 +863,39 @@ class FullFlushShutter(Device):
         return self._restCall("device/control/stop", body=json.dumps(data))
 
 
+class LightSensor(Device):
+    """ HMIP-SLO (Light Sensor outdoor) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:the average illumination value
+        self.averageIllumination = 0.0
+        #:float:the current illumination value
+        self.currentIllumination = 0.0
+        #:float:the highest illumination value
+        self.highestIllumination = 0.0
+        #:float:the lowest illumination value
+        self.lowestIllumination = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("LIGHT_SENSOR_CHANNEL", js)
+        if c:
+            self.averageIllumination = c["averageIllumination"]
+            self.currentIllumination = c["currentIllumination"]
+            self.highestIllumination = c["highestIllumination"]
+            self.lowestIllumination = c["lowestIllumination"]
+
+    def __str__(self):
+        return "{} averageIllumination({}) currentIllumination({}) highestIllumination({}) lowestIllumination({})".format(
+            super().__str__(),
+            self.averageIllumination,
+            self.currentIllumination,
+            self.highestIllumination,
+            self.lowestIllumination,
+        )
+
+
 class Dimmer(Device):
     """Base dimmer device class"""
 

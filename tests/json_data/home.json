@@ -220,6 +220,54 @@
             "type": "BRAND_SWITCH_NOTIFICATION_LIGHT",
             "updateState": "UP_TO_DATE"
         },
+        "3014F711SLO0000000000026": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.16",
+            "firmwareVersionInteger": 65552,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711SLO0000000000026",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -60,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "averageIllumination": 807.3,
+                    "currentIllumination": 785.2,
+                    "deviceId": "3014F711SLO0000000000026",
+                    "functionalChannelType": "LIGHT_SENSOR_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "highestIllumination": 837.1,
+                    "index": 1,
+                    "label": "",
+                    "lowestIllumination": 785.2
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711SLO0000000000026",
+            "label": "Lichtsensor Nord",
+            "lastStatusUpdate": 1548494235548,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 308,
+            "modelType": "HmIP-SLO",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F711SLO0000000000026",
+            "type": "LIGHT_SENSOR",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000054": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.0.0",
@@ -3938,7 +3986,6 @@
             "channels": [],
             "dutyCycle": null,
             "heatDemand": null,
-            "heatDemandRuleEnabled": false,
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "00000000-0000-0000-0000-000000000057",
             "label": "HEATING_COOLING_DEMAND_PUMP",
@@ -3950,7 +3997,6 @@
             "pumpLeadTime": 2,
             "pumpProtectionDuration": 1,
             "pumpProtectionSwitchingInterval": 14,
-            "triggered": false,
             "type": "HEATING_COOLING_DEMAND_PUMP",
             "unreach": null
         },

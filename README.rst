@@ -112,7 +112,7 @@ Devices:
 -  [X] HMIP-RC8 (Remote Control - 8 buttons)
 -  [ ] HMIP-RCB1 (Remote Control - 1 button)
 -  [ ] HMIP-SAM (Acceleration Sensor)
--  [ ] HMIP-SLO (Light Sensor outdoor)
+-  [X] HMIP-SLO (Light Sensor outdoor)
 -  [X] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 -  [X] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)
 -  [X] HMIP-SMO, HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)

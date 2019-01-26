@@ -273,7 +273,6 @@ def test_heating_cooling_demand_pump_group(fake_home: Home):
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000057")
         assert isinstance(g, HeatingCoolingDemandPumpGroup)
         assert g.on == None
-        assert g.heatDemandRuleEnabled == False
         assert g.pumpFollowUpTime == 2
         assert g.pumpLeadTime == 2
         assert g.pumpProtectionDuration == 1
@@ -281,7 +280,6 @@ def test_heating_cooling_demand_pump_group(fake_home: Home):
         assert str(g) == (
             "HEATING_COOLING_DEMAND_PUMP HEATING_COOLING_DEMAND_PUMP: on(None) pumpProtectionDuration(1)"
             " pumpProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2)"
-            " heatDemandRuleEnabled(False)"
         )
 
 

@@ -567,3 +567,25 @@ class NotificationLightChannel(DimmerChannel):
         super().from_json(js, groups)
         self.on = js["on"]
         self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
+
+
+class LightSensorChannel(FunctionalChannel):
+    """ this is the representive of the LIGHT_SENSOR_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:float:the average illumination value
+        self.averageIllumination = 0.0
+        #:float:the current illumination value
+        self.currentIllumination = 0.0
+        #:float:the highest illumination value
+        self.highestIllumination = 0.0
+        #:float:the lowest illumination value
+        self.lowestIllumination = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.averageIllumination = js["averageIllumination"]
+        self.currentIllumination = js["currentIllumination"]
+        self.highestIllumination = js["highestIllumination"]
+        self.lowestIllumination = js["lowestIllumination"]

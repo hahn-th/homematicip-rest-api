@@ -20,6 +20,7 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_THERMOSTAT: AsyncHeatingThermostat,
     DeviceType.KEY_REMOTE_CONTROL_4: AsyncKeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: AsyncKeyRemoteControlAlarm,
+    DeviceType.LIGHT_SENSOR: AsyncLightSensor,
     DeviceType.MOTION_DETECTOR_INDOOR: AsyncMotionDetectorIndoor,
     DeviceType.MOTION_DETECTOR_OUTDOOR: AsyncMotionDetectorOutdoor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: AsyncMotionDetectorPushButton,
