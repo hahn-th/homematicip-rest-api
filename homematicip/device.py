@@ -550,9 +550,6 @@ class BrandSwitchNotificationLight(Switch):
         Returns:
             the result of the _restCall
         """
-        LOGGER.warning(
-            "set_rgb_dim_level is untested. Please verify it's functionality"
-        )
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
@@ -582,9 +579,6 @@ class BrandSwitchNotificationLight(Switch):
         Returns:
             the result of the _restCall
         """
-        LOGGER.warning(
-            "set_rgb_dim_level_with_time is untested. Please verify it's functionality"
-        )
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
