@@ -98,7 +98,7 @@ Devices:
 -  [ ] HMIP-MIOB (Multi IO Box)
 -  [X] HMIP-MOD-OC8 (Open Collector Module Sender - 8x)
 -  [ ] HMIP-MOD-RC8 (Open Collector Module Receiver - 8x)
--  [ ] HMIP-MOD-TM (Garage Tormatic)
+-  [ ] HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)
 -  [ ] HMIP-MP3P (Combination Signalling Device MP3)
 -  [X] HMIP-PCBS (Switch Circuit Board - 1 channel)
 -  [ ] HMIP-PCBS2 (Switch Circuit Board - 2 channels)
