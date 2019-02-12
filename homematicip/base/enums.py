@@ -337,6 +337,7 @@ class WindValueType(AutoNameEnum):
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
+    BLIND_CHANNEL = auto()
     CLIMATE_SENSOR_CHANNEL = auto()
     DEHUMIDIFIER_DEMAND_CHANNEL = auto()
     DEVICE_BASE = auto()

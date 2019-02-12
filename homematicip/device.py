@@ -848,11 +848,22 @@ class FullFlushShutter(Device):
             self.bottomToTopReferenceTime,
         )
 
-    def set_shutter_level(self, level):
+    def set_shutter_level(self, level=0.0):
+        """ sets the shutter level
+
+        Args:
+            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+        Returns:
+            the result of the _restCall
+        """
         data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
+        """ stops the current shutter operation
+        Returns:
+            the result of the _restCall
+        """
         data = {"channelIndex": 1, "deviceId": self.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
 
@@ -895,6 +906,14 @@ class FullFlushBlind(FullFlushShutter):
 
 
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        """ sets the slats and shutter level
+
+        Args:
+            slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
+            shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
+        Returns:
+            the result of the _restCall
+        """
         if shutterLevel is None:
             shutterLevel = self.shutterLevel
         data = {"channelIndex": 1, "deviceId": self.id, "slatsLevel": slatsLevel, "shutterLevel": shutterLevel}

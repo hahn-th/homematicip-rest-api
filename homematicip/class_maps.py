@@ -19,6 +19,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: BrandSwitchNotificationLight,
     DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
+    DeviceType.FULL_FLUSH_BLIND: FullFlushBlind,
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE: FullFlushContactInterface,
     DeviceType.FULL_FLUSH_DIMMER: FullFlushDimmer,
     DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,
@@ -112,6 +113,7 @@ TYPE_FUNCTIONALHOME_MAP = {
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL: FunctionalChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
+    FunctionalChannelType.BLIND_CHANNEL: BlindChannel,
     FunctionalChannelType.CLIMATE_SENSOR_CHANNEL: ClimateSensorChannel,
     FunctionalChannelType.DEHUMIDIFIER_DEMAND_CHANNEL: DehumidifierDemandChannel,
     FunctionalChannelType.DEVICE_BASE: DeviceBaseChannel,
