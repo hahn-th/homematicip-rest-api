@@ -504,6 +504,38 @@ class FakeCloudServer:
         return response
 
     @validate_authorization
+    def post_hmip_device_control_setShutterLevel(
+        self, request: Request, response: Response
+    ):
+
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = "{}".format(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["shutterLevel"] = js["shutterLevel"]
+        response.status_code = 200
+        return response
+
+    @validate_authorization
+    def post_hmip_device_control_setSlatsLevel(
+        self, request: Request, response: Response
+    ):
+
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = "{}".format(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["shutterLevel"] = js["shutterLevel"]
+        d["functionalChannels"][channelIndex]["slatsLevel"] = js["slatsLevel"]
+        response.status_code = 200
+        return response
+
+    @validate_authorization
+    def post_hmip_device_control_stop(
+        self, request: Request, response: Response
+    ):
+        response.status_code = 200
+        return response
+
+    @validate_authorization
     def post_hmip_device_control_setSimpleRGBColorDimLevel(
         self, request: Request, response: Response
     ):

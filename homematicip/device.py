@@ -921,11 +921,8 @@ class FullFlushBlind(FullFlushShutter):
 
 
     def __str__(self):
-        return "{} shutterLevel({}) topToBottom({}) bottomToTop({}) slatsLevel({}) blindModeActive({})".format(
+        return "{} slatsLevel({}) blindModeActive({})".format(
             super().__str__(),
-            self.shutterLevel,
-            self.topToBottomReferenceTime,
-            self.bottomToTopReferenceTime,
             self.slatsLevel,
             self.blindModeActive,
         )
