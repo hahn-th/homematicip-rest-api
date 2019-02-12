@@ -122,8 +122,8 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
 
 @pytest.mark.asyncio
 async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
-    fake_home = no_ssl_fake_async_home
-    d = fake_home.search_device_by_id("3014F7110000000000000009")
+    no_ssl_fake_async_home = no_ssl_fake_async_home
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert isinstance(d, AsyncPlugableSwitchMeasuring)
     assert d.label == "Brunnen"
     assert d.lastStatusUpdate == (
@@ -159,13 +159,13 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     )
 
     await d.turn_on()
-    await fake_home.get_current_state()
-    d = fake_home.search_device_by_id("3014F7110000000000000009")
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d.on == True
 
     await d.turn_off()
-    await fake_home.get_current_state()
-    d = fake_home.search_device_by_id("3014F7110000000000000009")
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d.on == False
 
     d.id = "INVALID_ID"
@@ -259,3 +259,39 @@ async def test_brand_switch_notification_light(no_ssl_fake_async_home: AsyncHome
         "userDesiredProfileMode(AUTOMATIC) topDimLevel(0.5) "
         "topColor(BLUE) bottomDimLevel(0.7) bottomColor(YELLOW)"
     )
+
+
+@pytest.mark.asyncio
+async def test_full_flush_shutter(no_ssl_fake_async_home: AsyncHome):
+    d = FullFlushShutter(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711ACBCDABCADCA66")
+    assert d.shutterLevel == 1.0
+
+    await d.set_shutter_level(0.4)
+    await d.set_shutter_stop()  # this will not do anything in the test run
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711ACBCDABCADCA66")
+    assert d.shutterLevel == 0.4
+
+
+@pytest.mark.asyncio
+async def test_full_flush_blind(no_ssl_fake_async_home: AsyncHome):
+    d = AsyncFullFlushBlind(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711BADCAFE000000001")
+
+    assert d.shutterLevel == 1.0
+    assert d.slatsLevel == 1.0
+    assert d.blindModeActive == True
+    assert d.slatsReferenceTime == 2.0
+
+    await d.set_slats_level(0.4)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711BADCAFE000000001")
+    assert d.shutterLevel == 1.0
+    assert d.slatsLevel == 0.4
+
+    await d.set_slats_level(0.8, 0.3)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711BADCAFE000000001")
+    assert d.shutterLevel == 0.3
+    assert d.slatsLevel == 0.8

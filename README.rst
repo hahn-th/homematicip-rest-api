@@ -86,7 +86,7 @@ Devices:
 -  [ ] HMIP-FAL230-C10 (Floor Heating Actuator – 10 channels, 230V)
 -  [ ] HMIP-FAL24-C6 (Floor Heating Actuator – 6 channels, 24V)
 -  [ ] HMIP-FAL24-C10 (Floor Heating Actuator – 10 channels, 24V)
--  [ ] HMIP-FBL (Blind Actuator - flush-mount)
+-  [X] HMIP-FBL (Blind Actuator - flush-mount)
 -  [X] HMIP-FCI1 (Contact Interface flush-mount – 1 channel)
 -  [ ] HMIP-FCI6 (Contact Interface flush-mount – 6 channels)
 -  [X] HMIP-FDT (Dimming Actuator - flush-mount)

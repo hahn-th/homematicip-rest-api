@@ -848,13 +848,85 @@ class FullFlushShutter(Device):
             self.bottomToTopReferenceTime,
         )
 
-    def set_shutter_level(self, level):
+    def set_shutter_level(self, level=0.0):
+        """ sets the shutter level
+
+        Args:
+            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+        Returns:
+            the result of the _restCall
+        """
         data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
+        """ stops the current shutter operation
+        Returns:
+            the result of the _restCall
+        """
         data = {"channelIndex": 1, "deviceId": self.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
+
+
+class FullFlushBlind(FullFlushShutter):
+    """HMIP-FBL (Blind Actuator - flush-mount)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.slatsLevel = 0
+        self.slatsReferenceTime = 0.0
+        self.previousSlatsLevel = 0
+        self.blindModeActive = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("BLIND_CHANNEL", js)
+        if c:
+            self.shutterLevel = c["shutterLevel"]
+            self.changeOverDelay = c["changeOverDelay"]
+            self.delayCompensationValue = c["delayCompensationValue"]
+            self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
+            self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+            self.endpositionAutoDetectionEnabled = c["endpositionAutoDetectionEnabled"]
+            self.previousShutterLevel = c["previousShutterLevel"]
+            self.processing = c["processing"]
+            self.profileMode = c["profileMode"]
+            self.selfCalibrationInProgress = c["selfCalibrationInProgress"]
+            self.supportingDelayCompensation = c["supportingDelayCompensation"]
+            self.supportingEndpositionAutoDetection = c[
+                "supportingEndpositionAutoDetection"
+            ]
+            self.supportingSelfCalibration = c["supportingSelfCalibration"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
+
+            self.slatsLevel = c["slatsLevel"]
+            self.slatsReferenceTime = c["slatsReferenceTime"]
+            self.previousSlatsLevel = c["previousSlatsLevel"]
+            self.blindModeActive = c["blindModeActive"]
+
+    def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        """ sets the slats and shutter level
+
+        Args:
+            slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
+            shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
+        Returns:
+            the result of the _restCall
+        """
+        if shutterLevel is None:
+            shutterLevel = self.shutterLevel
+        data = {
+            "channelIndex": 1,
+            "deviceId": self.id,
+            "slatsLevel": slatsLevel,
+            "shutterLevel": shutterLevel,
+        }
+        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+
+    def __str__(self):
+        return "{} slatsLevel({}) blindModeActive({})".format(
+            super().__str__(), self.slatsLevel, self.blindModeActive
+        )
 
 
 class LightSensor(Device):

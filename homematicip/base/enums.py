@@ -187,6 +187,7 @@ class DeviceType(AutoNameEnum):
     BRAND_SWITCH_NOTIFICATION_LIGHT = auto()
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
+    FULL_FLUSH_BLIND = auto()
     FULL_FLUSH_CONTACT_INTERFACE = auto()
     FULL_FLUSH_DIMMER = auto()
     FULL_FLUSH_SHUTTER = auto()
@@ -336,6 +337,7 @@ class WindValueType(AutoNameEnum):
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
+    BLIND_CHANNEL = auto()
     CLIMATE_SENSOR_CHANNEL = auto()
     DEHUMIDIFIER_DEMAND_CHANNEL = auto()
     DEVICE_BASE = auto()
