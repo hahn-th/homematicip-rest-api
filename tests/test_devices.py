@@ -785,7 +785,7 @@ def test_full_flush_shutter(fake_home: Home):
         )
 
         d.set_shutter_level(0.4)
-        d.set_shutter_stop() # this will not do anything in the test run
+        d.set_shutter_stop()  # this will not do anything in the test run
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711ACBCDABCADCA66")
         assert d.shutterLevel == 0.4
@@ -807,7 +807,7 @@ def test_full_flush_blind(fake_home: Home):
         assert d.shutterLevel == 1.0
         assert d.slatsLevel == 0.4
 
-        d.set_slats_level(0.8,0.3)
+        d.set_slats_level(0.8, 0.3)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BADCAFE000000001")
         assert d.shutterLevel == 0.3
@@ -819,6 +819,7 @@ def test_full_flush_blind(fake_home: Home):
             "shutterLevel(0.3) topToBottom(41.0) bottomToTop(41.0) "
             "slatsLevel(0.8) blindModeActive(True)"
         )
+
 
 def test_alarm_siren_indoor(fake_home: Home):
     with no_ssl_verification():

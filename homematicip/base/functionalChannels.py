@@ -374,6 +374,7 @@ class ShutterChannel(FunctionalChannel):
         self.supportingSelfCalibration = js["supportingSelfCalibration"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
+
 class BlindChannel(ShutterChannel):
     """ this is the representive of the BLIND_CHANNEL channel"""
 
@@ -384,13 +385,14 @@ class BlindChannel(ShutterChannel):
         self.previousSlatsLevel = 0
         self.blindModeActive = False
 
-    def from_json(self, js):
-        super().from_json(js)
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
 
         self.slatsLevel = js["slatsLevel"]
         self.slatsReferenceTime = js["slatsReferenceTime"]
         self.previousSlatsLevel = js["previousSlatsLevel"]
         self.blindModeActive = js["blindModeActive"]
+
 
 class DimmerChannel(FunctionalChannel):
     """ this is the representive of the DIMMER_CHANNEL channel"""

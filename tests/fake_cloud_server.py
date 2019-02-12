@@ -529,9 +529,7 @@ class FakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_stop(
-        self, request: Request, response: Response
-    ):
+    def post_hmip_device_control_stop(self, request: Request, response: Response):
         response.status_code = 200
         return response
 

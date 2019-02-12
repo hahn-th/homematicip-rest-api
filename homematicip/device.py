@@ -867,6 +867,7 @@ class FullFlushShutter(Device):
         data = {"channelIndex": 1, "deviceId": self.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
 
+
 class FullFlushBlind(FullFlushShutter):
     """HMIP-FBL (Blind Actuator - flush-mount)"""
 
@@ -898,12 +899,10 @@ class FullFlushBlind(FullFlushShutter):
             self.supportingSelfCalibration = c["supportingSelfCalibration"]
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
-
             self.slatsLevel = c["slatsLevel"]
             self.slatsReferenceTime = c["slatsReferenceTime"]
             self.previousSlatsLevel = c["previousSlatsLevel"]
             self.blindModeActive = c["blindModeActive"]
-
 
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
         """ sets the slats and shutter level
@@ -916,16 +915,19 @@ class FullFlushBlind(FullFlushShutter):
         """
         if shutterLevel is None:
             shutterLevel = self.shutterLevel
-        data = {"channelIndex": 1, "deviceId": self.id, "slatsLevel": slatsLevel, "shutterLevel": shutterLevel}
+        data = {
+            "channelIndex": 1,
+            "deviceId": self.id,
+            "slatsLevel": slatsLevel,
+            "shutterLevel": shutterLevel,
+        }
         return self._restCall("device/control/setSlatsLevel", json.dumps(data))
-
 
     def __str__(self):
         return "{} slatsLevel({}) blindModeActive({})".format(
-            super().__str__(),
-            self.slatsLevel,
-            self.blindModeActive,
+            super().__str__(), self.slatsLevel, self.blindModeActive
         )
+
 
 class LightSensor(Device):
     """ HMIP-SLO (Light Sensor outdoor) """

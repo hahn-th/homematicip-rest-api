@@ -246,11 +246,15 @@ class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     async def set_shutter_stop(self):
         return await self._connection.api_call(*super().set_shutter_stop())
 
+
 class AsyncFullFlushBlind(FullFlushBlind, AsyncFullFlushShutter):
     """HMIP-FBL (Blind Actuator - flush-mount)"""
 
     async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
-        return await self._connection.api_call(*super().set_slats_level(slatsLevel,shutterLevel))
+        return await self._connection.api_call(
+            *super().set_slats_level(slatsLevel, shutterLevel)
+        )
+
 
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
