@@ -856,6 +856,60 @@ class FullFlushShutter(Device):
         data = {"channelIndex": 1, "deviceId": self.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
 
+class FullFlushBlind(FullFlushShutter):
+    """HMIP-FBL (Blind Actuator - flush-mount)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.slatsLevel = 0
+        self.slatsReferenceTime = 0.0
+        self.previousSlatsLevel = 0
+        self.blindModeActive = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("BLIND_CHANNEL", js)
+        if c:
+            self.shutterLevel = c["shutterLevel"]
+            self.changeOverDelay = c["changeOverDelay"]
+            self.delayCompensationValue = c["delayCompensationValue"]
+            self.bottomToTopReferenceTime = c["bottomToTopReferenceTime"]
+            self.topToBottomReferenceTime = c["topToBottomReferenceTime"]
+            self.endpositionAutoDetectionEnabled = c["endpositionAutoDetectionEnabled"]
+            self.previousShutterLevel = c["previousShutterLevel"]
+            self.processing = c["processing"]
+            self.profileMode = c["profileMode"]
+            self.selfCalibrationInProgress = c["selfCalibrationInProgress"]
+            self.supportingDelayCompensation = c["supportingDelayCompensation"]
+            self.supportingEndpositionAutoDetection = c[
+                "supportingEndpositionAutoDetection"
+            ]
+            self.supportingSelfCalibration = c["supportingSelfCalibration"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
+
+
+            self.slatsLevel = c["slatsLevel"]
+            self.slatsReferenceTime = c["slatsReferenceTime"]
+            self.previousSlatsLevel = c["previousSlatsLevel"]
+            self.blindModeActive = c["blindModeActive"]
+
+
+    def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        if shutterLevel is None:
+            shutterLevel = self.shutterLevel
+        data = {"channelIndex": 1, "deviceId": self.id, "slatsLevel": slatsLevel, "shutterLevel": shutterLevel}
+        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+
+
+    def __str__(self):
+        return "{} shutterLevel({}) topToBottom({}) bottomToTop({}) slatsLevel({}) blindModeActive({})".format(
+            super().__str__(),
+            self.shutterLevel,
+            self.topToBottomReferenceTime,
+            self.bottomToTopReferenceTime,
+            self.slatsLevel,
+            self.blindModeActive,
+        )
 
 class LightSensor(Device):
     """ HMIP-SLO (Light Sensor outdoor) """
