@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 import logging
 
-from homematicip.base.helpers import get_functional_channel
+from homematicip.base.helpers import get_functional_channel, get_functional_channels
 from homematicip.base.enums import *
 from homematicip import HomeMaticIPObject
 from homematicip.group import Group
@@ -487,23 +487,12 @@ class PrintedCircuitBoardSwitchBattery(Switch):
 class OpenCollector8Module(Switch):
     """ HmIP-MOD-OC8 ( Open Collector Module ) """
 
-    def __init__(self, connection):
-        super().__init__(connection)
-        self.on_ch = [None] * 9
-
     def from_json(self, js):
         super().from_json(js)
-        if self.functionalChannels:
-            for index in range(1, 9):
-                self.on_ch[index] = self.functionalChannels[index].on
-
-    def __str__(self):
-        return "{} on_ch1({}) on_ch2({}) on_ch3({}) on_ch4({}) \
-                on_ch5({}) on_ch6({}) on_ch7({}) on_ch8({})".format(
-            super().__str__(),
-            self.on_ch[1], self.on_ch[2], self.on_ch[3], self.on_ch[4],
-            self.on_ch[5], self.on_ch[6], self.on_ch[7], self.on_ch[8]
-        )
+        channels = get_functional_channels("SWITCH_CHANNEL", js)
+        self.on = []
+        for c in channels:
+            self.on.append(c["on"])
 
 
 class SwitchMeasuring(Switch):
