@@ -9,6 +9,14 @@ def get_functional_channel(channel_type, js):
     return None
 
 
+def get_functional_channels(channel_type, js):
+    channels = []
+    for channel in js["functionalChannels"].values():
+        if channel["functionalChannelType"] == channel_type:
+            channels.append(channel)
+    return channels
+
+
 # from https://bugs.python.org/file43513/json_detect_encoding_3.patch
 def detect_encoding(b):
     bstartswith = b.startswith
