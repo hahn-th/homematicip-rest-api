@@ -12,7 +12,7 @@ class FunctionalChannel:
         self.groupIndex = -1
         self.label = ""
         self.groupIndex = -1
-
+        self.functionalChannelType = ""
         self.groups = Iterable[Group]
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -26,7 +26,7 @@ class FunctionalChannel:
         self.index = js["index"]
         self.groupIndex = js["groupIndex"]
         self.label = js["label"]
-
+        self.functionalChannelType = FunctionalChannelType.from_str(js["functionalChannelType"],js["functionalChannelType"])
         self.groups = []
         for id in js["groups"]:
             for g in groups:

@@ -9,6 +9,7 @@ from homematicip import HomeMaticIPObject
 from homematicip.group import Group
 
 from typing import Iterable
+from collections import Counter
 
 LOGGER = logging.getLogger(__name__)
 
@@ -45,6 +46,7 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.permanentlyReachable = False
         self.liveUpdateState = LiveUpdateState.LIVE_UPDATE_NOT_SUPPORTED
         self.functionalChannels = []
+        self.functionalChannelCount = Counter()
 
         # must be imported in init. otherwise we have cross import issues
         from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
@@ -127,6 +129,8 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         for channel in self._rawJSONData["functionalChannels"].values():
             fc = self._parse_functionalChannel(channel, groups)
             self.functionalChannels.append(fc)
+        self.functionalChannelCount = Counter(x.functionalChannelType for x in self.functionalChannels)
+        print(self.functionalChannelCount)
 
     def _parse_functionalChannel(self, json_state, groups: Iterable[Group]):
         fc = None
