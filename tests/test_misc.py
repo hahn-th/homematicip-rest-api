@@ -6,7 +6,7 @@ import pytest
 
 from homematicip.EventHook import EventHook
 from homematicip.base.helpers import bytes2str, detect_encoding
-
+from homematicip.base.enums import DeviceType
 
 def event_hook_handler2(mustBe2):
     assert mustBe2 == 2
@@ -50,3 +50,10 @@ def test_bytes2str():
     assert bytes2str(testString) == testString
     with pytest.raises(TypeError):
         assert bytes2str(44) == testString
+
+def test_auto_name_enum():
+    
+    assert DeviceType.from_str("PUSH_BUTTON") == DeviceType.PUSH_BUTTON
+    assert DeviceType.from_str(None) == None
+    assert DeviceType.from_str("I_DONT_EXIST", DeviceType.DEVICE) == DeviceType.DEVICE
+    assert DeviceType.from_str("I_DONT_EXIST_EITHER") == None

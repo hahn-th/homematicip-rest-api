@@ -12,21 +12,22 @@ class AutoNameEnum(str, Enum):
         return self.value
 
     @classmethod
-    def from_str(cls, text: str):
+    def from_str(cls, text: str, default = None):
         """ this function will create the enum object based on its string value
 
         Args:
             text(str): the string value of the enum
-
+            default(AutoNameEnum): a default value if text could not be used
         Returns:
-            the enum object or None if the text is None
-
-        Raises:
-            ValueError: if the text is not a valid value of the enum
+            the enum object or None if the text is None or the default value
         """
         if text is None:
             return None
-        return cls(text)
+        try:
+            return cls(text)
+        except:
+            return default
+
 
 
 class AcousticAlarmTiming(AutoNameEnum):
