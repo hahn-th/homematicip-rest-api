@@ -14,6 +14,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
     DeviceType.BRAND_DIMMER: BrandDimmer,
+    DeviceType.BRAND_PUSH_BUTTON: BrandPushButton,
     DeviceType.BRAND_SHUTTER: FullFlushShutter,
     DeviceType.BRAND_SWITCH_MEASURING: BrandSwitchMeasuring,
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: BrandSwitchNotificationLight,

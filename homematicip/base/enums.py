@@ -183,6 +183,7 @@ class DeviceType(AutoNameEnum):
     DEVICE = auto()
     ALARM_SIREN_INDOOR = auto()
     BRAND_DIMMER = auto()
+    BRAND_PUSH_BUTTON = auto()
     BRAND_SHUTTER = auto()
     BRAND_SWITCH_MEASURING = auto()
     BRAND_SWITCH_NOTIFICATION_LIGHT = auto()

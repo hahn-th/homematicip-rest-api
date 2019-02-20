@@ -130,7 +130,6 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             fc = self._parse_functionalChannel(channel, groups)
             self.functionalChannels.append(fc)
         self.functionalChannelCount = Counter(x.functionalChannelType for x in self.functionalChannels)
-        print(self.functionalChannelCount)
 
     def _parse_functionalChannel(self, json_state, groups: Iterable[Group]):
         fc = None
@@ -615,6 +614,8 @@ class PushButton(Device):
 class PushButton6(PushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
 
+class BrandPushButton(PushButton):
+    """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """
 
 class KeyRemoteControl4(PushButton):
     """ HMIP-KRC4 (Key Ring Remote Control - 4 buttons) """

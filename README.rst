@@ -72,7 +72,7 @@ Devices:
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [ ] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
--  [ ] HMIP-BRC2       (Remote Control for brand switches – 2x channels)
+-  [X] HMIP-BRC2       (Remote Control for brand switches – 2x channels)
 -  [X] HMIP-BROLL      (Shutter Actuator - brand-mount)
 -  [X] HMIP-BSL        (Switch Actuator for brand switches – with signal lamp)
 -  [X] HMIP-BSM        (Brand Switch and Meter Actuator)

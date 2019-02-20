@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - HMIP-FBL (Blind Actuator - flush-mount)
+  - HMIP-BRC2 (Remote Control for brand switches – 2 channels)
+
+- API
+  - AutoNameEnum.from_str does now take a default parameter_ 
 
 ## [0.10.5] - 2019-01-26
 ### Added
