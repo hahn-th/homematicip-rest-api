@@ -132,6 +132,9 @@ class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
 
     pass
 
+class AsyncHeatingThermostatCompact(HeatingThermostatCompact, AsyncSabotageDevice):
+    """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+    pass
 
 class AsyncTemperatureHumiditySensorWithoutDisplay(
     TemperatureHumiditySensorWithoutDisplay, AsyncDevice

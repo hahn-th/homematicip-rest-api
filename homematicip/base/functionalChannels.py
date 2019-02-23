@@ -148,10 +148,17 @@ class HeatingThermostatChannel(FunctionalChannel):
 
     def __init__(self):
         super().__init__()
-        self.temperatureOffset = 0
+        #:float: the offset temperature for the thermostat (+/- 3.5)
+        self.temperatureOffset = 0.0
+        #:float: the current position of the valve 0.0 = closed, 1.0 max opened
         self.valvePosition = 0.0
+        #:ValveState: the current state of the valve
         self.valveState = ValveState.ERROR_POSITION
+        #:float: the current temperature which should be reached in the room
         self.setPointTemperature = 0.0
+        #:float: the current measured temperature at the valve
+        self.valveActualTemperature = 0.0
+        #:bool: must the adaption re-run?
         self.automaticValveAdaptionNeeded = False
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -160,6 +167,7 @@ class HeatingThermostatChannel(FunctionalChannel):
         self.valvePosition = js["valvePosition"]
         self.valveState = ValveState.from_str(js["valveState"])
         self.setPointTemperature = js["setPointTemperature"]
+        self.valveActualTemperature = js["valveActualTemperature"]
 
 
 class ShutterContactChannel(FunctionalChannel):

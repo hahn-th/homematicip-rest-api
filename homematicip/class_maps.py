@@ -26,6 +26,7 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: FullFlushSwitchMeasuring,
     DeviceType.HEATING_THERMOSTAT: HeatingThermostat,
+    DeviceType.HEATING_THERMOSTAT_COMPACT: HeatingThermostatCompact,
     DeviceType.KEY_REMOTE_CONTROL_4: KeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
     DeviceType.LIGHT_SENSOR: LightSensor,

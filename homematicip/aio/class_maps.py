@@ -20,6 +20,7 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring,
     DeviceType.HEATING_THERMOSTAT: AsyncHeatingThermostat,
+    DeviceType.HEATING_THERMOSTAT_COMPACT: AsyncHeatingThermostatCompact,
     DeviceType.KEY_REMOTE_CONTROL_4: AsyncKeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: AsyncKeyRemoteControlAlarm,
     DeviceType.LIGHT_SENSOR: AsyncLightSensor,

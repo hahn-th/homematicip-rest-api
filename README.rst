@@ -82,7 +82,7 @@ Devices:
 -  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-Thermostat with Display)
 -  [ ] HMIP-eTRV-2-UK  (UK Version not tested, but it should work)
 -  [ ] HMIP-eTRV-B     (Heating-Thermostat with Display not tested, but it should work)
--  [ ] HMIP-eTRV-C     (Heating-thermostat compact without display not tested, but it should work)
+-  [X] HMIP-eTRV-C     (Heating-thermostat compact without display)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
 -  [ ] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 -  [ ] HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)

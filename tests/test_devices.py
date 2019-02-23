@@ -239,10 +239,11 @@ def test_heating_thermostat(fake_home: Home):
     assert d.firmwareVersion == "2.0.2"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
+    assert d.valveActualTemperature == 20.0
 
     assert str(d) == (
         "HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)"
-        " valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)"
+        " valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0) valveActualTemperature(20.0)"
     )
     assert (
         d._rawJSONData
@@ -259,6 +260,33 @@ def test_heating_thermostat(fake_home: Home):
         result = d.set_operation_lock(True)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+def test_heating_thermostat_compact(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F71100000000ABCDEF10")
+    assert isinstance(d, HeatingThermostatCompact)
+    assert d.label == "Wohnzimmer 3"
+    assert d.modelType == "HmIP-eTRV-C"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F71100000000ABCDEF10"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.setPointTemperature == 21.0
+    assert d.temperatureOffset == 0.0
+    assert d.valvePosition == 0.0
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -47
+    assert d.rssiPeerValue == -50
+    assert d.unreach == False
+    assert d.automaticValveAdaptionNeeded == False
+    assert d.valveActualTemperature == 21.6
+
+    assert str(d) == (
+        "HmIP-eTRV-C Wohnzimmer 3 lowbat(False) unreach(False) rssiDeviceValue(-47) "
+        "rssiPeerValue(-50) configPending(False) dutyCycle(False) sabotage(None) "
+        "valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) "
+        "setPointTemperature(21.0) valveActualTemperature(21.6)"
+    )
 
 def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000002")

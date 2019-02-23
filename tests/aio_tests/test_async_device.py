@@ -205,8 +205,12 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
 
     assert str(d) == (
-        "HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) dutyCycle(False) operationLockActive(True)"
-        " valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) setPointTemperature(5.0)"
+        "HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) "
+        "rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) "
+        "dutyCycle(False) operationLockActive(True) "
+        "valvePosition(0.0) valveState(ADAPTION_DONE) "
+        "temperatureOffset(0.0) setPointTemperature(5.0) "
+        "valveActualTemperature(20.0)"
     )
 
     await d.set_operation_lock(False)

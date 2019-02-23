@@ -194,10 +194,17 @@ class HeatingThermostat(OperationLockableDevice):
 
     def __init__(self, connection):
         super().__init__(connection)
-        self.temperatureOffset = 0
+        #:float: the offset temperature for the thermostat (+/- 3.5)
+        self.temperatureOffset = 0.0
+        #:float: the current position of the valve 0.0 = closed, 1.0 max opened
         self.valvePosition = 0.0
+        #:ValveState: the current state of the valve
         self.valveState = ValveState.ERROR_POSITION
+        #:float: the current temperature which should be reached in the room
         self.setPointTemperature = 0.0
+        #:float: the current measured temperature at the valve
+        self.valveActualTemperature = 0.0
+        #:bool: must the adaption re-run?
         self.automaticValveAdaptionNeeded = False
 
     def from_json(self, js):
@@ -209,16 +216,55 @@ class HeatingThermostat(OperationLockableDevice):
             self.valvePosition = c["valvePosition"]
             self.valveState = ValveState.from_str(c["valveState"])
             self.setPointTemperature = c["setPointTemperature"]
+            self.valveActualTemperature = c["valveActualTemperature"]
 
     def __str__(self):
-        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({})".format(
+        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({}) valveActualTemperature({})".format(
             super().__str__(),
             self.valvePosition,
             self.valveState,
             self.temperatureOffset,
             self.setPointTemperature,
+            self.valveActualTemperature
         )
 
+class HeatingThermostatCompact(SabotageDevice):
+    """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float: the offset temperature for the thermostat (+/- 3.5)
+        self.temperatureOffset = 0.0
+        #:float: the current position of the valve 0.0 = closed, 1.0 max opened
+        self.valvePosition = 0.0
+        #:ValveState: the current state of the valve
+        self.valveState = ValveState.ERROR_POSITION
+        #:float: the current temperature which should be reached in the room
+        self.setPointTemperature = 0.0
+        #:float: the current measured temperature at the valve
+        self.valveActualTemperature = 0.0
+        #:bool: must the adaption re-run?
+        self.automaticValveAdaptionNeeded = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
+        c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
+        if c:
+            self.temperatureOffset = c["temperatureOffset"]
+            self.valvePosition = c["valvePosition"]
+            self.valveState = ValveState.from_str(c["valveState"])
+            self.setPointTemperature = c["setPointTemperature"]
+            self.valveActualTemperature = c["valveActualTemperature"]
+
+    def __str__(self):
+        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({}) valveActualTemperature({})".format(
+            super().__str__(),
+            self.valvePosition,
+            self.valveState,
+            self.temperatureOffset,
+            self.setPointTemperature,
+            self.valveActualTemperature
+        )
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 

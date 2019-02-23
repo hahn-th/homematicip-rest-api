@@ -8,6 +8,61 @@
         }
     },
     "devices": {
+        "3014F71100000000ABCDEF10": {
+            "automaticValveAdaptionNeeded": false,
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.6",
+            "firmwareVersionInteger": 65542,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F71100000000ABCDEF10",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -47,
+                    "rssiPeerValue": -50,
+                    "sabotage": null,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F71100000000ABCDEF10",
+                    "functionalChannelType": "HEATING_THERMOSTAT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000013"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "valveActualTemperature": 20.0, "setPointTemperature": 21.0,
+                    "temperatureOffset": 0.0,
+                    "valveActualTemperature": 21.6,
+                    "valvePosition": 0.0,
+                    "valveState": "ADAPTION_DONE"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F71100000000ABCDEF10",
+            "label": "Wohnzimmer 3",
+            "lastStatusUpdate": 1550912664486,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 325,
+            "modelType": "HmIP-eTRV-C",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F71100000000ABCDEF10",
+            "type": "HEATING_THERMOSTAT_COMPACT",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F71100000000000TEST1": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.8.8",
@@ -163,7 +218,7 @@
                     "humidity": 40,
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 21.5,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 21.5,
                     "temperatureOffset": 0.0
                 },
                 "2": {
@@ -1536,7 +1591,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1590,7 +1645,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 19.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 19.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1644,7 +1699,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1698,7 +1753,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1752,7 +1807,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1806,7 +1861,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1860,7 +1915,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -2120,7 +2175,7 @@
                     "humidity": 43,
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2174,7 +2229,7 @@
                     "humidity": 46,
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 19.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 19.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2228,7 +2283,7 @@
                     "humidity": 45,
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2282,7 +2337,7 @@
                     "humidity": 47,
                     "index": 1,
                     "label": "",
-                    "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0
                 }
             },
