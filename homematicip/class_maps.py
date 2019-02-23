@@ -76,6 +76,7 @@ TYPE_GROUP_MAP = {
     GroupType.HEATING_COOLING_DEMAND: HeatingCoolingDemandGroup,
     GroupType.HEATING_EXTERNAL_CLOCK: HeatingExternalClockGroup,
     GroupType.HEATING_DEHUMIDIFIER: HeatingDehumidifierGroup,
+    GroupType.HEATING_FAILURE_ALERT_RULE_GROUP: HeatingFailureAlertRuleGroup,
     GroupType.HEATING_COOLING_DEMAND_BOILER: HeatingCoolingDemandBoilerGroup,
     GroupType.HEATING_COOLING_DEMAND_PUMP: HeatingCoolingDemandPumpGroup,
     GroupType.SWITCHING_PROFILE: SwitchingProfileGroup,

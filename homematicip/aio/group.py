@@ -20,6 +20,7 @@ from homematicip.group import (
     HeatingExternalClockGroup,
     HeatingCoolingDemandBoilerGroup,
     HeatingCoolingDemandPumpGroup,
+    HeatingFailureAlertRuleGroup,
     SwitchingProfileGroup,
     OverHeatProtectionRule,
     SmokeAlarmDetectionRule,
@@ -134,6 +135,9 @@ class AsyncHeatingTemperatureLimiterGroup(HeatingTemperatureLimiterGroup, AsyncG
 
 
 class AsyncHeatingChangeoverGroup(HeatingChangeoverGroup, AsyncGroup):
+    pass
+
+class AsyncHeatingFailureAlertRuleGroup(HeatingFailureAlertRuleGroup,AsyncGroup):
     pass
 
 

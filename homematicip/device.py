@@ -129,7 +129,9 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         for channel in self._rawJSONData["functionalChannels"].values():
             fc = self._parse_functionalChannel(channel, groups)
             self.functionalChannels.append(fc)
-        self.functionalChannelCount = Counter(x.functionalChannelType for x in self.functionalChannels)
+        self.functionalChannelCount = Counter(
+            x.functionalChannelType for x in self.functionalChannels
+        )
 
     def _parse_functionalChannel(self, json_state, groups: Iterable[Group]):
         fc = None
@@ -225,11 +227,13 @@ class HeatingThermostat(OperationLockableDevice):
             self.valveState,
             self.temperatureOffset,
             self.setPointTemperature,
-            self.valveActualTemperature
+            self.valveActualTemperature,
         )
+
 
 class HeatingThermostatCompact(SabotageDevice):
     """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+
     def __init__(self, connection):
         super().__init__(connection)
         #:float: the offset temperature for the thermostat (+/- 3.5)
@@ -263,8 +267,9 @@ class HeatingThermostatCompact(SabotageDevice):
             self.valveState,
             self.temperatureOffset,
             self.setPointTemperature,
-            self.valveActualTemperature
+            self.valveActualTemperature,
         )
+
 
 class ShutterContact(SabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 
@@ -660,8 +665,10 @@ class PushButton(Device):
 class PushButton6(PushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
 
+
 class BrandPushButton(PushButton):
     """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """
+
 
 class KeyRemoteControl4(PushButton):
     """ HMIP-KRC4 (Key Ring Remote Control - 4 buttons) """

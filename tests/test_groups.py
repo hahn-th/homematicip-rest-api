@@ -100,7 +100,7 @@ def test_heating_group(fake_home: Home):
     assert g.windowState == "OPEN"
 
     assert str(g) == (
-        "HEATING Schlafzimmer: windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)"
+        "HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)"
         " sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)"
     )
 
@@ -170,7 +170,7 @@ def test_security_group(fake_home: Home):
     assert g.windowState == "CLOSED"
 
     assert str(g) == (
-        "SECURITY Büro: windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)"
+        "SECURITY Büro windowState(CLOSED) motionDetected(None) presenceDetected(None) sabotage(False)"
         " smokeDetectorAlarmType(IDLE_OFF) dutyCycle(False) lowBat(False) powerMainsFailure(None) moistureDetected(None) waterlevelDetected(None)"
     )
 
@@ -203,7 +203,7 @@ def test_switching_group(fake_home: Home):
         assert g.unreach == False
 
         assert str(g) == (
-            "SWITCHING Strom: on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)"
+            "SWITCHING Strom on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)"
             " dutyCycle(False) lowBat(None)"
         )
 
@@ -217,7 +217,7 @@ def test_switching_group(fake_home: Home):
         assert g.shutterLevel == 50
 
         assert str(g) == (
-            "SWITCHING NEW GROUP: on(False) dimLevel(None) processing(None) shutterLevel(50) slatsLevel(None)"
+            "SWITCHING NEW GROUP on(False) dimLevel(None) processing(None) shutterLevel(50) slatsLevel(None)"
             " dutyCycle(False) lowBat(None)"
         )
         g.turn_on()
@@ -256,7 +256,7 @@ def test_environment_group(fake_home: Home):
 
         assert (
             str(g)
-            == "ENVIRONMENT Terrasse: actualTemperature(15.4) illumination(4703.0) raining(False) windSpeed(29.1) humidity(65)"
+            == "ENVIRONMENT Terrasse actualTemperature(15.4) illumination(4703.0) raining(False) windSpeed(29.1) humidity(65)"
         )
 
 
@@ -265,7 +265,7 @@ def test_heating_dehumidifier_group(fake_home: Home):
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000055")
         assert isinstance(g, HeatingDehumidifierGroup)
         assert g.on == None
-        assert str(g) == "HEATING_DEHUMIDIFIER HEATING_DEHUMIDIFIER: on(None)"
+        assert str(g) == "HEATING_DEHUMIDIFIER HEATING_DEHUMIDIFIER on(None)"
 
 
 def test_heating_cooling_demand_pump_group(fake_home: Home):
@@ -278,7 +278,7 @@ def test_heating_cooling_demand_pump_group(fake_home: Home):
         assert g.pumpProtectionDuration == 1
         assert g.pumpProtectionSwitchingInterval == 14
         assert str(g) == (
-            "HEATING_COOLING_DEMAND_PUMP HEATING_COOLING_DEMAND_PUMP: on(None) pumpProtectionDuration(1)"
+            "HEATING_COOLING_DEMAND_PUMP HEATING_COOLING_DEMAND_PUMP on(None) pumpProtectionDuration(1)"
             " pumpProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2)"
         )
 
@@ -291,7 +291,7 @@ def test_switching_alarm_group(fake_home: Home):
         assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_RISING
         assert g.signalOptical == OpticalAlarmSignal.DOUBLE_FLASHING_REPEATING
         assert str(g) == (
-            "ALARM_SWITCHING SIREN: on(False) dimLevel(None) onTime(180.0) "
+            "ALARM_SWITCHING SIREN on(False) dimLevel(None) onTime(180.0) "
             "signalAcoustic(FREQUENCY_RISING) signalOptical(DOUBLE_FLASHING_REPEATING) "
             "smokeDetectorAlarmType(IDLE_OFF) acousticFeedbackEnabled(True)"
         )
@@ -322,6 +322,15 @@ def test_switching_alarm_group(fake_home: Home):
             OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
         )
         assert result["errorCode"] == "INVALID_GROUP"
+
+def test_heating_failure_alert_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-BBBB-0000-0000-000000000052")
+        assert str(g) == ( "HEATING_FAILURE_ALERT_RULE_GROUP HEATING_FAILURE_ALERT_RULE_GROUP"
+                           " enabled(True) heatingFailureValidationResult(NO_HEATING_FAILURE)"
+                           " checkInterval(600) validationTimeout(86400000)"
+                           " lastExecutionTimestamp(2019-02-21 19:30:00.084000)"
+)
 
 
 def test_all_groups_implemented(fake_home: Home):

@@ -26,7 +26,9 @@ class FunctionalChannel:
         self.index = js["index"]
         self.groupIndex = js["groupIndex"]
         self.label = js["label"]
-        self.functionalChannelType = FunctionalChannelType.from_str(js["functionalChannelType"],js["functionalChannelType"])
+        self.functionalChannelType = FunctionalChannelType.from_str(
+            js["functionalChannelType"], js["functionalChannelType"]
+        )
         self.groups = []
         for id in js["groups"]:
             for g in groups:

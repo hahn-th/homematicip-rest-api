@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Groups
     - Async/AlarmSwitchingGroup
       - added test/set_signal_acoustic methods
+    - HeatingGroup
+      - added heatingFailureSupported, valveSilentModeEnabled, valveSilentModeSupported properties
+    - Async/HeatingFailureAlertRuleGroup
 
 ## [0.10.4] - 2019-01-20
 ### Added

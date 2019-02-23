@@ -42,7 +42,7 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 21.0,
+                    "setPointTemperature": 21.0,
                     "temperatureOffset": 0.0,
                     "valveActualTemperature": 21.6,
                     "valvePosition": 0.0,
@@ -3270,6 +3270,9 @@
             "type": "HEATING",
             "unreach": false,
             "valvePosition": 0.0,
+            "valveSilentModeEnabled": false,
+            "valveSilentModeSupported": false,
+            "heatingFailureSupported": true,
             "windowOpenTemperature": 5.0,
             "windowState": "OPEN"
         },
@@ -3477,6 +3480,9 @@
             "type": "HEATING",
             "unreach": false,
             "valvePosition": 0.0,
+            "valveSilentModeEnabled": false,
+            "valveSilentModeSupported": false,
+            "heatingFailureSupported": true,
             "windowOpenTemperature": 5.0,
             "windowState": "CLOSED"
         },
@@ -3789,6 +3795,9 @@
             "type": "HEATING",
             "unreach": false,
             "valvePosition": 0.0,
+            "valveSilentModeEnabled": false,
+            "valveSilentModeSupported": false,
+            "heatingFailureSupported": true,
             "windowOpenTemperature": 5.0,
             "windowState": null
         },
@@ -4095,6 +4104,9 @@
             "type": "HEATING",
             "unreach": false,
             "valvePosition": 0.0,
+            "valveSilentModeEnabled": false,
+            "valveSilentModeSupported": false,
+            "heatingFailureSupported": true,
             "windowOpenTemperature": 5.0,
             "windowState": "OPEN"
         },
@@ -4352,6 +4364,9 @@
             "type": "HEATING",
             "unreach": false,
             "valvePosition": 0.0,
+            "valveSilentModeEnabled": false,
+            "valveSilentModeSupported": false,
+            "heatingFailureSupported": true,
             "windowOpenTemperature": 5.0,
             "windowState": null
         },
@@ -4383,6 +4398,24 @@
             "type": "ENVIRONMENT",
             "unreach": false,
             "windSpeed": 29.1
+        },
+        "00000000-BBBB-0000-0000-000000000052": {
+            "channels": [],
+            "checkInterval": 600,
+            "dutyCycle": null,
+            "enabled": true,
+            "heatingFailureValidationResult": "NO_HEATING_FAILURE",
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-BBBB-0000-0000-000000000052",
+            "label": "HEATING_FAILURE_ALERT_RULE_GROUP",
+            "lastExecutionTimestamp": 1550773800084,
+            "lastStatusUpdate": 0,
+            "lowBat": null,
+            "metaGroupId": null,
+            "triggered": false,
+            "type": "HEATING_FAILURE_ALERT_RULE_GROUP",
+            "unreach": null,
+            "validationTimeout": 86400000
         },
         "00000000-AAAA-0000-0000-000000000068": {
             "acousticFeedbackEnabled": true,

@@ -132,9 +132,12 @@ class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
 
     pass
 
+
 class AsyncHeatingThermostatCompact(HeatingThermostatCompact, AsyncSabotageDevice):
     """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+
     pass
+
 
 class AsyncTemperatureHumiditySensorWithoutDisplay(
     TemperatureHumiditySensorWithoutDisplay, AsyncDevice
@@ -185,8 +188,10 @@ class AsyncPushButton(PushButton, AsyncDevice):
 class AsyncPushButton6(PushButton6, AsyncPushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button)  """
 
+
 class AsyncBrandPushButton(BrandPushButton, AsyncPushButton):
     """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """
+
 
 class AsyncKeyRemoteControl4(KeyRemoteControl4, AsyncPushButton):
     """ HMIP-KRC4 (Key Ring Remote Control - 4 buttons) """

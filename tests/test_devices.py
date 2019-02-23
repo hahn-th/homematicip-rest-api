@@ -260,6 +260,7 @@ def test_heating_thermostat(fake_home: Home):
         result = d.set_operation_lock(True)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+
 def test_heating_thermostat_compact(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000ABCDEF10")
     assert isinstance(d, HeatingThermostatCompact)
@@ -287,6 +288,7 @@ def test_heating_thermostat_compact(fake_home: Home):
         "valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) "
         "setPointTemperature(21.0) valveActualTemperature(21.6)"
     )
+
 
 def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000002")

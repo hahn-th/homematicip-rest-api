@@ -12,7 +12,7 @@ class AutoNameEnum(str, Enum):
         return self.value
 
     @classmethod
-    def from_str(cls, text: str, default = None):
+    def from_str(cls, text: str, default=None):
         """ this function will create the enum object based on its string value
 
         Args:
@@ -27,7 +27,6 @@ class AutoNameEnum(str, Enum):
             return cls(text)
         except:
             return default
-
 
 
 class AcousticAlarmTiming(AutoNameEnum):
@@ -236,11 +235,12 @@ class GroupType(AutoNameEnum):
     SMOKE_ALARM_DETECTION_RULE = auto()
     OVER_HEAT_PROTECTION_RULE = auto()
     SWITCHING_PROFILE = auto()
+    HEATING_COOLING_DEMAND = auto()
     HEATING_COOLING_DEMAND_PUMP = auto()
     HEATING_COOLING_DEMAND_BOILER = auto()
     HEATING_DEHUMIDIFIER = auto()
     HEATING_EXTERNAL_CLOCK = auto()
-    HEATING_COOLING_DEMAND = auto()
+    HEATING_FAILURE_ALERT_RULE_GROUP = auto()
     HEATING = auto()
     SECURITY_ZONE = auto()
     INBOX = auto()
@@ -403,3 +403,9 @@ class MultiModeInputMode(AutoNameEnum):
 class BinaryBehaviorType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
     NORMALLY_OPEN = auto()
+
+
+class HeatingFailureValidationType(AutoNameEnum):
+    NO_HEATING_FAILURE = auto()
+    HEATING_FAILURE_WARNING = auto()
+    HEATING_FAILURE_ALARM = auto()

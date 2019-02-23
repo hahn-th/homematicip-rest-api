@@ -70,6 +70,7 @@ TYPE_GROUP_MAP = {
     GroupType.HEATING_DEHUMIDIFIER: AsyncHeatingDehumidifierGroup,
     GroupType.HEATING_COOLING_DEMAND_BOILER: AsyncHeatingCoolingDemandBoilerGroup,
     GroupType.HEATING_COOLING_DEMAND_PUMP: AsyncHeatingCoolingDemandPumpGroup,
+    GroupType.HEATING_FAILURE_ALERT_RULE_GROUP: AsyncHeatingFailureAlertRuleGroup,
     GroupType.SWITCHING_PROFILE: AsyncSwitchingProfileGroup,
     GroupType.OVER_HEAT_PROTECTION_RULE: AsyncOverHeatProtectionRule,
     GroupType.SMOKE_ALARM_DETECTION_RULE: AsyncSmokeAlarmDetectionRule,

@@ -74,7 +74,7 @@ async def test_heating_group(no_ssl_fake_async_home: AsyncHome):
     assert g.windowState == "OPEN"
 
     assert str(g) == (
-        "HEATING Schlafzimmer: windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)"
+        "HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)"
         " sabotage(5.0) cooling(False) partyMode(False) controlMode(AUTOMATIC) actualTemperature(24.7) valvePosition(0.0)"
     )
 
@@ -146,7 +146,7 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     assert g.unreach == False
 
     assert str(g) == (
-        "SWITCHING Strom: on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)"
+        "SWITCHING Strom on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)"
         " dutyCycle(False) lowBat(None)"
     )
 
@@ -162,7 +162,7 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     assert g.shutterLevel == 50
 
     assert str(g) == (
-        "SWITCHING NEW GROUP: on(False) dimLevel(None) processing(None) shutterLevel(50) slatsLevel(None)"
+        "SWITCHING NEW GROUP on(False) dimLevel(None) processing(None) shutterLevel(50) slatsLevel(None)"
         " dutyCycle(False) lowBat(None)"
     )
     await g.turn_on()
