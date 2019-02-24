@@ -682,6 +682,64 @@ class HeatingFailureAlertRuleGroup(Group):
         )
 
 
+class HumidityWarningRuleGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:bool: is this rule active
+        self.enabled = False
+        #:HumidityValidationType: the current humidity result
+        self.humidityValidationResult = (
+            HumidityValidationType.GREATER_LOWER_LESSER_UPPER_THRESHOLD
+        )
+        #:int:the lower humidity threshold
+        self.humidityLowerThreshold = 0
+        #:int:the upper humidity threshold
+        self.humidityUpperThreshold = 0
+        #:bool:is it currently triggered?
+        self.triggered = False
+        #:bool:should the windows be opened?
+        self.ventilationRecommended = False
+        #:datetime: last time of execution
+        self.lastExecutionTimestamp = None
+        #:datetime: last time the humidity got updated
+        self.lastStatusUpdate = None
+        #:Device: the climate sensor which get used as an outside reference. None if OpenWeatherMap will be used
+        self.outdoorClimateSensor = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.enabled = js["enabled"]
+        self.humidityValidationResult = HumidityValidationType.from_str(
+            js["humidityValidationResult"]
+        )
+        self.humidityLowerThreshold = js["humidityLowerThreshold"]
+        self.humidityUpperThreshold = js["humidityUpperThreshold"]
+        self.triggered = js["triggered"]
+        self.ventilationRecommended = js["ventilationRecommended"]
+        self.lastExecutionTimestamp = self.fromtimestamp(js["lastExecutionTimestamp"])
+        self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
+
+        #TODO
+        #self.outdoorClimateSensor
+
+    def __str__(self):
+        return (
+            "{} enabled({}) humidityValidationResult({}) "
+            "humidityLowerThreshold({}) humidityUpperThreshold({}) "
+            "triggered({}) lastExecutionTimestamp({}) "
+            "lastStatusUpdate({}) ventilationRecommended({})"
+        ).format(
+            super().__str__(),
+            self.enabled,
+            self.humidityValidationResult,
+            self.humidityLowerThreshold,
+            self.humidityUpperThreshold,
+            self.triggered,
+            self.lastExecutionTimestamp,
+            self.lastStatusUpdate,
+            self.ventilationRecommended
+        )
+
 # at the moment it doesn't look like this class has any special
 # properties/functions
 # keep it as a placeholder in the meantime

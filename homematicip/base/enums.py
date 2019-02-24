@@ -409,3 +409,9 @@ class HeatingFailureValidationType(AutoNameEnum):
     NO_HEATING_FAILURE = auto()
     HEATING_FAILURE_WARNING = auto()
     HEATING_FAILURE_ALARM = auto()
+
+
+class HumidityValidationType(AutoNameEnum):
+    LESSER_LOWER_THRESHOLD = auto()
+    GREATER_UPPER_THRESHOLD = auto()
+    GREATER_LOWER_LESSER_UPPER_THRESHOLD = auto()
