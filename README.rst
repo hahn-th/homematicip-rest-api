@@ -5,6 +5,8 @@ A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
 done via reverse engineering. Use at your own risk.
 
+Any help from the community thru e.g. Pull Request would be highly appreciated.
+
 |discord| |CircleCI| |Docs| |PyPi| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal|
 
 Documentation
@@ -19,7 +21,7 @@ Just run **pip3 install -U homematicip** to get the package
 Usage
 =====
 
-first run hmip_generate_auth_token.py (from the command line) to get an
+First run hmip_generate_auth_token.py (from the command line) to get an
 auth token for your access point. it will generate a “config.ini” in
 your current directory. The scripts will look for a config.ini in 3
 different locations depending on your OS. Copy the file to one of these
@@ -54,9 +56,8 @@ Examples
 
 Implemented Stuff
 =================
-Any help from the community thru e.g. Pull Request would be highly appreciated.
 
--  [X] generate authentication token
+-  [X] Generate authentication token
 -  [X] Read current state of the Environment
 -  [X] Weather
 -  [X] Location
@@ -65,7 +66,7 @@ Any help from the community thru e.g. Pull Request would be highly appreciated.
 -  [X] Client
 -  [X] Groups
 
-Devices:
+Homematic IP Devices:
 --------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
@@ -139,7 +140,20 @@ Devices:
 -  [ ] HMIP-WHS2       (Switch Actuator for heating systems – 2x channels)
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
+-  [ ] HMIP-WT         (Wall Mounted Thermostat without Display)
 -  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
+
+Homematic IP Wired Devices:
+--------
+
+-  [ ] HMIPW-DRAP      (Homematic IP Wired Access Point)
+-  [ ] HMIPW-DRBL4     (Homematic IP Wired Blinds Actuator – 4x channels)
+-  [ ] HMIPW-DRD3      (Homematic IP Wired Dimming Actuator – 3x channels)
+-  [ ] HMIPW-DRS4      (Homematic IP Wired Swich Actuator – 4x channels)
+-  [ ] HMIPW-DRI16     (Homematic IP Wired Inbound module – 16x channels)
+-  [ ] HMIPW-DRI32     (Homematic IP Wired Inbound module – 32x channels)
+-  [ ] HMIPW-DRS8      (Homematic IP Wired Switch Actuator – 8x channels)
+-  [ ] HMIPW-FIO6      (Homematic IP Wired IO Module flush-mount – 6x channels) 
 
 Events
 ------
