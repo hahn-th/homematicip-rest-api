@@ -242,6 +242,7 @@ class GroupType(AutoNameEnum):
     HEATING_EXTERNAL_CLOCK = auto()
     HEATING_FAILURE_ALERT_RULE_GROUP = auto()
     HEATING = auto()
+    HUMIDITY_WARNING_RULE_GROUP = auto()
     SECURITY_ZONE = auto()
     INBOX = auto()
     HEATING_CHANGEOVER = auto()

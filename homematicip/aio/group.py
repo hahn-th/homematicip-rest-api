@@ -21,6 +21,7 @@ from homematicip.group import (
     HeatingCoolingDemandBoilerGroup,
     HeatingCoolingDemandPumpGroup,
     HeatingFailureAlertRuleGroup,
+    HumidityWarningRuleGroup,
     SwitchingProfileGroup,
     OverHeatProtectionRule,
     SmokeAlarmDetectionRule,
@@ -191,6 +192,8 @@ class AsyncHeatingCoolingDemandBoilerGroup(HeatingCoolingDemandBoilerGroup, Asyn
 class AsyncHeatingCoolingDemandPumpGroup(HeatingCoolingDemandPumpGroup, AsyncGroup):
     pass
 
+class AsyncHumidityWarningRuleGroup(HumidityWarningRuleGroup,AsyncGroup):
+    pass
 
 class AsyncSwitchingProfileGroup(SwitchingProfileGroup, AsyncGroup):
     async def set_group_channels(self):

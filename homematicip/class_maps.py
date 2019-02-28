@@ -79,6 +79,7 @@ TYPE_GROUP_MAP = {
     GroupType.HEATING_FAILURE_ALERT_RULE_GROUP: HeatingFailureAlertRuleGroup,
     GroupType.HEATING_COOLING_DEMAND_BOILER: HeatingCoolingDemandBoilerGroup,
     GroupType.HEATING_COOLING_DEMAND_PUMP: HeatingCoolingDemandPumpGroup,
+    GroupType.HUMIDITY_WARNING_RULE_GROUP: HumidityWarningRuleGroup,
     GroupType.SWITCHING_PROFILE: SwitchingProfileGroup,
     GroupType.OVER_HEAT_PROTECTION_RULE: OverHeatProtectionRule,
     GroupType.SMOKE_ALARM_DETECTION_RULE: SmokeAlarmDetectionRule,

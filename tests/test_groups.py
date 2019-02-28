@@ -330,8 +330,17 @@ def test_heating_failure_alert_group(fake_home: Home):
                            " enabled(True) heatingFailureValidationResult(NO_HEATING_FAILURE)"
                            " checkInterval(600) validationTimeout(86400000)"
                            " lastExecutionTimestamp(2019-02-21 19:30:00.084000)"
-)
+        )
 
+def test_humidity_warning_rule_group(fake_home:Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-AAAA-000000000029")
+        assert str(g) == ( "HUMIDITY_WARNING_RULE_GROUP Büro enabled(True) "
+                           "humidityValidationResult(LESSER_LOWER_THRESHOLD) "
+                           "humidityLowerThreshold(40) humidityUpperThreshold(60) "
+                           "triggered(False) lastExecutionTimestamp(2019-02-28 22:05:05.665000) "
+                           "lastStatusUpdate(2019-02-28 22:08:24.260000) ventilationRecommended(True)"
+        )
 
 def test_all_groups_implemented(fake_home: Home):
     for g in fake_home.groups:

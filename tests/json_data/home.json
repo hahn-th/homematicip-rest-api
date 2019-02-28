@@ -4435,6 +4435,31 @@
             "smokeDetectorAlarmType": null,
             "type": "SECURITY_BACKUP_ALARM_SWITCHING",
             "unreach": null
+        },
+        "00000000-0000-0000-AAAA-000000000029": {
+            "channels": [
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000023"
+                }
+            ],
+            "dutyCycle": false,
+            "enabled": true,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "humidityLowerThreshold": 40,
+            "humidityUpperThreshold": 60,
+            "humidityValidationResult": "LESSER_LOWER_THRESHOLD",
+            "id": "00000000-0000-0000-AAAA-000000000029",
+            "label": "B\u00fcro",
+            "lastExecutionTimestamp": 1551387905665,
+            "lastStatusUpdate": 1551388104260,
+            "lowBat": false,
+            "metaGroupId": "00000000-0000-0000-0000-000000000008",
+            "outdoorClimateSensor": null,
+            "triggered": false,
+            "type": "HUMIDITY_WARNING_RULE_GROUP",
+            "unreach": false,
+            "ventilationRecommended": true
         }
     },
     "home": {
