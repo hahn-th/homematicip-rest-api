@@ -719,8 +719,8 @@ class HumidityWarningRuleGroup(Group):
         self.lastExecutionTimestamp = self.fromtimestamp(js["lastExecutionTimestamp"])
         self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
 
-        #TODO
-        #self.outdoorClimateSensor
+        # TODO
+        # self.outdoorClimateSensor
 
     def __str__(self):
         return (
@@ -737,8 +737,9 @@ class HumidityWarningRuleGroup(Group):
             self.triggered,
             self.lastExecutionTimestamp,
             self.lastStatusUpdate,
-            self.ventilationRecommended
+            self.ventilationRecommended,
         )
+
 
 # at the moment it doesn't look like this class has any special
 # properties/functions
