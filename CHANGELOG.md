@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - HMIP-FBL (Blind Actuator - flush-mount)
-  - HMIP-BRC2 (Remote Control for brand switches – 2 channels)
+  - HMIP-BRC2 (Remote Control for brand switches â€“ 2 channels)
   - HmIP-eTRV-C (Heating-thermostat compact without display)
 
 - API
@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - started with documentation
 - Devices
-  - HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
+  - HMIP-BSL (Switch Actuator for brand switches â€“ with signal lamp)
   - HMIP-KRC4 (Key Ring Remote Control - 4 buttons)
   - HMIP-SLO (Light Sensor outdoor)
 - API
@@ -178,7 +178,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -- Support for the new HMIP Cloud Update
 
 [Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.6...HEAD
-[0.10.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.5...0.10.6
+[0.10.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.5...0.10.6
 [0.10.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.4...0.10.5
 [0.10.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.2...0.10.3
