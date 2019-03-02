@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   - AutoNameEnum.from_str does now take a default parameter_ 
   - HeatingThermostat.**valveActualTemperature** = we are now able to read the measured temperature on the VALVE!
+  - Async/HeatingFailureAlertRuleGroup
 
 ## [0.10.5] - 2019-01-26
 ### Added

@@ -719,8 +719,13 @@ class HumidityWarningRuleGroup(Group):
         self.lastExecutionTimestamp = self.fromtimestamp(js["lastExecutionTimestamp"])
         self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
 
-        # TODO
-        # self.outdoorClimateSensor
+        jsOutdoorClimateSensor = js["outdoorClimateSensor"]
+        if jsOutdoorClimateSensor != None:
+            did = jsOutdoorClimateSensor["deviceId"]
+            for d in devices:
+                if d.id == did:
+                    self.outdoorClimateSensor = d
+                    break
 
     def __str__(self):
         return (

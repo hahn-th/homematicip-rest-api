@@ -4460,6 +4460,38 @@
             "type": "HUMIDITY_WARNING_RULE_GROUP",
             "unreach": false,
             "ventilationRecommended": true
+        },
+        "00000000-0000-0000-0000-000000000049": {
+            "channels": [
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000038"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000023"
+                }
+            ],
+            "dutyCycle": false,
+            "enabled": true,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "humidityLowerThreshold": 30,
+            "humidityUpperThreshold": 60,
+            "humidityValidationResult": null,
+            "id": "00000000-0000-0000-0000-000000000049",
+            "label": "Schlafzimmer",
+            "lastExecutionTimestamp": 0,
+            "lastStatusUpdate": 1551003370150,
+            "lowBat": false,
+            "metaGroupId": "00000000-0000-0000-0000-000000000008",
+            "outdoorClimateSensor": {
+                "channelIndex": 1,
+                "deviceId": "3014F7110000000000000038"
+            },
+            "triggered": false,
+            "type": "HUMIDITY_WARNING_RULE_GROUP",
+            "unreach": false,
+            "ventilationRecommended": false
         }
     },
     "home": {
