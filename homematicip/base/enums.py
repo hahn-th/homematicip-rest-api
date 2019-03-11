@@ -138,6 +138,7 @@ class WeatherCondition(AutoNameEnum):
     HEAVILY_CLOUDY_WITH_THUNDER = auto()
     HEAVILY_CLOUDY_WITH_RAIN_AND_THUNDER = auto()
     FOGGY = auto()
+    STRONG_WIND = auto()
     UNKNOWN = auto()
 
 
