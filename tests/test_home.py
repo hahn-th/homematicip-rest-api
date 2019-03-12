@@ -83,7 +83,7 @@ def test_home_weather(fake_home: Home):
     )
     assert (
         str(fake_home.weather)
-        == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) windSpeed(8.568) windDirection(294)"
+        == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) vaporAmount(5.465858858389302) windSpeed(8.568) windDirection(294)"
     )
 
 

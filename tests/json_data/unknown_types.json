@@ -121,6 +121,7 @@
             "maxTemperature": 16.6,
             "minTemperature": 16.6,
             "temperature": 16.6,
+            "vaporAmount": 5.465858858389302,
             "weatherCondition": "LIGHT_CLOUDY",
             "weatherDayTime": "NIGHT",
             "windDirection": 294,
