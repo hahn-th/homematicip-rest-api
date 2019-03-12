@@ -175,6 +175,7 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000022"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.humidity == 43
+    assert d.vaporAmount == 6.177718198711658
     assert d.setPointTemperature == 5.0
     assert d.display == ClimateControlDisplay.ACTUAL_HUMIDITY
     assert d.temperatureOffset == 0.0
@@ -191,8 +192,9 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
     assert str(d) == (
-        "HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63) configPending(False) dutyCycle(False) operationLockActive(False)"
-        " actualTemperature(24.7) humidity(43) setPointTemperature(5.0)"
+        "HmIP-WTH-2 Wandthermostat lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(-63)"
+        " configPending(False) dutyCycle(False) operationLockActive(False)"
+        " actualTemperature(24.7) humidity(43) vaporAmount(6.177718198711658) setPointTemperature(5.0)"
     )
     assert (
         d._rawJSONData
@@ -304,6 +306,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000002"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert d.humidity == 70
+    assert d.vaporAmount == 6.177718198711658
     assert d.actualTemperature == 15.1
     assert d.lowBat == False
     assert d.routerModuleEnabled == False
@@ -314,8 +317,9 @@ def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     assert d.configPending == False
     assert d.dutyCycle == False
     assert str(d) == (
-        "HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)"
-        " dutyCycle(False) actualTemperature(15.1) humidity(70)"
+        "HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False)"
+        " rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)"
+        " dutyCycle(False) actualTemperature(15.1) humidity(70) vaporAmount(6.177718198711658)"
     )
     assert (
         d._rawJSONData
@@ -341,6 +345,7 @@ def test_weather_sensor_pro(fake_home: Home):
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
     assert d.humidity == 65
+    assert d.vaporAmount == 6.177718198711658
     assert d.illumination == 4153.0
     assert d.illuminationThresholdSunshine == 10.0
     assert d.raining == False
@@ -367,10 +372,14 @@ def test_weather_sensor_pro(fake_home: Home):
     assert d.configPending == False
     assert d.dutyCycle == False
     assert str(d) == (
-        "HmIP-SWO-PR Wettersensor - pro lowbat(False) unreach(False) rssiDeviceValue(-68) rssiPeerValue(None) configPending(False) dutyCycle(False)"
-        " actualTemperature(15.4) humidity(65)"
-        " illumination(4153.0) illuminationThresholdSunshine(10.0) raining(False) storm(False) sunshine(True) todayRainCounter(6.5) todaySunshineDuration(100)"
-        " totalRainCounter(6.5) totalSunshineDuration(100) weathervaneAlignmentNeeded(False) windDirection(295.0) windDirectionVariation(56.25) windSpeed(2.6)"
+        "HmIP-SWO-PR Wettersensor - pro lowbat(False) unreach(False) rssiDeviceValue(-68)"
+        " rssiPeerValue(None) configPending(False) dutyCycle(False)"
+        " actualTemperature(15.4) humidity(65) vaporAmount(6.177718198711658)"
+        " illumination(4153.0) illuminationThresholdSunshine(10.0)"
+        " raining(False) storm(False) sunshine(True) todayRainCounter(6.5) todaySunshineDuration(100)"
+        " totalRainCounter(6.5) totalSunshineDuration(100)"
+        " weathervaneAlignmentNeeded(False) windDirection(295.0)"
+        " windDirectionVariation(56.25) windSpeed(2.6)"
         " windValueType(AVERAGE_VALUE) yesterdayRainCounter(0.0) yesterdaySunshineDuration(0)"
     )
     assert (
@@ -398,6 +407,7 @@ def test_weather_sensor(fake_home: Home):
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
     assert d.humidity == 42
+    assert d.vaporAmount == 6.177718198711658
     assert d.illumination == 4890.0
     assert d.illuminationThresholdSunshine == 3500.0
     assert d.storm == False
@@ -416,9 +426,12 @@ def test_weather_sensor(fake_home: Home):
     assert d.serializedGlobalTradeItemNumber == "3014F711AAAA000000000003"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
     assert str(d) == (
-        "HmIP-SWO-B Wettersensor lowbat(False) unreach(False) rssiDeviceValue(-77) rssiPeerValue(None) configPending(False) dutyCycle(False)"
-        " actualTemperature(15.2) humidity(42) illumination(4890.0) illuminationThresholdSunshine(3500.0) storm(False) sunshine(True)"
-        " todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6) windValueType(MAX_VALUE) yesterdaySunshineDuration(3)"
+        "HmIP-SWO-B Wettersensor lowbat(False) unreach(False) rssiDeviceValue(-77)"
+        " rssiPeerValue(None) configPending(False) dutyCycle(False)"
+        " actualTemperature(15.2) humidity(42) vaporAmount(6.177718198711658)"
+        " illumination(4890.0) illuminationThresholdSunshine(3500.0) storm(False) sunshine(True)"
+        " todaySunshineDuration(51) totalSunshineDuration(54) windSpeed(6.6)"
+        " windValueType(MAX_VALUE) yesterdaySunshineDuration(3)"
     )
     assert (
         d._rawJSONData
@@ -430,6 +443,7 @@ def test_weather_sensor_plus(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000038")
     assert isinstance(d, WeatherSensorPlus)
     assert d.humidity == 97
+    assert d.vaporAmount == 6.177718198711658
     assert d.illumination == 26.4
     assert d.illuminationThresholdSunshine == 3500.0
     assert d.raining == False
@@ -453,8 +467,11 @@ def test_weather_sensor_plus(fake_home: Home):
     assert d.configPending == False
     assert d.dutyCycle == False
     assert str(d) == (
-        "HmIP-SWO-PL Weather Sensor \u2013 plus lowbat(False) unreach(False) rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) actualTemperature(4.3)"
-        " humidity(97) illumination(26.4) illuminationThresholdSunshine(3500.0) raining(False) storm(False) sunshine(False) todayRainCounter(3.8999999999999773) todaySunshineDuration(0)"
+        "HmIP-SWO-PL Weather Sensor \u2013 plus lowbat(False) unreach(False) rssiDeviceValue(-55)"
+        " rssiPeerValue(None) configPending(False) dutyCycle(False) actualTemperature(4.3)"
+        " humidity(97) vaporAmount(6.177718198711658) illumination(26.4)"
+        " illuminationThresholdSunshine(3500.0) raining(False) storm(False)"
+        " sunshine(False) todayRainCounter(3.8999999999999773) todaySunshineDuration(0)"
         " totalRainCounter(544.0999999999999) totalSunshineDuration(132057) windSpeed(15.0)"
         " windValueType(CURRENT_VALUE) yesterdayRainCounter(25.600000000000023) yesterdaySunshineDuration(0)"
     )

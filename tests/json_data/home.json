@@ -218,7 +218,9 @@
                     "humidity": 40,
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 21.5,
+                    "vaporAmount": 6.177718198711658,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 21.5,
                     "temperatureOffset": 0.0
                 },
                 "2": {
@@ -603,6 +605,7 @@
                     "groups": [
                     ],
                     "humidity": 97,
+                    "vaporAmount": 6.177718198711658,
                     "illumination": 26.4,
                     "illuminationThresholdSunshine": 3500.0,
                     "index": 1,
@@ -2173,9 +2176,11 @@
                         "00000000-0000-0000-0000-000000000012"
                     ],
                     "humidity": 43,
+                    "vaporAmount": 6.177718198711658,
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2227,9 +2232,11 @@
                         "00000000-0000-0000-0000-000000000010"
                     ],
                     "humidity": 46,
+                    "vaporAmount": 6.177718198711658,
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 19.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 19.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2281,9 +2288,11 @@
                         "00000000-0000-0000-0000-000000000007"
                     ],
                     "humidity": 45,
+                    "vaporAmount": 6.177718198711658,
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2335,9 +2344,11 @@
                         "00000000-0000-0000-0000-000000000021"
                     ],
                     "humidity": 47,
+                    "vaporAmount": 6.177718198711658,
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0
                 }
             },
@@ -2438,6 +2449,7 @@
                         "00000000-AAAA-0000-0000-000000000001"
                     ],
                     "humidity": 65,
+                    "vaporAmount": 6.177718198711658,
                     "illumination": 4153.0,
                     "illuminationThresholdSunshine": 10.0,
                     "index": 1,
@@ -2504,6 +2516,7 @@
                         "00000000-AAAA-0000-0000-000000000001"
                     ],
                     "humidity": 70,
+                    "vaporAmount": 6.177718198711658,
                     "index": 1,
                     "label": ""
                 }
@@ -2550,6 +2563,7 @@
                     "groupIndex": 1,
                     "groups": [ "00000000-AAAA-0000-0000-000000000001" ],
                     "humidity": 42,
+                    "vaporAmount": 6.177718198711658,
                     "illumination": 4890.0,
                     "illuminationThresholdSunshine": 3500.0,
                     "index": 1,
@@ -4624,6 +4638,7 @@
             "maxTemperature": 16.6,
             "minTemperature": 16.6,
             "temperature": 16.6,
+            "vaporAmount": 5.465858858389302,
             "weatherCondition": "LIGHT_CLOUDY",
             "weatherDayTime": "NIGHT",
             "windDirection": 294,

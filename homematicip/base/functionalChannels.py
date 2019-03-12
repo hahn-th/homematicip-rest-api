@@ -197,11 +197,13 @@ class ClimateSensorChannel(FunctionalChannel):
         super().__init__()
         self.actualTemperature = 0
         self.humidity = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.actualTemperature = js["actualTemperature"]
         self.humidity = js["humidity"]
+        self.vaporAmount = js["vaporAmount"]
 
 
 class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
@@ -427,6 +429,7 @@ class WeatherSensorChannel(FunctionalChannel):
         super().__init__()
         self.actualTemperature = 0
         self.humidity = 0
+        self.vaporAmount = 0.0
         self.illumination = 0
         self.illuminationThresholdSunshine = 0
         self.storm = False
@@ -450,6 +453,7 @@ class WeatherSensorChannel(FunctionalChannel):
         self.windSpeed = js["windSpeed"]
         self.windValueType = WindValueType.from_str(js["windValueType"])
         self.yesterdaySunshineDuration = js["yesterdaySunshineDuration"]
+        self.vaporAmount = js["vaporAmount"]
 
 
 class WeatherSensorPlusChannel(WeatherSensorChannel):

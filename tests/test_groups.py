@@ -350,7 +350,7 @@ def test_humidity_warning_rule_group(fake_home: Home):
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000049")
         d = fake_home.search_device_by_id("3014F7110000000000000038")
         assert g.outdoorClimateSensor == d
-        
+
 
 def test_all_groups_implemented(fake_home: Home):
     for g in fake_home.groups:

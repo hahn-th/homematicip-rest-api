@@ -317,6 +317,7 @@ class TemperatureHumiditySensorOutdoor(Device):
         super().__init__(connection)
         self.actualTemperature = 0
         self.humidity = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -324,10 +325,11 @@ class TemperatureHumiditySensorOutdoor(Device):
         if c:
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
+            self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
-        return "{} actualTemperature({}) humidity({})".format(
-            super().__str__(), self.actualTemperature, self.humidity
+        return "{} actualTemperature({}) humidity({}) vaporAmount({})".format(
+            super().__str__(), self.actualTemperature, self.humidity, self.vaporAmount
         )
 
 
@@ -339,6 +341,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
         self.temperatureOffset = 0
         self.actualTemperature = 0
         self.humidity = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -349,10 +352,11 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
             self.temperatureOffset = c["temperatureOffset"]
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
+            self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
-        return "{} actualTemperature({}) humidity({})".format(
-            super().__str__(), self.actualTemperature, self.humidity
+        return "{} actualTemperature({}) humidity({}) vaporAmount({})".format(
+            super().__str__(), self.actualTemperature, self.humidity, self.vaporAmount
         )
 
 
@@ -366,6 +370,7 @@ class TemperatureHumiditySensorDisplay(Device):
         self.actualTemperature = 0
         self.humidity = 0
         self.setPointTemperature = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -376,6 +381,7 @@ class TemperatureHumiditySensorDisplay(Device):
             self.actualTemperature = c["actualTemperature"]
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
+            self.vaporAmount = c["vaporAmount"]
 
     def set_display(
         self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
@@ -386,10 +392,11 @@ class TemperatureHumiditySensorDisplay(Device):
         )
 
     def __str__(self):
-        return "{} actualTemperature({}) humidity({}) setPointTemperature({})".format(
+        return "{} actualTemperature({}) humidity({}) vaporAmount({}) setPointTemperature({})".format(
             super().__str__(),
             self.actualTemperature,
             self.humidity,
+            self.vaporAmount,
             self.setPointTemperature,
         )
 
@@ -1078,6 +1085,7 @@ class WeatherSensor(Device):
         self.windSpeed = 0
         self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdaySunshineDuration = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -1095,10 +1103,11 @@ class WeatherSensor(Device):
             self.windSpeed = c["windSpeed"]
             self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+            self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
         return (
-            "{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) storm({}) sunshine({}) "
+            "{} actualTemperature({}) humidity({}) vaporAmount({}) illumination({}) illuminationThresholdSunshine({}) storm({}) sunshine({}) "
             "todaySunshineDuration({}) totalSunshineDuration({}) "
             "windSpeed({}) windValueType({}) "
             "yesterdaySunshineDuration({})"
@@ -1106,6 +1115,7 @@ class WeatherSensor(Device):
             super().__str__(),
             self.actualTemperature,
             self.humidity,
+            self.vaporAmount,
             self.illumination,
             self.illuminationThresholdSunshine,
             self.storm,
@@ -1138,6 +1148,7 @@ class WeatherSensorPlus(Device):
         self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdayRainCounter = 0
         self.yesterdaySunshineDuration = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -1159,16 +1170,18 @@ class WeatherSensorPlus(Device):
             self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdayRainCounter = c["yesterdayRainCounter"]
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+            self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
         return (
-            "{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
+            "{} actualTemperature({}) humidity({}) vaporAmount({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
             "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
             "windSpeed({}) windValueType({}) yesterdayRainCounter({}) yesterdaySunshineDuration({})"
         ).format(
             super().__str__(),
             self.actualTemperature,
             self.humidity,
+            self.vaporAmount,
             self.illumination,
             self.illuminationThresholdSunshine,
             self.raining,
@@ -1208,6 +1221,7 @@ class WeatherSensorPro(Device):
         self.windValueType = WindValueType.AVERAGE_VALUE
         self.yesterdayRainCounter = 0
         self.yesterdaySunshineDuration = 0
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -1232,10 +1246,11 @@ class WeatherSensorPro(Device):
             self.windValueType = WindValueType.from_str(c["windValueType"])
             self.yesterdayRainCounter = c["yesterdayRainCounter"]
             self.yesterdaySunshineDuration = c["yesterdaySunshineDuration"]
+            self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
         return (
-            "{} actualTemperature({}) humidity({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
+            "{} actualTemperature({}) humidity({}) vaporAmount({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
             "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
             "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({}) "
             "yesterdayRainCounter({}) yesterdaySunshineDuration({})"
@@ -1243,6 +1258,7 @@ class WeatherSensorPro(Device):
             super().__str__(),
             self.actualTemperature,
             self.humidity,
+            self.vaporAmount,
             self.illumination,
             self.illuminationThresholdSunshine,
             self.raining,

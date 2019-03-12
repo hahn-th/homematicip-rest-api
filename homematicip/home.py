@@ -37,6 +37,8 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         self.windSpeed = 0.0
         #:int: the current wind direction in 360° where 0° is north
         self.windDirection = 0
+        #:float: the current vapor
+        self.vaporAmount = 0.0
 
     def from_json(self, js):
         super().from_json(js)
@@ -48,15 +50,17 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         self.humidity = js["humidity"]
         self.windSpeed = js["windSpeed"]
         self.windDirection = js["windDirection"]
+        self.vaporAmount = js["vaporAmount"]
 
     def __str__(self):
-        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) windSpeed({}) windDirection({})".format(
+        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) vaporAmount({}) windSpeed({}) windDirection({})".format(
             self.temperature,
             self.weatherCondition,
             self.weatherDayTime,
             self.minTemperature,
             self.maxTemperature,
             self.humidity,
+            self.vaporAmount,
             self.windSpeed,
             self.windDirection,
         )
