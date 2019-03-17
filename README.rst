@@ -97,7 +97,7 @@ Homematic IP Devices:
 -  [X] HMIP-FSM16      (Switch Actuator and Meter 16A – flush-mount)
 -  [X] HMIP-KRCA       (Key Ring Remote Control & Alarm)
 -  [X] HMIP-KRC4       (Key Ring Remote Control - 4x buttons)
--  [ ] HMIP-MIOB       (Multi IO Box for floor heating & cooling)
+-  [X] HMIP-MIOB       (Multi IO Box for floor heating & cooling)
 -  [X] HMIP-MOD-OC8    (Open Collector Module Receiver - 8x)
 -  [ ] HMIP-MOD-RC8    (Open Collector Module Sender - 8x)
 -  [ ] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)

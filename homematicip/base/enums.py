@@ -202,6 +202,7 @@ class DeviceType(AutoNameEnum):
     MOTION_DETECTOR_INDOOR = auto()
     MOTION_DETECTOR_OUTDOOR = auto()
     MOTION_DETECTOR_PUSH_BUTTON = auto()
+    MULTI_IO_BOX = auto()
     OPEN_COLLECTOR_8_MODULE = auto()
     PASSAGE_DETECTOR = auto()
     PLUGABLE_SWITCH = auto()
@@ -342,6 +343,7 @@ class WindValueType(AutoNameEnum):
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
+    ANALOG_OUTPUT_CHANNEL = auto()
     BLIND_CHANNEL = auto()
     CLIMATE_SENSOR_CHANNEL = auto()
     DEHUMIDIFIER_DEMAND_CHANNEL = auto()

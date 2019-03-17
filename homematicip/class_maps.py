@@ -33,6 +33,7 @@ TYPE_CLASS_MAP = {
     DeviceType.MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
     DeviceType.MOTION_DETECTOR_OUTDOOR: MotionDetectorOutdoor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
+    DeviceType.MULTI_IO_BOX: MultiIOBox,
     DeviceType.OPEN_COLLECTOR_8_MODULE: OpenCollector8Module,
     DeviceType.PASSAGE_DETECTOR: PassageDetector,
     DeviceType.PLUGABLE_SWITCH: PlugableSwitch,
@@ -117,6 +118,7 @@ TYPE_FUNCTIONALHOME_MAP = {
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL: FunctionalChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
+    FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,
     FunctionalChannelType.BLIND_CHANNEL: BlindChannel,
     FunctionalChannelType.CLIMATE_SENSOR_CHANNEL: ClimateSensorChannel,
     FunctionalChannelType.DEHUMIDIFIER_DEMAND_CHANNEL: DehumidifierDemandChannel,

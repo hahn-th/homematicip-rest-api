@@ -12,6 +12,13 @@ from datetime import datetime, timedelta, timezone
 
 from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
 
+def test_multi_io_box(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")
+    assert isinstance(d,MultiIOBox)
+    assert d.on == True
+    assert d.functionalChannels[2].on == False
+    assert d.analogOutputLevel == 12.5
+    assert d.functionalChannels[5].analogOutputLevel == 12.5
 
 def test_full_flush_contact_interface(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000029")
