@@ -174,6 +174,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocket = None
         self.__webSocketThread = None
         self.onEvent = EventHook()
+        self.onWsError = EventHook()
 
         #:List[Device]: a collection of all devices in home
         self.devices = []
@@ -663,8 +664,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
     def disable_events(self):
         self.__webSocket.close()
 
-    def _ws_on_error(self, message):
-        LOGGER.error("Websocket error: %s", bytes2str(message))
+    def _ws_on_error(self, err):
+        LOGGER.exception(err)
+        self.onWsError.fire(err)
 
     def _ws_on_message(self, message):
         # json.loads doesn't support bytes as parameter before python 3.6
