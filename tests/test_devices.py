@@ -20,6 +20,12 @@ def test_multi_io_box(fake_home: Home):
     assert d.analogOutputLevel == 12.5
     assert d.functionalChannels[5].analogOutputLevel == 12.5
 
+    assert str(d) == ("HmIP-MIOB Multi IO Box lowbat(None) unreach(False) "
+                      "rssiDeviceValue(-79) rssiPeerValue(None) configPending(False) "
+                      "dutyCycle(False) on(True) profileMode(None) "
+                      "userDesiredProfileMode(AUTOMATIC) analogOutputLevel(12.5)"
+                        )
+
 def test_full_flush_contact_interface(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000029")
     assert isinstance(d, FullFlushContactInterface)
