@@ -356,6 +356,7 @@ class FunctionalChannelType(AutoNameEnum):
     DIMMER_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
+    GENERIC_INPUT_CHANNEL = auto()
     HEAT_DEMAND_CHANNEL = auto()
     HEATING_THERMOSTAT_CHANNEL = auto()
     INTERNAL_SWITCH_CHANNEL = auto()

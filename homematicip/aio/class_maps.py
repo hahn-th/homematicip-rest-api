@@ -27,6 +27,7 @@ TYPE_CLASS_MAP = {
     DeviceType.MOTION_DETECTOR_INDOOR: AsyncMotionDetectorIndoor,
     DeviceType.MOTION_DETECTOR_OUTDOOR: AsyncMotionDetectorOutdoor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: AsyncMotionDetectorPushButton,
+    DeviceType.MULTI_IO_BOX: AsyncMultiIOBox,
     DeviceType.OPEN_COLLECTOR_8_MODULE: AsyncOpenCollector8Module,
     DeviceType.PASSAGE_DETECTOR: AsyncPassageDetector,
     DeviceType.PLUGABLE_SWITCH: AsyncPlugableSwitch,

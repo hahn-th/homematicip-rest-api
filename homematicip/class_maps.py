@@ -131,6 +131,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_CHANNEL: FloorTeminalBlockChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL: FloorTerminalBlockLocalPumpChannel,
+    FunctionalChannelType.GENERIC_INPUT_CHANNEL: GenericInputChannel,
     FunctionalChannelType.HEAT_DEMAND_CHANNEL: HeatDemandChannel,
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL: HeatingThermostatChannel,
     FunctionalChannelType.INTERNAL_SWITCH_CHANNEL: InternalSwitchChannel,

@@ -298,6 +298,9 @@ class AsyncWeatherSensorPlus(WeatherSensorPlus, AsyncDevice):
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
     """ HmIP-SWO-PR """
 
+class AsyncMultiIOBox(MultiIOBox, AsyncSwitch):
+    """ HMIP-MIOB (Multi IO Box for floor heating & cooling)  """
+
 
 class AsyncWaterSensor(WaterSensor, AsyncDevice):
     """ HmIP-SWD """
