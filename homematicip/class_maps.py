@@ -33,6 +33,7 @@ TYPE_CLASS_MAP = {
     DeviceType.MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
     DeviceType.MOTION_DETECTOR_OUTDOOR: MotionDetectorOutdoor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
+    DeviceType.MULTI_IO_BOX: MultiIOBox,
     DeviceType.OPEN_COLLECTOR_8_MODULE: OpenCollector8Module,
     DeviceType.PASSAGE_DETECTOR: PassageDetector,
     DeviceType.PLUGABLE_SWITCH: PlugableSwitch,
@@ -117,6 +118,7 @@ TYPE_FUNCTIONALHOME_MAP = {
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL: FunctionalChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
+    FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,
     FunctionalChannelType.BLIND_CHANNEL: BlindChannel,
     FunctionalChannelType.CLIMATE_SENSOR_CHANNEL: ClimateSensorChannel,
     FunctionalChannelType.DEHUMIDIFIER_DEMAND_CHANNEL: DehumidifierDemandChannel,
@@ -129,6 +131,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_CHANNEL: FloorTeminalBlockChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL: FloorTerminalBlockLocalPumpChannel,
+    FunctionalChannelType.GENERIC_INPUT_CHANNEL: GenericInputChannel,
     FunctionalChannelType.HEAT_DEMAND_CHANNEL: HeatDemandChannel,
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL: HeatingThermostatChannel,
     FunctionalChannelType.INTERNAL_SWITCH_CHANNEL: InternalSwitchChannel,

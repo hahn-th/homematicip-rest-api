@@ -8,6 +8,92 @@
         }
     },
     "devices": {
+        "3014F711ABCD0ABCD000002": {
+            "availableFirmwareVersion": "1.6.4",
+            "firmwareVersion": "1.6.4",
+            "firmwareVersionInteger": 67076,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F711ABCD0ABCD000002",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000027"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -79,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711ABCD0ABCD000002",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "on": true,
+                    "profileMode": null,
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "2": {
+                    "deviceId": "3014F711ABCD0ABCD000002",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [],
+                    "index": 2,
+                    "label": "",
+                    "on": false,
+                    "profileMode": null,
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "3": {
+                    "deviceId": "3014F711ABCD0ABCD000002",
+                    "functionalChannelType": "GENERIC_INPUT_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [],
+                    "index": 3,
+                    "label": ""
+                },
+                "4": {
+                    "deviceId": "3014F711ABCD0ABCD000002",
+                    "functionalChannelType": "GENERIC_INPUT_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [],
+                    "index": 4,
+                    "label": ""
+                },
+                "5": {
+                    "analogOutputLevel": 12.5,
+                    "deviceId": "3014F711ABCD0ABCD000002",
+                    "functionalChannelType": "ANALOG_OUTPUT_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 5,
+                    "label": ""
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711ABCD0ABCD000002",
+            "label": "Multi IO Box",
+            "lastStatusUpdate": 1552508702220,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 283,
+            "modelType": "HmIP-MIOB",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711ABCD0ABCD000002",
+            "type": "MULTI_IO_BOX",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F71100000000ABCDEF10": {
             "automaticValveAdaptionNeeded": false,
             "availableFirmwareVersion": "0.0.0",
@@ -1594,7 +1680,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1648,7 +1735,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 19.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 19.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1702,7 +1790,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1756,7 +1845,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1810,7 +1900,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1864,7 +1955,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"
@@ -1918,7 +2010,8 @@
                     ],
                     "index": 1,
                     "label": "",
-                    "valveActualTemperature": 20.0, "setPointTemperature": 5.0,
+                    "valveActualTemperature": 20.0,
+                    "setPointTemperature": 5.0,
                     "temperatureOffset": 0.0,
                     "valvePosition": 0.0,
                     "valveState": "ADAPTION_DONE"

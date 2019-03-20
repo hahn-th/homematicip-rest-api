@@ -579,6 +579,25 @@ class SwitchMeasuring(Switch):
         )
 
 
+class MultiIOBox(Switch):
+    """ HMIP-MIOB (Multi IO Box for floor heating & cooling)  """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.analogOutputLevel = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ANALOG_OUTPUT_CHANNEL", js)
+        if c:
+            self.analogOutputLevel = c["analogOutputLevel"]
+
+    def __str__(self):
+        return "{} analogOutputLevel({})".format(
+            super().__str__(), self.analogOutputLevel
+        )
+
+
 class BrandSwitchNotificationLight(Switch):
     """ HMIP-BSL (Switch Actuator for brand switches – with signal lamp) """
 

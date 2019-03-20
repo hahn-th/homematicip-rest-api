@@ -593,7 +593,9 @@ class NotificationLightChannel(DimmerChannel):
 
     def __init__(self):
         super().__init__()
+        #:boolean: is the light turned on?
         self.on = False
+        #:RGBColorState:the color of the light
         self.simpleRGBColorState = RGBColorState.BLACK
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -622,3 +624,19 @@ class LightSensorChannel(FunctionalChannel):
         self.currentIllumination = js["currentIllumination"]
         self.highestIllumination = js["highestIllumination"]
         self.lowestIllumination = js["lowestIllumination"]
+
+class GenericInputChannel(FunctionalChannel):
+    """ this is the representive of the GENERIC_INPUT_CHANNEL channel"""
+
+
+class AnalogOutputChannel(FunctionalChannel):
+    """ this is the representive of the ANALOG_OUTPUT_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:float:the analog output level (Volt?)
+        self.analogOutputLevel = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.analogOutputLevel = js["analogOutputLevel"]
