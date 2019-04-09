@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.10.7] - 2019-04-09
 ### Added
 - Devices
   - HMIP-MIOB (Multi IO Box for floor heating & cooling) 
@@ -187,7 +188,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.6...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...HEAD
+[0.10.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.6...0.10.7
 [0.10.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.5...0.10.6
 [0.10.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.4...0.10.5
 [0.10.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.3...0.10.4
