@@ -24,6 +24,8 @@ def main():
         os.makedirs("./img/")
     
     print("Generating QRCodes")
+    img = qrcode.make(config.access_point)
+    img.save("./img/{}.png".format(config.access_point))
     for d in home.devices:
         img = qrcode.make(d.id)
         img.save("./img/{}.png".format(d.id))
@@ -34,6 +36,8 @@ def main():
     tableText = ""
     with open(templatePath, "r") as t:
         template = t.read()
+    
+    tableText = tableText + "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td><img src=\"img/{}.png\"></td></tr>\n".format("#HAP#", "Access-Point", config.access_point, "HMIP-HAP", config.access_point)
     for g in home.groups:
         if not isinstance(g, MetaGroup):
             continue;
