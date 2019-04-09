@@ -5,6 +5,7 @@ from homematicip.group import MetaGroup
 from homematicip.device import Device
 import qrcode
 import os
+import codecs
 
 config = homematicip.find_and_load_config_file()
 
@@ -13,7 +14,7 @@ def main():
     if config is None:
         print("COULD NOT DETECT CONFIG FILE")
         return
-    
+
 
     home = Home()
     home.set_auth_token(config.auth_token)
@@ -22,7 +23,7 @@ def main():
     home.get_current_state()
     if not os.path.exists("./img/"):
         os.makedirs("./img/")
-    
+
     print("Generating QRCodes")
     img = qrcode.make(config.access_point)
     img.save("./img/{}.png".format(config.access_point))
@@ -44,7 +45,7 @@ def main():
         for d in g.devices:
             tableText = tableText + "<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td><img src=\"img/{}.png\"></td></tr>\n".format(g.label, d.label, d.id, d.modelType, d.id)
     result = template.replace("##QRROWS##", tableText)
-    with open("qrcodes.html", "w") as f:
+    with codecs.open("qrcodes.html", "w", "UTF-8") as f:
         f.write(result)
 
     print("Finished")
