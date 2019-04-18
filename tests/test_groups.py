@@ -5,7 +5,8 @@ from homematicip.home import Home
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
+from homematicip_demo.helper import fake_home_download_configuration, no_ssl_verification
+from conftest import utc_offset
 
 
 def test_meta_group(fake_home: Home):

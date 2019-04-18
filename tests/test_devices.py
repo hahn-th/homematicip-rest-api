@@ -10,7 +10,8 @@ from homematicip.base.functionalChannels import *
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
+from homematicip_demo.helper import fake_home_download_configuration, no_ssl_verification
+from conftest import utc_offset
 
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")

@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, timezone
 
 import pytest
-from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
+from homematicip_demo.helper import fake_home_download_configuration, no_ssl_verification
+from conftest import utc_offset
 
 from homematicip.aio.home import AsyncHome
 from homematicip.base.enums import *
