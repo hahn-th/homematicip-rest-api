@@ -681,6 +681,9 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                 if pushEventType == EventType.GROUP_CHANGED:
                     data = event["group"]
                     obj = self.search_group_by_id(data["id"])
+                    if obj is None:
+                        obj = self._parse_group(data)
+                        self.groups.append(obj)
                     if type(obj) is MetaGroup:
                         obj.from_json(data, self.devices, self.groups)
                     else:
