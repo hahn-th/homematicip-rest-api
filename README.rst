@@ -104,7 +104,7 @@ Homematic IP Devices:
 -  [ ] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
 -  [ ] HMIP-MP3P       (Combination Signalling Device MP3)
 -  [X] HMIP-PCBS       (Switch Circuit Board - 1x channel)
--  [ ] HMIP-PCBS2      (Switch Circuit Board - 2x channels)
+-  [X] HMIP-PCBS2      (Switch Circuit Board - 2x channels)
 -  [X] HMIP-PCBS-BAT   (Switch Circuit Board with Battery - 1x channel)
 -  [X] HMIP-PDT        (Plugable Dimmer)
 -  [ ] HMIP-PDT-UK     (UK Version not tested, but it should work)

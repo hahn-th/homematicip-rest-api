@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Devices
+  - HMIP-PCBS2 (Switch Circuit Board - 2x channels)
+  - Async implementation of HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 ## [0.10.7] - 2019-04-09
 ### Added
 - Devices

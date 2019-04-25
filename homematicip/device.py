@@ -544,6 +544,9 @@ class PlugableSwitch(Switch):
 class PrintedCircuitBoardSwitchBattery(Switch):
     """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
 
+class PrintedCircuitBoardSwitch2(Switch):
+    """ HMIP-PCBS2 (Switch Circuit Board - 2x channels) """
+
 
 class OpenCollector8Module(Switch):
     """ HmIP-MOD-OC8 ( Open Collector Module ) """

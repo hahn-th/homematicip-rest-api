@@ -210,6 +210,7 @@ class DeviceType(AutoNameEnum):
     PLUGGABLE_DIMMER = auto()
     PRESENCE_DETECTOR_INDOOR = auto()
     PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY = auto()
+    PRINTED_CIRCUIT_BOARD_SWITCH_2 = auto()
     PUSH_BUTTON = auto()
     PUSH_BUTTON_6 = auto()
     REMOTE_CONTROL_8 = auto()

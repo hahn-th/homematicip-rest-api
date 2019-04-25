@@ -49,6 +49,11 @@ class AsyncSwitch(Switch, AsyncDevice):
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
     """ Async implementation of HMIP-PS (Pluggable Switch) """
 
+class AsyncPrintedCircuitBoardSwitchBattery(PrintedCircuitBoardSwitchBattery,AsyncSwitch):
+    """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+
+class AsyncPrintedCircuitBoardSwitch2(PrintedCircuitBoardSwitch2, AsyncSwitch):
+    """ Async implementation of HMIP-PCBS2 (Switch Circuit Board - 2x channels) """
 
 class AsyncLightSensor(LightSensor, AsyncDevice):
     """ Async implementation of HMIP-SLO (Light Sensor outdoor) """

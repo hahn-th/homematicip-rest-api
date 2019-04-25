@@ -41,6 +41,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PLUGGABLE_DIMMER: PluggableDimmer,
     DeviceType.PRESENCE_DETECTOR_INDOOR: PresenceDetectorIndoor,
     DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
+    DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_2: PrintedCircuitBoardSwitch2,
     DeviceType.PUSH_BUTTON: PushButton,
     DeviceType.PUSH_BUTTON_6: PushButton6,
     DeviceType.REMOTE_CONTROL_8: RemoteControl8,
