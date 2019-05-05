@@ -10,9 +10,9 @@ class FakeCloudServer:
     """ a fake server to act as the HMIP cloud"""
 
     # region __init__ & helper functions
-    def __init__(self):
+    def __init__(self, home_path=Path(__file__).parent.joinpath("json_data/home.json")):
         with open(
-            Path(__file__).parent.joinpath("json_data/home.json"), encoding="utf-8"
+            home_path, encoding="utf-8"
         ) as file:
             self.data = json.load(file, encoding="UTF-8")
             self.sgtin = "3014F711A000000BAD0C0DED"
