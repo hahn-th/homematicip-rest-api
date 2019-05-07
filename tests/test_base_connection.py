@@ -7,7 +7,7 @@ from homematicip.base.base_connection import (
 )
 from homematicip.connection import Connection
 from homematicip.home import Home
-from conftest import no_ssl_verification
+from homematicip_demo.helper import no_ssl_verification
 
 
 @pytest.fixture

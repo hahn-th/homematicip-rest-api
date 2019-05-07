@@ -3,7 +3,7 @@ import requests
 import json
 
 from conftest import no_ssl_verification
-from fake_cloud_server import FakeCloudServer
+from homematicip_demo.fake_cloud_server import FakeCloudServer
 
 
 def test_getHost(fake_cloud):

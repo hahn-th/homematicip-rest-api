@@ -1,0 +1,52 @@
+{
+    "entries": [
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "ACTIVATION_CHANGED",
+            "label": "Alarmanlage aus",
+            "securityZoneValues": {
+                "EXTERNAL": false,
+                "INTERNAL": false
+            }
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "ACTIVATION_CHANGED",
+            "label": "Alarmanlage",
+            "securityZoneValues": {
+                "EXTERNAL": true,
+                "INTERNAL": true
+            }
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "ACCESS_POINT_DISCONNECTED",
+            "label": ""
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "ACCESS_POINT_CONNECTED",
+            "label": ""
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "SENSOR_EVENT",
+            "label": "Fenster (Büro)"
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "SABOTAGE",
+            "label": "Fenster (Schlafzimmer)"
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "MOISTURE_DETECTION_EVENT",
+            "label": "Wassersensor (Badezimmer)"
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "FLUX_CAPACITOR_OVERLOAD_EVENT",
+            "label": "Fluxkondensator"
+        }
+    ]
+}

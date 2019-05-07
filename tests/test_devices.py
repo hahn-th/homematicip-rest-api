@@ -10,7 +10,8 @@ from homematicip.base.functionalChannels import *
 import json
 from datetime import datetime, timedelta, timezone
 
-from conftest import fake_home_download_configuration, no_ssl_verification, utc_offset
+from homematicip_demo.helper import fake_home_download_configuration, no_ssl_verification
+from conftest import utc_offset
 
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")
@@ -752,7 +753,7 @@ def test_presence_detector_indoor(fake_home: Home):
     assert d.numberOfBrightnessMeasurements == 7
 
     assert str(d) == (
-        "HmIP-SPI *** lowbat(False) unreach(False) rssiDeviceValue(-62) rssiPeerValue(-61) configPending(False) "
+        "HmIP-SPI SPI_1 lowbat(False) unreach(False) rssiDeviceValue(-62) rssiPeerValue(-61) configPending(False) "
         "dutyCycle(False) sabotage(False) presenceDetected(False) illumination(1.8) motionBufferActive(False) "
         "motionDetectionSendInterval(SECONDS_240) numberOfBrightnessMeasurements(7)"
     )
@@ -813,7 +814,7 @@ def test_passage_detector(fake_home: Home):
         assert d.rightCounter == 802
 
         assert str(d) == (
-            "HmIP-SPDR *** lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(None) configPending(False) dutyCycle(False)"
+            "HmIP-SPDR SPDR_1 lowbat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(None) configPending(False) dutyCycle(False)"
             " sabotage(False) leftCounter(966) leftRightCounterDelta(164) passageBlindtime(1.5) passageDirection(LEFT) passageSensorSensitivity(50.0)"
             " passageTimeout(0.5) rightCounter(802)"
         )
@@ -840,7 +841,7 @@ def test_full_flush_shutter(fake_home: Home):
         assert d.userDesiredProfileMode == "AUTOMATIC"
 
         assert str(d) == (
-            "HmIP-BROLL *** lowbat(None) unreach(False) rssiDeviceValue(-78) rssiPeerValue(-77) configPending(False)"
+            "HmIP-BROLL BROLL_1 lowbat(None) unreach(False) rssiDeviceValue(-78) rssiPeerValue(-77) configPending(False)"
             " dutyCycle(False) shutterLevel(1.0) topToBottom(24.68) bottomToTop(30.080000000000002)"
         )
 
