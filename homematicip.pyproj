@@ -18,7 +18,7 @@
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <CommandLineArguments>--dump-configuration --anonymize</CommandLineArguments>
-    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -104,18 +104,23 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\conftest.py" />
-    <Compile Include="tests\fake_cloud_server.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="tests\test_misc.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="homematicip_demo\fake_cloud_server.py" />
+    <Compile Include="homematicip_demo\helper.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="homematicip_demo\json_data\home.json" />
+    <Compile Include="homematicip_demo\json_data\security_journal.json" />
+    <Compile Include="homematicip_demo\json_data\unknown_types.json" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="tests\json_data\home.json" />
     <Compile Include="tests\test_base_connection.py" />
     <Compile Include="tests\test_groups.py" />
     <Compile Include="tests\test_devices.py" />
@@ -129,7 +134,6 @@
   <ItemGroup>
     <Folder Include="tests\" />
     <Folder Include="tests\aio_tests\" />
-    <Folder Include="tests\json_data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="homematicip\" />
@@ -137,13 +141,25 @@
     <Folder Include="homematicip\base\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="homematicip_demo\" />
+    <Folder Include="homematicip_demo\json_data" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="CHANGELOG.md" />
     <Content Include="README.rst" />
     <Content Include="requirements.txt" />
-    <Content Include="tests\json_data\unknown_types.json" />
+    <Content Include="requirements_dev.txt" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|3.6" />
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.7</Version>
+      <Description>env (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
