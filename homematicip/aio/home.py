@@ -60,7 +60,7 @@ class AsyncHome(Home):
 
         return True
 
-    async def download_configuration(self) -> asyncio.Task:
+    async def download_configuration(self):
         return await self._connection.api_call(*super().download_configuration())
 
     async def enable_events(self) -> asyncio.Task:
