@@ -531,6 +531,8 @@ class HeatingGroup(Group):
         self.heatingFailureSupported = False
         self.valveSilentModeEnabled = False
         self.valveSilentModeSupported = False
+        self.lastSetPointReachedTimestamp = None
+        self.lastSetPointUpdatedTimestamp = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -563,6 +565,8 @@ class HeatingGroup(Group):
         self.heatingFailureSupported = js["heatingFailureSupported"]
         self.valveSilentModeEnabled = js["valveSilentModeEnabled"]
         self.valveSilentModeSupported = js["valveSilentModeSupported"]
+        self.lastSetPointReachedTimestamp = self.fromtimestamp(js["lastSetPointReachedTimestamp"])
+        self.lastSetPointUpdatedTimestamp = self.fromtimestamp(js["lastSetPointUpdatedTimestamp"])
 
         profiles = []
         activeProfile = js["activeProfile"]  # not self.!!!!
