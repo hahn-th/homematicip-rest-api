@@ -12,6 +12,7 @@ from homematicip.device import *
 from homematicip.group import *
 from homematicip.rule import *
 from homematicip.home import Home
+from homematicip.base.helpers import handle_config
 
 
 logger = None
@@ -30,23 +31,6 @@ def create_logger(level, file_name):
     )
     logger.addHandler(handler)
     return logger
-
-
-def anonymizeConfig(config, pattern, format):
-    m = re.findall(pattern, config, flags=re.IGNORECASE)
-    if m == None:
-        return config
-    map = {}
-    i = 0
-    for s in m:
-        if s in map.keys():
-            continue
-        map[s] = format.format(i)
-        i = i + 1
-
-    for k, v in map.items():
-        config = config.replace(k, v)
-    return config
 
 
 server_config = None
@@ -409,38 +393,11 @@ def main():
     if args.dump_config:
         command_entered = True
         json_state = home.download_configuration()
-        if "errorCode" in json_state:
-            logger.error(
-                "Could not get the current configuration. Error: %s",
-                json_state["errorCode"],
-            )
-        else:
-            c = json.dumps(json_state, indent=4, sort_keys=True)
-            if args.anonymize:
-                # generate dummy guids
-                c = anonymizeConfig(
-                    c,
-                    "[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}",
-                    "00000000-0000-0000-0000-{0:0>12}",
-                )
-                # generate dummy SGTIN
-                c = anonymizeConfig(c, "3014F711[A-Z0-9]{16}", "3014F711{0:0>16}")
-                # remove refresh Token
-                c = anonymizeConfig(
-                    c, '"refreshToken": ?"[^"]+"', '"refreshToken": null'
-                )
-                # location
-                c = anonymizeConfig(
-                    c, '"city": ?"[^"]+"', '"city": "1010, Vienna, Austria"'
-                )
-                c = anonymizeConfig(
-                    c, '"latitude": ?"[^"]+"', '"latitude": "48.208088"'
-                )
-                c = anonymizeConfig(
-                    c, '"longitude": ?"[^"]+"', '"longitude": "16.358608"'
-                )
 
-            print(c)
+        output = handle_config(json_state, args.anonymize)
+        if output:
+            print(output)
+
 
     if not home.get_current_state():
         return
