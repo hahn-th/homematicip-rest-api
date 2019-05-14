@@ -2,6 +2,7 @@ import pytest
 
 from homematicip.group import *
 from homematicip.home import Home
+
 import json
 from datetime import datetime, timedelta, timezone
 
@@ -99,6 +100,8 @@ def test_heating_group(fake_home: Home):
     assert g.valvePosition == 0.0
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
+    assert g.lastSetPointReachedTimestamp == datetime.fromtimestamp(1557767559939 / 1000.0)
+    assert g.lastSetPointUpdatedTimestamp == datetime.fromtimestamp(1557767559939 / 1000.0)
 
     assert str(g) == (
         "HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)"
