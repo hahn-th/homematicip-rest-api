@@ -1,5 +1,6 @@
 import json
-from hmip_cli import getRssiBarString, anonymizeConfig
+from hmip_cli import getRssiBarString
+from homematicip.base.helpers import anonymizeConfig
 
 
 def test_getRssiBarString():

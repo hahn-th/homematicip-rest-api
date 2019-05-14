@@ -60,6 +60,9 @@ class AsyncHome(Home):
 
         return True
 
+    async def download_configuration(self):
+        return await self._connection.api_call(*super().download_configuration())
+
     async def enable_events(self) -> asyncio.Task:
         """Connects to the websocket. Returns a listening task."""
         return await self._connection.ws_connect(
