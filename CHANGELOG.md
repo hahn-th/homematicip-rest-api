@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.10.8] - 2019-05-23
+### Added
 - Devices
   - HMIP-PCBS2 (Switch Circuit Board - 2x channels) 
   - HMIP-BBL (Blind Actuator for brand switches)
@@ -196,7 +197,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.8...HEAD
+[0.10.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...0.10.8
 [0.10.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.6...0.10.7
 [0.10.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.5...0.10.6
 [0.10.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.4...0.10.5
