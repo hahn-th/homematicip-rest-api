@@ -49,11 +49,16 @@ class AsyncSwitch(Switch, AsyncDevice):
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
     """ Async implementation of HMIP-PS (Pluggable Switch) """
 
-class AsyncPrintedCircuitBoardSwitchBattery(PrintedCircuitBoardSwitchBattery,AsyncSwitch):
+
+class AsyncPrintedCircuitBoardSwitchBattery(
+    PrintedCircuitBoardSwitchBattery, AsyncSwitch
+):
     """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+
 
 class AsyncPrintedCircuitBoardSwitch2(PrintedCircuitBoardSwitch2, AsyncSwitch):
     """ Async implementation of HMIP-PCBS2 (Switch Circuit Board - 2x channels) """
+
 
 class AsyncLightSensor(LightSensor, AsyncDevice):
     """ Async implementation of HMIP-SLO (Light Sensor outdoor) """
@@ -185,8 +190,10 @@ class AsyncFloorTerminalBlock6(FloorTerminalBlock6, AsyncDevice):
 
     pass
 
-class AsyncFloorTerminalBlock10(FloorTerminalBlock10,AsyncFloorTerminalBlock6):
+
+class AsyncFloorTerminalBlock10(FloorTerminalBlock10, AsyncFloorTerminalBlock6):
     """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
+
 
 class AsyncPushButton(PushButton, AsyncDevice):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
@@ -272,8 +279,10 @@ class AsyncFullFlushBlind(FullFlushBlind, AsyncFullFlushShutter):
             *super().set_slats_level(slatsLevel, shutterLevel)
         )
 
+
 class AsyncBrandBlind(BrandBlind, AsyncFullFlushBlind):
     """ HMIP-BBL (Blind Actuator for brand switches) """
+
 
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
@@ -306,6 +315,7 @@ class AsyncWeatherSensorPlus(WeatherSensorPlus, AsyncDevice):
 
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
     """ HmIP-SWO-PR """
+
 
 class AsyncMultiIOBox(MultiIOBox, AsyncSwitch):
     """ HMIP-MIOB (Multi IO Box for floor heating & cooling)  """

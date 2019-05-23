@@ -11,9 +11,7 @@ class FakeCloudServer:
 
     # region __init__ & helper functions
     def __init__(self, home_path=Path(__file__).parent.joinpath("json_data/home.json")):
-        with open(
-            home_path, encoding="utf-8"
-        ) as file:
+        with open(home_path, encoding="utf-8") as file:
             self.data = json.load(file, encoding="UTF-8")
             self.sgtin = "3014F711A000000BAD0C0DED"
             self.client_auth_token = (
@@ -847,5 +845,6 @@ class FakeCloudServer:
         with open(Path(__file__).parent.joinpath("json_data", js["file"])) as file:
             self.data = json.load(file, encoding="UTF-8")
         return response
-# endregion
 
+
+# endregion

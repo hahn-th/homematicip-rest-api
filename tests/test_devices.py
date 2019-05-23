@@ -10,22 +10,28 @@ from homematicip.base.functionalChannels import *
 import json
 from datetime import datetime, timedelta, timezone
 
-from homematicip_demo.helper import fake_home_download_configuration, no_ssl_verification
+from homematicip_demo.helper import (
+    fake_home_download_configuration,
+    no_ssl_verification,
+)
 from conftest import utc_offset
+
 
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")
-    assert isinstance(d,MultiIOBox)
+    assert isinstance(d, MultiIOBox)
     assert d.on == True
     assert d.functionalChannels[2].on == False
     assert d.analogOutputLevel == 12.5
     assert d.functionalChannels[5].analogOutputLevel == 12.5
 
-    assert str(d) == ("HmIP-MIOB Multi IO Box lowbat(None) unreach(False) "
-                      "rssiDeviceValue(-79) rssiPeerValue(None) configPending(False) "
-                      "dutyCycle(False) on(True) profileMode(None) "
-                      "userDesiredProfileMode(AUTOMATIC) analogOutputLevel(12.5)"
-                        )
+    assert str(d) == (
+        "HmIP-MIOB Multi IO Box lowbat(None) unreach(False) "
+        "rssiDeviceValue(-79) rssiPeerValue(None) configPending(False) "
+        "dutyCycle(False) on(True) profileMode(None) "
+        "userDesiredProfileMode(AUTOMATIC) analogOutputLevel(12.5)"
+    )
+
 
 def test_full_flush_contact_interface(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000029")
@@ -881,7 +887,8 @@ def test_full_flush_blind(fake_home: Home):
             "slatsLevel(0.8) blindModeActive(True)"
         )
 
-def test_brand_blind(fake_home:Home):
+
+def test_brand_blind(fake_home: Home):
     with no_ssl_verification():
         d = BrandBlind(fake_home._connection)
         d = fake_home.search_device_by_id("3014F71100000000000BBL24")
@@ -892,7 +899,8 @@ def test_brand_blind(fake_home:Home):
             "rssiDeviceValue(-64) rssiPeerValue(-76) configPending(False) "
             "dutyCycle(False) shutterLevel(0.885) topToBottom(53.68) bottomToTop(54.88) "
             "slatsLevel(1.0) blindModeActive(True)"
-)
+        )
+
 
 def test_alarm_siren_indoor(fake_home: Home):
     with no_ssl_verification():
@@ -944,7 +952,6 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
             "pumpProtectionSwitchingInterval(14)"
         )
-        
 
 
 def test_key_remote_control(fake_home: Home):

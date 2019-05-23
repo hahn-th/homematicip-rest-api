@@ -398,7 +398,6 @@ def main():
         if output:
             print(output)
 
-
     if not home.get_current_state():
         return
 

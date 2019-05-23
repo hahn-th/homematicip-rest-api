@@ -503,8 +503,10 @@ class FloorTerminalBlock6(Device):
             self.pumpProtectionSwitchingInterval,
         )
 
+
 class FloorTerminalBlock10(FloorTerminalBlock6):
     """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
+
 
 class Switch(Device):
     """ Generic Switch class """
@@ -545,6 +547,7 @@ class PlugableSwitch(Switch):
 
 class PrintedCircuitBoardSwitchBattery(Switch):
     """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+
 
 class PrintedCircuitBoardSwitch2(Switch):
     """ HMIP-PCBS2 (Switch Circuit Board - 2x channels) """
@@ -1017,8 +1020,10 @@ class FullFlushBlind(FullFlushShutter):
             super().__str__(), self.slatsLevel, self.blindModeActive
         )
 
+
 class BrandBlind(FullFlushBlind):
     """ HMIP-BBL (Blind Actuator for brand switches) """
+
 
 class LightSensor(Device):
     """ HMIP-SLO (Light Sensor outdoor) """

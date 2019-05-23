@@ -625,6 +625,7 @@ class LightSensorChannel(FunctionalChannel):
         self.highestIllumination = js["highestIllumination"]
         self.lowestIllumination = js["lowestIllumination"]
 
+
 class GenericInputChannel(FunctionalChannel):
     """ this is the representive of the GENERIC_INPUT_CHANNEL channel"""
 

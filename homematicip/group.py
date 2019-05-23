@@ -565,8 +565,12 @@ class HeatingGroup(Group):
         self.heatingFailureSupported = js["heatingFailureSupported"]
         self.valveSilentModeEnabled = js["valveSilentModeEnabled"]
         self.valveSilentModeSupported = js["valveSilentModeSupported"]
-        self.lastSetPointReachedTimestamp = self.fromtimestamp(js["lastSetPointReachedTimestamp"])
-        self.lastSetPointUpdatedTimestamp = self.fromtimestamp(js["lastSetPointUpdatedTimestamp"])
+        self.lastSetPointReachedTimestamp = self.fromtimestamp(
+            js["lastSetPointReachedTimestamp"]
+        )
+        self.lastSetPointUpdatedTimestamp = self.fromtimestamp(
+            js["lastSetPointUpdatedTimestamp"]
+        )
 
         profiles = []
         activeProfile = js["activeProfile"]  # not self.!!!!
