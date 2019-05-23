@@ -67,7 +67,7 @@ Implemented Stuff
 -  [X] Groups
 
 Homematic IP Devices:
---------
+---------------------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
