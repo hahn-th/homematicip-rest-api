@@ -148,7 +148,7 @@ Homematic IP Devices:
 -  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
 
 Homematic IP Wired Devices:
---------
+---------------------------
 
 -  [ ] HMIPW-DRAP      (Homematic IP Wired Access Point)
 -  [ ] HMIPW-DRBL4     (Homematic IP Wired Blinds Actuator – 4x channels)
