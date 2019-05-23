@@ -182,6 +182,7 @@ class ClientType(AutoNameEnum):
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
     ALARM_SIREN_INDOOR = auto()
+    BRAND_BLIND = auto()
     BRAND_DIMMER = auto()
     BRAND_PUSH_BUTTON = auto()
     BRAND_SHUTTER = auto()

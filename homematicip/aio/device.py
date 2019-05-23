@@ -270,6 +270,8 @@ class AsyncFullFlushBlind(FullFlushBlind, AsyncFullFlushShutter):
             *super().set_slats_level(slatsLevel, shutterLevel)
         )
 
+class AsyncBrandBlind(BrandBlind, AsyncFullFlushBlind):
+    """ HMIP-BBL (Blind Actuator for brand switches) """
 
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""

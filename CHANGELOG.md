@@ -6,12 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - Devices
-  - HMIP-PCBS2 (Switch Circuit Board - 2x channels)
+  - HMIP-PCBS2 (Switch Circuit Board - 2x channels) 
+  - HMIP-BBL (Blind Actuator for brand switches)
   - Async implementation of HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
 ## [0.10.7] - 2019-04-09
 ### Added
 - Devices
-  - HMIP-MIOB (Multi IO Box for floor heating & cooling) 
+  - HMIP-MIOB (Multi IO Box for floor heating & cooling)
 - API
   - FunctionalChannels: ANALOG_OUTPUT_CHANNEL, GENERIC_INPUT_CHANNEL
   - WeatherCondition.STRONG_WIND

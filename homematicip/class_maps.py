@@ -13,6 +13,7 @@ from homematicip.base.functionalChannels import *
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
+    DeviceType.BRAND_BLIND: BrandBlind,
     DeviceType.BRAND_DIMMER: BrandDimmer,
     DeviceType.BRAND_PUSH_BUTTON: BrandPushButton,
     DeviceType.BRAND_SHUTTER: FullFlushShutter,

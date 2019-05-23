@@ -1015,6 +1015,8 @@ class FullFlushBlind(FullFlushShutter):
             super().__str__(), self.slatsLevel, self.blindModeActive
         )
 
+class BrandBlind(FullFlushBlind):
+    """ HMIP-BBL (Blind Actuator for brand switches) """
 
 class LightSensor(Device):
     """ HMIP-SLO (Light Sensor outdoor) """
