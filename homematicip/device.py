@@ -503,6 +503,8 @@ class FloorTerminalBlock6(Device):
             self.pumpProtectionSwitchingInterval,
         )
 
+class FloorTerminalBlock10(FloorTerminalBlock6):
+    """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
 
 class Switch(Device):
     """ Generic Switch class """

@@ -931,6 +931,21 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)"
         )
 
+        d = FloorTerminalBlock10(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F71100000000FAL24C10")
+
+        assert str(d) == (
+            "HmIP-FAL24-C10 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+            "rssiDeviceValue(-73) rssiPeerValue(-74) configPending(False) "
+            "dutyCycle(False) globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) "
+            "heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) "
+            "frostProtectionTemperature(8.0) heatingEmergencyValue(0.25) "
+            "valveProtectionDuration(5) valveProtectionSwitchingInterval(14) "
+            "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
+            "pumpProtectionSwitchingInterval(14)"
+        )
+        
+
 
 def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():

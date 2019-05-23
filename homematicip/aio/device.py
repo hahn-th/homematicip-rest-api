@@ -185,6 +185,8 @@ class AsyncFloorTerminalBlock6(FloorTerminalBlock6, AsyncDevice):
 
     pass
 
+class AsyncFloorTerminalBlock10(FloorTerminalBlock10,AsyncFloorTerminalBlock6):
+    """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
 
 class AsyncPushButton(PushButton, AsyncDevice):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
