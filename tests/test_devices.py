@@ -881,6 +881,18 @@ def test_full_flush_blind(fake_home: Home):
             "slatsLevel(0.8) blindModeActive(True)"
         )
 
+def test_brand_blind(fake_home:Home):
+    with no_ssl_verification():
+        d = BrandBlind(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F71100000000000BBL24")
+        assert isinstance(d, BrandBlind)
+
+        assert str(d) == (
+            "HmIP-BBL Jalousie Schiebetür lowbat(None) unreach(False) "
+            "rssiDeviceValue(-64) rssiPeerValue(-76) configPending(False) "
+            "dutyCycle(False) shutterLevel(0.885) topToBottom(53.68) bottomToTop(54.88) "
+            "slatsLevel(1.0) blindModeActive(True)"
+)
 
 def test_alarm_siren_indoor(fake_home: Home):
     with no_ssl_verification():

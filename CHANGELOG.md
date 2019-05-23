@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - HMIP-MIOB (Multi IO Box for floor heating & cooling) 
+  - HMIP-BBL (Blind Actuator for brand switches)
 - API
   - FunctionalChannels: ANALOG_OUTPUT_CHANNEL, GENERIC_INPUT_CHANNEL
   - WeatherCondition.STRONG_WIND

@@ -8,6 +8,71 @@
         }
     },
     "devices": {
+        "3014F71100000000000BBL24": {
+            "availableFirmwareVersion": "1.6.2",
+            "firmwareVersion": "1.6.2",
+            "firmwareVersionInteger": 67074,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F71100000000000BBL24",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000034"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -64,
+                    "rssiPeerValue": -76,
+                    "unreach": false
+                },
+                "1": {
+                    "blindModeActive": true,
+                    "bottomToTopReferenceTime": 54.88,
+                    "changeOverDelay": 0.5,
+                    "delayCompensationValue": 12.7,
+                    "deviceId": "3014F71100000000000BBL24",
+                    "endpositionAutoDetectionEnabled": true,
+                    "functionalChannelType": "BLIND_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "previousShutterLevel": null,
+                    "previousSlatsLevel": null,
+                    "processing": false,
+                    "profileMode": "AUTOMATIC",
+                    "selfCalibrationInProgress": null,
+                    "shutterLevel": 0.885,
+                    "slatsLevel": 1.0,
+                    "slatsReferenceTime": 1.6,
+                    "supportingDelayCompensation": true,
+                    "supportingEndpositionAutoDetection": true,
+                    "supportingSelfCalibration": true,
+                    "topToBottomReferenceTime": 53.68,
+                    "userDesiredProfileMode": "MANUAL"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F71100000000000BBL24",
+            "label": "Jalousie Schiebet\u00fcr",
+            "lastStatusUpdate": 1558464454532,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 332,
+            "modelType": "HmIP-BBL",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000024",
+            "type": "BRAND_BLIND",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000BCBB11": {
             "availableFirmwareVersion": "0.0.0",
             "firmwareVersion": "1.10.10",

@@ -71,7 +71,7 @@ Homematic IP Devices:
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
--  [ ] HMIP-BBL        (Blind Actuator for brand switches)
+-  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
 -  [X] HMIP-BRC2       (Remote Control for brand switches – 2x channels)
 -  [X] HMIP-BROLL      (Shutter Actuator - brand-mount)
