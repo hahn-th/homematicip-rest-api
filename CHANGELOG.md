@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Devices
   - HMIP-PCBS2 (Switch Circuit Board - 2x channels) 
   - HMIP-BBL (Blind Actuator for brand switches)
+  - HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
+  - HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)
+  - HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)
   - Async implementation of HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
+ 
 ## [0.10.7] - 2019-04-09
 ### Added
 - Devices

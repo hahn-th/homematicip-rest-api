@@ -744,4 +744,3 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             except Exception as err:
                 LOGGER.exception(err)
         self.onEvent.fire(eventList)
-

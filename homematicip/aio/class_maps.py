@@ -7,7 +7,7 @@ from homematicip.aio.securityEvent import *
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: AsyncDevice,
     DeviceType.ALARM_SIREN_INDOOR: AsyncAlarmSirenIndoor,
-    DeviceType.BRAND_BLIND:AsyncBrandBlind,
+    DeviceType.BRAND_BLIND: AsyncBrandBlind,
     DeviceType.BRAND_DIMMER: AsyncBrandDimmer,
     DeviceType.BRAND_SHUTTER: AsyncFullFlushShutter,
     DeviceType.BRAND_PUSH_BUTTON: AsyncBrandPushButton,
@@ -15,6 +15,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: AsyncBrandSwitchNotificationLight,
     DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: AsyncFloorTerminalBlock6,
+    DeviceType.FLOOR_TERMINAL_BLOCK_10: AsyncFloorTerminalBlock10,
     DeviceType.FULL_FLUSH_BLIND: AsyncFullFlushBlind,
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE: AsyncFullFlushContactInterface,
     DeviceType.FULL_FLUSH_DIMMER: AsyncFullFlushDimmer,

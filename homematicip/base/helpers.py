@@ -55,7 +55,8 @@ def bytes2str(b):
         )
     )
 
-def handle_config(json_state : str, anonymize : bool) -> str:
+
+def handle_config(json_state: str, anonymize: bool) -> str:
     if "errorCode" in json_state:
         LOGGER.error(
             "Could not get the current configuration. Error: %s",
@@ -74,21 +75,16 @@ def handle_config(json_state : str, anonymize : bool) -> str:
             # generate dummy SGTIN
             c = anonymizeConfig(c, "3014F711[A-Z0-9]{16}", "3014F711{0:0>16}")
             # remove refresh Token
-            c = anonymizeConfig(
-                c, '"refreshToken": ?"[^"]+"', '"refreshToken": null'
-            )
+            c = anonymizeConfig(c, '"refreshToken": ?"[^"]+"', '"refreshToken": null')
             # location
             c = anonymizeConfig(
                 c, '"city": ?"[^"]+"', '"city": "1010, Vienna, Austria"'
             )
-            c = anonymizeConfig(
-                c, '"latitude": ?"[^"]+"', '"latitude": "48.208088"'
-            )
-            c = anonymizeConfig(
-                c, '"longitude": ?"[^"]+"', '"longitude": "16.358608"'
-            )
+            c = anonymizeConfig(c, '"latitude": ?"[^"]+"', '"latitude": "48.208088"')
+            c = anonymizeConfig(c, '"longitude": ?"[^"]+"', '"longitude": "16.358608"')
 
         return c
+
 
 def anonymizeConfig(config, pattern, format):
     m = re.findall(pattern, config, flags=re.IGNORECASE)

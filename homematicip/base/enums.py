@@ -190,6 +190,7 @@ class DeviceType(AutoNameEnum):
     BRAND_SWITCH_NOTIFICATION_LIGHT = auto()
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
+    FLOOR_TERMINAL_BLOCK_10 = auto()
     FULL_FLUSH_BLIND = auto()
     FULL_FLUSH_CONTACT_INTERFACE = auto()
     FULL_FLUSH_DIMMER = auto()

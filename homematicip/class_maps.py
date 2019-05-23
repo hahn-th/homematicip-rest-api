@@ -21,6 +21,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: BrandSwitchNotificationLight,
     DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
+    DeviceType.FLOOR_TERMINAL_BLOCK_10: FloorTerminalBlock10,
     DeviceType.FULL_FLUSH_BLIND: FullFlushBlind,
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE: FullFlushContactInterface,
     DeviceType.FULL_FLUSH_DIMMER: FullFlushDimmer,

@@ -72,8 +72,12 @@ async def test_heating_group(no_ssl_fake_async_home: AsyncHome):
     assert g.valvePosition == 0.0
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
-    assert g.lastSetPointReachedTimestamp == datetime.fromtimestamp(1557767559939 / 1000.0)
-    assert g.lastSetPointUpdatedTimestamp == datetime.fromtimestamp(1557767559939 / 1000.0)
+    assert g.lastSetPointReachedTimestamp == datetime.fromtimestamp(
+        1557767559939 / 1000.0
+    )
+    assert g.lastSetPointUpdatedTimestamp == datetime.fromtimestamp(
+        1557767559939 / 1000.0
+    )
 
     assert str(g) == (
         "HEATING Schlafzimmer windowOpenTemperature(5.0) setPointTemperature(5.0) windowState(OPEN) motionDetected(30.0)"
