@@ -88,6 +88,7 @@ Homematic IP Devices:
 -  [X] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 -  [X] HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)
 -  [X] HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)
+-  [ ] HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised)
 -  [X] HMIP-FBL        (Blind Actuator - flush-mount)
 -  [X] HMIP-FCI1       (Contact Interface flush-mount – 1x channel)
 -  [ ] HMIP-FCI6       (Contact Interface flush-mount – 6x channels)
