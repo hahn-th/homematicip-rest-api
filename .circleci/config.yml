@@ -85,6 +85,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            python3 -m pip uninstall pip && sudo apt install python3-pip --reinstall
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements_dev.txt
