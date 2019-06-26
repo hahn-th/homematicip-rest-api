@@ -159,14 +159,14 @@ Homematic IP Wired Devices:
 -  [ ] HMIPW-DRI16      (Homematic IP Wired Inbound module – 16x channels)
 -  [ ] HMIPW-DRI32      (Homematic IP Wired Inbound module – 32x channels)
 -  [ ] HMIPW-DRS8       (Homematic IP Wired Switch Actuator – 8x channels)
--  [ ] HmIPW-FAL24-C6   (Homematic IP Wired Floor Heating Actuator – 6x channels, 24V)
--  [ ] HmIPW-FAL24-C10  (Homematic IP Wired Floor Heating Actuator – 10x channels, 24V)
--  [ ] HmIPW-FAL230-C6  (Homematic IP Wired Floor Heating Actuator – 6x channels, 230V)
--  [ ] HmIPW-FAL230-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 230V)
+-  [ ] HMIPW-FAL24-C6   (Homematic IP Wired Floor Heating Actuator – 6x channels, 24V)
+-  [ ] HMIPW-FAL24-C10  (Homematic IP Wired Floor Heating Actuator – 10x channels, 24V)
+-  [ ] HMIPW-FAL230-C6  (Homematic IP Wired Floor Heating Actuator – 6x channels, 230V)
+-  [ ] HMIPW-FAL230-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 230V)
 -  [ ] HMIPW-FIO6       (Homematic IP Wired IO Module flush-mount – 6x channels) 
--  [ ] HmIPW-STH        (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
--  [ ] HmIPW-STHD       (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
--  [ ] HmIPW-WTH        (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
+-  [ ] HMIPW-STH        (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
+-  [ ] HMIPW-STHD       (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
+-  [ ] HMIPW-WTH        (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
 
 Events
 ------
