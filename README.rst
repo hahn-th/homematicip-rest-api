@@ -70,6 +70,7 @@ Homematic IP Devices:
 ---------------------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
+-  [ ] HMIP-ASIR-2     (Alarm Siren2 - indoor)
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
@@ -151,14 +152,21 @@ Homematic IP Devices:
 Homematic IP Wired Devices:
 ---------------------------
 
--  [ ] HMIPW-DRAP      (Homematic IP Wired Access Point)
--  [ ] HMIPW-DRBL4     (Homematic IP Wired Blinds Actuator – 4x channels)
--  [ ] HMIPW-DRD3      (Homematic IP Wired Dimming Actuator – 3x channels)
--  [ ] HMIPW-DRS4      (Homematic IP Wired Swich Actuator – 4x channels)
--  [ ] HMIPW-DRI16     (Homematic IP Wired Inbound module – 16x channels)
--  [ ] HMIPW-DRI32     (Homematic IP Wired Inbound module – 32x channels)
--  [ ] HMIPW-DRS8      (Homematic IP Wired Switch Actuator – 8x channels)
--  [ ] HMIPW-FIO6      (Homematic IP Wired IO Module flush-mount – 6x channels) 
+-  [ ] HMIPW-DRAP       (Homematic IP Wired Access Point)
+-  [ ] HMIPW-DRBL4      (Homematic IP Wired Blinds Actuator – 4x channels)
+-  [ ] HMIPW-DRD3       (Homematic IP Wired Dimming Actuator – 3x channels)
+-  [ ] HMIPW-DRS4       (Homematic IP Wired Swich Actuator – 4x channels)
+-  [ ] HMIPW-DRI16      (Homematic IP Wired Inbound module – 16x channels)
+-  [ ] HMIPW-DRI32      (Homematic IP Wired Inbound module – 32x channels)
+-  [ ] HMIPW-DRS8       (Homematic IP Wired Switch Actuator – 8x channels)
+-  [ ] HMIPW-FAL24-C6   (Homematic IP Wired Floor Heating Actuator – 6x channels, 24V)
+-  [ ] HMIPW-FAL24-C10  (Homematic IP Wired Floor Heating Actuator – 10x channels, 24V)
+-  [ ] HMIPW-FAL230-C6  (Homematic IP Wired Floor Heating Actuator – 6x channels, 230V)
+-  [ ] HMIPW-FAL230-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 230V)
+-  [ ] HMIPW-FIO6       (Homematic IP Wired IO Module flush-mount – 6x channels) 
+-  [ ] HMIPW-STH        (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
+-  [ ] HMIPW-STHD       (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
+-  [ ] HMIPW-WTH        (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
 
 Events
 ------
