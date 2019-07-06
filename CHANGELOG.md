@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - API
   - homematicip_demo package for testing against a test server
-
+  - a warning on parsing an enum value from string which isn't currently existing in the API
+ 
+### Fixes
+- [BUG: 220] Support controlMode ECO 
+- 
 ## [0.10.8] - 2019-05-23
 ### Added
 - Devices
@@ -220,3 +224,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [BUG: 141]: https://github.com/coreGreenberet/homematicip-rest-api/issues/141
 [BUG: 188]: https://github.com/coreGreenberet/homematicip-rest-api/issues/188
+[BUG: 220]: https://github.com/coreGreenberet/homematicip-rest-api/issues/220
