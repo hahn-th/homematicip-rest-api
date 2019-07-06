@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  
 ### Fixes
 - [BUG: 220] Support controlMode ECO 
-- 
+
 ## [0.10.8] - 2019-05-23
 ### Added
 - Devices
