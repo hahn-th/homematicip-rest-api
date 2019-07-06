@@ -1,6 +1,8 @@
 # coding=utf-8
 from aenum import auto, Enum
+import logging
 
+logger = logging.getLogger(__name__)
 
 class AutoNameEnum(str, Enum):
     """ auto() will generate the name of the attribute as value """
@@ -26,6 +28,7 @@ class AutoNameEnum(str, Enum):
         try:
             return cls(text)
         except:
+            logger.warning("'%s' isn't a valid option for class '%s'", text, cls.__name__)
             return default
 
 
@@ -151,6 +154,7 @@ class WeatherDayTime(AutoNameEnum):
 class ClimateControlMode(AutoNameEnum):
     AUTOMATIC = auto()
     MANUAL = auto()
+    ECO = auto()
 
 
 class AbsenceType(AutoNameEnum):
