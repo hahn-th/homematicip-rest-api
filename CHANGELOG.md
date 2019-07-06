@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.10.9] - 2019-07-06
 ### Added
 - API
   - homematicip_demo package for testing against a test server
@@ -206,7 +208,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.8...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.9...HEAD
+[0.10.9]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.8...0.10.9
 [0.10.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...0.10.8
 [0.10.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.6...0.10.7
 [0.10.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.5...0.10.6
