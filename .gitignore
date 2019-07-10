@@ -103,3 +103,4 @@ ENV/
 .DS_Store
 /config.ini
 /.pytest_cache
+/apk
