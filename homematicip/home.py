@@ -547,7 +547,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             temperature(float): the settemperature during the vacation mode
         """
         data = {
-            "endtime": endtime.strftime("%Y_%m_%d %H:%M"),
+            "endTime": endtime.strftime("%Y_%m_%d %H:%M"),
             "temperature": temperature,
         }
         return self._restCall("home/heating/activateVacation", json.dumps(data))

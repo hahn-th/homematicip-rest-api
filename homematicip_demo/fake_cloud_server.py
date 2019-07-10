@@ -246,7 +246,7 @@ class FakeCloudServer:
         js = json.loads(request.data)
 
         self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["absenceEndTime"] = js[
-            "endtime"
+            "endTime"
         ]
         self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"][
             "absenceType"
