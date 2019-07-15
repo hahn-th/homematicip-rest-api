@@ -29,6 +29,12 @@ class AsyncHome(Home):
         await self._connection.init(access_point_id, lookup)
 
     async def get_current_state(self, clearConfig: bool = False):
+        """downloads the current configuration and parses it into self
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        """
         json_state = await self.download_configuration()
         return self.update_home(json_state, clearConfig)
 
