@@ -29,36 +29,14 @@ class AsyncHome(Home):
         await self._connection.init(access_point_id, lookup)
 
     async def get_current_state(self, clearConfig: bool = False):
-        # todo: a download_configuration method has been added. This can simplify this one.
-        json_state = await self._connection.api_call(
-            "home/getCurrentState", json.dumps(self._connection.clientCharacteristics)
-        )
-        if "errorCode" in json_state:
-            LOGGER.error(
-                "Could not get the current configuration. Error: %s",
-                json_state["errorCode"],
-            )
-            return False
+        """downloads the current configuration and parses it into self
 
-        if clearConfig:
-            self.devices = []
-            self.clients = []
-            self.groups = []
-            self.rules = []
-            self.functionalHomes = []
-
-        js_home = json_state["home"]
-
-        self.from_json(js_home)
-
-        self._get_devices(json_state)
-        self._get_clients(json_state)
-        self._get_groups(json_state)
-
-        self._get_functionalHomes(js_home)
-        self._load_functionalChannels()
-
-        return True
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        """
+        json_state = await self.download_configuration()
+        return self.update_home(json_state, clearConfig)
 
     async def download_configuration(self):
         return await self._connection.api_call(*super().download_configuration())

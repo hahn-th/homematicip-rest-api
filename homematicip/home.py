@@ -240,7 +240,16 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
         json_state = self.download_configuration()
+        return self.update_home(json_state, clearConfig)
 
+    def update_home(self, json_state, clearConfig: bool = False):
+        """parse a given json configuration into self.
+        This will update the whole home including devices, clients and groups.
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        """
         if "errorCode" in json_state:
             LOGGER.error(
                 "Could not get the current configuration. Error: %s",
@@ -252,17 +261,35 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             self.devices = []
             self.clients = []
             self.groups = []
-            self.rules = []
-            self.functionalHomes = []
-
-        js_home = json_state["home"]
-
-        self.from_json(js_home)
 
         self._get_devices(json_state)
         self._get_clients(json_state)
         self._get_groups(json_state)
 
+        js_home = json_state["home"]
+
+        return self.update_home_only(js_home, clearConfig)
+
+    def update_home_only(self, js_home, clearConfig: bool = False):
+        """parse a given home json configuration into self.
+        This will update only the home without updating devices, clients and groups.
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        """
+        if "errorCode" in js_home:
+            LOGGER.error(
+                "Could not get the current configuration. Error: %s",
+                js_home["errorCode"],
+            )
+            return False
+
+        if clearConfig:
+            self.rules = []
+            self.functionalHomes = []
+
+        self.from_json(js_home)
         self._get_functionalHomes(js_home)
         self._load_functionalChannels()
 
