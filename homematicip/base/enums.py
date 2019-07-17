@@ -67,6 +67,11 @@ class AcousticAlarmSignal(AutoNameEnum):
     ERROR = auto()
 
 
+class AlarmContactType(AutoNameEnum):
+    PASSIVE_GLASS_BREAKAGE_DETECTOR = auto()
+    WINDOW_DOOR_CONTACT = auto()
+
+
 class ClimateControlDisplay(AutoNameEnum):
     ACTUAL = auto()
     SETPOINT = auto()
@@ -92,6 +97,10 @@ class ValveState(AutoNameEnum):
 
 
 class HeatingValveType(AutoNameEnum):
+    NORMALLY_CLOSE = auto()
+    NORMALLY_OPEN = auto()
+
+class ContactType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
     NORMALLY_OPEN = auto()
 
@@ -223,6 +232,7 @@ class DeviceType(AutoNameEnum):
     ROOM_CONTROL_DEVICE = auto()
     ROTARY_HANDLE_SENSOR = auto()
     SHUTTER_CONTACT = auto()
+    SHUTTER_CONTACT_INTERFACE = auto()
     SHUTTER_CONTACT_INVISIBLE = auto()
     SHUTTER_CONTACT_MAGNETIC = auto()
     SMOKE_DETECTOR = auto()
@@ -352,6 +362,7 @@ class FunctionalChannelType(AutoNameEnum):
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     BLIND_CHANNEL = auto()
+    CONTACT_INTERFACE_CHANNEL = auto()
     CLIMATE_SENSOR_CHANNEL = auto()
     DEHUMIDIFIER_DEMAND_CHANNEL = auto()
     DEVICE_BASE = auto()

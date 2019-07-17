@@ -291,6 +291,25 @@ class ShutterContact(SabotageDevice):
         return "{} windowState({})".format(super().__str__(), self.windowState)
 
 
+class ContactInterface(SabotageDevice):
+    """ HMIP-SCI (Contact Interface Sensor)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.windowState = WindowState.CLOSED
+        self.eventDelay = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("SHUTTER_CONTACT_INTERFACE", js)
+        if c:
+            self.windowState = WindowState.from_str(c["windowState"])
+            self.eventDelay = c["eventDelay"]
+
+    def __str__(self):
+        return "{} windowState({})".format(super().__str__(), self.windowState)
+
+
 class RotaryHandleSensor(SabotageDevice):
     """ HmIP-SRH """
 
