@@ -120,7 +120,7 @@ Homematic IP Devices:
 -  [X] HMIP-RC8        (Remote Control - 8x buttons)
 -  [ ] HMIP-RCB1       (Remote Control - 1x button)
 -  [ ] HMIP-SAM        (Acceleration Sensor)
--  [ ] HMIP-SCI        (Contact Interface Sensor)
+-  [X] HMIP-SCI        (Contact Interface Sensor)
 -  [X] HMIP-SLO        (Light Sensor - outdoor)
 -  [X] HMIP-SMI        (Motion Detector with Brightness Sensor - indoor)
 -  [X] HMIP-SMI55      (Motion Detector with Brightness Sensor and Remote Control - 2x buttons)

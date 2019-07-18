@@ -89,6 +89,40 @@ def test_shutter_device(fake_home: Home):
     )  # Shutter contact won't support this
 
 
+def test_contact_interface_device(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000064")
+    assert isinstance(d, ContactInterface)
+    assert d.label == "Schließer Magnet"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
+        0, utc_offset
+    )
+    assert d.manufacturerCode == 1
+    assert d.modelId == 375
+    assert d.modelType == "HmIP-SCI"
+    assert d.oem == "eQ-3"
+    assert d.windowState == WindowState.CLOSED
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000064"
+    assert d.availableFirmwareVersion == "1.0.6"
+    assert d.firmwareVersion == "1.0.6"
+    a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
+    assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -42
+    assert d.rssiPeerValue == None
+    assert d.dutyCycle == False
+    assert d.configPending == False
+    assert (
+        str(d)
+        == "HmIP-SCI Schließer Magnet lowbat(False) unreach(False) rssiDeviceValue(-42) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) windowState(CLOSED)"
+    )
+    assert (
+        d._rawJSONData
+        == fake_home_download_configuration()["devices"]["3014F7110000000000000064"]
+    )
+
+
 def test_pluggable_switch_measuring(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000009")
     assert isinstance(d, PlugableSwitchMeasuring)

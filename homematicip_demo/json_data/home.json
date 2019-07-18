@@ -487,6 +487,78 @@
             "type": "BRAND_PUSH_BUTTON",
             "updateState": "UP_TO_DATE"
         },
+        "3014F7110000000000000064": {
+            "availableFirmwareVersion": "1.0.6",
+            "firmwareVersion": "1.0.6",
+            "firmwareVersionInteger": 65542,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000000064",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_SABOTAGE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000032",
+                        "00000000-0000-0000-0000-000000000013"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -42,
+                    "rssiPeerValue": null,
+                    "sabotage": false,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceOverheated": false,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "alarmContactType": "WINDOW_DOOR_CONTACT",
+                    "contactType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F7110000000000000064",
+                    "eventDelay": 0,
+                    "functionalChannelType": "CONTACT_INTERFACE_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000033",
+                        "00000000-0000-0000-0000-000000000010",
+                        "00000000-0000-0000-0000-000000000013"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "windowState": "CLOSED"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000064",
+            "label": "Schlie\u00dfer Magnet",
+            "lastStatusUpdate": 1524515854304,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 375,
+            "modelType": "HmIP-SCI",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000064",
+            "type": "SHUTTER_CONTACT_INTERFACE",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F711BADCAFE000000001": {
             "availableFirmwareVersion": "1.2.0",
             "firmwareVersion": "1.2.0",

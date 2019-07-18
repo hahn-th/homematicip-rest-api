@@ -189,6 +189,19 @@ class ShutterContactChannel(FunctionalChannel):
 class RotaryHandleChannel(ShutterContactChannel):
     """ this is the representive of the ROTARY_HANDLE_CHANNEL channel"""
 
+class ContactInterfaceChannel(ShutterContactChannel):
+    """ this is the representive of the CONTACT_INTERFACE_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.alarmContactType = AlarmContactType.WINDOW_DOOR_CONTACT
+        self.contactType = ContactType.NORMALLY_CLOSE
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.alarmContactType = AlarmContactType.from_str(js["alarmContactType"])
+        self.contactType = ContactType.from_str(js["contactType"])
+
 
 class ClimateSensorChannel(FunctionalChannel):
     """ this is the representive of the CLIMATE_SENSOR_CHANNEL channel"""
