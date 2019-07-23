@@ -89,6 +89,39 @@ def test_shutter_device(fake_home: Home):
     )  # Shutter contact won't support this
 
 
+def test_shutter_device_magnetic(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000005551")
+    assert isinstance(d, ShutterContactMagnetic)
+    assert d.label == "Eingangstürkontakt"
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
+        0, utc_offset
+    )
+    assert d.manufacturerCode == 1
+    assert d.modelId == 340
+    assert d.modelType == "HmIP-SWDM"
+    assert d.oem == "eQ-3"
+    assert d.windowState == WindowState.CLOSED
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000005551"
+    assert d.availableFirmwareVersion == "0.0.0"
+    assert d.firmwareVersion == "1.2.12"
+    assert d.firmwareVersionInteger == 66060
+    assert d.lowBat == False
+    assert d.routerModuleEnabled == False
+    assert d.routerModuleSupported == False
+    assert d.rssiDeviceValue == -73
+    assert d.rssiPeerValue == None
+    assert d.dutyCycle == False
+    assert d.configPending == False
+    assert (
+        str(d)
+        == "HmIP-SWDM Eingangstürkontakt lowbat(False) unreach(False) rssiDeviceValue(-73) rssiPeerValue(None) configPending(False) dutyCycle(False) windowState(CLOSED)"
+    )
+    assert (
+        d._rawJSONData
+        == fake_home_download_configuration()["devices"]["3014F7110000000000005551"]
+    )
+
+
 def test_contact_interface_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000064")
     assert isinstance(d, ContactInterface)

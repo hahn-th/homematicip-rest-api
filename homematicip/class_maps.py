@@ -51,7 +51,7 @@ TYPE_CLASS_MAP = {
     DeviceType.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
     DeviceType.SHUTTER_CONTACT: ShutterContact,
     DeviceType.SHUTTER_CONTACT_INVISIBLE: ShutterContact,
-    DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContact,
+    DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContactMagnetic,
     DeviceType.SHUTTER_CONTACT_INTERFACE: ContactInterface,
     DeviceType.SMOKE_DETECTOR: SmokeDetector,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,

@@ -272,8 +272,26 @@ class HeatingThermostatCompact(SabotageDevice):
 
 
 class ShutterContact(SabotageDevice):
-    """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical) / 
-         HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic )"""
+    """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.windowState = WindowState.CLOSED
+        self.eventDelay = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("SHUTTER_CONTACT_CHANNEL", js)
+        if c:
+            self.windowState = WindowState.from_str(c["windowState"])
+            self.eventDelay = c["eventDelay"]
+
+    def __str__(self):
+        return "{} windowState({})".format(super().__str__(), self.windowState)
+
+
+class ShutterContactMagnetic(Device):
+    """ HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic )"""
 
     def __init__(self, connection):
         super().__init__(connection)
