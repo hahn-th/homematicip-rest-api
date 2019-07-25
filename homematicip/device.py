@@ -55,6 +55,11 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
 
         self._baseChannel = "DEVICE_BASE"
 
+        self.deviceOverheated = None
+        self.deviceOverloaded = None
+        self.deviceUndervoltage = None
+        self.temperatureOutOfRange = None
+
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
@@ -86,6 +91,17 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
             self.rssiPeerValue = c["rssiPeerValue"]
             self.dutyCycle = c["dutyCycle"]
             self.configPending = c["configPending"]
+
+            sof = c.get("supportedOptionalFeatures")
+            if sof:
+                if sof["IFeatureDeviceOverheated"]:
+                    self.deviceOverheated = c["deviceOverheated"]
+                if sof["IFeatureDeviceOverloaded"]:
+                    self.deviceOverloaded = c["deviceOverloaded"]
+                if sof["IFeatureDeviceUndervoltage"]:
+                    self.deviceUndervoltage = c["deviceUndervoltage"]
+                if sof["IFeatureDeviceTemperatureOutOfRange"]:
+                    self.temperatureOutOfRange = c["temperatureOutOfRange"]
 
     def __str__(self):
         return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({}) configPending({}) dutyCycle({})".format(

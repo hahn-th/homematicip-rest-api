@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - HMIP-SCI (Contact Interface Sensor) 
+- API
+  - add supported optional features
+  
 ### Fixes
 - [BUG: 223] activateVacation does not work 
 
