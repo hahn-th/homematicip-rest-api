@@ -1466,6 +1466,55 @@
             "type": "SHUTTER_CONTACT",
             "updateState": "UP_TO_DATE"
         },
+        "3014F7110000000000005551": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.2.12",
+            "firmwareVersionInteger": 66060,
+            "functionalChannels": {
+                "0": {
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000005551",
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [ ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -73,
+                    "rssiPeerValue": null,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F7110000000000005551",
+                    "eventDelay": 0,
+                    "functionalChannelType": "SHUTTER_CONTACT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000010",
+                        "00000000-0000-0000-0000-000000000007"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "windowState": "CLOSED"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000005551",
+            "label": "Eingangst\u00fcrkontakt",
+            "lastStatusUpdate": 1524515854304,
+            "liveUpdateState": "UP_TO_DATE",
+            "manufacturerCode": 1,
+            "modelId": 340,
+            "modelType": "HmIP-SWDM",
+            "oem": "eQ-3",
+            "permanentlyReachable": false,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000005551",
+            "type": "SHUTTER_CONTACT_MAGNETIC",
+            "updateState": "BACKGROUND_UPDATE_NOT_SUPPORTED"
+        },
         "3014F7110000000000000001": {
             "availableFirmwareVersion": "1.16.8",
             "firmwareVersion": "1.16.8",

@@ -44,7 +44,7 @@ TYPE_CLASS_MAP = {
     DeviceType.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
     DeviceType.SHUTTER_CONTACT: AsyncShutterContact,
     DeviceType.SHUTTER_CONTACT_INVISIBLE: AsyncShutterContact,
-    DeviceType.SHUTTER_CONTACT_MAGNETIC: AsyncShutterContact,
+    DeviceType.SHUTTER_CONTACT_MAGNETIC: AsyncShutterContactMagnetic,
     DeviceType.SHUTTER_CONTACT_INTERFACE: AsyncContactInterface,
     DeviceType.SMOKE_DETECTOR: AsyncSmokeDetector,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: AsyncTemperatureHumiditySensorWithoutDisplay,
