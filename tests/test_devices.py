@@ -146,6 +146,11 @@ def test_contact_interface_device(fake_home: Home):
     assert d.rssiPeerValue == None
     assert d.dutyCycle == False
     assert d.configPending == False
+    assert d.deviceOverheated == True
+    assert d.deviceOverloaded == None
+    assert d.deviceUndervoltage == None
+    assert d.temperatureOutOfRange == None
+
     assert (
         str(d)
         == "HmIP-SCI Schließer Magnet lowbat(False) unreach(False) rssiDeviceValue(-42) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) windowState(CLOSED)"

@@ -50,6 +50,14 @@ class DeviceBaseChannel(FunctionalChannel):
         self.rssiPeerValue = 0
         self.dutyCycle = False
         self.configPending = False
+        self.coProFaulty = None
+        self.coProRestartNeeded = None
+        self.coProUpdateFailure = None
+        self.deviceOverheated = None
+        self.deviceOverloaded = None
+        self.deviceUndervoltage = None
+        self.temperatureOutOfRange = None
+
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -61,6 +69,22 @@ class DeviceBaseChannel(FunctionalChannel):
         self.rssiPeerValue = js["rssiPeerValue"]
         self.dutyCycle = js["dutyCycle"]
         self.configPending = js["configPending"]
+        sof = js["supportedOptionalFeatures"]
+        if sof:
+            if sof["IFeatureDeviceCoProError"]:
+                self.coProFaulty = js["coProFaulty"]
+            if sof["IFeatureDeviceCoProRestart"]:
+                self.coProRestartNeeded = js["coProRestartNeeded"]
+            if sof["IFeatureDeviceCoProUpdate"]:
+                self.coProUpdateFailure = js["coProUpdateFailure"]
+            if sof["IFeatureDeviceOverheated"]:
+                self.deviceOverheated = js["deviceOverheated"]
+            if sof["IFeatureDeviceOverloaded"]:
+                self.deviceOverloaded = js["deviceOverloaded"]
+            if sof["IFeatureDeviceTemperatureOutOfRange"]:
+                self.temperatureOutOfRange = js["temperatureOutOfRange"]
+            if sof["IFeatureDeviceUndervoltage"]:
+                self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
 class DeviceSabotageChannel(DeviceBaseChannel):
