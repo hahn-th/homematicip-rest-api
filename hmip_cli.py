@@ -273,6 +273,12 @@ def main():
         dest="deactivate_absence",
         help="deactivates absence",
     )
+    group.add_argument(
+        "--start-inclusion",
+        action="store",
+        dest="inclusion_device_id",
+        help="start inclusion for device with given id",
+    )
 
     group = parser.add_argument_group("Group Settings")
     group.add_argument(
@@ -643,6 +649,10 @@ def main():
     if args.deactivate_absence:
         command_entered = True
         home.deactivate_absence()
+
+    if args.inclusion_device_id:
+        command_entered = True
+        home.start_inclusion(args.inclusion_device_id)
 
     if args.group:
         command_entered = False
