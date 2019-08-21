@@ -47,7 +47,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON: PushButton,
     DeviceType.PUSH_BUTTON_6: PushButton6,
     DeviceType.REMOTE_CONTROL_8: RemoteControl8,
-    DeviceType.REMOTE_CONTROL_8_MODULE: RemRemoteControl8Module,
+    DeviceType.REMOTE_CONTROL_8_MODULE: RemoteControl8Module,
     DeviceType.ROOM_CONTROL_DEVICE: TemperatureHumiditySensorDisplay,
     DeviceType.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
     DeviceType.SHUTTER_CONTACT: ShutterContact,
