@@ -764,6 +764,8 @@ class KeyRemoteControl4(PushButton):
 class RemoteControl8(PushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """
 
+class RemoteControl8Module(RemoteControl8):
+    """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
