@@ -229,6 +229,7 @@ class DeviceType(AutoNameEnum):
     PUSH_BUTTON = auto()
     PUSH_BUTTON_6 = auto()
     REMOTE_CONTROL_8 = auto()
+    REMOTE_CONTROL_8_MODULE = auto()
     ROOM_CONTROL_DEVICE = auto()
     ROTARY_HANDLE_SENSOR = auto()
     SHUTTER_CONTACT = auto()

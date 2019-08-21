@@ -225,6 +225,8 @@ class AsyncKeyRemoteControl4(KeyRemoteControl4, AsyncPushButton):
 class AsyncRemoteControl8(RemoteControl8, AsyncPushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """
 
+class AsyncRemoteControl8Module(RemoteControl8Module, AsyncRemoteControl8):
+    """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
