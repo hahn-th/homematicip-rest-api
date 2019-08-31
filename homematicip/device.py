@@ -335,7 +335,7 @@ class ContactInterface(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        c = get_functional_channel("SHUTTER_CONTACT_INTERFACE", js)
+        c = get_functional_channel("CONTACT_INTERFACE_CHANNEL", js)
         if c:
             self.windowState = WindowState.from_str(c["windowState"])
             self.eventDelay = c["eventDelay"]
