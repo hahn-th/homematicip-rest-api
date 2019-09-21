@@ -1,8 +1,8 @@
-from homematicip import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 import json
 
 
-class Rule(HomeMaticIPObject.HomeMaticIPObject):
+class Rule(HomeMaticIPObject):
     """this class represents the automation rule """
 
     def __init__(self, connection):

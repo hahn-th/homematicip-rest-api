@@ -1,5 +1,5 @@
 # coding=utf-8
-from homematicip import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 import json
 from datetime import datetime
 import calendar
@@ -8,7 +8,7 @@ from operator import attrgetter
 from homematicip.base.enums import *
 
 
-class Group(HomeMaticIPObject.HomeMaticIPObject):
+class Group(HomeMaticIPObject):
     """this class represents a group """
 
     def __init__(self, connection):
@@ -382,7 +382,7 @@ class SecurityZoneGroup(Group):
         )
 
 
-class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
+class HeatingCoolingPeriod(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.starttime = None
@@ -396,7 +396,7 @@ class HeatingCoolingPeriod(HomeMaticIPObject.HomeMaticIPObject):
         self.value = js["value"]
 
 
-class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
+class HeatingCoolingProfileDay(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.baseValue = None
@@ -412,7 +412,7 @@ class HeatingCoolingProfileDay(HomeMaticIPObject.HomeMaticIPObject):
             self.periods.append(period)
 
 
-class HeatingCoolingProfile(HomeMaticIPObject.HomeMaticIPObject):
+class HeatingCoolingProfile(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.id = None
@@ -812,7 +812,7 @@ class HeatingCoolingDemandPumpGroup(Group):
         )
 
 
-class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
+class TimeProfilePeriod(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.weekdays = []
@@ -840,7 +840,7 @@ class TimeProfilePeriod(HomeMaticIPObject.HomeMaticIPObject):
         self.rampTime = js["rampTime"]
 
 
-class TimeProfile(HomeMaticIPObject.HomeMaticIPObject):
+class TimeProfile(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.id = None

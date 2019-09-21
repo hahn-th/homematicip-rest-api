@@ -1,10 +1,11 @@
 from homematicip.group import Group
 from homematicip.base.enums import *
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 from typing import Iterable
 
 
-class FunctionalChannel:
+class FunctionalChannel(HomeMaticIPObject):
     """ this is the base class for the functional channels """
 
     def __init__(self):
@@ -14,6 +15,9 @@ class FunctionalChannel:
         self.groupIndex = -1
         self.functionalChannelType = ""
         self.groups = Iterable[Group]
+
+        #we don't need a connection in this object (at the moment)
+        self._connection = None
 
     def from_json(self, js, groups: Iterable[Group]):
         """ this function will load the functional channel object 
@@ -35,6 +39,8 @@ class FunctionalChannel:
                 if g.id == id:
                     self.groups.append(g)
                     break
+
+        super().from_json(js)
 
 
 class DeviceBaseChannel(FunctionalChannel):

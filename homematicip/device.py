@@ -5,7 +5,7 @@ import logging
 
 from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
-from homematicip import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
 
 from typing import Iterable
@@ -14,7 +14,7 @@ from collections import Counter
 LOGGER = logging.getLogger(__name__)
 
 
-class Device(HomeMaticIPObject.HomeMaticIPObject):
+class Device(HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
 
     def __init__(self, connection):
@@ -1507,3 +1507,17 @@ class FullFlushContactInterface(Device):
             self.multiModeInputMode,
             self.windowState,
         )
+
+class AccelerationSensor(Device):
+    """ HMIP-SAM (Contact Interface flush-mount – 1 channel) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.accelerationSensorEventFilterPeriod = 100.0
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        self.accelerationSensorNeutralPosition = AccelerationSensorNeutralPosition.HORIZONTAL
+        self.accelerationSensorSensitivity = AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        self.accelerationSensorTriggerAngle = 0
+        self.accelerationSensorTriggered = False
+        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
