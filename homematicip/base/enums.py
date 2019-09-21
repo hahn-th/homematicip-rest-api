@@ -439,3 +439,25 @@ class HumidityValidationType(AutoNameEnum):
     LESSER_LOWER_THRESHOLD = auto()
     GREATER_UPPER_THRESHOLD = auto()
     GREATER_LOWER_LESSER_UPPER_THRESHOLD = auto()
+
+class AccelerationSensorMode(AutoNameEnum):
+    ANY_MOTION = auto()
+    FLAT_DECT = auto()
+
+class AccelerationSensorNeutralPosition(AutoNameEnum):
+    HORIZONTAL = auto()
+    VERTICAL = auto()
+
+class AccelerationSensorSensitivity(AutoNameEnum):
+    SENSOR_RANGE_16G = auto()
+    SENSOR_RANGE_8G = auto()
+    SENSOR_RANGE_4G = auto()
+    SENSOR_RANGE_2G = auto()
+    SENSOR_RANGE_2G_PLUS_SENS = auto()
+    SENSOR_RANGE_2G_2PLUS_SENSE = auto()
+
+class NotificationSoundType(AutoNameEnum):
+    SOUND_NO_SOUND = auto()
+    SOUND_SHORT = auto()
+    SOUND_SHORT_SHORT = auto()
+    SOUND_LONG = auto()
