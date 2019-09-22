@@ -373,3 +373,6 @@ class AsyncWaterSensor(WaterSensor, AsyncDevice):
                 sirenWaterAlarmTrigger=sirenWaterAlarmTrigger
             )
         )
+
+class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
+    """ HmIP-SAM """
