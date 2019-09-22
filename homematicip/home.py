@@ -673,16 +673,14 @@ class Home(HomeMaticIPObject):
             "home/security/setZonesDeviceAssignment", body=json.dumps(data)
         )
 
-    def start_inclusion (self, deviceId):
+    def start_inclusion(self, deviceId):
         """ start inclusion mode for specific device
         Args:
             deviceId: sgtin of device        
         """
         data = {"deviceId": deviceId}
-        return self._restCall(
-            "home/startInclusionModeForDevice", body=json.dumps(data)
-        )
-        
+        return self._restCall("home/startInclusionModeForDevice", body=json.dumps(data))
+
     def enable_events(self):
         websocket.enableTrace(True)
         self.__webSocket = websocket.WebSocketApp(

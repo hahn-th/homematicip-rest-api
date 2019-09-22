@@ -47,10 +47,9 @@ class HomeMaticIPObject:
             return None
         return datetime.fromtimestamp(timestamp / 1000.0)
 
-    def __str__(self):
-        return "id({})".format(self.id)
-
-    def set_attr_from_dict(self,attr:str,dict,type:AutoNameEnum=None,dict_attr=None):
+    def set_attr_from_dict(
+        self, attr: str, dict, type: AutoNameEnum = None, dict_attr=None
+    ):
         """this method will add the value from dict to the given attr name
 
         Args:
@@ -60,8 +59,8 @@ class HomeMaticIPObject:
             dict_attr: the name of the attribute in the dict. Set this to None(default) to use attr
         """
         if not dict_attr:
-            dict_attr=attr
+            dict_attr = attr
         value = dict[dict_attr]
         if type:
             value = type.from_str(value)
-        self.__dict__[attr]=value
+        self.__dict__[attr] = value

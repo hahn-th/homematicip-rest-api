@@ -16,7 +16,7 @@ class FunctionalChannel(HomeMaticIPObject):
         self.functionalChannelType = ""
         self.groups = Iterable[Group]
 
-        #we don't need a connection in this object (at the moment)
+        # we don't need a connection in this object (at the moment)
         self._connection = None
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -63,7 +63,6 @@ class DeviceBaseChannel(FunctionalChannel):
         self.deviceOverloaded = None
         self.deviceUndervoltage = None
         self.temperatureOutOfRange = None
-
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -218,6 +217,7 @@ class ShutterContactChannel(FunctionalChannel):
 
 class RotaryHandleChannel(ShutterContactChannel):
     """ this is the representive of the ROTARY_HANDLE_CHANNEL channel"""
+
 
 class ContactInterfaceChannel(ShutterContactChannel):
     """ this is the representive of the CONTACT_INTERFACE_CHANNEL channel"""
