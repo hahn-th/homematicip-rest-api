@@ -56,8 +56,8 @@ def test_acceleration_sensor(fake_home: Home):
         assert d.accelerationSensorNeutralPosition == AccelerationSensorNeutralPosition.HORIZONTAL
         assert d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_2G
         assert d.accelerationSensorTriggerAngle == 30
-        assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_LONG
-        assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_LONG
+        assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
+        assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
 
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")

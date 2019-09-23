@@ -560,7 +560,7 @@ class FakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setNotificationSoundTypeRequest(
+    def post_hmip_device_configuration_setNotificationSoundType(
         self, request: Request, response: Response
     ):
 
