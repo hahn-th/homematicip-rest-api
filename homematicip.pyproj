@@ -19,6 +19,10 @@
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <CommandLineArguments>--list-groups</CommandLineArguments>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
+    <TestFramework>pytest</TestFramework>
+    <UnitTestPattern>test*.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
