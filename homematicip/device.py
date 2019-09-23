@@ -1516,17 +1516,25 @@ class AccelerationSensor(Device):
 
     def __init__(self, connection):
         super().__init__(connection)
+        #:float:
         self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
         self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorNeutralPosition:
         self.accelerationSensorNeutralPosition = (
             AccelerationSensorNeutralPosition.HORIZONTAL
         )
+        #:AccelerationSensorSensitivity:
         self.accelerationSensorSensitivity = (
             AccelerationSensorSensitivity.SENSOR_RANGE_2G
         )
+        #:int:
         self.accelerationSensorTriggerAngle = 0
+        #:bool:
         self.accelerationSensorTriggered = False
+        #:NotificationSoundType:
         self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        #:NotificationSoundType:
         self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
 
     def from_json(self, js):

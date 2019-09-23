@@ -684,3 +684,50 @@ class AnalogOutputChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.analogOutputLevel = js["analogOutputLevel"]
+
+class AccelerationSensorChannel(FunctionalChannel):
+    """ this is the representive of the ACCELERATION_SENSOR_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorNeutralPosition:
+        self.accelerationSensorNeutralPosition = (
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+        #:NotificationSoundType:
+        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        #:NotificationSoundType:
+        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
+        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
+        self.set_attr_from_dict(
+            "accelerationSensorNeutralPosition",
+            js,
+            AccelerationSensorNeutralPosition,
+        )
+        self.set_attr_from_dict(
+            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
+        )
+        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
+        self.set_attr_from_dict("accelerationSensorTriggered", js)
+        self.set_attr_from_dict(
+            "notificationSoundTypeHighToLow", js, NotificationSoundType
+        )
+        self.set_attr_from_dict(
+            "notificationSoundTypeLowToHigh", js, NotificationSoundType
+        )

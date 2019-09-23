@@ -365,6 +365,7 @@ class WindValueType(AutoNameEnum):
 
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
+    ACCELERATION_SENSOR_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     BLIND_CHANNEL = auto()

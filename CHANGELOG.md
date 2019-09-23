@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - HMIP-MOD-RC8 (Open Collector Module Sender - 8x)
+  - HMIP-SAM        (Acceleration Sensor)
 
 ### Deprecated
 - API
