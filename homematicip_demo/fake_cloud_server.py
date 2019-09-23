@@ -265,6 +265,7 @@ class FakeCloudServer:
         ] = "NOT_ABSENT"
 
         return response
+
     # endregion
 
     # region rule
@@ -567,8 +568,14 @@ class FakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
-        notificationSoundTypeKey = "notificationSoundTypeHighToLow" if js["isHighToLow"] else "notificationSoundTypeLowToHigh"
-        d["functionalChannels"][channelIndex][notificationSoundTypeKey] = js["notificationSoundType"]
+        notificationSoundTypeKey = (
+            "notificationSoundTypeHighToLow"
+            if js["isHighToLow"]
+            else "notificationSoundTypeLowToHigh"
+        )
+        d["functionalChannels"][channelIndex][notificationSoundTypeKey] = js[
+            "notificationSoundType"
+        ]
         response.status_code = 200
         return response
 
@@ -580,7 +587,9 @@ class FakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["accelerationSensorEventFilterPeriod"] = js["accelerationSensorEventFilterPeriod"]
+        d["functionalChannels"][channelIndex][
+            "accelerationSensorEventFilterPeriod"
+        ] = js["accelerationSensorEventFilterPeriod"]
         response.status_code = 200
         return response
 
@@ -592,7 +601,9 @@ class FakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["accelerationSensorTriggerAngle"] = js["accelerationSensorTriggerAngle"]
+        d["functionalChannels"][channelIndex]["accelerationSensorTriggerAngle"] = js[
+            "accelerationSensorTriggerAngle"
+        ]
         response.status_code = 200
         return response
 
@@ -604,7 +615,9 @@ class FakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["accelerationSensorSensitivity"] = js["accelerationSensorSensitivity"]
+        d["functionalChannels"][channelIndex]["accelerationSensorSensitivity"] = js[
+            "accelerationSensorSensitivity"
+        ]
         response.status_code = 200
         return response
 
@@ -616,7 +629,9 @@ class FakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["accelerationSensorNeutralPosition"] = js["accelerationSensorNeutralPosition"]
+        d["functionalChannels"][channelIndex]["accelerationSensorNeutralPosition"] = js[
+            "accelerationSensorNeutralPosition"
+        ]
         response.status_code = 200
         return response
 
@@ -628,9 +643,12 @@ class FakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = "{}".format(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["accelerationSensorMode"] = js["accelerationSensorMode"]
+        d["functionalChannels"][channelIndex]["accelerationSensorMode"] = js[
+            "accelerationSensorMode"
+        ]
         response.status_code = 200
         return response
+
     # endregion
 
     # region auth

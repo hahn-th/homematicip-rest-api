@@ -16,13 +16,19 @@ from homematicip_demo.helper import (
 )
 from conftest import utc_offset
 
+
 def test_acceleration_sensor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000031")
     assert isinstance(d, AccelerationSensor)
     assert d.accelerationSensorEventFilterPeriod == 3.0
     assert d.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
-    assert d.accelerationSensorNeutralPosition == AccelerationSensorNeutralPosition.VERTICAL
-    assert d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+    assert (
+        d.accelerationSensorNeutralPosition
+        == AccelerationSensorNeutralPosition.VERTICAL
+    )
+    assert (
+        d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+    )
     assert d.accelerationSensorTriggerAngle == 45
     assert d.accelerationSensorTriggered == True
     assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_LONG
@@ -38,12 +44,15 @@ def test_acceleration_sensor(fake_home: Home):
         " notificationSoundTypeLowToHigh(SOUND_LONG)"
     )
 
-
     with no_ssl_verification():
         d.set_acceleration_sensor_event_filter_period(10.0)
         d.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
-        d.set_acceleration_sensor_neutral_position(AccelerationSensorNeutralPosition.HORIZONTAL)
-        d.set_acceleration_sensor_sensitivity(AccelerationSensorSensitivity.SENSOR_RANGE_2G)
+        d.set_acceleration_sensor_neutral_position(
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        d.set_acceleration_sensor_sensitivity(
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
         d.set_acceleration_sensor_trigger_angle(30)
         d.set_notification_sound_type(NotificationSoundType.SOUND_SHORT, True)
         d.set_notification_sound_type(NotificationSoundType.SOUND_SHORT_SHORT, False)
@@ -53,11 +62,20 @@ def test_acceleration_sensor(fake_home: Home):
 
         assert d.accelerationSensorEventFilterPeriod == 10.0
         assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
-        assert d.accelerationSensorNeutralPosition == AccelerationSensorNeutralPosition.HORIZONTAL
-        assert d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        assert (
+            d.accelerationSensorNeutralPosition
+            == AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        assert (
+            d.accelerationSensorSensitivity
+            == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
         assert d.accelerationSensorTriggerAngle == 30
         assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
-        assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
+        assert (
+            d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
+        )
+
 
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")

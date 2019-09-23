@@ -1552,7 +1552,9 @@ class AccelerationSensor(Device):
                 "notificationSoundTypeLowToHigh", c, NotificationSoundType
             )
 
-    def set_acceleration_sensor_mode(self, mode: AccelerationSensorMode, channelIndex = 1):
+    def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
@@ -1562,17 +1564,22 @@ class AccelerationSensor(Device):
             "device/configuration/setAccelerationSensorMode", json.dumps(data)
         )
 
-    def set_acceleration_sensor_neutral_position(self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex = 1):
+    def set_acceleration_sensor_neutral_position(
+        self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex=1
+    ):
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
             "accelerationSensorNeutralPosition": str(neutralPosition),
         }
         return self._restCall(
-            "device/configuration/setAccelerationSensorNeutralPosition", json.dumps(data)
+            "device/configuration/setAccelerationSensorNeutralPosition",
+            json.dumps(data),
         )
 
-    def set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity, channelIndex = 1):
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
@@ -1582,7 +1589,7 @@ class AccelerationSensor(Device):
             "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
         )
 
-    def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex = 1):
+    def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
@@ -1592,22 +1599,27 @@ class AccelerationSensor(Device):
             "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
         )
 
-    def set_acceleration_sensor_event_filter_period(self, period: float, channelIndex = 1):
+    def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
             "accelerationSensorEventFilterPeriod": period,
         }
         return self._restCall(
-            "device/configuration/setAccelerationSensorEventFilterPeriod", json.dumps(data)
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
         )
 
-    def set_notification_sound_type(self, soundType:NotificationSoundType, isHighToLow:bool, channelIndex = 1):
+    def set_notification_sound_type(
+        self, soundType: NotificationSoundType, isHighToLow: bool, channelIndex=1
+    ):
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
             "notificationSoundType": str(soundType),
-            "isHighToLow":isHighToLow
+            "isHighToLow": isHighToLow,
         }
         return self._restCall(
             "device/configuration/setNotificationSoundType", json.dumps(data)
