@@ -120,7 +120,7 @@ Homematic IP Devices:
 -  [ ] HMIP-PSM-UK     (Type G not tested, but it should work)
 -  [X] HMIP-RC8        (Remote Control - 8x buttons)
 -  [ ] HMIP-RCB1       (Remote Control - 1x button)
--  [ ] HMIP-SAM        (Acceleration Sensor)
+-  [X] HMIP-SAM        (Acceleration Sensor)
 -  [X] HMIP-SCI        (Contact Interface Sensor)
 -  [X] HMIP-SLO        (Light Sensor - outdoor)
 -  [X] HMIP-SMI        (Motion Detector with Brightness Sensor - indoor)

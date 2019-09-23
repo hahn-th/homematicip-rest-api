@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class AutoNameEnum(str, Enum):
     """ auto() will generate the name of the attribute as value """
 
@@ -28,7 +29,9 @@ class AutoNameEnum(str, Enum):
         try:
             return cls(text)
         except:
-            logger.warning("'%s' isn't a valid option for class '%s'", text, cls.__name__)
+            logger.warning(
+                "'%s' isn't a valid option for class '%s'", text, cls.__name__
+            )
             return default
 
 
@@ -99,6 +102,7 @@ class ValveState(AutoNameEnum):
 class HeatingValveType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
     NORMALLY_OPEN = auto()
+
 
 class ContactType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
@@ -194,6 +198,7 @@ class ClientType(AutoNameEnum):
 
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
+    ACCELERATION_SENSOR = auto()
     ALARM_SIREN_INDOOR = auto()
     BRAND_BLIND = auto()
     BRAND_DIMMER = auto()
@@ -360,6 +365,7 @@ class WindValueType(AutoNameEnum):
 
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
+    ACCELERATION_SENSOR_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     BLIND_CHANNEL = auto()
@@ -439,3 +445,29 @@ class HumidityValidationType(AutoNameEnum):
     LESSER_LOWER_THRESHOLD = auto()
     GREATER_UPPER_THRESHOLD = auto()
     GREATER_LOWER_LESSER_UPPER_THRESHOLD = auto()
+
+
+class AccelerationSensorMode(AutoNameEnum):
+    ANY_MOTION = auto()
+    FLAT_DECT = auto()
+
+
+class AccelerationSensorNeutralPosition(AutoNameEnum):
+    HORIZONTAL = auto()
+    VERTICAL = auto()
+
+
+class AccelerationSensorSensitivity(AutoNameEnum):
+    SENSOR_RANGE_16G = auto()
+    SENSOR_RANGE_8G = auto()
+    SENSOR_RANGE_4G = auto()
+    SENSOR_RANGE_2G = auto()
+    SENSOR_RANGE_2G_PLUS_SENS = auto()
+    SENSOR_RANGE_2G_2PLUS_SENSE = auto()
+
+
+class NotificationSoundType(AutoNameEnum):
+    SOUND_NO_SOUND = auto()
+    SOUND_SHORT = auto()
+    SOUND_SHORT_SHORT = auto()
+    SOUND_LONG = auto()

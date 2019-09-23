@@ -225,8 +225,10 @@ class AsyncKeyRemoteControl4(KeyRemoteControl4, AsyncPushButton):
 class AsyncRemoteControl8(RemoteControl8, AsyncPushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """
 
+
 class AsyncRemoteControl8Module(RemoteControl8Module, AsyncRemoteControl8):
     """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
@@ -372,4 +374,50 @@ class AsyncWaterSensor(WaterSensor, AsyncDevice):
             *super().set_siren_water_alarm_trigger(
                 sirenWaterAlarmTrigger=sirenWaterAlarmTrigger
             )
+        )
+
+
+class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
+    """ HmIP-SAM """
+
+    async def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_mode(mode, channelIndex)
+        )
+
+    async def set_acceleration_sensor_neutral_position(
+        self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_neutral_position(
+                neutralPosition, channelIndex
+            )
+        )
+
+    async def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_sensitivity(sensitivity, channelIndex)
+        )
+
+    async def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_trigger_angle(angle, channelIndex)
+        )
+
+    async def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
+        )
+
+    async def set_notification_sound_type(
+        self, soundType: NotificationSoundType, isHighToLow: bool, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_notification_sound_type(soundType, isHighToLow, channelIndex)
         )

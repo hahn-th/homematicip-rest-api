@@ -5,7 +5,7 @@ import logging
 
 from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
-from homematicip import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
 
 from typing import Iterable
@@ -14,7 +14,7 @@ from collections import Counter
 LOGGER = logging.getLogger(__name__)
 
 
-class Device(HomeMaticIPObject.HomeMaticIPObject):
+class Device(HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
 
     def __init__(self, connection):
@@ -764,8 +764,10 @@ class KeyRemoteControl4(PushButton):
 class RemoteControl8(PushButton):
     """ HmIP-RC8 (Remote Control - 8 buttons) """
 
+
 class RemoteControl8Module(RemoteControl8):
     """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
@@ -1506,4 +1508,145 @@ class FullFlushContactInterface(Device):
             self.binaryBehaviorType,
             self.multiModeInputMode,
             self.windowState,
+        )
+
+
+class AccelerationSensor(Device):
+    """ HMIP-SAM (Contact Interface flush-mount – 1 channel) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorNeutralPosition:
+        self.accelerationSensorNeutralPosition = (
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+        #:NotificationSoundType:
+        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        #:NotificationSoundType:
+        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ACCELERATION_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("accelerationSensorEventFilterPeriod", c)
+            self.set_attr_from_dict("accelerationSensorMode", c, AccelerationSensorMode)
+            self.set_attr_from_dict(
+                "accelerationSensorNeutralPosition",
+                c,
+                AccelerationSensorNeutralPosition,
+            )
+            self.set_attr_from_dict(
+                "accelerationSensorSensitivity", c, AccelerationSensorSensitivity
+            )
+            self.set_attr_from_dict("accelerationSensorTriggerAngle", c)
+            self.set_attr_from_dict("accelerationSensorTriggered", c)
+            self.set_attr_from_dict(
+                "notificationSoundTypeHighToLow", c, NotificationSoundType
+            )
+            self.set_attr_from_dict(
+                "notificationSoundTypeLowToHigh", c, NotificationSoundType
+            )
+
+    def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorMode": str(mode),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorMode", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_neutral_position(
+        self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorNeutralPosition": str(neutralPosition),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorNeutralPosition",
+            json.dumps(data),
+        )
+
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorSensitivity": str(sensitivity),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorTriggerAngle": angle,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorEventFilterPeriod": period,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
+        )
+
+    def set_notification_sound_type(
+        self, soundType: NotificationSoundType, isHighToLow: bool, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "notificationSoundType": str(soundType),
+            "isHighToLow": isHighToLow,
+        }
+        return self._restCall(
+            "device/configuration/setNotificationSoundType", json.dumps(data)
+        )
+
+    def __str__(self):
+        return (
+            "{} accelerationSensorEventFilterPeriod({}) accelerationSensorMode({}) "
+            "accelerationSensorNeutralPosition({}) accelerationSensorSensitivity({}) "
+            "accelerationSensorTriggerAngle({}) accelerationSensorTriggered({}) "
+            "notificationSoundTypeHighToLow({}) notificationSoundTypeLowToHigh({})"
+        ).format(
+            super().__str__(),
+            self.accelerationSensorEventFilterPeriod,
+            self.accelerationSensorMode,
+            self.accelerationSensorNeutralPosition,
+            self.accelerationSensorSensitivity,
+            self.accelerationSensorTriggerAngle,
+            self.accelerationSensorTriggered,
+            self.notificationSoundTypeHighToLow,
+            self.notificationSoundTypeLowToHigh,
         )

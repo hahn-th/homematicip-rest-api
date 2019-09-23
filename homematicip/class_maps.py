@@ -12,6 +12,7 @@ from homematicip.base.functionalChannels import *
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
+    DeviceType.ACCELERATION_SENSOR: AccelerationSensor,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
     DeviceType.BRAND_BLIND: BrandBlind,
     DeviceType.BRAND_DIMMER: BrandDimmer,
@@ -122,6 +123,7 @@ TYPE_FUNCTIONALHOME_MAP = {
 
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL: FunctionalChannel,
+    FunctionalChannelType.ACCELERATION_SENSOR_CHANNEL: AccelerationSensorChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
     FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,
     FunctionalChannelType.BLIND_CHANNEL: BlindChannel,

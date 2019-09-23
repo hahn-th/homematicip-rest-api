@@ -1,10 +1,11 @@
 from homematicip.group import Group
 from homematicip.base.enums import *
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 from typing import Iterable
 
 
-class FunctionalChannel:
+class FunctionalChannel(HomeMaticIPObject):
     """ this is the base class for the functional channels """
 
     def __init__(self):
@@ -14,6 +15,9 @@ class FunctionalChannel:
         self.groupIndex = -1
         self.functionalChannelType = ""
         self.groups = Iterable[Group]
+
+        # we don't need a connection in this object (at the moment)
+        self._connection = None
 
     def from_json(self, js, groups: Iterable[Group]):
         """ this function will load the functional channel object 
@@ -36,6 +40,8 @@ class FunctionalChannel:
                     self.groups.append(g)
                     break
 
+        super().from_json(js)
+
 
 class DeviceBaseChannel(FunctionalChannel):
     """ this is the representive of the DEVICE_BASE channel"""
@@ -57,7 +63,6 @@ class DeviceBaseChannel(FunctionalChannel):
         self.deviceOverloaded = None
         self.deviceUndervoltage = None
         self.temperatureOutOfRange = None
-
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -212,6 +217,7 @@ class ShutterContactChannel(FunctionalChannel):
 
 class RotaryHandleChannel(ShutterContactChannel):
     """ this is the representive of the ROTARY_HANDLE_CHANNEL channel"""
+
 
 class ContactInterfaceChannel(ShutterContactChannel):
     """ this is the representive of the CONTACT_INTERFACE_CHANNEL channel"""
@@ -678,3 +684,50 @@ class AnalogOutputChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.analogOutputLevel = js["analogOutputLevel"]
+
+class AccelerationSensorChannel(FunctionalChannel):
+    """ this is the representive of the ACCELERATION_SENSOR_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorNeutralPosition:
+        self.accelerationSensorNeutralPosition = (
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+        #:NotificationSoundType:
+        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        #:NotificationSoundType:
+        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
+        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
+        self.set_attr_from_dict(
+            "accelerationSensorNeutralPosition",
+            js,
+            AccelerationSensorNeutralPosition,
+        )
+        self.set_attr_from_dict(
+            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
+        )
+        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
+        self.set_attr_from_dict("accelerationSensorTriggered", js)
+        self.set_attr_from_dict(
+            "notificationSoundTypeHighToLow", js, NotificationSoundType
+        )
+        self.set_attr_from_dict(
+            "notificationSoundTypeLowToHigh", js, NotificationSoundType
+        )

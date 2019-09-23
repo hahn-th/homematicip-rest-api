@@ -1,10 +1,10 @@
 # coding=utf-8
-from homematicip import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 import json
 from datetime import datetime
 
 
-class SecurityEvent(HomeMaticIPObject.HomeMaticIPObject):
+class SecurityEvent(HomeMaticIPObject):
     """this class represents a security event """
 
     def __init__(self, connection):

@@ -16,7 +16,7 @@ from homematicip.base.helpers import bytes2str
 LOGGER = logging.getLogger(__name__)
 
 
-class Weather(HomeMaticIPObject.HomeMaticIPObject):
+class Weather(HomeMaticIPObject):
     """ this class represents the weather of the home location"""
 
     def __init__(self, connection):
@@ -66,7 +66,7 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         )
 
 
-class Location(HomeMaticIPObject.HomeMaticIPObject):
+class Location(HomeMaticIPObject):
     """This class represents the possible location"""
 
     def __init__(self, connection):
@@ -90,7 +90,7 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         )
 
 
-class Client(HomeMaticIPObject.HomeMaticIPObject):
+class Client(HomeMaticIPObject):
     """A client is an app which has access to the access point. 
     e.g. smartphone, 3th party apps, google home, conrad connect
     """
@@ -121,7 +121,7 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         return "label({})".format(self.label)
 
 
-class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
+class OAuthOTK(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.authToken = None
@@ -133,7 +133,7 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
         self.expirationTimestamp = self.fromtimestamp(js["expirationTimestamp"])
 
 
-class Home(HomeMaticIPObject.HomeMaticIPObject):
+class Home(HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
 
     _typeClassMap = TYPE_CLASS_MAP
@@ -673,16 +673,14 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             "home/security/setZonesDeviceAssignment", body=json.dumps(data)
         )
 
-    def start_inclusion (self, deviceId):
+    def start_inclusion(self, deviceId):
         """ start inclusion mode for specific device
         Args:
             deviceId: sgtin of device        
         """
         data = {"deviceId": deviceId}
-        return self._restCall(
-            "home/startInclusionModeForDevice", body=json.dumps(data)
-        )
-        
+        return self._restCall("home/startInclusionModeForDevice", body=json.dumps(data))
+
     def enable_events(self):
         websocket.enableTrace(True)
         self.__webSocket = websocket.WebSocketApp(

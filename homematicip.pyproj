@@ -18,8 +18,11 @@
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <CommandLineArguments>--list-groups</CommandLineArguments>
-    <InterpreterId>
-    </InterpreterId>
+    <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
+    <TestFramework>pytest</TestFramework>
+    <UnitTestPattern>test*.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,9 +75,10 @@
     <Compile Include="homematicip\home.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="homematicip\HomeMaticIPObject.py">
+    <Compile Include="homematicip\base\HomeMaticIPObject.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="homematicip\HomeMaticIPObject.py" />
     <Compile Include="homematicip\rule.py">
       <SubType>Code</SubType>
     </Compile>
@@ -150,6 +154,17 @@
     <Content Include="README.rst" />
     <Content Include="requirements.txt" />
     <Content Include="requirements_dev.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="venv\">
+      <Id>venv</Id>
+      <Version>3.7</Version>
+      <Description>venv (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in
