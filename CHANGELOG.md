@@ -5,10 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.10.11] - 2019-09-23
 ### Added
 - Devices
   - HMIP-MOD-RC8 (Open Collector Module Sender - 8x)
-  - HMIP-SAM        (Acceleration Sensor)
+  - HMIP-SAM     (Acceleration Sensor)
 
 ### Deprecated
 - API
@@ -226,7 +228,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.10...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.11...HEAD
+[0.10.11]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.10...0.10.11
 [0.10.10]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.9...0.10.10
 [0.10.9]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.8...0.10.9
 [0.10.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...0.10.8
