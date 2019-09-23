@@ -58,8 +58,8 @@
                     "groups": [],
                     "index": 1,
                     "label": "",
-                    "notificationSoundTypeHighToLow": "SOUND_NO_SOUND",
-                    "notificationSoundTypeLowToHigh": "SOUND_NO_SOUND"
+                    "notificationSoundTypeHighToLow": "SOUND_LONG",
+                    "notificationSoundTypeLowToHigh": "SOUND_LONG"
                 }
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
