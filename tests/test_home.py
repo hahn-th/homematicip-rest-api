@@ -27,6 +27,17 @@ def test_update_event(fake_home: Home):
     fake_home.fire_update_event()
     fake_handler.method.assert_called()
 
+def test_remove_event(fake_home: Home):
+    fake_handler = Mock()
+    fake_home.on_remove(fake_handler.method)
+    fake_home.fire_remove_event()
+    fake_handler.method.assert_called()
+
+def test_create_event(fake_home: Home):
+    fake_handler = Mock()
+    fake_home.on_create(fake_handler.method)
+    fake_home.fire_create_event()
+    fake_handler.method.assert_called()
 
 def test_home_base(fake_home: Home):
     assert fake_home.connected == True

@@ -22,6 +22,11 @@ def test_update_event(fake_switch):
     fake_switch.fire_update_event()
     fake_handler.method.assert_called()
 
+def test_remove_event(fake_switch):
+    fake_handler = Mock()
+    fake_switch.on_remove(fake_handler.method)
+    fake_switch.fire_remove_event()
+    fake_handler.method.assert_called()
 
 @pytest.mark.asyncio
 async def test_switch_on(fake_switch):
