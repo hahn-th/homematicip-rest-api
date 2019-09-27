@@ -235,6 +235,12 @@ class Home(HomeMaticIPObject):
         for _handler in self._on_create:
             _handler(*args, **kwargs)
 
+    def remove_callback(self, handler):
+        """Remove event handler."""
+        super().remove_callback(handler)
+        if handler in self._on_create:
+            self._on_create.remove(handler)
+
     def download_configuration(self) -> str:
         """downloads the current configuration from the cloud
 
