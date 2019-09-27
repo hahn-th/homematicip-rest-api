@@ -12,11 +12,23 @@ class HomeMaticIPObject:
 
     def __init__(self, connection):
         self._connection = connection
+        ## List with remove handlers.
+        self._on_remove = []
         # List with update handlers.
         self._on_update = []
 
         #:the raw json data of the object
         self._rawJSONData = {}
+
+    def on_remove(self, handler):
+        """Adds an event handler to the remove method. Fires when a device
+        is removed."""
+        self._on_remove.append(handler)
+
+    def fire_remove_event(self, *args, **kwargs):
+        """Trigger the method tied to _on_remove"""
+        for _handler in self._on_remove:
+            _handler(*args, **kwargs)
 
     def on_update(self, handler):
         """Adds an event handler to the update method. Fires when a device
@@ -27,6 +39,13 @@ class HomeMaticIPObject:
         """Trigger the method tied to _on_update"""
         for _handler in self._on_update:
             _handler(*args, **kwargs)
+
+    def remove_callback(self, handler):
+        """Remove event handler."""
+        if handler in self._on_remove:
+            self._on_remove.remove(handler)
+        if handler in self._on_update:
+            self._on_update.remove(handler)
 
     def _restCall(self, path, body=None):
         return self._connection._restCall(path, body)

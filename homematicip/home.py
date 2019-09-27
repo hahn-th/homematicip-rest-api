@@ -147,6 +147,9 @@ class Home(HomeMaticIPObject):
             connection = Connection()
         super().__init__(connection)
 
+        # List with create handlers.
+        self._on_create = []
+
         self.apExchangeClientId = None
         self.apExchangeState = ApExchangeState.NONE
         self.availableAPVersion = None
@@ -221,6 +224,22 @@ class Home(HomeMaticIPObject):
         self.carrierSense = js_home["carrierSense"]
 
         self._get_rules(js_home)
+
+    def on_create(self, handler):
+        """Adds an event handler to the create method. Fires when a device
+        is created."""
+        self._on_create.append(handler)
+
+    def fire_create_event(self, *args, **kwargs):
+        """Trigger the method tied to _on_create"""
+        for _handler in self._on_create:
+            _handler(*args, **kwargs)
+
+    def remove_callback(self, handler):
+        """Remove event handler."""
+        super().remove_callback(handler)
+        if handler in self._on_create:
+            self._on_create.remove(handler)
 
     def download_configuration(self) -> str:
         """downloads the current configuration from the cloud
@@ -719,6 +738,8 @@ class Home(HomeMaticIPObject):
                     if obj is None:
                         obj = self._parse_group(data)
                         self.groups.append(obj)
+                        pushEventType = EventType.GROUP_ADDED
+                        self.fire_create_event(obj, event_type=pushEventType, obj=obj)
                     if type(obj) is MetaGroup:
                         obj.from_json(data, self.devices, self.groups)
                     else:
@@ -746,26 +767,32 @@ class Home(HomeMaticIPObject):
                     obj = self._parse_device(data)
                     obj.load_functionalChannels(self.groups)
                     self.devices.append(obj)
+                    self.fire_create_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_CHANGED:
                     data = event["device"]
                     obj = self.search_device_by_id(data["id"])
                     if obj is None:  # no DEVICE_ADDED Event?
                         obj = self._parse_device(data)
                         self.devices.append(obj)
+                        pushEventType = EventType.DEVICE_ADDED
+                        self.fire_create_event(data, event_type=pushEventType, obj=obj)
                     else:
                         obj.from_json(data)
                     obj.load_functionalChannels(self.groups)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
                     self.devices.remove(obj)
                 elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
                     self.groups.remove(obj)
                 elif pushEventType == EventType.GROUP_ADDED:
                     group = event["group"]
                     obj = self._parse_group(group)
                     self.groups.append(obj)
+                    self.fire_create_event(obj, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.SECURITY_JOURNAL_CHANGED:
                     pass  # data is just none so nothing to do here
 
