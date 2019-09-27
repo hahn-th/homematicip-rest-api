@@ -732,6 +732,7 @@ class Home(HomeMaticIPObject):
                     if obj is None:
                         obj = self._parse_group(data)
                         self.groups.append(obj)
+                        pushEventType = EventType.GROUP_ADDED
                         self.fire_create_event(obj, event_type=pushEventType, obj=obj)
                     if type(obj) is MetaGroup:
                         obj.from_json(data, self.devices, self.groups)
@@ -767,6 +768,7 @@ class Home(HomeMaticIPObject):
                     if obj is None:  # no DEVICE_ADDED Event?
                         obj = self._parse_device(data)
                         self.devices.append(obj)
+                        pushEventType = EventType.DEVICE_ADDED
                         self.fire_create_event(data, event_type=pushEventType, obj=obj)
                     else:
                         obj.from_json(data)
