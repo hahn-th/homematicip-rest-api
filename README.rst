@@ -1,8 +1,6 @@
 homematicip-rest-api
 ====================
 
-THIS SHOULD NOT TRIGGER A BUILD
-
 A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
 done via reverse engineering. Use at your own risk.
