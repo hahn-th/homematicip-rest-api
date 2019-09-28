@@ -16,7 +16,13 @@ Documentation can be found under https://homematicip-rest-api.readthedocs.io
 Installation
 ============
 
-Just run **pip3 install -U homematicip** to get the package
+Just run **pip install -U homematicip** to get the package
+
+"Nightly" Builds
+----------------
+
+each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
+Just run **pip install -U homematicip-testing** to get the package.
 
 Usage
 =====
