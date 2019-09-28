@@ -1,5 +1,6 @@
 homematicip-rest-api
 ====================
+THIS IS A BRANCH AND SHOULD NOT TRIGGER A BUILD
 
 A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
