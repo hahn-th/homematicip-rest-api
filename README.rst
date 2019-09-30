@@ -7,7 +7,7 @@ done via reverse engineering. Use at your own risk.
 
 Any help from the community thru e.g. Pull Request would be highly appreciated.
 
-|discord| |CircleCI| |Docs| |PyPi| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal|
+|discord| |CircleCI| |Docs| |PyPi| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal| |commit-activity|
 
 Documentation
 =============
@@ -225,3 +225,4 @@ connection
    :target: https://homematicip-rest-api.readthedocs.io
 .. |requirements| image:: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements.svg?branch=master
    :target: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements/?branch=master
+.. |commit-activity| image:: https://img.shields.io/github/commit-activity/y/coreGreenberet/homematicip-rest-api.svg
