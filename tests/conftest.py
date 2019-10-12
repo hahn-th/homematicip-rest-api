@@ -1,26 +1,38 @@
 import pytest
+from aiohttp import web
+import ssl
+from datetime import datetime, timedelta, timezone
+import time
+
+
+from aiohttp_wsgi import WSGIHandler
+from pytest_aiohttp import aiohttp_server
+from pytest_localserver.http import WSGIServer
 
 from homematicip.aio.auth import AsyncAuth
 from homematicip.aio.home import AsyncHome
 from homematicip.home import Home
 from homematicip.connection import Connection
 
-from pytest_localserver.http import WSGIServer
 from homematicip_demo.fake_cloud_server import FakeCloudServer
 from homematicip_demo.helper import *
 
-from datetime import datetime, timedelta, timezone
-import time
+
 
 
 @pytest.fixture
-def fake_cloud(request):
+async def fake_cloud(request,aiohttp_server):
     """Defines the testserver funcarg"""
-    app = FakeCloudServer()
-    server = WSGIServer(
-        application=app,
-        ssl_context=(get_full_path("server.crt"), get_full_path("server.key")),
-    )
+    fake_cloud_server = FakeCloudServer()
+    wsgi_handler = WSGIHandler(fake_cloud_server)
+    
+    app = web.Application()
+    app.router.add_route("*", "/{path_info:.*}", wsgi_handler)
+    ssl_context = ssl._create_default_https_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_context.load_cert_chain(get_full_path("server.crt"), get_full_path("server.key"))
+    server = await aiohttp_server(app)
+    web.run_app(app,ssl_context=ssl_context)
+
     app.url = server.url
     server._server._timeout = 5  # added to allow timeouts in the fake server
     server.start()

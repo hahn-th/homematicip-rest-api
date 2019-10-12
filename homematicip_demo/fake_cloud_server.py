@@ -1,12 +1,14 @@
 import hashlib
 import json
 import time
+import asyncio
+
 from datetime import datetime, timedelta
 from pathlib import Path
 from werkzeug.wrappers import Request, Response
 
 
-class FakeCloudServer:
+class AsyncFakeCloudServer:
     """ a fake server to act as the HMIP cloud"""
 
     # region __init__ & helper functions
@@ -29,7 +31,7 @@ class FakeCloudServer:
             self.client_auth_waiting = None  # used in auth
             self.home_id = "00000000-0000-0000-0000-000000000001"
 
-    def __call__(self, environ, start_response):
+    async def __call__(self, environ, start_response):
         request = Request(environ)
         response = Response()
         methodname = "{}{}".format(
@@ -936,6 +938,13 @@ class FakeCloudServer:
         with open(Path(__file__).parent.joinpath("json_data", js["file"])) as file:
             self.data = json.load(file, encoding="UTF-8")
         return response
+    # endregion
 
 
-# endregion
+class FakeCloudServer(AsyncFakeCloudServer):
+    """ a wrapper for the async implementation of the FakeCloudServer """
+    def __call__(self, environ, start_response):
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(super().__call__(environ,start_response))
+        
+        
