@@ -60,23 +60,8 @@ async def fake_cloud(aiohttp_server, ssl_ctx):
     server.close()
     stop_threads = True
 
-
 @pytest.fixture
-def old_fake_cloud(request):
-    """Defines the testserver funcarg"""
-    app = FakeCloudServer()
-    server = WSGIServer(
-        application=app,
-        ssl_context=(get_full_path("server.crt"), get_full_path("server.key")),
-    )
-    app.url = server.url
-    server._server._timeout = 5  # added to allow timeouts in the fake server
-    server.start()
-    yield server
-    server.stop()
-
-
-def get_home(fake_cloud):
+def fake_home(fake_cloud):
     home = Home()
     with no_ssl_verification():
         lookup_url = "{}/getHost".format(fake_cloud.url)
@@ -91,16 +76,6 @@ def get_home(fake_cloud):
         )
         home.get_current_state()
     return home
-
-
-@pytest.fixture
-def old_fake_home(old_fake_cloud):
-    return get_home(old_fake_cloud)
-
-
-@pytest.fixture
-def fake_home(fake_cloud):
-    return get_home(fake_cloud)
 
 
 @pytest.fixture

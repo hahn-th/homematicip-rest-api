@@ -993,15 +993,3 @@ class AsyncFakeCloudServer:
         return ws
 
     # endregion
-
-
-class FakeCloudServer(AsyncFakeCloudServer):
-    """ a wrapper for the async implementation of the FakeCloudServer """
-
-    def __call__(self, environ, start_response):
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        return loop.run_until_complete(super().__call__(environ, start_response))
