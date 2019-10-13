@@ -94,7 +94,7 @@ class AsyncConnection(BaseConnection):
                             ret = True
                         return ret
                     else:
-                        raise HmipWrongHttpStatusError
+                        raise HmipWrongHttpStatusError(result.status)
             except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
                 # Both exceptions occur when connecting to the server does
                 # somehow not work.
