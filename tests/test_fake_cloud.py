@@ -3,7 +3,7 @@ import requests
 import json
 import asyncio
 from conftest import no_ssl_verification
-from homematicip_demo.fake_cloud_server import FakeCloudServer
+from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 
 
 def test_getHost(fake_cloud):
@@ -17,13 +17,13 @@ def test_getHost(fake_cloud):
 @pytest.mark.asyncio
 async def test_calling_internal_func():
     with pytest.raises(NameError):
-        await FakeCloudServer().call_method("__init__")
+        await AsyncFakeCloudServer().call_method("__init__")
 
 
 @pytest.mark.asyncio
 async def test_calling_invalid_func():
     with pytest.raises(NameError):
-        await FakeCloudServer().call_method("get_this_function_does_not_exist")
+        await AsyncFakeCloudServer().call_method("get_this_function_does_not_exist")
 
 
 def test_invlid_authorization(fake_cloud):

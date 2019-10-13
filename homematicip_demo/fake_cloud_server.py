@@ -37,7 +37,7 @@ class AsyncFakeCloudServer:
         methodname = "{}{}".format(
             request.method.lower(), request.path.replace("/", "_")
         )
-        if request.method.lower() == "post": 
+        if request.method.lower() == "post":
             request.data = await request.content.read()
 
         response.content_type = "application/json"
@@ -46,8 +46,12 @@ class AsyncFakeCloudServer:
         except NameError as e:
             response.status_code = 404
             response.data = json.dumps({"errorCode": str(e)})
-        if isinstance(response, Response): # Workaround until all methods are converted
-            res = web.Response(body=(response.data),status=response.status_code, headers=response.headers)
+        if isinstance(response, Response):  # Workaround until all methods are converted
+            res = web.Response(
+                body=(response.data),
+                status=response.status_code,
+                headers=response.headers,
+            )
             return res
         elif isinstance(response, web.StreamResponse):
             return response
@@ -73,14 +77,12 @@ class AsyncFakeCloudServer:
             except:
                 pass
 
-            return self.errorCode(response, "INVALID_AUTHORIZATION", 403)
+            return sel.errorCode("INVALID_AUTHORIZATION", 403)
 
         return func_wrapper
 
-    def errorCode(self, response: Response, message, status_code):
-        response.data = json.dumps({"errorCode": message})
-        response.status_code = status_code
-        return response
+    def errorCode(self, message, status_code):
+        return web.json_response({"errorCode": message}, status=status_code)
 
     # endregion
 
@@ -117,7 +119,7 @@ class AsyncFakeCloudServer:
 
         if self.pin:
             if request.headers.get("PIN", None) != str(self.pin):
-                response = self.errorCode(response, "INVALID_PIN", 403)
+                response = sel.errorCode("INVALID_PIN", 403)
                 return response
 
         self.pin = js["pin"]
@@ -126,7 +128,7 @@ class AsyncFakeCloudServer:
         return response
 
     async def post_hmip_home_getPin(self, request: Request, response: Response):
-        js = {"pin":self.pin }
+        js = {"pin": self.pin}
         response.data = json.dumps(js)
         response.status_code = 200
         return response
@@ -298,7 +300,7 @@ class AsyncFakeCloudServer:
             rule["active"] = js["enabled"]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_RULE", 404)
+            response = sel.errorCode("INVALID_RULE", 404)
         return response
 
     @validate_authorization
@@ -310,7 +312,7 @@ class AsyncFakeCloudServer:
             rule["label"] = js["label"]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_RULE", 404)
+            response = sel.errorCode("INVALID_RULE", 404)
         return response
 
     # endregion
@@ -328,7 +330,7 @@ class AsyncFakeCloudServer:
             d["label"] = js["label"]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -345,7 +347,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -356,7 +358,7 @@ class AsyncFakeCloudServer:
             self.data["devices"].pop(js["deviceId"])
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -373,7 +375,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -390,7 +392,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -407,7 +409,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -424,7 +426,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -441,7 +443,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -456,7 +458,7 @@ class AsyncFakeCloudServer:
             d["functionalChannels"][channelIndex]["display"] = js["display"]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -473,7 +475,7 @@ class AsyncFakeCloudServer:
             ]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -488,7 +490,7 @@ class AsyncFakeCloudServer:
             d["functionalChannels"][channelIndex]["energyCounter"] = 0
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -503,7 +505,7 @@ class AsyncFakeCloudServer:
             d["functionalChannels"][channelIndex]["on"] = js["on"]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -518,7 +520,7 @@ class AsyncFakeCloudServer:
             d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
             response.status_code = 200
         except:
-            response = self.errorCode(response, "INVALID_DEVICE", 404)
+            response = sel.errorCode("INVALID_DEVICE", 404)
         return response
 
     @validate_authorization
@@ -712,9 +714,9 @@ class AsyncFakeCloudServer:
             c_id = js["deviceId"]
             for c in self.data["clients"]:
                 if c == c_id:
-                    response = self.errorCode(response, "", 200)
+                    response = sel.errorCode("", 200)
                     return response
-        response = self.errorCode(response, "INVALID_AUTH_CHALLANGE", 403)
+        response = sel.errorCode("INVALID_AUTH_CHALLANGE", 403)
         return response
 
     async def post_hmip_auth_simulateBlueButton(
@@ -778,7 +780,7 @@ class AsyncFakeCloudServer:
             self.data["groups"].pop(js["groupId"])
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -790,7 +792,7 @@ class AsyncFakeCloudServer:
             g["label"] = js["label"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -804,7 +806,7 @@ class AsyncFakeCloudServer:
             g["on"] = js["on"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -818,7 +820,7 @@ class AsyncFakeCloudServer:
             g["shutterLevel"] = js["shutterLevel"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -832,7 +834,7 @@ class AsyncFakeCloudServer:
             g["setPointTemperature"] = js["setPointTemperature"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -846,7 +848,7 @@ class AsyncFakeCloudServer:
             g["boostMode"] = js["boost"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -860,7 +862,7 @@ class AsyncFakeCloudServer:
             g["boostDuration"] = js["boostDuration"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -874,7 +876,7 @@ class AsyncFakeCloudServer:
             g["activeProfile"] = "PROFILE_{}".format(int(js["profileIndex"]) + 1)
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -888,7 +890,7 @@ class AsyncFakeCloudServer:
             g["controlMode"] = js["controlMode"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -902,7 +904,7 @@ class AsyncFakeCloudServer:
             assert js["signalAcoustic"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -916,7 +918,7 @@ class AsyncFakeCloudServer:
             g["signalAcoustic"] = js["signalAcoustic"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -930,7 +932,7 @@ class AsyncFakeCloudServer:
             assert js["signalOptical"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     @validate_authorization
@@ -944,20 +946,15 @@ class AsyncFakeCloudServer:
             g["signalOptical"] = js["signalOptical"]
             response.status_code = 200
         else:
-            response = self.errorCode(response, "INVALID_GROUP", 404)
+            response = sel.errorCode("INVALID_GROUP", 404)
         return response
 
     # endregion
 
     async def post_getHost(self, request: Request, response: Response):
         ws_url = self.url.replace("https", "wss")
-        data = {
-            "urlREST": self.url,
-            "urlWebSocket": f"{ws_url}/ws",
-            "apiVersion": "12",
-        }
-        response.data = json.dumps(data)
-        return response
+        data = {"urlREST": self.url, "urlWebSocket": f"{ws_url}/ws", "apiVersion": "12"}
+        return web.json_response(data)
 
     # region Fake Server settings
     async def post_hmip_fake_timeout(self, request: Request, response: Response):

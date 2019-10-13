@@ -185,9 +185,11 @@ def test_security_zones_activation(fake_home: Home):
 
 def test_set_pin(fake_home: Home):
     with no_ssl_verification():
+
         def get_pin(fake_home):
             result = fake_home._restCall("home/getPin")
             return result["pin"]
+
         assert get_pin(fake_home) == None
 
         fake_home.set_pin(1234)

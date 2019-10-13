@@ -83,7 +83,7 @@ async def test_set_pin(no_ssl_fake_async_home: AsyncHome):
     fh = no_ssl_fake_async_home
 
     assert await get_pin(fh) == None
-    
+
     await fh.set_pin(1234)
     assert await get_pin(fh) == 1234
 

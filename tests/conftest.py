@@ -6,7 +6,6 @@ from datetime import datetime, timedelta, timezone
 from threading import Thread
 from aiohttp.test_utils import TestServer
 import pytest
-from pytest_localserver.http import WSGIServer
 import functools
 
 from homematicip.aio.auth import AsyncAuth
@@ -14,7 +13,7 @@ from homematicip.aio.home import AsyncHome
 from homematicip.home import Home
 from homematicip.connection import Connection
 
-from homematicip_demo.fake_cloud_server import FakeCloudServer, AsyncFakeCloudServer
+from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 from homematicip_demo.helper import *
 
 
@@ -43,22 +42,29 @@ async def fake_cloud(aiohttp_server, ssl_ctx):
 
     loop = asyncio.new_event_loop()
     stop_threads = False
-    t = Thread(name="aio_fake_cloud",target=start_background_loop, args=(lambda: stop_threads, loop))
+    t = Thread(
+        name="aio_fake_cloud",
+        target=start_background_loop,
+        args=(lambda: stop_threads, loop),
+    )
     t.setDaemon(True)
     t.start()
 
     aio_server = AsyncFakeCloudServer()
     app = web.Application()
-    app.router.add_route('GET', '/{tail:.*}', aio_server)
-    app.router.add_route('POST', '/{tail:.*}', aio_server)
+    app.router.add_route("GET", "/{tail:.*}", aio_server)
+    app.router.add_route("POST", "/{tail:.*}", aio_server)
     # fill route table
     server = TestServer(app)
-    asyncio.run_coroutine_threadsafe(server.start_server(loop=loop, ssl=ssl_ctx),loop).result()
+    asyncio.run_coroutine_threadsafe(
+        server.start_server(loop=loop, ssl=ssl_ctx), loop
+    ).result()
     aio_server.url = str(server._root)
     server.url = aio_server.url
     yield server
     server.close()
     stop_threads = True
+
 
 @pytest.fixture
 def fake_home(fake_cloud):

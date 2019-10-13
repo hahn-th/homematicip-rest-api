@@ -716,14 +716,13 @@ class Home(HomeMaticIPObject):
         self.__webSocketThread = threading.Thread(
             name="hmip-websocket",
             target=self.__webSocket.run_forever,
-            kwargs={"sslopt": {"cert_reqs": ssl.CERT_NONE}, "ping_interval":10},
+            kwargs={"sslopt": {"cert_reqs": ssl.CERT_NONE}, "ping_interval": 10},
         )
         self.__webSocketThread.setDaemon(True)
         self.__webSocketThread.start()
 
     def disable_events(self):
         self.__webSocket.close()
-        
 
     def _ws_on_error(self, err):
         LOGGER.exception(err)
