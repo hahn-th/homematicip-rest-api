@@ -32,21 +32,25 @@ class AsyncFakeCloudServer:
             self.client_auth_waiting = None  # used in auth
             self.home_id = "00000000-0000-0000-0000-000000000001"
 
-    async def __call__(self, environ, start_response):
-        request = Request(environ)
-        request._loop = asyncio.get_event_loop()
+    async def __call__(self, request):
         response = Response()
-        response._loop = asyncio.get_event_loop()
         methodname = "{}{}".format(
             request.method.lower(), request.path.replace("/", "_")
         )
-        response.content_type = "application/json;charset=UTF-8"
+        if request.method.lower() == "post": 
+            request.data = await request.content.read()
+
+        response.content_type = "application/json"
         try:
             response = await self.call_method(methodname, request, response)
         except NameError as e:
             response.status_code = 404
             response.data = json.dumps({"errorCode": str(e)})
-        return response(environ, start_response)
+        if isinstance(response, Response): # Workaround until all methods are converted
+            res = web.Response(body=(response.data),status=response.status_code, headers=response.headers)
+            return res
+        elif isinstance(response, web.StreamResponse):
+            return response
 
     async def call_method(self, func_name, *args, **kwargs):
         if func_name[0] == "_":
@@ -119,6 +123,12 @@ class AsyncFakeCloudServer:
         self.pin = js["pin"]
         if self.pin == "":
             self.pin = None
+        return response
+
+    async def post_hmip_home_getPin(self, request: Request, response: Response):
+        js = {"pin":self.pin }
+        response.data = json.dumps(js)
+        response.status_code = 200
         return response
 
     @validate_authorization

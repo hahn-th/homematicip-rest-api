@@ -5,11 +5,6 @@ import asyncio
 from conftest import no_ssl_verification
 from homematicip_demo.fake_cloud_server import FakeCloudServer
 
-@pytest.mark.asyncio
-async def test_aio_fake_cloud(aio_fake_cloud):
-    while True:
-        await asyncio.sleep(1)
-
 
 def test_getHost(fake_cloud):
     with no_ssl_verification():

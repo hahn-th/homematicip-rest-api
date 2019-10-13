@@ -185,22 +185,24 @@ def test_security_zones_activation(fake_home: Home):
 
 def test_set_pin(fake_home: Home):
     with no_ssl_verification():
-
-        assert fake_home._fake_cloud.app.pin == None
+        def get_pin(fake_home):
+            result = fake_home._restCall("home/getPin")
+            return result["pin"]
+        assert get_pin(fake_home) == None
 
         fake_home.set_pin(1234)
-        assert fake_home._fake_cloud.app.pin == 1234
+        assert get_pin(fake_home) == 1234
 
         fake_home.set_pin(
             5555
         )  # ignore errors. just check if the old pin is still active
-        assert fake_home._fake_cloud.app.pin == 1234
+        assert get_pin(fake_home) == 1234
 
         fake_home.set_pin(5555, 1234)
-        assert fake_home._fake_cloud.app.pin == 5555
+        assert get_pin(fake_home) == 5555
 
         fake_home.set_pin(None, 5555)
-        assert fake_home._fake_cloud.app.pin == None
+        assert get_pin(fake_home) == None
 
 
 def test_set_timezone(fake_home: Home):

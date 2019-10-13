@@ -7,6 +7,7 @@ from threading import Thread
 from aiohttp.test_utils import TestServer
 import pytest
 from pytest_localserver.http import WSGIServer
+import functools
 
 from homematicip.aio.auth import AsyncAuth
 from homematicip.aio.home import AsyncHome
@@ -19,7 +20,7 @@ from homematicip_demo.helper import *
 
 @pytest.fixture
 def ssl_ctx():
-    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
     ssl_ctx.load_cert_chain(get_full_path("server.crt"), get_full_path("server.key"))
     return ssl_ctx
 
@@ -37,7 +38,7 @@ def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None
 
 
 @pytest.fixture
-async def aio_fake_cloud(aiohttp_server, ssl_ctx):
+async def fake_cloud(aiohttp_server, ssl_ctx):
     """Defines the testserver funcarg"""
 
     loop = asyncio.new_event_loop()
@@ -48,11 +49,11 @@ async def aio_fake_cloud(aiohttp_server, ssl_ctx):
 
     aio_server = AsyncFakeCloudServer()
     app = web.Application()
-    app.router.add_get("/{name}", aio_server)
-    app.router.add_post("/{name}", aio_server)
+    app.router.add_route('GET', '/{tail:.*}', aio_server)
+    app.router.add_route('POST', '/{tail:.*}', aio_server)
     # fill route table
-    server = TestServer(app, ssl=ssl_ctx)
-    await server.start_server(loop)
+    server = TestServer(app)
+    asyncio.run_coroutine_threadsafe(server.start_server(loop=loop, ssl=ssl_ctx),loop).result()
     aio_server.url = str(server._root)
     server.url = aio_server.url
     yield server
@@ -61,7 +62,7 @@ async def aio_fake_cloud(aiohttp_server, ssl_ctx):
 
 
 @pytest.fixture
-def fake_cloud(request):
+def old_fake_cloud(request):
     """Defines the testserver funcarg"""
     app = FakeCloudServer()
     server = WSGIServer(
@@ -93,13 +94,13 @@ def get_home(fake_cloud):
 
 
 @pytest.fixture
-def old_fake_home(fake_cloud):
-    return get_home(fake_cloud)
+def old_fake_home(old_fake_cloud):
+    return get_home(old_fake_cloud)
 
 
 @pytest.fixture
-def fake_home(aio_fake_cloud):
-    return get_home(aio_fake_cloud)
+def fake_home(fake_cloud):
+    return get_home(fake_cloud)
 
 
 @pytest.fixture

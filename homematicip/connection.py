@@ -30,7 +30,7 @@ class Connection(BaseConnection):
                     self._urlREST = js["urlREST"]
                     self._urlWebSocket = js["urlWebSocket"]
                     break
-                except:
+                except Exception as e:
                     pass
         else:
             self._urlREST = "https://ps1.homematic.com:6969"
