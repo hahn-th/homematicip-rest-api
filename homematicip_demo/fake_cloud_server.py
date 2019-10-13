@@ -685,19 +685,13 @@ class AsyncFakeCloudServer:
         self, request: Request, response: Response
     ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
-            response = self.errorCode(
-                "INVALID_AUTH_TOKEN", 403
-            )  # error responses must be validated against the real cloud
+            response = self.errorCode("INVALID_AUTH_TOKEN", 403)  # pragma: no cover
         elif self.client_auth_waiting is not None:
-            response = self.errorCode(
-                "AUTH_IN_PROCESS", 403
-            )  # error responses must be validated against the real cloud
+            response = self.errorCode("AUTH_IN_PROCESS", 403)  # pragma: no cover
         else:
             pin = request.headers.get("PIN", None)
             if pin != self.pin:
-                response = self.errorCode(
-                    "INVALID_PIN", 403
-                )  # error responses must be validated against the real cloud
+                response = self.errorCode("INVALID_PIN", 403)  # pragma: no cover
             else:
                 js = json.loads(request.data)
                 # TODO: add sgtin check
@@ -709,9 +703,7 @@ class AsyncFakeCloudServer:
         self, request: Request, response: Response
     ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
-            response = self.errorCode(
-                "INVALID_AUTH_TOKEN", 403
-            )  # error responses must be validated against the real cloud
+            response = self.errorCode("INVALID_AUTH_TOKEN", 403)  # pragma: no cover
         else:
             js = json.loads(request.data)
             c_id = js["deviceId"]
@@ -739,9 +731,7 @@ class AsyncFakeCloudServer:
         self, request: Request, response: Response
     ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
-            response = self.errorCode(
-                "INVALID_AUTH_TOKEN", 403
-            )  # error responses must be validated against the real cloud
+            response = self.errorCode("INVALID_AUTH_TOKEN", 403)  # pragma: no cover
         else:
             js = json.loads(request.data)
             c_id = js["deviceId"]
@@ -756,9 +746,7 @@ class AsyncFakeCloudServer:
         self, request: Request, response: Response
     ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
-            response = self.errorCode(
-                "INVALID_AUTH_TOKEN", 403
-            )  # error responses must be validated against the real cloud
+            response = self.errorCode("INVALID_AUTH_TOKEN", 403)  # pragma: no cover
         else:
             js = json.loads(request.data)
             c_id = js["deviceId"]
@@ -767,9 +755,7 @@ class AsyncFakeCloudServer:
                 response.data = json.dumps({"clientId": c_id})
                 response.status_code = 200
             else:
-                response = self.errorCode(
-                    "INVALID_AUTH_TOKEN", 403
-                )  # error responses must be validated against the real cloud
+                response = self.errorCode("INVALID_AUTH_TOKEN", 403)  # pragma: no cover
         return response
 
     # endregion
@@ -978,17 +964,8 @@ class AsyncFakeCloudServer:
     async def get_ws(self, request):
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
-        async for msg in self.ws:
-            if msg.type == aiohttp.WSMsgType.TEXT:
-                if msg.data == "close":
-                    await ws.close()
-                    self.ws = None
-                else:
-                    await ws.send_str(msg.data + "/answer")
-            elif msg.type == aiohttp.WSMsgType.ERROR:
-                print("ws connection closed with exception %s" % ws.exception())
-
-        print("websocket connection closed")
+        async for msg in self.ws:  # loop is needed to actually send the data to the client
+            pass
 
         return self.ws
 

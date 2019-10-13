@@ -64,9 +64,7 @@ async def fake_cloud(aiohttp_server, ssl_ctx):
 
     yield server
 
-    asyncio.run_coroutine_threadsafe(
-        server.close(), loop
-    ).result()
+    asyncio.run_coroutine_threadsafe(server.close(), loop).result()
     stop_threads = True
 
 

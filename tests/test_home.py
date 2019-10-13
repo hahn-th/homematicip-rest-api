@@ -25,7 +25,7 @@ from conftest import utc_offset
 
 
 def send_event(fake_home: Home, pushEventType: EventType, type: str, data):
-    event_data = {"events": {"0": {"pushEventType": str(pushEventType), type: data},}}
+    event_data = {"events": {"0": {"pushEventType": str(pushEventType), type: data}}}
     with no_ssl_verification():
         fake_home._restCall("ws/send", json.dumps(event_data))
 
