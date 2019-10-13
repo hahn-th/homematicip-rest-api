@@ -62,9 +62,9 @@ class AsyncConnection(BaseConnection):
 
             self._urlREST = result["urlREST"]
             self._urlWebSocket = result["urlWebSocket"]
-        else:
-            self._urlREST = "https://ps1.homematic.com:6969"
-            self._urlWebSocket = "wss://ps1.homematic.com:8888"
+        else: # pragma: no cover
+            self._urlREST = "https://ps1.homematic.com:6969" 
+            self._urlWebSocket = "wss://ps1.homematic.com:8888" 
 
     def _restCall(self, path, body=None):
         """Shadows the original restCalls"""
