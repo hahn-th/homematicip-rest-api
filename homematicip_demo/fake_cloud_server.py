@@ -31,6 +31,7 @@ class AsyncFakeCloudServer:
 
             self.client_auth_waiting = None  # used in auth
             self.home_id = "00000000-0000-0000-0000-000000000001"
+            self.ws = None
 
     async def __call__(self, request):
         response = Response()
@@ -46,6 +47,8 @@ class AsyncFakeCloudServer:
         except NameError as e:
             response.status_code = 404
             response.data = json.dumps({"errorCode": str(e)})
+        except TypeError as e:
+            response = await self.call_method(methodname, request)
         if isinstance(response, Response):  # Workaround until all methods are converted
             res = web.Response(
                 body=(response.data),
@@ -64,7 +67,7 @@ class AsyncFakeCloudServer:
             raise NameError("Can't find method {}".format(func_name))
 
         func = getattr(self, func_name, func_not_found)
-        return await func(*args, **kwargs)  # <-- this should work!
+        return await func(*args, **kwargs)
 
     def validate_authorization(func):
         @functools.wraps(func)
@@ -972,14 +975,14 @@ class AsyncFakeCloudServer:
     # endregion
 
     # region websocket
-    async def get_ws(self, request: Request, response: Response):
-        ws = web.WebSocketResponse()
-        await ws.prepare(request)
-
-        async for msg in ws:
+    async def get_ws(self, request):
+        self.ws = web.WebSocketResponse()
+        await self.ws.prepare(request)
+        async for msg in self.ws:
             if msg.type == aiohttp.WSMsgType.TEXT:
                 if msg.data == "close":
                     await ws.close()
+                    self.ws = None
                 else:
                     await ws.send_str(msg.data + "/answer")
             elif msg.type == aiohttp.WSMsgType.ERROR:
@@ -987,6 +990,11 @@ class AsyncFakeCloudServer:
 
         print("websocket connection closed")
 
-        return ws
+        return self.ws
+
+    async def post_hmip_ws_send(self, request):
+        """ this function will send specific data to the websocket """
+        await self.ws.send_json(json.loads(request.data))
+        return web.Response()
 
     # endregion
