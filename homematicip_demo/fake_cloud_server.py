@@ -2,7 +2,8 @@ import hashlib
 import json
 import time
 import asyncio
-
+import functools
+from aiohttp import web
 from datetime import datetime, timedelta
 from pathlib import Path
 from werkzeug.wrappers import Request, Response
@@ -33,19 +34,21 @@ class AsyncFakeCloudServer:
 
     async def __call__(self, environ, start_response):
         request = Request(environ)
+        request._loop = asyncio.get_event_loop()
         response = Response()
+        response._loop = asyncio.get_event_loop()
         methodname = "{}{}".format(
             request.method.lower(), request.path.replace("/", "_")
         )
         response.content_type = "application/json;charset=UTF-8"
         try:
-            response = self.call_method(methodname, request, response)
+            response = await self.call_method(methodname, request, response)
         except NameError as e:
             response.status_code = 404
             response.data = json.dumps({"errorCode": str(e)})
         return response(environ, start_response)
 
-    def call_method(self, func_name, *args, **kwargs):
+    async def call_method(self, func_name, *args, **kwargs):
         if func_name[0] == "_":
             raise NameError("Can't call internal function {}".format(func_name))
 
@@ -53,15 +56,16 @@ class AsyncFakeCloudServer:
             raise NameError("Can't find method {}".format(func_name))
 
         func = getattr(self, func_name, func_not_found)
-        return func(*args, **kwargs)  # <-- this should work!
+        return await func(*args, **kwargs)  # <-- this should work!
 
     def validate_authorization(func):
-        def func_wrapper(self, request: Request, response: Response):
+        @functools.wraps(func)
+        async def func_wrapper(self, request: Request, response: Response):
             try:
                 if request.headers["CLIENTAUTH"] == self.client_auth_token:
                     for v in self.client_token_map.values():
                         if v == request.headers["AUTHTOKEN"]:
-                            return func(self, request, response)
+                            return await func(self, request, response)
             except:
                 pass
 
@@ -79,19 +83,21 @@ class AsyncFakeCloudServer:
     # region home
 
     @validate_authorization
-    def post_hmip_home_getOAuthOTK(self, request: Request, response: Response):
+    async def post_hmip_home_getOAuthOTK(self, request: Request, response: Response):
         response.data = json.dumps(
             {"authToken": "C001ED", "expirationTimestamp": 1545568701680}
         )
         return response
 
     @validate_authorization
-    def post_hmip_home_getCurrentState(self, request: Request, response: Response):
+    async def post_hmip_home_getCurrentState(
+        self, request: Request, response: Response
+    ):
         response.data = json.dumps(self.data)
         return response
 
     @validate_authorization
-    def post_hmip_home_setLocation(self, request: Request, response: Response):
+    async def post_hmip_home_setLocation(self, request: Request, response: Response):
 
         js = json.loads(request.data)
 
@@ -102,7 +108,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_setPin(self, request: Request, response: Response):
+    async def post_hmip_home_setPin(self, request: Request, response: Response):
         js = json.loads(request.data)
 
         if self.pin:
@@ -116,13 +122,13 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_setTimezone(self, request: Request, response: Response):
+    async def post_hmip_home_setTimezone(self, request: Request, response: Response):
         js = json.loads(request.data)
         self.data["home"]["timeZoneId"] = js["timezoneId"]
         return response
 
     @validate_authorization
-    def post_hmip_home_setPowerMeterUnitPrice(
+    async def post_hmip_home_setPowerMeterUnitPrice(
         self, request: Request, response: Response
     ):
         js = json.loads(request.data)
@@ -133,7 +139,7 @@ class AsyncFakeCloudServer:
 
     # region home/security
     @validate_authorization
-    def post_hmip_home_security_setZonesActivation(
+    async def post_hmip_home_security_setZonesActivation(
         self, request: Request, response: Response
     ):
 
@@ -153,7 +159,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_security_setIntrusionAlertThroughSmokeDetectors(
+    async def post_hmip_home_security_setIntrusionAlertThroughSmokeDetectors(
         self, request: Request, response: Response
     ):
 
@@ -168,7 +174,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_security_setZoneActivationDelay(
+    async def post_hmip_home_security_setZoneActivationDelay(
         self, request: Request, response: Response
     ):
 
@@ -183,7 +189,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_security_getSecurityJournal(
+    async def post_hmip_home_security_getSecurityJournal(
         self, request: Request, response: Response
     ):
         with open(
@@ -199,7 +205,7 @@ class AsyncFakeCloudServer:
 
     # region home/heating
     @validate_authorization
-    def post_hmip_home_heating_activateAbsenceWithDuration(
+    async def post_hmip_home_heating_activateAbsenceWithDuration(
         self, request: Request, response: Response
     ):
 
@@ -215,7 +221,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_heating_activateAbsenceWithPeriod(
+    async def post_hmip_home_heating_activateAbsenceWithPeriod(
         self, request: Request, response: Response
     ):
 
@@ -229,7 +235,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_heating_deactivateAbsence(
+    async def post_hmip_home_heating_deactivateAbsence(
         self, request: Request, response: Response
     ):
 
@@ -241,7 +247,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_heating_activateVacation(
+    async def post_hmip_home_heating_activateVacation(
         self, request: Request, response: Response
     ):
 
@@ -257,7 +263,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_home_heating_deactivateVacation(
+    async def post_hmip_home_heating_deactivateVacation(
         self, request: Request, response: Response
     ):
 
@@ -272,7 +278,9 @@ class AsyncFakeCloudServer:
 
     # region rule
     @validate_authorization
-    def post_hmip_rule_enableSimpleRule(self, request: Request, response: Response):
+    async def post_hmip_rule_enableSimpleRule(
+        self, request: Request, response: Response
+    ):
 
         js = json.loads(request.data)
         try:
@@ -284,7 +292,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_rule_setRuleLabel(self, request: Request, response: Response):
+    async def post_hmip_rule_setRuleLabel(self, request: Request, response: Response):
 
         js = json.loads(request.data)
         try:
@@ -300,7 +308,9 @@ class AsyncFakeCloudServer:
     # region device
 
     @validate_authorization
-    def post_hmip_device_setDeviceLabel(self, request: Request, response: Response):
+    async def post_hmip_device_setDeviceLabel(
+        self, request: Request, response: Response
+    ):
 
         js = json.loads(request.data)
         try:
@@ -312,7 +322,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setRouterModuleEnabled(
+    async def post_hmip_device_configuration_setRouterModuleEnabled(
         self, request: Request, response: Response
     ):
 
@@ -329,7 +339,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_deleteDevice(self, request: Request, response: Response):
+    async def post_hmip_device_deleteDevice(self, request: Request, response: Response):
 
         js = json.loads(request.data)
         if js["deviceId"] in self.data["devices"]:
@@ -340,7 +350,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAcousticAlarmTiming(
+    async def post_hmip_device_configuration_setAcousticAlarmTiming(
         self, request: Request, response: Response
     ):
 
@@ -357,7 +367,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAcousticAlarmSignal(
+    async def post_hmip_device_configuration_setAcousticAlarmSignal(
         self, request: Request, response: Response
     ):
 
@@ -374,7 +384,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setInAppWaterAlarmTrigger(
+    async def post_hmip_device_configuration_setInAppWaterAlarmTrigger(
         self, request: Request, response: Response
     ):
 
@@ -391,7 +401,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAcousticWaterAlarmTrigger(
+    async def post_hmip_device_configuration_setAcousticWaterAlarmTrigger(
         self, request: Request, response: Response
     ):
 
@@ -408,7 +418,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setSirenWaterAlarmTrigger(
+    async def post_hmip_device_configuration_setSirenWaterAlarmTrigger(
         self, request: Request, response: Response
     ):
 
@@ -425,7 +435,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setClimateControlDisplay(
+    async def post_hmip_device_configuration_setClimateControlDisplay(
         self, request: Request, response: Response
     ):
 
@@ -440,7 +450,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setOperationLock(
+    async def post_hmip_device_configuration_setOperationLock(
         self, request: Request, response: Response
     ):
 
@@ -457,7 +467,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_resetEnergyCounter(
+    async def post_hmip_device_control_resetEnergyCounter(
         self, request: Request, response: Response
     ):
 
@@ -472,7 +482,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_setSwitchState(
+    async def post_hmip_device_control_setSwitchState(
         self, request: Request, response: Response
     ):
 
@@ -487,7 +497,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_setDimLevel(
+    async def post_hmip_device_control_setDimLevel(
         self, request: Request, response: Response
     ):
 
@@ -502,7 +512,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_setShutterLevel(
+    async def post_hmip_device_control_setShutterLevel(
         self, request: Request, response: Response
     ):
 
@@ -514,7 +524,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_setSlatsLevel(
+    async def post_hmip_device_control_setSlatsLevel(
         self, request: Request, response: Response
     ):
 
@@ -527,12 +537,12 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_stop(self, request: Request, response: Response):
+    async def post_hmip_device_control_stop(self, request: Request, response: Response):
         response.status_code = 200
         return response
 
     @validate_authorization
-    def post_hmip_device_control_setSimpleRGBColorDimLevel(
+    async def post_hmip_device_control_setSimpleRGBColorDimLevel(
         self, request: Request, response: Response
     ):
 
@@ -547,7 +557,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_control_setSimpleRGBColorDimLevelWithTime(
+    async def post_hmip_device_control_setSimpleRGBColorDimLevelWithTime(
         self, request: Request, response: Response
     ):
 
@@ -563,7 +573,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setNotificationSoundType(
+    async def post_hmip_device_configuration_setNotificationSoundType(
         self, request: Request, response: Response
     ):
 
@@ -582,7 +592,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAccelerationSensorEventFilterPeriod(
+    async def post_hmip_device_configuration_setAccelerationSensorEventFilterPeriod(
         self, request: Request, response: Response
     ):
 
@@ -596,7 +606,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAccelerationSensorTriggerAngle(
+    async def post_hmip_device_configuration_setAccelerationSensorTriggerAngle(
         self, request: Request, response: Response
     ):
 
@@ -610,7 +620,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAccelerationSensorSensitivity(
+    async def post_hmip_device_configuration_setAccelerationSensorSensitivity(
         self, request: Request, response: Response
     ):
 
@@ -624,7 +634,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAccelerationSensorNeutralPosition(
+    async def post_hmip_device_configuration_setAccelerationSensorNeutralPosition(
         self, request: Request, response: Response
     ):
 
@@ -638,7 +648,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_device_configuration_setAccelerationSensorMode(
+    async def post_hmip_device_configuration_setAccelerationSensorMode(
         self, request: Request, response: Response
     ):
 
@@ -656,7 +666,9 @@ class AsyncFakeCloudServer:
     # region auth
     # there is no 100% secure auth code here -> its a fake server...who cares =)
 
-    def post_hmip_auth_connectionRequest(self, request: Request, response: Response):
+    async def post_hmip_auth_connectionRequest(
+        self, request: Request, response: Response
+    ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
             response = self.errorCode(
                 response, "INVALID_AUTH_TOKEN", 403
@@ -678,7 +690,7 @@ class AsyncFakeCloudServer:
                 response.status_code = 200
         return response
 
-    def post_hmip_auth_isRequestAcknowledged(
+    async def post_hmip_auth_isRequestAcknowledged(
         self, request: Request, response: Response
     ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
@@ -695,7 +707,9 @@ class AsyncFakeCloudServer:
         response = self.errorCode(response, "INVALID_AUTH_CHALLANGE", 403)
         return response
 
-    def post_hmip_auth_simulateBlueButton(self, request: Request, response: Response):
+    async def post_hmip_auth_simulateBlueButton(
+        self, request: Request, response: Response
+    ):
         client = {
             "homeId": self.home_id,
             "id": self.client_auth_waiting["deviceId"],
@@ -706,7 +720,9 @@ class AsyncFakeCloudServer:
         self.client_auth_waiting = None
         return response
 
-    def post_hmip_auth_requestAuthToken(self, request: Request, response: Response):
+    async def post_hmip_auth_requestAuthToken(
+        self, request: Request, response: Response
+    ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
             response = self.errorCode(
                 response, "INVALID_AUTH_TOKEN", 403
@@ -721,7 +737,9 @@ class AsyncFakeCloudServer:
 
         return response
 
-    def post_hmip_auth_confirmAuthToken(self, request: Request, response: Response):
+    async def post_hmip_auth_confirmAuthToken(
+        self, request: Request, response: Response
+    ):
         if request.headers["CLIENTAUTH"] != self.client_auth_token:
             response = self.errorCode(
                 response, "INVALID_AUTH_TOKEN", 403
@@ -743,7 +761,7 @@ class AsyncFakeCloudServer:
 
     # region Group
     @validate_authorization
-    def post_hmip_group_deleteGroup(self, request: Request, response: Response):
+    async def post_hmip_group_deleteGroup(self, request: Request, response: Response):
 
         js = json.loads(request.data)
         if js["groupId"] in self.data["groups"]:
@@ -754,7 +772,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_setGroupLabel(self, request: Request, response: Response):
+    async def post_hmip_group_setGroupLabel(self, request: Request, response: Response):
 
         js = json.loads(request.data)
         if js["groupId"] in self.data["groups"]:
@@ -766,7 +784,9 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_switching_setState(self, request: Request, response: Response):
+    async def post_hmip_group_switching_setState(
+        self, request: Request, response: Response
+    ):
 
         js = json.loads(request.data)
         if js["groupId"] in self.data["groups"]:
@@ -778,7 +798,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_switching_setShutterLevel(
+    async def post_hmip_group_switching_setShutterLevel(
         self, request: Request, response: Response
     ):
 
@@ -792,7 +812,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_heating_setSetPointTemperature(
+    async def post_hmip_group_heating_setSetPointTemperature(
         self, request: Request, response: Response
     ):
 
@@ -806,7 +826,9 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_heating_setBoost(self, request: Request, response: Response):
+    async def post_hmip_group_heating_setBoost(
+        self, request: Request, response: Response
+    ):
 
         js = json.loads(request.data)
         if js["groupId"] in self.data["groups"]:
@@ -818,7 +840,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_heating_setBoostDuration(
+    async def post_hmip_group_heating_setBoostDuration(
         self, request: Request, response: Response
     ):
 
@@ -832,7 +854,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_heating_setActiveProfile(
+    async def post_hmip_group_heating_setActiveProfile(
         self, request: Request, response: Response
     ):
 
@@ -846,7 +868,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_heating_setControlMode(
+    async def post_hmip_group_heating_setControlMode(
         self, request: Request, response: Response
     ):
 
@@ -860,7 +882,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_switching_alarm_testSignalAcoustic(
+    async def post_hmip_group_switching_alarm_testSignalAcoustic(
         self, request: Request, response: Response
     ):
 
@@ -874,7 +896,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_switching_alarm_setSignalAcoustic(
+    async def post_hmip_group_switching_alarm_setSignalAcoustic(
         self, request: Request, response: Response
     ):
 
@@ -888,7 +910,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_switching_alarm_testSignalOptical(
+    async def post_hmip_group_switching_alarm_testSignalOptical(
         self, request: Request, response: Response
     ):
 
@@ -902,7 +924,7 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
-    def post_hmip_group_switching_alarm_setSignalOptical(
+    async def post_hmip_group_switching_alarm_setSignalOptical(
         self, request: Request, response: Response
     ):
 
@@ -917,34 +939,59 @@ class AsyncFakeCloudServer:
 
     # endregion
 
-    def post_getHost(self, request: Request, response: Response):
+    async def post_getHost(self, request: Request, response: Response):
+        ws_url = self.url.replace("https", "wss")
         data = {
             "urlREST": self.url,
-            "urlWebSocket": self.url,  # needs to be changed
+            "urlWebSocket": f"{ws_url}/ws",
             "apiVersion": "12",
         }
         response.data = json.dumps(data)
         return response
 
     # region Fake Server settings
-    def post_hmip_fake_timeout(self, request: Request, response: Response):
+    async def post_hmip_fake_timeout(self, request: Request, response: Response):
         """this function forces a timeout on the request (2 seconds)"""
         time.sleep(2)
         response.data = json.dumps({"TIMEOUT": "TIMEOUT"})
         return response
 
-    def post_hmip_fake_loadConfig(self, request: Request, response: Response):
+    async def post_hmip_fake_loadConfig(self, request: Request, response: Response):
         js = json.loads(request.data)
         with open(Path(__file__).parent.joinpath("json_data", js["file"])) as file:
             self.data = json.load(file, encoding="UTF-8")
         return response
+
+    # endregion
+
+    # region websocket
+    async def get_ws(self, request: Request, response: Response):
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
+
+        async for msg in ws:
+            if msg.type == aiohttp.WSMsgType.TEXT:
+                if msg.data == "close":
+                    await ws.close()
+                else:
+                    await ws.send_str(msg.data + "/answer")
+            elif msg.type == aiohttp.WSMsgType.ERROR:
+                print("ws connection closed with exception %s" % ws.exception())
+
+        print("websocket connection closed")
+
+        return ws
+
     # endregion
 
 
 class FakeCloudServer(AsyncFakeCloudServer):
     """ a wrapper for the async implementation of the FakeCloudServer """
+
     def __call__(self, environ, start_response):
-        loop = asyncio.get_event_loop()
-        return loop.run_until_complete(super().__call__(environ,start_response))
-        
-        
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+        return loop.run_until_complete(super().__call__(environ, start_response))

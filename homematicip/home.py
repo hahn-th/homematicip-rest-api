@@ -1,6 +1,7 @@
 import logging
 import threading
 import websocket
+import ssl
 from typing import List
 
 from homematicip.EventHook import *
@@ -154,7 +155,8 @@ class Home(HomeMaticIPObject):
         self.apExchangeState = ApExchangeState.NONE
         self.availableAPVersion = None
         self.carrierSense = None
-        #:bool:displays if the access point is connected to the hmip cloud or not
+        #:bool:displays if the access point is connected to the hmip cloud or
+        # not
         self.connected = None
         #:str:the current version of the access point
         self.currentAPVersion = None
@@ -711,12 +713,17 @@ class Home(HomeMaticIPObject):
             on_message=self._ws_on_message,
             on_error=self._ws_on_error,
         )
-        self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
-        self.__webSocketThread.daemon = True
+        self.__webSocketThread = threading.Thread(
+            name="hmip-websocket",
+            target=self.__webSocket.run_forever,
+            kwargs={"sslopt": {"cert_reqs": ssl.CERT_NONE}, "ping_interval":10},
+        )
+        self.__webSocketThread.setDaemon(True)
         self.__webSocketThread.start()
 
     def disable_events(self):
         self.__webSocket.close()
+        
 
     def _ws_on_error(self, err):
         LOGGER.exception(err)

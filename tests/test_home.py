@@ -21,6 +21,12 @@ from homematicip_demo.helper import (
 from conftest import utc_offset
 
 
+def test_ws(fake_home: Home):
+    fake_home.enable_events()
+
+    fake_home.disable_events()
+
+
 def test_update_event(fake_home: Home):
     fake_handler = Mock()
     fake_home.on_update(fake_handler.method)
@@ -28,6 +34,7 @@ def test_update_event(fake_home: Home):
     fake_handler.method.assert_called()
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_update
+
 
 def test_remove_event(fake_home: Home):
     fake_handler = Mock()
@@ -37,6 +44,7 @@ def test_remove_event(fake_home: Home):
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_remove
 
+
 def test_create_event(fake_home: Home):
     fake_handler = Mock()
     fake_home.on_create(fake_handler.method)
@@ -44,6 +52,7 @@ def test_create_event(fake_home: Home):
     fake_handler.method.assert_called()
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_create
+
 
 def test_home_base(fake_home: Home):
     assert fake_home.connected == True
