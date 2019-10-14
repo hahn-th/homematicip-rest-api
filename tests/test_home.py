@@ -13,7 +13,7 @@ from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
 from homematicip.functionalHomes import *
 from homematicip.securityEvent import *
-from homematicip.group import Group,MetaGroup
+from homematicip.group import Group, MetaGroup
 from homematicip.device import Device, AccelerationSensor
 
 

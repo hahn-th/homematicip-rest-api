@@ -32,9 +32,9 @@ class Connection(BaseConnection):
                     break
                 except Exception as e:
                     pass
-        else: # pragma: no cover
-            self._urlREST = "https://ps1.homematic.com:6969" 
-            self._urlWebSocket = "wss://ps1.homematic.com:8888" 
+        else:  # pragma: no cover
+            self._urlREST = "https://ps1.homematic.com:6969"
+            self._urlWebSocket = "wss://ps1.homematic.com:8888"
 
     def _restCall(self, path, body=None):
         result = None

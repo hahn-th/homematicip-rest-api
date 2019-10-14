@@ -804,11 +804,11 @@ class Home(HomeMaticIPObject):
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 eventList.append({"eventType": pushEventType, "data": obj})
-            except ValueError as valerr:
+            except ValueError as valerr:  # pragma: no cover
                 LOGGER.warning(
                     "Uknown EventType '%s' Data: %s", event["pushEventType"], event
                 )
 
-            except Exception as err:
+            except Exception as err:  # pragma: no cover
                 LOGGER.exception(err)
         self.onEvent.fire(eventList)

@@ -965,7 +965,7 @@ class AsyncFakeCloudServer:
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
         async for msg in self.ws:  # loop is needed to actually send the data to the client
-            pass
+            pass  # pragma: no cover
 
         return self.ws
 
