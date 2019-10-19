@@ -110,6 +110,59 @@ jobs:
           path: test-reports
           destination: test-reports
 
+  test_3_8_0:
+    docker:
+      # specify the version you desire here
+      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
+      - image: circleci/python:3.8.0
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+        environment:
+           TZ: "/usr/share/zoneinfo/Europe/Berlin"
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements_dev.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            python3 -m pip install -r requirements_dev.txt
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "requirements_dev.txt" }}
+        
+      # run tests!
+      # https://pytest.org
+      - run:
+          name: run tests
+          command: |
+            . venv/bin/activate
+            export PYTHONPATH=`pwd`;
+            pytest --cov=./ --junitxml=test-reports/junit.xml tests -vv
+
+      - store_test_results:
+          path: test-reports
+          
+      - store_artifacts:
+          path: test-reports
+          destination: test-reports
+
   deploy:
     docker:
       - image: circleci/python:3.6.1
@@ -206,6 +259,7 @@ workflows:
           requires:
             - test_3_6_1
             - test_3_7_0
+            - test_3_8_0
           filters:
             tags:
               only: /[0-9]+(\.[0-9]+)*/
@@ -215,6 +269,7 @@ workflows:
           requires:
             - test_3_6_1
             - test_3_7_0
+            - test_3_8_0
           filters:
             branches:
               only: master
