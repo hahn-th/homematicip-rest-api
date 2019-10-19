@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-from asyncio.futures import CancelledError
+from asyncio import CancelledError
 from json.decoder import JSONDecodeError
 
 import aiohttp
