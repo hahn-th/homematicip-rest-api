@@ -762,7 +762,7 @@ def printEvents(eventList):
 
 
 def getRssiBarString(rssiValue):
-    # Observerd values: -93..-47
+    # Observed values: -93..-47
     width = 10
     dots = 0
     if rssiValue:

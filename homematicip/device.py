@@ -599,7 +599,7 @@ class PlugableSwitch(Switch):
 
 
 class PrintedCircuitBoardSwitchBattery(Switch):
-    """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+    """ HmIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
 
 
 class PrintedCircuitBoardSwitch2(Switch):

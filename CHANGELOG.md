@@ -49,7 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
   - HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)
   - HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)
-  - Async implementation of HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
+  - Async implementation of HmIP-PCBS-BAT (Printed Circuit Board Switch Battery)
  
 ## [0.10.7] - 2019-04-09
 ### Added
