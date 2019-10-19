@@ -4,7 +4,7 @@ Homematic IP Overview
 General
 =======
 
-The library structure is similiar to the REST API or HomematicIP Android/IOS App.
+The library structure is similar to the REST API or HomematicIP Android/IOS App.
 The library has two ways of communicating with the REST API. Either via requests (homematicip package) or via async calls (homematicip.aio package).
 
 Important terms

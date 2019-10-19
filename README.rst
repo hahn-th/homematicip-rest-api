@@ -33,7 +33,7 @@ First run hmip_generate_auth_token.py (from the command line) to get an
 auth token for your access point. it will generate a “config.ini” in
 your current directory. The scripts will look for a config.ini in 3
 different locations depending on your OS. Copy the file to one of these
-locations so that it will be accessable for the scripts.
+locations so that it will be accessible for the scripts.
 
 -  General
 

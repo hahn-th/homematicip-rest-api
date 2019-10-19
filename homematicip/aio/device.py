@@ -53,7 +53,7 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
 class AsyncPrintedCircuitBoardSwitchBattery(
     PrintedCircuitBoardSwitchBattery, AsyncSwitch
 ):
-    """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+    """ HmIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
 
 
 class AsyncPrintedCircuitBoardSwitch2(PrintedCircuitBoardSwitch2, AsyncSwitch):
