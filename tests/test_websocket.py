@@ -152,6 +152,7 @@ def test_websocket_home_changed(fake_home: Home, home_data):
     assert fake_home.weather.humidity == 60
     fake_home.disable_events()
 
+
 def test_websocket_client(fake_home: Home, home_data):
 
     fake_home.enable_events()
@@ -184,5 +185,36 @@ def test_websocket_client(fake_home: Home, home_data):
     assert isinstance(d, Client)
 
     assert fake_home.search_client_by_id(client_delete_id) == None
+
+    fake_home.disable_events()
+
+ws_error_called=False
+def test_websocket_error(fake_home: Home, home_data):
+    global ws_error_called
+    def on_error(err):
+        global ws_error_called
+        ws_error_called = True
+
+    fake_home.onWsError += on_error
+
+    fake_home.enable_events()
+    with no_ssl_verification():
+        fake_home._connection._restCallRequestCounter = 1
+        fake_home._restCall("ws/sleep", json.dumps({"seconds": 5}))
+
+    assert ws_error_called
+
+    #testing automatic reconnection
+    time.sleep(5) # give the reconnection routine time to reconnect
+
+    client_base_id = "00000000-0000-0000-0000-000000000000"
+    client_changed = home_data["clients"][client_base_id].copy()
+    client_changed["label"] = "CHANGED"
+    send_event(fake_home, EventType.CLIENT_CHANGED, "client", client_changed)
+    time.sleep(1)
+    d = fake_home.search_client_by_id(client_base_id)
+    assert d.label == "CHANGED"
+    assert isinstance(d, Client)
+
 
     fake_home.disable_events()

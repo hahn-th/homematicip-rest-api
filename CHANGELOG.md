@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - API
   - converted FakeCloudServer to an async implementation
+  - the Home websocket can now automatically reopen a lost connection (default)
 ## [0.10.12] - 2019-09-27
 ### Added
 - API

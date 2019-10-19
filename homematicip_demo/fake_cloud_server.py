@@ -33,6 +33,10 @@ class AsyncFakeCloudServer:
             self.home_id = "00000000-0000-0000-0000-000000000001"
             self.ws = None
 
+    def __del__(self):
+        if self.ws:
+            self.ws.close()
+
     async def __call__(self, request):
         response = Response()
         methodname = "{}{}".format(
@@ -964,14 +968,23 @@ class AsyncFakeCloudServer:
     async def get_ws(self, request):
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
-        async for msg in self.ws:  # loop is needed to actually send the data to the client
-            pass  # pragma: no cover
+        async for msg in self.ws:
+            if msg.tp == web.WSMsgType.CLOSE:
+                await msg.close()
 
         return self.ws
 
     async def post_hmip_ws_send(self, request):
         """ this function will send specific data to the websocket """
         await self.ws.send_json(json.loads(request.data))
+        return web.Response()
+
+    async def post_hmip_ws_sleep(self, request):
+        """ this function will send specific data to the websocket """
+        js = json.loads(request.data)
+        # the server thread must be blocked here to simulate a timeout for the client
+        # NO AWAIT VERSION!
+        time.sleep(js["seconds"])
         return web.Response()
 
     # endregion

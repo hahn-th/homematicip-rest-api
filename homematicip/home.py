@@ -2,6 +2,7 @@ import logging
 import threading
 import websocket
 import ssl
+import sys
 from typing import List
 
 from homematicip.EventHook import *
@@ -178,8 +179,10 @@ class Home(HomeMaticIPObject):
 
         self.__webSocket = None
         self.__webSocketThread = None
-        self.onEvent = EventHook()
+        self.onEvent = EventHook()        
         self.onWsError = EventHook()
+        #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
+        self.websocket_reconnect_on_error = True
 
         #:List[Device]: a collection of all devices in home
         self.devices = []
@@ -704,6 +707,7 @@ class Home(HomeMaticIPObject):
 
     def enable_events(self):
         websocket.enableTrace(True)
+        
         self.__webSocket = websocket.WebSocketApp(
             self._connection.urlWebSocket,
             header=[
@@ -712,21 +716,37 @@ class Home(HomeMaticIPObject):
             ],
             on_message=self._ws_on_message,
             on_error=self._ws_on_error,
+            on_close=self._ws_on_close,
         )
+
+        websocket_kwargs = {"ping_interval": 3}
+        if hasattr(sys, "_called_from_test"):  # disable ssl during a test run
+            sslopt = {"cert_reqs": ssl.CERT_NONE}
+            websocket_kwargs = {"sslopt": sslopt, "ping_interval": 2, "ping_timeout": 1}
+
         self.__webSocketThread = threading.Thread(
             name="hmip-websocket",
             target=self.__webSocket.run_forever,
-            kwargs={"sslopt": {"cert_reqs": ssl.CERT_NONE}, "ping_interval": 10},
+            kwargs=websocket_kwargs,
         )
         self.__webSocketThread.setDaemon(True)
         self.__webSocketThread.start()
 
     def disable_events(self):
-        self.__webSocket.close()
+        if self.__webSocket:
+            self.__webSocket.close()
+            self.__webSocket = None
+
+    def _ws_on_close(self):
+        self.__webSocket = None
 
     def _ws_on_error(self, err):
         LOGGER.exception(err)
         self.onWsError.fire(err)
+        if self.websocket_reconnect_on_error:
+            logger.debug("Trying to reconnect websocket")
+            self.disable_events()
+            self.enable_events()
 
     def _ws_on_message(self, message):
         # json.loads doesn't support bytes as parameter before python 3.6
