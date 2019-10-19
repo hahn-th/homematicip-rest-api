@@ -255,6 +255,10 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - test_3_8_0:
+          filters:
+            tags:
+              only: /.*/
       - deploy:
           requires:
             - test_3_6_1
