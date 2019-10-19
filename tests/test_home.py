@@ -1,6 +1,10 @@
 from unittest.mock import MagicMock, Mock
 
 import pytest
+import json
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+import time
 
 from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
@@ -9,11 +13,10 @@ from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
 from homematicip.functionalHomes import *
 from homematicip.securityEvent import *
-from homematicip.group import Group
-from homematicip.device import Device
+from homematicip.group import Group, MetaGroup
+from homematicip.device import Device, AccelerationSensor
 
-import json
-from datetime import datetime, timedelta, timezone
+
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
@@ -29,6 +32,7 @@ def test_update_event(fake_home: Home):
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_update
 
+
 def test_remove_event(fake_home: Home):
     fake_handler = Mock()
     fake_home.on_remove(fake_handler.method)
@@ -37,6 +41,7 @@ def test_remove_event(fake_home: Home):
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_remove
 
+
 def test_create_event(fake_home: Home):
     fake_handler = Mock()
     fake_home.on_create(fake_handler.method)
@@ -44,6 +49,7 @@ def test_create_event(fake_home: Home):
     fake_handler.method.assert_called()
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_create
+
 
 def test_home_base(fake_home: Home):
     assert fake_home.connected == True
@@ -177,21 +183,25 @@ def test_security_zones_activation(fake_home: Home):
 def test_set_pin(fake_home: Home):
     with no_ssl_verification():
 
-        assert fake_home._fake_cloud.app.pin == None
+        def get_pin(fake_home):
+            result = fake_home._restCall("home/getPin")
+            return result["pin"]
+
+        assert get_pin(fake_home) == None
 
         fake_home.set_pin(1234)
-        assert fake_home._fake_cloud.app.pin == 1234
+        assert get_pin(fake_home) == 1234
 
         fake_home.set_pin(
             5555
         )  # ignore errors. just check if the old pin is still active
-        assert fake_home._fake_cloud.app.pin == 1234
+        assert get_pin(fake_home) == 1234
 
         fake_home.set_pin(5555, 1234)
-        assert fake_home._fake_cloud.app.pin == 5555
+        assert get_pin(fake_home) == 5555
 
         fake_home.set_pin(None, 5555)
-        assert fake_home._fake_cloud.app.pin == None
+        assert get_pin(fake_home) == None
 
 
 def test_set_timezone(fake_home: Home):

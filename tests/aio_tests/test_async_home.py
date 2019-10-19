@@ -76,22 +76,28 @@ async def test_security_zones_activation(no_ssl_fake_async_home: AsyncHome):
 
 @pytest.mark.asyncio
 async def test_set_pin(no_ssl_fake_async_home: AsyncHome):
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == None
+    async def get_pin(no_ssl_fake_async_home):
+        result = await no_ssl_fake_async_home._connection.api_call("home/getPin")
+        return result["pin"]
 
-    await no_ssl_fake_async_home.set_pin(1234)
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == 1234
+    fh = no_ssl_fake_async_home
+
+    assert await get_pin(fh) == None
+
+    await fh.set_pin(1234)
+    assert await get_pin(fh) == 1234
 
     with pytest.raises(HmipWrongHttpStatusError):
-        await no_ssl_fake_async_home.set_pin(
+        await fh.set_pin(
             5555
         )  # ignore errors. just check if the old pin is still active
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == 1234
+    assert await get_pin(fh) == 1234
 
-    await no_ssl_fake_async_home.set_pin(5555, 1234)
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == 5555
+    await fh.set_pin(5555, 1234)
+    assert await get_pin(fh) == 5555
 
-    await no_ssl_fake_async_home.set_pin(None, 5555)
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == None
+    await fh.set_pin(None, 5555)
+    assert await get_pin(fh) == None
 
 
 @pytest.mark.asyncio

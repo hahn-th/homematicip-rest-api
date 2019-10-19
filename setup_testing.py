@@ -8,12 +8,12 @@ import versioneer
 import configparser
 
 here = os.path.abspath(os.path.dirname(__file__))
-    
+
 config = configparser.ConfigParser()
 config.read(os.path.join(here, "setup.cfg"))
 config["versioneer"]["style"] = "pep440-pre"
 
-with open(os.path.join(here, "setup.cfg"), 'w') as configfile:
+with open(os.path.join(here, "setup.cfg"), "w") as configfile:
     config.write(configfile)
 
 setup(

@@ -685,6 +685,7 @@ class AnalogOutputChannel(FunctionalChannel):
         super().from_json(js, groups)
         self.analogOutputLevel = js["analogOutputLevel"]
 
+
 class AccelerationSensorChannel(FunctionalChannel):
     """ this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
 
@@ -716,9 +717,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
         self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
         self.set_attr_from_dict(
-            "accelerationSensorNeutralPosition",
-            js,
-            AccelerationSensorNeutralPosition,
+            "accelerationSensorNeutralPosition", js, AccelerationSensorNeutralPosition
         )
         self.set_attr_from_dict(
             "accelerationSensorSensitivity", js, AccelerationSensorSensitivity

@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--list-groups</CommandLineArguments>
+    <CommandLineArguments>--list-events</CommandLineArguments>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <TestFramework>pytest</TestFramework>
@@ -93,6 +93,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="homematicip_cli_async.py" />
+    <Compile Include="tests\test_websocket.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test_aio.py" />
     <Compile Include="tests\aio_tests\helpers.py" />
     <Compile Include="tests\aio_tests\notest_async_heating_group.py" />

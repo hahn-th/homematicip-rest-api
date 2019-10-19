@@ -3,4 +3,5 @@ websocket-client>=0.54.0
 async_timeout
 websockets
 aiohttp>3
+aiohttp_wsgi 
 aenum
