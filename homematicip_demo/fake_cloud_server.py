@@ -35,7 +35,7 @@ class AsyncFakeCloudServer:
 
     def __del__(self):
         if self.ws:
-            self.ws.close()
+            self.ws.close()  # pragma: no cover
 
     async def __call__(self, request):
         response = Response()
@@ -969,7 +969,7 @@ class AsyncFakeCloudServer:
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
         async for msg in self.ws:
-            if msg.tp == web.WSMsgType.CLOSE:
+            if msg.tp == web.WSMsgType.CLOSE:  # pragma: no cover
                 await msg.close()
 
         return self.ws

@@ -179,7 +179,7 @@ class Home(HomeMaticIPObject):
 
         self.__webSocket = None
         self.__webSocketThread = None
-        self.onEvent = EventHook()        
+        self.onEvent = EventHook()
         self.onWsError = EventHook()
         #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
         self.websocket_reconnect_on_error = True
@@ -707,7 +707,7 @@ class Home(HomeMaticIPObject):
 
     def enable_events(self):
         websocket.enableTrace(True)
-        
+
         self.__webSocket = websocket.WebSocketApp(
             self._connection.urlWebSocket,
             header=[

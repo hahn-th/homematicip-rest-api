@@ -188,9 +188,13 @@ def test_websocket_client(fake_home: Home, home_data):
 
     fake_home.disable_events()
 
-ws_error_called=False
+
+ws_error_called = False
+
+
 def test_websocket_error(fake_home: Home, home_data):
     global ws_error_called
+
     def on_error(err):
         global ws_error_called
         ws_error_called = True
@@ -204,8 +208,8 @@ def test_websocket_error(fake_home: Home, home_data):
 
     assert ws_error_called
 
-    #testing automatic reconnection
-    time.sleep(5) # give the reconnection routine time to reconnect
+    # testing automatic reconnection
+    time.sleep(5)  # give the reconnection routine time to reconnect
 
     client_base_id = "00000000-0000-0000-0000-000000000000"
     client_changed = home_data["clients"][client_base_id].copy()
@@ -215,6 +219,5 @@ def test_websocket_error(fake_home: Home, home_data):
     d = fake_home.search_client_by_id(client_base_id)
     assert d.label == "CHANGED"
     assert isinstance(d, Client)
-
 
     fake_home.disable_events()
