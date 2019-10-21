@@ -968,7 +968,7 @@ class AsyncFakeCloudServer:
     async def post_hmip_fake_timeout(self, request: web.Request) -> web.Response:
         """this function forces a timeout on the request (2 seconds)"""
         time.sleep(2)
-        rdata = json.dumps({"TIMEOUT": "TIMEOUT"})
+        data = json.dumps({"TIMEOUT": "TIMEOUT"})
         return web.json_response(data)
 
     async def post_hmip_fake_loadConfig(self, request: web.Request) -> web.Response:
