@@ -46,7 +46,7 @@ class AsyncSwitch(Switch, AsyncDevice):
         return await self.set_switch_state(False, channelIndex)
 
 
-class AsyncSwitchMeasuring(SwitchMeasuring, AsyncDevice):
+class AsyncSwitchMeasuring(SwitchMeasuring, AsyncSwitch):
     """ Generic async switch measuring"""
 
     async def reset_energy_counter(self):
