@@ -46,6 +46,13 @@ class AsyncSwitch(Switch, AsyncDevice):
         return await self.set_switch_state(False, channelIndex)
 
 
+class AsyncSwitchMeasuring(SwitchMeasuring, AsyncDevice):
+    """ Generic async switch measuring"""
+
+    async def reset_energy_counter(self):
+        return await self._connection.api_call(*super().reset_energy_counter())
+
+
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
     """ Async implementation of HMIP-PS (Pluggable Switch) """
 
@@ -104,18 +111,15 @@ class AsyncBrandSwitchNotificationLight(BrandSwitchNotificationLight, AsyncSwitc
         )
 
 
-class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncSwitch):
+class AsyncPlugableSwitchMeasuring(PlugableSwitchMeasuring, AsyncSwitchMeasuring):
     """ HMIP-PSM (Pluggable Switch and Meter) """
 
-    async def reset_energy_counter(self):
-        return await self._connection.api_call(*super().reset_energy_counter())
 
-
-class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncSwitch):
+class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncSwitchMeasuring):
     """ HMIP-BSM (Brand Switch and Meter) """
 
 
-class AsyncFullFlushSwitchMeasuring(FullFlushSwitchMeasuring, AsyncSwitch):
+class AsyncFullFlushSwitchMeasuring(FullFlushSwitchMeasuring, AsyncSwitchMeasuring):
     """ HmIP-FSM (Full flush Switch and Meter) """
 
 
