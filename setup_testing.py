@@ -29,7 +29,10 @@ setup(
     keywords=["homematicip"],  # arbitrary keywords
     classifiers=[
         "Development Status :: 3 - Alpha",
-        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     install_requires=[
         "requests>=2.4.3",
@@ -40,7 +43,7 @@ setup(
         "aenum",
     ],
     scripts=["hmip_cli.py", "hmip_generate_auth_token.py"],
-    python_requires=">=3",
+    python_requires="~=3.6",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
 )
