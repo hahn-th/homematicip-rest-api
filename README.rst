@@ -78,7 +78,7 @@ Homematic IP Devices:
 ---------------------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
--  [ ] HMIP-ASIR-2     (Alarm Siren2 - indoor)
+-  [ ] HMIP-ASIR-2     (Alarm Siren2 - indoor, not tested, but it should work)
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
@@ -135,6 +135,7 @@ Homematic IP Devices:
 -  [X] HMIP-SMI55      (Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
 -  [X] HMIP-SMO        (Motion Detector with Brightness Sensor - outdoor)
 -  [X] HMIP-SMO-A      (Motion Detector with Brightness Sensor - outdoor, anthracite)
+-  [ ] HMIP-SPDR       (Passage Sensor with Direction Recognition)
 -  [X] HMIP-SPI        (Presence Sensor - indoor)
 -  [X] HMIP-SRH        (Window Rotary Handle Sensor)
 -  [X] HMIP-STH        (Temperature and Humidity Sensor without display - indoor)
@@ -142,11 +143,11 @@ Homematic IP Devices:
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
 -  [X] HMIP-STHO-A     (Temperature and Humidity Sensor – outdoor, anthracite)
 -  [X] HMIP-SWD        (Water Sensor)
+-  [X] HMIP-SWDM       (Door / Window Contact - magnetic)
+-  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic)
 -  [X] HMIP-SWDO       (Shutter Contact)
 -  [X] HMIP-SWDO-I     (Shutter Contact Invisible)
 -  [X] HMIP-SWDO-PL    (Shutter Contact Plus)
--  [X] HMIP-SWDM       (Door / Window Contact - magnetic)
--  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic)
 -  [X] HMIP-SWO-B      (Weather Sensor - Basic)
 -  [X] HMIP-SWO-PL     (Weather Sensor – Plus)
 -  [X] HMIP-SWO-PR     (Weather Sensor – Pro)
@@ -156,8 +157,9 @@ Homematic IP Devices:
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
--  [ ] HMIP-WT         (Wall Mounted Thermostat without Display)
+-  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel)
 -  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
+-  [ ] HMIP-WTH-B      (Wall Mounted Thermostat without adjusting wheel)
 
 Homematic IP Wired Devices:
 ---------------------------
