@@ -78,7 +78,7 @@ Homematic IP Devices:
 ---------------------
 
 -  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
--  [ ] HMIP-ASIR-2     (Alarm Siren2 - indoor, not tested, but it should work)
+-  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor)
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
@@ -135,7 +135,7 @@ Homematic IP Devices:
 -  [X] HMIP-SMI55      (Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
 -  [X] HMIP-SMO        (Motion Detector with Brightness Sensor - outdoor)
 -  [X] HMIP-SMO-A      (Motion Detector with Brightness Sensor - outdoor, anthracite)
--  [ ] HMIP-SPDR       (Passage Sensor with Direction Recognition)
+-  [X] HMIP-SPDR       (Passage Sensor with Direction Recognition)
 -  [X] HMIP-SPI        (Presence Sensor - indoor)
 -  [X] HMIP-SRH        (Window Rotary Handle Sensor)
 -  [X] HMIP-STH        (Temperature and Humidity Sensor without display - indoor)
