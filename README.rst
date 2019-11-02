@@ -22,7 +22,7 @@ Just run **pip install -U homematicip** to get the package
 ----------------
 
 each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
-Just run **pip install -U homematicip-testing --pre** to get the package.
+Just run **pip install -U homematicip --pre** to get the package.
 
 Version: |PyPi-testing|
 
