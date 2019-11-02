@@ -24,8 +24,6 @@ Just run **pip install -U homematicip** to get the package
 each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
 Just run **pip install -U homematicip --pre** to get the package.
 
-Version: |PyPi-testing|
-
 Usage
 =====
 
@@ -212,8 +210,6 @@ connection
    :target: https://circleci.com/gh/coreGreenberet/homematicip-rest-api
 .. |PyPi| image:: https://badge.fury.io/py/homematicip.svg
    :target: https://badge.fury.io/py/homematicip
-.. |PyPi-testing| image:: https://badge.fury.io/py/homematicip-testing.svg
-   :target: https://badge.fury.io/py/homematicip-testing
 .. |codecov| image:: https://codecov.io/gh/coreGreenberet/homematicip-rest-api/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/coreGreenberet/homematicip-rest-api
 .. |Average time to resolve an issue| image:: http://isitmaintained.com/badge/resolution/coreGreenberet/homematicip-rest-api.svg
