@@ -225,17 +225,37 @@ class ExtendedLinkedShutterGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
         self.shutterLevel = None
+        self.slatsLevel = None
+        self.topSlatsLevel = None
+        self.bottomSlatsLevel = None
+        self.topShutterLevel = None
+        self.bottomShutterLevel = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.shutterLevel = js["shutterLevel"]
+        self.set_attr_from_dict("shutterLevel", js)
+        self.set_attr_from_dict("slatsLevel", js)
+        self.set_attr_from_dict("topSlatsLevel", js)
+        self.set_attr_from_dict("bottomSlatsLevel", js)
+        self.set_attr_from_dict("topShutterLevel", js)
+        self.set_attr_from_dict("bottomShutterLevel", js)
 
     def __str__(self):
-        return "{} shutterLevel({})".format(super().__str__(), self.shutterLevel)
+        return "{} shutterLevel({}) slatsLevel({})".format(
+            super().__str__(), self.shutterLevel, self.slatsLevel
+        )
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
         return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+
+    def set_slats_level(self, slatsLevel, shutterlevel):
+        data = {
+            "groupId": self.id,
+            "shutterLevel": shutterlevel,
+            "slatsLevel": slatsLevel,
+        }
+        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
