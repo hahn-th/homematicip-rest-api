@@ -25,12 +25,12 @@ async def test_heating_group(no_ssl_fake_async_home: AsyncHome):
         assert d.id in [
             "3014F7110000000000000004",
             "3014F7110000000000000022",
-            "3014F7110000000000000011",
+            "3014F7110000000000000008",
         ]
 
     assert g.activeProfile.index == "PROFILE_1"
     assert g.activeProfile.enabled == True
-    assert g.activeProfile.name == ""
+    assert g.activeProfile.name == "STD"
     assert g.activeProfile.visible == True
     assert g.activeProfile.id == "00000000-0000-0000-0000-000000000023"
     assert g.activeProfile.groupId == "00000000-0000-0000-0000-000000000012"
