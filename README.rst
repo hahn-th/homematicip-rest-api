@@ -75,8 +75,9 @@ Implemented Stuff
 Homematic IP Devices:
 ---------------------
 
--  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
--  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor)
+-  [X] HMIP-ASIR       (Alarm Siren - indoor)
+-  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
+-  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
@@ -87,9 +88,11 @@ Homematic IP Devices:
 -  [X] HMIP-BWTH       (Wall Thermostat Display with switching output – for brand switches, 230V)
 -  [ ] HMIP-BWTH24     (Wall Thermostat Display with switching output – for brand switches, 24V)
 -  [ ] HMIP-DBB        (Doorbell Push-Button)
--  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-Thermostat with Display)
+-  [X] HMIP-eTRV       (Heating-Thermostat with Display)
+-  [X] HMIP-eTRV2      (Heating-Thermostat with Display) New Version
+-  [X] HMIP-eTRV-B1    (Heating-Thermostat basic with Display) *Silvercrest Edition*
 -  [ ] HMIP-eTRV-2-UK  (UK Version not tested, but it should work)
--  [ ] HMIP-eTRV-B     (Heating-Thermostat with Display Basic not tested, but it should work)
+-  [ ] HMIP-eTRV-B     (Heating-Thermostat basic with Display) not tested, but it should work
 -  [X] HMIP-eTRV-C     (Heating-thermostat compact without display)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
 -  [X] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
@@ -140,9 +143,10 @@ Homematic IP Devices:
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
 -  [X] HMIP-STHO-A     (Temperature and Humidity Sensor – outdoor, anthracite)
+-  [ ] HMIP-STV        (Inclination and vibration Sensor)
 -  [X] HMIP-SWD        (Water Sensor)
 -  [X] HMIP-SWDM       (Door / Window Contact - magnetic)
--  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic)
+-  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic) *Silvercrest Edition*
 -  [X] HMIP-SWDO       (Shutter Contact)
 -  [X] HMIP-SWDO-I     (Shutter Contact Invisible)
 -  [X] HMIP-SWDO-PL    (Shutter Contact Plus)
@@ -156,7 +160,8 @@ Homematic IP Devices:
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel)
--  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
+-  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
+-  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
 -  [ ] HMIP-WTH-B      (Wall Mounted Thermostat without adjusting wheel)
 
 Homematic IP Wired Devices:
