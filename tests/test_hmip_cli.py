@@ -16,8 +16,10 @@ def test_getRssiBarString():
     assert getRssiBarString(-95) == "[*_________]"
     assert getRssiBarString(-100) == "[__________]"
 
+
 def test_handle_config_error():
-    assert handle_config({"errorCode":"Dummy"}, False) == None
+    assert handle_config({"errorCode": "Dummy"}, False) is None
+
 
 def test_anonymizeConfig():
     c = (
@@ -28,7 +30,7 @@ def test_anonymizeConfig():
         '"location":'
         '{"city": "Vatican City, Vatican","latitude":"41.9026011","longitude":"12.4533701"}}'
     )
-    c = handle_config(json.loads(c),True)
+    c = handle_config(json.loads(c), True)
 
     js = json.loads(c)
 
@@ -37,12 +39,12 @@ def test_anonymizeConfig():
     assert js["inboxGroup"] == "00000000-0000-0000-0000-000000000001"
     assert js["sgtin"] == "3014F7110000000000000000"
     assert js["sgtin_silvercrest"] == "3014F7110000000000000001"
-    
+
     l = js["location"]
     assert l["city"] == "1010, Vienna, Austria"
     assert l["latitude"] == "48.208088"
     assert l["longitude"] == "16.358608"
 
     c = '{"id":"test"}'
-    c = anonymizeConfig(c, 'original', 'REPLACED')
+    c = anonymizeConfig(c, "original", "REPLACED")
     assert c == '{"id":"test"}'
