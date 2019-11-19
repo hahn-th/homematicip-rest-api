@@ -20,13 +20,13 @@ def test_meta_group(fake_home: Home):
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 16, 479000) + timedelta(
         0, utc_offset
     )
-    assert g.lowBat == False
-    assert g.metaGroup == None
-    assert g.sabotage == None
-    assert g.configPending == False
-    assert g.unreach == False
-    assert g.dutyCycle == False
-    assert g.incorrectPositioned == None
+    assert g.lowBat is False
+    assert g.metaGroup is None
+    assert g.sabotage is None
+    assert g.configPending is False
+    assert g.unreach is False
+    assert g.dutyCycle is False
+    assert g.incorrectPositioned is None
     for d in g.devices:
         assert d.id in [
             "3014F7110000000000000025",
@@ -60,46 +60,46 @@ def test_heating_group(fake_home: Home):
         ]
 
     assert g.activeProfile.index == "PROFILE_1"
-    assert g.activeProfile.enabled == True
+    assert g.activeProfile.enabled is True
     assert g.activeProfile.name == "STD"
-    assert g.activeProfile.visible == True
+    assert g.activeProfile.visible is True
     assert g.activeProfile.id == "00000000-0000-0000-0000-000000000023"
     assert g.activeProfile.groupId == "00000000-0000-0000-0000-000000000012"
 
     profile3 = g.profiles[2]
     assert profile3.index == "PROFILE_3"
-    assert profile3.visible == False
+    assert profile3.visible is False
     assert profile3.id == "00000000-0000-0000-0000-000000000025"
 
     assert g.actualTemperature == 24.7
     assert g.boostDuration == 15
-    assert g.boostMode == False
+    assert g.boostMode is False
     assert g.controlMode == ClimateControlMode.AUTOMATIC
-    assert g.controllable == True
-    assert g.cooling == False
-    assert g.coolingAllowed == False
-    assert g.coolingIgnored == False
-    assert g.dutyCycle == False
-    assert g.ecoAllowed == True
-    assert g.ecoIgnored == False
+    assert g.controllable is True
+    assert g.cooling is False
+    assert g.coolingAllowed is False
+    assert g.coolingIgnored is False
+    assert g.dutyCycle is False
+    assert g.ecoAllowed is True
+    assert g.ecoIgnored is False
     assert g.externalClockCoolingTemperature == 23.0
-    assert g.externalClockEnabled == False
+    assert g.externalClockEnabled is False
     assert g.externalClockHeatingTemperature == 19.0
     assert g.floorHeatingMode == "FLOOR_HEATING_STANDARD"
     assert g.humidity == 43
-    assert g.humidityLimitEnabled == True
+    assert g.humidityLimitEnabled is True
     assert g.humidityLimitValue == 60
     assert g.label == "Schlafzimmer"
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
         0, utc_offset
     )
-    assert g.lowBat == False
+    assert g.lowBat is False
     assert g.maxTemperature == 30.0
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000011"
     assert g.minTemperature == 5.0
-    assert g.partyMode == False
+    assert g.partyMode is False
     assert g.setPointTemperature == 5.0
-    assert g.unreach == False
+    assert g.unreach is False
     assert g.valvePosition == 0.0
     assert g.windowOpenTemperature == 5.0
     assert g.windowState == "OPEN"
@@ -132,7 +132,7 @@ def test_heating_group(fake_home: Home):
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000012")
         assert g.boostDuration == 20
-        assert g.boostMode == True
+        assert g.boostMode is True
         assert g.activeProfile.index == "PROFILE_4"
         assert g.setPointTemperature == 10.5
         assert g.controlMode == ClimateControlMode.MANUAL
@@ -140,7 +140,7 @@ def test_heating_group(fake_home: Home):
         fake_home.delete_group(g)
         fake_home.get_current_state()
         gNotFound = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000012")
-        assert gNotFound == None
+        assert gNotFound is None
 
         result = g.set_boost_duration(20)
         assert result["errorCode"] == "INVALID_GROUP"
@@ -164,20 +164,20 @@ def test_security_group(fake_home: Home):
     for d in g.devices:
         assert d.id in ["3014F7110000000000000001", "3014F7110000000000000019"]
 
-    assert g.dutyCycle == False
+    assert g.dutyCycle is False
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000009"
     assert g.label == "Büro"
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
         0, utc_offset
     )
-    assert g.lowBat == False
+    assert g.lowBat is False
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000008"
-    assert g.motionDetected == None
-    assert g.presenceDetected == None
-    assert g.sabotage == False
+    assert g.motionDetected is None
+    assert g.presenceDetected is None
+    assert g.sabotage is False
     assert g.smokeDetectorAlarmType == SmokeDetectorAlarmType.IDLE_OFF
-    assert g.unreach == False
+    assert g.unreach is False
     assert g.windowState == "CLOSED"
 
     assert str(g) == (
@@ -197,21 +197,21 @@ def test_switching_group(fake_home: Home):
                 "3014F7110000000000000008",
             ]
 
-        assert g.dimLevel == None
-        assert g.dutyCycle == False
+        assert g.dimLevel is None
+        assert g.dutyCycle is False
         assert g.homeId == "00000000-0000-0000-0000-000000000001"
         assert g.id == "00000000-0000-0000-0000-000000000018"
         assert g.label == "Strom"
         assert g.lastStatusUpdate == datetime(
             2018, 4, 23, 20, 49, 14, 56000
         ) + timedelta(0, utc_offset)
-        assert g.lowBat == None
+        assert g.lowBat is None
         assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
-        assert g.on == True
-        assert g.processing == None
-        assert g.shutterLevel == None
-        assert g.slatsLevel == None
-        assert g.unreach == False
+        assert g.on is True
+        assert g.processing is None
+        assert g.shutterLevel is None
+        assert g.slatsLevel is None
+        assert g.unreach is False
 
         assert str(g) == (
             "SWITCHING Strom on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)"
@@ -223,7 +223,7 @@ def test_switching_group(fake_home: Home):
         g.set_shutter_level(50)
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000018")
-        assert g.on == False
+        assert g.on is False
         assert g.label == "NEW GROUP"
         assert g.shutterLevel == 50
 
@@ -234,12 +234,12 @@ def test_switching_group(fake_home: Home):
         g.turn_on()
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000018")
-        assert g.on == True
+        assert g.on is True
 
         fake_home.delete_group(g)
         fake_home.get_current_state()
         gNotFound = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000018")
-        assert gNotFound == None
+        assert gNotFound is None
 
         result = g.delete()
         assert result["errorCode"] == "INVALID_GROUP"
@@ -261,7 +261,7 @@ def test_environment_group(fake_home: Home):
 
         assert g.actualTemperature == 15.4
         assert g.illumination == 4703.0
-        assert g.raining == False
+        assert g.raining is False
         assert g.humidity == 65
         assert g.windSpeed == 29.1
 
@@ -275,7 +275,7 @@ def test_heating_dehumidifier_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000055")
         assert isinstance(g, HeatingDehumidifierGroup)
-        assert g.on == None
+        assert g.on is None
         assert str(g) == "HEATING_DEHUMIDIFIER HEATING_DEHUMIDIFIER on(None)"
 
 
@@ -283,7 +283,7 @@ def test_heating_cooling_demand_pump_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000057")
         assert isinstance(g, HeatingCoolingDemandPumpGroup)
-        assert g.on == None
+        assert g.on is None
         assert g.pumpFollowUpTime == 2
         assert g.pumpLeadTime == 2
         assert g.pumpProtectionDuration == 1
@@ -356,7 +356,7 @@ def test_humidity_warning_rule_group(fake_home: Home):
             "triggered(False) lastExecutionTimestamp(2019-02-28 22:05:05.665000) "
             "lastStatusUpdate(2019-02-28 22:08:24.260000) ventilationRecommended(True)"
         )
-        assert g.outdoorClimateSensor == None
+        assert g.outdoorClimateSensor is None
 
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000049")
         d = fake_home.search_device_by_id("3014F7110000000000000038")

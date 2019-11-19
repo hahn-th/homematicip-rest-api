@@ -84,7 +84,7 @@ def test_websocket_device(fake_home: Home, home_data):
     assert d.label == "CHANGED"
     assert isinstance(d, AccelerationSensor)
 
-    assert fake_home.search_device_by_id(device_delete_id) == None
+    assert fake_home.search_device_by_id(device_delete_id) is None
 
     fake_home.disable_events()
 
@@ -128,7 +128,7 @@ def test_websocket_group(fake_home: Home, home_data):
     assert d.label == "CHANGED"
     assert isinstance(d, SecurityZoneGroup)
 
-    assert fake_home.search_group_by_id(group_delete_id) == None
+    assert fake_home.search_group_by_id(group_delete_id) is None
 
     fake_home.disable_events()
 
@@ -184,7 +184,7 @@ def test_websocket_client(fake_home: Home, home_data):
     assert d.label == "CHANGED"
     assert isinstance(d, Client)
 
-    assert fake_home.search_client_by_id(client_delete_id) == None
+    assert fake_home.search_client_by_id(client_delete_id) is None
 
     fake_home.disable_events()
 

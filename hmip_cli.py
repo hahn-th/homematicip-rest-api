@@ -2,7 +2,6 @@
 import logging
 import sys
 import time
-import re
 from argparse import ArgumentParser
 from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
@@ -522,7 +521,7 @@ def main():
                 break
             else:
                 d = home.search_device_by_id(argdevice)
-                if d == None:
+                if d is None:
                     logger.error("Could not find device %s", argdevice)
                 else:
                     devices.append(d)
@@ -626,7 +625,7 @@ def main():
         command_entered = True
         for id in args.external_devices:
             d = home.search_device_by_id(id)
-            if d == None:
+            if d is None:
                 logger.error("Device %s is not registered on this Access Point", id)
                 error = True
             else:
@@ -634,7 +633,7 @@ def main():
 
         for id in args.internal_devices:
             d = home.search_device_by_id(id)
-            if d == None:
+            if d is None:
                 logger.error("Device %s is not registered on this Access Point", id)
                 error = True
             else:
@@ -661,7 +660,7 @@ def main():
             if g.id == args.group:
                 group = g
                 break
-        if group == None:
+        if group is None:
             logger.error("Could not find group %s", args.group)
             return
 
@@ -725,7 +724,7 @@ def main():
                 break
             else:
                 r = home.search_rule_by_id(argrule)
-                if r == None:
+                if r is None:
                     logger.error("Could not find automation rule %s", argrule)
                 else:
                     rules.append(r)

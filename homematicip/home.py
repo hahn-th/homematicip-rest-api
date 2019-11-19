@@ -618,7 +618,7 @@ class Home(HomeMaticIPObject):
         Returns:
             the result of the call
         """
-        if newPin == None:
+        if newPin is None:
             newPin = ""
         data = {"pin": newPin}
         if oldPin:
