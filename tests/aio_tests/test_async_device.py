@@ -25,7 +25,7 @@ async def test_acceleration_sensor(no_ssl_fake_async_home: AsyncHome):
         d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_4G
     )
     assert d.accelerationSensorTriggerAngle == 45
-    assert d.accelerationSensorTriggered == True
+    assert d.accelerationSensorTriggered is True
     assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_LONG
     assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_LONG
 
@@ -95,7 +95,7 @@ async def test_basic_device_functions(no_ssl_fake_async_home: AsyncHome):
     await d.delete()
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
-    assert d == None
+    assert d is None
     assert d2 is no_ssl_fake_async_home.search_device_by_id(
         "3014F7110000000000000005"
     )  # make sure that the objects got updated and not completely renewed
@@ -192,23 +192,23 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000009"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
-    assert d.on == False
+    assert d.on is False
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
     assert d.currentPowerConsumption == 0.0
     assert d.energyCounter == 0.4754
-    assert d.lowBat == None
-    assert d.routerModuleEnabled == True
-    assert d.routerModuleSupported == True
+    assert d.lowBat is None
+    assert d.routerModuleEnabled is True
+    assert d.routerModuleSupported is True
     assert d.rssiDeviceValue == -60
     assert d.rssiPeerValue == -66
-    assert d.unreach == False
+    assert d.unreach is False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "2.6.2"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-    assert d.dutyCycle == False
-    assert d.configPending == False
+    assert d.dutyCycle is False
+    assert d.configPending is False
 
     assert str(d) == (
         "HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)"
@@ -218,12 +218,12 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     await d.turn_on()
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
-    assert d.on == True
+    assert d.on is True
 
     await d.turn_off()
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
-    assert d.on == False
+    assert d.on is False
 
     d.id = "INVALID_ID"
     with pytest.raises(HmipWrongHttpStatusError):
@@ -248,14 +248,14 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     assert d.temperatureOffset == 0.0
     assert d.valvePosition == 0.0
     assert d.valveState == ValveState.ADAPTION_DONE
-    assert d.lowBat == False
-    assert d.operationLockActive == True
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.operationLockActive is True
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -65
     assert d.rssiPeerValue == -66
-    assert d.unreach == False
-    assert d.automaticValveAdaptionNeeded == False
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
     assert d.availableFirmwareVersion == "2.0.2"
     assert d.firmwareVersion == "2.0.2"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
@@ -273,7 +273,7 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     await d.set_operation_lock(False)
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000015")
-    assert d.operationLockActive == False
+    assert d.operationLockActive is False
 
     d.id = "INVALID_ID"
     with pytest.raises(HmipWrongHttpStatusError):
@@ -342,7 +342,7 @@ async def test_full_flush_blind(no_ssl_fake_async_home: AsyncHome):
 
     assert d.shutterLevel == 1.0
     assert d.slatsLevel == 1.0
-    assert d.blindModeActive == True
+    assert d.blindModeActive is True
     assert d.slatsReferenceTime == 2.0
 
     await d.set_slats_level(0.4)

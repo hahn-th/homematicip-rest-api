@@ -16,12 +16,12 @@ def test_auth_challenge_no_pin(fake_home: Home):
         sgtin = "3014F711A000000BAD0C0DED"
         devicename = "auth_test"
         assert auth.connectionRequest(sgtin, devicename).status_code == 200
-        assert auth.isRequestAcknowledged() == False
-        assert auth.isRequestAcknowledged() == False
+        assert auth.isRequestAcknowledged() is False
+        assert auth.isRequestAcknowledged() is False
 
         fake_home._connection._restCall("auth/simulateBlueButton")
 
-        assert auth.isRequestAcknowledged() == True
+        assert auth.isRequestAcknowledged() is True
 
         token = auth.requestAuthToken()
         assert token == hashlib.sha512(auth.uuid.encode("utf-8")).hexdigest().upper()
