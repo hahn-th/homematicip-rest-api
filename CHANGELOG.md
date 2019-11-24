@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - General
   - removed homematicip-testing package. Pip will automatically install the latest tagged release. For a "nightly" build you just have to run it with the "--pre" argument.
+### FIXED
+- [BUG: 266]: Anonymize won't work on the Silvercrest models
+
 ## [0.10.13] - 2019-10-19
 ### Changed
 - API
@@ -268,3 +271,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 188]: https://github.com/coreGreenberet/homematicip-rest-api/issues/188
 [BUG: 220]: https://github.com/coreGreenberet/homematicip-rest-api/issues/220
 [BUG: 223]: https://github.com/coreGreenberet/homematicip-rest-api/issues/223
+[BUG: 266]: https://github.com/coreGreenberet/homematicip-rest-api/issues/266
