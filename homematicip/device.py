@@ -1379,7 +1379,7 @@ class WaterSensor(Device):
         self.acousticWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.inAppWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.moistureDetected = False
-        self.sirenWateralarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.waterlevelDetected = False
         self._baseChannel = "DEVICE_INCORRECT_POSITIONED"
 
