@@ -1682,6 +1682,6 @@ class GarageDoorModuleTormatic(Device):
         )
 
     def send_door_command(self, doorCommand=DoorCommand.STOP):
-        data = {"channelIndex": 0, "deviceId": self.id, "doorCommand": doorCommand}
+        data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
         return self._restCall("device/control/sendDoorCommand", json.dumps(data))
 

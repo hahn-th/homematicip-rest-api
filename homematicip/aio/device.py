@@ -428,3 +428,8 @@ class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
 
 class AsyncGarageDoorModuleTormatic(GarageDoorModuleTormatic, AsyncDevice):
     """ HMIP-MOD-TM (Garage Door Module Tormatic) """
+
+    async def send_door_command(self, doorCommand=DoorCommand.STOP):
+        return await self._connection.api_call(
+            *super().send_door_command(doorCommand)
+        )

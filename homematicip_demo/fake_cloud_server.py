@@ -598,7 +598,7 @@ class AsyncFakeCloudServer:
             "PARTIAL_OPEN": "VENTILATION_POSITION",
             "STOP": "POSITION_UNKNOWN",
         }
-        d["functionalChannels"][channelIndex]["doorState"] = switcher.get(js["doorCommmand"], "Invalid month")
+        d["functionalChannels"][channelIndex]["doorState"] = switcher.get(js["doorCommand"], "POSITION_UNKNOWN")
 
         return web.json_response(None)
 
