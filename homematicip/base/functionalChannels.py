@@ -249,6 +249,25 @@ class ClimateSensorChannel(FunctionalChannel):
         self.vaporAmount = js["vaporAmount"]
 
 
+class DoorChannel(FunctionalChannel):
+    """ this is the representative of the DoorChannel channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.doorState = DoorState.POSITION_UNKNOWN
+        self.on = False
+        self.processing = False
+        self.ventilationPositionSupported = True
+
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.doorState = js["doorState"]
+        self.on = js["on"]
+        self.processing = js["processing"]
+        self.ventilationPositionSupported = js["ventilationPositionSupported"]
+
+
 class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
     """ this is the representative of the WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL channel"""
 
