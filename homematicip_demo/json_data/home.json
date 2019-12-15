@@ -4031,6 +4031,74 @@
             "serializedGlobalTradeItemNumber": "3014F711BBBBBBBBBBBBB18",
             "type": "OPEN_COLLECTOR_8_MODULE",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F0000000000000FAF9B4": {
+            "availableFirmwareVersion": "1.0.0",
+            "firmwareVersion": "1.0.0",
+            "firmwareVersionInteger": 65536,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F0000000000000FAF9B4",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000004"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -52,
+                    "rssiPeerValue": -54,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceOverheated": false,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F0000000000000FAF9B4",
+                    "doorState": "CLOSED",
+                    "functionalChannelType": "DOOR_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000005"
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "on": false,
+                    "processing": false,
+                    "ventilationPositionSupported": true
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F0000000000000FAF9B4",
+            "label": "Garage Door Module",
+            "lastStatusUpdate": 1574878451970,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 376,
+            "modelType": "HmIP-MOD-TM",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F0000000000000FAF9B4",
+            "type": "TORMATIC_MODULE",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {

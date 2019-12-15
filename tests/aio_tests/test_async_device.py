@@ -356,3 +356,18 @@ async def test_full_flush_blind(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F711BADCAFE000000001")
     assert d.shutterLevel == 0.3
     assert d.slatsLevel == 0.8
+
+
+@pytest.mark.asyncio
+async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F0000000000000FAF9B4")
+
+    assert d.doorState == DoorState.CLOSED
+    assert d.on == False
+    assert d.processing == False
+    assert d.ventilationPositionSupported == True
+
+    await no_ssl_fake_async_home.get_current_state()
+    await d.send_door_command(DoorCommand.OPEN)
+    await no_ssl_fake_async_home.get_current_state()
+    assert d.doorState == DoorState.OPEN

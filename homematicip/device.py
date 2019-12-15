@@ -1379,7 +1379,7 @@ class WaterSensor(Device):
         self.acousticWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.inAppWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.moistureDetected = False
-        self.sirenWateralarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.waterlevelDetected = False
         self._baseChannel = "DEVICE_INCORRECT_POSITIONED"
 
@@ -1650,3 +1650,38 @@ class AccelerationSensor(Device):
             self.notificationSoundTypeHighToLow,
             self.notificationSoundTypeLowToHigh,
         )
+
+class GarageDoorModuleTormatic(Device):
+    """ HMIP-MOD-TM (Garage Door Module Tormatic) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.doorState = DoorState.POSITION_UNKNOWN
+        self.on = False
+        self.processing = False
+        self.ventilationPositionSupported = False
+
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DOOR_CHANNEL", js)
+        if c:
+            self.doorState = DoorState.from_str(c["doorState"])
+            self.on = c["on"]
+            self.processing = c["processing"]
+            self.ventilationPositionSupported = c["ventilationPositionSupported"]
+
+
+    def __str__(self):
+        return "{} doorState({}) on({}) processing({}) ventilationPositionSupported({})".format(
+            super().__str__(),
+            self.doorState,
+            self.on,
+            self.processing,
+            self.ventilationPositionSupported,
+        )
+
+    def send_door_command(self, doorCommand=DoorCommand.STOP):
+        data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
+        return self._restCall("device/control/sendDoorCommand", json.dumps(data))
+

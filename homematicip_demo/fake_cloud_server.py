@@ -585,6 +585,24 @@ class AsyncFakeCloudServer:
         return web.json_response(None)
 
     @validate_authorization
+    async def post_hmip_device_control_sendDoorCommand(
+        self, request: web.Request
+    ) -> web.Response:
+
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = "{}".format(js["channelIndex"])
+        switcher = {
+            "CLOSE": "CLOSED",
+            "OPEN": "OPEN",
+            "PARTIAL_OPEN": "VENTILATION_POSITION",
+            "STOP": "POSITION_UNKNOWN",
+        }
+        d["functionalChannels"][channelIndex]["doorState"] = switcher.get(js["doorCommand"], "POSITION_UNKNOWN")
+
+        return web.json_response(None)
+
+    @validate_authorization
     async def post_hmip_device_configuration_setNotificationSoundType(
         self, request: web.Request
     ) -> web.Response:

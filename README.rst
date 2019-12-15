@@ -119,7 +119,7 @@ Homematic IP Devices:
 -  [ ] HMIP-MOD-HO     (Garage Door Module for Hörmann)
 -  [X] HMIP-MOD-OC8    (Open Collector Module Receiver - 8x)
 -  [X] HMIP-MOD-RC8    (Open Collector Module Sender - 8x)
--  [ ] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
+-  [X] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
 -  [ ] HMIP-MP3P       (Combination Signalling Device MP3)
 -  [X] HMIP-PCBS       (Switch Circuit Board - 1x channel)
 -  [X] HMIP-PCBS2      (Switch Circuit Board - 2x channels)

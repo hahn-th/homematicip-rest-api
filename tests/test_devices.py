@@ -1150,3 +1150,19 @@ def test_light_sensor(fake_home: Home):
             "averageIllumination(807.3) currentIllumination(785.2) "
             "highestIllumination(837.1) lowestIllumination(785.2)"
         )
+
+
+def test_door_sensor_tm(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
+
+        assert d.doorState == DoorState.CLOSED
+        assert d.on == False
+        assert d.processing == False
+        assert d.ventilationPositionSupported == True
+
+        assert str(d) == (
+            "HmIP-MOD-TM Garage Door Module lowbat(None) unreach(False) rssiDeviceValue(-52) "
+            "rssiPeerValue(-54) configPending(False) dutyCycle(False) doorState(CLOSED) "
+            "on(False) processing(False) ventilationPositionSupported(True)"
+        )

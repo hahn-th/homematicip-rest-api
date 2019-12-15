@@ -52,6 +52,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: AsyncTemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: AsyncTemperatureHumiditySensorDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: AsyncTemperatureHumiditySensorOutdoor,
+    DeviceType.TORMATIC_MODULE: AsyncGarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: AsyncWallMountedThermostatPro,
     DeviceType.WATER_SENSOR: AsyncWaterSensor,
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
