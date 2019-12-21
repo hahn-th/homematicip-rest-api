@@ -20,6 +20,9 @@ This script will ping (ICMP) all configured IP addresses (e.g. mobile phones whi
 ### GetDevicesAndValues
 Get´s (all) devices and values.
 
+### ControlDevices
+Example of turning a switch on and off
+
 ### QRCodeGenerator
 This script will create QRCodes for all configured devices and a webpage for easier browsing
 
