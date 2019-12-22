@@ -249,8 +249,8 @@ class ExtendedLinkedShutterGroup(Group):
         self.primaryShadingLevel = 0.0
         self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
         self.secondaryShadingLevel = 0.0
-        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT    
-        self.groupVisibility = GroupVisibility.INVISIBLE_GROUP_AND_CONTROL   
+        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.groupVisibility = GroupVisibility.INVISIBLE_GROUP_AND_CONTROL
 
     def from_json(self, js, devices):
         super().from_json(js, devices)

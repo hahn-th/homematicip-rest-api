@@ -69,7 +69,7 @@ class AsyncSwitchingGroup(SwitchingGroup, AsyncGroup):
         return await self._connection.api_call(url, data)
 
     async def set_slats_level(self, slatsLevel, shutterlevel):
-        url, data = super().set_slats_level(slatsLevel,shutterlevel)
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
         return await self._connection.api_call(url, data)
 
 
@@ -97,8 +97,9 @@ class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):
         return await self._connection.api_call(url, data)
 
     async def set_slats_level(self, slatsLevel, shutterlevel):
-        url, data = super().set_slats_level(slatsLevel,shutterlevel)
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
         return await self._connection.api_call(url, data)
+
 
 class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
     async def set_on_time(self, onTimeSeconds):
