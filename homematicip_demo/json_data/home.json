@@ -20,7 +20,7 @@
             "firmwareVersionInteger": 65542,
             "functionalChannels": {
                 "0": {
-                    "badBatteryHealth": false,
+                    "badBatteryHealth": true,
                     "coProFaulty": false,
                     "coProRestartNeeded": false,
                     "coProUpdateFailure": false,
@@ -72,7 +72,7 @@
             "modelType": "HmIP-ASIR-O",
             "oem": "eQ-3",
             "permanentlyReachable": true,
-            "serializedGlobalTradeItemNumber": "3014F7110000000000000033",
+            "serializedGlobalTradeItemNumber": "3014F7110000ABCDABCD0033",
             "type": "ALARM_SIREN_OUTDOOR",
             "updateState": "UP_TO_DATE"
         },
@@ -747,14 +747,14 @@
             "firmwareVersionInteger": 65542,
             "functionalChannels": {
                 "0": {
-                    "coProFaulty": false,
-                    "coProRestartNeeded": false,
-                    "coProUpdateFailure": false,
+                    "coProFaulty": true,
+                    "coProRestartNeeded": true,
+                    "coProUpdateFailure": true,
                     "configPending": false,
                     "deviceId": "3014F7110000000000000064",
                     "deviceOverheated": true,
-                    "deviceOverloaded": false,
-                    "deviceUndervoltage": false,
+                    "deviceOverloaded": true,
+                    "deviceUndervoltage": true,
                     "dutyCycle": false,
                     "functionalChannelType": "DEVICE_SABOTAGE",
                     "groupIndex": 0,
@@ -771,15 +771,15 @@
                     "rssiPeerValue": null,
                     "sabotage": false,
                     "supportedOptionalFeatures": {
-                        "IFeatureDeviceCoProError": false,
-                        "IFeatureDeviceCoProRestart": false,
-                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceCoProError": true,
+                        "IFeatureDeviceCoProRestart": true,
+                        "IFeatureDeviceCoProUpdate": true,
                         "IFeatureDeviceOverheated": true,
-                        "IFeatureDeviceOverloaded": false,
-                        "IFeatureDeviceTemperatureOutOfRange": false,
-                        "IFeatureDeviceUndervoltage": false
+                        "IFeatureDeviceOverloaded": true,
+                        "IFeatureDeviceTemperatureOutOfRange": true,
+                        "IFeatureDeviceUndervoltage": true
                     },
-                    "temperatureOutOfRange": false,
+                    "temperatureOutOfRange": true,
                     "unreach": false
                 },
                 "1": {
