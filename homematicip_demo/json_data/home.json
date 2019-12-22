@@ -5466,6 +5466,31 @@
             "type": "HUMIDITY_WARNING_RULE_GROUP",
             "unreach": false,
             "ventilationRecommended": false
+        },
+        "00000000-0000-0000-0000-000000000050": {
+            "bottomShutterLevel": 1.0,
+            "bottomSlatsLevel": 1.0,
+            "channels": [],
+            "dutyCycle": false,
+            "groupVisibility": "VISIBLE",
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000050",
+            "label": "Rollos",
+            "lastStatusUpdate": 1573078054795,
+            "lowBat": null,
+            "metaGroupId": null,
+            "primaryShadingLevel": 1.0,
+            "primaryShadingStateType": "POSITION_USED",
+            "processing": false,
+            "secondaryShadingLevel": null,
+            "secondaryShadingStateType": "NOT_EXISTENT",
+            "sensorSpecificParameters": {},
+            "shutterLevel": 1.0,
+            "slatsLevel": null,
+            "topShutterLevel": 0.0,
+            "topSlatsLevel": 0.0,
+            "type": "EXTENDED_LINKED_SHUTTER",
+            "unreach": false
         }
     },
     "home": {

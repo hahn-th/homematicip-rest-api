@@ -857,6 +857,14 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
+    async def post_hmip_group_switching_stop(
+        self, request: web.Request
+    ) -> web.Response:
+        response = web.json_response(None)
+        return response
+
+
+    @validate_authorization
     async def post_hmip_group_heating_setSetPointTemperature(
         self, request: web.Request
     ) -> web.Response:

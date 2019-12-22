@@ -140,6 +140,11 @@ class SwitchingGroup(Group):
         self.slatsLevel = None
         self.dutyCycle = None
         self.lowBat = None
+        self.primaryShadingLevel = 0.0
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.processing = None
+        self.secondaryShadingLevel = 0.0
+        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -154,7 +159,6 @@ class SwitchingGroup(Group):
         self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
         self.set_attr_from_dict("secondaryShadingLevel", js)
         self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
-        self.set_attr_from_dict("slatsLevel", js)
 
     def set_switch_state(self, on=True):
         data = {"groupId": self.id, "on": on}
@@ -233,21 +237,37 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
 class ExtendedLinkedShutterGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
+        self.dutyCycle = None
+        self.lowBat = None
         self.shutterLevel = None
         self.slatsLevel = None
         self.topSlatsLevel = None
         self.bottomSlatsLevel = None
         self.topShutterLevel = None
         self.bottomShutterLevel = None
+        self.processing = None
+        self.primaryShadingLevel = 0.0
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.secondaryShadingLevel = 0.0
+        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT    
+        self.groupVisibility = GroupVisibility.INVISIBLE_GROUP_AND_CONTROL   
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.set_attr_from_dict("shutterLevel", js)
-        self.set_attr_from_dict("slatsLevel", js)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("groupVisibility", js, GroupVisibility)
         self.set_attr_from_dict("topSlatsLevel", js)
         self.set_attr_from_dict("bottomSlatsLevel", js)
         self.set_attr_from_dict("topShutterLevel", js)
         self.set_attr_from_dict("bottomShutterLevel", js)
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("shutterLevel", js)
+        self.set_attr_from_dict("slatsLevel", js)
+        self.set_attr_from_dict("primaryShadingLevel", js)
+        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
+        self.set_attr_from_dict("secondaryShadingLevel", js)
+        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
 
     def __str__(self):
         return "{} shutterLevel({}) slatsLevel({})".format(

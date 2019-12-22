@@ -202,3 +202,37 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
         result = await g.set_shutter_level(50)
     with pytest.raises(HmipWrongHttpStatusError):
         result = await g.set_slats_level(2.0,10)
+
+
+@pytest.mark.asyncio
+async def test_extended_linked_shutter_group(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+
+    assert g.groupVisibility == GroupVisibility.VISIBLE
+    assert g.dutyCycle is False
+    assert g.label == "Rollos"
+    assert g.primaryShadingLevel == 1.0
+    assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+    assert g.secondaryShadingLevel is None
+    assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+    assert g.slatsLevel is None
+    assert g.shutterLevel == 1.0
+    assert g.topShutterLevel == 0.0
+    assert g.topSlatsLevel == 0.0
+    assert g.bottomShutterLevel == 1.0
+    assert g.bottomSlatsLevel == 1.0
+
+    assert str(g) == "EXTENDED_LINKED_SHUTTER Rollos shutterLevel(1.0) slatsLevel(None)"
+
+    await g.set_slats_level(1.2,10)
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+
+    assert g.slatsLevel == 1.2
+    assert g.shutterLevel == 10
+
+    await g.set_shutter_stop()
+    await g.set_shutter_level(30)
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+    assert g.shutterLevel == 30

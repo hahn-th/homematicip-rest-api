@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Python 3.8 support
 - API
   - ExtendedLinkedShutterGroup.set_slats_level 
+    - added missing attributes
 ### Changed
 - General
   - removed homematicip-testing package. Pip will automatically install the latest tagged release. For a "nightly" build you just have to run it with the "--pre" argument.

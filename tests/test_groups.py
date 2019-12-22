@@ -373,6 +373,39 @@ def test_humidity_warning_rule_group(fake_home: Home):
         d = fake_home.search_device_by_id("3014F7110000000000000038")
         assert g.outdoorClimateSensor == d
 
+def test_extended_linked_shutter_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+
+        assert g.groupVisibility == GroupVisibility.VISIBLE
+        assert g.dutyCycle is False
+        assert g.label == "Rollos"
+        assert g.primaryShadingLevel == 1.0
+        assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+        assert g.secondaryShadingLevel is None
+        assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+        assert g.slatsLevel is None
+        assert g.shutterLevel == 1.0
+        assert g.topShutterLevel == 0.0
+        assert g.topSlatsLevel == 0.0
+        assert g.bottomShutterLevel == 1.0
+        assert g.bottomSlatsLevel == 1.0
+
+        assert str(g) == "EXTENDED_LINKED_SHUTTER Rollos shutterLevel(1.0) slatsLevel(None)"
+
+        g.set_slats_level(1.2,10)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+
+        assert g.slatsLevel == 1.2
+        assert g.shutterLevel == 10
+
+        g.set_shutter_stop()
+        g.set_shutter_level(30)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+        assert g.shutterLevel == 30
+    
 
 def test_all_groups_implemented(fake_home: Home):
     for g in fake_home.groups:
