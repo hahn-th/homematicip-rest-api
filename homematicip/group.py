@@ -140,20 +140,25 @@ class SwitchingGroup(Group):
         self.slatsLevel = None
         self.dutyCycle = None
         self.lowBat = None
+        self.primaryShadingLevel = 0.0
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.processing = None
+        self.secondaryShadingLevel = 0.0
+        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
-        self.dutyCycle = js["dutyCycle"]
-        self.lowBat = js["lowBat"]
-        try:  # TODO: FIX that ugly hack -> maybe linked_switching shouldn't inherit
-            # anymore from switchingGroup
-            self.processing = js["processing"]
-            self.shutterLevel = js["shutterLevel"]
-            self.slatsLevel = js["slatsLevel"]
-        except:
-            pass
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("shutterLevel", js)
+        self.set_attr_from_dict("slatsLevel", js)
+        self.set_attr_from_dict("primaryShadingLevel", js)
+        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
+        self.set_attr_from_dict("secondaryShadingLevel", js)
+        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
 
     def set_switch_state(self, on=True):
         data = {"groupId": self.id, "on": on}
@@ -168,6 +173,14 @@ class SwitchingGroup(Group):
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
         return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+
+    def set_slats_level(self, slatsLevel, shutterlevel):
+        data = {
+            "groupId": self.id,
+            "shutterLevel": shutterlevel,
+            "slatsLevel": slatsLevel,
+        }
+        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
@@ -186,7 +199,7 @@ class SwitchingGroup(Group):
         )
 
 
-class LinkedSwitchingGroup(SwitchingGroup):
+class LinkedSwitchingGroup(Group):
     def set_light_group_switches(self, devices):
         switchChannels = []
         for d in devices:
@@ -224,18 +237,54 @@ class ExtendedLinkedSwitchingGroup(SwitchingGroup):
 class ExtendedLinkedShutterGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
+        self.dutyCycle = None
+        self.lowBat = None
         self.shutterLevel = None
+        self.slatsLevel = None
+        self.topSlatsLevel = None
+        self.bottomSlatsLevel = None
+        self.topShutterLevel = None
+        self.bottomShutterLevel = None
+        self.processing = None
+        self.primaryShadingLevel = 0.0
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.secondaryShadingLevel = 0.0
+        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.groupVisibility = GroupVisibility.INVISIBLE_GROUP_AND_CONTROL
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.shutterLevel = js["shutterLevel"]
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("groupVisibility", js, GroupVisibility)
+        self.set_attr_from_dict("topSlatsLevel", js)
+        self.set_attr_from_dict("bottomSlatsLevel", js)
+        self.set_attr_from_dict("topShutterLevel", js)
+        self.set_attr_from_dict("bottomShutterLevel", js)
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("shutterLevel", js)
+        self.set_attr_from_dict("slatsLevel", js)
+        self.set_attr_from_dict("primaryShadingLevel", js)
+        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
+        self.set_attr_from_dict("secondaryShadingLevel", js)
+        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
 
     def __str__(self):
-        return "{} shutterLevel({})".format(super().__str__(), self.shutterLevel)
+        return "{} shutterLevel({}) slatsLevel({})".format(
+            super().__str__(), self.shutterLevel, self.slatsLevel
+        )
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
         return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+
+    def set_slats_level(self, slatsLevel, shutterlevel):
+        data = {
+            "groupId": self.id,
+            "shutterLevel": shutterlevel,
+            "slatsLevel": slatsLevel,
+        }
+        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
@@ -820,11 +869,11 @@ class TimeProfilePeriod(HomeMaticIPObject):
         self.minute = 0
         self.astroOffset = 0
         self.astroLimitationType = (
-            "NO_LIMITATION"
-        )  # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
+            "NO_LIMITATION"  # NOT_EARLIER_THAN_TIME, NOT_LATER_THAN_TIME
+        )
         self.switchTimeMode = (
-            "REGULAR_SWITCH_TIME"
-        )  # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
+            "REGULAR_SWITCH_TIME"  # ASTRO_SUNRISE_SWITCH_TIME, ASTRO_SUNSET_SWITCH_TIME
+        )
         self.dimLevel = 1.0
         self.rampTime = 0
 
@@ -868,8 +917,8 @@ class SwitchingProfileGroup(Group):
         self.on = None
         self.dimLevel = None
         self.profileId = (
-            None
-        )  # Not sure why it is there.  You can't use it to query something.
+            None  # Not sure why it is there.  You can't use it to query something.
+        )
         self.profileMode = None
 
     def from_json(self, js, devices):

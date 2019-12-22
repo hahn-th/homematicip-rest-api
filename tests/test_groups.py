@@ -208,13 +208,17 @@ def test_switching_group(fake_home: Home):
         assert g.lowBat is None
         assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
         assert g.on is True
-        assert g.processing is None
+        assert g.processing is False
         assert g.shutterLevel is None
         assert g.slatsLevel is None
         assert g.unreach is False
+        assert g.primaryShadingLevel == 1.0
+        assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+        assert g.secondaryShadingLevel == None
+        assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
 
         assert str(g) == (
-            "SWITCHING Strom on(True) dimLevel(None) processing(None) shutterLevel(None) slatsLevel(None)"
+            "SWITCHING Strom on(True) dimLevel(None) processing(False) shutterLevel(None) slatsLevel(None)"
             " dutyCycle(False) lowBat(None)"
         )
 
@@ -228,13 +232,17 @@ def test_switching_group(fake_home: Home):
         assert g.shutterLevel == 50
 
         assert str(g) == (
-            "SWITCHING NEW GROUP on(False) dimLevel(None) processing(None) shutterLevel(50) slatsLevel(None)"
+            "SWITCHING NEW GROUP on(False) dimLevel(None) processing(False) shutterLevel(50) slatsLevel(None)"
             " dutyCycle(False) lowBat(None)"
         )
         g.turn_on()
+        g.set_slats_level(1.0, 20)
+
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000018")
         assert g.on is True
+        assert g.slatsLevel == 1.0
+        assert g.shutterLevel == 20
 
         fake_home.delete_group(g)
         fake_home.get_current_state()
@@ -251,6 +259,9 @@ def test_switching_group(fake_home: Home):
         assert result["errorCode"] == "INVALID_GROUP"
 
         result = g.set_shutter_level(50)
+        assert result["errorCode"] == "INVALID_GROUP"
+
+        result = g.set_slats_level(1.0, 20)
         assert result["errorCode"] == "INVALID_GROUP"
 
 
@@ -361,6 +372,43 @@ def test_humidity_warning_rule_group(fake_home: Home):
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000049")
         d = fake_home.search_device_by_id("3014F7110000000000000038")
         assert g.outdoorClimateSensor == d
+
+
+def test_extended_linked_shutter_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+
+        assert g.groupVisibility == GroupVisibility.VISIBLE
+        assert g.dutyCycle is False
+        assert g.label == "Rollos"
+        assert g.primaryShadingLevel == 1.0
+        assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+        assert g.secondaryShadingLevel is None
+        assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+        assert g.slatsLevel is None
+        assert g.shutterLevel == 1.0
+        assert g.topShutterLevel == 0.0
+        assert g.topSlatsLevel == 0.0
+        assert g.bottomShutterLevel == 1.0
+        assert g.bottomSlatsLevel == 1.0
+
+        assert (
+            str(g)
+            == "EXTENDED_LINKED_SHUTTER Rollos shutterLevel(1.0) slatsLevel(None)"
+        )
+
+        g.set_slats_level(1.2, 10)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+
+        assert g.slatsLevel == 1.2
+        assert g.shutterLevel == 10
+
+        g.set_shutter_stop()
+        g.set_shutter_level(30)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
+        assert g.shutterLevel == 30
 
 
 def test_all_groups_implemented(fake_home: Home):

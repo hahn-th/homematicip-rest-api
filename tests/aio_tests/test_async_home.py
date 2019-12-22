@@ -201,7 +201,7 @@ async def test_security_setZoneActivationDelay(no_ssl_fake_async_home: AsyncHome
 
 @pytest.mark.asyncio
 async def test_security_setIntrusionAlertThroughSmokeDetectors(
-    no_ssl_fake_async_home: AsyncHome
+    no_ssl_fake_async_home: AsyncHome,
 ):
     securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)
     assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False

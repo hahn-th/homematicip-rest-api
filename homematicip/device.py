@@ -27,8 +27,8 @@ class Device(HomeMaticIPObject):
         self.updateState = DeviceUpdateState.UP_TO_DATE
         self.firmwareVersion = None
         self.firmwareVersionInteger = (
-            0
-        )  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
+            0  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
+        )
         self.availableFirmwareVersion = None
         self.unreach = None
         self.lowBat = None
@@ -1651,6 +1651,7 @@ class AccelerationSensor(Device):
             self.notificationSoundTypeLowToHigh,
         )
 
+
 class GarageDoorModuleTormatic(Device):
     """ HMIP-MOD-TM (Garage Door Module Tormatic) """
 
@@ -1661,7 +1662,6 @@ class GarageDoorModuleTormatic(Device):
         self.processing = False
         self.ventilationPositionSupported = False
 
-
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("DOOR_CHANNEL", js)
@@ -1670,7 +1670,6 @@ class GarageDoorModuleTormatic(Device):
             self.on = c["on"]
             self.processing = c["processing"]
             self.ventilationPositionSupported = c["ventilationPositionSupported"]
-
 
     def __str__(self):
         return "{} doorState({}) on({}) processing({}) ventilationPositionSupported({})".format(
@@ -1684,4 +1683,3 @@ class GarageDoorModuleTormatic(Device):
     def send_door_command(self, doorCommand=DoorCommand.STOP):
         data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
         return self._restCall("device/control/sendDoorCommand", json.dumps(data))
-
