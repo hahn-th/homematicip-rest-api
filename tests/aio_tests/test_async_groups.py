@@ -243,6 +243,7 @@ async def test_extended_linked_shutter_group(no_ssl_fake_async_home: AsyncHome):
     )
     assert g.shutterLevel == 30
 
+
 @pytest.mark.asyncio
 async def test_hot_water(no_ssl_fake_async_home: AsyncHome):
     g = no_ssl_fake_async_home.search_group_by_id(

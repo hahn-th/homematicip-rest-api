@@ -506,6 +506,7 @@ class GroupVisibility(AutoNameEnum):
     INVISIBLE_CONTROL = auto()
     VISIBLE = auto()
 
+
 class ProfileMode(AutoNameEnum):
     AUTOMATIC = auto()
     MANUAL = auto()

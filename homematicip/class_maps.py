@@ -138,7 +138,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DEVICE_INCORRECT_POSITIONED: DeviceIncorrectPositionedChannel,
     FunctionalChannelType.DEVICE_OPERATIONLOCK: DeviceOperationLockChannel,
     FunctionalChannelType.DEVICE_PERMANENT_FULL_RX: DevicePermanentFullRxChannel,
-    FunctionalChannelType.DEVICE_RECHARGEABLE_WITH_SABOTAGE:DeviceRechargeableWithSabotage,
+    FunctionalChannelType.DEVICE_RECHARGEABLE_WITH_SABOTAGE: DeviceRechargeableWithSabotage,
     FunctionalChannelType.DEVICE_SABOTAGE: DeviceSabotageChannel,
     FunctionalChannelType.DOOR_CHANNEL: DoorChannel,
     FunctionalChannelType.DIMMER_CHANNEL: DimmerChannel,

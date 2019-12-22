@@ -245,8 +245,7 @@ class AsyncLockOutProtectionRule(LockOutProtectionRule, AsyncGroup):
 class AsyncEnvironmentGroup(EnvironmentGroup, AsyncGroup):
     pass
 
-class AsyncHotWaterGroup(HotWaterGroup,AsyncGroup):
-    async def set_profile_mode(self, profileMode:ProfileMode):
-        return await self._connection.api_call(
-            *super().set_profile_mode(profileMode)
-        )
+
+class AsyncHotWaterGroup(HotWaterGroup, AsyncGroup):
+    async def set_profile_mode(self, profileMode: ProfileMode):
+        return await self._connection.api_call(*super().set_profile_mode(profileMode))

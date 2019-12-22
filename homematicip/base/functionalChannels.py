@@ -749,6 +749,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "notificationSoundTypeLowToHigh", js, NotificationSoundType
         )
 
+
 class DeviceRechargeableWithSabotage(DeviceSabotageChannel):
     """ this is the representative of the DEVICE_RECHARGEABLE_WITH_SABOTAGE channel"""
 
@@ -759,4 +760,4 @@ class DeviceRechargeableWithSabotage(DeviceSabotageChannel):
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.set_attr_from_dict("badBatteryHealth",js)
+        self.set_attr_from_dict("badBatteryHealth", js)

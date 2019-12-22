@@ -923,10 +923,10 @@ class SwitchingProfileGroup(Group):
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.set_attr_from_dict("on",js)
-        self.set_attr_from_dict("dimLevel",js)
-        self.set_attr_from_dict("profileId",js)
-        self.set_attr_from_dict("profileMode",js,ProfileMode)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("profileId", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
 
     def __str__(self):
         return "{} on({}) dimLevel({}) profileMode({})".format(
@@ -1078,6 +1078,7 @@ class EnvironmentGroup(Group):
             self.humidity,
         )
 
+
 class HotWaterGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
@@ -1090,19 +1091,14 @@ class HotWaterGroup(Group):
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.set_attr_from_dict("on",js)
-        self.set_attr_from_dict("onTime",js)
-        self.set_attr_from_dict("profileId",js)
-        self.set_attr_from_dict("profileMode",js,ProfileMode)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("onTime", js)
+        self.set_attr_from_dict("profileId", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
 
     def __str__(self):
         return f"{super().__str__()} on({self.on}) onTime({self.onTime}) profileMode({self.profileMode})"
 
     def set_profile_mode(self, profileMode: ProfileMode):
-        data = {
-            "groupId": self.id,
-            "profileMode": profileMode
-        }
-        return self._restCall(
-            "group/heating/setProfileMode", body=json.dumps(data)
-        )
+        data = {"groupId": self.id, "profileMode": profileMode}
+        return self._restCall("group/heating/setProfileMode", body=json.dumps(data))
