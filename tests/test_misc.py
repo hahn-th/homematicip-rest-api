@@ -56,9 +56,9 @@ def test_bytes2str():
 
 def test_auto_name_enum():
     assert DeviceType.from_str("PUSH_BUTTON") == DeviceType.PUSH_BUTTON
-    assert DeviceType.from_str(None) == None
+    assert DeviceType.from_str(None) is None
     assert DeviceType.from_str("I_DONT_EXIST", DeviceType.DEVICE) == DeviceType.DEVICE
-    assert DeviceType.from_str("I_DONT_EXIST_EITHER") == None
+    assert DeviceType.from_str("I_DONT_EXIST_EITHER") is None
 
 
 def test_hmipObject_set_attr_from_dict():

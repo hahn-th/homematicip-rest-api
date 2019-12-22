@@ -245,6 +245,7 @@ class DeviceType(AutoNameEnum):
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()
     TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR = auto()
+    TORMATIC_MODULE = auto()
     WALL_MOUNTED_THERMOSTAT_PRO = auto()
     WATER_SENSOR = auto()
     WEATHER_SENSOR = auto()
@@ -378,6 +379,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEVICE_OPERATIONLOCK = auto()
     DEVICE_PERMANENT_FULL_RX = auto()
     DEVICE_SABOTAGE = auto()
+    DOOR_CHANNEL = auto()
     DIMMER_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
@@ -471,3 +473,17 @@ class NotificationSoundType(AutoNameEnum):
     SOUND_SHORT = auto()
     SOUND_SHORT_SHORT = auto()
     SOUND_LONG = auto()
+
+
+class DoorState(AutoNameEnum):
+    CLOSED = auto()
+    OPEN = auto()
+    VENTILATION_POSITION = auto()
+    POSITION_UNKNOWN = auto()
+
+
+class DoorCommand(AutoNameEnum):
+    OPEN = auto()
+    STOP = auto()
+    CLOSE = auto()
+    PARTIAL_OPEN = auto()

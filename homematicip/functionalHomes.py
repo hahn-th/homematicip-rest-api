@@ -103,8 +103,6 @@ class SecurityAndAlarmHome(FunctionalHome):
         self.securityZoneActivationMode = (
             SecurityZoneActivationMode.ACTIVATION_WITH_DEVICE_IGNORELIST
         )
-        self.alarmActive = False
-        self.alarmActive = False
 
         self.securitySwitchingGroups = []
         self.securityZones = []

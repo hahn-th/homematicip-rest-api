@@ -75,8 +75,9 @@ Implemented Stuff
 Homematic IP Devices:
 ---------------------
 
--  [X] HMIP-ASIR, HMIP-ASIR-B1 (Alarm Siren - indoor)
--  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor)
+-  [X] HMIP-ASIR       (Alarm Siren - indoor)
+-  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
+-  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version
 -  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
@@ -87,9 +88,12 @@ Homematic IP Devices:
 -  [X] HMIP-BWTH       (Wall Thermostat Display with switching output – for brand switches, 230V)
 -  [ ] HMIP-BWTH24     (Wall Thermostat Display with switching output – for brand switches, 24V)
 -  [ ] HMIP-DBB        (Doorbell Push-Button)
--  [X] HMIP-eTRV, HMIP-eTRV2, HMIP-eTRV-B1 (Heating-Thermostat with Display)
+-  [ ] HMIP-DSD-PCB    (Door Signal Dector PCB) 
+-  [X] HMIP-eTRV       (Heating-Thermostat with Display)
+-  [X] HMIP-eTRV2      (Heating-Thermostat with Display) New Version
 -  [ ] HMIP-eTRV-2-UK  (UK Version not tested, but it should work)
--  [ ] HMIP-eTRV-B     (Heating-Thermostat with Display Basic not tested, but it should work)
+-  [X] HMIP-eTRV-B     (Heating-Thermostat basic with Display) 
+-  [X] HMIP-eTRV-B1    (Heating-Thermostat basic with Display) *Silvercrest Edition*
 -  [X] HMIP-eTRV-C     (Heating-thermostat compact without display)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
 -  [X] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
@@ -103,6 +107,11 @@ Homematic IP Devices:
 -  [X] HMIP-FROLL      (Shutter Actuator - flush-mount)
 -  [X] HMIP-FSM        (Switch Actuator and Meter 5A – flush-mount)
 -  [X] HMIP-FSM16      (Switch Actuator and Meter 16A – flush-mount)
+-  [X] HMIP-HAP        (Cloud Access Point)
+-  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
+-  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels) electrical DIN rail
+-  [ ] HMIP-K-DRDI3    (Dimming Actuator Inbound 230V – 3x channels) electrical DIN rail
+-  [ ] HMIP-K-DRSI4    (Swich Actuator – 4x channels) electrical DIN rail
 -  [X] HMIP-KRCA       (Key Ring Remote Control & Alarm)
 -  [X] HMIP-KRC4       (Key Ring Remote Control - 4x buttons)
 -  [ ] HMIP-MIO16-PCB  (Multi Analog/Digitial Interface - Switch Circuit Board)
@@ -110,7 +119,7 @@ Homematic IP Devices:
 -  [ ] HMIP-MOD-HO     (Garage Door Module for Hörmann)
 -  [X] HMIP-MOD-OC8    (Open Collector Module Receiver - 8x)
 -  [X] HMIP-MOD-RC8    (Open Collector Module Sender - 8x)
--  [ ] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
+-  [X] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
 -  [ ] HMIP-MP3P       (Combination Signalling Device MP3)
 -  [X] HMIP-PCBS       (Switch Circuit Board - 1x channel)
 -  [X] HMIP-PCBS2      (Switch Circuit Board - 2x channels)
@@ -140,9 +149,10 @@ Homematic IP Devices:
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
 -  [X] HMIP-STHO-A     (Temperature and Humidity Sensor – outdoor, anthracite)
+-  [ ] HMIP-STV        (Inclination and vibration Sensor)
 -  [X] HMIP-SWD        (Water Sensor)
 -  [X] HMIP-SWDM       (Door / Window Contact - magnetic)
--  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic)
+-  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic) *Silvercrest Edition*
 -  [X] HMIP-SWDO       (Shutter Contact)
 -  [X] HMIP-SWDO-I     (Shutter Contact Invisible)
 -  [X] HMIP-SWDO-PL    (Shutter Contact Plus)
@@ -156,8 +166,9 @@ Homematic IP Devices:
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel)
--  [X] HMIP-WTH, HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
--  [ ] HMIP-WTH-B      (Wall Mounted Thermostat without adjusting wheel)
+-  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
+-  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
+-  [ ] HMIP-WTH-B      (Wall Mounted Thermostat basic without adjusting wheel)
 
 Homematic IP Wired Devices:
 ---------------------------

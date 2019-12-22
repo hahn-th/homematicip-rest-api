@@ -62,7 +62,7 @@ class HomeMaticIPObject:
 
     def fromtimestamp(self, timestamp):
         """ internal helper function which will create a datetime object from a timestamp """
-        if timestamp == None or timestamp <= 0:
+        if timestamp is None or timestamp <= 0:
             return None
         return datetime.fromtimestamp(timestamp / 1000.0)
 
