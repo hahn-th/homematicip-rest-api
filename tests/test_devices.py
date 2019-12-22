@@ -207,9 +207,12 @@ def test_contact_interface_device(fake_home: Home):
     assert d.dutyCycle is False
     assert d.configPending is False
     assert d.deviceOverheated is True
-    assert d.deviceOverloaded is None
-    assert d.deviceUndervoltage is None
-    assert d.temperatureOutOfRange is None
+    assert d.deviceOverloaded is True
+    assert d.deviceUndervoltage is True
+    assert d.temperatureOutOfRange is True
+    assert d.coProFaulty is True
+    assert d.coProRestartNeeded is True
+    assert d.coProUpdateFailure is True
 
     assert (
         str(d)
@@ -1039,9 +1042,20 @@ def test_alarm_siren_indoor(fake_home: Home):
         d = AlarmSirenIndoor(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000BBBBB8")
 
-        assert (
-            str(d)
-            == "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False)"
+        assert str(d) == (
+            "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False)"
+        )
+
+
+def test_alarm_siren_outdoor(fake_home: Home):
+    with no_ssl_verification():
+        d = AlarmSirenIndoor(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000ABCDABCD0033")
+
+        assert str(d) == (
+            "HmIP-ASIR-O Alarmsirene – außen lowbat(False) unreach(False) rssiDeviceValue(-51) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(None) badBatteryHealth(True)"
         )
 
 
@@ -1065,9 +1079,12 @@ def test_floor_terminal_block(fake_home: Home):
         assert d.pumpProtectionSwitchingInterval == 14
 
         assert str(d) == (
-            "HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
-            "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
-            "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2) "
+            "HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+            "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) "
+            "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
+            "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) "
+            "pumpFollowUpTime(2) pumpLeadTime(2) "
             "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)"
         )
 

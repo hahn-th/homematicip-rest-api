@@ -748,3 +748,16 @@ class AccelerationSensorChannel(FunctionalChannel):
         self.set_attr_from_dict(
             "notificationSoundTypeLowToHigh", js, NotificationSoundType
         )
+
+
+class DeviceRechargeableWithSabotage(DeviceSabotageChannel):
+    """ this is the representative of the DEVICE_RECHARGEABLE_WITH_SABOTAGE channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:bool:is the battery in a bad condition
+        self.badBatteryHealth = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("badBatteryHealth", js)

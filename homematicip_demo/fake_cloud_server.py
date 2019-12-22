@@ -940,6 +940,17 @@ class AsyncFakeCloudServer:
             response = self.errorCode("INVALID_GROUP", 404)
         return response
 
+    async def post_hmip_group_heating_setProfileMode(
+        self, request: web.Request
+    ) -> web.Response:
+        response = web.json_response(None)
+
+        js = json.loads(request.data)
+        g = self.data["groups"][js["groupId"]]
+        g["profileMode"] = js["profileMode"]
+
+        return response
+
     @validate_authorization
     async def post_hmip_group_switching_alarm_testSignalAcoustic(
         self, request: web.Request

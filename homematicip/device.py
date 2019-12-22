@@ -30,8 +30,8 @@ class Device(HomeMaticIPObject):
             0  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
         )
         self.availableFirmwareVersion = None
-        self.unreach = None
-        self.lowBat = None
+        self.unreach = False
+        self.lowBat = False
         self.routerModuleSupported = False
         self.routerModuleEnabled = False
         self.modelType = ""
@@ -55,10 +55,13 @@ class Device(HomeMaticIPObject):
 
         self._baseChannel = "DEVICE_BASE"
 
-        self.deviceOverheated = None
-        self.deviceOverloaded = None
-        self.deviceUndervoltage = None
-        self.temperatureOutOfRange = None
+        self.deviceOverheated = False
+        self.deviceOverloaded = False
+        self.deviceUndervoltage = False
+        self.temperatureOutOfRange = False
+        self.coProFaulty = False
+        self.coProRestartNeeded = False
+        self.coProUpdateFailure = False
 
     def from_json(self, js):
         super().from_json(js)
@@ -94,14 +97,20 @@ class Device(HomeMaticIPObject):
 
             sof = c.get("supportedOptionalFeatures")
             if sof:
-                if sof["IFeatureDeviceOverheated"]:
-                    self.deviceOverheated = c["deviceOverheated"]
-                if sof["IFeatureDeviceOverloaded"]:
-                    self.deviceOverloaded = c["deviceOverloaded"]
-                if sof["IFeatureDeviceUndervoltage"]:
-                    self.deviceUndervoltage = c["deviceUndervoltage"]
-                if sof["IFeatureDeviceTemperatureOutOfRange"]:
-                    self.temperatureOutOfRange = c["temperatureOutOfRange"]
+                if sof.get("IFeatureDeviceOverheated", False):
+                    self.set_attr_from_dict("deviceOverheated", c)
+                if sof.get("IFeatureDeviceOverloaded", False):
+                    self.set_attr_from_dict("deviceOverloaded", c)
+                if sof.get("IFeatureDeviceUndervoltage", False):
+                    self.set_attr_from_dict("deviceUndervoltage", c)
+                if sof.get("IFeatureDeviceTemperatureOutOfRange", False):
+                    self.set_attr_from_dict("temperatureOutOfRange", c)
+                if sof.get("IFeatureDeviceCoProError", False):
+                    self.set_attr_from_dict("coProFaulty", c)
+                if sof.get("IFeatureDeviceCoProRestart", False):
+                    self.set_attr_from_dict("coProRestartNeeded", c)
+                if sof.get("IFeatureDeviceCoProUpdate", False):
+                    self.set_attr_from_dict("coProUpdateFailure", c)
 
     def __str__(self):
         return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({}) configPending({}) dutyCycle({})".format(
@@ -778,6 +787,24 @@ class AlarmSirenIndoor(SabotageDevice):
         if c:
             # The ALARM_SIREN_CHANNEL doesn't have any values yet.
             pass
+
+
+class AlarmSirenOutdoor(AlarmSirenIndoor):
+    """ HMIP-ASIR-O (Alarm Siren Outdoor) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.badBatteryHealth = False
+        self._baseChannel = "DEVICE_RECHARGEABLE_WITH_SABOTAGE"
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_RECHARGEABLE_WITH_SABOTAGE", js)
+        if c:
+            self.set_attr_from_dict("badBatteryHealth", c)
+
+    def __str__(self):
+        return f"{super().__str__()} badBatteryHealth({self.badBatteryHealth})"
 
 
 class MotionDetectorIndoor(SabotageDevice):

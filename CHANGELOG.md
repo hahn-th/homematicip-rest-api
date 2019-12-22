@@ -6,14 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Devices
-  - HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)
 - API
-  - FunctionalChannels: DOOR_CHANNEL
-- Python 3.8 support
-- API
+  - FunctionalChannels:
+    - DOOR_CHANNEL
+    - DEVICE_RECHARGEABLE_WITH_SABOTAGE
   - ExtendedLinkedShutterGroup.set_slats_level 
     - added missing attributes
+- Devices
+  - HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)
+  - HMIP-ASIR-O (Alarm Siren - outdoor)
+
+- Groups
+  - HOT_WATER
+- Python 3.8 support
+
 ### Changed
 - General
   - removed homematicip-testing package. Pip will automatically install the latest tagged release. For a "nightly" build you just have to run it with the "--pre" argument.

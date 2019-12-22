@@ -238,6 +238,10 @@ class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
 
 
+class AsyncAlarmSirenOutdoor(AlarmSirenOutdoor, AsyncAlarmSirenIndoor):
+    """ HMIP-ASIR-O (Alarm Siren Outdoor) """
+
+
 class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
 
