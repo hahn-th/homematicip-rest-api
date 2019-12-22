@@ -259,7 +259,6 @@ class DoorChannel(FunctionalChannel):
         self.processing = False
         self.ventilationPositionSupported = True
 
-
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.doorState = js["doorState"]

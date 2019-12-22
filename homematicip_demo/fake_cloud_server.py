@@ -598,7 +598,9 @@ class AsyncFakeCloudServer:
             "PARTIAL_OPEN": "VENTILATION_POSITION",
             "STOP": "POSITION_UNKNOWN",
         }
-        d["functionalChannels"][channelIndex]["doorState"] = switcher.get(js["doorCommand"], "POSITION_UNKNOWN")
+        d["functionalChannels"][channelIndex]["doorState"] = switcher.get(
+            js["doorCommand"], "POSITION_UNKNOWN"
+        )
 
         return web.json_response(None)
 
@@ -833,6 +835,22 @@ class AsyncFakeCloudServer:
         if js["groupId"] in self.data["groups"]:
             g = self.data["groups"][js["groupId"]]
             g["shutterLevel"] = js["shutterLevel"]
+
+        else:
+            response = self.errorCode("INVALID_GROUP", 404)
+        return response
+
+    @validate_authorization
+    async def post_hmip_group_switching_setSlatsLevel(
+        self, request: web.Request
+    ) -> web.Response:
+        response = web.json_response(None)
+
+        js = json.loads(request.data)
+        if js["groupId"] in self.data["groups"]:
+            g = self.data["groups"][js["groupId"]]
+            g["shutterLevel"] = js["shutterLevel"]
+            g["slatsLevel"] = js["slatsLevel"]
 
         else:
             response = self.errorCode("INVALID_GROUP", 404)

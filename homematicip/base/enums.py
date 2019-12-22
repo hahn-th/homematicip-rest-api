@@ -487,3 +487,18 @@ class DoorCommand(AutoNameEnum):
     STOP = auto()
     CLOSE = auto()
     PARTIAL_OPEN = auto()
+
+
+class ShadingStateType(AutoNameEnum):
+    NOT_POSSIBLE = auto()
+    NOT_EXISTENT = auto()
+    POSITION_USED = auto()
+    TILT_USED = auto()
+    NOT_USED = auto()
+    MIXED = auto()
+
+
+class GroupVisibility(AutoNameEnum):
+    INVISIBLE_GROUP_AND_CONTROL = auto()
+    INVISIBLE_CONTROL = auto()
+    VISIBLE = auto()
