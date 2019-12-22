@@ -206,7 +206,6 @@ jobs:
 workflows:
   version: 2
   build_and_deploy:
-    parallelism: 1
     jobs:
       - test_3_6_1:
           filters:
