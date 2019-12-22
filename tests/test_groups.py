@@ -410,6 +410,19 @@ def test_extended_linked_shutter_group(fake_home: Home):
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000050")
         assert g.shutterLevel == 30
 
+def test_hot_water(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000067")
+        assert g.profileMode is None
+
+        g.set_profile_mode(ProfileMode.AUTOMATIC)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000067")
+        assert g.profileMode == ProfileMode.AUTOMATIC
+
+        assert str(g) == "HOT_WATER HOT_WATER on(None) onTime(900.0) profileMode(AUTOMATIC)"
+
+
 
 def test_all_groups_implemented(fake_home: Home):
     for g in fake_home.groups:

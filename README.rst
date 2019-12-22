@@ -78,7 +78,7 @@ Homematic IP Devices:
 -  [X] HMIP-ASIR       (Alarm Siren - indoor)
 -  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
 -  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version
--  [ ] HMIP-ASIR-O     (Alarm Siren - outdoor)
+-  [X] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
 -  [X] HMIP-BRC2       (Remote Control for brand switches – 2x channels)

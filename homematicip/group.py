@@ -919,14 +919,14 @@ class SwitchingProfileGroup(Group):
         self.profileId = (
             None  # Not sure why it is there.  You can't use it to query something.
         )
-        self.profileMode = None
+        self.profileMode = ProfileMode.MANUAL
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.on = js["on"]
-        self.dimLevel = js["dimLevel"]
-        self.profileId = js["profileId"]
-        self.profileMode = js["profileMode"]
+        self.set_attr_from_dict("on",js)
+        self.set_attr_from_dict("dimLevel",js)
+        self.set_attr_from_dict("profileId",js)
+        self.set_attr_from_dict("profileMode",js,ProfileMode)
 
     def __str__(self):
         return "{} on({}) dimLevel({}) profileMode({})".format(
@@ -949,7 +949,7 @@ class SwitchingProfileGroup(Group):
         data = {
             "groupId": self.id,
             "channels": channels,
-            "profileMode": "AUTOMATIC" if automatic else "MANUAL",
+            "profileMode": ProfileMode.AUTOMATIC if automatic else ProfileMode.MANUAL,
         }
         return self._restCall(
             "group/switching/profile/setProfileMode", body=json.dumps(data)
@@ -1076,4 +1076,33 @@ class EnvironmentGroup(Group):
             self.raining,
             self.windSpeed,
             self.humidity,
+        )
+
+class HotWaterGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.on = None
+        self.onTime = 0.0
+        self.profileId = (
+            None  # Not sure why it is there.  You can't use it to query something.
+        )
+        self.profileMode = ProfileMode.MANUAL
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("on",js)
+        self.set_attr_from_dict("onTime",js)
+        self.set_attr_from_dict("profileId",js)
+        self.set_attr_from_dict("profileMode",js,ProfileMode)
+
+    def __str__(self):
+        return f"{super().__str__()} on({self.on}) onTime({self.onTime}) profileMode({self.profileMode})"
+
+    def set_profile_mode(self, profileMode: ProfileMode):
+        data = {
+            "groupId": self.id,
+            "profileMode": profileMode
+        }
+        return self._restCall(
+            "group/heating/setProfileMode", body=json.dumps(data)
         )

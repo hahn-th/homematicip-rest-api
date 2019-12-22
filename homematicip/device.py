@@ -30,8 +30,8 @@ class Device(HomeMaticIPObject):
             0  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
         )
         self.availableFirmwareVersion = None
-        self.unreach = None
-        self.lowBat = None
+        self.unreach = False
+        self.lowBat = False
         self.routerModuleSupported = False
         self.routerModuleEnabled = False
         self.modelType = ""
@@ -55,10 +55,10 @@ class Device(HomeMaticIPObject):
 
         self._baseChannel = "DEVICE_BASE"
 
-        self.deviceOverheated = None
-        self.deviceOverloaded = None
-        self.deviceUndervoltage = None
-        self.temperatureOutOfRange = None
+        self.deviceOverheated = False
+        self.deviceOverloaded = False
+        self.deviceUndervoltage = False
+        self.temperatureOutOfRange = False
 
     def from_json(self, js):
         super().from_json(js)
@@ -779,6 +779,18 @@ class AlarmSirenIndoor(SabotageDevice):
             # The ALARM_SIREN_CHANNEL doesn't have any values yet.
             pass
 
+class AlarmSirenOutdoor(AlarmSirenIndoor):
+    """ HMIP-ASIR-O (Alarm Siren Outdoor) """
+    def __init__(self,connection):
+        super().__init__(connection)
+        self.badBatteryHealth = False
+        self._baseChannel = "DEVICE_RECHARGEABLE_WITH_SABOTAGE"
+    
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_RECHARGEABLE_WITH_SABOTAGE", js)
+        if c:
+            self.set_attr_from_dict("badBatteryHealth",js)
 
 class MotionDetectorIndoor(SabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
