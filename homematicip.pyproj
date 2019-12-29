@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--list-devices --server-config D:\Repositories\homematicip-rest-api\hmip-config_1B11.txt</CommandLineArguments>
+    <CommandLineArguments>--list-devices</CommandLineArguments>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <TestFramework>pytest</TestFramework>
