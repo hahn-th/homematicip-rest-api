@@ -433,3 +433,16 @@ async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
     await d.send_door_command(DoorCommand.OPEN)
     await no_ssl_fake_async_home.get_current_state()
     assert d.doorState == DoorState.OPEN
+
+@pytest.mark.asyncio
+async def test_pluggable_mains_failure(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000ABCD50")
+
+    assert d.powerMainsFailure is False
+    assert d.genericAlarmSignal is AlarmSignalType.FULL_ALARM
+
+    assert str(d) == (
+        "HmIP-PMFS Netzausfallüberwachung lowbat(None) unreach(False) rssiDeviceValue(-58) "
+        "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
+        "genericAlarmSignal(FULL_ALARM)"
+    )

@@ -39,6 +39,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PLUGABLE_SWITCH: AsyncPlugableSwitch,
     DeviceType.PLUGABLE_SWITCH_MEASURING: AsyncPlugableSwitchMeasuring,
     DeviceType.PLUGGABLE_DIMMER: AsyncPluggableDimmer,
+    DeviceType.PLUGGABLE_MAINS_FAILURE_SURVEILLANCE: AsyncPluggableMainsFailureSurveillance,
     DeviceType.PRESENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
     DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: AsyncPrintedCircuitBoardSwitchBattery,
     DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_2: AsyncPrintedCircuitBoardSwitch2,

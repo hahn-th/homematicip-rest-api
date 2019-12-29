@@ -802,3 +802,16 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
 
 class ChangeOverChannel(FunctionalChannel):
     """ this is the representative of the CHANGE_OVER_CHANNEL channel"""
+
+class MainsFailureChannel(FunctionalChannel):
+    """ this is the representative of the MAINS_FAILURE_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.powerMainsFailure = False
+        self.genericAlarmSignal = AlarmSignalType.NO_ALARM
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("powerMainsFailure",js)
+        self.set_attr_from_dict("genericAlarmSignal",js,AlarmSignalType)

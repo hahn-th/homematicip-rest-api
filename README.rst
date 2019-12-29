@@ -126,7 +126,7 @@ Homematic IP Devices:
 -  [X] HMIP-PCBS-BAT   (Switch Circuit Board with Battery - 1x channel)
 -  [X] HMIP-PDT        (Plugable Dimmer)
 -  [ ] HMIP-PDT-UK     (UK Version not tested, but it should work)
--  [ ] HMIP-PMFS       (Plugable Power Supply Monitoring)
+-  [X] HMIP-PMFS       (Plugable Power Supply Monitoring)
 -  [X] HMIP-PS         (Plugable Switch)
 -  [X] HMIP-PSM        (Plugable Switch Measuring, Type F - Standard for Homematic)
 -  [ ] HMIP-PSM-CH     (Type J not tested, but it should work)

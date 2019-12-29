@@ -14,6 +14,70 @@
         }
     },
     "devices": {
+        "3014F7110000000000ABCD50": {
+            "availableFirmwareVersion": "1.0.12",
+            "firmwareVersion": "1.0.12",
+            "firmwareVersionInteger": 65548,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000ABCD50",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -58,
+                    "rssiPeerValue": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceOverheated": false,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F7110000000000ABCD50",
+                    "functionalChannelType": "MAINS_FAILURE_CHANNEL",
+                    "genericAlarmSignal": "FULL_ALARM",
+                    "groupIndex": 1,
+                    "groups": [
+                    ],
+                    "index": 1,
+                    "label": "",
+                    "powerMainsFailure": false
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000ABCD50",
+            "label": "Netzausfall\u00fcberwachung",
+            "lastStatusUpdate": 1577487207542,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 309,
+            "modelType": "HmIP-PMFS",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000ABCD50",
+            "type": "PLUGGABLE_MAINS_FAILURE_SURVEILLANCE",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000000000000049": {
             "availableFirmwareVersion": "1.0.8",
             "firmwareVersion": "1.0.8",
@@ -33,7 +97,7 @@
                     "frostProtectionTemperature": 8.0,
                     "functionalChannelType": "DEVICE_BASE_FLOOR_HEATING",
                     "groupIndex": 0,
-                    "groups": [ ],
+                    "groups": [],
                     "heatingEmergencyValue": 0.25,
                     "index": 0,
                     "label": "",
@@ -485,119 +549,119 @@
                     "valveProtectionDuration": 5,
                     "valveProtectionSwitchingInterval": 14,
                     "supportedOptionalFeatures": {}
-                    },
-                    "1": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL",
-                        "groupIndex": 1,
-                        "groups": [],
-                        "index": 1,
-                        "label": "",
-                        "pumpFollowUpTime": 2,
-                        "pumpLeadTime": 2,
-                        "pumpProtectionDuration": 1,
-                        "pumpProtectionSwitchingInterval": 14
-                    },
-                    "10": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 10,
-                        "groups": [
-                        ],
-                        "index": 10,
-                        "label": ""
-                    },
-                    "11": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "HEAT_DEMAND_CHANNEL",
-                        "groupIndex": 0,
-                        "groups": [
-                        ],
-                        "index": 11,
-                        "label": ""
-                    },
-                    "12": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "DEHUMIDIFIER_DEMAND_CHANNEL",
-                        "groupIndex": 0,
-                        "groups": [
-                        ],
-                        "index": 12,
-                        "label": ""
-                    },
-                    "2": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 2,
-                        "groups": [
-                        ],
-                        "index": 2,
-                        "label": ""
-                    },
-                    "3": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 3,
-                        "groups": [
-                        ],
-                        "index": 3,
-                        "label": ""
-                    },
-                    "4": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 4,
-                        "groups": [
-                        ],
-                        "index": 4,
-                        "label": ""
-                    },
-                    "5": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 5,
-                        "groups": [
-                        ],
-                        "index": 5,
-                        "label": ""
-                    },
-                    "6": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 6,
-                        "groups": [
-                        ],
-                        "index": 6,
-                        "label": ""
-                    },
-                    "7": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 7,
-                        "groups": [
-                        ],
-                        "index": 7,
-                        "label": ""
-                    },
-                    "8": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 8,
-                        "groups": [
-                        ],
-                        "index": 8,
-                        "label": ""
-                    },
-                    "9": {
-                        "deviceId": "3014F71100000000FAL24C10",
-                        "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
-                        "groupIndex": 9,
-                        "groups": [
-                        ],
-                        "index": 9,
-                        "label": ""
-                    }
                 },
+                "1": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "index": 1,
+                    "label": "",
+                    "pumpFollowUpTime": 2,
+                    "pumpLeadTime": 2,
+                    "pumpProtectionDuration": 1,
+                    "pumpProtectionSwitchingInterval": 14
+                },
+                "10": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 10,
+                    "groups": [
+                    ],
+                    "index": 10,
+                    "label": ""
+                },
+                "11": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "HEAT_DEMAND_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 11,
+                    "label": ""
+                },
+                "12": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "DEHUMIDIFIER_DEMAND_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                    ],
+                    "index": 12,
+                    "label": ""
+                },
+                "2": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                    ],
+                    "index": 2,
+                    "label": ""
+                },
+                "3": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [
+                    ],
+                    "index": 3,
+                    "label": ""
+                },
+                "4": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [
+                    ],
+                    "index": 4,
+                    "label": ""
+                },
+                "5": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [
+                    ],
+                    "index": 5,
+                    "label": ""
+                },
+                "6": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [
+                    ],
+                    "index": 6,
+                    "label": ""
+                },
+                "7": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 7,
+                    "groups": [
+                    ],
+                    "index": 7,
+                    "label": ""
+                },
+                "8": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 8,
+                    "groups": [
+                    ],
+                    "index": 8,
+                    "label": ""
+                },
+                "9": {
+                    "deviceId": "3014F71100000000FAL24C10",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_CHANNEL",
+                    "groupIndex": 9,
+                    "groups": [
+                    ],
+                    "index": 9,
+                    "label": ""
+                }
+            },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F71100000000FAL24C10",
             "label": "Fu\u00dfbodenheizungsaktor",

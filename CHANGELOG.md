@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Devices
   - [HMIP-FALMOT-C12] (Floor Heating Actuator – 12x channels, motorised)
   - [HMIP-WHS2]       (Switch Actuator for heating systems – 2x channels)
+  - [HMIP-PMFS]       (Plugable Power Supply Monitoring)
 
 ## [0.10.14] - 2019-12-22
 ### Added
@@ -299,3 +300,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
+[HMIP-PMFS]: https://github.com/coreGreenberet/homematicip-rest-api/issues/282 

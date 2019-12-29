@@ -228,6 +228,7 @@ class DeviceType(AutoNameEnum):
     MULTI_IO_BOX = auto()
     OPEN_COLLECTOR_8_MODULE = auto()
     PASSAGE_DETECTOR = auto()
+    PLUGGABLE_MAINS_FAILURE_SURVEILLANCE = auto()
     PLUGABLE_SWITCH = auto()
     PLUGABLE_SWITCH_MEASURING = auto()
     PLUGGABLE_DIMMER = auto()
@@ -285,6 +286,7 @@ class GroupType(AutoNameEnum):
     SECURITY = auto()
     ENVIRONMENT = auto()
     SECURITY_BACKUP_ALARM_SWITCHING = auto()
+    SHUTTER_PROFILE = auto()
 
 
 class SecurityEventType(AutoNameEnum):
@@ -396,6 +398,7 @@ class FunctionalChannelType(AutoNameEnum):
     HEATING_THERMOSTAT_CHANNEL = auto()
     INTERNAL_SWITCH_CHANNEL = auto()
     LIGHT_SENSOR_CHANNEL = auto()
+    MAINS_FAILURE_CHANNEL = auto()
     MOTION_DETECTION_CHANNEL = auto()
     MULTI_MODE_INPUT_CHANNEL = auto()
     NOTIFICATION_LIGHT_CHANNEL = auto()
@@ -515,3 +518,8 @@ class GroupVisibility(AutoNameEnum):
 class ProfileMode(AutoNameEnum):
     AUTOMATIC = auto()
     MANUAL = auto()
+
+class AlarmSignalType(AutoNameEnum):
+    NO_ALARM = auto()
+    SILENT_ALARM = auto()
+    FULL_ALARM = auto()
