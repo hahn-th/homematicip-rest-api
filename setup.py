@@ -30,7 +30,7 @@ setup(
     ],
     install_requires=[
         "requests==2.22.0",
-        "websocket-client==0.56.0",
+        "websocket-client==0.57.0",
         "websockets==8.1",
         "aiohttp==3.6.2",
         "async_timeout==3.0.1",
