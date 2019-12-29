@@ -218,8 +218,8 @@ def test_switching_group(fake_home: Home):
         assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
 
         assert str(g) == (
-            "SWITCHING Strom on(True) dimLevel(None) processing(False) shutterLevel(None) slatsLevel(None)"
-            " dutyCycle(False) lowBat(None)"
+            "SWITCHING Strom on(True) dimLevel(None) dutyCycle(False) lowBat(None)"
+            " processing(False) shutterLevel(None) slatsLevel(None)"
         )
 
         g.turn_off()
@@ -232,8 +232,8 @@ def test_switching_group(fake_home: Home):
         assert g.shutterLevel == 50
 
         assert str(g) == (
-            "SWITCHING NEW GROUP on(False) dimLevel(None) processing(False) shutterLevel(50) slatsLevel(None)"
-            " dutyCycle(False) lowBat(None)"
+            "SWITCHING NEW GROUP on(False) dimLevel(None) dutyCycle(False) lowBat(None)"
+            " processing(False) shutterLevel(50) slatsLevel(None)"
         )
         g.turn_on()
         g.set_slats_level(1.0, 20)

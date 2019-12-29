@@ -156,8 +156,8 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
 
     assert str(g) == (
-        "SWITCHING Strom on(True) dimLevel(None) processing(False) shutterLevel(None) slatsLevel(None)"
-        " dutyCycle(False) lowBat(None)"
+        "SWITCHING Strom on(True) dimLevel(None) dutyCycle(False) lowBat(None)"
+        " processing(False) shutterLevel(None) slatsLevel(None)"
     )
 
     await g.turn_off()
@@ -172,9 +172,10 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     assert g.shutterLevel == 50
 
     assert str(g) == (
-        "SWITCHING NEW GROUP on(False) dimLevel(None) processing(False) shutterLevel(50) slatsLevel(None)"
-        " dutyCycle(False) lowBat(None)"
+        "SWITCHING NEW GROUP on(False) dimLevel(None) dutyCycle(False) lowBat(None)"
+        " processing(False) shutterLevel(50) slatsLevel(None)"
     )
+
     await g.turn_on()
     await g.set_slats_level(1.0, 20)
     await no_ssl_fake_async_home.get_current_state()

@@ -4,6 +4,7 @@ from homematicip.group import (
     Group,
     MetaGroup,
     SecurityGroup,
+    SwitchGroupBase,
     SwitchingGroup,
     LinkedSwitchingGroup,
     ExtendedLinkedSwitchingGroup,
@@ -51,15 +52,18 @@ class AsyncMetaGroup(MetaGroup, AsyncGroup):
 class AsyncSecurityGroup(SecurityGroup, AsyncGroup):
     pass
 
-
-class AsyncSwitchingGroup(SwitchingGroup, AsyncGroup):
+class AsyncSwitchGroupBase(SwitchGroupBase,AsyncGroup):
     async def turn_on(self):
-        url, data = super().turn_on()
-        return await self._connection.api_call(url, data)
+        return await self.set_switch_state(True)
 
     async def turn_off(self):
-        url, data = super().turn_off()
+        return await self.set_switch_state(False)
+
+    async def set_switch_state(self, on=True):
+        url, data = super().set_switch_state(on=on)
         return await self._connection.api_call(url, data)
+
+class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
 
     async def set_shutter_level(self, level):
         url, data = super().set_shutter_level(level)
@@ -81,7 +85,7 @@ class AsyncLinkedSwitchingGroup(LinkedSwitchingGroup, AsyncGroup):
 
 
 class AsyncExtendedLinkedSwitchingGroup(
-    ExtendedLinkedSwitchingGroup, AsyncSwitchingGroup
+    ExtendedLinkedSwitchingGroup, AsyncSwitchGroupBase
 ):
     async def set_on_time(self, onTimeSeconds):
         url, data = super().set_on_time(onTimeSeconds)
