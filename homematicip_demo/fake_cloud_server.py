@@ -335,7 +335,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["routerModuleEnabled"] = js[
                 "routerModuleEnabled"
             ]
@@ -364,7 +364,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["acousticAlarmTiming"] = js[
                 "acousticAlarmTiming"
             ]
@@ -381,7 +381,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["acousticAlarmSignal"] = js[
                 "acousticAlarmSignal"
             ]
@@ -398,7 +398,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["inAppWaterAlarmTrigger"] = js[
                 "inAppWaterAlarmTrigger"
             ]
@@ -415,7 +415,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["acousticWaterAlarmTrigger"] = js[
                 "acousticWaterAlarmTrigger"
             ]
@@ -432,7 +432,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["sirenWaterAlarmTrigger"] = js[
                 "sirenWaterAlarmTrigger"
             ]
@@ -449,7 +449,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["display"] = js["display"]
 
         except:
@@ -465,7 +465,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["operationLockActive"] = js[
                 "operationLock"
             ]
@@ -483,7 +483,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["energyCounter"] = 0
 
         except:
@@ -499,7 +499,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["on"] = js["on"]
 
         except:
@@ -515,7 +515,7 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         try:
             d = self.data["devices"][js["deviceId"]]
-            channelIndex = "{}".format(js["channelIndex"])
+            channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
 
         except:
@@ -530,7 +530,7 @@ class AsyncFakeCloudServer:
         response = web.json_response(None)
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["shutterLevel"] = js["shutterLevel"]
 
         return response
@@ -542,7 +542,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["shutterLevel"] = js["shutterLevel"]
         d["functionalChannels"][channelIndex]["slatsLevel"] = js["slatsLevel"]
 
@@ -560,7 +560,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
         d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js[
             "simpleRGBColorState"
@@ -575,12 +575,26 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
         d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js[
             "simpleRGBColorState"
         ]
         # not sure what to do with onTime and rampTime :/
+
+        return web.json_response(None)
+
+    @validate_authorization
+    async def post_hmip_device_configuration_setMinimumFloorHeatingValvePosition(
+        self, request: web.Request
+    ) -> web.Response:
+
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = str(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["minimumFloorHeatingValvePosition"] = js[
+            "minimumFloorHeatingValvePosition"
+        ]
 
         return web.json_response(None)
 
@@ -591,7 +605,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         switcher = {
             "CLOSE": "CLOSED",
             "OPEN": "OPEN",
@@ -611,7 +625,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         notificationSoundTypeKey = (
             "notificationSoundTypeHighToLow"
             if js["isHighToLow"]
@@ -630,7 +644,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex][
             "accelerationSensorEventFilterPeriod"
         ] = js["accelerationSensorEventFilterPeriod"]
@@ -644,7 +658,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["accelerationSensorTriggerAngle"] = js[
             "accelerationSensorTriggerAngle"
         ]
@@ -658,7 +672,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["accelerationSensorSensitivity"] = js[
             "accelerationSensorSensitivity"
         ]
@@ -672,7 +686,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["accelerationSensorNeutralPosition"] = js[
             "accelerationSensorNeutralPosition"
         ]
@@ -686,7 +700,7 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
-        channelIndex = "{}".format(js["channelIndex"])
+        channelIndex = str(js["channelIndex"])
         d["functionalChannels"][channelIndex]["accelerationSensorMode"] = js[
             "accelerationSensorMode"
         ]

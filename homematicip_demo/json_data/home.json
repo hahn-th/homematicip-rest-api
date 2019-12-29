@@ -14,6 +14,199 @@
         }
     },
     "devices": {
+        "3014F7110000000000000049": {
+            "availableFirmwareVersion": "1.0.8",
+            "firmwareVersion": "1.0.8",
+            "firmwareVersionInteger": 65544,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "coolingEmergencyValue": 0.0,
+                    "deviceId": "3014F7110000000000000049",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "frostProtectionTemperature": 8.0,
+                    "functionalChannelType": "DEVICE_BASE_FLOOR_HEATING",
+                    "groupIndex": 0,
+                    "groups": [ ],
+                    "heatingEmergencyValue": 0.25,
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "minimumFloorHeatingValvePosition": 0.0,
+                    "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled": true,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -55,
+                    "rssiPeerValue": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceOverheated": false,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false,
+                        "IFeatureMinimumFloorHeatingValvePosition": true,
+                        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": true
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false,
+                    "valveProtectionDuration": 5,
+                    "valveProtectionSwitchingInterval": 14
+                },
+                "1": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "index": 1,
+                    "label": "",
+                    "valveState": "ADAPTION_DONE"
+                },
+                "10": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 10,
+                    "groups": [],
+                    "index": 10,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                },
+                "11": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 11,
+                    "groups": [],
+                    "index": 11,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                },
+                "12": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 12,
+                    "groups": [],
+                    "index": 12,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                },
+                "13": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "HEAT_DEMAND_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 13,
+                    "label": ""
+                },
+                "14": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "DEHUMIDIFIER_DEMAND_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 14,
+                    "label": ""
+                },
+                "15": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "CHANGE_OVER_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 15,
+                    "label": ""
+                },
+                "2": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [],
+                    "index": 2,
+                    "label": "",
+                    "valveState": "ADAPTION_DONE"
+                },
+                "3": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [],
+                    "index": 3,
+                    "label": "",
+                    "valveState": "ADAPTION_DONE"
+                },
+                "4": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [],
+                    "index": 4,
+                    "label": "",
+                    "valveState": "ADAPTION_DONE"
+                },
+                "5": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [],
+                    "index": 5,
+                    "label": "",
+                    "valveState": "ADAPTION_DONE"
+                },
+                "6": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [],
+                    "index": 6,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                },
+                "7": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 7,
+                    "groups": [],
+                    "index": 7,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                },
+                "8": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 8,
+                    "groups": [],
+                    "index": 8,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                },
+                "9": {
+                    "deviceId": "3014F7110000000000000049",
+                    "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
+                    "groupIndex": 9,
+                    "groups": [],
+                    "index": 9,
+                    "label": "",
+                    "valveState": "ADJUSTMENT_TOO_SMALL"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000049",
+            "label": "Fu\u00dfbodenheizungsaktor OG motorisch",
+            "lastStatusUpdate": 1577486092047,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 365,
+            "modelType": "HmIP-FALMOT-C12",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000049",
+            "type": "FLOOR_TERMINAL_BLOCK_12",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110000ABCDABCD0033": {
             "availableFirmwareVersion": "1.0.6",
             "firmwareVersion": "1.0.6",

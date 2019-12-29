@@ -17,6 +17,18 @@ LOGGER = logging.getLogger(__name__)
 class Device(HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
 
+    _supportedFeatureAttributeMap = {
+        "IFeatureDeviceOverheated": "deviceOverheated",
+        "IFeatureDeviceOverloaded": "deviceOverloaded",
+        "IFeatureDeviceUndervoltage": "deviceUndervoltage",
+        "IFeatureDeviceTemperatureOutOfRange": "temperatureOutOfRange",
+        "IFeatureDeviceCoProError": "coProFaulty",
+        "IFeatureDeviceCoProRestart": "coProRestartNeeded",
+        "IFeatureDeviceCoProUpdate": "coProUpdateFailure",
+        "IFeatureMinimumFloorHeatingValvePosition": "minimumFloorHeatingValvePosition",
+        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled",
+    }
+
     def __init__(self, connection):
         super().__init__(connection)
         self.id = None
@@ -97,20 +109,16 @@ class Device(HomeMaticIPObject):
 
             sof = c.get("supportedOptionalFeatures")
             if sof:
-                if sof.get("IFeatureDeviceOverheated", False):
-                    self.set_attr_from_dict("deviceOverheated", c)
-                if sof.get("IFeatureDeviceOverloaded", False):
-                    self.set_attr_from_dict("deviceOverloaded", c)
-                if sof.get("IFeatureDeviceUndervoltage", False):
-                    self.set_attr_from_dict("deviceUndervoltage", c)
-                if sof.get("IFeatureDeviceTemperatureOutOfRange", False):
-                    self.set_attr_from_dict("temperatureOutOfRange", c)
-                if sof.get("IFeatureDeviceCoProError", False):
-                    self.set_attr_from_dict("coProFaulty", c)
-                if sof.get("IFeatureDeviceCoProRestart", False):
-                    self.set_attr_from_dict("coProRestartNeeded", c)
-                if sof.get("IFeatureDeviceCoProUpdate", False):
-                    self.set_attr_from_dict("coProUpdateFailure", c)
+                for k, v in sof.items():
+                    if v:
+                        if k in Device._supportedFeatureAttributeMap:
+                            self.set_attr_from_dict(
+                                Device._supportedFeatureAttributeMap[k], c
+                            )
+                        else:  # pragma: no cover
+                            LOGGER.warning(
+                                "Optional Device Feature '%s' is not yet supported", k,
+                            )
 
     def __str__(self):
         return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({}) configPending({}) dutyCycle({})".format(
@@ -257,7 +265,7 @@ class HeatingThermostat(OperationLockableDevice):
 
 
 class HeatingThermostatCompact(SabotageDevice):
-    """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+    """ HMIP-eTRV-C (Heating-thermostat compact without display) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -316,7 +324,7 @@ class ShutterContact(SabotageDevice):
 
 
 class ShutterContactMagnetic(Device):
-    """ HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic )"""
+    """ HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic )"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -354,7 +362,7 @@ class ContactInterface(SabotageDevice):
 
 
 class RotaryHandleSensor(SabotageDevice):
-    """ HmIP-SRH """
+    """ HMIP-SRH """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -373,7 +381,7 @@ class RotaryHandleSensor(SabotageDevice):
 
 
 class TemperatureHumiditySensorOutdoor(Device):
-    """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
+    """ HMIP-STHO (Temperature and Humidity Sensor outdoor) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -570,6 +578,59 @@ class FloorTerminalBlock10(FloorTerminalBlock6):
     """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
 
 
+class FloorTerminalBlock12(Device):
+    """ HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.frostProtectionTemperature = 0.0
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 20
+        self.coolingEmergencyValue = 0
+        self.minimumFloorHeatingValvePosition = 0.0
+        self.pulseWidthModulationAtLowFloorHeatingValvePositionEnabled = False
+
+        self._baseChannel = "DEVICE_BASE_FLOOR_HEATING"
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_BASE_FLOOR_HEATING", js)
+        if c:
+            self.set_attr_from_dict("coolingEmergencyValue", c)
+            self.set_attr_from_dict("frostProtectionTemperature", c)
+            self.set_attr_from_dict("valveProtectionDuration", c)
+            self.set_attr_from_dict("valveProtectionSwitchingInterval", c)
+
+    def __str__(self):
+        return (
+            f"{super().__str__()} coolingEmergencyValue({self.coolingEmergencyValue}) frostProtectionTemperature({self.frostProtectionTemperature})"
+            f" valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval})"
+            f" minimumFloorHeatingValvePosition({self.minimumFloorHeatingValvePosition})"
+            f" pulseWidthModulationAtLowFloorHeatingValvePositionEnabled({self.pulseWidthModulationAtLowFloorHeatingValvePositionEnabled})"
+        )
+
+    def set_minimum_floor_heating_valve_position(
+        self, minimumFloorHeatingValvePosition: float
+    ):
+        """ sets the minimum floot heating valve position
+
+        Args:
+            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
+
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": 0,
+            "deviceId": self.id,
+            "minimumFloorHeatingValvePosition": minimumFloorHeatingValvePosition,
+        }
+        return self._restCall(
+            "device/configuration/setMinimumFloorHeatingValvePosition",
+            body=json.dumps(data),
+        )
+
+
 class Switch(Device):
     """ Generic Switch class """
 
@@ -608,7 +669,7 @@ class PlugableSwitch(Switch):
 
 
 class PrintedCircuitBoardSwitchBattery(Switch):
-    """ HmIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
+    """ HMIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
 
 
 class PrintedCircuitBoardSwitch2(Switch):
@@ -616,7 +677,11 @@ class PrintedCircuitBoardSwitch2(Switch):
 
 
 class OpenCollector8Module(Switch):
-    """ HmIP-MOD-OC8 ( Open Collector Module ) """
+    """ HMIP-MOD-OC8 ( Open Collector Module ) """
+
+
+class HeatingSwitch2(Switch):
+    """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
 
 
 class SwitchMeasuring(Switch):
@@ -771,11 +836,11 @@ class KeyRemoteControl4(PushButton):
 
 
 class RemoteControl8(PushButton):
-    """ HmIP-RC8 (Remote Control - 8 buttons) """
+    """ HMIP-RC8 (Remote Control - 8 buttons) """
 
 
 class RemoteControl8Module(RemoteControl8):
-    """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+    """ HMIP-MOD-RC8 (Open Collector Module Sender - 8x) """
 
 
 class AlarmSirenIndoor(SabotageDevice):
@@ -844,7 +909,7 @@ class MotionDetectorIndoor(SabotageDevice):
 
 
 class MotionDetectorOutdoor(Device):
-    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    """ HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1173,19 +1238,19 @@ class Dimmer(Device):
 
 
 class PluggableDimmer(Dimmer):
-    """HmIP-PDT Pluggable Dimmer"""
+    """HMIP-PDT Pluggable Dimmer"""
 
 
 class BrandDimmer(Dimmer):
-    """HmIP-BDT Brand Dimmer"""
+    """HMIP-BDT Brand Dimmer"""
 
 
 class FullFlushDimmer(Dimmer):
-    """HmIP-FDT Dimming Actuator flush-mount"""
+    """HMIP-FDT Dimming Actuator flush-mount"""
 
 
 class WeatherSensor(Device):
-    """ HmIP-SWO-B """
+    """ HMIP-SWO-B """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1244,7 +1309,7 @@ class WeatherSensor(Device):
 
 
 class WeatherSensorPlus(Device):
-    """ HmIP-SWO-PL """
+    """ HMIP-SWO-PL """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1314,7 +1379,7 @@ class WeatherSensorPlus(Device):
 
 
 class WeatherSensorPro(Device):
-    """ HmIP-SWO-PR """
+    """ HMIP-SWO-PR """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1396,7 +1461,7 @@ class WeatherSensorPro(Device):
 
 
 class WaterSensor(Device):
-    """ HmIP-SWD ( Water Sensor ) """
+    """ HMIP-SWD ( Water Sensor ) """
 
     def __init__(self, connection):
         super().__init__(connection)
