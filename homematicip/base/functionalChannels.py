@@ -342,8 +342,14 @@ class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
 
     def __init__(self):
         super().__init__()
-        self.globalPumpControl = None
+        self.globalPumpControl = False
         self.heatingValveType = HeatingValveType.NORMALLY_CLOSE
+        self.heatingLoadType = HeatingLoadType.LOAD_BALANCING
+        self.frostProtectionTemperature = 0.0
+        self.heatingEmergencyValue = 0.0
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 20
+        self.coolingEmergencyValue = 0
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -356,6 +362,24 @@ class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
         self.heatingEmergencyValue = js["heatingEmergencyValue"]
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
+
+
+class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
+    """ this is the representative of the DEVICE_BASE_FLOOR_HEATING channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.frostProtectionTemperature = 0.0
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 20
+        self.coolingEmergencyValue = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("coolingEmergencyValue", js)
+        self.set_attr_from_dict("frostProtectionTemperature", js)
+        self.set_attr_from_dict("valveProtectionDuration", js)
+        self.set_attr_from_dict("valveProtectionSwitchingInterval", js)
 
 
 class MotionDetectionChannel(FunctionalChannel):
@@ -761,3 +785,34 @@ class DeviceRechargeableWithSabotage(DeviceSabotageChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("badBatteryHealth", js)
+
+
+class FloorTerminalBlockMechanicChannel(FunctionalChannel):
+    """ this is the representative of the class FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL(FunctionalChannel) channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:ValveState:the current valve state
+        self.valveState = ValveState.ADAPTION_DONE
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("valveState", js)
+
+
+class ChangeOverChannel(FunctionalChannel):
+    """ this is the representative of the CHANGE_OVER_CHANNEL channel"""
+
+
+class MainsFailureChannel(FunctionalChannel):
+    """ this is the representative of the MAINS_FAILURE_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.powerMainsFailure = False
+        self.genericAlarmSignal = AlarmSignalType.NO_ALARM
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("powerMainsFailure", js)
+        self.set_attr_from_dict("genericAlarmSignal", js, AlarmSignalType)

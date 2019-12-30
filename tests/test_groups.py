@@ -218,8 +218,8 @@ def test_switching_group(fake_home: Home):
         assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
 
         assert str(g) == (
-            "SWITCHING Strom on(True) dimLevel(None) processing(False) shutterLevel(None) slatsLevel(None)"
-            " dutyCycle(False) lowBat(None)"
+            "SWITCHING Strom on(True) dimLevel(None) dutyCycle(False) lowBat(None)"
+            " processing(False) shutterLevel(None) slatsLevel(None)"
         )
 
         g.turn_off()
@@ -232,8 +232,8 @@ def test_switching_group(fake_home: Home):
         assert g.shutterLevel == 50
 
         assert str(g) == (
-            "SWITCHING NEW GROUP on(False) dimLevel(None) processing(False) shutterLevel(50) slatsLevel(None)"
-            " dutyCycle(False) lowBat(None)"
+            "SWITCHING NEW GROUP on(False) dimLevel(None) dutyCycle(False) lowBat(None)"
+            " processing(False) shutterLevel(50) slatsLevel(None)"
         )
         g.turn_on()
         g.set_slats_level(1.0, 20)
@@ -243,6 +243,7 @@ def test_switching_group(fake_home: Home):
         assert g.on is True
         assert g.slatsLevel == 1.0
         assert g.shutterLevel == 20
+        g.set_shutter_stop()
 
         fake_home.delete_group(g)
         fake_home.get_current_state()
@@ -263,6 +264,52 @@ def test_switching_group(fake_home: Home):
 
         result = g.set_slats_level(1.0, 20)
         assert result["errorCode"] == "INVALID_GROUP"
+
+
+def test_shutter_profile(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+        assert isinstance(g, ShutterProfile)
+
+        assert g.dutyCycle is False
+        assert g.homeId == "00000000-0000-0000-0000-000000000001"
+        assert g.label == "Rollladen Schiebet\u00fcr"
+        assert g.lowBat is None
+        assert g.metaGroup is None
+        assert g.processing is False
+        assert g.shutterLevel == 0.97
+        assert g.slatsLevel is None
+        assert g.unreach is False
+        assert g.primaryShadingLevel == 0.97
+        assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+        assert g.secondaryShadingLevel is None
+        assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+        assert g.profileMode == ProfileMode.AUTOMATIC
+
+        assert str(g) == (
+            "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+            " shutterLevel(0.97) slatsLevel(None) profileMode(AUTOMATIC)"
+        )
+
+        g.set_shutter_level(50)
+        g.set_profile_mode(ProfileMode.MANUAL)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+        assert g.shutterLevel == 50
+        assert g.profileMode == ProfileMode.MANUAL
+
+        assert str(g) == (
+            "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+            " shutterLevel(50) slatsLevel(None) profileMode(MANUAL)"
+        )
+
+        g.set_slats_level(1.0, 20)
+
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+        assert g.slatsLevel == 1.0
+        assert g.shutterLevel == 20
+        g.set_shutter_stop()
 
 
 def test_environment_group(fake_home: Home):
@@ -323,12 +370,14 @@ def test_switching_alarm_group(fake_home: Home):
 
         g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
         g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+        g.set_on_time(5)
 
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
 
         assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
         assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+        assert g.onTime == 5
 
         g.id = "00000000-0000-0000-0000-BADBADBADB22"
         result = g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)

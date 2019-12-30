@@ -53,6 +53,10 @@ class AsyncSwitchMeasuring(SwitchMeasuring, AsyncSwitch):
         return await self._connection.api_call(*super().reset_energy_counter())
 
 
+class AsyncHeatingSwitch2(HeatingSwitch2, AsyncSwitch):
+    """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
+
+
 class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
     """ Async implementation of HMIP-PS (Pluggable Switch) """
 
@@ -60,7 +64,7 @@ class AsyncPlugableSwitch(PlugableSwitch, AsyncSwitch):
 class AsyncPrintedCircuitBoardSwitchBattery(
     PrintedCircuitBoardSwitchBattery, AsyncSwitch
 ):
-    """ HmIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
+    """ HMIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
 
 
 class AsyncPrintedCircuitBoardSwitch2(PrintedCircuitBoardSwitch2, AsyncSwitch):
@@ -76,7 +80,7 @@ class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
 
 
 class AsyncOpenCollector8Module(OpenCollector8Module, AsyncSwitch):
-    """ Async implementation of HmIP-MOD-OC8 ( Open Collector Module ) """
+    """ Async implementation of HMIP-MOD-OC8 ( Open Collector Module ) """
 
 
 class AsyncOperationLockableDevice(OperationLockableDevice, AsyncDevice):
@@ -120,7 +124,7 @@ class AsyncBrandSwitchMeasuring(BrandSwitchMeasuring, AsyncSwitchMeasuring):
 
 
 class AsyncFullFlushSwitchMeasuring(FullFlushSwitchMeasuring, AsyncSwitchMeasuring):
-    """ HmIP-FSM (Full flush Switch and Meter) """
+    """ HMIP-FSM (Full flush Switch and Meter) """
 
 
 class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
@@ -131,7 +135,7 @@ class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
 
 
 class AsyncShutterContactMagnetic(ShutterContactMagnetic, AsyncDevice):
-    """ HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic """
+    """ HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic """
 
     pass
 
@@ -143,13 +147,13 @@ class AsyncContactInterface(ContactInterface, AsyncSabotageDevice):
 
 
 class AsyncRotaryHandleSensor(RotaryHandleSensor, AsyncSabotageDevice):
-    """ HmIP-SRH """
+    """ HMIP-SRH """
 
 
 class AsyncTemperatureHumiditySensorOutdoor(
     TemperatureHumiditySensorOutdoor, AsyncDevice
 ):
-    """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
+    """ HMIP-STHO (Temperature and Humidity Sensor outdoor) """
 
 
 class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
@@ -159,7 +163,7 @@ class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
 
 
 class AsyncHeatingThermostatCompact(HeatingThermostatCompact, AsyncSabotageDevice):
-    """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+    """ HMIP-eTRV-C (Heating-thermostat compact without display) """
 
     pass
 
@@ -210,6 +214,27 @@ class AsyncFloorTerminalBlock10(FloorTerminalBlock10, AsyncFloorTerminalBlock6):
     """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
 
 
+class AsyncFloorTerminalBlock12(FloorTerminalBlock12, AsyncDevice):
+    """ HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised) """
+
+    async def set_minimum_floor_heating_valve_position(
+        self, minimumFloorHeatingValvePosition: float
+    ):
+        """ sets the minimum floot heating valve position
+
+        Args:
+            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
+
+        Returns:
+            the result of the _restCall
+        """
+        await self._connection.api_call(
+            *super().set_minimum_floor_heating_valve_position(
+                minimumFloorHeatingValvePosition=minimumFloorHeatingValvePosition
+            )
+        )
+
+
 class AsyncPushButton(PushButton, AsyncDevice):
     """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
 
@@ -227,11 +252,11 @@ class AsyncKeyRemoteControl4(KeyRemoteControl4, AsyncPushButton):
 
 
 class AsyncRemoteControl8(RemoteControl8, AsyncPushButton):
-    """ HmIP-RC8 (Remote Control - 8 buttons) """
+    """ HMIP-RC8 (Remote Control - 8 buttons) """
 
 
 class AsyncRemoteControl8Module(RemoteControl8Module, AsyncRemoteControl8):
-    """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+    """ HMIP-MOD-RC8 (Open Collector Module Sender - 8x) """
 
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
@@ -249,7 +274,7 @@ class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
 
 
 class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncDevice):
-    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    """ HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
 
     pass
 
@@ -317,27 +342,27 @@ class AsyncDimmer(Dimmer, AsyncDevice):
 
 
 class AsyncPluggableDimmer(AsyncDimmer):
-    """HmIP-PDT Pluggable Dimmer"""
+    """HMIP-PDT Pluggable Dimmer"""
 
 
 class AsyncBrandDimmer(AsyncDimmer):
-    """HmIP-BDT Brand Dimmer"""
+    """HMIP-BDT Brand Dimmer"""
 
 
 class AsyncFullFlushDimmer(AsyncDimmer):
-    """HmIP-FDT Dimming Actuator flush-mount"""
+    """HMIP-FDT Dimming Actuator flush-mount"""
 
 
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
-    """ HmIP-SWO-B """
+    """ HMIP-SWO-B """
 
 
 class AsyncWeatherSensorPlus(WeatherSensorPlus, AsyncDevice):
-    """ HmIP-SWO-PL """
+    """ HMIP-SWO-PL """
 
 
 class AsyncWeatherSensorPro(WeatherSensorPro, AsyncDevice):
-    """ HmIP-SWO-PR """
+    """ HMIP-SWO-PR """
 
 
 class AsyncMultiIOBox(MultiIOBox, AsyncSwitch):
@@ -345,7 +370,7 @@ class AsyncMultiIOBox(MultiIOBox, AsyncSwitch):
 
 
 class AsyncWaterSensor(WaterSensor, AsyncDevice):
-    """ HmIP-SWD """
+    """ HMIP-SWD """
 
     async def set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
         return await self._connection.api_call(
@@ -386,7 +411,7 @@ class AsyncWaterSensor(WaterSensor, AsyncDevice):
 
 
 class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
-    """ HmIP-SAM """
+    """ HMIP-SAM """
 
     async def set_acceleration_sensor_mode(
         self, mode: AccelerationSensorMode, channelIndex=1
@@ -436,3 +461,9 @@ class AsyncGarageDoorModuleTormatic(GarageDoorModuleTormatic, AsyncDevice):
 
     async def send_door_command(self, doorCommand=DoorCommand.STOP):
         return await self._connection.api_call(*super().send_door_command(doorCommand))
+
+
+class AsyncPluggableMainsFailureSurveillance(
+    PluggableMainsFailureSurveillance, AsyncDevice
+):
+    """ [HMIP-PMFS] (Plugable Power Supply Monitoring) """

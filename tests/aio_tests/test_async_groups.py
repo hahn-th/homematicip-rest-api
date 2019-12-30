@@ -156,8 +156,8 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
 
     assert str(g) == (
-        "SWITCHING Strom on(True) dimLevel(None) processing(False) shutterLevel(None) slatsLevel(None)"
-        " dutyCycle(False) lowBat(None)"
+        "SWITCHING Strom on(True) dimLevel(None) dutyCycle(False) lowBat(None)"
+        " processing(False) shutterLevel(None) slatsLevel(None)"
     )
 
     await g.turn_off()
@@ -167,14 +167,18 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     g = no_ssl_fake_async_home.search_group_by_id(
         "00000000-0000-0000-0000-000000000018"
     )
+
+    await g.set_shutter_stop()
+
     assert g.on is False
     assert g.label == "NEW GROUP"
     assert g.shutterLevel == 50
 
     assert str(g) == (
-        "SWITCHING NEW GROUP on(False) dimLevel(None) processing(False) shutterLevel(50) slatsLevel(None)"
-        " dutyCycle(False) lowBat(None)"
+        "SWITCHING NEW GROUP on(False) dimLevel(None) dutyCycle(False) lowBat(None)"
+        " processing(False) shutterLevel(50) slatsLevel(None)"
     )
+
     await g.turn_on()
     await g.set_slats_level(1.0, 20)
     await no_ssl_fake_async_home.get_current_state()
@@ -202,6 +206,58 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
         result = await g.set_shutter_level(50)
     with pytest.raises(HmipWrongHttpStatusError):
         result = await g.set_slats_level(2.0, 10)
+
+
+@pytest.mark.asyncio
+async def test_shutter_profile(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000093"
+    )
+    assert isinstance(g, AsyncShutterProfile)
+
+    assert g.dutyCycle is False
+    assert g.homeId == "00000000-0000-0000-0000-000000000001"
+    assert g.label == "Rollladen Schiebet\u00fcr"
+    assert g.lowBat is None
+    assert g.metaGroup is None
+    assert g.processing is False
+    assert g.shutterLevel == 0.97
+    assert g.slatsLevel is None
+    assert g.unreach is False
+    assert g.primaryShadingLevel == 0.97
+    assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+    assert g.secondaryShadingLevel is None
+    assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+    assert g.profileMode == ProfileMode.AUTOMATIC
+
+    assert str(g) == (
+        "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+        " shutterLevel(0.97) slatsLevel(None) profileMode(AUTOMATIC)"
+    )
+
+    await g.set_shutter_level(50)
+    await g.set_profile_mode(ProfileMode.MANUAL)
+    await g.set_shutter_stop()
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000093"
+    )
+    assert g.shutterLevel == 50
+    assert g.profileMode == ProfileMode.MANUAL
+
+    assert str(g) == (
+        "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+        " shutterLevel(50) slatsLevel(None) profileMode(MANUAL)"
+    )
+
+    await g.set_slats_level(1.0, 20)
+
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000093"
+    )
+    assert g.slatsLevel == 1.0
+    assert g.shutterLevel == 20
 
 
 @pytest.mark.asyncio
@@ -260,3 +316,30 @@ async def test_hot_water(no_ssl_fake_async_home: AsyncHome):
     assert g.profileMode == ProfileMode.AUTOMATIC
 
     assert str(g) == "HOT_WATER HOT_WATER on(None) onTime(900.0) profileMode(AUTOMATIC)"
+
+@pytest.mark.asyncio
+async def test_switching_alarm_group(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
+    assert isinstance(g, AlarmSwitchingGroup)
+
+    assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_RISING
+    assert g.signalOptical == OpticalAlarmSignal.DOUBLE_FLASHING_REPEATING
+    assert str(g) == (
+        "ALARM_SWITCHING SIREN on(False) dimLevel(None) onTime(180.0) "
+        "signalAcoustic(FREQUENCY_RISING) signalOptical(DOUBLE_FLASHING_REPEATING) "
+        "smokeDetectorAlarmType(IDLE_OFF) acousticFeedbackEnabled(True)"
+    )
+
+    await g.test_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+    await g.test_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+     
+    await g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+    await g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+    await g.set_on_time(5)
+
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
+
+    assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
+    assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    assert g.onTime == 5

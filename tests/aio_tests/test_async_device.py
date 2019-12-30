@@ -69,6 +69,68 @@ async def test_acceleration_sensor(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):
+    d = AsyncFloorTerminalBlock6(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000BBBBB1")
+
+    assert d.frostProtectionTemperature == 8.0
+    assert d.coolingEmergencyValue == 0.0
+    assert d.globalPumpControl is True
+    assert d.heatingEmergencyValue == 0.25
+    assert d.heatingLoadType == HeatingLoadType.LOAD_BALANCING
+    assert d.heatingValveType == HeatingValveType.NORMALLY_CLOSE
+    assert d.valveProtectionDuration == 5
+    assert d.valveProtectionSwitchingInterval == 14
+
+    assert d.pumpFollowUpTime == 2
+    assert d.pumpLeadTime == 2
+    assert d.pumpProtectionDuration == 1
+    assert d.pumpProtectionSwitchingInterval == 14
+
+    assert str(d) == (
+        "HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+        "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+        "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) "
+        "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
+        "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) "
+        "pumpFollowUpTime(2) pumpLeadTime(2) "
+        "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)"
+    )
+
+    d = AsyncFloorTerminalBlock10(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000FAL24C10")
+
+    assert str(d) == (
+        "HmIP-FAL24-C10 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+        "rssiDeviceValue(-73) rssiPeerValue(-74) configPending(False) "
+        "dutyCycle(False) globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) "
+        "heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) "
+        "frostProtectionTemperature(8.0) heatingEmergencyValue(0.25) "
+        "valveProtectionDuration(5) valveProtectionSwitchingInterval(14) "
+        "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
+        "pumpProtectionSwitchingInterval(14)"
+    )
+
+    d = AsyncFloorTerminalBlock12(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000049")
+    assert d.minimumFloorHeatingValvePosition == 0.0
+
+    await d.set_minimum_floor_heating_valve_position(0.2)
+
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000049")
+    assert d.minimumFloorHeatingValvePosition == 0.2
+
+    assert str(d) == (
+        "HmIP-FALMOT-C12 Fußbodenheizungsaktor OG motorisch lowbat(None) unreach(False) "
+        "rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+        "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) valveProtectionDuration(5) "
+        "valveProtectionSwitchingInterval(14) minimumFloorHeatingValvePosition(0.2) "
+        "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(True)"
+    )
+
+
+@pytest.mark.asyncio
 async def test_basic_device_functions(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert d.label == "Brunnen"
@@ -371,3 +433,17 @@ async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
     await d.send_door_command(DoorCommand.OPEN)
     await no_ssl_fake_async_home.get_current_state()
     assert d.doorState == DoorState.OPEN
+
+
+@pytest.mark.asyncio
+async def test_pluggable_mains_failure(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000ABCD50")
+
+    assert d.powerMainsFailure is False
+    assert d.genericAlarmSignal is AlarmSignalType.FULL_ALARM
+
+    assert str(d) == (
+        "HmIP-PMFS Netzausfallüberwachung lowbat(None) unreach(False) rssiDeviceValue(-58) "
+        "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
+        "genericAlarmSignal(FULL_ALARM)"
+    )

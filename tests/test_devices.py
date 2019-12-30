@@ -1102,6 +1102,24 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpProtectionSwitchingInterval(14)"
         )
 
+        d = FloorTerminalBlock12(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000000049")
+        assert d.minimumFloorHeatingValvePosition == 0.0
+
+        d.set_minimum_floor_heating_valve_position(0.2)
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000049")
+        assert d.minimumFloorHeatingValvePosition == 0.2
+
+        assert str(d) == (
+            "HmIP-FALMOT-C12 Fußbodenheizungsaktor OG motorisch lowbat(None) unreach(False) "
+            "rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) valveProtectionDuration(5) "
+            "valveProtectionSwitchingInterval(14) minimumFloorHeatingValvePosition(0.2) "
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(True)"
+        )
+
 
 def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():
@@ -1174,12 +1192,26 @@ def test_door_sensor_tm(fake_home: Home):
         d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
 
         assert d.doorState == DoorState.CLOSED
-        assert d.on == False
-        assert d.processing == False
-        assert d.ventilationPositionSupported == True
+        assert d.on is False
+        assert d.processing is False
+        assert d.ventilationPositionSupported is True
 
         assert str(d) == (
             "HmIP-MOD-TM Garage Door Module lowbat(None) unreach(False) rssiDeviceValue(-52) "
             "rssiPeerValue(-54) configPending(False) dutyCycle(False) doorState(CLOSED) "
             "on(False) processing(False) ventilationPositionSupported(True)"
+        )
+
+
+def test_pluggable_mains_failure(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000ABCD50")
+
+        assert d.powerMainsFailure is False
+        assert d.genericAlarmSignal is AlarmSignalType.FULL_ALARM
+
+        assert str(d) == (
+            "HmIP-PMFS Netzausfallüberwachung lowbat(None) unreach(False) rssiDeviceValue(-58) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
+            "genericAlarmSignal(FULL_ALARM)"
         )
