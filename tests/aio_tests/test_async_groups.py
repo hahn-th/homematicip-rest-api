@@ -167,6 +167,9 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     g = no_ssl_fake_async_home.search_group_by_id(
         "00000000-0000-0000-0000-000000000018"
     )
+
+    await g.set_shutter_stop()
+
     assert g.on is False
     assert g.label == "NEW GROUP"
     assert g.shutterLevel == 50
@@ -234,6 +237,7 @@ async def test_shutter_profile(no_ssl_fake_async_home: AsyncHome):
 
     await g.set_shutter_level(50)
     await g.set_profile_mode(ProfileMode.MANUAL)
+    await g.set_shutter_stop()
     await no_ssl_fake_async_home.get_current_state()
     g = no_ssl_fake_async_home.search_group_by_id(
         "00000000-0000-0000-0000-000000000093"
@@ -312,3 +316,30 @@ async def test_hot_water(no_ssl_fake_async_home: AsyncHome):
     assert g.profileMode == ProfileMode.AUTOMATIC
 
     assert str(g) == "HOT_WATER HOT_WATER on(None) onTime(900.0) profileMode(AUTOMATIC)"
+
+@pytest.mark.asyncio
+async def test_switching_alarm_group(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
+    assert isinstance(g, AlarmSwitchingGroup)
+
+    assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_RISING
+    assert g.signalOptical == OpticalAlarmSignal.DOUBLE_FLASHING_REPEATING
+    assert str(g) == (
+        "ALARM_SWITCHING SIREN on(False) dimLevel(None) onTime(180.0) "
+        "signalAcoustic(FREQUENCY_RISING) signalOptical(DOUBLE_FLASHING_REPEATING) "
+        "smokeDetectorAlarmType(IDLE_OFF) acousticFeedbackEnabled(True)"
+    )
+
+    await g.test_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+    await g.test_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+     
+    await g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
+    await g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+    await g.set_on_time(5)
+
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
+
+    assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
+    assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    assert g.onTime == 5

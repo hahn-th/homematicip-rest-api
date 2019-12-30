@@ -243,6 +243,7 @@ def test_switching_group(fake_home: Home):
         assert g.on is True
         assert g.slatsLevel == 1.0
         assert g.shutterLevel == 20
+        g.set_shutter_stop()
 
         fake_home.delete_group(g)
         fake_home.get_current_state()
@@ -308,6 +309,7 @@ def test_shutter_profile(fake_home: Home):
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
         assert g.slatsLevel == 1.0
         assert g.shutterLevel == 20
+        g.set_shutter_stop()
 
 
 def test_environment_group(fake_home: Home):
@@ -368,12 +370,14 @@ def test_switching_alarm_group(fake_home: Home):
 
         g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
         g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
+        g.set_on_time(5)
 
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
 
         assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
         assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+        assert g.onTime == 5
 
         g.id = "00000000-0000-0000-0000-BADBADBADB22"
         result = g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
