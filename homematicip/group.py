@@ -129,6 +129,7 @@ class SecurityGroup(Group):
             self.waterlevelDetected,
         )
 
+
 class SwitchGroupBase(Group):
     def __init__(self, connection):
         super().__init__(connection)
@@ -156,6 +157,7 @@ class SwitchGroupBase(Group):
 
     def __str__(self):
         return f"{super().__str__()} on({self.on}) dimLevel({self.dimLevel}) dutyCycle({self.dutyCycle}) lowBat({self.lowBat})"
+
 
 class SwitchingGroup(SwitchGroupBase):
     def __init__(self, connection):
@@ -197,6 +199,66 @@ class SwitchingGroup(SwitchGroupBase):
 
     def __str__(self):
         return f"{super().__str__()} processing({self.processing}) shutterLevel({self.shutterLevel}) slatsLevel({self.slatsLevel})"
+
+
+class ShutterProfile(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.dutyCycle = None
+        self.lowBat = None
+        self.unreach = None
+
+        self.processing = None
+        self.shutterLevel = None
+        self.slatsLevel = None
+        self.primaryShadingLevel = 0.0
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.processing = None
+        self.secondaryShadingLevel = 0.0
+        self.secondaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.profileMode = ProfileMode.MANUAL
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("unreach", js)
+
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("shutterLevel", js)
+        self.set_attr_from_dict("slatsLevel", js)
+        self.set_attr_from_dict("primaryShadingLevel", js)
+        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
+        self.set_attr_from_dict("secondaryShadingLevel", js)
+        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
+
+    def set_profile_mode(self, profileMode: ProfileMode):
+        data = {"groupId": self.id, "profileMode": profileMode}
+        return self._restCall("group/heating/setProfileMode", body=json.dumps(data))
+
+    def set_shutter_level(self, level):
+        data = {"groupId": self.id, "shutterLevel": level}
+        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+
+    def set_slats_level(self, slatsLevel, shutterlevel):
+        data = {
+            "groupId": self.id,
+            "shutterLevel": shutterlevel,
+            "slatsLevel": slatsLevel,
+        }
+        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
+
+    def set_shutter_stop(self):
+        data = {"groupId": self.id}
+        return self._restCall("group/switching/stop", body=json.dumps(data))
+
+    def __str__(self):
+        return (
+            f"{super().__str__()} processing({self.processing}) shutterLevel({self.shutterLevel}) "
+            f"slatsLevel({self.slatsLevel}) profileMode({self.profileMode})"
+        )
 
 
 class LinkedSwitchingGroup(Group):

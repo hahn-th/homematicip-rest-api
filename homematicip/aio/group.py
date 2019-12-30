@@ -3,33 +3,34 @@ import json
 from homematicip.group import (
     Group,
     MetaGroup,
-    SecurityGroup,
-    SwitchGroupBase,
-    SwitchingGroup,
-    LinkedSwitchingGroup,
-    ExtendedLinkedSwitchingGroup,
-    ExtendedLinkedShutterGroup,
     AlarmSwitchingGroup,
+    EnvironmentGroup,
+    ExtendedLinkedShutterGroup,
+    ExtendedLinkedSwitchingGroup,
+    HeatingChangeoverGroup,
+    HeatingCoolingDemandBoilerGroup,
+    HeatingCoolingDemandGroup,
+    HeatingCoolingDemandPumpGroup,
+    HeatingDehumidifierGroup,
+    HeatingExternalClockGroup,
+    HeatingFailureAlertRuleGroup,
+    HeatingGroup,
     HeatingHumidyLimiterGroup,
     HeatingTemperatureLimiterGroup,
-    HeatingChangeoverGroup,
-    InboxGroup,
-    SecurityZoneGroup,
-    HeatingGroup,
-    HeatingDehumidifierGroup,
-    HeatingCoolingDemandGroup,
-    HeatingExternalClockGroup,
-    HeatingCoolingDemandBoilerGroup,
-    HeatingCoolingDemandPumpGroup,
-    HeatingFailureAlertRuleGroup,
-    HumidityWarningRuleGroup,
-    SwitchingProfileGroup,
-    OverHeatProtectionRule,
-    SmokeAlarmDetectionRule,
-    ShutterWindProtectionRule,
-    LockOutProtectionRule,
-    EnvironmentGroup,
     HotWaterGroup,
+    HumidityWarningRuleGroup,
+    InboxGroup,
+    LinkedSwitchingGroup,
+    LockOutProtectionRule,
+    OverHeatProtectionRule,
+    SecurityGroup,
+    SecurityZoneGroup,
+    ShutterProfile,
+    ShutterWindProtectionRule,
+    SmokeAlarmDetectionRule,
+    SwitchGroupBase,
+    SwitchingGroup,
+    SwitchingProfileGroup,
 )
 
 from homematicip.base.enums import *
@@ -52,7 +53,8 @@ class AsyncMetaGroup(MetaGroup, AsyncGroup):
 class AsyncSecurityGroup(SecurityGroup, AsyncGroup):
     pass
 
-class AsyncSwitchGroupBase(SwitchGroupBase,AsyncGroup):
+
+class AsyncSwitchGroupBase(SwitchGroupBase, AsyncGroup):
     async def turn_on(self):
         return await self.set_switch_state(True)
 
@@ -63,8 +65,8 @@ class AsyncSwitchGroupBase(SwitchGroupBase,AsyncGroup):
         url, data = super().set_switch_state(on=on)
         return await self._connection.api_call(url, data)
 
-class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
 
+class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
     async def set_shutter_level(self, level):
         url, data = super().set_shutter_level(level)
         return await self._connection.api_call(url, data)
@@ -77,6 +79,21 @@ class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
         url, data = super().set_slats_level(slatsLevel, shutterlevel)
         return await self._connection.api_call(url, data)
 
+class AsyncShutterProfile(ShutterProfile, AsyncGroup):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel, shutterlevel):
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
+        return await self._connection.api_call(url, data)
+
+    async def set_profile_mode(self, profileMode: ProfileMode):
+        return await self._connection.api_call(*super().set_profile_mode(profileMode))
 
 class AsyncLinkedSwitchingGroup(LinkedSwitchingGroup, AsyncGroup):
     async def set_light_group_switches(self, devices):

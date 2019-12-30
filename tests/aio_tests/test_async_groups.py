@@ -204,6 +204,51 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await g.set_slats_level(2.0, 10)
 
+@pytest.mark.asyncio
+async def test_shutter_profile(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000093"
+    )
+    assert isinstance(g, AsyncShutterProfile)
+
+    assert g.dutyCycle is False
+    assert g.homeId == "00000000-0000-0000-0000-000000000001"
+    assert g.label == "Rollladen Schiebet\u00fcr"
+    assert g.lowBat is None
+    assert g.metaGroup is None
+    assert g.processing is False
+    assert g.shutterLevel == 0.97
+    assert g.slatsLevel is None
+    assert g.unreach is False
+    assert g.primaryShadingLevel == 0.97
+    assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+    assert g.secondaryShadingLevel is None
+    assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+    assert g.profileMode == ProfileMode.AUTOMATIC
+
+    assert str(g) == (
+        "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+        " shutterLevel(0.97) slatsLevel(None) profileMode(AUTOMATIC)"
+    )
+
+    await g.set_shutter_level(50)
+    await g.set_profile_mode(ProfileMode.MANUAL)
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+    assert g.shutterLevel == 50
+    assert g.profileMode == ProfileMode.MANUAL
+
+    assert str(g) == (
+        "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+        " shutterLevel(50) slatsLevel(None) profileMode(MANUAL)"
+    )
+
+    await g.set_slats_level(1.0, 20)
+
+    await no_ssl_fake_async_home.get_current_state()
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+    assert g.slatsLevel == 1.0
+    assert g.shutterLevel == 20
 
 @pytest.mark.asyncio
 async def test_extended_linked_shutter_group(no_ssl_fake_async_home: AsyncHome):

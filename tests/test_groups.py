@@ -265,6 +265,51 @@ def test_switching_group(fake_home: Home):
         assert result["errorCode"] == "INVALID_GROUP"
 
 
+def test_shutter_profile(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+        assert isinstance(g, ShutterProfile)
+
+        assert g.dutyCycle is False
+        assert g.homeId == "00000000-0000-0000-0000-000000000001"
+        assert g.label == "Rollladen Schiebet\u00fcr"
+        assert g.lowBat is None
+        assert g.metaGroup is None
+        assert g.processing is False
+        assert g.shutterLevel == 0.97
+        assert g.slatsLevel is None
+        assert g.unreach is False
+        assert g.primaryShadingLevel == 0.97
+        assert g.primaryShadingStateType == ShadingStateType.POSITION_USED
+        assert g.secondaryShadingLevel is None
+        assert g.secondaryShadingStateType == ShadingStateType.NOT_EXISTENT
+        assert g.profileMode == ProfileMode.AUTOMATIC
+
+        assert str(g) == (
+            "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+            " shutterLevel(0.97) slatsLevel(None) profileMode(AUTOMATIC)"
+        )
+
+        g.set_shutter_level(50)
+        g.set_profile_mode(ProfileMode.MANUAL)
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+        assert g.shutterLevel == 50
+        assert g.profileMode == ProfileMode.MANUAL
+
+        assert str(g) == (
+            "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
+            " shutterLevel(50) slatsLevel(None) profileMode(MANUAL)"
+        )
+
+        g.set_slats_level(1.0, 20)
+
+        fake_home.get_current_state()
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
+        assert g.slatsLevel == 1.0
+        assert g.shutterLevel == 20
+
+
 def test_environment_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-AAAA-0000-0000-000000000001")

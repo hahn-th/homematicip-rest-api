@@ -1776,6 +1776,7 @@ class GarageDoorModuleTormatic(Device):
         data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
         return self._restCall("device/control/sendDoorCommand", json.dumps(data))
 
+
 class PluggableMainsFailureSurveillance(Device):
     """ [HMIP-PMFS] (Plugable Power Supply Monitoring) """
 
@@ -1788,8 +1789,8 @@ class PluggableMainsFailureSurveillance(Device):
         super().from_json(js)
         c = get_functional_channel("MAINS_FAILURE_CHANNEL", js)
         if c:
-            self.set_attr_from_dict("powerMainsFailure",c)
-            self.set_attr_from_dict("genericAlarmSignal",c,AlarmSignalType)
+            self.set_attr_from_dict("powerMainsFailure", c)
+            self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
 
     def __str__(self):
         return f"{super().__str__()} powerMainsFailure({self.powerMainsFailure}) genericAlarmSignal({self.genericAlarmSignal})"

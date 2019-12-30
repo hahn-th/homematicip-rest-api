@@ -5884,6 +5884,27 @@
             "profileMode": null,
             "type": "HOT_WATER",
             "unreach": null
+        },
+        "00000000-0000-0000-0000-000000000093": {
+            "channels": [],
+            "dutyCycle": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000093",
+            "label": "Rollladen Schiebet\u00fcr",
+            "lastStatusUpdate": 1577488124150,
+            "lowBat": null,
+            "metaGroupId": null,
+            "primaryShadingLevel": 0.97,
+            "primaryShadingStateType": "POSITION_USED",
+            "processing": false,
+            "profileId": "00000000-0000-0000-0000-000000000113",
+            "profileMode": "AUTOMATIC",
+            "secondaryShadingLevel": null,
+            "secondaryShadingStateType": "NOT_EXISTENT",
+            "shutterLevel": 0.97,
+            "slatsLevel": null,
+            "type": "SHUTTER_PROFILE",
+            "unreach": false
         }
     },
     "home": {

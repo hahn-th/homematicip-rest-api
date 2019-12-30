@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   - Groups
     - Created new Async/SwitchBaseGroup class for groups which are using on, dimLevel, lowbat and dutycycle
+    - ShutterProfile
 - Devices
   - [HMIP-FALMOT-C12] (Floor Heating Actuator – 12x channels, motorised)
   - [HMIP-WHS2]       (Switch Actuator for heating systems – 2x channels)

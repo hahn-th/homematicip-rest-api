@@ -519,6 +519,7 @@ class ProfileMode(AutoNameEnum):
     AUTOMATIC = auto()
     MANUAL = auto()
 
+
 class AlarmSignalType(AutoNameEnum):
     NO_ALARM = auto()
     SILENT_ALARM = auto()

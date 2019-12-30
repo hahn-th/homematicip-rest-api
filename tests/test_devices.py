@@ -1202,7 +1202,8 @@ def test_door_sensor_tm(fake_home: Home):
             "on(False) processing(False) ventilationPositionSupported(True)"
         )
 
-def test_pluggable_mains_failure(fake_home:Home):
+
+def test_pluggable_mains_failure(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000ABCD50")
 
