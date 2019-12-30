@@ -824,7 +824,6 @@ class AsyncFakeCloudServer:
             response = self.errorCode("INVALID_GROUP", 404)
         return response
 
-
     @validate_authorization
     async def post_hmip_group_switching_alarm_setOnTime(
         self, request: web.Request
@@ -836,7 +835,9 @@ class AsyncFakeCloudServer:
         g["onTime"] = js["onTime"]
         return response
 
-    post_hmip_group_switching_linked_setOnTime = post_hmip_group_switching_alarm_setOnTime
+    post_hmip_group_switching_linked_setOnTime = (
+        post_hmip_group_switching_alarm_setOnTime
+    )
 
     @validate_authorization
     async def post_hmip_group_switching_setState(

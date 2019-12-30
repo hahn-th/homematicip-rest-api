@@ -317,9 +317,12 @@ async def test_hot_water(no_ssl_fake_async_home: AsyncHome):
 
     assert str(g) == "HOT_WATER HOT_WATER on(None) onTime(900.0) profileMode(AUTOMATIC)"
 
+
 @pytest.mark.asyncio
 async def test_switching_alarm_group(no_ssl_fake_async_home: AsyncHome):
-    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000022"
+    )
     assert isinstance(g, AlarmSwitchingGroup)
 
     assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_RISING
@@ -332,13 +335,15 @@ async def test_switching_alarm_group(no_ssl_fake_async_home: AsyncHome):
 
     await g.test_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
     await g.test_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
-     
+
     await g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
     await g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
     await g.set_on_time(5)
 
     await no_ssl_fake_async_home.get_current_state()
-    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-000000000022")
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000022"
+    )
 
     assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
     assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
