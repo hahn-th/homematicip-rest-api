@@ -79,6 +79,7 @@ class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
         url, data = super().set_slats_level(slatsLevel, shutterlevel)
         return await self._connection.api_call(url, data)
 
+
 class AsyncShutterProfile(ShutterProfile, AsyncGroup):
     async def set_shutter_level(self, level):
         url, data = super().set_shutter_level(level)
@@ -94,6 +95,7 @@ class AsyncShutterProfile(ShutterProfile, AsyncGroup):
 
     async def set_profile_mode(self, profileMode: ProfileMode):
         return await self._connection.api_call(*super().set_profile_mode(profileMode))
+
 
 class AsyncLinkedSwitchingGroup(LinkedSwitchingGroup, AsyncGroup):
     async def set_light_group_switches(self, devices):
