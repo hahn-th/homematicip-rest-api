@@ -340,10 +340,10 @@ class ExtendedLinkedShutterGroup(Group):
         data = {"groupId": self.id, "shutterLevel": level}
         return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
 
-    def set_slats_level(self, slatsLevel, shutterlevel):
+    def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
         data = {
             "groupId": self.id,
-            "shutterLevel": shutterlevel,
+            "shutterLevel": shutterLevel,
             "slatsLevel": slatsLevel,
         }
         return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))

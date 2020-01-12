@@ -120,8 +120,8 @@ class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):
         url, data = super().set_shutter_stop()
         return await self._connection.api_call(url, data)
 
-    async def set_slats_level(self, slatsLevel, shutterlevel):
-        url, data = super().set_slats_level(slatsLevel, shutterlevel)
+    async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        url, data = super().set_slats_level(slatsLevel, shutterLevel)
         return await self._connection.api_call(url, data)
 
 
