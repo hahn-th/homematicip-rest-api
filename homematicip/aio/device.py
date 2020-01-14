@@ -197,6 +197,9 @@ class AsyncWallMountedThermostatPro(
 
     pass
 
+class AsyncWallMountedThermostatBasicHumidity(AsyncWallMountedThermostatPro):
+    """ HMIP-WTH-B (Wall Thermostat – basic)"""
+    pass
 
 class AsyncSmokeDetector(SmokeDetector, AsyncDevice):
     """ HMIP-SWSD (Smoke Alarm with Q label) """

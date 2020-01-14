@@ -1215,3 +1215,18 @@ def test_pluggable_mains_failure(fake_home: Home):
             "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
             "genericAlarmSignal(FULL_ALARM)"
         )
+
+
+def test_wall_thermostat_basic(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000AAA5")
+
+        assert d.display == ClimateControlDisplay.ACTUAL
+        assert d.humidity == 42
+
+        assert str(d) == (
+            "HmIP-WTH-B Thermostat Schlafen Tal lowbat(False) unreach(False) rssiDeviceValue(-58) "
+            "rssiPeerValue(-59) configPending(False) dutyCycle(False) operationLockActive(False) "
+            "actualTemperature(16.0) humidity(42) vaporAmount(5.710127947243264) "
+            "setPointTemperature(12.0)"
+        )

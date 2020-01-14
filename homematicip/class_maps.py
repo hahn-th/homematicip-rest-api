@@ -65,6 +65,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
     DeviceType.TORMATIC_MODULE: GarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
+    DeviceType.WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY: WallMountedThermostatBasicHumidity,
     DeviceType.WATER_SENSOR: WaterSensor,
     DeviceType.WEATHER_SENSOR: WeatherSensor,
     DeviceType.WEATHER_SENSOR_PLUS: WeatherSensorPlus,

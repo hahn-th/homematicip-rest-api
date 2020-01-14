@@ -14,6 +14,73 @@
         }
     },
     "devices": {
+        "3014F711000000000000AAA5": {
+            "availableFirmwareVersion": "0.0.0",
+            "firmwareVersion": "1.0.12",
+            "firmwareVersionInteger": 65548,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F711000000000000AAA5",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_OPERATIONLOCK",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": false,
+                    "operationLockActive": false,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -58,
+                    "rssiPeerValue": -59,
+                    "supportedOptionalFeatures": {
+                        "3014F7110000000000000002": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "3014F7110000000000000003": false,
+                        "3014F7110000000000000004": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "actualTemperature": 16.0,
+                    "deviceId": "3014F711000000000000AAA5",
+                    "display": "ACTUAL",
+                    "functionalChannelType": "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "humidity": 42,
+                    "index": 1,
+                    "label": "",
+                    "setPointTemperature": 12.0,
+                    "temperatureOffset": 0.0,
+                    "vaporAmount": 5.710127947243264
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000000000000AAA5",
+            "label": "Thermostat Schlafen Tal",
+            "lastStatusUpdate": 1578954498192,
+            "liveUpdateState": "UP_TO_DATE",
+            "manufacturerCode": 1,
+            "modelId": 408,
+            "modelType": "HmIP-WTH-B",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711000000000000AAA5",
+            "type": "WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY",
+            "updateState": "BACKGROUND_UPDATE_NOT_SUPPORTED"
+        },
         "3014F7110000000000ABCD50": {
             "availableFirmwareVersion": "1.0.12",
             "firmwareVersion": "1.0.12",

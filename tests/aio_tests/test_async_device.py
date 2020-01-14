@@ -447,3 +447,17 @@ async def test_pluggable_mains_failure(no_ssl_fake_async_home: AsyncHome):
         "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
         "genericAlarmSignal(FULL_ALARM)"
     )
+
+@pytest.mark.asyncio
+async def test_wall_thermostat_basic(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000AAA5")
+
+    assert d.display == ClimateControlDisplay.ACTUAL
+    assert d.humidity == 42
+
+    assert str(d) == (
+        "HmIP-WTH-B Thermostat Schlafen Tal lowbat(False) unreach(False) rssiDeviceValue(-58) "
+        "rssiPeerValue(-59) configPending(False) dutyCycle(False) operationLockActive(False) "
+        "actualTemperature(16.0) humidity(42) vaporAmount(5.710127947243264) "
+        "setPointTemperature(12.0)"
+    )
