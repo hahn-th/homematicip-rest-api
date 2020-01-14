@@ -168,7 +168,7 @@ Homematic IP Devices:
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel)
 -  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
 -  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
--  [ ] HMIP-WTH-B      (Wall Mounted Thermostat basic without adjusting wheel)
+-  [X] HMIP-WTH-B      (Wall Mounted Thermostat basic without adjusting wheel)
 
 Homematic IP Wired Devices:
 ---------------------------

@@ -486,6 +486,9 @@ class WallMountedThermostatPro(
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
 
+class WallMountedThermostatBasicHumidity(WallMountedThermostatPro):
+    """ HMIP-WTH-B (Wall Thermostat – basic)"""
+    pass 
 
 class SmokeDetector(Device):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
