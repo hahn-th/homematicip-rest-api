@@ -4,11 +4,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
+### Added
+- Devices
+  - [HMIP-WTH-B] (Wall Thermostat Basic)
+
+## [0.10.15] 2019-12-30
+### Added
+- API
+  - Groups
+    - Created new Async/SwitchBaseGroup class for groups which are using on, dimLevel, lowbat and dutycycle
+    - ShutterProfile
+- Devices
+  - [HMIP-FALMOT-C12] (Floor Heating Actuator – 12x channels, motorised)
+  - [HMIP-WHS2]       (Switch Actuator for heating systems – 2x channels)
+  - [HMIP-PMFS]       (Pluggable Power Supply Monitoring)
+
+## [0.10.14] - 2019-12-22
+### Added
+- API
+  - FunctionalChannels:
+    - DOOR_CHANNEL
+    - DEVICE_RECHARGEABLE_WITH_SABOTAGE
+  - ExtendedLinkedShutterGroup.set_slats_level 
+    - added missing attributes
+- Devices
+  - HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)
+  - HMIP-ASIR-O (Alarm Siren - outdoor)
+
+- Groups
+  - HOT_WATER
+- Python 3.8 support
+
+### Changed
+- General
+  - removed homematicip-testing package. Pip will automatically install the latest tagged release. For a "nightly" build you just have to run it with the "--pre" argument.
+### FIXED
+- [BUG: 266]: Anonymize won't work on the Silvercrest models
+
+## [0.10.13] - 2019-10-19
+### Changed
+- API
+  - converted FakeCloudServer to an async implementation
+  - the Home websocket can now automatically reopen a lost connection (default)
+## [0.10.12] - 2019-09-27
+### Added
+- API
+  - Added event handlers for adding/updating/removing devices and groups
+  - fixed cloud bug: DEVICE/GROUP_ADDED will now be generated instead of DEVICE/GROUP_CHANGED on an added device
+  
+## [0.10.11] - 2019-09-23
 ### Added
 - Devices
   - HMIP-MOD-RC8 (Open Collector Module Sender - 8x)
+  - HMIP-SAM     (Acceleration Sensor)
 
+### Deprecated
+- API
+  - moved homematicip.HomematicIPBaseObject to homematicip.base.HomematicIPBaseObject package 
 ## [0.10.10] - 2019-08-01
 ### Added
 - Devices
@@ -37,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
   - HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)
   - HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)
-  - Async implementation of HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery)
+  - Async implementation of HMIP-PCBS-BAT (Printed Circuit Board Switch Battery)
  
 ## [0.10.7] - 2019-04-09
 ### Added
@@ -56,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Devices
   - HMIP-FBL (Blind Actuator - flush-mount)
   - HMIP-BRC2 (Remote Control for brand switches – 2 channels)
-  - HmIP-eTRV-C (Heating-thermostat compact without display)
+  - HMIP-eTRV-C (Heating-thermostat compact without display)
 
 - API
   - AutoNameEnum.from_str does now take a default parameter_ 
@@ -109,12 +162,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.10.3] - 2019-01-06
 ### Added
 - Devices
-  - HmIP-SWO-PL
+  - HMIP-SWO-PL
 
 ## [0.10.2] - 2019-01-06
 ### Added
 - Devices
-  - HmIP-SMO-A
+  - HMIP-SMO-A
 ### Changes
 - API
   - Small Bugfix in the aio library
@@ -131,7 +184,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Enums
     - HeatingLoadType
   - Devices
-    - HmIP-FAL230-C6 
+    - HMIP-FAL230-C6 
       - added missing properties
       
 ### Changes
@@ -204,8 +257,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.9.7] - 2018-07-06
 ### Added
 - Devices
-  - HmIP-SWD
-  - HmIP-SMI55
+  - HMIP-SWD
+  - HMIP-SMI55
   
 ## [0.9.6] - 2018-06-12
 ### Changed
@@ -222,7 +275,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.10...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...HEAD
+[0.10.15]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.14...0.10.15
+[0.10.14]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.13...0.10.14
+[0.10.13]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.12...0.10.13
+[0.10.12]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.11...0.10.12
+[0.10.11]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.10...0.10.11
 [0.10.10]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.9...0.10.10
 [0.10.9]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.8...0.10.9
 [0.10.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...0.10.8
@@ -244,3 +302,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 188]: https://github.com/coreGreenberet/homematicip-rest-api/issues/188
 [BUG: 220]: https://github.com/coreGreenberet/homematicip-rest-api/issues/220
 [BUG: 223]: https://github.com/coreGreenberet/homematicip-rest-api/issues/223
+[BUG: 266]: https://github.com/coreGreenberet/homematicip-rest-api/issues/266
+
+
+[HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
+[HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
+[HMIP-PMFS]: https://github.com/coreGreenberet/homematicip-rest-api/issues/282 

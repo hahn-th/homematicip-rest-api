@@ -16,14 +16,14 @@ from homematicip.aio.securityEvent import *
 
 @pytest.mark.asyncio
 async def test_async_home_base(no_ssl_fake_async_home: AsyncHome):
-    assert no_ssl_fake_async_home.connected == True
+    assert no_ssl_fake_async_home.connected is True
     assert no_ssl_fake_async_home.currentAPVersion == "1.2.4"
     assert (
         no_ssl_fake_async_home.deviceUpdateStrategy
         == DeviceUpdateStrategy.AUTOMATICALLY_IF_POSSIBLE
     )
     assert no_ssl_fake_async_home.dutyCycle == 8.0
-    assert no_ssl_fake_async_home.pinAssigned == False
+    assert no_ssl_fake_async_home.pinAssigned is False
     assert no_ssl_fake_async_home.powerMeterCurrency == "EUR"
     assert no_ssl_fake_async_home.powerMeterUnitPrice == 0.0
     assert no_ssl_fake_async_home.timeZoneId == "Europe/Vienna"
@@ -63,35 +63,41 @@ async def test_home_set_location(no_ssl_fake_async_home: AsyncHome):
 @pytest.mark.asyncio
 async def test_security_zones_activation(no_ssl_fake_async_home: AsyncHome):
     internal, external = no_ssl_fake_async_home.get_security_zones_activation()
-    assert internal == False
-    assert external == False
+    assert internal is False
+    assert external is False
 
     await no_ssl_fake_async_home.set_security_zones_activation(True, True)
     await no_ssl_fake_async_home.get_current_state()
 
     internal, external = no_ssl_fake_async_home.get_security_zones_activation()
-    assert internal == True
-    assert external == True
+    assert internal is True
+    assert external is True
 
 
 @pytest.mark.asyncio
 async def test_set_pin(no_ssl_fake_async_home: AsyncHome):
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == None
+    async def get_pin(no_ssl_fake_async_home):
+        result = await no_ssl_fake_async_home._connection.api_call("home/getPin")
+        return result["pin"]
 
-    await no_ssl_fake_async_home.set_pin(1234)
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == 1234
+    fh = no_ssl_fake_async_home
+
+    assert await get_pin(fh) is None
+
+    await fh.set_pin(1234)
+    assert await get_pin(fh) == 1234
 
     with pytest.raises(HmipWrongHttpStatusError):
-        await no_ssl_fake_async_home.set_pin(
+        await fh.set_pin(
             5555
         )  # ignore errors. just check if the old pin is still active
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == 1234
+    assert await get_pin(fh) == 1234
 
-    await no_ssl_fake_async_home.set_pin(5555, 1234)
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == 5555
+    await fh.set_pin(5555, 1234)
+    assert await get_pin(fh) == 5555
 
-    await no_ssl_fake_async_home.set_pin(None, 5555)
-    assert no_ssl_fake_async_home._fake_cloud.app.pin == None
+    await fh.set_pin(None, 5555)
+    assert await get_pin(fh) is None
 
 
 @pytest.mark.asyncio
@@ -99,12 +105,12 @@ async def test_indoor_climate_home(no_ssl_fake_async_home: AsyncHome):
     for fh in no_ssl_fake_async_home.functionalHomes:
         if not isinstance(fh, IndoorClimateHome):
             continue
-        assert fh.active == True
+        assert fh.active is True
         assert fh.absenceType == AbsenceType.NOT_ABSENT
-        assert fh.coolingEnabled == False
+        assert fh.coolingEnabled is False
         assert fh.ecoDuration == EcoDuration.PERMANENT
         assert fh.ecoTemperature == 17.0
-        assert fh.optimumStartStopEnabled == False
+        assert fh.optimumStartStopEnabled is False
 
         minutes = 20
         await no_ssl_fake_async_home.activate_absence_with_duration(minutes)
@@ -129,7 +135,7 @@ async def test_indoor_climate_home(no_ssl_fake_async_home: AsyncHome):
 
         await no_ssl_fake_async_home.get_current_state()
         assert fh.absenceType == AbsenceType.NOT_ABSENT
-        assert fh.absenceEndTime == None
+        assert fh.absenceEndTime is None
 
 
 @pytest.mark.asyncio
@@ -173,7 +179,7 @@ async def test_heating_vacation(no_ssl_fake_async_home: AsyncHome):
 
     await no_ssl_fake_async_home.get_current_state()
     heatingHome = no_ssl_fake_async_home.get_functionalHome(IndoorClimateHome)
-    assert heatingHome.absenceEndTime == None
+    assert heatingHome.absenceEndTime is None
     assert heatingHome.absenceType == AbsenceType.NOT_ABSENT
 
 
@@ -195,20 +201,20 @@ async def test_security_setZoneActivationDelay(no_ssl_fake_async_home: AsyncHome
 
 @pytest.mark.asyncio
 async def test_security_setIntrusionAlertThroughSmokeDetectors(
-    no_ssl_fake_async_home: AsyncHome
+    no_ssl_fake_async_home: AsyncHome,
 ):
     securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)
-    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False
+    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False
 
     await no_ssl_fake_async_home.set_intrusion_alert_through_smoke_detectors(True)
     await no_ssl_fake_async_home.get_current_state()
     securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)
-    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == True
+    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is True
 
     await no_ssl_fake_async_home.set_intrusion_alert_through_smoke_detectors(False)
     await no_ssl_fake_async_home.get_current_state()
     securityAlarmHome = no_ssl_fake_async_home.get_functionalHome(SecurityAndAlarmHome)
-    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False
+    assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False
 
 
 @pytest.mark.asyncio

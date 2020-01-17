@@ -5,7 +5,7 @@ import logging
 
 from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
-from homematicip import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
 
 from typing import Iterable
@@ -14,8 +14,20 @@ from collections import Counter
 LOGGER = logging.getLogger(__name__)
 
 
-class Device(HomeMaticIPObject.HomeMaticIPObject):
+class Device(HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
+
+    _supportedFeatureAttributeMap = {
+        "IFeatureDeviceOverheated": "deviceOverheated",
+        "IFeatureDeviceOverloaded": "deviceOverloaded",
+        "IFeatureDeviceUndervoltage": "deviceUndervoltage",
+        "IFeatureDeviceTemperatureOutOfRange": "temperatureOutOfRange",
+        "IFeatureDeviceCoProError": "coProFaulty",
+        "IFeatureDeviceCoProRestart": "coProRestartNeeded",
+        "IFeatureDeviceCoProUpdate": "coProUpdateFailure",
+        "IFeatureMinimumFloorHeatingValvePosition": "minimumFloorHeatingValvePosition",
+        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled",
+    }
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -27,11 +39,11 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
         self.updateState = DeviceUpdateState.UP_TO_DATE
         self.firmwareVersion = None
         self.firmwareVersionInteger = (
-            0
-        )  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
+            0  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
+        )
         self.availableFirmwareVersion = None
-        self.unreach = None
-        self.lowBat = None
+        self.unreach = False
+        self.lowBat = False
         self.routerModuleSupported = False
         self.routerModuleEnabled = False
         self.modelType = ""
@@ -55,10 +67,13 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
 
         self._baseChannel = "DEVICE_BASE"
 
-        self.deviceOverheated = None
-        self.deviceOverloaded = None
-        self.deviceUndervoltage = None
-        self.temperatureOutOfRange = None
+        self.deviceOverheated = False
+        self.deviceOverloaded = False
+        self.deviceUndervoltage = False
+        self.temperatureOutOfRange = False
+        self.coProFaulty = False
+        self.coProRestartNeeded = False
+        self.coProUpdateFailure = False
 
     def from_json(self, js):
         super().from_json(js)
@@ -94,14 +109,16 @@ class Device(HomeMaticIPObject.HomeMaticIPObject):
 
             sof = c.get("supportedOptionalFeatures")
             if sof:
-                if sof["IFeatureDeviceOverheated"]:
-                    self.deviceOverheated = c["deviceOverheated"]
-                if sof["IFeatureDeviceOverloaded"]:
-                    self.deviceOverloaded = c["deviceOverloaded"]
-                if sof["IFeatureDeviceUndervoltage"]:
-                    self.deviceUndervoltage = c["deviceUndervoltage"]
-                if sof["IFeatureDeviceTemperatureOutOfRange"]:
-                    self.temperatureOutOfRange = c["temperatureOutOfRange"]
+                for k, v in sof.items():
+                    if v:
+                        if k in Device._supportedFeatureAttributeMap:
+                            self.set_attr_from_dict(
+                                Device._supportedFeatureAttributeMap[k], c
+                            )
+                        else:  # pragma: no cover
+                            LOGGER.warning(
+                                "Optional Device Feature '%s' is not yet supported", k,
+                            )
 
     def __str__(self):
         return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({}) configPending({}) dutyCycle({})".format(
@@ -248,7 +265,7 @@ class HeatingThermostat(OperationLockableDevice):
 
 
 class HeatingThermostatCompact(SabotageDevice):
-    """ HmIP-eTRV-C (Heating-thermostat compact without display) """
+    """ HMIP-eTRV-C (Heating-thermostat compact without display) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -307,7 +324,7 @@ class ShutterContact(SabotageDevice):
 
 
 class ShutterContactMagnetic(Device):
-    """ HmIP-SWDM /  HmIP-SWDM-B2  (Door / Window Contact - magnetic )"""
+    """ HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic )"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -335,7 +352,7 @@ class ContactInterface(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        c = get_functional_channel("SHUTTER_CONTACT_INTERFACE", js)
+        c = get_functional_channel("CONTACT_INTERFACE_CHANNEL", js)
         if c:
             self.windowState = WindowState.from_str(c["windowState"])
             self.eventDelay = c["eventDelay"]
@@ -345,7 +362,7 @@ class ContactInterface(SabotageDevice):
 
 
 class RotaryHandleSensor(SabotageDevice):
-    """ HmIP-SRH """
+    """ HMIP-SRH """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -364,7 +381,7 @@ class RotaryHandleSensor(SabotageDevice):
 
 
 class TemperatureHumiditySensorOutdoor(Device):
-    """ HmIP-STHO (Temperature and Humidity Sensor outdoor) """
+    """ HMIP-STHO (Temperature and Humidity Sensor outdoor) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -469,6 +486,9 @@ class WallMountedThermostatPro(
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
 
+class WallMountedThermostatBasicHumidity(WallMountedThermostatPro):
+    """ HMIP-WTH-B (Wall Thermostat – basic)"""
+    pass 
 
 class SmokeDetector(Device):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
@@ -561,6 +581,59 @@ class FloorTerminalBlock10(FloorTerminalBlock6):
     """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
 
 
+class FloorTerminalBlock12(Device):
+    """ HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.frostProtectionTemperature = 0.0
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 20
+        self.coolingEmergencyValue = 0
+        self.minimumFloorHeatingValvePosition = 0.0
+        self.pulseWidthModulationAtLowFloorHeatingValvePositionEnabled = False
+
+        self._baseChannel = "DEVICE_BASE_FLOOR_HEATING"
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_BASE_FLOOR_HEATING", js)
+        if c:
+            self.set_attr_from_dict("coolingEmergencyValue", c)
+            self.set_attr_from_dict("frostProtectionTemperature", c)
+            self.set_attr_from_dict("valveProtectionDuration", c)
+            self.set_attr_from_dict("valveProtectionSwitchingInterval", c)
+
+    def __str__(self):
+        return (
+            f"{super().__str__()} coolingEmergencyValue({self.coolingEmergencyValue}) frostProtectionTemperature({self.frostProtectionTemperature})"
+            f" valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval})"
+            f" minimumFloorHeatingValvePosition({self.minimumFloorHeatingValvePosition})"
+            f" pulseWidthModulationAtLowFloorHeatingValvePositionEnabled({self.pulseWidthModulationAtLowFloorHeatingValvePositionEnabled})"
+        )
+
+    def set_minimum_floor_heating_valve_position(
+        self, minimumFloorHeatingValvePosition: float
+    ):
+        """ sets the minimum floot heating valve position
+
+        Args:
+            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
+
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": 0,
+            "deviceId": self.id,
+            "minimumFloorHeatingValvePosition": minimumFloorHeatingValvePosition,
+        }
+        return self._restCall(
+            "device/configuration/setMinimumFloorHeatingValvePosition",
+            body=json.dumps(data),
+        )
+
+
 class Switch(Device):
     """ Generic Switch class """
 
@@ -599,7 +672,7 @@ class PlugableSwitch(Switch):
 
 
 class PrintedCircuitBoardSwitchBattery(Switch):
-    """ HmIP-PCBS-BAT (Printed Curcuit Board Switch Battery) """
+    """ HMIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
 
 
 class PrintedCircuitBoardSwitch2(Switch):
@@ -607,7 +680,11 @@ class PrintedCircuitBoardSwitch2(Switch):
 
 
 class OpenCollector8Module(Switch):
-    """ HmIP-MOD-OC8 ( Open Collector Module ) """
+    """ HMIP-MOD-OC8 ( Open Collector Module ) """
+
+
+class HeatingSwitch2(Switch):
+    """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
 
 
 class SwitchMeasuring(Switch):
@@ -762,10 +839,12 @@ class KeyRemoteControl4(PushButton):
 
 
 class RemoteControl8(PushButton):
-    """ HmIP-RC8 (Remote Control - 8 buttons) """
+    """ HMIP-RC8 (Remote Control - 8 buttons) """
+
 
 class RemoteControl8Module(RemoteControl8):
-    """ HmIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+    """ HMIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+
 
 class AlarmSirenIndoor(SabotageDevice):
     """ HMIP-ASIR (Alarm Siren) """
@@ -776,6 +855,24 @@ class AlarmSirenIndoor(SabotageDevice):
         if c:
             # The ALARM_SIREN_CHANNEL doesn't have any values yet.
             pass
+
+
+class AlarmSirenOutdoor(AlarmSirenIndoor):
+    """ HMIP-ASIR-O (Alarm Siren Outdoor) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.badBatteryHealth = False
+        self._baseChannel = "DEVICE_RECHARGEABLE_WITH_SABOTAGE"
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_RECHARGEABLE_WITH_SABOTAGE", js)
+        if c:
+            self.set_attr_from_dict("badBatteryHealth", c)
+
+    def __str__(self):
+        return f"{super().__str__()} badBatteryHealth({self.badBatteryHealth})"
 
 
 class MotionDetectorIndoor(SabotageDevice):
@@ -815,7 +912,7 @@ class MotionDetectorIndoor(SabotageDevice):
 
 
 class MotionDetectorOutdoor(Device):
-    """ HmIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    """ HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1144,19 +1241,19 @@ class Dimmer(Device):
 
 
 class PluggableDimmer(Dimmer):
-    """HmIP-PDT Pluggable Dimmer"""
+    """HMIP-PDT Pluggable Dimmer"""
 
 
 class BrandDimmer(Dimmer):
-    """HmIP-BDT Brand Dimmer"""
+    """HMIP-BDT Brand Dimmer"""
 
 
 class FullFlushDimmer(Dimmer):
-    """HmIP-FDT Dimming Actuator flush-mount"""
+    """HMIP-FDT Dimming Actuator flush-mount"""
 
 
 class WeatherSensor(Device):
-    """ HmIP-SWO-B """
+    """ HMIP-SWO-B """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1215,7 +1312,7 @@ class WeatherSensor(Device):
 
 
 class WeatherSensorPlus(Device):
-    """ HmIP-SWO-PL """
+    """ HMIP-SWO-PL """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1285,7 +1382,7 @@ class WeatherSensorPlus(Device):
 
 
 class WeatherSensorPro(Device):
-    """ HmIP-SWO-PR """
+    """ HMIP-SWO-PR """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1367,7 +1464,7 @@ class WeatherSensorPro(Device):
 
 
 class WaterSensor(Device):
-    """ HmIP-SWD ( Water Sensor ) """
+    """ HMIP-SWD ( Water Sensor ) """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1377,7 +1474,7 @@ class WaterSensor(Device):
         self.acousticWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.inAppWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.moistureDetected = False
-        self.sirenWateralarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
         self.waterlevelDetected = False
         self._baseChannel = "DEVICE_INCORRECT_POSITIONED"
 
@@ -1507,3 +1604,196 @@ class FullFlushContactInterface(Device):
             self.multiModeInputMode,
             self.windowState,
         )
+
+
+class AccelerationSensor(Device):
+    """ HMIP-SAM (Contact Interface flush-mount – 1 channel) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorNeutralPosition:
+        self.accelerationSensorNeutralPosition = (
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+        #:NotificationSoundType:
+        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        #:NotificationSoundType:
+        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ACCELERATION_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("accelerationSensorEventFilterPeriod", c)
+            self.set_attr_from_dict("accelerationSensorMode", c, AccelerationSensorMode)
+            self.set_attr_from_dict(
+                "accelerationSensorNeutralPosition",
+                c,
+                AccelerationSensorNeutralPosition,
+            )
+            self.set_attr_from_dict(
+                "accelerationSensorSensitivity", c, AccelerationSensorSensitivity
+            )
+            self.set_attr_from_dict("accelerationSensorTriggerAngle", c)
+            self.set_attr_from_dict("accelerationSensorTriggered", c)
+            self.set_attr_from_dict(
+                "notificationSoundTypeHighToLow", c, NotificationSoundType
+            )
+            self.set_attr_from_dict(
+                "notificationSoundTypeLowToHigh", c, NotificationSoundType
+            )
+
+    def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorMode": str(mode),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorMode", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_neutral_position(
+        self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorNeutralPosition": str(neutralPosition),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorNeutralPosition",
+            json.dumps(data),
+        )
+
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorSensitivity": str(sensitivity),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorTriggerAngle": angle,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorEventFilterPeriod": period,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
+        )
+
+    def set_notification_sound_type(
+        self, soundType: NotificationSoundType, isHighToLow: bool, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "notificationSoundType": str(soundType),
+            "isHighToLow": isHighToLow,
+        }
+        return self._restCall(
+            "device/configuration/setNotificationSoundType", json.dumps(data)
+        )
+
+    def __str__(self):
+        return (
+            "{} accelerationSensorEventFilterPeriod({}) accelerationSensorMode({}) "
+            "accelerationSensorNeutralPosition({}) accelerationSensorSensitivity({}) "
+            "accelerationSensorTriggerAngle({}) accelerationSensorTriggered({}) "
+            "notificationSoundTypeHighToLow({}) notificationSoundTypeLowToHigh({})"
+        ).format(
+            super().__str__(),
+            self.accelerationSensorEventFilterPeriod,
+            self.accelerationSensorMode,
+            self.accelerationSensorNeutralPosition,
+            self.accelerationSensorSensitivity,
+            self.accelerationSensorTriggerAngle,
+            self.accelerationSensorTriggered,
+            self.notificationSoundTypeHighToLow,
+            self.notificationSoundTypeLowToHigh,
+        )
+
+
+class GarageDoorModuleTormatic(Device):
+    """ HMIP-MOD-TM (Garage Door Module Tormatic) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.doorState = DoorState.POSITION_UNKNOWN
+        self.on = False
+        self.processing = False
+        self.ventilationPositionSupported = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DOOR_CHANNEL", js)
+        if c:
+            self.doorState = DoorState.from_str(c["doorState"])
+            self.on = c["on"]
+            self.processing = c["processing"]
+            self.ventilationPositionSupported = c["ventilationPositionSupported"]
+
+    def __str__(self):
+        return "{} doorState({}) on({}) processing({}) ventilationPositionSupported({})".format(
+            super().__str__(),
+            self.doorState,
+            self.on,
+            self.processing,
+            self.ventilationPositionSupported,
+        )
+
+    def send_door_command(self, doorCommand=DoorCommand.STOP):
+        data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
+        return self._restCall("device/control/sendDoorCommand", json.dumps(data))
+
+
+class PluggableMainsFailureSurveillance(Device):
+    """ [HMIP-PMFS] (Plugable Power Supply Monitoring) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.powerMainsFailure = False
+        self.genericAlarmSignal = AlarmSignalType.NO_ALARM
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MAINS_FAILURE_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("powerMainsFailure", c)
+            self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
+
+    def __str__(self):
+        return f"{super().__str__()} powerMainsFailure({self.powerMainsFailure}) genericAlarmSignal({self.genericAlarmSignal})"

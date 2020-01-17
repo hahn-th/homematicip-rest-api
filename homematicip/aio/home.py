@@ -79,7 +79,7 @@ class AsyncHome(Home):
         )
 
     async def set_pin(self, newPin, oldPin=None):
-        if newPin == None:
+        if newPin is None:
             newPin = ""
         data = {"pin": newPin}
         if oldPin:

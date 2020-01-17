@@ -30,9 +30,9 @@ class Connection(BaseConnection):
                     self._urlREST = js["urlREST"]
                     self._urlWebSocket = js["urlWebSocket"]
                     break
-                except:
+                except Exception as e:
                     pass
-        else:
+        else:  # pragma: no cover
             self._urlREST = "https://ps1.homematic.com:6969"
             self._urlWebSocket = "wss://ps1.homematic.com:8888"
 

@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class AutoNameEnum(str, Enum):
     """ auto() will generate the name of the attribute as value """
 
@@ -28,7 +29,9 @@ class AutoNameEnum(str, Enum):
         try:
             return cls(text)
         except:
-            logger.warning("'%s' isn't a valid option for class '%s'", text, cls.__name__)
+            logger.warning(
+                "'%s' isn't a valid option for class '%s'", text, cls.__name__
+            )
             return default
 
 
@@ -99,6 +102,7 @@ class ValveState(AutoNameEnum):
 class HeatingValveType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
     NORMALLY_OPEN = auto()
+
 
 class ContactType(AutoNameEnum):
     NORMALLY_CLOSE = auto()
@@ -194,7 +198,9 @@ class ClientType(AutoNameEnum):
 
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
+    ACCELERATION_SENSOR = auto()
     ALARM_SIREN_INDOOR = auto()
+    ALARM_SIREN_OUTDOOR = auto()
     BRAND_BLIND = auto()
     BRAND_DIMMER = auto()
     BRAND_PUSH_BUTTON = auto()
@@ -204,11 +210,13 @@ class DeviceType(AutoNameEnum):
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
+    FLOOR_TERMINAL_BLOCK_12 = auto()
     FULL_FLUSH_BLIND = auto()
     FULL_FLUSH_CONTACT_INTERFACE = auto()
     FULL_FLUSH_DIMMER = auto()
     FULL_FLUSH_SHUTTER = auto()
     FULL_FLUSH_SWITCH_MEASURING = auto()
+    HEATING_SWITCH_2 = auto()
     HEATING_THERMOSTAT = auto()
     HEATING_THERMOSTAT_COMPACT = auto()
     KEY_REMOTE_CONTROL_4 = auto()
@@ -220,6 +228,7 @@ class DeviceType(AutoNameEnum):
     MULTI_IO_BOX = auto()
     OPEN_COLLECTOR_8_MODULE = auto()
     PASSAGE_DETECTOR = auto()
+    PLUGGABLE_MAINS_FAILURE_SURVEILLANCE = auto()
     PLUGABLE_SWITCH = auto()
     PLUGABLE_SWITCH_MEASURING = auto()
     PLUGGABLE_DIMMER = auto()
@@ -240,6 +249,8 @@ class DeviceType(AutoNameEnum):
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()
     TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR = auto()
+    TORMATIC_MODULE = auto()
+    WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY = auto()
     WALL_MOUNTED_THERMOSTAT_PRO = auto()
     WATER_SENSOR = auto()
     WEATHER_SENSOR = auto()
@@ -262,6 +273,7 @@ class GroupType(AutoNameEnum):
     HEATING_EXTERNAL_CLOCK = auto()
     HEATING_FAILURE_ALERT_RULE_GROUP = auto()
     HEATING = auto()
+    HOT_WATER = auto()
     HUMIDITY_WARNING_RULE_GROUP = auto()
     SECURITY_ZONE = auto()
     INBOX = auto()
@@ -275,6 +287,7 @@ class GroupType(AutoNameEnum):
     SECURITY = auto()
     ENVIRONMENT = auto()
     SECURITY_BACKUP_ALARM_SWITCHING = auto()
+    SHUTTER_PROFILE = auto()
 
 
 class SecurityEventType(AutoNameEnum):
@@ -360,26 +373,33 @@ class WindValueType(AutoNameEnum):
 
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
+    ACCELERATION_SENSOR_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     BLIND_CHANNEL = auto()
+    CHANGE_OVER_CHANNEL = auto()
     CONTACT_INTERFACE_CHANNEL = auto()
     CLIMATE_SENSOR_CHANNEL = auto()
     DEHUMIDIFIER_DEMAND_CHANNEL = auto()
     DEVICE_BASE = auto()
+    DEVICE_BASE_FLOOR_HEATING = auto()
     DEVICE_GLOBAL_PUMP_CONTROL = auto()
     DEVICE_INCORRECT_POSITIONED = auto()
     DEVICE_OPERATIONLOCK = auto()
     DEVICE_PERMANENT_FULL_RX = auto()
+    DEVICE_RECHARGEABLE_WITH_SABOTAGE = auto()
     DEVICE_SABOTAGE = auto()
+    DOOR_CHANNEL = auto()
     DIMMER_CHANNEL = auto()
-    FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
+    FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
+    FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL = auto()
     GENERIC_INPUT_CHANNEL = auto()
     HEAT_DEMAND_CHANNEL = auto()
     HEATING_THERMOSTAT_CHANNEL = auto()
     INTERNAL_SWITCH_CHANNEL = auto()
     LIGHT_SENSOR_CHANNEL = auto()
+    MAINS_FAILURE_CHANNEL = auto()
     MOTION_DETECTION_CHANNEL = auto()
     MULTI_MODE_INPUT_CHANNEL = auto()
     NOTIFICATION_LIGHT_CHANNEL = auto()
@@ -439,3 +459,69 @@ class HumidityValidationType(AutoNameEnum):
     LESSER_LOWER_THRESHOLD = auto()
     GREATER_UPPER_THRESHOLD = auto()
     GREATER_LOWER_LESSER_UPPER_THRESHOLD = auto()
+
+
+class AccelerationSensorMode(AutoNameEnum):
+    ANY_MOTION = auto()
+    FLAT_DECT = auto()
+
+
+class AccelerationSensorNeutralPosition(AutoNameEnum):
+    HORIZONTAL = auto()
+    VERTICAL = auto()
+
+
+class AccelerationSensorSensitivity(AutoNameEnum):
+    SENSOR_RANGE_16G = auto()
+    SENSOR_RANGE_8G = auto()
+    SENSOR_RANGE_4G = auto()
+    SENSOR_RANGE_2G = auto()
+    SENSOR_RANGE_2G_PLUS_SENS = auto()
+    SENSOR_RANGE_2G_2PLUS_SENSE = auto()
+
+
+class NotificationSoundType(AutoNameEnum):
+    SOUND_NO_SOUND = auto()
+    SOUND_SHORT = auto()
+    SOUND_SHORT_SHORT = auto()
+    SOUND_LONG = auto()
+
+
+class DoorState(AutoNameEnum):
+    CLOSED = auto()
+    OPEN = auto()
+    VENTILATION_POSITION = auto()
+    POSITION_UNKNOWN = auto()
+
+
+class DoorCommand(AutoNameEnum):
+    OPEN = auto()
+    STOP = auto()
+    CLOSE = auto()
+    PARTIAL_OPEN = auto()
+
+
+class ShadingStateType(AutoNameEnum):
+    NOT_POSSIBLE = auto()
+    NOT_EXISTENT = auto()
+    POSITION_USED = auto()
+    TILT_USED = auto()
+    NOT_USED = auto()
+    MIXED = auto()
+
+
+class GroupVisibility(AutoNameEnum):
+    INVISIBLE_GROUP_AND_CONTROL = auto()
+    INVISIBLE_CONTROL = auto()
+    VISIBLE = auto()
+
+
+class ProfileMode(AutoNameEnum):
+    AUTOMATIC = auto()
+    MANUAL = auto()
+
+
+class AlarmSignalType(AutoNameEnum):
+    NO_ALARM = auto()
+    SILENT_ALARM = auto()
+    FULL_ALARM = auto()

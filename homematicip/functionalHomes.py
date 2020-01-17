@@ -1,6 +1,6 @@
 from typing import List
 
-from homematicip.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
 from homematicip.base.enums import *
 from datetime import datetime
@@ -103,8 +103,6 @@ class SecurityAndAlarmHome(FunctionalHome):
         self.securityZoneActivationMode = (
             SecurityZoneActivationMode.ACTIVATION_WITH_DEVICE_IGNORELIST
         )
-        self.alarmActive = False
-        self.alarmActive = False
 
         self.securitySwitchingGroups = []
         self.securityZones = []

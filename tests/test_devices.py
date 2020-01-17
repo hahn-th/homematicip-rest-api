@@ -17,11 +17,71 @@ from homematicip_demo.helper import (
 from conftest import utc_offset
 
 
+def test_acceleration_sensor(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000031")
+    assert isinstance(d, AccelerationSensor)
+    assert d.accelerationSensorEventFilterPeriod == 3.0
+    assert d.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
+    assert (
+        d.accelerationSensorNeutralPosition
+        == AccelerationSensorNeutralPosition.VERTICAL
+    )
+    assert (
+        d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+    )
+    assert d.accelerationSensorTriggerAngle == 45
+    assert d.accelerationSensorTriggered is True
+    assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_LONG
+    assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_LONG
+
+    assert str(d) == (
+        "HmIP-SAM Garagentor lowbat(False) unreach(False) "
+        "rssiDeviceValue(-88) rssiPeerValue(None) configPending(False)"
+        " dutyCycle(False) accelerationSensorEventFilterPeriod(3.0)"
+        " accelerationSensorMode(FLAT_DECT) accelerationSensorNeutralPosition(VERTICAL)"
+        " accelerationSensorSensitivity(SENSOR_RANGE_4G) accelerationSensorTriggerAngle(45)"
+        " accelerationSensorTriggered(True) notificationSoundTypeHighToLow(SOUND_LONG)"
+        " notificationSoundTypeLowToHigh(SOUND_LONG)"
+    )
+
+    with no_ssl_verification():
+        d.set_acceleration_sensor_event_filter_period(10.0)
+        d.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
+        d.set_acceleration_sensor_neutral_position(
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        d.set_acceleration_sensor_sensitivity(
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        d.set_acceleration_sensor_trigger_angle(30)
+        d.set_notification_sound_type(NotificationSoundType.SOUND_SHORT, True)
+        d.set_notification_sound_type(NotificationSoundType.SOUND_SHORT_SHORT, False)
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000031")
+
+        assert d.accelerationSensorEventFilterPeriod == 10.0
+        assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
+        assert (
+            d.accelerationSensorNeutralPosition
+            == AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        assert (
+            d.accelerationSensorSensitivity
+            == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        assert d.accelerationSensorTriggerAngle == 30
+        assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
+        assert (
+            d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
+        )
+
+
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")
     assert isinstance(d, MultiIOBox)
-    assert d.on == True
-    assert d.functionalChannels[2].on == False
+    assert d.on is True
+    assert d.functionalChannels[2].on is False
     assert d.analogOutputLevel == 12.5
     assert d.functionalChannels[5].analogOutputLevel == 12.5
 
@@ -64,13 +124,13 @@ def test_shutter_device(fake_home: Home):
     assert d.firmwareVersion == "1.16.8"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -64
-    assert d.rssiPeerValue == None
-    assert d.dutyCycle == False
-    assert d.configPending == False
+    assert d.rssiPeerValue is None
+    assert d.dutyCycle is False
+    assert d.configPending is False
     assert (
         str(d)
         == "HMIP-SWDO Fenster lowbat(False) unreach(False) rssiDeviceValue(-64) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) windowState(CLOSED)"
@@ -82,10 +142,10 @@ def test_shutter_device(fake_home: Home):
 
     d = fake_home.search_device_by_id("3014F7110000000000000005")
     assert d.windowState == WindowState.OPEN
-    assert d.lastStatusUpdate == None
+    assert d.lastStatusUpdate is None
 
     assert (
-        d.set_router_module_enabled(True) == False
+        d.set_router_module_enabled(True) is False
     )  # Shutter contact won't support this
 
 
@@ -105,13 +165,13 @@ def test_shutter_device_magnetic(fake_home: Home):
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.2.12"
     assert d.firmwareVersionInteger == 66060
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -73
-    assert d.rssiPeerValue == None
-    assert d.dutyCycle == False
-    assert d.configPending == False
+    assert d.rssiPeerValue is None
+    assert d.dutyCycle is False
+    assert d.configPending is False
     assert (
         str(d)
         == "HmIP-SWDM Eingangstürkontakt lowbat(False) unreach(False) rssiDeviceValue(-73) rssiPeerValue(None) configPending(False) dutyCycle(False) windowState(CLOSED)"
@@ -139,17 +199,20 @@ def test_contact_interface_device(fake_home: Home):
     assert d.firmwareVersion == "1.0.6"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -42
-    assert d.rssiPeerValue == None
-    assert d.dutyCycle == False
-    assert d.configPending == False
-    assert d.deviceOverheated == True
-    assert d.deviceOverloaded == None
-    assert d.deviceUndervoltage == None
-    assert d.temperatureOutOfRange == None
+    assert d.rssiPeerValue is None
+    assert d.dutyCycle is False
+    assert d.configPending is False
+    assert d.deviceOverheated is True
+    assert d.deviceOverloaded is True
+    assert d.deviceUndervoltage is True
+    assert d.temperatureOutOfRange is True
+    assert d.coProFaulty is True
+    assert d.coProRestartNeeded is True
+    assert d.coProUpdateFailure is True
 
     assert (
         str(d)
@@ -174,23 +237,23 @@ def test_pluggable_switch_measuring(fake_home: Home):
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000009"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
-    assert d.on == False
+    assert d.on is False
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
     assert d.currentPowerConsumption == 0.0
     assert d.energyCounter == 0.4754
-    assert d.lowBat == None
-    assert d.routerModuleEnabled == True
-    assert d.routerModuleSupported == True
+    assert d.lowBat is None
+    assert d.routerModuleEnabled is True
+    assert d.routerModuleSupported is True
     assert d.rssiDeviceValue == -60
     assert d.rssiPeerValue == -66
-    assert d.unreach == False
+    assert d.unreach is False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "2.6.2"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-    assert d.dutyCycle == False
-    assert d.configPending == False
+    assert d.dutyCycle is False
+    assert d.configPending is False
 
     assert str(d) == (
         "HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)"
@@ -205,12 +268,12 @@ def test_pluggable_switch_measuring(fake_home: Home):
         d.turn_on()
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
-        assert d.on == True
+        assert d.on is True
 
         d.turn_off()
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
-        assert d.on == False
+        assert d.on is False
 
         d.id = "INVALID_ID"
         result = d.turn_off()
@@ -230,18 +293,18 @@ def test_smoke_detector(fake_home: Home):
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000020"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -54
-    assert d.rssiPeerValue == None
-    assert d.unreach == False
+    assert d.rssiPeerValue is None
+    assert d.unreach is False
     assert d.smokeDetectorAlarmType == SmokeDetectorAlarmType.IDLE_OFF
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.11"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-    assert d.configPending == False
+    assert d.configPending is False
     assert (
         str(d)
         == "HmIP-SWSD Rauchwarnmelder lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False) smokeDetectorAlarmType(IDLE_OFF)"
@@ -271,14 +334,14 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
     assert d.setPointTemperature == 5.0
     assert d.display == ClimateControlDisplay.ACTUAL_HUMIDITY
     assert d.temperatureOffset == 0.0
-    assert d.lowBat == False
-    assert d.operationLockActive == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.operationLockActive is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -76
     assert d.rssiPeerValue == -63
-    assert d.unreach == False
-    assert d.dutyCycle == False
+    assert d.unreach is False
+    assert d.dutyCycle is False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.8.0"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
@@ -321,14 +384,14 @@ def test_heating_thermostat(fake_home: Home):
     assert d.temperatureOffset == 0.0
     assert d.valvePosition == 0.0
     assert d.valveState == ValveState.ADAPTION_DONE
-    assert d.lowBat == False
-    assert d.operationLockActive == True
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.operationLockActive is True
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -65
     assert d.rssiPeerValue == -66
-    assert d.unreach == False
-    assert d.automaticValveAdaptionNeeded == False
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
     assert d.availableFirmwareVersion == "2.0.2"
     assert d.firmwareVersion == "2.0.2"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
@@ -348,7 +411,7 @@ def test_heating_thermostat(fake_home: Home):
         d.set_operation_lock(False)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000015")
-        assert d.operationLockActive == False
+        assert d.operationLockActive is False
 
         d.id = "INVALID_ID"
         result = d.set_operation_lock(True)
@@ -367,13 +430,13 @@ def test_heating_thermostat_compact(fake_home: Home):
     assert d.temperatureOffset == 0.0
     assert d.valvePosition == 0.0
     assert d.valveState == ValveState.ADAPTION_DONE
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -47
     assert d.rssiPeerValue == -50
-    assert d.unreach == False
-    assert d.automaticValveAdaptionNeeded == False
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
     assert d.valveActualTemperature == 21.6
 
     assert str(d) == (
@@ -400,14 +463,14 @@ def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     assert d.humidity == 70
     assert d.vaporAmount == 6.177718198711658
     assert d.actualTemperature == 15.1
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -55
-    assert d.rssiPeerValue == None
-    assert d.unreach == False
-    assert d.configPending == False
-    assert d.dutyCycle == False
+    assert d.rssiPeerValue is None
+    assert d.unreach is False
+    assert d.configPending is False
+    assert d.dutyCycle is False
     assert str(d) == (
         "HmIP-STHO Temperatur- und Luftfeuchtigkeitssensor - außen lowbat(False) unreach(False)"
         " rssiDeviceValue(-55) rssiPeerValue(None) configPending(False)"
@@ -440,14 +503,14 @@ def test_weather_sensor_pro(fake_home: Home):
     assert d.vaporAmount == 6.177718198711658
     assert d.illumination == 4153.0
     assert d.illuminationThresholdSunshine == 10.0
-    assert d.raining == False
-    assert d.storm == False
-    assert d.sunshine == True
+    assert d.raining is False
+    assert d.storm is False
+    assert d.sunshine is True
     assert d.todayRainCounter == 6.5
     assert d.todaySunshineDuration == 100
     assert d.totalRainCounter == 6.5
     assert d.totalSunshineDuration == 100
-    assert d.weathervaneAlignmentNeeded == False
+    assert d.weathervaneAlignmentNeeded is False
     assert d.windDirection == 295.0
     assert d.windDirectionVariation == 56.25
     assert d.windSpeed == 2.6
@@ -455,14 +518,14 @@ def test_weather_sensor_pro(fake_home: Home):
     assert d.yesterdayRainCounter == 0.0
     assert d.yesterdaySunshineDuration == 0
     assert d.actualTemperature == 15.4
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -68
-    assert d.rssiPeerValue == None
-    assert d.unreach == False
-    assert d.configPending == False
-    assert d.dutyCycle == False
+    assert d.rssiPeerValue is None
+    assert d.unreach is False
+    assert d.configPending is False
+    assert d.dutyCycle is False
     assert str(d) == (
         "HmIP-SWO-PR Wettersensor - pro lowbat(False) unreach(False) rssiDeviceValue(-68)"
         " rssiPeerValue(None) configPending(False) dutyCycle(False)"
@@ -486,14 +549,14 @@ def test_weather_sensor(fake_home: Home):
     assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
         0, utc_offset
     )
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -77
-    assert d.rssiPeerValue == None
-    assert d.unreach == False
-    assert d.configPending == False
-    assert d.dutyCycle == False
+    assert d.rssiPeerValue is None
+    assert d.unreach is False
+    assert d.configPending is False
+    assert d.dutyCycle is False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.10"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
@@ -502,8 +565,8 @@ def test_weather_sensor(fake_home: Home):
     assert d.vaporAmount == 6.177718198711658
     assert d.illumination == 4890.0
     assert d.illuminationThresholdSunshine == 3500.0
-    assert d.storm == False
-    assert d.sunshine == True
+    assert d.storm is False
+    assert d.sunshine is True
     assert d.todaySunshineDuration == 51
     assert d.totalSunshineDuration == 54
     assert d.windSpeed == 6.6
@@ -538,9 +601,9 @@ def test_weather_sensor_plus(fake_home: Home):
     assert d.vaporAmount == 6.177718198711658
     assert d.illumination == 26.4
     assert d.illuminationThresholdSunshine == 3500.0
-    assert d.raining == False
-    assert d.storm == False
-    assert d.sunshine == False
+    assert d.raining is False
+    assert d.storm is False
+    assert d.sunshine is False
     assert d.todayRainCounter == 3.8999999999999773
     assert d.todaySunshineDuration == 0
     assert d.totalRainCounter == 544.0999999999999
@@ -550,14 +613,14 @@ def test_weather_sensor_plus(fake_home: Home):
     assert d.yesterdayRainCounter == 25.600000000000023
     assert d.yesterdaySunshineDuration == 0
     assert d.actualTemperature == 4.3
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -55
-    assert d.rssiPeerValue == None
-    assert d.unreach == False
-    assert d.configPending == False
-    assert d.dutyCycle == False
+    assert d.rssiPeerValue is None
+    assert d.unreach is False
+    assert d.configPending is False
+    assert d.dutyCycle is False
     assert str(d) == (
         "HmIP-SWO-PL Weather Sensor \u2013 plus lowbat(False) unreach(False) rssiDeviceValue(-55)"
         " rssiPeerValue(None) configPending(False) dutyCycle(False) actualTemperature(4.3)"
@@ -591,13 +654,13 @@ def test_rotary_handle_sensor(fake_home: Home):
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
 
-    assert d.lowBat == False
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -54
-    assert d.rssiPeerValue == None
-    assert d.dutyCycle == False
-    assert d.configPending == False
+    assert d.rssiPeerValue is None
+    assert d.dutyCycle is False
+    assert d.configPending is False
     assert str(d) == (
         "HmIP-SRH Fenstergriffsensor lowbat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False)"
         " sabotage(False) windowState(TILTED)"
@@ -623,14 +686,14 @@ def test_dimmer(fake_home: Home):
     assert d.profileMode == "AUTOMATIC"
     assert d.userDesiredProfileMode == "AUTOMATIC"
     assert d.dimLevel == 0.0
-    assert d.lowBat == None
-    assert d.routerModuleEnabled == False
-    assert d.routerModuleSupported == False
+    assert d.lowBat is None
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
     assert d.rssiDeviceValue == -44
     assert d.rssiPeerValue == -42
-    assert d.unreach == False
-    assert d.dutyCycle == False
-    assert d.configPending == False
+    assert d.unreach is False
+    assert d.dutyCycle is False
+    assert d.configPending is False
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.4.8"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
@@ -660,9 +723,9 @@ def test_dimmer(fake_home: Home):
 def test_basic_device_functions(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000009")
-        assert d.permanentlyReachable == True
+        assert d.permanentlyReachable is True
         assert d.label == "Brunnen"
-        assert d.routerModuleEnabled == True
+        assert d.routerModuleEnabled is True
         assert d.energyCounter == 0.4754
 
         d.set_label("new label")
@@ -670,7 +733,7 @@ def test_basic_device_functions(fake_home: Home):
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
         assert d.label == "new label"
-        assert d.routerModuleEnabled == False
+        assert d.routerModuleEnabled is False
 
         d.set_label("other label")
         d.set_router_module_enabled(True)
@@ -678,14 +741,14 @@ def test_basic_device_functions(fake_home: Home):
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
         assert d.label == "other label"
-        assert d.routerModuleEnabled == True
+        assert d.routerModuleEnabled is True
         assert d.energyCounter == 0
 
         d2 = fake_home.search_device_by_id("3014F7110000000000000005")
         d.delete()
         fake_home.get_current_state()
         dNotFound = fake_home.search_device_by_id("3014F7110000000000000009")
-        assert dNotFound == None
+        assert dNotFound is None
         assert d2 is fake_home.search_device_by_id(
             "3014F7110000000000000005"
         )  # make sure that the objects got updated and not completely renewed
@@ -713,17 +776,17 @@ def test_water_sensor(fake_home: Home):
         d = WaterSensor(fake_home._connection)  # just needed for intellisense
         d = fake_home.search_device_by_id("3014F7110000000000000050")
         assert d.label == "Wassersensor"
-        assert d.routerModuleEnabled == False
-        assert d.routerModuleSupported == False
+        assert d.routerModuleEnabled is False
+        assert d.routerModuleSupported is False
 
-        assert d.incorrectPositioned == True
+        assert d.incorrectPositioned is True
         assert d.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
         assert d.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
         assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.WATER_DETECTION
         assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
-        assert d.moistureDetected == False
+        assert d.moistureDetected is False
         assert d.sirenWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
-        assert d.waterlevelDetected == False
+        assert d.waterlevelDetected is False
 
         d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
         d.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
@@ -769,11 +832,11 @@ def test_motion_detector_push_button(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000000000AAAAA25")
 
     assert isinstance(d, MotionDetectorPushButton)
-    assert d.permanentFullRx == True
+    assert d.permanentFullRx is True
     assert d.illumination == 14.2
-    assert d.currentIllumination == None
-    assert d.motionBufferActive == True
-    assert d.motionDetected == False
+    assert d.currentIllumination is None
+    assert d.motionBufferActive is True
+    assert d.motionDetected is False
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
     assert d.numberOfBrightnessMeasurements == 7
 
@@ -790,9 +853,9 @@ def test_motion_detector(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000000000000BB11")
 
     assert d.illumination == 0.1
-    assert d.currentIllumination == None
-    assert d.motionBufferActive == False
-    assert d.motionDetected == True
+    assert d.currentIllumination is None
+    assert d.motionBufferActive is False
+    assert d.motionDetected is True
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_480
     assert d.numberOfBrightnessMeasurements == 7
 
@@ -806,9 +869,9 @@ def test_motion_detector(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000000BBB17")
 
     assert d.illumination == 233.4
-    assert d.currentIllumination == None
-    assert d.motionBufferActive == True
-    assert d.motionDetected == True
+    assert d.currentIllumination is None
+    assert d.motionBufferActive is True
+    assert d.motionDetected is True
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
     assert d.numberOfBrightnessMeasurements == 7
 
@@ -824,9 +887,9 @@ def test_presence_detector_indoor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAAAAAAAAAAAA51")
 
     assert d.illumination == 1.8
-    assert d.currentIllumination == None
-    assert d.motionBufferActive == False
-    assert d.presenceDetected == False
+    assert d.currentIllumination is None
+    assert d.motionBufferActive is False
+    assert d.presenceDetected is False
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
     assert d.numberOfBrightnessMeasurements == 7
 
@@ -862,21 +925,21 @@ def test_open_collector_8(fake_home: Home):
 
         assert isinstance(c, SwitchChannel)
         assert c.index == 2
-        assert c.on == False
+        assert c.on is False
         assert c.profileMode == "AUTOMATIC"
 
         c = d.functionalChannels[8]
 
         assert isinstance(c, SwitchChannel)
         assert c.index == 8
-        assert c.on == True
+        assert c.on is True
         assert c.profileMode == "AUTOMATIC"
 
         d.turn_off(8)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
         c = d.functionalChannels[8]
-        assert c.on == False
+        assert c.on is False
 
 
 def test_passage_detector(fake_home: Home):
@@ -906,15 +969,15 @@ def test_full_flush_shutter(fake_home: Home):
         assert d.bottomToTopReferenceTime == 30.080000000000002
         assert d.changeOverDelay == 0.5
         assert d.delayCompensationValue == 12.7
-        assert d.endpositionAutoDetectionEnabled == True
-        assert d.previousShutterLevel == None
-        assert d.processing == False
+        assert d.endpositionAutoDetectionEnabled is True
+        assert d.previousShutterLevel is None
+        assert d.processing is False
         assert d.profileMode == "AUTOMATIC"
-        assert d.selfCalibrationInProgress == None
+        assert d.selfCalibrationInProgress is None
         assert d.shutterLevel == 1.0
-        assert d.supportingDelayCompensation == True
-        assert d.supportingEndpositionAutoDetection == True
-        assert d.supportingSelfCalibration == True
+        assert d.supportingDelayCompensation is True
+        assert d.supportingEndpositionAutoDetection is True
+        assert d.supportingSelfCalibration is True
         assert d.topToBottomReferenceTime == 24.68
         assert d.userDesiredProfileMode == "AUTOMATIC"
 
@@ -937,7 +1000,7 @@ def test_full_flush_blind(fake_home: Home):
 
         assert d.shutterLevel == 1.0
         assert d.slatsLevel == 1.0
-        assert d.blindModeActive == True
+        assert d.blindModeActive is True
         assert d.slatsReferenceTime == 2.0
 
         d.set_slats_level(0.4)
@@ -979,9 +1042,20 @@ def test_alarm_siren_indoor(fake_home: Home):
         d = AlarmSirenIndoor(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000BBBBB8")
 
-        assert (
-            str(d)
-            == "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False)"
+        assert str(d) == (
+            "HmIP-ASIR Alarmsirene lowbat(False) unreach(False) rssiDeviceValue(-59) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False)"
+        )
+
+
+def test_alarm_siren_outdoor(fake_home: Home):
+    with no_ssl_verification():
+        d = AlarmSirenIndoor(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000ABCDABCD0033")
+
+        assert str(d) == (
+            "HmIP-ASIR-O Alarmsirene – außen lowbat(False) unreach(False) rssiDeviceValue(-51) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(None) badBatteryHealth(True)"
         )
 
 
@@ -992,7 +1066,7 @@ def test_floor_terminal_block(fake_home: Home):
 
         assert d.frostProtectionTemperature == 8.0
         assert d.coolingEmergencyValue == 0.0
-        assert d.globalPumpControl == True
+        assert d.globalPumpControl is True
         assert d.heatingEmergencyValue == 0.25
         assert d.heatingLoadType == HeatingLoadType.LOAD_BALANCING
         assert d.heatingValveType == HeatingValveType.NORMALLY_CLOSE
@@ -1005,9 +1079,12 @@ def test_floor_terminal_block(fake_home: Home):
         assert d.pumpProtectionSwitchingInterval == 14
 
         assert str(d) == (
-            "HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
-            "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
-            "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) pumpFollowUpTime(2) pumpLeadTime(2) "
+            "HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+            "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) "
+            "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
+            "heatingEmergencyValue(0.25) valveProtectionDuration(5) valveProtectionSwitchingInterval(14) "
+            "pumpFollowUpTime(2) pumpLeadTime(2) "
             "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)"
         )
 
@@ -1023,6 +1100,24 @@ def test_floor_terminal_block(fake_home: Home):
             "valveProtectionDuration(5) valveProtectionSwitchingInterval(14) "
             "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
             "pumpProtectionSwitchingInterval(14)"
+        )
+
+        d = FloorTerminalBlock12(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000000049")
+        assert d.minimumFloorHeatingValvePosition == 0.0
+
+        d.set_minimum_floor_heating_valve_position(0.2)
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000049")
+        assert d.minimumFloorHeatingValvePosition == 0.2
+
+        assert str(d) == (
+            "HmIP-FALMOT-C12 Fußbodenheizungsaktor OG motorisch lowbat(None) unreach(False) "
+            "rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) valveProtectionDuration(5) "
+            "valveProtectionSwitchingInterval(14) minimumFloorHeatingValvePosition(0.2) "
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(True)"
         )
 
 
@@ -1089,4 +1184,49 @@ def test_light_sensor(fake_home: Home):
             "rssiPeerValue(None) configPending(False) dutyCycle(False) "
             "averageIllumination(807.3) currentIllumination(785.2) "
             "highestIllumination(837.1) lowestIllumination(785.2)"
+        )
+
+
+def test_door_sensor_tm(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
+
+        assert d.doorState == DoorState.CLOSED
+        assert d.on is False
+        assert d.processing is False
+        assert d.ventilationPositionSupported is True
+
+        assert str(d) == (
+            "HmIP-MOD-TM Garage Door Module lowbat(None) unreach(False) rssiDeviceValue(-52) "
+            "rssiPeerValue(-54) configPending(False) dutyCycle(False) doorState(CLOSED) "
+            "on(False) processing(False) ventilationPositionSupported(True)"
+        )
+
+
+def test_pluggable_mains_failure(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000ABCD50")
+
+        assert d.powerMainsFailure is False
+        assert d.genericAlarmSignal is AlarmSignalType.FULL_ALARM
+
+        assert str(d) == (
+            "HmIP-PMFS Netzausfallüberwachung lowbat(None) unreach(False) rssiDeviceValue(-58) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
+            "genericAlarmSignal(FULL_ALARM)"
+        )
+
+
+def test_wall_thermostat_basic(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000AAA5")
+
+        assert d.display == ClimateControlDisplay.ACTUAL
+        assert d.humidity == 42
+
+        assert str(d) == (
+            "HmIP-WTH-B Thermostat Schlafen Tal lowbat(False) unreach(False) rssiDeviceValue(-58) "
+            "rssiPeerValue(-59) configPending(False) dutyCycle(False) operationLockActive(False) "
+            "actualTemperature(16.0) humidity(42) vaporAmount(5.710127947243264) "
+            "setPointTemperature(12.0)"
         )

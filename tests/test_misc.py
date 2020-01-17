@@ -6,7 +6,8 @@ import pytest
 
 from homematicip.EventHook import EventHook
 from homematicip.base.helpers import bytes2str, detect_encoding
-from homematicip.base.enums import DeviceType
+from homematicip.base.enums import *
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 
 def event_hook_handler2(mustBe2):
@@ -54,8 +55,27 @@ def test_bytes2str():
 
 
 def test_auto_name_enum():
-
     assert DeviceType.from_str("PUSH_BUTTON") == DeviceType.PUSH_BUTTON
-    assert DeviceType.from_str(None) == None
+    assert DeviceType.from_str(None) is None
     assert DeviceType.from_str("I_DONT_EXIST", DeviceType.DEVICE) == DeviceType.DEVICE
-    assert DeviceType.from_str("I_DONT_EXIST_EITHER") == None
+    assert DeviceType.from_str("I_DONT_EXIST_EITHER") is None
+
+
+def test_hmipObject_set_attr_from_dict():
+    dict = {
+        "id": "DEVICE_ID",
+        "height": 1234,
+        "window_state": "OPEN",
+        "valve_state": "ERROR_POSITION",
+        "label": "my label",
+    }
+    hmip = HomeMaticIPObject(None)
+    hmip.set_attr_from_dict("height", dict)
+    hmip.set_attr_from_dict("window_state", dict, WindowState)
+    hmip.set_attr_from_dict("valveState", dict, ValveState, "valve_state")
+    hmip.set_attr_from_dict("name", dict, dict_attr="label")
+
+    assert hmip.height == 1234
+    assert hmip.window_state == WindowState.OPEN
+    assert hmip.valveState == ValveState.ERROR_POSITION
+    assert hmip.name == "my label"

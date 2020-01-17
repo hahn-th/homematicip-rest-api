@@ -1,7 +1,7 @@
 import asyncio
 import json
 import logging
-from asyncio.futures import CancelledError
+from asyncio import CancelledError
 from json.decoder import JSONDecodeError
 
 import aiohttp
@@ -62,7 +62,7 @@ class AsyncConnection(BaseConnection):
 
             self._urlREST = result["urlREST"]
             self._urlWebSocket = result["urlWebSocket"]
-        else:
+        else:  # pragma: no cover
             self._urlREST = "https://ps1.homematic.com:6969"
             self._urlWebSocket = "wss://ps1.homematic.com:8888"
 
@@ -94,7 +94,7 @@ class AsyncConnection(BaseConnection):
                             ret = True
                         return ret
                     else:
-                        raise HmipWrongHttpStatusError
+                        raise HmipWrongHttpStatusError(result.status)
             except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
                 # Both exceptions occur when connecting to the server does
                 # somehow not work.

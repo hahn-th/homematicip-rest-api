@@ -32,7 +32,7 @@ def test_find_and_load_config_file():
     assert config.access_point == "TEMP_AP"
     os.remove("./config.ini")
 
-    assert homematicip.find_and_load_config_file() == None
+    assert homematicip.find_and_load_config_file() is None
 
 
 def test_get_config_file_locations_win():

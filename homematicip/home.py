@@ -1,6 +1,8 @@
 import logging
 import threading
 import websocket
+import ssl
+import sys
 from typing import List
 
 from homematicip.EventHook import *
@@ -16,7 +18,7 @@ from homematicip.base.helpers import bytes2str
 LOGGER = logging.getLogger(__name__)
 
 
-class Weather(HomeMaticIPObject.HomeMaticIPObject):
+class Weather(HomeMaticIPObject):
     """ this class represents the weather of the home location"""
 
     def __init__(self, connection):
@@ -66,7 +68,7 @@ class Weather(HomeMaticIPObject.HomeMaticIPObject):
         )
 
 
-class Location(HomeMaticIPObject.HomeMaticIPObject):
+class Location(HomeMaticIPObject):
     """This class represents the possible location"""
 
     def __init__(self, connection):
@@ -90,7 +92,7 @@ class Location(HomeMaticIPObject.HomeMaticIPObject):
         )
 
 
-class Client(HomeMaticIPObject.HomeMaticIPObject):
+class Client(HomeMaticIPObject):
     """A client is an app which has access to the access point. 
     e.g. smartphone, 3th party apps, google home, conrad connect
     """
@@ -121,7 +123,7 @@ class Client(HomeMaticIPObject.HomeMaticIPObject):
         return "label({})".format(self.label)
 
 
-class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
+class OAuthOTK(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
         self.authToken = None
@@ -133,7 +135,7 @@ class OAuthOTK(HomeMaticIPObject.HomeMaticIPObject):
         self.expirationTimestamp = self.fromtimestamp(js["expirationTimestamp"])
 
 
-class Home(HomeMaticIPObject.HomeMaticIPObject):
+class Home(HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
 
     _typeClassMap = TYPE_CLASS_MAP
@@ -147,11 +149,15 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             connection = Connection()
         super().__init__(connection)
 
+        # List with create handlers.
+        self._on_create = []
+
         self.apExchangeClientId = None
         self.apExchangeState = ApExchangeState.NONE
         self.availableAPVersion = None
         self.carrierSense = None
-        #:bool:displays if the access point is connected to the hmip cloud or not
+        #:bool:displays if the access point is connected to the hmip cloud or
+        # not
         self.connected = None
         #:str:the current version of the access point
         self.currentAPVersion = None
@@ -175,6 +181,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.__webSocketThread = None
         self.onEvent = EventHook()
         self.onWsError = EventHook()
+        #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
+        self.websocket_reconnect_on_error = True
 
         #:List[Device]: a collection of all devices in home
         self.devices = []
@@ -221,6 +229,22 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         self.carrierSense = js_home["carrierSense"]
 
         self._get_rules(js_home)
+
+    def on_create(self, handler):
+        """Adds an event handler to the create method. Fires when a device
+        is created."""
+        self._on_create.append(handler)
+
+    def fire_create_event(self, *args, **kwargs):
+        """Trigger the method tied to _on_create"""
+        for _handler in self._on_create:
+            _handler(*args, **kwargs)
+
+    def remove_callback(self, handler):
+        """Remove event handler."""
+        super().remove_callback(handler)
+        if handler in self._on_create:
+            self._on_create.remove(handler)
 
     def download_configuration(self) -> str:
         """downloads the current configuration from the cloud
@@ -594,7 +618,7 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
         Returns:
             the result of the call
         """
-        if newPin == None:
+        if newPin is None:
             newPin = ""
         data = {"pin": newPin}
         if oldPin:
@@ -673,18 +697,17 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             "home/security/setZonesDeviceAssignment", body=json.dumps(data)
         )
 
-    def start_inclusion (self, deviceId):
+    def start_inclusion(self, deviceId):
         """ start inclusion mode for specific device
         Args:
             deviceId: sgtin of device        
         """
         data = {"deviceId": deviceId}
-        return self._restCall(
-            "home/startInclusionModeForDevice", body=json.dumps(data)
-        )
-        
+        return self._restCall("home/startInclusionModeForDevice", body=json.dumps(data))
+
     def enable_events(self):
         websocket.enableTrace(True)
+
         self.__webSocket = websocket.WebSocketApp(
             self._connection.urlWebSocket,
             header=[
@@ -693,17 +716,37 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
             ],
             on_message=self._ws_on_message,
             on_error=self._ws_on_error,
+            on_close=self._ws_on_close,
         )
-        self.__webSocketThread = threading.Thread(target=self.__webSocket.run_forever)
-        self.__webSocketThread.daemon = True
+
+        websocket_kwargs = {"ping_interval": 3}
+        if hasattr(sys, "_called_from_test"):  # disable ssl during a test run
+            sslopt = {"cert_reqs": ssl.CERT_NONE}
+            websocket_kwargs = {"sslopt": sslopt, "ping_interval": 2, "ping_timeout": 1}
+
+        self.__webSocketThread = threading.Thread(
+            name="hmip-websocket",
+            target=self.__webSocket.run_forever,
+            kwargs=websocket_kwargs,
+        )
+        self.__webSocketThread.setDaemon(True)
         self.__webSocketThread.start()
 
     def disable_events(self):
-        self.__webSocket.close()
+        if self.__webSocket:
+            self.__webSocket.close()
+            self.__webSocket = None
+
+    def _ws_on_close(self):
+        self.__webSocket = None
 
     def _ws_on_error(self, err):
         LOGGER.exception(err)
         self.onWsError.fire(err)
+        if self.websocket_reconnect_on_error:
+            logger.debug("Trying to reconnect websocket")
+            self.disable_events()
+            self.enable_events()
 
     def _ws_on_message(self, message):
         # json.loads doesn't support bytes as parameter before python 3.6
@@ -721,6 +764,8 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     if obj is None:
                         obj = self._parse_group(data)
                         self.groups.append(obj)
+                        pushEventType = EventType.GROUP_ADDED
+                        self.fire_create_event(obj, event_type=pushEventType, obj=obj)
                     if type(obj) is MetaGroup:
                         obj.from_json(data, self.devices, self.groups)
                     else:
@@ -748,36 +793,42 @@ class Home(HomeMaticIPObject.HomeMaticIPObject):
                     obj = self._parse_device(data)
                     obj.load_functionalChannels(self.groups)
                     self.devices.append(obj)
+                    self.fire_create_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_CHANGED:
                     data = event["device"]
                     obj = self.search_device_by_id(data["id"])
                     if obj is None:  # no DEVICE_ADDED Event?
                         obj = self._parse_device(data)
                         self.devices.append(obj)
+                        pushEventType = EventType.DEVICE_ADDED
+                        self.fire_create_event(data, event_type=pushEventType, obj=obj)
                     else:
                         obj.from_json(data)
                     obj.load_functionalChannels(self.groups)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
                     self.devices.remove(obj)
                 elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
                     self.groups.remove(obj)
                 elif pushEventType == EventType.GROUP_ADDED:
                     group = event["group"]
                     obj = self._parse_group(group)
                     self.groups.append(obj)
+                    self.fire_create_event(obj, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.SECURITY_JOURNAL_CHANGED:
                     pass  # data is just none so nothing to do here
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 eventList.append({"eventType": pushEventType, "data": obj})
-            except ValueError as valerr:
+            except ValueError as valerr:  # pragma: no cover
                 LOGGER.warning(
                     "Uknown EventType '%s' Data: %s", event["pushEventType"], event
                 )
 
-            except Exception as err:
+            except Exception as err:  # pragma: no cover
                 LOGGER.exception(err)
         self.onEvent.fire(eventList)

@@ -104,3 +104,5 @@ ENV/
 /config.ini
 /.pytest_cache
 /apk
+/TestResults
+/venv38

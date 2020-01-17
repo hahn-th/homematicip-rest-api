@@ -1,6 +1,10 @@
 from unittest.mock import MagicMock, Mock
 
 import pytest
+import json
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+import time
 
 from homematicip.home import Home
 from homematicip.base.base_connection import BaseConnection
@@ -9,11 +13,10 @@ from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
 from homematicip.functionalHomes import *
 from homematicip.securityEvent import *
-from homematicip.group import Group
-from homematicip.device import Device
+from homematicip.group import Group, MetaGroup
+from homematicip.device import Device, AccelerationSensor
 
-import json
-from datetime import datetime, timedelta, timezone
+
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
@@ -26,16 +29,36 @@ def test_update_event(fake_home: Home):
     fake_home.on_update(fake_handler.method)
     fake_home.fire_update_event()
     fake_handler.method.assert_called()
+    fake_home.remove_callback(fake_handler.method)
+    assert fake_handler.method not in fake_home._on_update
+
+
+def test_remove_event(fake_home: Home):
+    fake_handler = Mock()
+    fake_home.on_remove(fake_handler.method)
+    fake_home.fire_remove_event()
+    fake_handler.method.assert_called()
+    fake_home.remove_callback(fake_handler.method)
+    assert fake_handler.method not in fake_home._on_remove
+
+
+def test_create_event(fake_home: Home):
+    fake_handler = Mock()
+    fake_home.on_create(fake_handler.method)
+    fake_home.fire_create_event()
+    fake_handler.method.assert_called()
+    fake_home.remove_callback(fake_handler.method)
+    assert fake_handler.method not in fake_home._on_create
 
 
 def test_home_base(fake_home: Home):
-    assert fake_home.connected == True
+    assert fake_home.connected is True
     assert fake_home.currentAPVersion == "1.2.4"
     assert (
         fake_home.deviceUpdateStrategy == DeviceUpdateStrategy.AUTOMATICALLY_IF_POSSIBLE
     )
     assert fake_home.dutyCycle == 8.0
-    assert fake_home.pinAssigned == False
+    assert fake_home.pinAssigned is False
     assert fake_home.powerMeterCurrency == "EUR"
     assert fake_home.powerMeterUnitPrice == 0.0
     assert fake_home.timeZoneId == "Europe/Vienna"
@@ -110,7 +133,7 @@ def test_clients(fake_home: Home):
 def test_rules(fake_home: Home):
     with no_ssl_verification():
         rule = fake_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
-        assert rule.active == True
+        assert rule.active is True
         assert rule.label == "Alarmanlage"
         assert isinstance(rule, SimpleRule)
         assert rule.ruleErrorCategories == []
@@ -125,7 +148,7 @@ def test_rules(fake_home: Home):
         rule.set_label("DISABLED_RULE")
         fake_home.get_current_state()
         rule = fake_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
-        assert rule.active == False
+        assert rule.active is False
         assert rule.label == "DISABLED_RULE"
 
         # endable test
@@ -133,7 +156,7 @@ def test_rules(fake_home: Home):
         rule.set_label("ENABLED_RULE")
         fake_home.get_current_state()
         rule = fake_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
-        assert rule.active == True
+        assert rule.active is True
         assert rule.label == "ENABLED_RULE"
 
         rule.id = "INVALID_ID"
@@ -146,35 +169,39 @@ def test_rules(fake_home: Home):
 def test_security_zones_activation(fake_home: Home):
     with no_ssl_verification():
         internal, external = fake_home.get_security_zones_activation()
-        assert internal == False
-        assert external == False
+        assert internal is False
+        assert external is False
 
         fake_home.set_security_zones_activation(True, True)
         fake_home.get_current_state()
 
         internal, external = fake_home.get_security_zones_activation()
-        assert internal == True
-        assert external == True
+        assert internal is True
+        assert external is True
 
 
 def test_set_pin(fake_home: Home):
     with no_ssl_verification():
 
-        assert fake_home._fake_cloud.app.pin == None
+        def get_pin(fake_home):
+            result = fake_home._restCall("home/getPin")
+            return result["pin"]
+
+        assert get_pin(fake_home) is None
 
         fake_home.set_pin(1234)
-        assert fake_home._fake_cloud.app.pin == 1234
+        assert get_pin(fake_home) == 1234
 
         fake_home.set_pin(
             5555
         )  # ignore errors. just check if the old pin is still active
-        assert fake_home._fake_cloud.app.pin == 1234
+        assert get_pin(fake_home) == 1234
 
         fake_home.set_pin(5555, 1234)
-        assert fake_home._fake_cloud.app.pin == 5555
+        assert get_pin(fake_home) == 5555
 
         fake_home.set_pin(None, 5555)
-        assert fake_home._fake_cloud.app.pin == None
+        assert get_pin(fake_home) is None
 
 
 def test_set_timezone(fake_home: Home):
@@ -204,12 +231,12 @@ def test_indoor_climate_home(fake_home: Home):
         for fh in fake_home.functionalHomes:
             if not isinstance(fh, IndoorClimateHome):
                 continue
-            assert fh.active == True
+            assert fh.active is True
             assert fh.absenceType == AbsenceType.NOT_ABSENT
-            assert fh.coolingEnabled == False
+            assert fh.coolingEnabled is False
             assert fh.ecoDuration == EcoDuration.PERMANENT
             assert fh.ecoTemperature == 17.0
-            assert fh.optimumStartStopEnabled == False
+            assert fh.optimumStartStopEnabled is False
 
             minutes = 20
             fake_home.activate_absence_with_duration(minutes)
@@ -234,7 +261,7 @@ def test_indoor_climate_home(fake_home: Home):
 
             fake_home.get_current_state()
             assert fh.absenceType == AbsenceType.NOT_ABSENT
-            assert fh.absenceEndTime == None
+            assert fh.absenceEndTime is None
 
 
 def test_get_functionalHome(fake_home: Home):
@@ -248,23 +275,23 @@ def test_get_functionalHome(fake_home: Home):
     assert isinstance(functionalHome, WeatherAndEnvironmentHome)
 
     functionalHome = fake_home.get_functionalHome(Home)
-    assert functionalHome == None
+    assert functionalHome is None
 
 
 def test_security_setIntrusionAlertThroughSmokeDetectors(fake_home: Home):
     with no_ssl_verification():
         securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False
+        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False
 
         fake_home.set_intrusion_alert_through_smoke_detectors(True)
         fake_home.get_current_state()
         securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == True
+        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is True
 
         fake_home.set_intrusion_alert_through_smoke_detectors(False)
         fake_home.get_current_state()
         securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors == False
+        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False
 
 
 def test_heating_vacation(fake_home: Home):
@@ -283,7 +310,7 @@ def test_heating_vacation(fake_home: Home):
 
         fake_home.get_current_state()
         heatingHome = fake_home.get_functionalHome(IndoorClimateHome)
-        assert heatingHome.absenceEndTime == None
+        assert heatingHome.absenceEndTime is None
         assert heatingHome.absenceType == AbsenceType.NOT_ABSENT
 
 
