@@ -275,6 +275,7 @@ class GroupType(AutoNameEnum):
     SECURITY = auto()
     ENVIRONMENT = auto()
     SECURITY_BACKUP_ALARM_SWITCHING = auto()
+    SHUTTER_PROFILE = auto()
 
 
 class SecurityEventType(AutoNameEnum):

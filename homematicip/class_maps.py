@@ -93,6 +93,7 @@ TYPE_GROUP_MAP = {
     GroupType.SHUTTER_WIND_PROTECTION_RULE: ShutterWindProtectionRule,
     GroupType.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,
     GroupType.ENVIRONMENT: EnvironmentGroup,
+    GroupType.SHUTTER_PROFILE: ShutterProfileGroup,
 }
 
 TYPE_SECURITY_EVENT_MAP = {

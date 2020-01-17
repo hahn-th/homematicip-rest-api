@@ -1028,3 +1028,32 @@ class EnvironmentGroup(Group):
             self.windSpeed,
             self.humidity,
         )
+
+
+class ShutterProfileGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.primaryShadingLevel = None
+        self.primaryShadingStateType = None
+        self.secondaryShadingLevel = None
+        self.secondaryShadingStateType = None
+        self.profileMode = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.primaryShadingLevel = js["primaryShadingLevel"]
+        self.primaryShadingStateType = js["primaryShadingStateType"]
+        self.secondaryShadingLevel = js["secondaryShadingLevel"]
+        self.secondaryShadingStateType = js["secondaryShadingStateType"]
+        self.profileMode = js["profileMode"]
+
+    def __str__(self):
+        return "{} primaryShadingLevel({}) primaryShadingStateType({}) secondaryShadingLevel({}) " \
+               "secondaryShadingStateType({}) profileMode({})".format(
+            super().__str__(),
+            self.primaryShadingLevel,
+            self.primaryShadingStateType,
+            self.secondaryShadingLevel,
+            self.secondaryShadingStateType,
+            self.profileMode,
+        )
