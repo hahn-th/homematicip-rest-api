@@ -75,6 +75,8 @@ Implemented Stuff
 Homematic IP Devices:
 ---------------------
 
+-  [ ] ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)
+-  [ ] ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)
 -  [X] HMIP-ASIR       (Alarm Siren - indoor)
 -  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
 -  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version
@@ -107,6 +109,7 @@ Homematic IP Devices:
 -  [X] HMIP-FROLL      (Shutter Actuator - flush-mount)
 -  [X] HMIP-FSM        (Switch Actuator and Meter 5A – flush-mount)
 -  [X] HMIP-FSM16      (Switch Actuator and Meter 16A – flush-mount)
+-  [ ] HmIP-FSI16      (Switch Actuator with Push-button Input)
 -  [X] HMIP-HAP        (Cloud Access Point)
 -  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
 -  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels) electrical DIN rail
@@ -145,6 +148,7 @@ Homematic IP Devices:
 -  [X] HMIP-SPDR       (Passage Sensor with Direction Recognition)
 -  [X] HMIP-SPI        (Presence Sensor - indoor)
 -  [X] HMIP-SRH        (Window Rotary Handle Sensor)
+-  [ ] HMIP-SRD        (Rain Sensor) 
 -  [X] HMIP-STH        (Temperature and Humidity Sensor without display - indoor)
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
@@ -165,6 +169,7 @@ Homematic IP Devices:
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
+-  [ ] HMIP-WRCR       ((Wall-mount Remote Control - Rotary)
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel)
 -  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
 -  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
