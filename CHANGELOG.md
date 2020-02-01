@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - [HMIP-WTH-B] (Wall Thermostat Basic)
+### FIXED
+- [BUG: 294]: hmip_cli.py --anonymize will wrongly anonymize other fields
 
 ## [0.10.15] 2019-12-30
 ### Added
@@ -303,6 +305,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 220]: https://github.com/coreGreenberet/homematicip-rest-api/issues/220
 [BUG: 223]: https://github.com/coreGreenberet/homematicip-rest-api/issues/223
 [BUG: 266]: https://github.com/coreGreenberet/homematicip-rest-api/issues/266
+[BUG: 294]: https://github.com/coreGreenberet/homematicip-rest-api/issues/294
 
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281

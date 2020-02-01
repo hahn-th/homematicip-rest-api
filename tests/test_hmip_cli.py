@@ -26,6 +26,7 @@ def test_anonymizeConfig():
         '{"id":"d0fea2b1-ef3b-44b1-ae96-f9b31f75de84",'
         '"id2":"d0fea2b1-ef3b-44b1-ae96-f9b31f75de84",'
         '"inboxGroup":"2dc54a8d-ceee-4626-8f27-b24e78dc05de",'
+        '"availableFirmwareVersion": "0.0.0",'
         '"sgtin":"3014F71112345AB891234561", "sgtin_silvercrest" : "301503771234567891234567",'
         '"location":'
         '{"city": "Vatican City, Vatican","latitude":"41.9026011","longitude":"12.4533701"}}'
@@ -39,6 +40,7 @@ def test_anonymizeConfig():
     assert js["inboxGroup"] == "00000000-0000-0000-0000-000000000001"
     assert js["sgtin"] == "3014F7110000000000000000"
     assert js["sgtin_silvercrest"] == "3014F7110000000000000001"
+    assert js["availableFirmwareVersion"] == "0.0.0"
 
     l = js["location"]
     assert l["city"] == "1010, Vienna, Austria"

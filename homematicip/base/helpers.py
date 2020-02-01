@@ -73,7 +73,7 @@ def handle_config(json_state: str, anonymize: bool) -> str:
                 "00000000-0000-0000-0000-{0:0>12}",
             )
             # generate dummy SGTIN
-            c = anonymizeConfig(c, '"[A-Z0-9]{24}"', '"3014F711{0:0>16}"')
+            c = anonymizeConfig(c, '"[A-Z0-9]{24}"', '"3014F711{0:0>16}"', flags=0)
             # remove refresh Token
             c = anonymizeConfig(c, '"refreshToken": ?"[^"]+"', '"refreshToken": null')
             # location
@@ -86,8 +86,8 @@ def handle_config(json_state: str, anonymize: bool) -> str:
         return c
 
 
-def anonymizeConfig(config, pattern, format):
-    m = re.findall(pattern, config, flags=re.IGNORECASE)
+def anonymizeConfig(config, pattern, format, flags=re.IGNORECASE):
+    m = re.findall(pattern, config, flags=flags)
     if m is None:
         return config
     map = {}
