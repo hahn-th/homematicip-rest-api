@@ -278,6 +278,7 @@ class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
         super().from_json(js, groups)
         self.temperatureOffset = js["temperatureOffset"]
 
+
 class AnalogRoomControlChannel(FunctionalChannel):
     """ this is the representative of the ANALOG_ROOM_CONTROL_CHANNEL channel"""
 
@@ -289,9 +290,10 @@ class AnalogRoomControlChannel(FunctionalChannel):
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.attr_from_dict("actualTemperature",js)
-        self.attr_from_dict("setPointTemperature",js)
-        self.attr_from_dict("temperatureOffset",js)
+        self.attr_from_dict("actualTemperature", js)
+        self.attr_from_dict("setPointTemperature", js)
+        self.attr_from_dict("temperatureOffset", js)
+
 
 class WallMountedThermostatProChannel(WallMountedThermostatWithoutDisplayChannel):
     """ this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""

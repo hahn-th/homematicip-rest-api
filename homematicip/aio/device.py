@@ -474,7 +474,8 @@ class AsyncPluggableMainsFailureSurveillance(
 ):
     """ [HMIP-PMFS] (Plugable Power Supply Monitoring) """
 
-class RoomControlDevice(WallMountedThermostatPro,AsyncWallMountedThermostatPro):
+
+class RoomControlDevice(WallMountedThermostatPro, AsyncWallMountedThermostatPro):
     """ ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display) """
 
     pass

@@ -32,6 +32,7 @@ def test_room_control_device(fake_home: Home):
         "actualTemperature(23.0) humidity(52) vaporAmount(10.662700840292974) setPointTemperature(20.0)"
     )
 
+
 def test_room_control_device_analog(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000000BBBB000005")
     assert isinstance(d, RoomControlDeviceAnalog)
@@ -45,6 +46,7 @@ def test_room_control_device_analog(fake_home: Home):
         "rssiPeerValue(-29) configPending(False) dutyCycle(False) actualTemperature(23.3) "
         "setPointTemperature(23.0) temperatureOffset(0.0)"
     )
+
 
 def test_acceleration_sensor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000031")
@@ -430,7 +432,7 @@ def test_heating_thermostat(fake_home: Home):
     assert d.valveActualTemperature == 20.0
 
     assert str(d) == (
-        "HMIP-eTRV Wohnzimmer-Heizung lowBat(False) unreach(False) " 
+        "HMIP-eTRV Wohnzimmer-Heizung lowBat(False) unreach(False) "
         "rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) "
         "dutyCycle(False) operationLockActive(True) valvePosition(0.0) "
         "valveState(ADAPTION_DONE) temperatureOffset(0.0) "
