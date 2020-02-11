@@ -805,7 +805,7 @@ def test_basic_device_functions(fake_home: Home):
 def test_all_devices_implemented(fake_home: Home):
     not_implemented = False
     for d in fake_home.devices:
-        if type(d) != Device:
+        if type(d) != Device:  # pragma: no cover
             print(f"{d.deviceType} isn't implemented yet")
             not_implemented = True
     assert not_implemented

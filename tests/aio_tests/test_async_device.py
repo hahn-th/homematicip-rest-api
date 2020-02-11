@@ -231,8 +231,12 @@ async def test_water_sensor(no_ssl_fake_async_home: AsyncHome):
 
 
 def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
+    not_implemented = False
     for d in no_ssl_fake_async_home.devices:
-        assert type(d) != AsyncDevice
+        if type(d) != AsyncDevice:  # pragma: no cover
+            print(f"{d.deviceType} isn't implemented yet")
+            not_implemented = True
+    assert not_implemented
 
 
 @pytest.mark.asyncio
