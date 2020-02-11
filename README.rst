@@ -75,8 +75,8 @@ Implemented Stuff
 Homematic IP Devices:
 ---------------------
 
--  [ ] ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)
--  [ ] ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)
+-  [X] ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)
+-  [X] ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)
 -  [X] HMIP-ASIR       (Alarm Siren - indoor)
 -  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
 -  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version

@@ -197,9 +197,12 @@ class AsyncWallMountedThermostatPro(
 
     pass
 
+
 class AsyncWallMountedThermostatBasicHumidity(AsyncWallMountedThermostatPro):
     """ HMIP-WTH-B (Wall Thermostat – basic)"""
+
     pass
+
 
 class AsyncSmokeDetector(SmokeDetector, AsyncDevice):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
@@ -470,3 +473,27 @@ class AsyncPluggableMainsFailureSurveillance(
     PluggableMainsFailureSurveillance, AsyncDevice
 ):
     """ [HMIP-PMFS] (Plugable Power Supply Monitoring) """
+
+
+class AsyncRoomControlDevice(RoomControlDevice, AsyncWallMountedThermostatPro):
+    """ ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display) """
+
+    pass
+
+
+class AsyncRoomControlDeviceAnalog(AsyncDevice):
+    """ ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.actualTemperature = 0.0
+        self.setPointTemperature = 0.0
+        self.temperatureOffset = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ANALOG_ROOM_CONTROL_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("actualTemperature", c)
+            self.set_attr_from_dict("setPointTemperature", c)
+            self.set_attr_from_dict("temperatureOffset", c)
