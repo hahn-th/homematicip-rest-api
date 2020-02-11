@@ -481,7 +481,7 @@ class AsyncRoomControlDevice(RoomControlDevice, AsyncWallMountedThermostatPro):
     pass
 
 
-class RoomControlDeviceAnalog(AsyncDevice):
+class AsyncRoomControlDeviceAnalog(AsyncDevice):
     """ ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog) """
 
     def __init__(self, connection):
