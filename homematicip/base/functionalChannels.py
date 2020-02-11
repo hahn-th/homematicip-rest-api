@@ -9,6 +9,7 @@ class FunctionalChannel(HomeMaticIPObject):
     """ this is the base class for the functional channels """
 
     def __init__(self):
+        super().__init__(None)
         self.index = -1
         self.groupIndex = -1
         self.label = ""
@@ -277,6 +278,22 @@ class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.temperatureOffset = js["temperatureOffset"]
+
+
+class AnalogRoomControlChannel(FunctionalChannel):
+    """ this is the representative of the ANALOG_ROOM_CONTROL_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.actualTemperature = 0
+        self.setPointTemperature = 0
+        self.temperatureOffset = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("actualTemperature", js)
+        self.set_attr_from_dict("setPointTemperature", js)
+        self.set_attr_from_dict("temperatureOffset", js)
 
 
 class WallMountedThermostatProChannel(WallMountedThermostatWithoutDisplayChannel):

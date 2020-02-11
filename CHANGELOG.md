@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - [HMIP-WTH-B] (Wall Thermostat Basic)
+  - [ALPHA-IP-RBG]  (Alpha IP Wall Thermostat Display)
+  - [ALPHA-IP-RBGa] (ALpha IP Wall Thermostat Display analog)
 ### FIXED
 - [BUG: 294]: hmip_cli.py --anonymize will wrongly anonymize other fields
 
@@ -311,3 +313,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
 [HMIP-PMFS]: https://github.com/coreGreenberet/homematicip-rest-api/issues/282 
+[HMIP-WTH-B]: https://github.com/coreGreenberet/homematicip-rest-api/issues/286
+[ALPHA-IP-RBG]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
+[ALPHA-IP-RBGa]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290

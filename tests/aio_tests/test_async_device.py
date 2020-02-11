@@ -12,6 +12,39 @@ from conftest import utc_offset
 
 
 @pytest.mark.asyncio
+async def test_room_control_device(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000BBBB000000000")
+    assert isinstance(d, AsyncRoomControlDevice)
+
+    assert d.vaporAmount == 10.662700840292974
+    assert d.temperatureOffset == 0.0
+    assert d.setPointTemperature == 20.0
+    assert d.actualTemperature == 23.0
+
+    assert str(d) == (
+        "ALPHA-IP-RBG Raumbediengerät lowBat(False) unreach(False) rssiDeviceValue(-45) "
+        "rssiPeerValue(-54) configPending(False) dutyCycle(False) operationLockActive(False) "
+        "actualTemperature(23.0) humidity(52) vaporAmount(10.662700840292974) setPointTemperature(20.0)"
+    )
+
+
+@pytest.mark.asyncio
+async def test_room_control_device_analog(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000BBBB000005")
+    assert isinstance(d, AsyncRoomControlDeviceAnalog)
+
+    assert d.temperatureOffset == 0.0
+    assert d.setPointTemperature == 23.0
+    assert d.actualTemperature == 23.3
+
+    assert str(d) == (
+        "ALPHA-IP-RBGa Raumbediengerät lowBat(False) unreach(False) rssiDeviceValue(-41) "
+        "rssiPeerValue(-29) configPending(False) dutyCycle(False) actualTemperature(23.3) "
+        "setPointTemperature(23.0) temperatureOffset(0.0)"
+    )
+
+
+@pytest.mark.asyncio
 async def test_acceleration_sensor(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000031")
     assert isinstance(d, AsyncAccelerationSensor)
@@ -30,7 +63,7 @@ async def test_acceleration_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_LONG
 
     assert str(d) == (
-        "HmIP-SAM Garagentor lowbat(False) unreach(False) "
+        "HmIP-SAM Garagentor lowBat(False) unreach(False) "
         "rssiDeviceValue(-88) rssiPeerValue(None) configPending(False)"
         " dutyCycle(False) accelerationSensorEventFilterPeriod(3.0)"
         " accelerationSensorMode(FLAT_DECT) accelerationSensorNeutralPosition(VERTICAL)"
@@ -88,7 +121,7 @@ async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):
     assert d.pumpProtectionSwitchingInterval == 14
 
     assert str(d) == (
-        "HmIP-FAL230-C6 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+        "HmIP-FAL230-C6 Fußbodenheizungsaktor lowBat(None) unreach(False) "
         "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
         "globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) heatingLoadType(LOAD_BALANCING) "
         "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) "
@@ -101,7 +134,7 @@ async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000FAL24C10")
 
     assert str(d) == (
-        "HmIP-FAL24-C10 Fußbodenheizungsaktor lowbat(None) unreach(False) "
+        "HmIP-FAL24-C10 Fußbodenheizungsaktor lowBat(None) unreach(False) "
         "rssiDeviceValue(-73) rssiPeerValue(-74) configPending(False) "
         "dutyCycle(False) globalPumpControl(True) heatingValveType(NORMALLY_CLOSE) "
         "heatingLoadType(LOAD_BALANCING) coolingEmergencyValue(0.0) "
@@ -122,11 +155,11 @@ async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):
     assert d.minimumFloorHeatingValvePosition == 0.2
 
     assert str(d) == (
-        "HmIP-FALMOT-C12 Fußbodenheizungsaktor OG motorisch lowbat(None) unreach(False) "
+        "HmIP-FALMOT-C12 Fußbodenheizungsaktor OG motorisch lowBat(None) unreach(False) "
         "rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) "
-        "coolingEmergencyValue(0.0) frostProtectionTemperature(8.0) valveProtectionDuration(5) "
-        "valveProtectionSwitchingInterval(14) minimumFloorHeatingValvePosition(0.2) "
-        "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(True)"
+        "minimumFloorHeatingValvePosition(0.2) "
+        "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(True) coolingEmergencyValue(0.0) "
+        "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
     )
 
 
@@ -198,8 +231,12 @@ async def test_water_sensor(no_ssl_fake_async_home: AsyncHome):
 
 
 def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
+    not_implemented = False
     for d in no_ssl_fake_async_home.devices:
-        assert type(d) != AsyncDevice
+        if type(d) != AsyncDevice:  # pragma: no cover
+            print(f"{d.deviceType} isn't implemented yet")
+            not_implemented = True
+    assert not_implemented
 
 
 @pytest.mark.asyncio
@@ -273,7 +310,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     assert d.configPending is False
 
     assert str(d) == (
-        "HMIP-PSM Brunnen lowbat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)"
+        "HMIP-PSM Brunnen lowBat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)"
         " userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)"
     )
 
@@ -324,12 +361,11 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
 
     assert str(d) == (
-        "HMIP-eTRV Wohnzimmer-Heizung lowbat(False) unreach(False) "
+        "HMIP-eTRV Wohnzimmer-Heizung lowBat(False) unreach(False) "
         "rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) "
-        "dutyCycle(False) operationLockActive(True) "
-        "valvePosition(0.0) valveState(ADAPTION_DONE) "
-        "temperatureOffset(0.0) setPointTemperature(5.0) "
-        "valveActualTemperature(20.0)"
+        "dutyCycle(False) operationLockActive(True) valvePosition(0.0) "
+        "valveState(ADAPTION_DONE) temperatureOffset(0.0) "
+        "setPointTemperature(5.0) valveActualTemperature(20.0)"
     )
 
     await d.set_operation_lock(False)
@@ -376,7 +412,7 @@ async def test_brand_switch_notification_light(no_ssl_fake_async_home: AsyncHome
     assert c.dimLevel == 0.7
 
     assert str(d) == (
-        "HmIP-BSL Treppe lowbat(None) unreach(False) "
+        "HmIP-BSL Treppe lowBat(None) unreach(False) "
         "rssiDeviceValue(-67) rssiPeerValue(-70) configPending(False) "
         "dutyCycle(False) on(True) profileMode(AUTOMATIC) "
         "userDesiredProfileMode(AUTOMATIC) topDimLevel(0.5) "
@@ -443,10 +479,11 @@ async def test_pluggable_mains_failure(no_ssl_fake_async_home: AsyncHome):
     assert d.genericAlarmSignal is AlarmSignalType.FULL_ALARM
 
     assert str(d) == (
-        "HmIP-PMFS Netzausfallüberwachung lowbat(None) unreach(False) rssiDeviceValue(-58) "
+        "HmIP-PMFS Netzausfallüberwachung lowBat(None) unreach(False) rssiDeviceValue(-58) "
         "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
         "genericAlarmSignal(FULL_ALARM)"
     )
+
 
 @pytest.mark.asyncio
 async def test_wall_thermostat_basic(no_ssl_fake_async_home: AsyncHome):
@@ -456,7 +493,7 @@ async def test_wall_thermostat_basic(no_ssl_fake_async_home: AsyncHome):
     assert d.humidity == 42
 
     assert str(d) == (
-        "HmIP-WTH-B Thermostat Schlafen Tal lowbat(False) unreach(False) rssiDeviceValue(-58) "
+        "HmIP-WTH-B Thermostat Schlafen Tal lowBat(False) unreach(False) rssiDeviceValue(-58) "
         "rssiPeerValue(-59) configPending(False) dutyCycle(False) operationLockActive(False) "
         "actualTemperature(16.0) humidity(42) vaporAmount(5.710127947243264) "
         "setPointTemperature(12.0)"

@@ -98,14 +98,14 @@ class Device(HomeMaticIPObject):
 
         c = get_functional_channel(self._baseChannel, js)
         if c:
-            self.unreach = c["unreach"]
-            self.lowBat = c["lowBat"]
+            self.set_attr_from_dict("lowBat", c)
+            self.set_attr_from_dict("unreach", c)
+            self.set_attr_from_dict("rssiDeviceValue", c)
+            self.set_attr_from_dict("rssiPeerValue", c)
+            self.set_attr_from_dict("configPending", c)
+            self.set_attr_from_dict("dutyCycle", c)
             self.routerModuleSupported = c["routerModuleSupported"]
             self.routerModuleEnabled = c["routerModuleEnabled"]
-            self.rssiDeviceValue = c["rssiDeviceValue"]
-            self.rssiPeerValue = c["rssiPeerValue"]
-            self.dutyCycle = c["dutyCycle"]
-            self.configPending = c["configPending"]
 
             sof = c.get("supportedOptionalFeatures")
             if sof:
@@ -121,16 +121,7 @@ class Device(HomeMaticIPObject):
                             )
 
     def __str__(self):
-        return "{} {} lowbat({}) unreach({}) rssiDeviceValue({}) rssiPeerValue({}) configPending({}) dutyCycle({})".format(
-            self.modelType,
-            self.label,
-            self.lowBat,
-            self.unreach,
-            self.rssiDeviceValue,
-            self.rssiPeerValue,
-            self.configPending,
-            self.dutyCycle,
-        )
+        return f"{self.modelType} {self.label} {self.str_from_attr_map()}"
 
     def set_label(self, label):
         data = {"deviceId": self.id, "label": label}
@@ -194,12 +185,9 @@ class SabotageDevice(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        c = get_functional_channel("DEVICE_SABOTAGE", js)
+        c = get_functional_channel(self._baseChannel, js)
         if c:
-            self.sabotage = c["sabotage"]
-
-    def __str__(self):
-        return "{} sabotage({})".format(super().__str__(), self.sabotage)
+            self.set_attr_from_dict("sabotage", c)
 
 
 class OperationLockableDevice(Device):
@@ -210,18 +198,13 @@ class OperationLockableDevice(Device):
 
     def from_json(self, js):
         super().from_json(js)
-        c = get_functional_channel("DEVICE_OPERATIONLOCK", js)
+        c = get_functional_channel(self._baseChannel, js)
         if c:
-            self.operationLockActive = c["operationLockActive"]
+            self.set_attr_from_dict("operationLockActive", c)
 
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
         return self._restCall("device/configuration/setOperationLock", json.dumps(data))
-
-    def __str__(self):
-        return "{} operationLockActive({})".format(
-            super().__str__(), self.operationLockActive
-        )
 
 
 class HeatingThermostat(OperationLockableDevice):
@@ -486,9 +469,36 @@ class WallMountedThermostatPro(
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
 
+
+class RoomControlDevice(WallMountedThermostatPro):
+    """ ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display) """
+
+    pass
+
+
+class RoomControlDeviceAnalog(Device):
+    """ ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.actualTemperature = 0.0
+        self.setPointTemperature = 0.0
+        self.temperatureOffset = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("ANALOG_ROOM_CONTROL_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("actualTemperature", c)
+            self.set_attr_from_dict("setPointTemperature", c)
+            self.set_attr_from_dict("temperatureOffset", c)
+
+
 class WallMountedThermostatBasicHumidity(WallMountedThermostatPro):
     """ HMIP-WTH-B (Wall Thermostat – basic)"""
-    pass 
+
+    pass
+
 
 class SmokeDetector(Device):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
@@ -603,14 +613,6 @@ class FloorTerminalBlock12(Device):
             self.set_attr_from_dict("frostProtectionTemperature", c)
             self.set_attr_from_dict("valveProtectionDuration", c)
             self.set_attr_from_dict("valveProtectionSwitchingInterval", c)
-
-    def __str__(self):
-        return (
-            f"{super().__str__()} coolingEmergencyValue({self.coolingEmergencyValue}) frostProtectionTemperature({self.frostProtectionTemperature})"
-            f" valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval})"
-            f" minimumFloorHeatingValvePosition({self.minimumFloorHeatingValvePosition})"
-            f" pulseWidthModulationAtLowFloorHeatingValvePositionEnabled({self.pulseWidthModulationAtLowFloorHeatingValvePositionEnabled})"
-        )
 
     def set_minimum_floor_heating_valve_position(
         self, minimumFloorHeatingValvePosition: float
@@ -871,9 +873,6 @@ class AlarmSirenOutdoor(AlarmSirenIndoor):
         if c:
             self.set_attr_from_dict("badBatteryHealth", c)
 
-    def __str__(self):
-        return f"{super().__str__()} badBatteryHealth({self.badBatteryHealth})"
-
 
 class MotionDetectorIndoor(SabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
@@ -927,27 +926,15 @@ class MotionDetectorOutdoor(Device):
         super().from_json(js)
         c = get_functional_channel("MOTION_DETECTION_CHANNEL", js)
         if c:
-            self.motionDetected = c["motionDetected"]
-            self.illumination = c["illumination"]
-            self.motionBufferActive = c["motionBufferActive"]
-            self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(
-                c["motionDetectionSendInterval"]
-            )
-            self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
-            self.currentIllumination = c["currentIllumination"]
-
-    def __str__(self):
-        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(
-            super().__str__(),
-            self.motionDetected,
-            self.illumination,
-            self.motionBufferActive,
-            self.motionDetectionSendInterval,
-            self.numberOfBrightnessMeasurements,
-        )
+            self.set_attr_from_dict("motionDetected", c)
+            self.set_attr_from_dict("illumination", c)
+            self.set_attr_from_dict("motionBufferActive", c)
+            self.set_attr_from_dict("motionDetectionSendInterval", c)
+            self.set_attr_from_dict("numberOfBrightnessMeasurements", c)
+            self.set_attr_from_dict("currentIllumination", c)
 
 
-class MotionDetectorPushButton(MotionDetectorIndoor):
+class MotionDetectorPushButton(MotionDetectorOutdoor):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
 
     def __init__(self, connection):
@@ -959,10 +946,7 @@ class MotionDetectorPushButton(MotionDetectorIndoor):
         super().from_json(js)
         c = get_functional_channel("DEVICE_PERMANENT_FULL_RX", js)
         if c:
-            self.permanentFullRx = c["permanentFullRx"]
-
-    def __str__(self):
-        return "{} permanentFullRx({})".format(super().__str__(), self.permanentFullRx)
+            self.set_attr_from_dict("permanentFullRx", c)
 
 
 class PresenceDetectorIndoor(SabotageDevice):
@@ -1728,24 +1712,6 @@ class AccelerationSensor(Device):
             "device/configuration/setNotificationSoundType", json.dumps(data)
         )
 
-    def __str__(self):
-        return (
-            "{} accelerationSensorEventFilterPeriod({}) accelerationSensorMode({}) "
-            "accelerationSensorNeutralPosition({}) accelerationSensorSensitivity({}) "
-            "accelerationSensorTriggerAngle({}) accelerationSensorTriggered({}) "
-            "notificationSoundTypeHighToLow({}) notificationSoundTypeLowToHigh({})"
-        ).format(
-            super().__str__(),
-            self.accelerationSensorEventFilterPeriod,
-            self.accelerationSensorMode,
-            self.accelerationSensorNeutralPosition,
-            self.accelerationSensorSensitivity,
-            self.accelerationSensorTriggerAngle,
-            self.accelerationSensorTriggered,
-            self.notificationSoundTypeHighToLow,
-            self.notificationSoundTypeLowToHigh,
-        )
-
 
 class GarageDoorModuleTormatic(Device):
     """ HMIP-MOD-TM (Garage Door Module Tormatic) """
@@ -1794,6 +1760,3 @@ class PluggableMainsFailureSurveillance(Device):
         if c:
             self.set_attr_from_dict("powerMainsFailure", c)
             self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
-
-    def __str__(self):
-        return f"{super().__str__()} powerMainsFailure({self.powerMainsFailure}) genericAlarmSignal({self.genericAlarmSignal})"

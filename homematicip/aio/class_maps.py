@@ -47,6 +47,8 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON_6: AsyncPushButton6,
     DeviceType.REMOTE_CONTROL_8: AsyncRemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: AsyncRemoteControl8Module,
+    DeviceType.ROOM_CONTROL_DEVICE: AsyncRoomControlDevice,
+    DeviceType.ROOM_CONTROL_DEVICE_ANALOG: AsyncRoomControlDeviceAnalog,
     DeviceType.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
     DeviceType.SHUTTER_CONTACT: AsyncShutterContact,
     DeviceType.SHUTTER_CONTACT_INTERFACE: AsyncContactInterface,
