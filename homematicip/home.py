@@ -775,6 +775,8 @@ class Home(HomeMaticIPObject):
                     data = event["home"]
                     obj = self
                     obj.from_json(data)
+                    obj._get_functionalHomes(data)
+                    obj._load_functionalChannels()
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.CLIENT_ADDED:
                     data = event["client"]
