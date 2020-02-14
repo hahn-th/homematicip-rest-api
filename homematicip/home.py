@@ -774,7 +774,7 @@ class Home(HomeMaticIPObject):
                 elif pushEventType == EventType.HOME_CHANGED:
                     data = event["home"]
                     obj = self
-                    obj.from_json(data)
+                    obj.update_home_only(data)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.CLIENT_ADDED:
                     data = event["client"]
