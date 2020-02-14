@@ -316,7 +316,7 @@ def test_pluggable_switch_measuring(fake_home: Home):
 def test_smoke_detector(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000020")
     assert isinstance(d, SmokeDetector)
-    assert d.label == "Rauchwarnmelder"
+    assert d.label == "Rauchwarnmelder3"
     assert d.lastStatusUpdate == datetime(2018, 4, 23, 4, 5, 24, 824000) + timedelta(
         0, utc_offset
     )
@@ -340,7 +340,7 @@ def test_smoke_detector(fake_home: Home):
     assert d.configPending is False
     assert (
         str(d)
-        == "HmIP-SWSD Rauchwarnmelder lowBat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False) smokeDetectorAlarmType(IDLE_OFF)"
+        == "HmIP-SWSD Rauchwarnmelder3 lowBat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False) smokeDetectorAlarmType(IDLE_OFF)"
     )
     assert (
         d._rawJSONData
