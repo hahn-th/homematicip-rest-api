@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+## [0.10.16] 2020-02-16
 ### Added
 - Devices
   - [HMIP-WTH-B] (Wall Thermostat Basic)
@@ -279,7 +281,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.16...HEAD
+[0.10.16]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...0.10.16
 [0.10.15]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.14...0.10.15
 [0.10.14]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.13...0.10.14
 [0.10.13]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.12...0.10.13
