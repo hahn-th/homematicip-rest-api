@@ -1,20 +1,17 @@
+import json
+from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, Mock
 
 import pytest
 
-from homematicip.home import Home
+from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
-from homematicip.device import *
 from homematicip.base.functionalChannels import *
-import json
-from datetime import datetime, timedelta, timezone
-
-from homematicip_demo.helper import (
-    fake_home_download_configuration,
-    no_ssl_verification,
-)
-from conftest import utc_offset
+from homematicip.device import *
+from homematicip.home import Home
+from homematicip_demo.helper import (fake_home_download_configuration,
+                                     no_ssl_verification)
 
 
 def test_room_control_device(fake_home: Home):

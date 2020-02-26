@@ -7,12 +7,11 @@ from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
 
 import homematicip
+from homematicip.base.helpers import handle_config
 from homematicip.device import *
 from homematicip.group import *
-from homematicip.rule import *
 from homematicip.home import Home
-from homematicip.base.helpers import handle_config
-
+from homematicip.rule import *
 
 logger = None
 

@@ -1,8 +1,8 @@
-from homematicip.group import Group
+from typing import Iterable
+
 from homematicip.base.enums import *
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
-
-from typing import Iterable
+from homematicip.group import Group
 
 
 class FunctionalChannel(HomeMaticIPObject):

@@ -15,6 +15,8 @@
 import os
 import sys
 
+import homematicip
+
 sys.path.insert(0, os.path.abspath("../.."))
 
 
@@ -24,7 +26,6 @@ project = "Homematic IP Rest API"
 copyright = "2018, Heimo Stieg"
 author = "Heimo Stieg"
 
-import homematicip
 
 # The short X.Y version
 version = ""

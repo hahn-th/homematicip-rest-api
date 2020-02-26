@@ -1,10 +1,7 @@
 import pytest
 
-from homematicip.base.base_connection import (
-    BaseConnection,
-    ATTR_AUTH_TOKEN,
-    ATTR_CLIENT_AUTH,
-)
+from homematicip.base.base_connection import (ATTR_AUTH_TOKEN,
+                                              ATTR_CLIENT_AUTH, BaseConnection)
 from homematicip.connection import Connection
 from homematicip.home import Home
 from homematicip_demo.helper import no_ssl_verification

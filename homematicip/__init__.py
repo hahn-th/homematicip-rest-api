@@ -1,7 +1,7 @@
 # coding=utf-8
-import platform
 import configparser
 import os
+import platform
 from collections import namedtuple
 
 from ._version import get_versions

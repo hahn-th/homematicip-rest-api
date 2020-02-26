@@ -1,5 +1,7 @@
+import logging
+import warnings
+
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
-import warnings, logging
 
 LOGGER = logging.getLogger(__name__)
 

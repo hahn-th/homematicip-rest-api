@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-import homematicip
-import homematicip.auth
+import configparser
+import json
 import time
 from builtins import input
-import json
 
+import homematicip
+import homematicip.auth
 from homematicip.home import Home
-import configparser
 
 
 def main():

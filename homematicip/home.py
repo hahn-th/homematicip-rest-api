@@ -1,19 +1,20 @@
 import logging
-import threading
-import websocket
 import ssl
 import sys
+import threading
 from typing import List
 
-from homematicip.EventHook import *
+import websocket
+
 from homematicip.base.enums import *
+from homematicip.base.helpers import bytes2str
 from homematicip.class_maps import *
 from homematicip.connection import Connection
-from homematicip.group import *
 from homematicip.device import *
-from homematicip.securityEvent import *
+from homematicip.EventHook import *
+from homematicip.group import *
 from homematicip.rule import *
-from homematicip.base.helpers import bytes2str
+from homematicip.securityEvent import *
 
 LOGGER = logging.getLogger(__name__)
 

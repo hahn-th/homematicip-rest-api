@@ -1,13 +1,12 @@
+import hashlib
+import json
+
 import pytest
 
-import json
-import hashlib
-
-from homematicip.home import Home
+from conftest import no_ssl_verification
 from homematicip.auth import Auth
 from homematicip.base.enums import ClientType
-
-from conftest import no_ssl_verification
+from homematicip.home import Home
 
 
 def test_auth_challenge_no_pin(fake_home: Home):

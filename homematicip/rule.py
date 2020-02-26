@@ -1,5 +1,6 @@
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 import json
+
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 
 class Rule(HomeMaticIPObject):

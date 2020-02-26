@@ -1,20 +1,21 @@
 import asyncio
-from aiohttp import web
+import functools
 import ssl
 import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
-from aiohttp.test_utils import TestServer
+
 import pytest
-import functools
+from aiohttp import web
+from aiohttp.test_utils import TestServer
 
 from homematicip.aio.auth import AsyncAuth
 from homematicip.aio.home import AsyncHome
-from homematicip.home import Home
 from homematicip.connection import Connection
-
+from homematicip.home import Home
 from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 from homematicip_demo.helper import *
+
 
 # content of conftest.py
 def pytest_configure(config):

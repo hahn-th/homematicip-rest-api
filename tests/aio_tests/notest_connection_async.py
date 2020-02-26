@@ -2,17 +2,16 @@ import asyncio
 
 import aiohttp
 import pytest
-from tests.fake_hmip_server import FakeLookupHmip, FakeConnectionHmip, FakeWebsocketHmip
-from tests.helpers import mockreturn
 
 from homematicip.aio.connection import AsyncConnection
-from homematicip.base.base_connection import (
-    HmipWrongHttpStatusError,
-    HmipConnectionError,
-    ATTR_AUTH_TOKEN,
-    ATTR_CLIENT_AUTH,
-    HmipServerCloseError,
-)
+from homematicip.base.base_connection import (ATTR_AUTH_TOKEN,
+                                              ATTR_CLIENT_AUTH,
+                                              HmipConnectionError,
+                                              HmipServerCloseError,
+                                              HmipWrongHttpStatusError)
+from tests.fake_hmip_server import (FakeConnectionHmip, FakeLookupHmip,
+                                    FakeWebsocketHmip)
+from tests.helpers import mockreturn
 
 
 @pytest.fixture

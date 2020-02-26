@@ -1,8 +1,7 @@
-from homematicip.base.enums import *
-
 from homematicip.aio.device import *
 from homematicip.aio.group import *
 from homematicip.aio.securityEvent import *
+from homematicip.base.enums import *
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: AsyncDevice,
