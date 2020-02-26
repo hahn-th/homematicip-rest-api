@@ -1,15 +1,14 @@
 # coding=utf-8
 import json
-from datetime import datetime
 import logging
+from collections import Counter
+from datetime import datetime
+from typing import Iterable
 
-from homematicip.base.helpers import get_functional_channel
 from homematicip.base.enums import *
+from homematicip.base.helpers import get_functional_channel
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
-
-from typing import Iterable
-from collections import Counter
 
 LOGGER = logging.getLogger(__name__)
 

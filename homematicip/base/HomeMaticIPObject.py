@@ -1,7 +1,7 @@
-from datetime import datetime
-from homematicip.base.enums import AutoNameEnum
-
 import logging
+from datetime import datetime
+
+from homematicip.base.enums import AutoNameEnum
 
 LOGGER = logging.getLogger(__name__)
 

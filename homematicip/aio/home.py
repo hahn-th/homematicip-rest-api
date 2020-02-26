@@ -2,15 +2,12 @@ import asyncio
 import json
 import logging
 
-from homematicip.aio.class_maps import (
-    TYPE_CLASS_MAP,
-    TYPE_GROUP_MAP,
-    TYPE_SECURITY_EVENT_MAP,
-)
+from homematicip.aio.class_maps import (TYPE_CLASS_MAP, TYPE_GROUP_MAP,
+                                        TYPE_SECURITY_EVENT_MAP)
 from homematicip.aio.connection import AsyncConnection
 from homematicip.aio.securityEvent import AsyncSecurityEvent
-from homematicip.home import Home, OAuthOTK
 from homematicip.base.enums import *
+from homematicip.home import Home, OAuthOTK
 
 LOGGER = logging.getLogger(__name__)
 

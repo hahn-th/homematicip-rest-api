@@ -1,6 +1,7 @@
 # coding=utf-8
-from aenum import auto, Enum
 import logging
+
+from aenum import Enum, auto
 
 logger = logging.getLogger(__name__)
 

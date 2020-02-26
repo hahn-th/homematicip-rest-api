@@ -1,39 +1,25 @@
 import json
 
-from homematicip.group import (
-    Group,
-    MetaGroup,
-    AlarmSwitchingGroup,
-    EnvironmentGroup,
-    ExtendedLinkedShutterGroup,
-    ExtendedLinkedSwitchingGroup,
-    HeatingChangeoverGroup,
-    HeatingCoolingDemandBoilerGroup,
-    HeatingCoolingDemandGroup,
-    HeatingCoolingDemandPumpGroup,
-    HeatingDehumidifierGroup,
-    HeatingExternalClockGroup,
-    HeatingFailureAlertRuleGroup,
-    HeatingGroup,
-    HeatingHumidyLimiterGroup,
-    HeatingTemperatureLimiterGroup,
-    HotWaterGroup,
-    HumidityWarningRuleGroup,
-    InboxGroup,
-    LinkedSwitchingGroup,
-    LockOutProtectionRule,
-    OverHeatProtectionRule,
-    SecurityGroup,
-    SecurityZoneGroup,
-    ShutterProfile,
-    ShutterWindProtectionRule,
-    SmokeAlarmDetectionRule,
-    SwitchGroupBase,
-    SwitchingGroup,
-    SwitchingProfileGroup,
-)
-
 from homematicip.base.enums import *
+from homematicip.group import (AlarmSwitchingGroup, EnvironmentGroup,
+                               ExtendedLinkedShutterGroup,
+                               ExtendedLinkedSwitchingGroup, Group,
+                               HeatingChangeoverGroup,
+                               HeatingCoolingDemandBoilerGroup,
+                               HeatingCoolingDemandGroup,
+                               HeatingCoolingDemandPumpGroup,
+                               HeatingDehumidifierGroup,
+                               HeatingExternalClockGroup,
+                               HeatingFailureAlertRuleGroup, HeatingGroup,
+                               HeatingHumidyLimiterGroup,
+                               HeatingTemperatureLimiterGroup, HotWaterGroup,
+                               HumidityWarningRuleGroup, InboxGroup,
+                               LinkedSwitchingGroup, LockOutProtectionRule,
+                               MetaGroup, OverHeatProtectionRule,
+                               SecurityGroup, SecurityZoneGroup,
+                               ShutterProfile, ShutterWindProtectionRule,
+                               SmokeAlarmDetectionRule, SwitchGroupBase,
+                               SwitchingGroup, SwitchingProfileGroup)
 
 
 class AsyncGroup(Group):

@@ -1,14 +1,14 @@
 import asyncio
 from datetime import datetime, timedelta, timezone
+
 import pytest
 
+from conftest import utc_offset
 from homematicip.aio.device import *
 from homematicip.aio.home import AsyncHome
-from homematicip.base.enums import *
 from homematicip.base.base_connection import HmipWrongHttpStatusError
+from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
-
-from conftest import utc_offset
 
 
 @pytest.mark.asyncio

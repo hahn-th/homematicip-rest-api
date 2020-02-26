@@ -1,8 +1,9 @@
 import hashlib
 import json
 import locale
-import platform
 import logging
+import platform
+
 import requests
 
 from homematicip.base.base_connection import BaseConnection

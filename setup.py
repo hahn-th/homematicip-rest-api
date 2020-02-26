@@ -1,9 +1,11 @@
-from distutils.core import setup
-from setuptools import find_packages
-from setuptools.command.install import install
+import io
 import os
 import sys
-import io
+from distutils.core import setup
+
+from setuptools import find_packages
+from setuptools.command.install import install
+
 import versioneer
 
 here = os.path.abspath(os.path.dirname(__file__))

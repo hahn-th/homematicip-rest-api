@@ -1,11 +1,11 @@
 # coding=utf-8
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+import calendar
 import json
 from datetime import datetime
-import calendar
 from operator import attrgetter
 
 from homematicip.base.enums import *
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 
 class Group(HomeMaticIPObject):

@@ -1,14 +1,10 @@
 from homematicip.base.enums import *
-
-from homematicip.device import *
-
-from homematicip.group import *
-
-from homematicip.securityEvent import *
-from homematicip.rule import *
-from homematicip.functionalHomes import *
 from homematicip.base.functionalChannels import *
-
+from homematicip.device import *
+from homematicip.functionalHomes import *
+from homematicip.group import *
+from homematicip.rule import *
+from homematicip.securityEvent import *
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,

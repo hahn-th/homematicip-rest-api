@@ -1,16 +1,13 @@
-import pytest
-
-from homematicip.group import *
-from homematicip.home import Home
-
 import json
 from datetime import datetime, timedelta, timezone
 
-from homematicip_demo.helper import (
-    fake_home_download_configuration,
-    no_ssl_verification,
-)
+import pytest
+
 from conftest import utc_offset
+from homematicip.group import *
+from homematicip.home import Home
+from homematicip_demo.helper import (fake_home_download_configuration,
+                                     no_ssl_verification)
 
 
 def test_meta_group(fake_home: Home):

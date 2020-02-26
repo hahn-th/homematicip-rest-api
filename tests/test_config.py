@@ -1,8 +1,10 @@
+import io
+import os
+import platform
+
 import pytest
 
 import homematicip
-import io, os
-import platform
 
 
 def fake_windows():
