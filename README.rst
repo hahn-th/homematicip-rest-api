@@ -172,13 +172,13 @@ Homematic IP Devices:
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
 -  [ ] HMIP-WRCR       ((Wall-mount Remote Control - Rotary)
--  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel) *probably only prototype for WTH-B and was not released
+-  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 -  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
 -  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
 -  [X] HMIP-WTH-B      (Wall Mounted Thermostat basic without adjusting wheel)
 
 Homematic IP Wired Devices (no radio signal):
----------------------------
+---------------------------------------------
 
 -  [ ] HMIPW-DRAP       (Homematic IP Wired Access Point)
 -  [ ] HMIPW-DRBL4      (Homematic IP Wired Blinds Actuator – 4x channels)
