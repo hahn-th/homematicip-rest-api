@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
+- Devices
+  - [HMIP-MOD-HO] (Module for Hörmann drives)
 - CLI
   - --channel parameter for turning on/off different channels and not just the first one
 
@@ -328,3 +330,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-WTH-B]: https://github.com/coreGreenberet/homematicip-rest-api/issues/286
 [ALPHA-IP-RBG]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
 [ALPHA-IP-RBGa]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
+[HMIP-MOD-HO]: https://github.com/coreGreenberet/homematicip-rest-api/issues/304

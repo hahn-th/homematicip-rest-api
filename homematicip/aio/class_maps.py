@@ -26,6 +26,7 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_SWITCH_2: AsyncHeatingSwitch2,
     DeviceType.HEATING_THERMOSTAT: AsyncHeatingThermostat,
     DeviceType.HEATING_THERMOSTAT_COMPACT: AsyncHeatingThermostatCompact,
+    DeviceType.HOERMANN_DRIVES_MODULE: AsyncHoermannDrivesModule,
     DeviceType.KEY_REMOTE_CONTROL_4: AsyncKeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: AsyncKeyRemoteControlAlarm,
     DeviceType.LIGHT_SENSOR: AsyncLightSensor,

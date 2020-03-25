@@ -472,6 +472,16 @@ async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_hoermann_drives_module(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000HOERMANN")
+
+    assert d.doorState == DoorState.CLOSED
+    assert d.on is False
+    assert d.processing is False
+    assert d.ventilationPositionSupported is True
+
+
+@pytest.mark.asyncio
 async def test_pluggable_mains_failure(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000ABCD50")
 

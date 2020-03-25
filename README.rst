@@ -121,7 +121,7 @@ Homematic IP Devices:
 -  [X] HMIP-KRC4       (Key Ring Remote Control - 4x buttons)
 -  [ ] HMIP-MIO16-PCB  (Multi Analog/Digitial Interface - Switch Circuit Board)
 -  [X] HMIP-MIOB       (Multi IO Box for floor heating & cooling)
--  [ ] HMIP-MOD-HO     (Garage Door Module for Hörmann)
+-  [X] HMIP-MOD-HO     (Garage Door Module for Hörmann)
 -  [X] HMIP-MOD-OC8    (Open Collector Module Receiver - 8x)
 -  [X] HMIP-MOD-RC8    (Open Collector Module Sender - 8x)
 -  [X] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
