@@ -169,6 +169,15 @@ def main():
         help="turn the switch off",
         default=None,
     )
+
+    group.add_argument(
+        "--channel",
+        nargs="*",
+        dest="channels",
+        help="used together with --turn-on and --turn-off to specify one or more specific channels",
+        default=[5],
+    )
+
     group.add_argument(
         "--set-dim-level",
         action="store",
@@ -533,7 +542,8 @@ def main():
 
             if args.device_switch_state is not None:
                 if isinstance(device, Switch):
-                    device.set_switch_state(args.device_switch_state)
+                    for c in args.channels:
+                        device.set_switch_state(args.device_switch_state, c)
                 else:
                     logger.error(
                         "can't turn on/off device %s of type %s",

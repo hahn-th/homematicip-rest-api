@@ -37,10 +37,8 @@ setup(
         "aiohttp==3.6.2",
         "async_timeout==3.0.1",
         "aenum==2.2.3",
-    ],    
-    package_data={  # Optional
-        'homematicip_demo': ['json_data/*.json'],
-    },
+    ],
+    package_data={"homematicip_demo": ["json_data/*.json"],},  # Optional
     scripts=["hmip_cli.py", "hmip_generate_auth_token.py"],
     python_requires="~=3.6",
     version=versioneer.get_version(),

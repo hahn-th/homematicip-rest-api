@@ -15,8 +15,10 @@ from homematicip.group import Group, MetaGroup, SecurityZoneGroup
 from homematicip.home import Client, Home
 from homematicip.rule import *
 from homematicip.securityEvent import *
-from homematicip_demo.helper import (fake_home_download_configuration,
-                                     no_ssl_verification)
+from homematicip_demo.helper import (
+    fake_home_download_configuration,
+    no_ssl_verification,
+)
 
 
 @pytest.fixture

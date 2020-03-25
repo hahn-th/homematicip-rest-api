@@ -10,8 +10,10 @@ from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.home import Home
-from homematicip_demo.helper import (fake_home_download_configuration,
-                                     no_ssl_verification)
+from homematicip_demo.helper import (
+    fake_home_download_configuration,
+    no_ssl_verification,
+)
 
 
 def test_room_control_device(fake_home: Home):
