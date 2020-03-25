@@ -1258,7 +1258,7 @@ def test_hoermann_drives_module(fake_home: Home):
         assert d.ventilationPositionSupported is True
 
         assert str(d) == (
-            "HmIP-MOD-TM Garage Door lowBat(None) unreach(False) rssiDeviceValue(-71) "
+            "HmIP-MOD-HO Garage door lowBat(None) unreach(False) rssiDeviceValue(-71) "
             "rssiPeerValue(-76) configPending(False) dutyCycle(False) doorState(CLOSED) "
             "on(False) processing(False) ventilationPositionSupported(True)"
         )
