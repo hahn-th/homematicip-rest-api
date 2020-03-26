@@ -8,8 +8,10 @@ from homematicip.aio.securityEvent import *
 from homematicip.base.base_connection import HmipWrongHttpStatusError
 from homematicip.base.enums import *
 from homematicip.functionalHomes import *
-from homematicip_demo.helper import (fake_home_download_configuration,
-                                     no_ssl_verification)
+from homematicip_demo.helper import (
+    fake_home_download_configuration,
+    no_ssl_verification,
+)
 
 
 @pytest.mark.asyncio

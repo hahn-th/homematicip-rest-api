@@ -10,8 +10,10 @@ from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.home import Home
-from homematicip_demo.helper import (fake_home_download_configuration,
-                                     no_ssl_verification)
+from homematicip_demo.helper import (
+    fake_home_download_configuration,
+    no_ssl_verification,
+)
 
 
 def test_room_control_device(fake_home: Home):
@@ -1238,6 +1240,34 @@ def test_door_sensor_tm(fake_home: Home):
             "rssiPeerValue(-54) configPending(False) dutyCycle(False) doorState(CLOSED) "
             "on(False) processing(False) ventilationPositionSupported(True)"
         )
+
+        d.send_door_command(doorCommand=DoorCommand.OPEN)
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
+        assert d.doorState == DoorState.OPEN
+
+
+def test_hoermann_drives_module(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000HOERMANN")
+
+        assert d.doorState == DoorState.CLOSED
+        assert d.on is False
+        assert d.processing is False
+        assert d.ventilationPositionSupported is True
+
+        assert str(d) == (
+            "HmIP-MOD-HO Garage door lowBat(None) unreach(False) rssiDeviceValue(-71) "
+            "rssiPeerValue(-76) configPending(False) dutyCycle(False) doorState(CLOSED) "
+            "on(False) processing(False) ventilationPositionSupported(True)"
+        )
+
+        d.send_door_command(doorCommand=DoorCommand.CLOSE)
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000HOERMANN")
+        assert d.doorState == DoorState.CLOSED
 
 
 def test_pluggable_mains_failure(fake_home: Home):

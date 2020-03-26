@@ -220,6 +220,7 @@ class DeviceType(AutoNameEnum):
     HEATING_SWITCH_2 = auto()
     HEATING_THERMOSTAT = auto()
     HEATING_THERMOSTAT_COMPACT = auto()
+    HOERMANN_DRIVES_MODULE = auto()
     KEY_REMOTE_CONTROL_4 = auto()
     KEY_REMOTE_CONTROL_ALARM = auto()
     LIGHT_SENSOR = auto()

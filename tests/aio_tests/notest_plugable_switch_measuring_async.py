@@ -4,7 +4,10 @@ import pytest
 
 from homematicip.aio.device import AsyncPlugableSwitchMeasuring
 from tests.json_data.plugable_switch_measuring import (
-    fake_device_id, fake_home_id, plugable_switch_measuring)
+    fake_device_id,
+    fake_home_id,
+    plugable_switch_measuring,
+)
 
 
 @pytest.fixture

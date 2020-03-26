@@ -1712,8 +1712,8 @@ class AccelerationSensor(Device):
         )
 
 
-class GarageDoorModuleTormatic(Device):
-    """ HMIP-MOD-TM (Garage Door Module Tormatic) """
+class DoorModule(Device):
+    """ Generic class for a door module """
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1726,27 +1726,26 @@ class GarageDoorModuleTormatic(Device):
         super().from_json(js)
         c = get_functional_channel("DOOR_CHANNEL", js)
         if c:
-            self.doorState = DoorState.from_str(c["doorState"])
-            self.on = c["on"]
-            self.processing = c["processing"]
-            self.ventilationPositionSupported = c["ventilationPositionSupported"]
-
-    def __str__(self):
-        return "{} doorState({}) on({}) processing({}) ventilationPositionSupported({})".format(
-            super().__str__(),
-            self.doorState,
-            self.on,
-            self.processing,
-            self.ventilationPositionSupported,
-        )
+            self.set_attr_from_dict("doorState", c, DoorState)
+            self.set_attr_from_dict("on", c)
+            self.set_attr_from_dict("processing", c)
+            self.set_attr_from_dict("ventilationPositionSupported", c)
 
     def send_door_command(self, doorCommand=DoorCommand.STOP):
         data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
         return self._restCall("device/control/sendDoorCommand", json.dumps(data))
 
 
+class GarageDoorModuleTormatic(DoorModule):
+    """ HMIP-MOD-TM (Garage Door Module Tormatic) """
+
+
+class HoermannDrivesModule(DoorModule):
+    """ HMIP-MOD-HO (Garage Door Module for Hörmann) """
+
+
 class PluggableMainsFailureSurveillance(Device):
-    """ [HMIP-PMFS] (Plugable Power Supply Monitoring) """
+    """ HMIP-PMFS (Plugable Power Supply Monitoring) """
 
     def __init__(self, connection):
         super().__init__(connection)
