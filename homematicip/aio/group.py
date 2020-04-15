@@ -1,12 +1,12 @@
 import json
 
+from homematicip.base.enums import *
 from homematicip.group import (
-    Group,
-    MetaGroup,
     AlarmSwitchingGroup,
     EnvironmentGroup,
     ExtendedLinkedShutterGroup,
     ExtendedLinkedSwitchingGroup,
+    Group,
     HeatingChangeoverGroup,
     HeatingCoolingDemandBoilerGroup,
     HeatingCoolingDemandGroup,
@@ -22,6 +22,7 @@ from homematicip.group import (
     InboxGroup,
     LinkedSwitchingGroup,
     LockOutProtectionRule,
+    MetaGroup,
     OverHeatProtectionRule,
     SecurityGroup,
     SecurityZoneGroup,
@@ -32,8 +33,6 @@ from homematicip.group import (
     SwitchingGroup,
     SwitchingProfileGroup,
 )
-
-from homematicip.base.enums import *
 
 
 class AsyncGroup(Group):

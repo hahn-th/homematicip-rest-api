@@ -1,7 +1,7 @@
-from datetime import datetime
-from homematicip.base.enums import AutoNameEnum
-
 import logging
+from datetime import datetime
+
+from homematicip.base.enums import AutoNameEnum
 
 LOGGER = logging.getLogger(__name__)
 
@@ -12,13 +12,16 @@ class HomeMaticIPObject:
 
     def __init__(self, connection):
         self._connection = connection
-        ## List with remove handlers.
+        #: List with remove handlers.
         self._on_remove = []
-        # List with update handlers.
+        #: List with update handlers.
         self._on_update = []
 
         #:the raw json data of the object
         self._rawJSONData = {}
+
+        # list[str]:List of all attributes which were added via set_attr_from_dict
+        self._dictAttributes = []
 
     def on_remove(self, handler):
         """Adds an event handler to the remove method. Fires when a device
@@ -67,7 +70,12 @@ class HomeMaticIPObject:
         return datetime.fromtimestamp(timestamp / 1000.0)
 
     def set_attr_from_dict(
-        self, attr: str, dict, type: AutoNameEnum = None, dict_attr=None
+        self,
+        attr: str,
+        dict,
+        type: AutoNameEnum = None,
+        dict_attr=None,
+        addToStrOutput=True,
     ):
         """this method will add the value from dict to the given attr name
 
@@ -76,6 +84,7 @@ class HomeMaticIPObject:
             dict(dict): the dictionary from which the value should be extracted
             type(AutoNameEnum): this will call type.from_str(value), if a type gets provided
             dict_attr: the name of the attribute in the dict. Set this to None(default) to use attr
+            addToStrOutput(str): should the attribute be returned via __str__()
         """
         if not dict_attr:
             dict_attr = attr
@@ -83,3 +92,9 @@ class HomeMaticIPObject:
         if type:
             value = type.from_str(value)
         self.__dict__[attr] = value
+        if addToStrOutput and attr not in self._dictAttributes:
+            self._dictAttributes.append(attr)
+
+    def str_from_attr_map(self) -> str:
+        """ this method will return a string with all key/values which were added via the set_attr_from_dict method """
+        return "".join([f"{x}({self.__dict__[x]}) " for x in self._dictAttributes])[:-1]

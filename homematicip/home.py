@@ -1,19 +1,20 @@
 import logging
-import threading
-import websocket
 import ssl
 import sys
+import threading
 from typing import List
 
-from homematicip.EventHook import *
+import websocket
+
 from homematicip.base.enums import *
+from homematicip.base.helpers import bytes2str
 from homematicip.class_maps import *
 from homematicip.connection import Connection
-from homematicip.group import *
 from homematicip.device import *
-from homematicip.securityEvent import *
+from homematicip.EventHook import *
+from homematicip.group import *
 from homematicip.rule import *
-from homematicip.base.helpers import bytes2str
+from homematicip.securityEvent import *
 
 LOGGER = logging.getLogger(__name__)
 
@@ -774,7 +775,7 @@ class Home(HomeMaticIPObject):
                 elif pushEventType == EventType.HOME_CHANGED:
                     data = event["home"]
                     obj = self
-                    obj.from_json(data)
+                    obj.update_home_only(data)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.CLIENT_ADDED:
                     data = event["client"]

@@ -1,6 +1,7 @@
 # coding=utf-8
-from aenum import auto, Enum
 import logging
+
+from aenum import Enum, auto
 
 logger = logging.getLogger(__name__)
 
@@ -219,6 +220,7 @@ class DeviceType(AutoNameEnum):
     HEATING_SWITCH_2 = auto()
     HEATING_THERMOSTAT = auto()
     HEATING_THERMOSTAT_COMPACT = auto()
+    HOERMANN_DRIVES_MODULE = auto()
     KEY_REMOTE_CONTROL_4 = auto()
     KEY_REMOTE_CONTROL_ALARM = auto()
     LIGHT_SENSOR = auto()
@@ -240,6 +242,7 @@ class DeviceType(AutoNameEnum):
     REMOTE_CONTROL_8 = auto()
     REMOTE_CONTROL_8_MODULE = auto()
     ROOM_CONTROL_DEVICE = auto()
+    ROOM_CONTROL_DEVICE_ANALOG = auto()
     ROTARY_HANDLE_SENSOR = auto()
     SHUTTER_CONTACT = auto()
     SHUTTER_CONTACT_INTERFACE = auto()
@@ -376,6 +379,7 @@ class FunctionalChannelType(AutoNameEnum):
     ACCELERATION_SENSOR_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
+    ANALOG_ROOM_CONTROL_CHANNEL = auto()
     BLIND_CHANNEL = auto()
     CHANGE_OVER_CHANNEL = auto()
     CONTACT_INTERFACE_CHANNEL = auto()

@@ -1,7 +1,9 @@
+import asyncio
+import json
+
 import pytest
 import requests
-import json
-import asyncio
+
 from conftest import no_ssl_verification
 from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 

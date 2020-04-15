@@ -1,14 +1,10 @@
 from homematicip.base.enums import *
-
-from homematicip.device import *
-
-from homematicip.group import *
-
-from homematicip.securityEvent import *
-from homematicip.rule import *
-from homematicip.functionalHomes import *
 from homematicip.base.functionalChannels import *
-
+from homematicip.device import *
+from homematicip.functionalHomes import *
+from homematicip.group import *
+from homematicip.rule import *
+from homematicip.securityEvent import *
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
@@ -33,6 +29,7 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_SWITCH_2: HeatingSwitch2,
     DeviceType.HEATING_THERMOSTAT: HeatingThermostat,
     DeviceType.HEATING_THERMOSTAT_COMPACT: HeatingThermostatCompact,
+    DeviceType.HOERMANN_DRIVES_MODULE: HoermannDrivesModule,
     DeviceType.KEY_REMOTE_CONTROL_4: KeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
     DeviceType.LIGHT_SENSOR: LightSensor,
@@ -53,7 +50,8 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON_6: PushButton6,
     DeviceType.REMOTE_CONTROL_8: RemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: RemoteControl8Module,
-    DeviceType.ROOM_CONTROL_DEVICE: TemperatureHumiditySensorDisplay,
+    DeviceType.ROOM_CONTROL_DEVICE: RoomControlDevice,
+    DeviceType.ROOM_CONTROL_DEVICE_ANALOG: RoomControlDeviceAnalog,
     DeviceType.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
     DeviceType.SHUTTER_CONTACT: ShutterContact,
     DeviceType.SHUTTER_CONTACT_INTERFACE: ContactInterface,
@@ -134,6 +132,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.ACCELERATION_SENSOR_CHANNEL: AccelerationSensorChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
     FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,
+    FunctionalChannelType.ANALOG_ROOM_CONTROL_CHANNEL: AnalogRoomControlChannel,
     FunctionalChannelType.BLIND_CHANNEL: BlindChannel,
     FunctionalChannelType.CHANGE_OVER_CHANNEL: ChangeOverChannel,
     FunctionalChannelType.CLIMATE_SENSOR_CHANNEL: ClimateSensorChannel,

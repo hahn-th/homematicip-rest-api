@@ -1,13 +1,13 @@
-import pytest
 import json
 from datetime import datetime, timedelta, timezone
 
+import pytest
+
+from conftest import utc_offset
 from homematicip.aio.group import *
 from homematicip.aio.home import AsyncHome
 from homematicip.base.base_connection import HmipWrongHttpStatusError
 from homematicip.base.enums import *
-
-from conftest import utc_offset
 
 
 def test_all_groups_implemented(no_ssl_fake_async_home: AsyncHome):

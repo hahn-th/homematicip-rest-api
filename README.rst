@@ -75,8 +75,8 @@ Implemented Stuff
 Homematic IP Devices:
 ---------------------
 
--  [ ] ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)
--  [ ] ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)
+-  [X] ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)
+-  [X] ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)
 -  [X] HMIP-ASIR       (Alarm Siren - indoor)
 -  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
 -  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version
@@ -94,7 +94,8 @@ Homematic IP Devices:
 -  [X] HMIP-eTRV       (Heating-Thermostat with Display)
 -  [X] HMIP-eTRV2      (Heating-Thermostat with Display) New Version
 -  [ ] HMIP-eTRV-2-UK  (UK Version not tested, but it should work)
--  [X] HMIP-eTRV-B     (Heating-Thermostat basic with Display) 
+-  [X] HMIP-eTRV-B     (Heating-Thermostat basic with Display)
+-  [ ] HMIP-eTRV-B-UK  (UK Version not tested, but it should work) 
 -  [X] HMIP-eTRV-B1    (Heating-Thermostat basic with Display) *Silvercrest Edition*
 -  [X] HMIP-eTRV-C     (Heating-thermostat compact without display)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
@@ -109,17 +110,18 @@ Homematic IP Devices:
 -  [X] HMIP-FROLL      (Shutter Actuator - flush-mount)
 -  [X] HMIP-FSM        (Switch Actuator and Meter 5A – flush-mount)
 -  [X] HMIP-FSM16      (Switch Actuator and Meter 16A – flush-mount)
--  [ ] HmIP-FSI16      (Switch Actuator with Push-button Input)
+-  [ ] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
 -  [X] HMIP-HAP        (Cloud Access Point)
 -  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
--  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels) electrical DIN rail
--  [ ] HMIP-K-DRDI3    (Dimming Actuator Inbound 230V – 3x channels) electrical DIN rail
--  [ ] HMIP-K-DRSI4    (Swich Actuator – 4x channels) electrical DIN rail
+-  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
+-  [ ] HMIP-K-DRSI1    (Actuator Inbound 230V – 1x channel) electrical DIN rail
+-  [ ] HMIP-K-DRDI3    (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
+-  [ ] HMIP-K-DRSI4    (Swich Actuator – 4x channels, 16A per channel) electrical DIN rail
 -  [X] HMIP-KRCA       (Key Ring Remote Control & Alarm)
 -  [X] HMIP-KRC4       (Key Ring Remote Control - 4x buttons)
 -  [ ] HMIP-MIO16-PCB  (Multi Analog/Digitial Interface - Switch Circuit Board)
 -  [X] HMIP-MIOB       (Multi IO Box for floor heating & cooling)
--  [ ] HMIP-MOD-HO     (Garage Door Module for Hörmann)
+-  [X] HMIP-MOD-HO     (Garage Door Module for Hörmann)
 -  [X] HMIP-MOD-OC8    (Open Collector Module Receiver - 8x)
 -  [X] HMIP-MOD-RC8    (Open Collector Module Sender - 8x)
 -  [X] HMIP-MOD-TM     (Garage Door Module for Novoferm and Tormatic door operators)
@@ -170,13 +172,13 @@ Homematic IP Devices:
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
 -  [ ] HMIP-WRCR       ((Wall-mount Remote Control - Rotary)
--  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel)
+-  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 -  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
 -  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
 -  [X] HMIP-WTH-B      (Wall Mounted Thermostat basic without adjusting wheel)
 
-Homematic IP Wired Devices:
----------------------------
+Homematic IP Wired Devices (no radio signal):
+---------------------------------------------
 
 -  [ ] HMIPW-DRAP       (Homematic IP Wired Access Point)
 -  [ ] HMIPW-DRBL4      (Homematic IP Wired Blinds Actuator – 4x channels)

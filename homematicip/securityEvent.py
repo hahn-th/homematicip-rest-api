@@ -1,7 +1,8 @@
 # coding=utf-8
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 import json
 from datetime import datetime
+
+from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 
 class SecurityEvent(HomeMaticIPObject):

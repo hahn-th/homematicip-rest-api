@@ -1,27 +1,25 @@
+import json
+import time
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from unittest.mock import MagicMock, Mock
 
 import pytest
-import json
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-import time
 
-from homematicip.home import Home
+from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
-from homematicip.rule import *
-from homematicip.EventHook import EventHook
 from homematicip.base.enums import *
+from homematicip.device import AccelerationSensor, Device
+from homematicip.EventHook import EventHook
 from homematicip.functionalHomes import *
-from homematicip.securityEvent import *
 from homematicip.group import Group, MetaGroup
-from homematicip.device import Device, AccelerationSensor
-
-
+from homematicip.home import Home
+from homematicip.rule import *
+from homematicip.securityEvent import *
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
 )
-from conftest import utc_offset
 
 
 def test_update_event(fake_home: Home):

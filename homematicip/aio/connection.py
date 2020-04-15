@@ -10,11 +10,11 @@ import websockets
 from websockets import ConnectionClosed
 
 from homematicip.base.base_connection import (
-    BaseConnection,
-    HmipWrongHttpStatusError,
     ATTR_AUTH_TOKEN,
     ATTR_CLIENT_AUTH,
+    BaseConnection,
     HmipConnectionError,
+    HmipWrongHttpStatusError,
 )
 
 logger = logging.getLogger(__name__)

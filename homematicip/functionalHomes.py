@@ -1,9 +1,9 @@
+from datetime import datetime
 from typing import List
 
+from homematicip.base.enums import *
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
-from homematicip.base.enums import *
-from datetime import datetime
 
 
 class FunctionalHome(HomeMaticIPObject):

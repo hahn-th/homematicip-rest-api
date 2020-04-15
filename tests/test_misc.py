@@ -1,13 +1,13 @@
-from unittest.mock import MagicMock, Mock
 import json
 from datetime import datetime, timedelta, timezone
+from unittest.mock import MagicMock, Mock
+
 import pytest
 
-
-from homematicip.EventHook import EventHook
-from homematicip.base.helpers import bytes2str, detect_encoding
 from homematicip.base.enums import *
+from homematicip.base.helpers import bytes2str, detect_encoding
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.EventHook import EventHook
 
 
 def event_hook_handler2(mustBe2):

@@ -9,8 +9,8 @@ from homematicip.aio.class_maps import (
 )
 from homematicip.aio.connection import AsyncConnection
 from homematicip.aio.securityEvent import AsyncSecurityEvent
-from homematicip.home import Home, OAuthOTK
 from homematicip.base.enums import *
+from homematicip.home import Home, OAuthOTK
 
 LOGGER = logging.getLogger(__name__)
 

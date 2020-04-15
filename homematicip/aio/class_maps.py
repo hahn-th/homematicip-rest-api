@@ -1,8 +1,7 @@
-from homematicip.base.enums import *
-
 from homematicip.aio.device import *
 from homematicip.aio.group import *
 from homematicip.aio.securityEvent import *
+from homematicip.base.enums import *
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: AsyncDevice,
@@ -27,6 +26,7 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_SWITCH_2: AsyncHeatingSwitch2,
     DeviceType.HEATING_THERMOSTAT: AsyncHeatingThermostat,
     DeviceType.HEATING_THERMOSTAT_COMPACT: AsyncHeatingThermostatCompact,
+    DeviceType.HOERMANN_DRIVES_MODULE: AsyncHoermannDrivesModule,
     DeviceType.KEY_REMOTE_CONTROL_4: AsyncKeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: AsyncKeyRemoteControlAlarm,
     DeviceType.LIGHT_SENSOR: AsyncLightSensor,
@@ -47,6 +47,8 @@ TYPE_CLASS_MAP = {
     DeviceType.PUSH_BUTTON_6: AsyncPushButton6,
     DeviceType.REMOTE_CONTROL_8: AsyncRemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: AsyncRemoteControl8Module,
+    DeviceType.ROOM_CONTROL_DEVICE: AsyncRoomControlDevice,
+    DeviceType.ROOM_CONTROL_DEVICE_ANALOG: AsyncRoomControlDeviceAnalog,
     DeviceType.ROTARY_HANDLE_SENSOR: AsyncRotaryHandleSensor,
     DeviceType.SHUTTER_CONTACT: AsyncShutterContact,
     DeviceType.SHUTTER_CONTACT_INTERFACE: AsyncContactInterface,

@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Added
 - Devices
+  - [HMIP-MOD-HO] (Module for Hörmann drives)
+- CLI
+  - --channel parameter for turning on/off different channels and not just the first one
+
+## [0.10.17] 2020-02-16
+
+### FIXED
+- [PR: 300] Fix AsyncMotionDetectorPushButton
+
+## [0.10.16] 2020-02-16
+### Added
+- Devices
   - [HMIP-WTH-B] (Wall Thermostat Basic)
+  - [ALPHA-IP-RBG]  (Alpha IP Wall Thermostat Display)
+  - [ALPHA-IP-RBGa] (ALpha IP Wall Thermostat Display analog)
 ### FIXED
 - [BUG: 294]: hmip_cli.py --anonymize will wrongly anonymize other fields
 
@@ -277,7 +291,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...HEAD
+[0.10.17]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.16...0.10.17
+[0.10.16]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...0.10.16
 [0.10.15]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.14...0.10.15
 [0.10.14]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.13...0.10.14
 [0.10.13]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.12...0.10.13
@@ -306,8 +322,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 223]: https://github.com/coreGreenberet/homematicip-rest-api/issues/223
 [BUG: 266]: https://github.com/coreGreenberet/homematicip-rest-api/issues/266
 [BUG: 294]: https://github.com/coreGreenberet/homematicip-rest-api/issues/294
-
+[PR: 300]: https://github.com/coreGreenberet/homematicip-rest-api/pull/300
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
 [HMIP-PMFS]: https://github.com/coreGreenberet/homematicip-rest-api/issues/282 
+[HMIP-WTH-B]: https://github.com/coreGreenberet/homematicip-rest-api/issues/286
+[ALPHA-IP-RBG]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
+[ALPHA-IP-RBGa]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
+[HMIP-MOD-HO]: https://github.com/coreGreenberet/homematicip-rest-api/issues/304
