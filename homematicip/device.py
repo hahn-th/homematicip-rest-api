@@ -324,6 +324,10 @@ class ShutterContactMagnetic(Device):
         return "{} windowState({})".format(super().__str__(), self.windowState)
 
 
+class ShutterContactOpticalPlus(ShutterContact):
+    """ HmIP-SWDO-PL ( Window / Door Contact – optical, plus )"""
+
+
 class ContactInterface(SabotageDevice):
     """ HMIP-SCI (Contact Interface Sensor)"""
 

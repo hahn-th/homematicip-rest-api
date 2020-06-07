@@ -212,6 +212,23 @@ def test_shutter_device_magnetic(fake_home: Home):
     )
 
 
+def test_shutter_contact_optical_plus(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110SHUTTER_OPTICAL")
+    assert isinstance(d, ShutterContactOpticalPlus)
+    assert d.label == "Sitzplatztüre"
+    assert d.windowState == WindowState.CLOSED
+    assert d.serializedGlobalTradeItemNumber == "3014F7110SHUTTER_OPTICAL"
+
+    assert str(d) == (
+        "HmIP-SWDO-PL Sitzplatztüre lowBat(False) unreach(False) rssiDeviceValue(-72) "
+        "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) windowState(CLOSED)"
+    )
+    assert (
+        d._rawJSONData
+        == fake_home_download_configuration()["devices"]["3014F7110SHUTTER_OPTICAL"]
+    )
+
+
 def test_contact_interface_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000064")
     assert isinstance(d, ContactInterface)

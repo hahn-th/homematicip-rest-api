@@ -57,6 +57,7 @@ TYPE_CLASS_MAP = {
     DeviceType.SHUTTER_CONTACT_INTERFACE: ContactInterface,
     DeviceType.SHUTTER_CONTACT_INVISIBLE: ShutterContact,
     DeviceType.SHUTTER_CONTACT_MAGNETIC: ShutterContactMagnetic,
+    DeviceType.SHUTTER_CONTACT_OPTICAL_PLUS: ShutterContactOpticalPlus,
     DeviceType.SMOKE_DETECTOR: SmokeDetector,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
