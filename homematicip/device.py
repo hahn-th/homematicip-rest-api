@@ -324,6 +324,10 @@ class ShutterContactMagnetic(Device):
         return "{} windowState({})".format(super().__str__(), self.windowState)
 
 
+class ShutterContactOpticalPlus(ShutterContact):
+    """ HmIP-SWDO-PL ( Window / Door Contact – optical, plus )"""
+
+
 class ContactInterface(SabotageDevice):
     """ HMIP-SCI (Contact Interface Sensor)"""
 
@@ -1587,6 +1591,28 @@ class FullFlushContactInterface(Device):
             self.multiModeInputMode,
             self.windowState,
         )
+
+
+class FullFlushInputSwitch(Device):
+    """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.SWITCH_BEHAVIOR
+        self.on = False
+        self.profileMode = ProfileMode.MANUAL
+        self.userDesiredProfileMode = ProfileMode.MANUAL
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MULTI_MODE_INPUT_SWITCH_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("binaryBehaviorType", c, BinaryBehaviorType)
+            self.set_attr_from_dict("multiModeInputMode", c, MultiModeInputMode)
+            self.set_attr_from_dict("on", c)
+            self.set_attr_from_dict("profileMode", c, ProfileMode)
+            self.set_attr_from_dict("userDesiredProfileMode", c, ProfileMode)
 
 
 class AccelerationSensor(Device):
