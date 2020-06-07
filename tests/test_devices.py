@@ -132,8 +132,26 @@ def test_full_flush_contact_interface(fake_home: Home):
     assert d.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
 
     assert str(d) == (
-        "HmIP-FCI1 Kontakt-Schnittstelle Unterputz – 1-fach lowBat(False) unreach(False) rssiDeviceValue(-46) rssiPeerValue(None) configPending(False) "
+        "HmIP-FCI1 Kontakt-Schnittstelle Unterputz – 1-fach lowBat(False) unreach(False) rssiDeviceValue(-46) "
+        "rssiPeerValue(None) configPending(False) "
         "dutyCycle(False) binaryBehaviorType(NORMALLY_CLOSE) multiModeInputMode(KEY_BEHAVIOR) windowState(CLOSED)"
+    )
+
+
+def test_full_flush_input_switch(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000HmIPFSI16")
+    assert isinstance(d, FullFlushInputSwitch)
+
+    assert d.binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert d.on == True
+    assert d.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
+    assert d.profileMode == ProfileMode.AUTOMATIC
+    assert d.userDesiredProfileMode == ProfileMode.AUTOMATIC
+
+    assert str(d) == (
+        "HmIP-FSI16 Wohnzimmer Beleuchtung lowBat(None) unreach(False) rssiDeviceValue(-57) rssiPeerValue(-54) "
+        "configPending(False) dutyCycle(False) deviceOverheated(False) binaryBehaviorType(NORMALLY_CLOSE) "
+        "multiModeInputMode(KEY_BEHAVIOR) on(True) profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)"
     )
 
 

@@ -110,7 +110,7 @@ Homematic IP Devices:
 -  [X] HMIP-FROLL      (Shutter Actuator - flush-mount)
 -  [X] HMIP-FSM        (Switch Actuator and Meter 5A – flush-mount)
 -  [X] HMIP-FSM16      (Switch Actuator and Meter 16A – flush-mount)
--  [ ] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
+-  [X] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
 -  [X] HMIP-HAP        (Cloud Access Point)
 -  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
 -  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail

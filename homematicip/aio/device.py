@@ -131,8 +131,10 @@ class AsyncShutterContact(ShutterContact, AsyncSabotageDevice):
     """ HMIP-SWDO (Door / Window Contact - optical) /
     HMIP-SWDO-I (Door / Window Contact Invisible - optical) """
 
+
 class AsyncShutterContactOpticalPlus(ShutterContactOpticalPlus, AsyncShutterContact):
     """ HmIP-SWDO-PL ( Window / Door Contact – optical, plus )"""
+
 
 class AsyncShutterContactMagnetic(ShutterContactMagnetic, AsyncDevice):
     """ HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic """
@@ -314,6 +316,8 @@ class AsyncFullFlushContactInterface(FullFlushContactInterface, AsyncDevice):
 
     pass
 
+class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncDevice):
+    """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """

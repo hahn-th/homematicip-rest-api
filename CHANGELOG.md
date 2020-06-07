@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Devices
   - [HMIP-MOD-HO] (Module for Hörmann drives)
+  - [HMIP-FSI16] (Switch Actuator with Push-button Input 230V, 16A)
+  - [HMIP-SWDO-PL] (Shutter Contact Plus)
 - CLI
   - --channel parameter for turning on/off different channels and not just the first one
 
@@ -331,3 +333,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [ALPHA-IP-RBG]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
 [ALPHA-IP-RBGa]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
 [HMIP-MOD-HO]: https://github.com/coreGreenberet/homematicip-rest-api/issues/304
+[HMIP-FSI16]: https://github.com/coreGreenberet/homematicip-rest-api/issues/310
+[HMIP-SWDO-PL]: https://github.com/coreGreenberet/homematicip-rest-api/issues/315
