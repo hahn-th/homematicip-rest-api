@@ -336,7 +336,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F711000000BBBB000005",
-            "label": "Raumbedienger\u00e4t",
+            "label": "Raumbedienger\u00e4t Analog",
             "lastStatusUpdate": 1579384126279,
             "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
@@ -1795,7 +1795,7 @@
                     "groupIndex": 1,
                     "groups": [],
                     "index": 1,
-                    "label": "",
+                    "label": "Treppe CH",
                     "on": true,
                     "profileMode": "AUTOMATIC",
                     "userDesiredProfileMode": "AUTOMATIC"
@@ -1807,7 +1807,7 @@
                     "groupIndex": 2,
                     "groups": [],
                     "index": 2,
-                    "label": "",
+                    "label": "Alarm Status",
                     "on": null,
                     "profileMode": "AUTOMATIC",
                     "simpleRGBColorState": "RED",
@@ -3967,7 +3967,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000000023",
-            "label": "Wandthermostat",
+            "label": "Wandthermostat4",
             "lastStatusUpdate": 1524516454116,
             "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,
@@ -4780,7 +4780,7 @@
                         "00000000-0000-0000-0000-000000000042"
                     ],
                     "index": 1,
-                    "label": "",
+                    "label": "SW1",
                     "on": false,
                     "profileMode": "AUTOMATIC",
                     "userDesiredProfileMode": "AUTOMATIC"
@@ -4794,7 +4794,7 @@
                         "00000000-0000-0000-0000-000000000040"
                     ],
                     "index": 2,
-                    "label": "",
+                    "label": "SW2",
                     "on": false,
                     "profileMode": "AUTOMATIC",
                     "userDesiredProfileMode": "AUTOMATIC"

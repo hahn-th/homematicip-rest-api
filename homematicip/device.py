@@ -1593,7 +1593,7 @@ class FullFlushContactInterface(Device):
         )
 
 
-class FullFlushInputSwitch(Device):
+class FullFlushInputSwitch(Switch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
 
     def __init__(self, connection):

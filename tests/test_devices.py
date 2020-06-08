@@ -41,7 +41,7 @@ def test_room_control_device_analog(fake_home: Home):
     assert d.actualTemperature == 23.3
 
     assert str(d) == (
-        "ALPHA-IP-RBGa Raumbediengerät lowBat(False) unreach(False) rssiDeviceValue(-41) "
+        "ALPHA-IP-RBGa Raumbediengerät Analog lowBat(False) unreach(False) rssiDeviceValue(-41) "
         "rssiPeerValue(-29) configPending(False) dutyCycle(False) actualTemperature(23.3) "
         "setPointTemperature(23.0) temperatureOffset(0.0)"
     )
@@ -149,9 +149,11 @@ def test_full_flush_input_switch(fake_home: Home):
     assert d.userDesiredProfileMode == ProfileMode.AUTOMATIC
 
     assert str(d) == (
-        "HmIP-FSI16 Wohnzimmer Beleuchtung lowBat(None) unreach(False) rssiDeviceValue(-57) rssiPeerValue(-54) "
-        "configPending(False) dutyCycle(False) deviceOverheated(False) binaryBehaviorType(NORMALLY_CLOSE) "
-        "multiModeInputMode(KEY_BEHAVIOR) on(True) profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)"
+        "HmIP-FSI16 Wohnzimmer Beleuchtung lowBat(None) unreach(False) rssiDeviceValue(-57) "
+        "rssiPeerValue(-54) configPending(False) dutyCycle(False) deviceOverheated(False) "
+        "binaryBehaviorType(NORMALLY_CLOSE) multiModeInputMode(KEY_BEHAVIOR) on(True) "
+        "profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC) on(True) profileMode(AUTOMATIC) "
+        "userDesiredProfileMode(AUTOMATIC)"
     )
 
 

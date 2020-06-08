@@ -38,7 +38,7 @@ async def test_room_control_device_analog(no_ssl_fake_async_home: AsyncHome):
     assert d.actualTemperature == 23.3
 
     assert str(d) == (
-        "ALPHA-IP-RBGa Raumbediengerät lowBat(False) unreach(False) rssiDeviceValue(-41) "
+        "ALPHA-IP-RBGa Raumbediengerät Analog lowBat(False) unreach(False) rssiDeviceValue(-41) "
         "rssiPeerValue(-29) configPending(False) dutyCycle(False) actualTemperature(23.3) "
         "setPointTemperature(23.0) temperatureOffset(0.0)"
     )

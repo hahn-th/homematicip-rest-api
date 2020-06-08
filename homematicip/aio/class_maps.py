@@ -22,6 +22,7 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE: AsyncFullFlushContactInterface,
     DeviceType.FULL_FLUSH_DIMMER: AsyncFullFlushDimmer,
     DeviceType.FULL_FLUSH_SHUTTER: AsyncFullFlushShutter,
+    DeviceType.FULL_FLUSH_INPUT_SWITCH: AsyncFullFlushInputSwitch,
     DeviceType.FULL_FLUSH_SWITCH_MEASURING: AsyncFullFlushSwitchMeasuring,
     DeviceType.HEATING_SWITCH_2: AsyncHeatingSwitch2,
     DeviceType.HEATING_THERMOSTAT: AsyncHeatingThermostat,
