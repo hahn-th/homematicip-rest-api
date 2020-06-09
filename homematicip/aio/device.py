@@ -316,7 +316,7 @@ class AsyncFullFlushContactInterface(FullFlushContactInterface, AsyncDevice):
 
     pass
 
-class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncDevice):
+class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
