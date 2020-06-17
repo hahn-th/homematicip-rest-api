@@ -31,7 +31,7 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     install_requires=[
-        "requests==2.23.0",
+        "requests==2.24.0",
         "websocket-client==0.57.0",
         "websockets==8.1",
         "aiohttp==3.6.2",
