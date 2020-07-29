@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### CHANGED
+- [BUG: 325] Requirements are now using a min version instead of a pinned version. requirements_dev.txt will still use the pinned versions to make sure that the latest version is compatible with the library.
+
 ## [0.10.19] 2020-07-08
+
 ### FIXED
 - [PR: 320] Fix FSI-16
 
@@ -25,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR: 300] Fix AsyncMotionDetectorPushButton
 
 ## [0.10.16] 2020-02-16
+
 ### Added
 - Devices
   - [HMIP-WTH-B] (Wall Thermostat Basic)
@@ -334,6 +339,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 294]: https://github.com/coreGreenberet/homematicip-rest-api/issues/294
 [PR: 300]: https://github.com/coreGreenberet/homematicip-rest-api/pull/300
 [PR: 320]: https://github.com/coreGreenberet/homematicip-rest-api/pull/320
+[BUG: 325]: https://github.com/coreGreenberet/homematicip-rest-api/issues/325
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
