@@ -110,7 +110,7 @@ Homematic IP Devices:
 -  [X] HMIP-FROLL      (Shutter Actuator - flush-mount)
 -  [X] HMIP-FSM        (Switch Actuator and Meter 5A – flush-mount)
 -  [X] HMIP-FSM16      (Switch Actuator and Meter 16A – flush-mount)
--  [ ] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
+-  [X] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
 -  [X] HMIP-HAP        (Cloud Access Point)
 -  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
 -  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
@@ -142,6 +142,7 @@ Homematic IP Devices:
 -  [ ] HMIP-RCB1       (Remote Control - 1x button)
 -  [X] HMIP-SAM        (Acceleration Sensor)
 -  [X] HMIP-SCI        (Contact Interface Sensor)
+-  [ ] HMIP-SFD        (Fine Dust Sensor)
 -  [X] HMIP-SLO        (Light Sensor - outdoor)
 -  [X] HMIP-SMI        (Motion Detector with Brightness Sensor - indoor)
 -  [X] HMIP-SMI55      (Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
@@ -171,7 +172,7 @@ Homematic IP Devices:
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
--  [ ] HMIP-WRCR       ((Wall-mount Remote Control - Rotary)
+-  [ ] HMIP-WRCR       (Wall-mount Remote Control - Rotary)
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 -  [X] HMIP-WTH        (Wall Mounted Thermostat Pro with Display)
 -  [X] HMIP-WTH-2      (Wall Mounted Thermostat Pro with Display) New Version
@@ -181,6 +182,7 @@ Homematic IP Wired Devices (no radio signal):
 ---------------------------------------------
 
 -  [ ] HMIPW-DRAP       (Homematic IP Wired Access Point)
+-  [ ] HMIPW-BRC2       (Homematic IP Wired Remote Control for brand switches – 2x channels)
 -  [ ] HMIPW-DRBL4      (Homematic IP Wired Blinds Actuator – 4x channels)
 -  [ ] HMIPW-DRD3       (Homematic IP Wired Dimming Actuator – 3x channels)
 -  [ ] HMIPW-DRS4       (Homematic IP Wired Swich Actuator – 4x channels)
@@ -196,6 +198,7 @@ Homematic IP Wired Devices (no radio signal):
 -  [ ] HMIPW-SPI        (Homematic IP Wired Presence Sensor - indoor)
 -  [ ] HMIPW-STH        (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
 -  [ ] HMIPW-STHD       (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
+-  [ ] HMIPW-WRC2       (Homematic IP Wired Wall-mount Remote Control - 2x channels)
 -  [ ] HMIPW-WTH        (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
 
 Events

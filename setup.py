@@ -31,12 +31,12 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     install_requires=[
-        "requests==2.23.0",
-        "websocket-client==0.57.0",
-        "websockets==8.1",
-        "aiohttp==3.6.2",
-        "async_timeout==3.0.1",
-        "aenum==2.2.3",
+        "requests>=2.24.0",
+        "websocket-client>=0.57.0",
+        "websockets>=8.1",
+        "aiohttp>=3.6.2",
+        "async_timeout>=3.0.1",
+        "aenum>=2.2.4",
     ],
     package_data={"homematicip_demo": ["json_data/*.json"],},  # Optional
     scripts=["hmip_cli.py", "hmip_generate_auth_token.py"],

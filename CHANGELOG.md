@@ -4,10 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
+
+### CHANGED
+- [BUG: 325] Requirements are now using a min version instead of a pinned version. requirements_dev.txt will still use the pinned versions to make sure that the latest version is compatible with the library.
+
+## [0.10.19] 2020-07-08
+
+### FIXED
+- [PR: 320] Fix FSI-16
+
+## [0.10.18] 2020-06-07
 ### Added
 - Devices
   - [HMIP-MOD-HO] (Module for Hörmann drives)
+  - [HMIP-FSI16] (Switch Actuator with Push-button Input 230V, 16A)
+  - [HMIP-SWDO-PL] (Shutter Contact Plus)
 - CLI
   - --channel parameter for turning on/off different channels and not just the first one
 
@@ -17,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR: 300] Fix AsyncMotionDetectorPushButton
 
 ## [0.10.16] 2020-02-16
+
 ### Added
 - Devices
   - [HMIP-WTH-B] (Wall Thermostat Basic)
@@ -291,7 +304,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...HEAD
+[0.10.19]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.18...0.10.19
+[0.10.18]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...0.10.18
 [0.10.17]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.16...0.10.17
 [0.10.16]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...0.10.16
 [0.10.15]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.14...0.10.15
@@ -323,6 +338,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 266]: https://github.com/coreGreenberet/homematicip-rest-api/issues/266
 [BUG: 294]: https://github.com/coreGreenberet/homematicip-rest-api/issues/294
 [PR: 300]: https://github.com/coreGreenberet/homematicip-rest-api/pull/300
+[PR: 320]: https://github.com/coreGreenberet/homematicip-rest-api/pull/320
+[BUG: 325]: https://github.com/coreGreenberet/homematicip-rest-api/issues/325
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
@@ -331,3 +348,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [ALPHA-IP-RBG]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
 [ALPHA-IP-RBGa]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
 [HMIP-MOD-HO]: https://github.com/coreGreenberet/homematicip-rest-api/issues/304
+[HMIP-FSI16]: https://github.com/coreGreenberet/homematicip-rest-api/issues/310
+[HMIP-SWDO-PL]: https://github.com/coreGreenberet/homematicip-rest-api/issues/315

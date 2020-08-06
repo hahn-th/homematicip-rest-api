@@ -833,3 +833,23 @@ class MainsFailureChannel(FunctionalChannel):
         super().from_json(js, groups)
         self.set_attr_from_dict("powerMainsFailure", js)
         self.set_attr_from_dict("genericAlarmSignal", js, AlarmSignalType)
+
+
+class MultiModeInputSwitchChannel(FunctionalChannel):
+    """ this is the representative of the MULTI_MODE_INPUT_SWITCH_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.SWITCH_BEHAVIOR
+        self.on = False
+        self.profileMode = ProfileMode.MANUAL
+        self.userDesiredProfileMode = ProfileMode.MANUAL
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
+        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
