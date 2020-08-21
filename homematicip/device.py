@@ -43,6 +43,7 @@ class Device(HomeMaticIPObject):
         self.id = None
         self.homeId = None
         self.label = None
+        self.connectionType = ConnectionType.HMIP_LAN
         self.lastStatusUpdate = None
         self.deviceType = None
         self.updateState = DeviceUpdateState.UP_TO_DATE
@@ -109,7 +110,7 @@ class Device(HomeMaticIPObject):
         self.serializedGlobalTradeItemNumber = js["serializedGlobalTradeItemNumber"]
         self.permanentlyReachable = js["permanentlyReachable"]
         self.liveUpdateState = LiveUpdateState.from_str(js["liveUpdateState"])
-
+        self.connectionType = ConnectionType.from_str(js["connectionType"])
         c = get_functional_channel(self._baseChannel, js)
         if c:
             self.set_attr_from_dict("lowBat", c)

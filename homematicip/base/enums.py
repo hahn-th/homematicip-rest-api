@@ -532,3 +532,9 @@ class AlarmSignalType(AutoNameEnum):
     NO_ALARM = auto()
     SILENT_ALARM = auto()
     FULL_ALARM = auto()
+
+class ConnectionType(AutoNameEnum):
+    HMIP_RF = auto()
+    HMIP_WIRED = auto()
+    HMIP_LAN = auto()
+    HMIP_WLAN  = auto()
