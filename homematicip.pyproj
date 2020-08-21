@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--device 3014F711A00001D569A581FD --channel 1 --turn-off</CommandLineArguments>
+    <CommandLineArguments>--dump-configuration</CommandLineArguments>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <TestFramework>pytest</TestFramework>

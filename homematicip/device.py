@@ -26,6 +26,16 @@ class Device(HomeMaticIPObject):
         "IFeatureDeviceCoProUpdate": "coProUpdateFailure",
         "IFeatureMinimumFloorHeatingValvePosition": "minimumFloorHeatingValvePosition",
         "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled",
+        "IFeatureBusConfigMismatch": "busConfigMismatch",
+        "IFeatureShortCircuitDataLine": "shortCircuitDataLine",
+        "IFeatureRssiValue": "rssiDeviceValue",
+        "IOptionalFeatureDutyCycle": "dutyCycle",
+        "IFeaturePowerShortCircuit": "powerShortCircuit",
+        "IOptionalFeatureLowBat": "lowBat",
+        "IFeatureDevicePowerFailure": "devicePowerFailureDetected",
+        "IFeatureDeviceUndervoltage": "deviceUndervoltage",
+        "IFeatureMulticastRouter": "multicastRoutingEnabled",
+        # "IFeatureDeviceIdentify":"<unknown>,"
     }
 
     def __init__(self, connection):
@@ -73,6 +83,11 @@ class Device(HomeMaticIPObject):
         self.coProFaulty = False
         self.coProRestartNeeded = False
         self.coProUpdateFailure = False
+        self.busConfigMismatch = False
+        self.shortCircuitDataLine = False
+        self.powerShortCircuit = False
+        self.deviceUndervoltage = False
+        self.devicePowerFailureDetected = False
 
     def from_json(self, js):
         super().from_json(js)

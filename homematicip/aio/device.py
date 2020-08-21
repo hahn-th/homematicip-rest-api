@@ -316,8 +316,10 @@ class AsyncFullFlushContactInterface(FullFlushContactInterface, AsyncDevice):
 
     pass
 
+
 class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
+
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
