@@ -35,7 +35,7 @@ class Device(HomeMaticIPObject):
         "IFeatureDevicePowerFailure": "devicePowerFailureDetected",
         "IFeatureDeviceUndervoltage": "deviceUndervoltage",
         "IFeatureMulticastRouter": "multicastRoutingEnabled",
-        # "IFeatureDeviceIdentify":"<unknown>,"
+        "IFeatureDeviceIdentify":"deviceIdentifySupported",
     }
 
     def __init__(self, connection):
@@ -89,6 +89,7 @@ class Device(HomeMaticIPObject):
         self.powerShortCircuit = False
         self.deviceUndervoltage = False
         self.devicePowerFailureDetected = False
+        self.deviceIdentifySupported = False # just placeholder at the moment the feature doesn't set any values
 
     def from_json(self, js):
         super().from_json(js)

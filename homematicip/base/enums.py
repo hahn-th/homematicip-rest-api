@@ -425,6 +425,9 @@ class FunctionalChannelType(AutoNameEnum):
     WEATHER_SENSOR_CHANNEL = auto()
     WEATHER_SENSOR_PRO_CHANNEL = auto()
     WEATHER_SENSOR_PLUS_CHANNEL = auto()
+    WIRED_DIMMER_3 = auto()
+    WIRED_INPUT_32 = auto()
+    WIRED_SWITCH_8 = auto()
 
 
 class HeatingLoadType(AutoNameEnum):
