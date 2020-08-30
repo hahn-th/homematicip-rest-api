@@ -254,6 +254,7 @@ class DeviceType(AutoNameEnum):
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()
     TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR = auto()
+    TILT_VIBRATION_SENSOR = auto()
     TORMATIC_MODULE = auto()
     WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY = auto()
     WALL_MOUNTED_THERMOSTAT_PRO = auto()
@@ -261,6 +262,9 @@ class DeviceType(AutoNameEnum):
     WEATHER_SENSOR = auto()
     WEATHER_SENSOR_PLUS = auto()
     WEATHER_SENSOR_PRO = auto()
+    WIRED_DIMMER_3 = auto()
+    WIRED_INPUT_32 = auto()
+    WIRED_SWITCH_8 = auto()
 
 
 class GroupType(AutoNameEnum):
@@ -419,6 +423,7 @@ class FunctionalChannelType(AutoNameEnum):
     SMOKE_DETECTOR_CHANNEL = auto()
     SWITCH_CHANNEL = auto()
     SWITCH_MEASURING_CHANNEL = auto()
+    TILT_VIBRATION_SENSOR_CHANNEL = auto()
     WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL = auto()
     WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL = auto()
     WATER_SENSOR_CHANNEL = auto()
@@ -532,3 +537,10 @@ class AlarmSignalType(AutoNameEnum):
     NO_ALARM = auto()
     SILENT_ALARM = auto()
     FULL_ALARM = auto()
+
+
+class ConnectionType(AutoNameEnum):
+    HMIP_RF = auto()
+    HMIP_WIRED = auto()
+    HMIP_LAN = auto()
+    HMIP_WLAN = auto()

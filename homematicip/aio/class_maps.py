@@ -60,6 +60,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: AsyncTemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: AsyncTemperatureHumiditySensorDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: AsyncTemperatureHumiditySensorOutdoor,
+    DeviceType.TILT_VIBRATION_SENSOR: AsyncTiltVibrationSensor,
     DeviceType.TORMATIC_MODULE: AsyncGarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY: AsyncWallMountedThermostatBasicHumidity,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: AsyncWallMountedThermostatPro,
@@ -67,6 +68,9 @@ TYPE_CLASS_MAP = {
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
     DeviceType.WEATHER_SENSOR_PLUS: AsyncWeatherSensorPlus,
     DeviceType.WEATHER_SENSOR_PRO: AsyncWeatherSensorPro,
+    DeviceType.WIRED_DIMMER_3: AsyncWiredDimmer3,
+    DeviceType.WIRED_INPUT_32: AsyncWiredInput32,
+    DeviceType.WIRED_SWITCH_8: AsyncWiredSwitch8,
 }
 
 TYPE_GROUP_MAP = {

@@ -136,6 +136,23 @@ class OAuthOTK(HomeMaticIPObject):
         self.expirationTimestamp = self.fromtimestamp(js["expirationTimestamp"])
 
 
+class AccessPointUpdateState(HomeMaticIPObject):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.accessPointUpdateState = DeviceUpdateState.UP_TO_DATE
+        self.successfulUpdateTimestamp = None
+        self.updateStateChangedTimestamp = None
+
+    def from_json(self, js):
+        self.accessPointUpdateState = js["accessPointUpdateState"]
+        self.successfulUpdateTimestamp = self.fromtimestamp(
+            js["successfulUpdateTimestamp"]
+        )
+        self.updateStateChangedTimestamp = self.fromtimestamp(
+            js["updateStateChangedTimestamp"]
+        )
+
+
 class Home(HomeMaticIPObject):
     """this class represents the 'Home' of the homematic ip"""
 
@@ -195,6 +212,8 @@ class Home(HomeMaticIPObject):
         self.rules = []
         #: a collection of all functionalHomes in the home
         self.functionalHomes = []
+        #:Map: a map of all access points and their updateStates
+        self.accessPointUpdateStates = {}
 
     def init(self, access_point_id, lookup=True):
         self._connection.init(access_point_id, lookup)
@@ -228,6 +247,11 @@ class Home(HomeMaticIPObject):
         self.apExchangeState = ApExchangeState.from_str(js_home["apExchangeState"])
         self.id = js_home["id"]
         self.carrierSense = js_home["carrierSense"]
+
+        for ap, state in js_home["accessPointUpdateStates"].items():
+            ap_state = AccessPointUpdateState(self._connection)
+            ap_state.from_json(state)
+            self.accessPointUpdateStates[ap] = ap_state
 
         self._get_rules(js_home)
 
