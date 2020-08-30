@@ -212,10 +212,15 @@ workflows:
             tags:
               only: /.*/
       - test_3_7_0:
+          requires:
+            - test_3_6_1
           filters:
             tags:
               only: /.*/
       - test_3_8_0:
+          requires:
+            - test_3_6_1
+            - test_3_7_0
           filters:
             tags:
               only: /.*/
