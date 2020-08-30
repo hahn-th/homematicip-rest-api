@@ -41,11 +41,12 @@ def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None
     async def wait_for_close(stop_threads):
         while True:
             await asyncio.sleep(1)
-            if stop_threads():
+            if stop_threads:
                 break
 
     asyncio.set_event_loop(loop)
     loop.run_until_complete(wait_for_close(stop_threads))
+    loop.run_until_complete(asyncio.sleep(0))
     loop.close()
 
 
@@ -79,8 +80,7 @@ async def fake_cloud(aiohttp_server, ssl_ctx):
 
     asyncio.run_coroutine_threadsafe(server.close(), loop).result()
     stop_threads = True
-    asyncio.run_coroutine_threadsafe(asyncio.sleep(0.5), loop).result()
-    await asyncio.sleep(0.5)
+    await asyncio.sleep(0.1)
     
 
 
