@@ -38,6 +38,8 @@ def send_event(fake_home: Home, pushEventType: EventType, type: str, data):
     else:
         event_data = {"events": {"0": {"pushEventType": str(pushEventType)}}}
     with no_ssl_verification():
+        print("TESTTEST")
+        print(event_data)
         fake_home._restCall("ws/send", json.dumps(event_data))
 
 
