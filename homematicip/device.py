@@ -713,6 +713,7 @@ class OpenCollector8Module(Switch):
 class HeatingSwitch2(Switch):
     """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
 
+
 class WiredSwitch8(Switch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
 
@@ -1247,7 +1248,7 @@ class Dimmer(Device):
             self.userDesiredProfileMode,
         )
 
-    def set_dim_level(self, dimLevel=0.0, channelIndex = 1):
+    def set_dim_level(self, dimLevel=0.0, channelIndex=1):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
         return self._restCall("device/control/setDimLevel", json.dumps(data))
 
@@ -1262,6 +1263,7 @@ class BrandDimmer(Dimmer):
 
 class FullFlushDimmer(Dimmer):
     """HMIP-FDT Dimming Actuator flush-mount"""
+
 
 class WiredDimmer3(Dimmer):
     """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
@@ -1620,6 +1622,7 @@ class FullFlushContactInterface(Device):
             self.windowState,
         )
 
+
 class WiredInput32(FullFlushContactInterface):
     """ HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels) """
 
@@ -1816,8 +1819,10 @@ class PluggableMainsFailureSurveillance(Device):
             self.set_attr_from_dict("powerMainsFailure", c)
             self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
 
+
 class TiltVibrationSensor(Device):
     """ HMIP-STV (Inclination and vibration Sensor) """
+
     def __init__(self, connection):
         super().__init__(connection)
         #:float:

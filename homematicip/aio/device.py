@@ -513,13 +513,15 @@ class AsyncRoomControlDeviceAnalog(AsyncDevice):
             self.set_attr_from_dict("temperatureOffset", c)
 
 
-class AsyncWiredDimmer3(WiredDimmer3,AsyncDimmer):
+class AsyncWiredDimmer3(WiredDimmer3, AsyncDimmer):
     """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
 
-class AsyncWiredInput32(WiredInput32,AsyncFullFlushContactInterface):
+
+class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
     """ HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels) """
 
-class AsyncWiredSwitch8(WiredSwitch8,AsyncSwitch):
+
+class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
 
 

@@ -100,6 +100,7 @@ async def test_acceleration_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
     assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
 
+
 @pytest.mark.asyncio
 async def test_tilt_vibration_sensor(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
@@ -116,8 +117,8 @@ async def test_tilt_vibration_sensor(no_ssl_fake_async_home: AsyncHome):
         "HmIP-STV Garage Neigungs- und Erschütterungssensor lowBat(False) unreach(False)"
         " rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False)"
         " accelerationSensorEventFilterPeriod(0.5) accelerationSensorMode(FLAT_DECT) "
-      "accelerationSensorSensitivity(SENSOR_RANGE_2G) accelerationSensorTriggerAngle(45)"
-" accelerationSensorTriggered(True)"
+        "accelerationSensorSensitivity(SENSOR_RANGE_2G) accelerationSensorTriggerAngle(45)"
+        " accelerationSensorTriggered(True)"
     )
     await asyncio.gather(
         d.set_acceleration_sensor_event_filter_period(10.0),
@@ -136,6 +137,7 @@ async def test_tilt_vibration_sensor(no_ssl_fake_async_home: AsyncHome):
         d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_4G
     )
     assert d.accelerationSensorTriggerAngle == 30
+
 
 @pytest.mark.asyncio
 async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):
