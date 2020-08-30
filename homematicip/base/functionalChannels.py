@@ -853,3 +853,32 @@ class MultiModeInputSwitchChannel(FunctionalChannel):
         self.set_attr_from_dict("on", js)
         self.set_attr_from_dict("profileMode", js, ProfileMode)
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
+
+class TiltVibrationSensorChannel(FunctionalChannel):
+    """ this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
+        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
+        self.set_attr_from_dict(
+            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
+        )
+        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
+        self.set_attr_from_dict("accelerationSensorTriggered", js)

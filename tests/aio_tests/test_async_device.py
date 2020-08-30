@@ -100,6 +100,42 @@ async def test_acceleration_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
     assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
 
+@pytest.mark.asyncio
+async def test_tilt_vibration_sensor(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
+    assert isinstance(d, TiltVibrationSensor)
+    assert d.accelerationSensorEventFilterPeriod == 0.5
+    assert d.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
+    assert (
+        d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+    )
+    assert d.accelerationSensorTriggerAngle == 45
+    assert d.accelerationSensorTriggered is True
+
+    assert str(d) == (
+        "HmIP-STV Garage Neigungs- und Erschütterungssensor lowBat(False) unreach(False)"
+        " rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False)"
+        " accelerationSensorEventFilterPeriod(0.5) accelerationSensorMode(FLAT_DECT) "
+      "accelerationSensorSensitivity(SENSOR_RANGE_2G) accelerationSensorTriggerAngle(45)"
+" accelerationSensorTriggered(True)"
+    )
+    await asyncio.gather(
+        d.set_acceleration_sensor_event_filter_period(10.0),
+        d.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION),
+        d.set_acceleration_sensor_sensitivity(
+            AccelerationSensorSensitivity.SENSOR_RANGE_4G
+        ),
+        d.set_acceleration_sensor_trigger_angle(30),
+    )
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
+
+    assert d.accelerationSensorEventFilterPeriod == 10.0
+    assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
+    assert (
+        d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+    )
+    assert d.accelerationSensorTriggerAngle == 30
 
 @pytest.mark.asyncio
 async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):

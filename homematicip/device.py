@@ -1815,3 +1815,79 @@ class PluggableMainsFailureSurveillance(Device):
         if c:
             self.set_attr_from_dict("powerMainsFailure", c)
             self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
+
+class TiltVibrationSensor(Device):
+    """ HMIP-STV (Inclination and vibration Sensor) """
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("TILT_VIBRATION_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("accelerationSensorEventFilterPeriod", c)
+            self.set_attr_from_dict("accelerationSensorMode", c, AccelerationSensorMode)
+            self.set_attr_from_dict(
+                "accelerationSensorSensitivity", c, AccelerationSensorSensitivity
+            )
+            self.set_attr_from_dict("accelerationSensorTriggerAngle", c)
+            self.set_attr_from_dict("accelerationSensorTriggered", c)
+
+    def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorMode": str(mode),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorMode", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorSensitivity": str(sensitivity),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorTriggerAngle": angle,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorEventFilterPeriod": period,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
+        )

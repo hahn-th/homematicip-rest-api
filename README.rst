@@ -156,7 +156,7 @@ Homematic IP Devices:
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
 -  [X] HMIP-STHO-A     (Temperature and Humidity Sensor – outdoor, anthracite)
--  [ ] HMIP-STV        (Inclination and vibration Sensor)
+-  [X] HMIP-STV        (Inclination and vibration Sensor)
 -  [X] HMIP-SWD        (Water Sensor)
 -  [X] HMIP-SWDM       (Door / Window Contact - magnetic)
 -  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic) *Silvercrest Edition*

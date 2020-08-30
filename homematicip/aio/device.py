@@ -521,3 +521,33 @@ class AsyncWiredInput32(WiredInput32,AsyncFullFlushContactInterface):
 
 class AsyncWiredSwitch8(WiredSwitch8,AsyncSwitch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+
+
+class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
+    """ HMIP-STV (Inclination and vibration Sensor) """
+
+    async def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_mode(mode, channelIndex)
+        )
+
+    async def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_sensitivity(sensitivity, channelIndex)
+        )
+
+    async def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_trigger_angle(angle, channelIndex)
+        )
+
+    async def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
+        )

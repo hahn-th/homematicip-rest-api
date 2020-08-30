@@ -106,6 +106,43 @@ def test_acceleration_sensor(fake_home: Home):
             d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
         )
 
+def test_tilt_vibration_sensor(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
+    assert isinstance(d, TiltVibrationSensor)
+    assert d.accelerationSensorEventFilterPeriod == 0.5
+    assert d.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
+    assert (
+        d.accelerationSensorSensitivity == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+    )
+    assert d.accelerationSensorTriggerAngle == 45
+    assert d.accelerationSensorTriggered is True
+
+    assert str(d) == (
+        "HmIP-STV Garage Neigungs- und Erschütterungssensor lowBat(False) unreach(False)"
+        " rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False)"
+        " accelerationSensorEventFilterPeriod(0.5) accelerationSensorMode(FLAT_DECT) "
+      "accelerationSensorSensitivity(SENSOR_RANGE_2G) accelerationSensorTriggerAngle(45)"
+" accelerationSensorTriggered(True)"
+    )
+
+    with no_ssl_verification():
+        d.set_acceleration_sensor_event_filter_period(10.0)
+        d.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
+        d.set_acceleration_sensor_sensitivity(
+            AccelerationSensorSensitivity.SENSOR_RANGE_4G
+        )
+        d.set_acceleration_sensor_trigger_angle(30)
+
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
+
+        assert d.accelerationSensorEventFilterPeriod == 10.0
+        assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
+        assert (
+            d.accelerationSensorSensitivity
+            == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+        )
+        assert d.accelerationSensorTriggerAngle == 30
 
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")
