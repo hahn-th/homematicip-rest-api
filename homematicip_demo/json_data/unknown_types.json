@@ -68,6 +68,13 @@
         }
     },
     "home": {
+        "accessPointUpdateStates": {
+            "3014F711A000000000000000": {
+                "accessPointUpdateState": "UP_TO_DATE",
+                "successfulUpdateTimestamp": 0,
+                "updateStateChangedTimestamp": 0
+            }
+        },
         "apExchangeClientId": null,
         "apExchangeState": "NONE",
         "availableAPVersion": null,

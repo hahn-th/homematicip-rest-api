@@ -261,6 +261,9 @@ class DeviceType(AutoNameEnum):
     WEATHER_SENSOR = auto()
     WEATHER_SENSOR_PLUS = auto()
     WEATHER_SENSOR_PRO = auto()
+    WIRED_DIMMER_3 = auto()
+    WIRED_INPUT_32 = auto()
+    WIRED_SWITCH_8 = auto()
 
 
 class GroupType(AutoNameEnum):
@@ -425,9 +428,6 @@ class FunctionalChannelType(AutoNameEnum):
     WEATHER_SENSOR_CHANNEL = auto()
     WEATHER_SENSOR_PRO_CHANNEL = auto()
     WEATHER_SENSOR_PLUS_CHANNEL = auto()
-    WIRED_DIMMER_3 = auto()
-    WIRED_INPUT_32 = auto()
-    WIRED_SWITCH_8 = auto()
 
 
 class HeatingLoadType(AutoNameEnum):
@@ -536,8 +536,9 @@ class AlarmSignalType(AutoNameEnum):
     SILENT_ALARM = auto()
     FULL_ALARM = auto()
 
+
 class ConnectionType(AutoNameEnum):
     HMIP_RF = auto()
     HMIP_WIRED = auto()
     HMIP_LAN = auto()
-    HMIP_WLAN  = auto()
+    HMIP_WLAN = auto()

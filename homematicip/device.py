@@ -17,25 +17,29 @@ class Device(HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
 
     _supportedFeatureAttributeMap = {
-        "IFeatureDeviceOverheated": "deviceOverheated",
-        "IFeatureDeviceOverloaded": "deviceOverloaded",
-        "IFeatureDeviceUndervoltage": "deviceUndervoltage",
-        "IFeatureDeviceTemperatureOutOfRange": "temperatureOutOfRange",
-        "IFeatureDeviceCoProError": "coProFaulty",
-        "IFeatureDeviceCoProRestart": "coProRestartNeeded",
-        "IFeatureDeviceCoProUpdate": "coProUpdateFailure",
-        "IFeatureMinimumFloorHeatingValvePosition": "minimumFloorHeatingValvePosition",
-        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled",
-        "IFeatureBusConfigMismatch": "busConfigMismatch",
-        "IFeatureShortCircuitDataLine": "shortCircuitDataLine",
-        "IFeatureRssiValue": "rssiDeviceValue",
-        "IOptionalFeatureDutyCycle": "dutyCycle",
-        "IFeaturePowerShortCircuit": "powerShortCircuit",
-        "IOptionalFeatureLowBat": "lowBat",
-        "IFeatureDevicePowerFailure": "devicePowerFailureDetected",
-        "IFeatureDeviceUndervoltage": "deviceUndervoltage",
-        "IFeatureMulticastRouter": "multicastRoutingEnabled",
-        "IFeatureDeviceIdentify":"deviceIdentifySupported",
+        "IFeatureDeviceOverheated": ["deviceOverheated"],
+        "IFeatureDeviceOverloaded": ["deviceOverloaded"],
+        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
+        "IFeatureDeviceTemperatureOutOfRange": ["temperatureOutOfRange"],
+        "IFeatureDeviceCoProError": ["coProFaulty"],
+        "IFeatureDeviceCoProRestart": ["coProRestartNeeded"],
+        "IFeatureDeviceCoProUpdate": ["coProUpdateFailure"],
+        "IFeatureMinimumFloorHeatingValvePosition": [
+            "minimumFloorHeatingValvePosition"
+        ],
+        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": [
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled"
+        ],
+        "IFeatureBusConfigMismatch": ["busConfigMismatch"],
+        "IFeatureShortCircuitDataLine": ["shortCircuitDataLine"],
+        "IFeatureRssiValue": ["rssiDeviceValue"],
+        "IOptionalFeatureDutyCycle": ["dutyCycle"],
+        "IFeaturePowerShortCircuit": ["powerShortCircuit"],
+        "IOptionalFeatureLowBat": ["lowBat"],
+        "IFeatureDevicePowerFailure": ["devicePowerFailureDetected"],
+        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
+        "IFeatureMulticastRouter": ["multicastRoutingEnabled"],
+        "IFeatureDeviceIdentify": [],
     }
 
     def __init__(self, connection):
@@ -89,7 +93,9 @@ class Device(HomeMaticIPObject):
         self.powerShortCircuit = False
         self.deviceUndervoltage = False
         self.devicePowerFailureDetected = False
-        self.deviceIdentifySupported = False # just placeholder at the moment the feature doesn't set any values
+        self.deviceIdentifySupported = (
+            False  # just placeholder at the moment the feature doesn't set any values
+        )
 
     def from_json(self, js):
         super().from_json(js)
@@ -128,9 +134,8 @@ class Device(HomeMaticIPObject):
                 for k, v in sof.items():
                     if v:
                         if k in Device._supportedFeatureAttributeMap:
-                            self.set_attr_from_dict(
-                                Device._supportedFeatureAttributeMap[k], c
-                            )
+                            for attribute in Device._supportedFeatureAttributeMap[k]:
+                                self.set_attr_from_dict(attribute, c)
                         else:  # pragma: no cover
                             LOGGER.warning(
                                 "Optional Device Feature '%s' is not yet supported", k,
@@ -708,6 +713,9 @@ class OpenCollector8Module(Switch):
 class HeatingSwitch2(Switch):
     """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
 
+class WiredSwitch8(Switch):
+    """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+
 
 class SwitchMeasuring(Switch):
     """ Generic class for Switch and Meter """
@@ -1239,8 +1247,8 @@ class Dimmer(Device):
             self.userDesiredProfileMode,
         )
 
-    def set_dim_level(self, dimLevel=0.0):
-        data = {"channelIndex": 1, "deviceId": self.id, "dimLevel": dimLevel}
+    def set_dim_level(self, dimLevel=0.0, channelIndex = 1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
         return self._restCall("device/control/setDimLevel", json.dumps(data))
 
 
@@ -1254,6 +1262,9 @@ class BrandDimmer(Dimmer):
 
 class FullFlushDimmer(Dimmer):
     """HMIP-FDT Dimming Actuator flush-mount"""
+
+class WiredDimmer3(Dimmer):
+    """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
 
 
 class WeatherSensor(Device):
@@ -1608,6 +1619,9 @@ class FullFlushContactInterface(Device):
             self.multiModeInputMode,
             self.windowState,
         )
+
+class WiredInput32(FullFlushContactInterface):
+    """ HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels) """
 
 
 class FullFlushInputSwitch(Switch):

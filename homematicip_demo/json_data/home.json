@@ -14,6 +14,767 @@
         }
     },
     "devices": {
+        "3014F711000WIREDSWITCH8": {
+            "availableFirmwareVersion": "0.0.0",
+            "connectionType": "HMIP_WIRED",
+            "firmwareVersion": "1.2.4",
+            "firmwareVersionInteger": 66052,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "devicePowerFailureDetected": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": null,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": null,
+                    "rssiPeerValue": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceIdentify": true,
+                        "IFeatureDeviceOverheated": true,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDevicePowerFailure": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": true
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "index": 1,
+                    "label": "Fernseher (Wohnzimmer)",
+                    "on": true,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "2": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [],
+                    "index": 2,
+                    "label": "Steckdosen (Wohnzimmer)",
+                    "on": true,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "3": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [],
+                    "index": 3,
+                    "label": "Steckdosen Kaffeeecke (K\u00fcche)",
+                    "on": true,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "4": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [],
+                    "index": 4,
+                    "label": "Steckdosen (K\u00fcche)",
+                    "on": true,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "5": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [],
+                    "index": 5,
+                    "label": "T\u00fcrlicht (Garten)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "6": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [],
+                    "index": 6,
+                    "label": "Arbeitsplattenlicht (K\u00fcche)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "7": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 7,
+                    "groups": [],
+                    "index": 7,
+                    "label": "Raumlich (Flur/Oben)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "8": {
+                    "deviceId": "3014F711000WIREDSWITCH8",
+                    "functionalChannelType": "SWITCH_CHANNEL",
+                    "groupIndex": 8,
+                    "groups": [],
+                    "index": 8,
+                    "label": "Spiegellicht (Bad/Oben)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000WIREDSWITCH8",
+            "label": "Wired Schaltaktor \u2013 8-fach",
+            "lastStatusUpdate": 1595225535806,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 343,
+            "modelType": "HmIPW-DRS8",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711000WIREDSWITCH8",
+            "type": "WIRED_SWITCH_8",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711000WIREDDIMMER3": {
+            "availableFirmwareVersion": "0.0.0",
+            "connectionType": "HMIP_WIRED",
+            "firmwareVersion": "1.0.0",
+            "firmwareVersionInteger": 65536,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F711000WIREDDIMMER3",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "devicePowerFailureDetected": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": null,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": null,
+                    "rssiPeerValue": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceIdentify": true,
+                        "IFeatureDeviceOverheated": true,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDevicePowerFailure": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": true
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "deviceId": "3014F711000WIREDDIMMER3",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "DIMMER_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "index": 1,
+                    "label": "Raumlich (K\u00fcche)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceOverloaded": true
+                    },
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "2": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "deviceId": "3014F711000WIREDDIMMER3",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "DIMMER_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [],
+                    "index": 2,
+                    "label": "Raumlicht (Bad/Oben)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceOverloaded": true
+                    },
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "3": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "deviceId": "3014F711000WIREDDIMMER3",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "DIMMER_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [],
+                    "index": 3,
+                    "label": "Raumlich (Kinderzimmer/Oben)",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceOverloaded": true
+                    },
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000WIREDDIMMER3",
+            "label": "Wired Dimmaktor \u2013 3-fach (K\u00fcche)",
+            "lastStatusUpdate": 1595225686220,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 345,
+            "modelType": "HmIPW-DRD3",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711000WIREDDIMMER3",
+            "type": "WIRED_DIMMER_3",
+            "updateState": "UP_TO_DATE"
+        },
+        "3014F711000WIREDINPUT32": {
+            "availableFirmwareVersion": "0.0.0",
+            "connectionType": "HMIP_WIRED",
+            "firmwareVersion": "1.2.2",
+            "firmwareVersionInteger": 66050,
+            "functionalChannels": {
+                "0": {
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "devicePowerFailureDetected": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": null,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": null,
+                    "rssiPeerValue": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceIdentify": true,
+                        "IFeatureDeviceOverheated": true,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDevicePowerFailure": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": true
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [],
+                    "index": 1,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "10": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 10,
+                    "groups": [],
+                    "index": 10,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "11": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 11,
+                    "groups": [],
+                    "index": 11,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "12": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 12,
+                    "groups": [],
+                    "index": 12,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "13": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 13,
+                    "groups": [],
+                    "index": 13,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "14": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 14,
+                    "groups": [],
+                    "index": 14,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "15": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 15,
+                    "groups": [],
+                    "index": 15,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "16": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 16,
+                    "groups": [],
+                    "index": 16,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "17": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 17,
+                    "groups": [],
+                    "index": 17,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "18": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 18,
+                    "groups": [],
+                    "index": 18,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "19": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 19,
+                    "groups": [],
+                    "index": 19,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "2": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [],
+                    "index": 2,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "20": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 20,
+                    "groups": [],
+                    "index": 20,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "21": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 21,
+                    "groups": [],
+                    "index": 21,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "22": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 22,
+                    "groups": [],
+                    "index": 22,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "23": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 23,
+                    "groups": [],
+                    "index": 23,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "24": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 24,
+                    "groups": [],
+                    "index": 24,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "25": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 25,
+                    "groups": [],
+                    "index": 25,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "26": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 26,
+                    "groups": [],
+                    "index": 26,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "27": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 27,
+                    "groups": [],
+                    "index": 27,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "28": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 28,
+                    "groups": [],
+                    "index": 28,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "29": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 29,
+                    "groups": [],
+                    "index": 29,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "3": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [],
+                    "index": 3,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "30": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 30,
+                    "groups": [],
+                    "index": 30,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "31": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 31,
+                    "groups": [],
+                    "index": 31,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "32": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 32,
+                    "groups": [],
+                    "index": 32,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "4": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [],
+                    "index": 4,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "5": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 5,
+                    "groups": [],
+                    "index": 5,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "6": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 6,
+                    "groups": [],
+                    "index": 6,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "7": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 7,
+                    "groups": [],
+                    "index": 7,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "8": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 8,
+                    "groups": [],
+                    "index": 8,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                },
+                "9": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F711000WIREDINPUT32",
+                    "functionalChannelType": "MULTI_MODE_INPUT_CHANNEL",
+                    "groupIndex": 9,
+                    "groups": [],
+                    "index": 9,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "supportedOptionalFeatures": {
+                        "IOptionalFeatureWindowState": false
+                    },
+                    "windowState": "CLOSED"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711000WIREDINPUT32",
+            "label": "Wired Eingangsmodul \u2013 32-fach",
+            "lastStatusUpdate": 1595222885844,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 347,
+            "modelType": "HmIPW-DRI32",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711000WIREDINPUT32",
+            "type": "WIRED_INPUT_32",
+            "updateState": "UP_TO_DATE"
+        },
         "3014F7110SHUTTER_OPTICAL": {
             "availableFirmwareVersion": "1.16.10",
             "connectionType": "HMIP_RF",
