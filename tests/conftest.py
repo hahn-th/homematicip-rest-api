@@ -48,11 +48,15 @@ def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None
     loop.run_until_complete(wait_for_close(stop_threads))
     loop.run_until_complete(asyncio.sleep(0))
 
+@pytest.yield_fixture(scope='session')
+def event_loop(request):
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
 
-@pytest.fixture
-async def fake_cloud(aiohttp_server, ssl_ctx):
-    """Defines the testserver funcarg"""
-
+test_server = None
+@pytest.fixture(scope="session")
+async def session_stop_threads():
     loop = asyncio.new_event_loop()
     stop_threads = False
     t = Thread(
@@ -62,26 +66,34 @@ async def fake_cloud(aiohttp_server, ssl_ctx):
     )
     t.setDaemon(True)
     t.start()
-
-    aio_server = AsyncFakeCloudServer()
-    app = web.Application()
-    app.router.add_route("GET", "/{tail:.*}", aio_server)
-    app.router.add_route("POST", "/{tail:.*}", aio_server)
-
-    server = TestServer(app)
-    asyncio.run_coroutine_threadsafe(
-        server.start_server(loop=loop, ssl=ssl_ctx), loop
-    ).result()
-    aio_server.url = str(server._root)
-    server.url = aio_server.url
-
-    yield server
+    yield loop
 
     stop_threads = True
-    asyncio.run_coroutine_threadsafe(server.close(), loop).result()
+    t.join()
     while loop.is_running():
         await asyncio.sleep(0.1)
     loop.close()
+    
+@pytest.fixture
+async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
+    """Defines the testserver funcarg"""
+    global test_server
+    if test_server is None:
+        aio_server = AsyncFakeCloudServer()
+        app = web.Application()
+        app.router.add_route("GET", "/{tail:.*}", aio_server)
+        app.router.add_route("POST", "/{tail:.*}", aio_server)
+
+        test_server = TestServer(app)
+        asyncio.run_coroutine_threadsafe(
+            test_server.start_server(loop=session_stop_threads, ssl=ssl_ctx), session_stop_threads
+        ).result()
+        aio_server.url = str(test_server._root)
+        test_server.url = aio_server.url
+        test_server.aio_server = aio_server
+    test_server.aio_server.reset()
+    return test_server
+
     
 
 
