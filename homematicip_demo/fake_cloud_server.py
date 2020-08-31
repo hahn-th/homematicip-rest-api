@@ -1068,7 +1068,6 @@ class AsyncFakeCloudServer:
 
     # region websocket
     async def get_ws(self, request):
-        print("GET_WS")
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
         async for msg in self.ws:
@@ -1079,7 +1078,6 @@ class AsyncFakeCloudServer:
 
     async def post_hmip_ws_send(self, request):
         """ this function will send specific data to the websocket """
-        print("WS_SEND")
         await self.ws.send_json(json.loads(request.data))
         return web.json_response(None)
 
