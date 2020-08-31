@@ -70,8 +70,8 @@ async def session_stop_threads():
 
     stop_threads = True
     t.join()
-    while loop.is_running():
-        await asyncio.sleep(0.1)
+    while loop.is_running(): # pragma: no cover
+        await asyncio.sleep(0.1) 
     loop.close()
     
 @pytest.fixture
