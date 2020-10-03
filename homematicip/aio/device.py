@@ -347,9 +347,9 @@ class AsyncBrandBlind(BrandBlind, AsyncFullFlushBlind):
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
 
-    async def set_dim_level(self, dimLevel=0.0):
+    async def set_dim_level(self, dimLevel=0.0, channelIndex=1):
         return await self._connection.api_call(
-            *super().set_dim_level(dimLevel=dimLevel)
+            *super().set_dim_level(dimLevel=dimLevel, channelIndex=channelIndex)
         )
 
 
