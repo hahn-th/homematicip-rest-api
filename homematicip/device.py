@@ -17,15 +17,29 @@ class Device(HomeMaticIPObject):
     """ this class represents a generic homematic ip device """
 
     _supportedFeatureAttributeMap = {
-        "IFeatureDeviceOverheated": "deviceOverheated",
-        "IFeatureDeviceOverloaded": "deviceOverloaded",
-        "IFeatureDeviceUndervoltage": "deviceUndervoltage",
-        "IFeatureDeviceTemperatureOutOfRange": "temperatureOutOfRange",
-        "IFeatureDeviceCoProError": "coProFaulty",
-        "IFeatureDeviceCoProRestart": "coProRestartNeeded",
-        "IFeatureDeviceCoProUpdate": "coProUpdateFailure",
-        "IFeatureMinimumFloorHeatingValvePosition": "minimumFloorHeatingValvePosition",
-        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled",
+        "IFeatureDeviceOverheated": ["deviceOverheated"],
+        "IFeatureDeviceOverloaded": ["deviceOverloaded"],
+        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
+        "IFeatureDeviceTemperatureOutOfRange": ["temperatureOutOfRange"],
+        "IFeatureDeviceCoProError": ["coProFaulty"],
+        "IFeatureDeviceCoProRestart": ["coProRestartNeeded"],
+        "IFeatureDeviceCoProUpdate": ["coProUpdateFailure"],
+        "IFeatureMinimumFloorHeatingValvePosition": [
+            "minimumFloorHeatingValvePosition"
+        ],
+        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": [
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled"
+        ],
+        "IFeatureBusConfigMismatch": ["busConfigMismatch"],
+        "IFeatureShortCircuitDataLine": ["shortCircuitDataLine"],
+        "IFeatureRssiValue": ["rssiDeviceValue"],
+        "IOptionalFeatureDutyCycle": ["dutyCycle"],
+        "IFeaturePowerShortCircuit": ["powerShortCircuit"],
+        "IOptionalFeatureLowBat": ["lowBat"],
+        "IFeatureDevicePowerFailure": ["devicePowerFailureDetected"],
+        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
+        "IFeatureMulticastRouter": ["multicastRoutingEnabled"],
+        "IFeatureDeviceIdentify": [],
     }
 
     def __init__(self, connection):
@@ -33,6 +47,7 @@ class Device(HomeMaticIPObject):
         self.id = None
         self.homeId = None
         self.label = None
+        self.connectionType = ConnectionType.HMIP_LAN
         self.lastStatusUpdate = None
         self.deviceType = None
         self.updateState = DeviceUpdateState.UP_TO_DATE
@@ -73,6 +88,14 @@ class Device(HomeMaticIPObject):
         self.coProFaulty = False
         self.coProRestartNeeded = False
         self.coProUpdateFailure = False
+        self.busConfigMismatch = False
+        self.shortCircuitDataLine = False
+        self.powerShortCircuit = False
+        self.deviceUndervoltage = False
+        self.devicePowerFailureDetected = False
+        self.deviceIdentifySupported = (
+            False  # just placeholder at the moment the feature doesn't set any values
+        )
 
     def from_json(self, js):
         super().from_json(js)
@@ -94,7 +117,7 @@ class Device(HomeMaticIPObject):
         self.serializedGlobalTradeItemNumber = js["serializedGlobalTradeItemNumber"]
         self.permanentlyReachable = js["permanentlyReachable"]
         self.liveUpdateState = LiveUpdateState.from_str(js["liveUpdateState"])
-
+        self.connectionType = ConnectionType.from_str(js["connectionType"])
         c = get_functional_channel(self._baseChannel, js)
         if c:
             self.set_attr_from_dict("lowBat", c)
@@ -111,9 +134,8 @@ class Device(HomeMaticIPObject):
                 for k, v in sof.items():
                     if v:
                         if k in Device._supportedFeatureAttributeMap:
-                            self.set_attr_from_dict(
-                                Device._supportedFeatureAttributeMap[k], c
-                            )
+                            for attribute in Device._supportedFeatureAttributeMap[k]:
+                                self.set_attr_from_dict(attribute, c)
                         else:  # pragma: no cover
                             LOGGER.warning(
                                 "Optional Device Feature '%s' is not yet supported", k,
@@ -692,6 +714,10 @@ class HeatingSwitch2(Switch):
     """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
 
 
+class WiredSwitch8(Switch):
+    """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+
+
 class SwitchMeasuring(Switch):
     """ Generic class for Switch and Meter """
 
@@ -1222,8 +1248,8 @@ class Dimmer(Device):
             self.userDesiredProfileMode,
         )
 
-    def set_dim_level(self, dimLevel=0.0):
-        data = {"channelIndex": 1, "deviceId": self.id, "dimLevel": dimLevel}
+    def set_dim_level(self, dimLevel=0.0, channelIndex=1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
         return self._restCall("device/control/setDimLevel", json.dumps(data))
 
 
@@ -1237,6 +1263,10 @@ class BrandDimmer(Dimmer):
 
 class FullFlushDimmer(Dimmer):
     """HMIP-FDT Dimming Actuator flush-mount"""
+
+
+class WiredDimmer3(Dimmer):
+    """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
 
 
 class WeatherSensor(Device):
@@ -1593,6 +1623,10 @@ class FullFlushContactInterface(Device):
         )
 
 
+class WiredInput32(FullFlushContactInterface):
+    """ HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels) """
+
+
 class FullFlushInputSwitch(Switch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
 
@@ -1784,3 +1818,81 @@ class PluggableMainsFailureSurveillance(Device):
         if c:
             self.set_attr_from_dict("powerMainsFailure", c)
             self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
+
+
+class TiltVibrationSensor(Device):
+    """ HMIP-STV (Inclination and vibration Sensor) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("TILT_VIBRATION_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("accelerationSensorEventFilterPeriod", c)
+            self.set_attr_from_dict("accelerationSensorMode", c, AccelerationSensorMode)
+            self.set_attr_from_dict(
+                "accelerationSensorSensitivity", c, AccelerationSensorSensitivity
+            )
+            self.set_attr_from_dict("accelerationSensorTriggerAngle", c)
+            self.set_attr_from_dict("accelerationSensorTriggered", c)
+
+    def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorMode": str(mode),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorMode", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorSensitivity": str(sensitivity),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorTriggerAngle": angle,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
+        )
+
+    def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "accelerationSensorEventFilterPeriod": period,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
+        )

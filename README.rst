@@ -113,6 +113,7 @@ Homematic IP Devices:
 -  [X] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
 -  [X] HMIP-HAP        (Cloud Access Point)
 -  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
+-  [ ] HMIP-HDM1       (Hunter Douglas & erfal window blinds)
 -  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
 -  [ ] HMIP-K-DRSI1    (Actuator Inbound 230V – 1x channel) electrical DIN rail
 -  [ ] HMIP-K-DRDI3    (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
@@ -156,7 +157,7 @@ Homematic IP Devices:
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
 -  [X] HMIP-STHO-A     (Temperature and Humidity Sensor – outdoor, anthracite)
--  [ ] HMIP-STV        (Inclination and vibration Sensor)
+-  [X] HMIP-STV        (Inclination and vibration Sensor)
 -  [X] HMIP-SWD        (Water Sensor)
 -  [X] HMIP-SWDM       (Door / Window Contact - magnetic)
 -  [X] HMIP-SWDM-B2    (Door / Window Contact - magnetic) *Silvercrest Edition*
@@ -169,6 +170,7 @@ Homematic IP Devices:
 -  [X] HMIP-SWSD       (Smoke Detector)
 -  [ ] HMIP-WGC        (Garage Door Button)
 -  [X] HMIP-WHS2       (Switch Actuator for heating systems – 2x channels)
+-  [ ] HMIP-WLAN-HAP   (WLAN Access Point)
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
@@ -181,14 +183,14 @@ Homematic IP Devices:
 Homematic IP Wired Devices (no radio signal):
 ---------------------------------------------
 
--  [ ] HMIPW-DRAP       (Homematic IP Wired Access Point)
+-  [X] HMIPW-DRAP       (Homematic IP Wired Access Point)
 -  [ ] HMIPW-BRC2       (Homematic IP Wired Remote Control for brand switches – 2x channels)
 -  [ ] HMIPW-DRBL4      (Homematic IP Wired Blinds Actuator – 4x channels)
--  [ ] HMIPW-DRD3       (Homematic IP Wired Dimming Actuator – 3x channels)
--  [ ] HMIPW-DRS4       (Homematic IP Wired Swich Actuator – 4x channels)
+-  [X] HMIPW-DRD3       (Homematic IP Wired Dimming Actuator – 3x channels)
+-  [ ] HMIPW-DRS4       (Homematic IP Wired Switch Actuator – 4x channels)
 -  [ ] HMIPW-DRI16      (Homematic IP Wired Inbound module – 16x channels)
--  [ ] HMIPW-DRI32      (Homematic IP Wired Inbound module – 32x channels)
--  [ ] HMIPW-DRS8       (Homematic IP Wired Switch Actuator – 8x channels)
+-  [X] HMIPW-DRI32      (Homematic IP Wired Inbound module – 32x channels)
+-  [X] HMIPW-DRS8       (Homematic IP Wired Switch Actuator – 8x channels)
 -  [ ] HMIPW-FAL24-C6   (Homematic IP Wired Floor Heating Actuator – 6x channels, 24V)
 -  [ ] HMIPW-FAL24-C10  (Homematic IP Wired Floor Heating Actuator – 10x channels, 24V)
 -  [ ] HMIPW-FAL230-C6  (Homematic IP Wired Floor Heating Actuator – 6x channels, 230V)

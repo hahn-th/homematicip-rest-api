@@ -316,8 +316,10 @@ class AsyncFullFlushContactInterface(FullFlushContactInterface, AsyncDevice):
 
     pass
 
+
 class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
+
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
@@ -345,9 +347,9 @@ class AsyncBrandBlind(BrandBlind, AsyncFullFlushBlind):
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
 
-    async def set_dim_level(self, dimLevel=0.0):
+    async def set_dim_level(self, dimLevel=0.0, channelIndex=1):
         return await self._connection.api_call(
-            *super().set_dim_level(dimLevel=dimLevel)
+            *super().set_dim_level(dimLevel=dimLevel, channelIndex=channelIndex)
         )
 
 
@@ -509,3 +511,45 @@ class AsyncRoomControlDeviceAnalog(AsyncDevice):
             self.set_attr_from_dict("actualTemperature", c)
             self.set_attr_from_dict("setPointTemperature", c)
             self.set_attr_from_dict("temperatureOffset", c)
+
+
+class AsyncWiredDimmer3(WiredDimmer3, AsyncDimmer):
+    """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
+
+
+class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
+    """ HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels) """
+
+
+class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
+    """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+
+
+class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
+    """ HMIP-STV (Inclination and vibration Sensor) """
+
+    async def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_mode(mode, channelIndex)
+        )
+
+    async def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_sensitivity(sensitivity, channelIndex)
+        )
+
+    async def set_acceleration_sensor_trigger_angle(self, angle: int, channelIndex=1):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_trigger_angle(angle, channelIndex)
+        )
+
+    async def set_acceleration_sensor_event_filter_period(
+        self, period: float, channelIndex=1
+    ):
+        return await self._connection.api_call(
+            *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
+        )

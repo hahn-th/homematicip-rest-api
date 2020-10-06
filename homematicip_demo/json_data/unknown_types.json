@@ -10,6 +10,7 @@
     "devices": {
         "3014F7110000000000000050": {
             "availableFirmwareVersion": "0.0.0",
+            "connectionType": "HMIP_RF",
             "firmwareVersion": "1.0.2",
             "firmwareVersionInteger": "65538",
             "functionalChannels": {
@@ -31,22 +32,22 @@
                     "rssiPeerValue": -77,
                     "unreach": false
                 }
-                },
-                "homeId": "00000000-0000-0000-0000-000000000001",
-                "id": "3014F7110000000000000050",
-                "label": "DUMMY_DEVICE",
-                "lastStatusUpdate": 1530802738493,
-                "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
-                "manufacturerCode": 1,
-                "modelId": 353,
-                "modelType": "HmIP-DUMMY",
-                "oem": "eQ-3",
-                "permanentlyReachable": true,
-                "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
-                "type": "DUMMY_DEVICE",
-                "updateState": "UP_TO_DATE"
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000000050",
+            "label": "DUMMY_DEVICE",
+            "lastStatusUpdate": 1530802738493,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 353,
+            "modelType": "HmIP-DUMMY",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000000050",
+            "type": "DUMMY_DEVICE",
+            "updateState": "UP_TO_DATE"
 
-            }
+        }
     },
     "groups": {
         "00000000-0000-0000-0000-000000000020": {
@@ -67,6 +68,13 @@
         }
     },
     "home": {
+        "accessPointUpdateStates": {
+            "3014F711A000000000000000": {
+                "accessPointUpdateState": "UP_TO_DATE",
+                "successfulUpdateTimestamp": 0,
+                "updateStateChangedTimestamp": 0
+            }
+        },
         "apExchangeClientId": null,
         "apExchangeState": "NONE",
         "availableAPVersion": null,

@@ -63,6 +63,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
+    DeviceType.TILT_VIBRATION_SENSOR: TiltVibrationSensor,
     DeviceType.TORMATIC_MODULE: GarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
     DeviceType.WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY: WallMountedThermostatBasicHumidity,
@@ -70,6 +71,9 @@ TYPE_CLASS_MAP = {
     DeviceType.WEATHER_SENSOR: WeatherSensor,
     DeviceType.WEATHER_SENSOR_PLUS: WeatherSensorPlus,
     DeviceType.WEATHER_SENSOR_PRO: WeatherSensorPro,
+    DeviceType.WIRED_DIMMER_3: WiredDimmer3,
+    DeviceType.WIRED_INPUT_32: WiredInput32,
+    DeviceType.WIRED_SWITCH_8: WiredSwitch8,
 }
 
 TYPE_GROUP_MAP = {
@@ -172,6 +176,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.SMOKE_DETECTOR_CHANNEL: SmokeDetectorChannel,
     FunctionalChannelType.SWITCH_CHANNEL: SwitchChannel,
     FunctionalChannelType.SWITCH_MEASURING_CHANNEL: SwitchMeasuringChannel,
+    FunctionalChannelType.TILT_VIBRATION_SENSOR_CHANNEL: TiltVibrationSensorChannel,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL: WallMountedThermostatProChannel,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL: WallMountedThermostatWithoutDisplayChannel,
     FunctionalChannelType.WATER_SENSOR_CHANNEL: WaterSensorChannel,

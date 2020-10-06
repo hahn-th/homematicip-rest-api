@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0] 2020-08-31
+
+### ADDED
+- API
+    - Devices
+      - HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)
+      - HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)
+      - HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)
+      - HMIP-STV (Inclination and vibration Sensor)
+      - Fields
+        - connectionType
+        - new OptionalFeatures
+    - Home
+      - accessPointUpdateStates
 ### CHANGED
 - [BUG: 325] Requirements are now using a min version instead of a pinned version. requirements_dev.txt will still use the pinned versions to make sure that the latest version is compatible with the library.
 
@@ -15,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR: 320] Fix FSI-16
 
 ## [0.10.18] 2020-06-07
+
 ### Added
 - Devices
   - [HMIP-MOD-HO] (Module for Hörmann drives)
@@ -304,7 +319,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.0...HEAD
+[0.11.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...0.11.0
 [0.10.19]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.18...0.10.19
 [0.10.18]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...0.10.18
 [0.10.17]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.16...0.10.17
