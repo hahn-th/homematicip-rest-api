@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 # -- Project information -----------------------------------------------------
 
 project = "Homematic IP Rest API"
-copyright = "2018, Heimo Stieg"
+copyright = "2018 - 2020, Heimo Stieg"
 author = "Heimo Stieg"
 
 
