@@ -569,7 +569,7 @@ class HeatingCoolingProfile(HomeMaticIPObject):
 
     def update_profile(self):
         days = {}
-        for i in xrange(0, 7):
+        for i in range(0, 7):
             periods = []
             day = self.profileDays[i]
             for p in day.periods:
