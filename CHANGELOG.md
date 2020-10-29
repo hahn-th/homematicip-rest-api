@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ADDED
+- API
+    - Devices
+      - HMIP-HDM1 (Hunter Douglas & erfal window blinds)
+
+
 ### CHANGED
 
 - [BUG: 342] NameError: name 'xrange' is not defined on Python 3.8.1

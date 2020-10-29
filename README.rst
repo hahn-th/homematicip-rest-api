@@ -117,7 +117,7 @@ Homematic IP Devices:
 -  [X] HMIP-FSI16      (Switch Actuator with Push-button Input 230V, 16A)
 -  [X] HMIP-HAP        (Cloud Access Point)
 -  [X] HMIP-HAP-B1     (Cloud Access Point) *Silvercrest Edition*
--  [ ] HMIP-HDM1       (Hunter Douglas & erfal window blinds)
+-  [X] HMIP-HDM1       (Hunter Douglas & erfal window blinds)
 -  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
 -  [ ] HMIP-K-DRSI1    (Actuator Inbound 230V – 1x channel) electrical DIN rail
 -  [ ] HMIP-K-DRDI3    (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
