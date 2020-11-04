@@ -882,3 +882,66 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         )
         self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
         self.set_attr_from_dict("accelerationSensorTriggered", js)
+
+
+class ShadingChannel(FunctionalChannel):
+    """ this is the representative of the SHADING_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.automationDriveSpeed = DriveSpeed.CREEP_SPEED
+        self.manualDriveSpeed = DriveSpeed.CREEP_SPEED
+        self.favoritePrimaryShadingPosition = 0.0
+        self.favoriteSecondaryShadingPosition = 0.0
+        self.primaryShadingLevel = 0.0
+        self.secondaryShadingLevel = 0.0
+        self.previousPrimaryShadingLevel = 0.0
+        self.previousSecondaryShadingLevel = 0.0
+        self.identifyOemSupported = False
+        self.productId = 0
+        self.primaryCloseAdjustable = False
+        self.primaryOpenAdjustable = False
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.primaryCloseAdjustable = False
+        self.primaryOpenAdjustable = False
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.profileMode = ProfileMode.MANUAL
+        self.userDesiredProfileMode = ProfileMode.MANUAL
+        self.processing = False
+        self.shadingDriveVersion = None
+        self.shadingPackagePosition = ShadingPackagePosition.NOT_USED
+        self.shadingPositionAdjustmentActive = None
+        self.shadingPositionAdjustmentClientId = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("automationDriveSpeed", js, DriveSpeed)
+        self.set_attr_from_dict("manualDriveSpeed", js, DriveSpeed)
+
+        self.set_attr_from_dict("favoritePrimaryShadingPosition", js)
+        self.set_attr_from_dict("favoriteSecondaryShadingPosition", js)
+
+        self.set_attr_from_dict("primaryCloseAdjustable", js)
+        self.set_attr_from_dict("primaryOpenAdjustable", js)
+        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
+        self.set_attr_from_dict("secondaryCloseAdjustable", js)
+        self.set_attr_from_dict("secondaryOpenAdjustable", js)
+        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
+
+        self.set_attr_from_dict("primaryShadingLevel", js)
+        self.set_attr_from_dict("secondaryShadingLevel", js)
+
+        self.set_attr_from_dict("previousPrimaryShadingLevel", js)
+        self.set_attr_from_dict("previousSecondaryShadingLevel", js)
+
+        self.set_attr_from_dict("identifyOemSupported", js)
+        self.set_attr_from_dict("productId", js)
+
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
+        self.set_attr_from_dict("shadingDriveVersion", js)
+        self.set_attr_from_dict("shadingPackagePosition", js, ShadingPackagePosition)
+        self.set_attr_from_dict("shadingPositionAdjustmentActive", js)
+        self.set_attr_from_dict("shadingPositionAdjustmentClientId", js)

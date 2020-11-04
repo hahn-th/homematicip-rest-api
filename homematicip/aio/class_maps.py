@@ -8,6 +8,7 @@ TYPE_CLASS_MAP = {
     DeviceType.ACCELERATION_SENSOR: AsyncAccelerationSensor,
     DeviceType.ALARM_SIREN_INDOOR: AsyncAlarmSirenIndoor,
     DeviceType.ALARM_SIREN_OUTDOOR: AsyncAlarmSirenOutdoor,
+    DeviceType.BLIND_MODULE: AsyncBlindModule,
     DeviceType.BRAND_BLIND: AsyncBrandBlind,
     DeviceType.BRAND_DIMMER: AsyncBrandDimmer,
     DeviceType.BRAND_PUSH_BUTTON: AsyncBrandPushButton,

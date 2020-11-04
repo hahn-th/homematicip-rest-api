@@ -553,3 +553,21 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
         )
+
+
+class AsyncBlindModule(BlindModule, AsyncDevice):
+    """ HMIP-HDM1 (Hunter Douglas & erfal window blinds) """
+
+    async def set_primary_shading_level(self, primaryShadingLevel: float):
+        return await self._connection.api_call(
+            *super().set_primary_shading_level(primaryShadingLevel)
+        )
+
+    async def set_secondary_shading_level(
+        self, primaryShadingLevel: float, secondaryShadingLevel: float
+    ):
+        return await self._connection.api_call(
+            *super().set_secondary_shading_level(
+                primaryShadingLevel, secondaryShadingLevel
+            )
+        )

@@ -30,7 +30,9 @@ class AutoNameEnum(str, Enum):
         try:
             return cls(text)
         except:
-            logger.warning("'%s' isn't a valid option for class '%s'", text, cls.__name__)
+            logger.warning(
+                "'%s' isn't a valid option for class '%s'", text, cls.__name__
+            )
             return default
 
 
@@ -545,6 +547,7 @@ class ConnectionType(AutoNameEnum):
     HMIP_LAN = auto()
     HMIP_WLAN = auto()
 
+
 class ShadingStateType(AutoNameEnum):
     NOT_POSSIBLE = auto()
     NOT_EXISTENT = auto()
@@ -553,18 +556,20 @@ class ShadingStateType(AutoNameEnum):
     NOT_USED = auto()
     MIXED = auto()
 
+
 class DriveSpeed(AutoNameEnum):
-        CREEP_SPEED = auto()
-        SLOW_SPEED = auto()
-        NOMINAL_SPEED = auto()
-        OPTIONAL_SPEED = auto()
+    CREEP_SPEED = auto()
+    SLOW_SPEED = auto()
+    NOMINAL_SPEED = auto()
+    OPTIONAL_SPEED = auto()
+
 
 class ShadingPackagePosition(AutoNameEnum):
-    LEFT     = auto()
-    RIGHT    = auto()
-    CENTER   = auto()
-    SPLIT    = auto()
-    TOP      = auto()
-    BOTTOM   = auto()
-    TDBU     = auto()
+    LEFT = auto()
+    RIGHT = auto()
+    CENTER = auto()
+    SPLIT = auto()
+    TOP = auto()
+    BOTTOM = auto()
+    TDBU = auto()
     NOT_USED = auto()

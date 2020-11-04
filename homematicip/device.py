@@ -1189,20 +1189,22 @@ class FullFlushBlind(FullFlushShutter):
 class BrandBlind(FullFlushBlind):
     """ HMIP-BBL (Blind Actuator for brand switches) """
 
+
 class BlindModule(Device):
     """ HMIP-HDM1 (Hunter Douglas & erfal window blinds) """
+
     def __init__(self, connection):
         super().__init__(connection)
         self.automationDriveSpeed = DriveSpeed.CREEP_SPEED
         self.manualDriveSpeed = DriveSpeed.CREEP_SPEED
-        self.favoritePrimaryShadingPosition    = 0.0
-        self.favoriteSecondaryShadingPosition  = 0.0
-        self.primaryShadingLevel               = 0.0
-        self.secondaryShadingLevel             = 0.0
-        self.previousPrimaryShadingLevel               = 0.0
-        self.previousSecondaryShadingLevel             = 0.0
-        self.identifyOemSupported             = False
-        self.productId             = 0
+        self.favoritePrimaryShadingPosition = 0.0
+        self.favoriteSecondaryShadingPosition = 0.0
+        self.primaryShadingLevel = 0.0
+        self.secondaryShadingLevel = 0.0
+        self.previousPrimaryShadingLevel = 0.0
+        self.previousSecondaryShadingLevel = 0.0
+        self.identifyOemSupported = False
+        self.productId = 0
         self.primaryCloseAdjustable = False
         self.primaryOpenAdjustable = False
         self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
@@ -1211,7 +1213,7 @@ class BlindModule(Device):
         self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
         self.profileMode = ProfileMode.MANUAL
         self.userDesiredProfileMode = ProfileMode.MANUAL
-        self.processing             = False
+        self.processing = False
         self.shadingDriveVersion = None
         self.shadingPackagePosition = ShadingPackagePosition.NOT_USED
         self.shadingPositionAdjustmentActive = None
@@ -1226,10 +1228,10 @@ class BlindModule(Device):
 
             self.set_attr_from_dict("favoritePrimaryShadingPosition", c)
             self.set_attr_from_dict("favoriteSecondaryShadingPosition", c)
-            
+
             self.set_attr_from_dict("primaryCloseAdjustable", c)
             self.set_attr_from_dict("primaryOpenAdjustable", c)
-            self.set_attr_from_dict("primaryShadingStateType", c, ShadingStateType)            
+            self.set_attr_from_dict("primaryShadingStateType", c, ShadingStateType)
             self.set_attr_from_dict("secondaryCloseAdjustable", c)
             self.set_attr_from_dict("secondaryOpenAdjustable", c)
             self.set_attr_from_dict("secondaryShadingStateType", c, ShadingStateType)
@@ -1250,6 +1252,28 @@ class BlindModule(Device):
             self.set_attr_from_dict("shadingPackagePosition", c, ShadingPackagePosition)
             self.set_attr_from_dict("shadingPositionAdjustmentActive", c)
             self.set_attr_from_dict("shadingPositionAdjustmentClientId", c)
+
+    def set_primary_shading_level(self, primaryShadingLevel: float):
+        data = {
+            "channelIndex": 1,
+            "deviceId": self.id,
+            "primaryShadingLevel": primaryShadingLevel,
+        }
+        return self._restCall("device/control/setPrimaryShadingLevel", json.dumps(data))
+
+    def set_secondary_shading_level(
+        self, primaryShadingLevel: float, secondaryShadingLevel: float
+    ):
+        data = {
+            "channelIndex": 1,
+            "deviceId": self.id,
+            "primaryShadingLevel": primaryShadingLevel,
+            "secondaryShadingLevel": secondaryShadingLevel,
+        }
+        return self._restCall(
+            "device/control/setSecondaryShadingLevel", json.dumps(data)
+        )
+
 
 class LightSensor(Device):
     """ HMIP-SLO (Light Sensor outdoor) """
