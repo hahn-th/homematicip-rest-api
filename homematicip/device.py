@@ -198,6 +198,23 @@ class Device(HomeMaticIPObject):
         return fc
 
 
+class HomeControlAccessPoint(Device):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.dutyCycleLevel = 0.0
+        self.accessPointPriority = 0
+        self.signalBrightness = 0
+        self._baseChannel = "ACCESS_CONTROLLER_CHANNEL"
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel(self._baseChannel, js)
+        if c:
+            self.set_attr_from_dict("dutyCycleLevel", c)
+            self.set_attr_from_dict("accessPointPriority", c)
+            self.set_attr_from_dict("signalBrightness", c)
+
+
 class SabotageDevice(Device):
     def __init__(self, connection):
         super().__init__(connection)
