@@ -222,6 +222,7 @@ class DeviceType(AutoNameEnum):
     HEATING_SWITCH_2 = auto()
     HEATING_THERMOSTAT = auto()
     HEATING_THERMOSTAT_COMPACT = auto()
+    HOME_CONTROL_ACCESS_POINT = auto()
     HOERMANN_DRIVES_MODULE = auto()
     KEY_REMOTE_CONTROL_4 = auto()
     KEY_REMOTE_CONTROL_ALARM = auto()
@@ -384,6 +385,7 @@ class WindValueType(AutoNameEnum):
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
     ACCELERATION_SENSOR_CHANNEL = auto()
+    ACCESS_CONTROLLER_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     ANALOG_ROOM_CONTROL_CHANNEL = auto()

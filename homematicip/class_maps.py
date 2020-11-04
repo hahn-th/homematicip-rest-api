@@ -31,6 +31,7 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_SWITCH_2: HeatingSwitch2,
     DeviceType.HEATING_THERMOSTAT: HeatingThermostat,
     DeviceType.HEATING_THERMOSTAT_COMPACT: HeatingThermostatCompact,
+    DeviceType.HOME_CONTROL_ACCESS_POINT: HomeControlAccessPoint,
     DeviceType.HOERMANN_DRIVES_MODULE: HoermannDrivesModule,
     DeviceType.KEY_REMOTE_CONTROL_4: KeyRemoteControl4,
     DeviceType.KEY_REMOTE_CONTROL_ALARM: KeyRemoteControlAlarm,
@@ -137,6 +138,7 @@ TYPE_FUNCTIONALHOME_MAP = {
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL: FunctionalChannel,
     FunctionalChannelType.ACCELERATION_SENSOR_CHANNEL: AccelerationSensorChannel,
+    FunctionalChannelType.ACCESS_CONTROLLER_CHANNEL: AccessControllerChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
     FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,
     FunctionalChannelType.ANALOG_ROOM_CONTROL_CHANNEL: AnalogRoomControlChannel,

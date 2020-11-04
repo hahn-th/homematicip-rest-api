@@ -16,7 +16,7 @@ class AsyncFakeCloudServer:
     def __init__(self, home_path=Path(__file__).parent.joinpath("json_data/home.json")):
         self.reset(home_path=home_path)
 
-    def reset(self,home_path=Path(__file__).parent.joinpath("json_data/home.json")):
+    def reset(self, home_path=Path(__file__).parent.joinpath("json_data/home.json")):
         with open(home_path, encoding="utf-8") as file:
             self.data = json.load(file, encoding="UTF-8")
             self.sgtin = "3014F711A000000BAD0C0DED"
@@ -34,8 +34,8 @@ class AsyncFakeCloudServer:
 
             self.client_auth_waiting = None  # used in auth
             self.home_id = "00000000-0000-0000-0000-000000000001"
-            self.ws = None   
-     
+            self.ws = None
+
     def __del__(self):
         if self.ws:
             self.ws.close()  # pragma: no cover
@@ -548,7 +548,9 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = str(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["primaryShadingLevel"] = js["primaryShadingLevel"]
+        d["functionalChannels"][channelIndex]["primaryShadingLevel"] = js[
+            "primaryShadingLevel"
+        ]
 
         return response
 
@@ -561,8 +563,12 @@ class AsyncFakeCloudServer:
         js = json.loads(request.data)
         d = self.data["devices"][js["deviceId"]]
         channelIndex = str(js["channelIndex"])
-        d["functionalChannels"][channelIndex]["primaryShadingLevel"] = js["primaryShadingLevel"]
-        d["functionalChannels"][channelIndex]["secondaryShadingLevel"] = js["secondaryShadingLevel"]
+        d["functionalChannels"][channelIndex]["primaryShadingLevel"] = js[
+            "primaryShadingLevel"
+        ]
+        d["functionalChannels"][channelIndex]["secondaryShadingLevel"] = js[
+            "secondaryShadingLevel"
+        ]
 
         return response
 
@@ -1090,7 +1096,7 @@ class AsyncFakeCloudServer:
         with open(Path(__file__).parent.joinpath("json_data", js["file"])) as file:
             self.data = json.load(file, encoding="UTF-8")
         return web.json_response(None)
-    
+
     # endregion
 
     # region websocket

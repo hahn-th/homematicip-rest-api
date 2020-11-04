@@ -93,6 +93,22 @@ class DeviceBaseChannel(FunctionalChannel):
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
+class AccessControllerChannel(DeviceBaseChannel):
+    """ this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.dutyCycleLevel = 0.0
+        self.accessPointPriority = 0
+        self.signalBrightness = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("dutyCycleLevel", js)
+        self.set_attr_from_dict("accessPointPriority", js)
+        self.set_attr_from_dict("signalBrightness", js)
+
+
 class DeviceSabotageChannel(DeviceBaseChannel):
     """ this is the representative of the DEVICE_SABOTAGE channel"""
 
