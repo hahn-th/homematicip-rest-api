@@ -202,6 +202,7 @@ class DeviceType(AutoNameEnum):
     ACCELERATION_SENSOR = auto()
     ALARM_SIREN_INDOOR = auto()
     ALARM_SIREN_OUTDOOR = auto()
+    BLIND_MODULE = auto()
     BRAND_BLIND = auto()
     BRAND_DIMMER = auto()
     BRAND_PUSH_BUTTON = auto()
@@ -417,6 +418,7 @@ class FunctionalChannelType(AutoNameEnum):
     PASSAGE_DETECTOR_CHANNEL = auto()
     PRESENCE_DETECTION_CHANNEL = auto()
     ROTARY_HANDLE_CHANNEL = auto()
+    SHADING_CHANNEL = auto()
     SHUTTER_CHANNEL = auto()
     SHUTTER_CONTACT_CHANNEL = auto()
     SINGLE_KEY_CHANNEL = auto()
@@ -544,3 +546,30 @@ class ConnectionType(AutoNameEnum):
     HMIP_WIRED = auto()
     HMIP_LAN = auto()
     HMIP_WLAN = auto()
+
+
+class ShadingStateType(AutoNameEnum):
+    NOT_POSSIBLE = auto()
+    NOT_EXISTENT = auto()
+    POSITION_USED = auto()
+    TILT_USED = auto()
+    NOT_USED = auto()
+    MIXED = auto()
+
+
+class DriveSpeed(AutoNameEnum):
+    CREEP_SPEED = auto()
+    SLOW_SPEED = auto()
+    NOMINAL_SPEED = auto()
+    OPTIONAL_SPEED = auto()
+
+
+class ShadingPackagePosition(AutoNameEnum):
+    LEFT = auto()
+    RIGHT = auto()
+    CENTER = auto()
+    SPLIT = auto()
+    TOP = auto()
+    BOTTOM = auto()
+    TDBU = auto()
+    NOT_USED = auto()

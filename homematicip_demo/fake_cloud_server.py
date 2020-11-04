@@ -540,6 +540,33 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
+    async def post_hmip_device_control_setPrimaryShadingLevel(
+        self, request: web.Request
+    ) -> web.Response:
+
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = str(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["primaryShadingLevel"] = js["primaryShadingLevel"]
+
+        return response
+
+    @validate_authorization
+    async def post_hmip_device_control_setSecondaryShadingLevel(
+        self, request: web.Request
+    ) -> web.Response:
+
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = str(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["primaryShadingLevel"] = js["primaryShadingLevel"]
+        d["functionalChannels"][channelIndex]["secondaryShadingLevel"] = js["secondaryShadingLevel"]
+
+        return response
+
+    @validate_authorization
     async def post_hmip_device_control_setSlatsLevel(
         self, request: web.Request
     ) -> web.Response:
