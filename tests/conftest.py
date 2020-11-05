@@ -48,13 +48,17 @@ def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None
     loop.run_until_complete(wait_for_close(stop_threads))
     loop.run_until_complete(asyncio.sleep(0))
 
-@pytest.yield_fixture(scope='session')
+
+@pytest.yield_fixture(scope="session")
 def event_loop(request):
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
 
+
 test_server = None
+
+
 @pytest.fixture(scope="session")
 async def session_stop_threads():
     loop = asyncio.new_event_loop()
@@ -70,10 +74,11 @@ async def session_stop_threads():
 
     stop_threads = True
     t.join()
-    while loop.is_running(): # pragma: no cover
-        await asyncio.sleep(0.1) 
+    while loop.is_running():  # pragma: no cover
+        await asyncio.sleep(0.1)
     loop.close()
-    
+
+
 @pytest.fixture
 async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
     """Defines the testserver funcarg"""
@@ -86,15 +91,14 @@ async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
 
         test_server = TestServer(app)
         asyncio.run_coroutine_threadsafe(
-            test_server.start_server(loop=session_stop_threads, ssl=ssl_ctx), session_stop_threads
+            test_server.start_server(loop=session_stop_threads, ssl=ssl_ctx),
+            session_stop_threads,
         ).result()
         aio_server.url = str(test_server._root)
         test_server.url = aio_server.url
         test_server.aio_server = aio_server
     test_server.aio_server.reset()
     return test_server
-
-    
 
 
 @pytest.fixture

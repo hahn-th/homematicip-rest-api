@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ADDED
+- API
+    - Devices
+      - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
+      - [HMIP-HAP] (HomematicIP Access Point)
+
+
 ### CHANGED
 
 - [BUG: 342] NameError: name 'xrange' is not defined on Python 3.8.1
@@ -373,3 +380,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-MOD-HO]: https://github.com/coreGreenberet/homematicip-rest-api/issues/304
 [HMIP-FSI16]: https://github.com/coreGreenberet/homematicip-rest-api/issues/310
 [HMIP-SWDO-PL]: https://github.com/coreGreenberet/homematicip-rest-api/issues/315
+[HMIP-HDM1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/332
+[HMIP-HAP]: https://github.com/coreGreenberet/homematicip-rest-api/issues/335

@@ -546,3 +546,47 @@ async def test_wall_thermostat_basic(no_ssl_fake_async_home: AsyncHome):
         "actualTemperature(16.0) humidity(42) vaporAmount(5.710127947243264) "
         "setPointTemperature(12.0)"
     )
+
+
+@pytest.mark.asyncio
+async def test_blind_module(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100BLIND_MODULE00")
+
+    assert str(d) == (
+        "HmIP-HDM1 Sonnenschutz Balkontür lowBat(False) unreach(False) rssiDeviceValue(-85) "
+        "rssiPeerValue(-78) configPending(False) dutyCycle(False) automationDriveSpeed(SLOW_SPEED) "
+        "manualDriveSpeed(NOMINAL_SPEED) favoritePrimaryShadingPosition(0.5) "
+        "favoriteSecondaryShadingPosition(0.5) primaryCloseAdjustable(True) "
+        "primaryOpenAdjustable(True) primaryShadingStateType(POSITION_USED) "
+        "secondaryCloseAdjustable(False) secondaryOpenAdjustable(False) "
+        "secondaryShadingStateType(NOT_EXISTENT) primaryShadingLevel(0.94956) "
+        "secondaryShadingLevel(None) previousPrimaryShadingLevel(None) "
+        "previousSecondaryShadingLevel(None) identifyOemSupported(True) productId(10) "
+        "profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC) shadingDriveVersion(None) "
+        "shadingPackagePosition(TOP) shadingPositionAdjustmentActive(None) "
+        "shadingPositionAdjustmentClientId(None)"
+    )
+
+    await d.set_primary_shading_level(5)
+
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100BLIND_MODULE00")
+    assert d.primaryShadingLevel == 5
+
+    await d.set_secondary_shading_level(0.5, 1.0)
+
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100BLIND_MODULE00")
+    assert d.primaryShadingLevel == 0.5
+    assert d.secondaryShadingLevel == 1.0
+
+
+@pytest.mark.asyncio
+async def test_home_control_access_point(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000000BAD0C0DED")
+
+    assert str(d) == (
+        "HmIP-HAP HOME_CONTROL_ACCESS_POINT lowBat(None) unreach(False) rssiDeviceValue(None) "
+        "rssiPeerValue(None) configPending(False) dutyCycle(False) dutyCycleLevel(8.0) "
+        "accessPointPriority(1) signalBrightness(1.0)"
+    )
