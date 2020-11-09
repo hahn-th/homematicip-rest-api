@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.12.0] 2020-11-09
 
 ### ADDED
 - API
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       - [HMIP-HAP] (HomematicIP Access Point)
 
 
-### CHANGED
+### FIXED
 
 - [BUG: 342] NameError: name 'xrange' is not defined on Python 3.8.1
 
@@ -332,7 +332,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.0...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.0...HEAD
+[0.12.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.00...0.12.0
 [0.11.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...0.11.0
 [0.10.19]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.18...0.10.19
 [0.10.18]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...0.10.18
