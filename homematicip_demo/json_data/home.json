@@ -14,6 +14,77 @@
         }
     },
     "devices": {
+        "3014F711A000000BAD0CAAAA": {
+            "availableFirmwareVersion": "2.2.18",
+            "connectionType": "HMIP_LAN",
+            "firmwareVersion": "2.2.18",
+            "firmwareVersionInteger": 131602,
+            "functionalChannels": {
+                "0": {
+                    "accessPointPriority": 0,
+                    "busConfigMismatch": null,
+                    "carrierSenseLevel": 2.0,
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F711A000000BAD0CAAAA",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "devicePowerFailureDetected": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "dutyCycleLevel": 8.0,
+                    "functionalChannelType": "ACCESS_CONTROLLER_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "multicastRoutingEnabled": false,
+                    "powerShortCircuit": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": null,
+                    "rssiPeerValue": null,
+                    "shortCircuitDataLine": null,
+                    "signalBrightness": 1.0,
+                    "supportedOptionalFeatures": {
+                        "IFeatureBusConfigMismatch": false,
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceIdentify": false,
+                        "IFeatureDeviceOverheated": false,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDevicePowerFailure": false,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false,
+                        "IFeatureMulticastRouter": false,
+                        "IFeaturePowerShortCircuit": false,
+                        "IFeatureRssiValue": false,
+                        "IFeatureShortCircuitDataLine": false,
+                        "IOptionalFeatureDutyCycle": true,
+                        "IOptionalFeatureLowBat": false
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F711A000000BAD0CAAAA",
+            "label": "AP1",
+            "lastStatusUpdate": 1604522238580,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 270,
+            "modelType": "HmIP-HAP",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F711A000000BAD0CAAAA",
+            "type": "HOME_CONTROL_ACCESS_POINT",
+            "updateState": "BACKGROUND_UPDATE_NOT_SUPPORTED"
+        },
         "3014F711A000000BAD0C0DED": {
             "availableFirmwareVersion": "2.2.18",
             "connectionType": "HMIP_LAN",
@@ -7478,6 +7549,11 @@
     },
     "home": {
         "accessPointUpdateStates": {
+            "3014F711A000000BAD0CAAAA": {
+                "accessPointUpdateState": "UP_TO_DATE",
+                "successfulUpdateTimestamp": 0,
+                "updateStateChangedTimestamp": 0
+            },
             "3014F711A000000BAD0C0DED": {
                 "accessPointUpdateState": "UP_TO_DATE",
                 "successfulUpdateTimestamp": 0,
