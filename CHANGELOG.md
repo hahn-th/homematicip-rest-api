@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] 2020-11-09
+
+## [0.12.1] 2020-11-10
+### ADDED
+- API
+    - Devices
+      - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
+        - stop method
+
+
 ## [0.12.0] 2020-11-09
 
 ### ADDED
@@ -332,7 +342,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.0...HEAD
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...HEAD
+[0.12.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.00...0.12.1
 [0.12.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.00...0.12.0
 [0.11.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...0.11.0
 [0.10.19]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.18...0.10.19

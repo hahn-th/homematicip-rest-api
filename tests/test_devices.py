@@ -1,9 +1,7 @@
 import json
 from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, Mock
-
 import pytest
-
 from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
@@ -19,12 +17,10 @@ from homematicip_demo.helper import (
 def test_room_control_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000BBBB000000000")
     assert isinstance(d, RoomControlDevice)
-
     assert d.vaporAmount == 10.662700840292974
     assert d.temperatureOffset == 0.0
     assert d.setPointTemperature == 20.0
     assert d.actualTemperature == 23.0
-
     assert str(d) == (
         "ALPHA-IP-RBG Raumbediengerät lowBat(False) unreach(False) rssiDeviceValue(-45) "
         "rssiPeerValue(-54) configPending(False) dutyCycle(False) operationLockActive(False) "
@@ -35,11 +31,9 @@ def test_room_control_device(fake_home: Home):
 def test_room_control_device_analog(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000000BBBB000005")
     assert isinstance(d, RoomControlDeviceAnalog)
-
     assert d.temperatureOffset == 0.0
     assert d.setPointTemperature == 23.0
     assert d.actualTemperature == 23.3
-
     assert str(d) == (
         "ALPHA-IP-RBGa Raumbediengerät Analog lowBat(False) unreach(False) rssiDeviceValue(-41) "
         "rssiPeerValue(-29) configPending(False) dutyCycle(False) actualTemperature(23.3) "
@@ -63,7 +57,6 @@ def test_acceleration_sensor(fake_home: Home):
     assert d.accelerationSensorTriggered is True
     assert d.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_LONG
     assert d.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_LONG
-
     assert str(d) == (
         "HmIP-SAM Garagentor lowBat(False) unreach(False) "
         "rssiDeviceValue(-88) rssiPeerValue(None) configPending(False)"
@@ -73,7 +66,6 @@ def test_acceleration_sensor(fake_home: Home):
         " accelerationSensorTriggered(True) notificationSoundTypeHighToLow(SOUND_LONG)"
         " notificationSoundTypeLowToHigh(SOUND_LONG)"
     )
-
     with no_ssl_verification():
         d.set_acceleration_sensor_event_filter_period(10.0)
         d.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
@@ -86,10 +78,8 @@ def test_acceleration_sensor(fake_home: Home):
         d.set_acceleration_sensor_trigger_angle(30)
         d.set_notification_sound_type(NotificationSoundType.SOUND_SHORT, True)
         d.set_notification_sound_type(NotificationSoundType.SOUND_SHORT_SHORT, False)
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000031")
-
         assert d.accelerationSensorEventFilterPeriod == 10.0
         assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
         assert (
@@ -117,7 +107,6 @@ def test_tilt_vibration_sensor(fake_home: Home):
     )
     assert d.accelerationSensorTriggerAngle == 45
     assert d.accelerationSensorTriggered is True
-
     assert str(d) == (
         "HmIP-STV Garage Neigungs- und Erschütterungssensor lowBat(False) unreach(False)"
         " rssiDeviceValue(-59) rssiPeerValue(None) configPending(False) dutyCycle(False)"
@@ -125,7 +114,6 @@ def test_tilt_vibration_sensor(fake_home: Home):
         "accelerationSensorSensitivity(SENSOR_RANGE_2G) accelerationSensorTriggerAngle(45)"
         " accelerationSensorTriggered(True)"
     )
-
     with no_ssl_verification():
         d.set_acceleration_sensor_event_filter_period(10.0)
         d.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
@@ -133,10 +121,8 @@ def test_tilt_vibration_sensor(fake_home: Home):
             AccelerationSensorSensitivity.SENSOR_RANGE_4G
         )
         d.set_acceleration_sensor_trigger_angle(30)
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
-
         assert d.accelerationSensorEventFilterPeriod == 10.0
         assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
         assert (
@@ -153,7 +139,6 @@ def test_multi_io_box(fake_home: Home):
     assert d.functionalChannels[2].on is False
     assert d.analogOutputLevel == 12.5
     assert d.functionalChannels[5].analogOutputLevel == 12.5
-
     assert str(d) == (
         "HmIP-MIOB Multi IO Box lowBat(None) unreach(False) "
         "rssiDeviceValue(-79) rssiPeerValue(None) configPending(False) "
@@ -165,11 +150,9 @@ def test_multi_io_box(fake_home: Home):
 def test_full_flush_contact_interface(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000029")
     assert isinstance(d, FullFlushContactInterface)
-
     assert d.binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
     assert d.windowState == WindowState.CLOSED
     assert d.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
-
     assert str(d) == (
         "HmIP-FCI1 Kontakt-Schnittstelle Unterputz – 1-fach lowBat(False) unreach(False) rssiDeviceValue(-46) "
         "rssiPeerValue(None) configPending(False) "
@@ -180,13 +163,11 @@ def test_full_flush_contact_interface(fake_home: Home):
 def test_full_flush_input_switch(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000HmIPFSI16")
     assert isinstance(d, FullFlushInputSwitch)
-
     assert d.binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
     assert d.on == True
     assert d.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
     assert d.profileMode == ProfileMode.AUTOMATIC
     assert d.userDesiredProfileMode == ProfileMode.AUTOMATIC
-
     assert str(d) == (
         "HmIP-FSI16 Wohnzimmer Beleuchtung lowBat(None) unreach(False) rssiDeviceValue(-57) "
         "rssiPeerValue(-54) configPending(False) dutyCycle(False) deviceOverheated(False) "
@@ -228,11 +209,9 @@ def test_shutter_device(fake_home: Home):
         d._rawJSONData
         == fake_home_download_configuration()["devices"]["3014F7110000000000000001"]
     )
-
     d = fake_home.search_device_by_id("3014F7110000000000000005")
     assert d.windowState == WindowState.OPEN
     assert d.lastStatusUpdate is None
-
     assert (
         d.set_router_module_enabled(True) is False
     )  # Shutter contact won't support this
@@ -277,7 +256,6 @@ def test_shutter_contact_optical_plus(fake_home: Home):
     assert d.label == "Sitzplatztüre"
     assert d.windowState == WindowState.CLOSED
     assert d.serializedGlobalTradeItemNumber == "3014F7110SHUTTER_OPTICAL"
-
     assert str(d) == (
         "HmIP-SWDO-PL Sitzplatztüre lowBat(False) unreach(False) rssiDeviceValue(-72) "
         "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) windowState(CLOSED)"
@@ -319,7 +297,6 @@ def test_contact_interface_device(fake_home: Home):
     assert d.coProFaulty is True
     assert d.coProRestartNeeded is True
     assert d.coProUpdateFailure is True
-
     assert str(d) == (
         "HmIP-SCI Schließer Magnet lowBat(False) unreach(False) rssiDeviceValue(-42) rssiPeerValue(None) "
         "configPending(False) dutyCycle(False) coProFaulty(True) coProRestartNeeded(True) "
@@ -362,7 +339,6 @@ def test_pluggable_switch_measuring(fake_home: Home):
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
     assert d.dutyCycle is False
     assert d.configPending is False
-
     assert str(d) == (
         "HMIP-PSM Brunnen lowBat(None) unreach(False) rssiDeviceValue(-60) rssiPeerValue(-66) configPending(False) dutyCycle(False) on(False) profileMode(AUTOMATIC)"
         " userDesiredProfileMode(AUTOMATIC) energyCounter(0.4754) currentPowerConsumption(0.0W)"
@@ -371,18 +347,15 @@ def test_pluggable_switch_measuring(fake_home: Home):
         d._rawJSONData
         == fake_home_download_configuration()["devices"]["3014F7110000000000000009"]
     )
-
     with no_ssl_verification():
         d.turn_on()
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
         assert d.on is True
-
         d.turn_off()
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
         assert d.on is False
-
         d.id = "INVALID_ID"
         result = d.turn_off()
         assert result["errorCode"] == "INVALID_DEVICE"
@@ -463,13 +436,11 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
         d._rawJSONData
         == fake_home_download_configuration()["devices"]["3014F7110000000000000022"]
     )
-
     with no_ssl_verification():
         d.set_display(ClimateControlDisplay.ACTUAL)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000022")
         assert d.display == ClimateControlDisplay.ACTUAL
-
         d.id = "INVALID_ID"
         result = d.set_display(ClimateControlDisplay.ACTUAL)
         assert result["errorCode"] == "INVALID_DEVICE"
@@ -505,7 +476,6 @@ def test_heating_thermostat(fake_home: Home):
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
     assert d.valveActualTemperature == 20.0
-
     assert str(d) == (
         "HMIP-eTRV Wohnzimmer-Heizung lowBat(False) unreach(False) "
         "rssiDeviceValue(-65) rssiPeerValue(-66) configPending(False) "
@@ -517,13 +487,11 @@ def test_heating_thermostat(fake_home: Home):
         d._rawJSONData
         == fake_home_download_configuration()["devices"]["3014F7110000000000000015"]
     )
-
     with no_ssl_verification():
         d.set_operation_lock(False)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000015")
         assert d.operationLockActive is False
-
         d.id = "INVALID_ID"
         result = d.set_operation_lock(True)
         assert result["errorCode"] == "INVALID_DEVICE"
@@ -549,7 +517,6 @@ def test_heating_thermostat_compact(fake_home: Home):
     assert d.unreach is False
     assert d.automaticValveAdaptionNeeded is False
     assert d.valveActualTemperature == 21.6
-
     assert str(d) == (
         "HmIP-eTRV-C Wohnzimmer 3 lowBat(False) unreach(False) rssiDeviceValue(-47) "
         "rssiPeerValue(-50) configPending(False) dutyCycle(False) sabotage(None) "
@@ -764,7 +731,6 @@ def test_rotary_handle_sensor(fake_home: Home):
     assert d.firmwareVersion == "1.2.10"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-
     assert d.lowBat is False
     assert d.routerModuleEnabled is False
     assert d.routerModuleSupported is False
@@ -809,23 +775,19 @@ def test_dimmer(fake_home: Home):
     assert d.firmwareVersion == "1.4.8"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
     assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
-
     assert str(d) == (
         "HmIP-BDT Schlafzimmerlicht lowBat(None) unreach(False) rssiDeviceValue(-44) rssiPeerValue(-42) configPending(False) dutyCycle(False) dimLevel(0.0)"
         " profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC)"
     )
-
     with no_ssl_verification():
         d.set_dim_level(1.0)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711AAAA000000000005")
         assert d.dimLevel == 1.0
-
         d.set_dim_level(0.5)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711AAAA000000000005")
         assert d.dimLevel == 0.5
-
         d.id = "INVALID_ID"
         result = d.set_dim_level(0.5)
         assert result["errorCode"] == "INVALID_DEVICE"
@@ -838,14 +800,12 @@ def test_basic_device_functions(fake_home: Home):
         assert d.label == "Brunnen"
         assert d.routerModuleEnabled is True
         assert d.energyCounter == 0.4754
-
         d.set_label("new label")
         d.set_router_module_enabled(False)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000009")
         assert d.label == "new label"
         assert d.routerModuleEnabled is False
-
         d.set_label("other label")
         d.set_router_module_enabled(True)
         d.reset_energy_counter()
@@ -854,7 +814,6 @@ def test_basic_device_functions(fake_home: Home):
         assert d.label == "other label"
         assert d.routerModuleEnabled is True
         assert d.energyCounter == 0
-
         d2 = fake_home.search_device_by_id("3014F7110000000000000005")
         d.delete()
         fake_home.get_current_state()
@@ -863,16 +822,13 @@ def test_basic_device_functions(fake_home: Home):
         assert d2 is fake_home.search_device_by_id(
             "3014F7110000000000000005"
         )  # make sure that the objects got updated and not completely renewed
-
         # check if the server is answering properly
         result = d.set_label("BLa")
         assert result["errorCode"] == "INVALID_DEVICE"
         result = d.delete()
         assert result["errorCode"] == "INVALID_DEVICE"
-
         result = d.reset_energy_counter()
         assert result["errorCode"] == "INVALID_DEVICE"
-
         result = d.set_router_module_enabled(False)
         assert result["errorCode"] == "INVALID_DEVICE"
 
@@ -893,7 +849,6 @@ def test_water_sensor(fake_home: Home):
         assert d.label == "Wassersensor"
         assert d.routerModuleEnabled is False
         assert d.routerModuleSupported is False
-
         assert d.incorrectPositioned is True
         assert d.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
         assert d.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
@@ -902,23 +857,19 @@ def test_water_sensor(fake_home: Home):
         assert d.moistureDetected is False
         assert d.sirenWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
         assert d.waterlevelDetected is False
-
         d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
         d.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
         d.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
         d.set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
         d.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
-
         assert str(d) == (
             "HmIP-SWD Wassersensor lowBat(False) unreach(False) rssiDeviceValue(-65) rssiPeerValue(None) configPending(False) "
             "dutyCycle(False) incorrectPositioned(True) acousticAlarmSignal(FREQUENCY_RISING) acousticAlarmTiming(ONCE_PER_MINUTE) "
             "acousticWaterAlarmTrigger(WATER_DETECTION) inAppWaterAlarmTrigger(WATER_MOISTURE_DETECTION) moistureDetected(False) "
             "sirenWaterAlarmTrigger(WATER_MOISTURE_DETECTION) waterlevelDetected(False)"
         )
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000050")
-
         assert d.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
         assert (
             d.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
@@ -926,7 +877,6 @@ def test_water_sensor(fake_home: Home):
         assert d.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
         assert d.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
         assert d.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
-
         d.id = "INVALID_ID"
         result = d.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
         assert result["errorCode"] == "INVALID_DEVICE"
@@ -945,7 +895,6 @@ def test_water_sensor(fake_home: Home):
 def test_motion_detector_push_button(fake_home: Home):
     d = MotionDetectorPushButton(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711000000000AAAAA25")
-
     assert isinstance(d, MotionDetectorPushButton)
     assert d.permanentFullRx is True
     assert d.illumination == 14.2
@@ -954,7 +903,6 @@ def test_motion_detector_push_button(fake_home: Home):
     assert d.motionDetected is False
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
     assert d.numberOfBrightnessMeasurements == 7
-
     assert str(d) == (
         "HmIP-SMI55 Bewegungsmelder für 55er Rahmen – innen lowBat(False) unreach(False) rssiDeviceValue(-46) "
         "rssiPeerValue(None) configPending(False) dutyCycle(False) motionDetected(False) "
@@ -966,30 +914,25 @@ def test_motion_detector_push_button(fake_home: Home):
 def test_motion_detector(fake_home: Home):
     d = MotionDetectorIndoor(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711000000000000BB11")
-
     assert d.illumination == 0.1
     assert d.currentIllumination is None
     assert d.motionBufferActive is False
     assert d.motionDetected is True
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_480
     assert d.numberOfBrightnessMeasurements == 7
-
     assert str(d) == (
         "HmIP-SMI Wohnzimmer lowBat(False) unreach(False) rssiDeviceValue(-56) rssiPeerValue(-52) configPending(False) "
         "dutyCycle(False) sabotage(False) motionDetected(True) illumination(0.1) motionBufferActive(False) "
         "motionDetectionSendInterval(SECONDS_480) numberOfBrightnessMeasurements(7)"
     )
-
     d = MotionDetectorOutdoor(fake_home._connection)
     d = fake_home.search_device_by_id("3014F71100000000000BBB17")
-
     assert d.illumination == 233.4
     assert d.currentIllumination is None
     assert d.motionBufferActive is True
     assert d.motionDetected is True
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
     assert d.numberOfBrightnessMeasurements == 7
-
     assert str(d) == (
         "HmIP-SMO-A Außen Küche lowBat(False) unreach(False) rssiDeviceValue(-70) rssiPeerValue(-67) configPending(False) "
         "dutyCycle(False) motionDetected(True) illumination(233.4) motionBufferActive(True) "
@@ -1000,14 +943,12 @@ def test_motion_detector(fake_home: Home):
 def test_presence_detector_indoor(fake_home: Home):
     d = PresenceDetectorIndoor(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711AAAAAAAAAAAAAA51")
-
     assert d.illumination == 1.8
     assert d.currentIllumination is None
     assert d.motionBufferActive is False
     assert d.presenceDetected is False
     assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_240
     assert d.numberOfBrightnessMeasurements == 7
-
     assert str(d) == (
         "HmIP-SPI SPI_1 lowBat(False) unreach(False) rssiDeviceValue(-62) rssiPeerValue(-61) configPending(False) "
         "dutyCycle(False) sabotage(False) presenceDetected(False) illumination(1.8) motionBufferActive(False) "
@@ -1018,7 +959,6 @@ def test_presence_detector_indoor(fake_home: Home):
 def test_push_button_6(fake_home: Home):
     d = PushButton6(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB017")
-
     assert d.modelId == 300
     assert d.label == "Wandtaster - 6-fach"
 
@@ -1026,7 +966,6 @@ def test_push_button_6(fake_home: Home):
 def test_remote_control_8(fake_home: Home):
     d = PushButton6(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB016")
-
     assert d.modelId == 299
     assert d.label == "Fernbedienung - 8 Tasten"
 
@@ -1035,21 +974,16 @@ def test_open_collector_8(fake_home: Home):
     with no_ssl_verification():
         d = OpenCollector8Module(fake_home._connection)
         d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
-
         c = d.functionalChannels[2]
-
         assert isinstance(c, SwitchChannel)
         assert c.index == 2
         assert c.on is False
         assert c.profileMode == "AUTOMATIC"
-
         c = d.functionalChannels[8]
-
         assert isinstance(c, SwitchChannel)
         assert c.index == 8
         assert c.on is True
         assert c.profileMode == "AUTOMATIC"
-
         d.turn_off(8)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB18")
@@ -1068,7 +1002,6 @@ def test_passage_detector(fake_home: Home):
         assert d.passageSensorSensitivity == 50.0
         assert d.passageTimeout == 0.5
         assert d.rightCounter == 802
-
         assert str(d) == (
             "HmIP-SPDR SPDR_1 lowBat(False) unreach(False) rssiDeviceValue(-76) rssiPeerValue(None) configPending(False) dutyCycle(False)"
             " sabotage(False) leftCounter(966) leftRightCounterDelta(164) passageBlindtime(1.5) passageDirection(LEFT) passageSensorSensitivity(50.0)"
@@ -1080,7 +1013,6 @@ def test_full_flush_shutter(fake_home: Home):
     with no_ssl_verification():
         d = FullFlushShutter(fake_home._connection)
         d = fake_home.search_device_by_id("3014F711ACBCDABCADCA66")
-
         assert d.bottomToTopReferenceTime == 30.080000000000002
         assert d.changeOverDelay == 0.5
         assert d.delayCompensationValue == 12.7
@@ -1095,12 +1027,10 @@ def test_full_flush_shutter(fake_home: Home):
         assert d.supportingSelfCalibration is True
         assert d.topToBottomReferenceTime == 24.68
         assert d.userDesiredProfileMode == "AUTOMATIC"
-
         assert str(d) == (
             "HmIP-BROLL BROLL_1 lowBat(None) unreach(False) rssiDeviceValue(-78) rssiPeerValue(-77) configPending(False)"
             " dutyCycle(False) shutterLevel(1.0) topToBottom(24.68) bottomToTop(30.080000000000002)"
         )
-
         d.set_shutter_level(0.4)
         d.set_shutter_stop()  # this will not do anything in the test run
         fake_home.get_current_state()
@@ -1112,24 +1042,20 @@ def test_full_flush_blind(fake_home: Home):
     with no_ssl_verification():
         d = FullFlushBlind(fake_home._connection)
         d = fake_home.search_device_by_id("3014F711BADCAFE000000001")
-
         assert d.shutterLevel == 1.0
         assert d.slatsLevel == 1.0
         assert d.blindModeActive is True
         assert d.slatsReferenceTime == 2.0
-
         d.set_slats_level(0.4)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BADCAFE000000001")
         assert d.shutterLevel == 1.0
         assert d.slatsLevel == 0.4
-
         d.set_slats_level(0.8, 0.3)
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BADCAFE000000001")
         assert d.shutterLevel == 0.3
         assert d.slatsLevel == 0.8
-
         assert str(d) == (
             "HmIP-FBL Sofa links lowBat(None) unreach(False) rssiDeviceValue(-73) "
             "rssiPeerValue(-78) configPending(False) dutyCycle(False) "
@@ -1143,7 +1069,6 @@ def test_brand_blind(fake_home: Home):
         d = BrandBlind(fake_home._connection)
         d = fake_home.search_device_by_id("3014F71100000000000BBL24")
         assert isinstance(d, BrandBlind)
-
         assert str(d) == (
             "HmIP-BBL Jalousie Schiebetür lowBat(None) unreach(False) "
             "rssiDeviceValue(-64) rssiPeerValue(-76) configPending(False) "
@@ -1156,7 +1081,6 @@ def test_alarm_siren_indoor(fake_home: Home):
     with no_ssl_verification():
         d = AlarmSirenIndoor(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000BBBBB8")
-
         assert str(d) == (
             "HmIP-ASIR Alarmsirene lowBat(False) unreach(False) rssiDeviceValue(-59) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False)"
@@ -1167,7 +1091,6 @@ def test_alarm_siren_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = AlarmSirenIndoor(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000ABCDABCD0033")
-
         assert str(d) == (
             "HmIP-ASIR-O Alarmsirene – außen lowBat(False) unreach(False) rssiDeviceValue(-51) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) sabotage(False) badBatteryHealth(True)"
@@ -1178,7 +1101,6 @@ def test_floor_terminal_block(fake_home: Home):
     with no_ssl_verification():
         d = FloorTerminalBlock6(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000BBBBB1")
-
         assert d.frostProtectionTemperature == 8.0
         assert d.coolingEmergencyValue == 0.0
         assert d.globalPumpControl is True
@@ -1187,12 +1109,10 @@ def test_floor_terminal_block(fake_home: Home):
         assert d.heatingValveType == HeatingValveType.NORMALLY_CLOSE
         assert d.valveProtectionDuration == 5
         assert d.valveProtectionSwitchingInterval == 14
-
         assert d.pumpFollowUpTime == 2
         assert d.pumpLeadTime == 2
         assert d.pumpProtectionDuration == 1
         assert d.pumpProtectionSwitchingInterval == 14
-
         assert str(d) == (
             "HmIP-FAL230-C6 Fußbodenheizungsaktor lowBat(None) unreach(False) "
             "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
@@ -1202,10 +1122,8 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpFollowUpTime(2) pumpLeadTime(2) "
             "pumpProtectionDuration(1) pumpProtectionSwitchingInterval(14)"
         )
-
         d = FloorTerminalBlock10(fake_home._connection)
         d = fake_home.search_device_by_id("3014F71100000000FAL24C10")
-
         assert str(d) == (
             "HmIP-FAL24-C10 Fußbodenheizungsaktor lowBat(None) unreach(False) "
             "rssiDeviceValue(-73) rssiPeerValue(-74) configPending(False) "
@@ -1216,17 +1134,13 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
             "pumpProtectionSwitchingInterval(14)"
         )
-
         d = FloorTerminalBlock12(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000000049")
         assert d.minimumFloorHeatingValvePosition == 0.0
-
         d.set_minimum_floor_heating_valve_position(0.2)
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000000000049")
         assert d.minimumFloorHeatingValvePosition == 0.2
-
         assert str(d) == (
             "HmIP-FALMOT-C12 Fußbodenheizungsaktor OG motorisch lowBat(None) unreach(False) "
             "rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) "
@@ -1246,35 +1160,28 @@ def test_brand_switch_notification_light(fake_home: Home):
     with no_ssl_verification():
         d = BrandSwitchNotificationLight(fake_home._connection)
         d = fake_home.search_device_by_id("3014F711BSL0000000000050")
-
         c = d.functionalChannels[d.topLightChannelIndex]
         assert isinstance(c, NotificationLightChannel)
         assert c.simpleRGBColorState == RGBColorState.RED
         assert c.dimLevel == 0.0
-
         c = d.functionalChannels[d.bottomLightChannelIndex]
         assert isinstance(c, NotificationLightChannel)
         assert c.simpleRGBColorState == RGBColorState.GREEN
         assert c.dimLevel == 1.0
-
         d.set_rgb_dim_level(d.topLightChannelIndex, RGBColorState.BLUE, 0.5)
         d.set_rgb_dim_level_with_time(
             d.bottomLightChannelIndex, RGBColorState.YELLOW, 0.7, 10, 20
         )
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F711BSL0000000000050")
-
         c = d.functionalChannels[d.topLightChannelIndex]
         assert isinstance(c, NotificationLightChannel)
         assert c.simpleRGBColorState == RGBColorState.BLUE
         assert c.dimLevel == 0.5
-
         c = d.functionalChannels[d.bottomLightChannelIndex]
         assert isinstance(c, NotificationLightChannel)
         assert c.simpleRGBColorState == RGBColorState.YELLOW
         assert c.dimLevel == 0.7
-
         assert str(d) == (
             "HmIP-BSL Treppe lowBat(None) unreach(False) "
             "rssiDeviceValue(-67) rssiPeerValue(-70) configPending(False) "
@@ -1288,12 +1195,10 @@ def test_light_sensor(fake_home: Home):
     with no_ssl_verification():
         d = LightSensor(fake_home._connection)
         d = fake_home.search_device_by_id("3014F711SLO0000000000026")
-
         assert d.averageIllumination == 807.3
         assert d.currentIllumination == 785.2
         assert d.highestIllumination == 837.1
         assert d.lowestIllumination == 785.2
-
         assert str(d) == (
             "HmIP-SLO Lichtsensor Nord lowBat(False) unreach(False) rssiDeviceValue(-60) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) "
@@ -1305,20 +1210,16 @@ def test_light_sensor(fake_home: Home):
 def test_door_sensor_tm(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
-
         assert d.doorState == DoorState.CLOSED
         assert d.on is False
         assert d.processing is False
         assert d.ventilationPositionSupported is True
-
         assert str(d) == (
             "HmIP-MOD-TM Garage Door Module lowBat(None) unreach(False) rssiDeviceValue(-52) "
             "rssiPeerValue(-54) configPending(False) dutyCycle(False) doorState(CLOSED) "
             "on(False) processing(False) ventilationPositionSupported(True)"
         )
-
         d.send_door_command(doorCommand=DoorCommand.OPEN)
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
         assert d.doorState == DoorState.OPEN
@@ -1327,20 +1228,16 @@ def test_door_sensor_tm(fake_home: Home):
 def test_hoermann_drives_module(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000HOERMANN")
-
         assert d.doorState == DoorState.CLOSED
         assert d.on is False
         assert d.processing is False
         assert d.ventilationPositionSupported is True
-
         assert str(d) == (
             "HmIP-MOD-HO Garage door lowBat(None) unreach(False) rssiDeviceValue(-71) "
             "rssiPeerValue(-76) configPending(False) dutyCycle(False) doorState(CLOSED) "
             "on(False) processing(False) ventilationPositionSupported(True)"
         )
-
         d.send_door_command(doorCommand=DoorCommand.CLOSE)
-
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F7110000000HOERMANN")
         assert d.doorState == DoorState.CLOSED
@@ -1349,10 +1246,8 @@ def test_hoermann_drives_module(fake_home: Home):
 def test_pluggable_mains_failure(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000ABCD50")
-
         assert d.powerMainsFailure is False
         assert d.genericAlarmSignal is AlarmSignalType.FULL_ALARM
-
         assert str(d) == (
             "HmIP-PMFS Netzausfallüberwachung lowBat(None) unreach(False) rssiDeviceValue(-58) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) powerMainsFailure(False) "
@@ -1363,10 +1258,8 @@ def test_pluggable_mains_failure(fake_home: Home):
 def test_wall_thermostat_basic(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000000AAA5")
-
         assert d.display == ClimateControlDisplay.ACTUAL
         assert d.humidity == 42
-
         assert str(d) == (
             "HmIP-WTH-B Thermostat Schlafen Tal lowBat(False) unreach(False) rssiDeviceValue(-58) "
             "rssiPeerValue(-59) configPending(False) dutyCycle(False) operationLockActive(False) "
@@ -1378,9 +1271,38 @@ def test_wall_thermostat_basic(fake_home: Home):
 def test_home_control_access_point(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711A000000BAD0C0DED")
-
         assert str(d) == (
             "HmIP-HAP HOME_CONTROL_ACCESS_POINT lowBat(None) unreach(False) rssiDeviceValue(None) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) dutyCycleLevel(8.0) "
             "accessPointPriority(1) signalBrightness(1.0)"
         )
+
+
+def test_blind_module(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100BLIND_MODULE00")
+        assert str(d) == (
+            "HmIP-HDM1 Sonnenschutz Balkontür lowBat(False) unreach(False) rssiDeviceValue(-85) "
+            "rssiPeerValue(-78) configPending(False) dutyCycle(False) automationDriveSpeed(SLOW_SPEED) "
+            "manualDriveSpeed(NOMINAL_SPEED) favoritePrimaryShadingPosition(0.5) "
+            "favoriteSecondaryShadingPosition(0.5) primaryCloseAdjustable(True) "
+            "primaryOpenAdjustable(True) primaryShadingStateType(POSITION_USED) "
+            "secondaryCloseAdjustable(False) secondaryOpenAdjustable(False) "
+            "secondaryShadingStateType(NOT_EXISTENT) primaryShadingLevel(0.94956) "
+            "secondaryShadingLevel(None) previousPrimaryShadingLevel(None) "
+            "previousSecondaryShadingLevel(None) identifyOemSupported(True) productId(10) "
+            "profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC) shadingDriveVersion(None) "
+            "shadingPackagePosition(TOP) shadingPositionAdjustmentActive(None) "
+            "shadingPositionAdjustmentClientId(None)"
+        )
+
+        d.set_primary_shading_level(5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100BLIND_MODULE00")
+        assert d.primaryShadingLevel == 5
+
+        d.set_secondary_shading_level(0.5, 1.0)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100BLIND_MODULE00")
+        assert d.primaryShadingLevel == 0.5
+        assert d.secondaryShadingLevel == 1.0

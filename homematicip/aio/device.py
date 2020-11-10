@@ -575,3 +575,6 @@ class AsyncBlindModule(BlindModule, AsyncDevice):
                 primaryShadingLevel, secondaryShadingLevel
             )
         )
+
+    async def stop(self):
+        return await self._connection.api_call(*super().stop())
