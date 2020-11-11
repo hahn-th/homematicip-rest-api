@@ -573,6 +573,8 @@ async def test_blind_module(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F71100BLIND_MODULE00")
     assert d.primaryShadingLevel == 5
 
+    await d.stop()
+
     await d.set_secondary_shading_level(0.5, 1.0)
 
     await no_ssl_fake_async_home.get_current_state()

@@ -1291,6 +1291,14 @@ class BlindModule(Device):
             "device/control/setSecondaryShadingLevel", json.dumps(data)
         )
 
+    def stop(self):
+        """ stops the current operation
+        Returns:
+            the result of the _restCall
+        """
+        data = {"channelIndex": 1, "deviceId": self.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
+
 
 class LightSensor(Device):
     """ HMIP-SLO (Light Sensor outdoor) """
