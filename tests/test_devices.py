@@ -1289,7 +1289,7 @@ def test_blind_module(fake_home: Home):
             "primaryOpenAdjustable(True) primaryShadingStateType(POSITION_USED) "
             "secondaryCloseAdjustable(False) secondaryOpenAdjustable(False) "
             "secondaryShadingStateType(NOT_EXISTENT) primaryShadingLevel(0.94956) "
-            "secondaryShadingLevel(None) previousPrimaryShadingLevel(None) "
+            "secondaryShadingLevel(0) previousPrimaryShadingLevel(None) "
             "previousSecondaryShadingLevel(None) identifyOemSupported(True) productId(10) "
             "profileMode(AUTOMATIC) userDesiredProfileMode(AUTOMATIC) shadingDriveVersion(None) "
             "shadingPackagePosition(TOP) shadingPositionAdjustmentActive(None) "
