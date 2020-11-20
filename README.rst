@@ -147,6 +147,7 @@ Homematic IP Devices:
 -  [ ] HMIP-RCB1       (Remote Control - 1x button)
 -  [X] HMIP-SAM        (Acceleration Sensor)
 -  [X] HMIP-SCI        (Contact Interface Sensor)
+-  [ ] HMIP-SCTH230    (CO2, Temperature and Humidity Sensor 230V)
 -  [ ] HMIP-SFD        (Fine Dust Sensor)
 -  [X] HMIP-SLO        (Light Sensor - outdoor)
 -  [X] HMIP-SMI        (Motion Detector with Brightness Sensor - indoor)
