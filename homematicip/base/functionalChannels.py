@@ -524,6 +524,25 @@ class BlindChannel(ShutterChannel):
         self.blindModeActive = js["blindModeActive"]
 
 
+class MultiModeInputBlindChannel(BlindChannel):
+    """ this is the representative of the MULTI_MODE_INPUT_BLIND_CHANNEL channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_CLOSE
+        self.multiModeInputMode = MultiModeInputMode.KEY_BEHAVIOR
+        self.favoritePrimaryShadingPosition = 0.0
+        self.favoriteSecondaryShadingPosition = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
+        self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
+        self.favoritePrimaryShadingPosition = js["favoritePrimaryShadingPosition"]
+        self.favoriteSecondaryShadingPosition = js["favoriteSecondaryShadingPosition"]
+
+
 class DimmerChannel(FunctionalChannel):
     """ this is the representative of the DIMMER_CHANNEL channel"""
 
