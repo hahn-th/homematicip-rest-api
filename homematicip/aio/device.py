@@ -524,6 +524,9 @@ class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
 class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
 
+class AsyncDinRailSwitch4(DinRailSwitch4, AsyncSwitch):
+    """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """
+
 
 class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
     """ HMIP-STV (Inclination and vibration Sensor) """

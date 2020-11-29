@@ -6116,6 +6116,131 @@
             "serializedGlobalTradeItemNumber": "3014F0000000000000FAF9B4",
             "type": "TORMATIC_MODULE",
             "updateState": "UP_TO_DATE"
+        },
+        "3014F7110000000000005521": {
+            "availableFirmwareVersion": "1.4.2",
+            "connectionType": "HMIP_RF",
+            "firmwareVersion": "1.4.2",
+            "firmwareVersionInteger": 66562,
+            "functionalChannels": {
+                "0": {
+                    "busConfigMismatch": null,
+                    "coProFaulty": false,
+                    "coProRestartNeeded": false,
+                    "coProUpdateFailure": false,
+                    "configPending": false,
+                    "deviceId": "3014F7110000000000005521",
+                    "deviceOverheated": false,
+                    "deviceOverloaded": false,
+                    "devicePowerFailureDetected": false,
+                    "deviceUndervoltage": false,
+                    "dutyCycle": false,
+                    "functionalChannelType": "DEVICE_BASE",
+                    "groupIndex": 0,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000034"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "lowBat": null,
+                    "multicastRoutingEnabled": false,
+                    "powerShortCircuit": null,
+                    "routerModuleEnabled": false,
+                    "routerModuleSupported": false,
+                    "rssiDeviceValue": -82,
+                    "rssiPeerValue": -78,
+                    "shortCircuitDataLine": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureBusConfigMismatch": false,
+                        "IFeatureDeviceCoProError": false,
+                        "IFeatureDeviceCoProRestart": false,
+                        "IFeatureDeviceCoProUpdate": false,
+                        "IFeatureDeviceIdentify": true,
+                        "IFeatureDeviceOverheated": true,
+                        "IFeatureDeviceOverloaded": false,
+                        "IFeatureDevicePowerFailure": true,
+                        "IFeatureDeviceTemperatureOutOfRange": false,
+                        "IFeatureDeviceUndervoltage": false,
+                        "IFeatureMulticastRouter": false,
+                        "IFeaturePowerShortCircuit": false,
+                        "IFeatureRssiValue": true,
+                        "IFeatureShortCircuitDataLine": false,
+                        "IOptionalFeatureDutyCycle": true,
+                        "IOptionalFeatureLowBat": false
+                    },
+                    "temperatureOutOfRange": false,
+                    "unreach": false
+                },
+                "1": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F7110000000000005521",
+                    "functionalChannelType": "MULTI_MODE_INPUT_SWITCH_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000035"
+                    ],
+                    "index": 1,
+                    "label": "Poolpumpe",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "2": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F7110000000000005521",
+                    "functionalChannelType": "MULTI_MODE_INPUT_SWITCH_CHANNEL",
+                    "groupIndex": 2,
+                    "groups": [
+                        "00000000-0000-0000-0000-000000000035"
+                    ],
+                    "index": 2,
+                    "label": "Poollicht",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "3": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F7110000000000005521",
+                    "functionalChannelType": "MULTI_MODE_INPUT_SWITCH_CHANNEL",
+                    "groupIndex": 3,
+                    "groups": [],
+                    "index": 3,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                },
+                "4": {
+                    "binaryBehaviorType": "NORMALLY_CLOSE",
+                    "deviceId": "3014F7110000000000005521",
+                    "functionalChannelType": "MULTI_MODE_INPUT_SWITCH_CHANNEL",
+                    "groupIndex": 4,
+                    "groups": [],
+                    "index": 4,
+                    "label": "",
+                    "multiModeInputMode": "KEY_BEHAVIOR",
+                    "on": false,
+                    "profileMode": "AUTOMATIC",
+                    "userDesiredProfileMode": "AUTOMATIC"
+                }
+            },
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "3014F7110000000000005521",
+            "label": "Schaltaktor Verteiler",
+            "lastStatusUpdate": 1605271783993,
+            "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+            "manufacturerCode": 1,
+            "modelId": 405,
+            "modelType": "HmIP-DRSI4",
+            "oem": "eQ-3",
+            "permanentlyReachable": true,
+            "serializedGlobalTradeItemNumber": "3014F7110000000000005521",
+            "type": "DIN_RAIL_SWITCH_4",
+            "updateState": "UP_TO_DATE"
         }
     },
     "groups": {

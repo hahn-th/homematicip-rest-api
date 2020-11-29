@@ -366,6 +366,54 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+@pytest.mark.asyncio
+async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
+    no_ssl_fake_async_home = no_ssl_fake_async_home
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000005521")
+    assert isinstance(d, AsyncDinRailSwitch4)
+    assert d.label == "Schaltaktor Verteiler"
+    assert d.lastStatusUpdate == (
+        datetime(2020, 11, 13, 11, 49, 43, 993000) + timedelta(0, utc_offset)
+    )
+    assert d.manufacturerCode == 1
+    assert d.modelId == 405
+    assert d.modelType == "HmIP-DRSI4"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000005521"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.on is None
+    assert d.profileMode is None
+    assert d.userDesiredProfileMode is None
+    assert d.lowBat is None
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -82
+    assert d.rssiPeerValue == -78
+    assert d.unreach is False
+    assert d.availableFirmwareVersion == "1.4.2"
+    assert d.firmwareVersion == "1.4.2"
+    a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
+    assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
+    assert d.dutyCycle is False
+    assert d.configPending is False
+
+    assert str(d) == (
+        "HmIP-DRSI4 Schaltaktor Verteiler lowBat(None) unreach(False) rssiDeviceValue(-82) rssiPeerValue(-78) "
+        "configPending(False) dutyCycle(False) deviceOverheated(False) devicePowerFailureDetected(False) on(None) "
+        "profileMode(None) userDesiredProfileMode(None)"
+    )
+
+    for channel in range(1, 4):
+        await d.turn_on(channel)
+        await no_ssl_fake_async_home.get_current_state()
+        d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000005521")
+        assert d.functionalChannels[channel].on is True
+
+        await d.turn_off(channel)
+        await no_ssl_fake_async_home.get_current_state()
+        d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000005521")
+        assert d.functionalChannels[channel].on is False
+
 
 @pytest.mark.asyncio
 async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
