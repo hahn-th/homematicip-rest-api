@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
     - Devices
       - [HMIP-DRSI4] (Switch Actuator for DIN rail mount – 4x channels)
+      - [HMIP-DRBLI4] (Blind Actuator for DIN rail mount – 4 channels)
+      - [HMIP-FCI6] (Contact Interface flush-mount – 6x channels)
 
 
 ## [0.12.1] 2020-11-10

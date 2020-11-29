@@ -543,6 +543,52 @@ async def test_full_flush_blind(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
+    assert isinstance(d, AsyncDinRailBlind4)
+    assert d.label == "Jalousieaktor 1 für Hutschienenmontage – 4-fach"
+    assert d.lastStatusUpdate == (
+        datetime(2020, 11, 3, 13, 35, 24, 509000) + timedelta(0, utc_offset)
+    )
+    assert d.manufacturerCode == 1
+    assert d.modelId == 406
+    assert d.modelType == "HmIP-DRBLI4"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000022311"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.lowBat is None
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -70
+    assert d.rssiPeerValue == -63
+    assert d.unreach is False
+    assert d.availableFirmwareVersion == "1.6.0"
+    assert d.firmwareVersion == "1.6.0"
+    a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
+    assert d.firmwareVersionInteger == (a << 16) | (b << 8) | c
+    assert d.dutyCycle is False
+    assert d.configPending is False
+
+    for channel in range(1, 4):
+        await d.set_shutter_level(channel, 0.35)
+        await no_ssl_fake_async_home.get_current_state()
+        d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
+        assert d.functionalChannels[channel].shutterLevel == 0.35
+
+        await d.set_slats_level(channel, 0.8)
+        await no_ssl_fake_async_home.get_current_state()
+        d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
+        assert d.functionalChannels[channel].shutterLevel == 0.35
+        assert d.functionalChannels[channel].slatsLevel == 0.8
+
+        await d.set_slats_level(channel, 0.8, 0.3)
+        await no_ssl_fake_async_home.get_current_state()
+        d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
+        assert d.functionalChannels[channel].shutterLevel == 0.3
+        assert d.functionalChannels[channel].slatsLevel == 0.8
+
+
+@pytest.mark.asyncio
 async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F0000000000000FAF9B4")
 
