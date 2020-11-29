@@ -210,6 +210,7 @@ class DeviceType(AutoNameEnum):
     BRAND_SWITCH_MEASURING = auto()
     BRAND_SWITCH_NOTIFICATION_LIGHT = auto()
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()
+    DIN_RAIL_SWITCH_4 = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
     FLOOR_TERMINAL_BLOCK_12 = auto()

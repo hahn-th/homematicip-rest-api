@@ -734,6 +734,9 @@ class HeatingSwitch2(Switch):
 class WiredSwitch8(Switch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
 
+class DinRailSwitch4(Switch):
+    """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """
+
 
 class SwitchMeasuring(Switch):
     """ Generic class for Switch and Meter """
