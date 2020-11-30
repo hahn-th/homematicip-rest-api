@@ -76,7 +76,7 @@ class AsyncLightSensor(LightSensor, AsyncDevice):
 
 
 class AsyncSabotageDevice(SabotageDevice, AsyncDevice):
-    pass
+    """ Async implementation sabotage signaling devices """
 
 
 class AsyncOpenCollector8Module(OpenCollector8Module, AsyncSwitch):
@@ -139,13 +139,9 @@ class AsyncShutterContactOpticalPlus(ShutterContactOpticalPlus, AsyncShutterCont
 class AsyncShutterContactMagnetic(ShutterContactMagnetic, AsyncDevice):
     """ HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic """
 
-    pass
-
 
 class AsyncContactInterface(ContactInterface, AsyncSabotageDevice):
     """ HMIP-SCI (Contact Interface Sensor) """
-
-    pass
 
 
 class AsyncRotaryHandleSensor(RotaryHandleSensor, AsyncSabotageDevice):
@@ -161,21 +157,15 @@ class AsyncTemperatureHumiditySensorOutdoor(
 class AsyncHeatingThermostat(HeatingThermostat, AsyncOperationLockableDevice):
     """ HMIP-eTRV (Radiator Thermostat) """
 
-    pass
-
 
 class AsyncHeatingThermostatCompact(HeatingThermostatCompact, AsyncSabotageDevice):
     """ HMIP-eTRV-C (Heating-thermostat compact without display) """
-
-    pass
 
 
 class AsyncTemperatureHumiditySensorWithoutDisplay(
     TemperatureHumiditySensorWithoutDisplay, AsyncDevice
 ):
     """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
-
-    pass
 
 
 class AsyncTemperatureHumiditySensorDisplay(
@@ -197,25 +187,17 @@ class AsyncWallMountedThermostatPro(
     """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor)
     / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)"""
 
-    pass
-
 
 class AsyncWallMountedThermostatBasicHumidity(AsyncWallMountedThermostatPro):
     """ HMIP-WTH-B (Wall Thermostat – basic)"""
-
-    pass
 
 
 class AsyncSmokeDetector(SmokeDetector, AsyncDevice):
     """ HMIP-SWSD (Smoke Alarm with Q label) """
 
-    pass
-
 
 class AsyncFloorTerminalBlock6(FloorTerminalBlock6, AsyncDevice):
     """ HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V) """
-
-    pass
 
 
 class AsyncFloorTerminalBlock10(FloorTerminalBlock10, AsyncFloorTerminalBlock6):
@@ -278,47 +260,56 @@ class AsyncAlarmSirenOutdoor(AlarmSirenOutdoor, AsyncAlarmSirenIndoor):
 class AsyncMotionDetectorIndoor(MotionDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
 
-    pass
-
 
 class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncDevice):
     """ HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
-
-    pass
 
 
 class AsyncMotionDetectorPushButton(MotionDetectorPushButton, AsyncDevice):
     """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
 
-    pass
-
 
 class AsyncPresenceDetectorIndoor(PresenceDetectorIndoor, AsyncSabotageDevice):
     """ HMIP-SPI (Presence Sensor - indoor) """
-
-    pass
 
 
 class AsyncPassageDetector(PassageDetector, AsyncSabotageDevice):
     """ HMIP-SPDR (Passage Detector) """
 
-    pass
-
 
 class AsyncKeyRemoteControlAlarm(KeyRemoteControlAlarm, AsyncDevice):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
-
-    pass
 
 
 class AsyncFullFlushContactInterface(FullFlushContactInterface, AsyncDevice):
     """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
 
-    pass
+
+class AsyncFullFlushContactInterface6(FullFlushContactInterface6, AsyncDevice):
+    """ HMIP-FCI6 (Contact Interface flush-mount – 6 channels) """
 
 
 class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
+
+
+class AsyncShutter(Shutter, AsyncDevice):
+    """ Base class for async shutter devices """
+
+    async def set_shutter_level(self, channelIndex=1, level=0.0):
+        return await self._connection.api_call(*super().set_shutter_level(channelIndex, level))
+
+    async def set_shutter_stop(self, channelIndex=1):
+        return await self._connection.api_call(*super().set_shutter_stop(channelIndex))
+
+
+class AsyncBlind(Blind, AsyncShutter):
+    """ Base class for async blind devices """
+
+    async def set_slats_level(self, channelIndex=1, slatsLevel=0.0, shutterLevel=None):
+        return await self._connection.api_call(
+            *super().set_slats_level(channelIndex, slatsLevel, shutterLevel)
+        )
 
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
@@ -342,6 +333,10 @@ class AsyncFullFlushBlind(FullFlushBlind, AsyncFullFlushShutter):
 
 class AsyncBrandBlind(BrandBlind, AsyncFullFlushBlind):
     """ HMIP-BBL (Blind Actuator for brand switches) """
+
+
+class AsyncDinRailBlind4(DinRailBlind4, AsyncBlind):
+    """ HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels) """
 
 
 class AsyncDimmer(Dimmer, AsyncDevice):
@@ -492,8 +487,6 @@ class AsyncPluggableMainsFailureSurveillance(
 class AsyncRoomControlDevice(RoomControlDevice, AsyncWallMountedThermostatPro):
     """ ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display) """
 
-    pass
-
 
 class AsyncRoomControlDeviceAnalog(AsyncDevice):
     """ ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog) """
@@ -523,6 +516,9 @@ class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
 
 class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+
+class AsyncDinRailSwitch4(DinRailSwitch4, AsyncSwitch):
+    """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """
 
 
 class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):

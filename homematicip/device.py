@@ -734,6 +734,9 @@ class HeatingSwitch2(Switch):
 class WiredSwitch8(Switch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
 
+class DinRailSwitch4(Switch):
+    """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """
+
 
 class SwitchMeasuring(Switch):
     """ Generic class for Switch and Meter """
@@ -1073,7 +1076,59 @@ class KeyRemoteControlAlarm(Device):
     """ HMIP-KRCA (Key Ring Remote Control - alarm) """
 
 
-class FullFlushShutter(Device):
+class Shutter(Device):
+    """ Base class for shutter devices"""
+
+    def set_shutter_level(self, channelIndex=1, level=0.0):
+        """ sets the shutter level
+
+        Args:
+            channelIndex(int): the channel to control
+            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+        Returns:
+            the result of the _restCall
+        """
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "shutterLevel": level}
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+
+    def set_shutter_stop(self, channelIndex=1):
+        """ stops the current shutter operation
+
+        Args:
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {"channelIndex": channelIndex, "deviceId": self.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
+
+
+class Blind(Shutter):
+    """ Base class for blind devices"""
+
+    def set_slats_level(self, channelIndex=1, slatsLevel=0.0, shutterLevel=None):
+        """ sets the slats and shutter level
+
+        Args:
+            channelIndex(int): the channel to control
+            slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
+            shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
+        Returns:
+            the result of the _restCall
+        """
+        if shutterLevel is None:
+            shutterLevel = self.functionalChannels[channelIndex].shutterLevel
+
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "slatsLevel": slatsLevel,
+            "shutterLevel": shutterLevel,
+        }
+        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+
+
+class FullFlushShutter(Shutter):
     """HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)"""
 
     def __init__(self, connection):
@@ -1123,26 +1178,15 @@ class FullFlushShutter(Device):
         )
 
     def set_shutter_level(self, level=0.0):
-        """ sets the shutter level
-
-        Args:
-            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
-        Returns:
-            the result of the _restCall
-        """
-        data = {"channelIndex": 1, "deviceId": self.id, "shutterLevel": level}
-        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+        """ sets the shutter level """
+        return super().set_shutter_level(channelIndex=1, level=level)
 
     def set_shutter_stop(self):
-        """ stops the current shutter operation
-        Returns:
-            the result of the _restCall
-        """
-        data = {"channelIndex": 1, "deviceId": self.id}
-        return self._restCall("device/control/stop", body=json.dumps(data))
+        """ stops the current shutter operation """
+        return super().set_shutter_stop(channelIndex=1)
 
 
-class FullFlushBlind(FullFlushShutter):
+class FullFlushBlind(FullFlushShutter, Blind):
     """HMIP-FBL (Blind Actuator - flush-mount)"""
 
     def __init__(self, connection):
@@ -1179,23 +1223,9 @@ class FullFlushBlind(FullFlushShutter):
             self.blindModeActive = c["blindModeActive"]
 
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
-        """ sets the slats and shutter level
+        """ sets the slats and shutter level """
 
-        Args:
-            slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
-            shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
-        Returns:
-            the result of the _restCall
-        """
-        if shutterLevel is None:
-            shutterLevel = self.shutterLevel
-        data = {
-            "channelIndex": 1,
-            "deviceId": self.id,
-            "slatsLevel": slatsLevel,
-            "shutterLevel": shutterLevel,
-        }
-        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+        return super().set_slats_level(channelIndex=1, slatsLevel=slatsLevel, shutterLevel=shutterLevel)
 
     def __str__(self):
         return "{} slatsLevel({}) blindModeActive({})".format(
@@ -1205,6 +1235,9 @@ class FullFlushBlind(FullFlushShutter):
 
 class BrandBlind(FullFlushBlind):
     """ HMIP-BBL (Blind Actuator for brand switches) """
+
+class DinRailBlind4(Blind):
+    """ HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels) """
 
 
 class BlindModule(Device):
@@ -1731,6 +1764,9 @@ class FullFlushContactInterface(Device):
             self.multiModeInputMode,
             self.windowState,
         )
+
+class FullFlushContactInterface6(Device):
+    """ HMIP-FCI6 (Contact Interface flush-mount – 6 channels) """
 
 
 class WiredInput32(FullFlushContactInterface):
