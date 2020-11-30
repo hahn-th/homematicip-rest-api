@@ -296,8 +296,8 @@ class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
 class AsyncShutter(Shutter, AsyncDevice):
     """ Base class for async shutter devices """
 
-    async def set_shutter_level(self, channelIndex=1, level=0.0):
-        return await self._connection.api_call(*super().set_shutter_level(channelIndex, level))
+    async def set_shutter_level(self, level=0.0, channelIndex=1):
+        return await self._connection.api_call(*super().set_shutter_level(level, channelIndex))
 
     async def set_shutter_stop(self, channelIndex=1):
         return await self._connection.api_call(*super().set_shutter_stop(channelIndex))
@@ -306,29 +306,18 @@ class AsyncShutter(Shutter, AsyncDevice):
 class AsyncBlind(Blind, AsyncShutter):
     """ Base class for async blind devices """
 
-    async def set_slats_level(self, channelIndex=1, slatsLevel=0.0, shutterLevel=None):
+    async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None, channelIndex=1):
         return await self._connection.api_call(
-            *super().set_slats_level(channelIndex, slatsLevel, shutterLevel)
+            *super().set_slats_level(slatsLevel, shutterLevel, channelIndex)
         )
 
 
-class AsyncFullFlushShutter(FullFlushShutter, AsyncDevice):
+class AsyncFullFlushShutter(FullFlushShutter, AsyncShutter):
     """ HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount) """
 
-    async def set_shutter_level(self, level):
-        return await self._connection.api_call(*super().set_shutter_level(level))
 
-    async def set_shutter_stop(self):
-        return await self._connection.api_call(*super().set_shutter_stop())
-
-
-class AsyncFullFlushBlind(FullFlushBlind, AsyncFullFlushShutter):
+class AsyncFullFlushBlind(FullFlushBlind, AsyncBlind):
     """HMIP-FBL (Blind Actuator - flush-mount)"""
-
-    async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
-        return await self._connection.api_call(
-            *super().set_slats_level(slatsLevel, shutterLevel)
-        )
 
 
 class AsyncBrandBlind(BrandBlind, AsyncFullFlushBlind):

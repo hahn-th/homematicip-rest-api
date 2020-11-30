@@ -173,7 +173,7 @@ def test_full_flush_contact_interface6(fake_home: Home):
     assert d.functionalChannels[6].multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
 
     assert str(d) == (
-        "HmIP-FCI6 BA - Licht (Sensor) lowBat(None) unreach(None) rssiDeviceValue(None) rssiPeerValue(None) "
+        "HmIP-FCI6 Licht Flur lowBat(None) unreach(None) rssiDeviceValue(None) rssiPeerValue(None) "
         "configPending(False) dutyCycle(None)"
     )
 
