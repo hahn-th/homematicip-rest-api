@@ -1079,12 +1079,12 @@ class KeyRemoteControlAlarm(Device):
 class Shutter(Device):
     """ Base class for shutter devices"""
 
-    def set_shutter_level(self, channelIndex=1, level=0.0):
+    def set_shutter_level(self, level=0.0, channelIndex=1):
         """ sets the shutter level
 
         Args:
-            channelIndex(int): the channel to control
             level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+            channelIndex(int): the channel to control
         Returns:
             the result of the _restCall
         """
@@ -1106,13 +1106,13 @@ class Shutter(Device):
 class Blind(Shutter):
     """ Base class for blind devices"""
 
-    def set_slats_level(self, channelIndex=1, slatsLevel=0.0, shutterLevel=None):
+    def set_slats_level(self, slatsLevel=0.0, shutterLevel=None, channelIndex=1):
         """ sets the slats and shutter level
 
         Args:
-            channelIndex(int): the channel to control
             slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
             shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
+            channelIndex(int): the channel to control
         Returns:
             the result of the _restCall
         """
@@ -1177,14 +1177,6 @@ class FullFlushShutter(Shutter):
             self.bottomToTopReferenceTime,
         )
 
-    def set_shutter_level(self, level=0.0):
-        """ sets the shutter level """
-        return super().set_shutter_level(channelIndex=1, level=level)
-
-    def set_shutter_stop(self):
-        """ stops the current shutter operation """
-        return super().set_shutter_stop(channelIndex=1)
-
 
 class FullFlushBlind(FullFlushShutter, Blind):
     """HMIP-FBL (Blind Actuator - flush-mount)"""
@@ -1221,11 +1213,6 @@ class FullFlushBlind(FullFlushShutter, Blind):
             self.slatsReferenceTime = c["slatsReferenceTime"]
             self.previousSlatsLevel = c["previousSlatsLevel"]
             self.blindModeActive = c["blindModeActive"]
-
-    def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
-        """ sets the slats and shutter level """
-
-        return super().set_slats_level(channelIndex=1, slatsLevel=slatsLevel, shutterLevel=shutterLevel)
 
     def __str__(self):
         return "{} slatsLevel({}) blindModeActive({})".format(
