@@ -366,6 +366,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+
 @pytest.mark.asyncio
 async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
     no_ssl_fake_async_home = no_ssl_fake_async_home

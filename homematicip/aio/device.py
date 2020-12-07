@@ -297,7 +297,9 @@ class AsyncShutter(Shutter, AsyncDevice):
     """ Base class for async shutter devices """
 
     async def set_shutter_level(self, level=0.0, channelIndex=1):
-        return await self._connection.api_call(*super().set_shutter_level(level, channelIndex))
+        return await self._connection.api_call(
+            *super().set_shutter_level(level, channelIndex)
+        )
 
     async def set_shutter_stop(self, channelIndex=1):
         return await self._connection.api_call(*super().set_shutter_stop(channelIndex))
@@ -505,6 +507,7 @@ class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
 
 class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+
 
 class AsyncDinRailSwitch4(DinRailSwitch4, AsyncSwitch):
     """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """

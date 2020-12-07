@@ -164,11 +164,15 @@ def test_full_flush_contact_interface6(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000056775")
     assert isinstance(d, FullFlushContactInterface6)
 
-    assert d.functionalChannels[3].binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert (
+        d.functionalChannels[3].binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    )
     assert d.functionalChannels[3].windowState == WindowState.OPEN
     assert d.functionalChannels[3].multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
 
-    assert d.functionalChannels[6].binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert (
+        d.functionalChannels[6].binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    )
     assert d.functionalChannels[6].windowState == None
     assert d.functionalChannels[6].multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
 
