@@ -40,6 +40,7 @@ def send_event(fake_home: Home, pushEventType: EventType, type: str, data):
     with no_ssl_verification():
         fake_home._restCall("ws/send", json.dumps(event_data))
 
+
 @pytest.mark.flaky(reruns=5, reruns_delay=2)
 def test_websocket_device(fake_home: Home, home_data):
 
@@ -87,6 +88,7 @@ def test_websocket_device(fake_home: Home, home_data):
 
     fake_home.disable_events()
 
+
 @pytest.mark.flaky(reruns=5, reruns_delay=2)
 def test_websocket_group(fake_home: Home, home_data):
 
@@ -131,12 +133,14 @@ def test_websocket_group(fake_home: Home, home_data):
 
     fake_home.disable_events()
 
+
 @pytest.mark.flaky(reruns=5, reruns_delay=2)
 def test_websocket_security_journal_changed(fake_home: Home, home_data):
     fake_home.enable_events()
     send_event(fake_home, EventType.SECURITY_JOURNAL_CHANGED, None, None)
     time.sleep(1)
     fake_home.disable_events()
+
 
 @pytest.mark.flaky(reruns=5, reruns_delay=2)
 def test_websocket_home_changed(fake_home: Home, home_data):
@@ -150,6 +154,7 @@ def test_websocket_home_changed(fake_home: Home, home_data):
     time.sleep(1)
     assert fake_home.weather.humidity == 60
     fake_home.disable_events()
+
 
 @pytest.mark.flaky(reruns=5, reruns_delay=2)
 def test_websocket_client(fake_home: Home, home_data):
@@ -189,6 +194,7 @@ def test_websocket_client(fake_home: Home, home_data):
 
 
 ws_error_called = False
+
 
 @pytest.mark.flaky(reruns=5, reruns_delay=2)
 def test_websocket_error(fake_home: Home, home_data):

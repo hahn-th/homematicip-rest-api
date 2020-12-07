@@ -734,6 +734,7 @@ class HeatingSwitch2(Switch):
 class WiredSwitch8(Switch):
     """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
 
+
 class DinRailSwitch4(Switch):
     """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """
 
@@ -1088,7 +1089,11 @@ class Shutter(Device):
         Returns:
             the result of the _restCall
         """
-        data = {"channelIndex": channelIndex, "deviceId": self.id, "shutterLevel": level}
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "shutterLevel": level,
+        }
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self, channelIndex=1):
@@ -1222,6 +1227,7 @@ class FullFlushBlind(FullFlushShutter, Blind):
 
 class BrandBlind(FullFlushBlind):
     """ HMIP-BBL (Blind Actuator for brand switches) """
+
 
 class DinRailBlind4(Blind):
     """ HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels) """
@@ -1751,6 +1757,7 @@ class FullFlushContactInterface(Device):
             self.multiModeInputMode,
             self.windowState,
         )
+
 
 class FullFlushContactInterface6(Device):
     """ HMIP-FCI6 (Contact Interface flush-mount – 6 channels) """
