@@ -1,5 +1,6 @@
 from homematicip.aio.device import *
 from homematicip.aio.group import *
+from homematicip.aio.rule import *
 from homematicip.aio.securityEvent import *
 from homematicip.base.enums import *
 
@@ -125,3 +126,5 @@ TYPE_SECURITY_EVENT_MAP = {
     SecurityEventType.SMOKE_ALARM: AsyncSmokeAlarmEvent,
     SecurityEventType.WATER_DETECTION_EVENT: AsyncWaterDetectionEvent,
 }
+
+TYPE_RULE_MAP = {AutomationRuleType.SIMPLE: AsyncSimpleRule}
