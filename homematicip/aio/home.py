@@ -5,6 +5,7 @@ import logging
 from homematicip.aio.class_maps import (
     TYPE_CLASS_MAP,
     TYPE_GROUP_MAP,
+    TYPE_RULE_MAP,
     TYPE_SECURITY_EVENT_MAP,
 )
 from homematicip.aio.connection import AsyncConnection
@@ -21,6 +22,7 @@ class AsyncHome(Home):
     _typeClassMap = TYPE_CLASS_MAP
     _typeGroupMap = TYPE_GROUP_MAP
     _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+    _typeRuleMap = TYPE_RULE_MAP
 
     def __init__(self, loop, websession=None):
         super().__init__(connection=AsyncConnection(loop, websession))

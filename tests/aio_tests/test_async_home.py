@@ -4,6 +4,7 @@ import pytest
 
 from conftest import utc_offset
 from homematicip.aio.home import AsyncHome
+from homematicip.aio.rule import *
 from homematicip.aio.securityEvent import *
 from homematicip.base.base_connection import HmipWrongHttpStatusError
 from homematicip.base.enums import *
@@ -248,3 +249,40 @@ async def test_clearconfig(no_ssl_fake_async_home: AsyncHome):
 
     assert d1.id == d2.id
     assert d1 != d2
+
+
+@pytest.mark.asyncio
+async def test_rules(no_ssl_fake_async_home: AsyncHome):
+    with no_ssl_verification():
+        rule = no_ssl_fake_async_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
+        assert rule.active is True
+        assert rule.label == "Alarmanlage"
+        assert isinstance(rule, AsyncSimpleRule)
+        assert rule.ruleErrorCategories == []
+        assert rule.errorRuleTriggerItems == []
+        assert rule.errorRuleConditionItems == []
+        assert rule.errorRuleActionItems == []
+
+        assert str(rule) == "SIMPLE Alarmanlage active(True)"
+
+        # disable test
+        await rule.disable()
+        await rule.set_label("DISABLED_RULE")
+        await no_ssl_fake_async_home.get_current_state()
+        rule = no_ssl_fake_async_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
+        assert rule.active is False
+        assert rule.label == "DISABLED_RULE"
+
+        # enable test
+        await rule.enable()
+        await rule.set_label("ENABLED_RULE")
+        await no_ssl_fake_async_home.get_current_state()
+        rule = no_ssl_fake_async_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
+        assert rule.active is True
+        assert rule.label == "ENABLED_RULE"
+
+        rule.id = "INVALID_ID"
+        with pytest.raises(HmipWrongHttpStatusError):
+            await rule.disable()
+        with pytest.raises(HmipWrongHttpStatusError):
+            await rule.set_label("NEW LABEL")

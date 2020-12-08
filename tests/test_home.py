@@ -149,7 +149,7 @@ def test_rules(fake_home: Home):
         assert rule.active is False
         assert rule.label == "DISABLED_RULE"
 
-        # endable test
+        # enable test
         rule.enable()
         rule.set_label("ENABLED_RULE")
         fake_home.get_current_state()
