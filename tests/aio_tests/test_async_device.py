@@ -366,6 +366,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+
 @pytest.mark.asyncio
 async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
     no_ssl_fake_async_home = no_ssl_fake_async_home
@@ -570,18 +571,18 @@ async def test_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
     assert d.configPending is False
 
     for channel in range(1, 4):
-        await d.set_shutter_level(channel, 0.35)
+        await d.set_shutter_level(0.35, channelIndex=channel)
         await no_ssl_fake_async_home.get_current_state()
         d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
         assert d.functionalChannels[channel].shutterLevel == 0.35
 
-        await d.set_slats_level(channel, 0.8)
+        await d.set_slats_level(0.8, channelIndex=channel)
         await no_ssl_fake_async_home.get_current_state()
         d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
         assert d.functionalChannels[channel].shutterLevel == 0.35
         assert d.functionalChannels[channel].slatsLevel == 0.8
 
-        await d.set_slats_level(channel, 0.8, 0.3)
+        await d.set_slats_level(0.8, 0.3, channelIndex=channel)
         await no_ssl_fake_async_home.get_current_state()
         d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
         assert d.functionalChannels[channel].shutterLevel == 0.3

@@ -6515,7 +6515,7 @@
                         "00000000-0000-0000-0000-000000000045"
                     ],
                     "index": 1,
-                    "label": "BA - Licht (Sensor) 1",
+                    "label": "Licht Flur 1",
                     "multiModeInputMode": "KEY_BEHAVIOR",
                     "supportedOptionalFeatures": {
                         "IOptionalFeatureWindowState": false
@@ -6533,7 +6533,7 @@
                         "00000000-0000-0000-0000-000000000047"
                     ],
                     "index": 2,
-                    "label": "BA - Licht (Sensor) 2",
+                    "label": "Licht Flur 2",
                     "multiModeInputMode": "KEY_BEHAVIOR",
                     "supportedOptionalFeatures": {
                         "IOptionalFeatureWindowState": false
@@ -6565,7 +6565,7 @@
                         "00000000-0000-0000-0000-000000000044"
                     ],
                     "index": 4,
-                    "label": "BA - Licht (Sensor) 4 (Dummy)",
+                    "label": "Licht Flur 4",
                     "multiModeInputMode": "KEY_BEHAVIOR",
                     "supportedOptionalFeatures": {
                         "IOptionalFeatureWindowState": false
@@ -6581,7 +6581,7 @@
                         "00000000-0000-0000-0000-000000000044"
                     ],
                     "index": 5,
-                    "label": "BA - Licht (Sensor) 5 (Dummy)",
+                    "label": "Licht Flur 5",
                     "multiModeInputMode": "KEY_BEHAVIOR",
                     "supportedOptionalFeatures": {
                         "IOptionalFeatureWindowState": false
@@ -6597,7 +6597,7 @@
                         "00000000-0000-0000-0000-000000000044"
                     ],
                     "index": 6,
-                    "label": "BA - Licht (Sensor) 6 (Dummy)",
+                    "label": "Licht Flur 6",
                     "multiModeInputMode": "KEY_BEHAVIOR",
                     "supportedOptionalFeatures": {
                         "IOptionalFeatureWindowState": false
@@ -6607,7 +6607,7 @@
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "3014F7110000000000056775",
-            "label": "BA - Licht (Sensor)",
+            "label": "Licht Flur",
             "lastStatusUpdate": 0,
             "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
             "manufacturerCode": 1,

@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] 2020-11-09
+## [Unreleased] 
+- API
+    - Rules
+      - Add async classes and methods for rules
+
+## [0.13.0] 2020-12-03
+
 ### ADDED
 - API
     - Devices
@@ -14,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [0.12.1] 2020-11-10
+
 ### ADDED
 - API
     - Devices
@@ -349,9 +356,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...HEAD
-[0.12.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.00...0.12.1
-[0.12.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.00...0.12.0
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...HEAD
+[0.12.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...0.13.0
+[0.12.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.0...0.12.1
+[0.12.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.0...0.12.0
 [0.11.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...0.11.0
 [0.10.19]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.18...0.10.19
 [0.10.18]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...0.10.18
