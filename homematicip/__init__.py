@@ -26,8 +26,9 @@ def find_and_load_config_file() -> HmipConfig:
 def load_config_file(config_file: str) -> HmipConfig:
     """Loads the config ini file.
     :raises a FileNotFoundError when the config file does not exist."""
+    expanded_config_file = os.path.expanduser(config_file)
     _config = configparser.ConfigParser()
-    with open(config_file, "r") as fl:
+    with open(expanded_config_file, "r") as fl:
         _config.read_file(fl)
         logging_filename = _config.get("LOGGING", "FileName", fallback="hmip.log")
         if logging_filename == "None":
