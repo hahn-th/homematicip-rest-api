@@ -2036,3 +2036,21 @@ class TiltVibrationSensor(Device):
             "device/configuration/setAccelerationSensorEventFilterPeriod",
             json.dumps(data),
         )
+
+
+class RainSensor(Device):
+    """ HMIP-SRD (Rain Sensor)  """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.raining = False
+        #:bool:
+        self.rainSensorSensitivity = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("RAIN_DETECTION_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("rainSensorSensitivity", c)
+            self.set_attr_from_dict("raining", c)

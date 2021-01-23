@@ -1328,3 +1328,17 @@ def test_blind_module(fake_home: Home):
         d = fake_home.search_device_by_id("3014F71100BLIND_MODULE00")
         assert d.primaryShadingLevel == 0.5
         assert d.secondaryShadingLevel == 1.0
+
+
+def test_rain_sensor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000RAIN_SENSOR")
+
+        assert d.raining == True
+        assert d.rainSensorSensitivity == 50.0
+
+        assert str(d) == (
+            "HmIP-SRD Regensensor lowBat(None) unreach(False) rssiDeviceValue(-91) "
+            "rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "rainSensorSensitivity(50.0) raining(True)"
+        )

@@ -254,7 +254,9 @@ async def test_clearconfig(no_ssl_fake_async_home: AsyncHome):
 @pytest.mark.asyncio
 async def test_rules(no_ssl_fake_async_home: AsyncHome):
     with no_ssl_verification():
-        rule = no_ssl_fake_async_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
+        rule = no_ssl_fake_async_home.search_rule_by_id(
+            "00000000-0000-0000-0000-000000000065"
+        )
         assert rule.active is True
         assert rule.label == "Alarmanlage"
         assert isinstance(rule, AsyncSimpleRule)
@@ -269,7 +271,9 @@ async def test_rules(no_ssl_fake_async_home: AsyncHome):
         await rule.disable()
         await rule.set_label("DISABLED_RULE")
         await no_ssl_fake_async_home.get_current_state()
-        rule = no_ssl_fake_async_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
+        rule = no_ssl_fake_async_home.search_rule_by_id(
+            "00000000-0000-0000-0000-000000000065"
+        )
         assert rule.active is False
         assert rule.label == "DISABLED_RULE"
 
@@ -277,7 +281,9 @@ async def test_rules(no_ssl_fake_async_home: AsyncHome):
         await rule.enable()
         await rule.set_label("ENABLED_RULE")
         await no_ssl_fake_async_home.get_current_state()
-        rule = no_ssl_fake_async_home.search_rule_by_id("00000000-0000-0000-0000-000000000065")
+        rule = no_ssl_fake_async_home.search_rule_by_id(
+            "00000000-0000-0000-0000-000000000065"
+        )
         assert rule.active is True
         assert rule.label == "ENABLED_RULE"
 

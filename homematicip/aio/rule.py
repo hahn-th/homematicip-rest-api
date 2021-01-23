@@ -6,6 +6,7 @@ from homematicip.rule import (
     SimpleRule,
 )
 
+
 class AsyncRule(Rule):
     """ Async implementation of a homematic ip rule """
 
@@ -27,4 +28,3 @@ class AsyncSimpleRule(SimpleRule, AsyncRule):
 
     async def get_simple_rule(self):
         return await self._connection.api_call(*super().get_simple_rule())
-
