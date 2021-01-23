@@ -120,6 +120,9 @@ class AsyncHome(Home):
             *super().activate_absence_with_period(endtime)
         )
 
+    async def activate_absence_permanent(self):
+        return await self._connection.api_call(*super().activate_absence_permanent())
+
     async def deactivate_absence(self):
         return await self._connection.api_call(*super().deactivate_absence())
 

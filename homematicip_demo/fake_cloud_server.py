@@ -245,6 +245,23 @@ class AsyncFakeCloudServer:
         return web.json_response(None)
 
     @validate_authorization
+    async def post_hmip_home_heating_activateAbsencePermanent(
+        self, request: web.Request
+    ) -> web.Response:
+
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"][
+            "absenceEndTime"
+        ] = "2100_12_31 23:59"
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"][
+            "absenceType"
+        ] = "PERMANENT"
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"][
+            "ecoDuration"
+        ] = "PERMANENT"
+
+        return web.json_response(None)
+
+    @validate_authorization
     async def post_hmip_home_heating_deactivateAbsence(
         self, request: web.Request
     ) -> web.Response:

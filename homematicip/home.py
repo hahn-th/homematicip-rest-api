@@ -600,6 +600,11 @@ class Home(HomeMaticIPObject):
             "home/heating/activateAbsenceWithPeriod", json.dumps(data)
         )
 
+    def activate_absence_permanent(self):
+        """ activates the absence forever
+        """
+        return self._restCall("home/heating/activateAbsencePermanent")
+
     def activate_absence_with_duration(self, duration: int):
         """ activates the absence mode for a given time
 
