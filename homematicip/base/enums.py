@@ -245,6 +245,7 @@ class DeviceType(AutoNameEnum):
     PRINTED_CIRCUIT_BOARD_SWITCH_2 = auto()
     PUSH_BUTTON = auto()
     PUSH_BUTTON_6 = auto()
+    PUSH_BUTTON_FLAT = auto()
     RAIN_SENSOR = auto()
     REMOTE_CONTROL_8 = auto()
     REMOTE_CONTROL_8_MODULE = auto()

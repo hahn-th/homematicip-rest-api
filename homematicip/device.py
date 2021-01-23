@@ -881,6 +881,8 @@ class PushButton(Device):
 class PushButton6(PushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
 
+class PushButtonFlat(PushButton):
+    """ HmIP-WRCC2 (Wall-mount Remote Control – flat) """
 
 class BrandPushButton(PushButton):
     """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """

@@ -178,6 +178,7 @@ Homematic IP Devices:
 -  [ ] HMIP-WLAN-HAP   (WLAN Access Point)
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
+-  [X] HMIP-WRCC2      (Wall-mount Remote Control – flat)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
 -  [ ] HMIP-WRCR       (Wall-mount Remote Control - Rotary)
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released

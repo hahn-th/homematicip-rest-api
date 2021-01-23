@@ -54,6 +54,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: PrintedCircuitBoardSwitchBattery,
     DeviceType.PUSH_BUTTON: PushButton,
     DeviceType.PUSH_BUTTON_6: PushButton6,
+    DeviceType.PUSH_BUTTON_FLAT: PushButtonFlat,
     DeviceType.RAIN_SENSOR: RainSensor,
     DeviceType.REMOTE_CONTROL_8: RemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: RemoteControl8Module,
