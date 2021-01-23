@@ -985,6 +985,13 @@ def test_push_button_6(fake_home: Home):
     assert d.label == "Wandtaster - 6-fach"
 
 
+def test_push_button_flat(fake_home: Home):
+    d = PushButton6(fake_home._connection)
+    d = fake_home.search_device_by_id("3014F711PUSH_BUTTON_FLAT")
+    assert d.modelId == 431
+    assert d.label == "Wandtaster"
+
+
 def test_remote_control_8(fake_home: Home):
     d = PushButton6(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB016")
@@ -1342,3 +1349,21 @@ def test_rain_sensor(fake_home: Home):
             "rssiPeerValue(None) configPending(False) dutyCycle(False) "
             "rainSensorSensitivity(50.0) raining(True)"
         )
+
+
+def test_din_rail_switch(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110DIN_RAIL_SWITCH")
+    assert isinstance(d, FullFlushInputSwitch)
+    assert d.binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert d.on == None
+    assert d.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
+    assert d.profileMode == None
+    assert d.userDesiredProfileMode == ProfileMode.AUTOMATIC
+    assert str(d) == (
+        "HmIP-DRSI1 Schaltaktor für Hutschienenmontage – 1-fach lowBat(None) unreach(None) "
+        "rssiDeviceValue(None) rssiPeerValue(None) configPending(None) dutyCycle(None) "
+        "deviceOverheated(False) devicePowerFailureDetected(False) "
+        "binaryBehaviorType(NORMALLY_CLOSE) multiModeInputMode(KEY_BEHAVIOR) on(None) "
+        "profileMode(None) userDesiredProfileMode(AUTOMATIC) on(None) profileMode(None) "
+        "userDesiredProfileMode(AUTOMATIC)"
+    )

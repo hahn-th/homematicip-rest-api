@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Rules
       - Add async classes and methods for rules
 - Devices
+    - [HMIP-DRSI1] (Switch Actuator for DIN rail mount – 1x channel)
     - [HMIP-SRD] (Rain Sensor) 
+    - [HMIP-WRCC2] (Wall-mount Remote Control – flat)
 
 ## [0.13.0] 2020-12-03
 
@@ -409,3 +411,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-HDM1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/332
 [HMIP-HAP]: https://github.com/coreGreenberet/homematicip-rest-api/issues/335
 [HMIP-SRD]: https://github.com/coreGreenberet/homematicip-rest-api/issues/375
+[HMIP-WRCC2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
+[HMIP-DRSI1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373

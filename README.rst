@@ -91,7 +91,7 @@ Homematic IP Devices:
 -  [ ] HMIP-BWTH24     (Wall Thermostat Display with switching output – for brand switches, 24V)
 -  [ ] HMIP-DBB        (Doorbell Push-Button)
 -  [X] HMIP-DRBLI4     (Blind Actuator for DIN rail mount – 4 channels)
--  [ ] HMIP-DRSI1      (Switch Actuator for DIN rail mount – 1x channel)
+-  [X] HMIP-DRSI1      (Switch Actuator for DIN rail mount – 1x channel)
 -  [ ] HMIP-DRDI3      (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
 -  [X] HMIP-DRSI4      (Switch Actuator for DIN rail mount – 4x channels)
 -  [ ] HMIP-DSD-PCB    (Door Signal Dector PCB) 
@@ -178,6 +178,7 @@ Homematic IP Devices:
 -  [ ] HMIP-WLAN-HAP   (WLAN Access Point)
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
+-  [X] HMIP-WRCC2      (Wall-mount Remote Control – flat)
 -  [ ] HMIP-WRCD       (Wall-mount Remote Control - E-Paper-Status display)
 -  [ ] HMIP-WRCR       (Wall-mount Remote Control - Rotary)
 -  [ ] HMIP-WT         (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
