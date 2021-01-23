@@ -4,11 +4,11 @@
 #
 version: 2
 jobs:
-  test_3_9:
+  test_3_6:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.9.0rc2-buster
+      - image: circleci/python:3.6.14
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -207,7 +207,7 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - test_3_9:
+      - test_3_6:
           filters:
             tags:
               only: /.*/
@@ -221,7 +221,7 @@ workflows:
               only: /.*/
       - deploy:
           requires:
-            - test_3_9
+            - test_3_6
             - test_3_8
             - test_3_7
           filters:
