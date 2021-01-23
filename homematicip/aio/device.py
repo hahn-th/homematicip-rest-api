@@ -566,3 +566,7 @@ class AsyncBlindModule(BlindModule, AsyncDevice):
 
     async def stop(self):
         return await self._connection.api_call(*super().stop())
+
+
+class AsyncRainSensor(RainSensor, AsyncDevice):
+    """ HMIP-SRD (Rain Sensor)  """
