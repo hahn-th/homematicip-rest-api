@@ -18,7 +18,7 @@ class AsyncFakeCloudServer:
 
     def reset(self, home_path=Path(__file__).parent.joinpath("json_data/home.json")):
         with open(home_path, encoding="utf-8") as file:
-            self.data = json.load(file, encoding="UTF-8")
+            self.data = json.load(file)
             self.sgtin = "3014F711A000000BAD0C0DED"
             self.client_auth_token = (
                 hashlib.sha512(str(self.sgtin + "jiLpVitHvWnIGD1yo7MA").encode("utf-8"))
