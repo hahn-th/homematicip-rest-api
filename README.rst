@@ -157,7 +157,7 @@ Homematic IP Devices:
 -  [X] HMIP-SPDR       (Passage Sensor with Direction Recognition)
 -  [X] HMIP-SPI        (Presence Sensor - indoor)
 -  [X] HMIP-SRH        (Window Rotary Handle Sensor)
--  [ ] HMIP-SRD        (Rain Sensor) 
+-  [X] HMIP-SRD        (Rain Sensor) 
 -  [X] HMIP-STH        (Temperature and Humidity Sensor without display - indoor)
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)

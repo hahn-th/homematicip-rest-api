@@ -8,33 +8,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
     - Rules
       - Add async classes and methods for rules
+- Devices
+    - [HMIP-SRD] (Rain Sensor) 
 
 ## [0.13.0] 2020-12-03
 
 ### ADDED
-- API
-    - Devices
-      - [HMIP-DRSI4] (Switch Actuator for DIN rail mount – 4x channels)
-      - [HMIP-DRBLI4] (Blind Actuator for DIN rail mount – 4 channels)
-      - [HMIP-FCI6] (Contact Interface flush-mount – 6x channels)
+- Devices
+    - [HMIP-DRSI4] (Switch Actuator for DIN rail mount – 4x channels)
+    - [HMIP-DRBLI4] (Blind Actuator for DIN rail mount – 4 channels)
+    - [HMIP-FCI6] (Contact Interface flush-mount – 6x channels)
 
 
 ## [0.12.1] 2020-11-10
 
 ### ADDED
-- API
-    - Devices
-      - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
-        - stop method
+- Devices
+    - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
+    - stop method
 
 
 ## [0.12.0] 2020-11-09
 
 ### ADDED
-- API
-    - Devices
-      - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
-      - [HMIP-HAP] (HomematicIP Access Point)
+- Devices
+    - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
+    - [HMIP-HAP] (HomematicIP Access Point)
 
 
 ### FIXED
@@ -45,17 +44,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ADDED
 - API
-    - Devices
-      - HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)
-      - HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)
-      - HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)
-      - HMIP-STV (Inclination and vibration Sensor)
-      - Fields
-        - connectionType
-        - new OptionalFeatures
     - Home
       - accessPointUpdateStates
-	  
+- Devices
+    - HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)
+    - HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)
+    - HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)
+    - HMIP-STV (Inclination and vibration Sensor)
+    - Fields
+    - connectionType
+    - new OptionalFeatures
+
 ### CHANGED
 
 - [BUG: 325] Requirements are now using a min version instead of a pinned version. requirements_dev.txt will still use the pinned versions to make sure that the latest version is compatible with the library.
@@ -409,3 +408,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-SWDO-PL]: https://github.com/coreGreenberet/homematicip-rest-api/issues/315
 [HMIP-HDM1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/332
 [HMIP-HAP]: https://github.com/coreGreenberet/homematicip-rest-api/issues/335
+[HMIP-SRD]: https://github.com/coreGreenberet/homematicip-rest-api/issues/375
