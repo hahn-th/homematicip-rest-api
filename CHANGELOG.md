@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
     - Rules
       - Add async classes and methods for rules
+    - Home
+      - Added [activate_absence_permanent] method
 - Devices
     - [HMIP-DRSI1] (Switch Actuator for DIN rail mount – 1x channel)
     - [HMIP-SRD] (Rain Sensor) 
@@ -413,3 +415,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-SRD]: https://github.com/coreGreenberet/homematicip-rest-api/issues/375
 [HMIP-WRCC2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
 [HMIP-DRSI1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
+[activate_absence_permanent]: https://github.com/coreGreenberet/homematicip-rest-api/issues/357

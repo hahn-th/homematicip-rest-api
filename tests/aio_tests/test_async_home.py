@@ -132,6 +132,16 @@ async def test_indoor_climate_home(no_ssl_fake_async_home: AsyncHome):
         assert fh.absenceType == AbsenceType.PERIOD
         assert fh.absenceEndTime == absence_end
 
+        await no_ssl_fake_async_home.activate_absence_permanent()
+
+        await no_ssl_fake_async_home.get_current_state()
+
+        assert fh.absenceType == AbsenceType.PERMANENT
+        assert fh.absenceEndTime == datetime.strptime(
+            "2100_12_31 23:59", "%Y_%m_%d %H:%M"
+        )
+        assert fh.ecoDuration == EcoDuration.PERMANENT
+
         await no_ssl_fake_async_home.deactivate_absence()
 
         await no_ssl_fake_async_home.get_current_state()
