@@ -20,6 +20,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: BrandSwitchNotificationLight,
     DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.DIN_RAIL_BLIND_4: DinRailBlind4,
+    DeviceType.DIN_RAIL_SWITCH: DinRailSwitch,
     DeviceType.DIN_RAIL_SWITCH_4: DinRailSwitch4,
     DeviceType.FLOOR_TERMINAL_BLOCK_10: FloorTerminalBlock10,
     DeviceType.FLOOR_TERMINAL_BLOCK_12: FloorTerminalBlock12,

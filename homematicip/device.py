@@ -881,8 +881,10 @@ class PushButton(Device):
 class PushButton6(PushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
 
+
 class PushButtonFlat(PushButton):
     """ HmIP-WRCC2 (Wall-mount Remote Control – flat) """
+
 
 class BrandPushButton(PushButton):
     """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """
@@ -1789,6 +1791,10 @@ class FullFlushInputSwitch(Switch):
             self.set_attr_from_dict("on", c)
             self.set_attr_from_dict("profileMode", c, ProfileMode)
             self.set_attr_from_dict("userDesiredProfileMode", c, ProfileMode)
+
+
+class DinRailSwitch(FullFlushInputSwitch):
+    """ HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel) """
 
 
 class AccelerationSensor(Device):
