@@ -995,4 +995,4 @@ class RainDetectionChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("rainSensorSensitivity", js)
-        self.set_attr_from_dict("raining", js) - ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+        self.set_attr_from_dict("raining", js)
