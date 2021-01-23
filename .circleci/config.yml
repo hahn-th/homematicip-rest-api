@@ -272,16 +272,16 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - test_3_9:
-          filters:
-            tags:
-              only: /.*/
+      #- test_3_9:
+      #    filters:
+      #      tags:
+      #        only: /.*/
       - deploy:
           requires:
             - test_3_6
             - test_3_7
             - test_3_8
-            - test_3_9
+            #- test_3_9
           filters:
             branches:
               only: master

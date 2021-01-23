@@ -84,17 +84,17 @@ class AsyncConnection(BaseConnection):
         for i in range(self._restCallRequestCounter):
             try:
                 with async_timeout.timeout(self._restCallTimout, loop=self._loop):
-                    async with self._websession.post(
+                    result = await self._websession.post(
                         path, data=body, headers=self.headers
-                    ) as result:
-                        if result.status == 200:
-                            if result.content_type == "application/json":
-                                ret = await result.json()
-                            else:
-                                ret = True
-                            return ret
+                    )
+                    if result.status == 200:
+                        if result.content_type == "application/json":
+                            ret = await result.json()
                         else:
-                            raise HmipWrongHttpStatusError(result.status)
+                            ret = True
+                        return ret
+                    else:
+                        raise HmipWrongHttpStatusError(result.status)
             except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
                 # Both exceptions occur when connecting to the server does
                 # somehow not work.
