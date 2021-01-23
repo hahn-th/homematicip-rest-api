@@ -1328,7 +1328,7 @@ def test_blind_module(fake_home: Home):
         d = fake_home.search_device_by_id("3014F71100BLIND_MODULE00")
         assert d.primaryShadingLevel == 0.5
         assert d.secondaryShadingLevel == 1.0
-        
+
 
 def test_rain_sensor(fake_home: Home):
     with no_ssl_verification():
@@ -1342,6 +1342,3 @@ def test_rain_sensor(fake_home: Home):
             "rssiPeerValue(None) configPending(False) dutyCycle(False) "
             "rainSensorSensitivity(50.0) raining(True)"
         )
-
-        
-

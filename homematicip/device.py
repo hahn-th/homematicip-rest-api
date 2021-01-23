@@ -2037,6 +2037,7 @@ class TiltVibrationSensor(Device):
             json.dumps(data),
         )
 
+
 class RainSensor(Device):
     """ HMIP-SRD (Rain Sensor)  """
 
