@@ -233,6 +233,10 @@ class AsyncPushButton6(PushButton6, AsyncPushButton):
     """ HMIP-WRC6 (Wall-mount Remote Control - 6-button)  """
 
 
+class AsyncPushButtonFlat(PushButtonFlat, AsyncPushButton):
+    """ HMIP-WRCC2 (Wall-mount Remote Control – flat) """
+
+
 class AsyncBrandPushButton(BrandPushButton, AsyncPushButton):
     """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """
 
@@ -291,6 +295,10 @@ class AsyncFullFlushContactInterface6(FullFlushContactInterface6, AsyncDevice):
 
 class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
+
+
+class AsyncDinRailSwitch(DinRailSwitch, AsyncFullFlushInputSwitch):
+    """ HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)  """
 
 
 class AsyncShutter(Shutter, AsyncDevice):

@@ -255,6 +255,16 @@ def test_indoor_climate_home(fake_home: Home):
             assert fh.absenceType == AbsenceType.PERIOD
             assert fh.absenceEndTime == absence_end
 
+            fake_home.activate_absence_permanent()
+
+            fake_home.get_current_state()
+
+            assert fh.absenceType == AbsenceType.PERMANENT
+            assert fh.absenceEndTime == datetime.strptime(
+                "2100_12_31 23:59", "%Y_%m_%d %H:%M"
+            )
+            assert fh.ecoDuration == EcoDuration.PERMANENT
+
             fake_home.deactivate_absence()
 
             fake_home.get_current_state()

@@ -4,12 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] 
+## [Unreleased]
+
+## [0.13.1] 2021-01-23
+
+### ADDED
 - API
     - Rules
       - Add async classes and methods for rules
+    - Home
+      - Added [activate_absence_permanent] method
 - Devices
+    - [HMIP-DRSI1] (Switch Actuator for DIN rail mount – 1x channel)
     - [HMIP-SRD] (Rain Sensor) 
+    - [HMIP-WRCC2] (Wall-mount Remote Control – flat)
 
 ## [0.13.0] 2020-12-03
 
@@ -355,8 +363,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...HEAD
-[0.12.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...0.13.0
+[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...HEAD
+[0.13.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...0.13.1
+[0.13.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...0.13.0
 [0.12.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.0...0.12.1
 [0.12.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.0...0.12.0
 [0.11.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...0.11.0
@@ -409,3 +418,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-HDM1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/332
 [HMIP-HAP]: https://github.com/coreGreenberet/homematicip-rest-api/issues/335
 [HMIP-SRD]: https://github.com/coreGreenberet/homematicip-rest-api/issues/375
+[HMIP-WRCC2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
+[HMIP-DRSI1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
+[activate_absence_permanent]: https://github.com/coreGreenberet/homematicip-rest-api/issues/357

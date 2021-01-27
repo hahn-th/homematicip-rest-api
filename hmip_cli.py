@@ -275,6 +275,12 @@ def main():
         type=int,
     )
     group.add_argument(
+        "--activate-absence-permanent",
+        dest="activate_absence_permanent",
+        action="store_true",
+        help="activates absence forever",
+    )
+    group.add_argument(
         "--deactivate-absence",
         action="store_true",
         dest="deactivate_absence",
@@ -653,6 +659,10 @@ def main():
     if args.activate_absence:
         command_entered = True
         home.activate_absence_with_duration(args.activate_absence)
+
+    if args.activate_absence_permanent:
+        command_entered = True
+        home.activate_absence_permanent()
 
     if args.deactivate_absence:
         command_entered = True
