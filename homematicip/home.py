@@ -312,9 +312,9 @@ class Home(HomeMaticIPObject):
             self.groups = []
 
         self._get_devices(json_state)
-        self._load_functionalChannels()
         self._get_clients(json_state)
         self._get_groups(json_state)
+        self._load_functionalChannels()
 
         js_home = json_state["home"]
 
