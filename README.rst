@@ -173,6 +173,7 @@ Homematic IP Devices:
 -  [X] HMIP-SWO-PL     (Weather Sensor – Plus)
 -  [X] HMIP-SWO-PR     (Weather Sensor – Pro)
 -  [X] HMIP-SWSD       (Smoke Detector)
+-  [ ] HMIP-USBSM      (USB Switching Measurement Actuator)
 -  [ ] HMIP-WGC        (Garage Door Button)
 -  [X] HMIP-WHS2       (Switch Actuator for heating systems – 2x channels)
 -  [ ] HMIP-WLAN-HAP   (WLAN Access Point)
