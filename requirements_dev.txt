@@ -1,5 +1,5 @@
 requests==2.25.1
-websocket-client==0.57.0
+websocket-client==0.58.0
 async_timeout==3.0.1
 websockets==8.1
 aiohttp==3.7.4
