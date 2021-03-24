@@ -90,6 +90,7 @@ Homematic IP Devices:
 -  [X] HMIP-BWTH       (Wall Thermostat Display with switching output – for brand switches, 230V)
 -  [ ] HMIP-BWTH24     (Wall Thermostat Display with switching output – for brand switches, 24V)
 -  [ ] HMIP-DBB        (Doorbell Push-Button)
+-  [ ] HMIP-DLD        (Door Lock Drive)
 -  [X] HMIP-DRBLI4     (Blind Actuator for DIN rail mount – 4 channels)
 -  [X] HMIP-DRSI1      (Switch Actuator for DIN rail mount – 1x channel)
 -  [ ] HMIP-DRDI3      (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
@@ -101,7 +102,8 @@ Homematic IP Devices:
 -  [X] HMIP-eTRV-B     (Heating-Thermostat basic with Display)
 -  [ ] HMIP-eTRV-B-UK  (UK Version not tested, but it should work) 
 -  [X] HMIP-eTRV-B1    (Heating-Thermostat basic with Display) *Silvercrest Edition*
--  [X] HMIP-eTRV-C     (Heating-thermostat compact without display)
+-  [X] HMIP-eTRV-C     (Heating-Thermostat compact without display)
+-  [ ] HMIP-eTRV-E     (Heating-Thermostat *New Generation*)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
 -  [X] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 -  [X] HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)
