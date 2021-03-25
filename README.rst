@@ -79,7 +79,7 @@ Homematic IP Devices:
 -  [X] ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)
 -  [X] HMIP-ASIR       (Alarm Siren - indoor)
 -  [X] HMIP-ASIR-B1    (Alarm Siren - indoor) *Silvercrest Edition*
--  [X] HMIP-ASIR-2     (Alarm Siren2 - indoor) New Version
+-  [X] HMIP-ASIR-2     (Alarm Siren - indoor) New Version
 -  [X] HMIP-ASIR-O     (Alarm Siren - outdoor)
 -  [X] HMIP-BBL        (Blind Actuator for brand switches)
 -  [X] HMIP-BDT        (Dimming Actuator for brand switches)
@@ -97,12 +97,13 @@ Homematic IP Devices:
 -  [X] HMIP-DRSI4      (Switch Actuator for DIN rail mount – 4x channels)
 -  [ ] HMIP-DSD-PCB    (Door Signal Dector PCB) 
 -  [X] HMIP-eTRV       (Heating-Thermostat with Display)
--  [X] HMIP-eTRV2      (Heating-Thermostat with Display) New Version
+-  [X] HMIP-eTRV-2     (Heating-Thermostat with Display) New Version
 -  [ ] HMIP-eTRV-2-UK  (UK Version not tested, but it should work)
 -  [X] HMIP-eTRV-B     (Heating-Thermostat basic with Display)
 -  [ ] HMIP-eTRV-B-UK  (UK Version not tested, but it should work) 
 -  [X] HMIP-eTRV-B1    (Heating-Thermostat basic with Display) *Silvercrest Edition*
 -  [X] HMIP-eTRV-C     (Heating-Thermostat compact without display)
+-  [X] HMIP-eTRV-C2    (Heating-Thermostat compact without display) New Version
 -  [ ] HMIP-eTRV-E     (Heating-Thermostat *New Generation*)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
 -  [X] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
@@ -160,6 +161,7 @@ Homematic IP Devices:
 -  [X] HMIP-SPI        (Presence Sensor - indoor)
 -  [X] HMIP-SRH        (Window Rotary Handle Sensor)
 -  [X] HMIP-SRD        (Rain Sensor) 
+-  [X] HMIP-STE2-PCB   (Temperature Difference Sensors - 2x sensors) 
 -  [X] HMIP-STH        (Temperature and Humidity Sensor without display - indoor)
 -  [X] HMIP-STHD       (Temperature and Humidity Sensor with display - indoor)
 -  [X] HMIP-STHO       (Temperature and Humidity Sensor - outdoor)
