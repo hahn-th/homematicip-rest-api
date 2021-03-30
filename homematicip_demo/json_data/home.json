@@ -8394,6 +8394,11 @@
                     "00000000-AAAA-0000-0000-000000000001"
                 ],
                 "solution": "WEATHER_AND_ENVIRONMENT"
+            },
+            "ACCESS_CONTROL": {
+                "active": true,
+                "functionalGroups": [],
+                "solution": "ACCESS_CONTROL"
             }
         },
         "id": "00000000-0000-0000-0000-000000000001",

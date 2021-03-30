@@ -139,6 +139,7 @@ TYPE_FUNCTIONALHOME_MAP = {
     FunctionalHomeType.LIGHT_AND_SHADOW: LightAndShadowHome,
     FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome,
     FunctionalHomeType.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
+    FunctionalHomeType.ACCESS_CONTROL: AccessControlHome,
 }
 
 TYPE_FUNCTIONALCHANNEL_MAP = {
