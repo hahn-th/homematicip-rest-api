@@ -282,6 +282,9 @@ def test_get_functionalHome(fake_home: Home):
     functionalHome = fake_home.get_functionalHome(WeatherAndEnvironmentHome)
     assert isinstance(functionalHome, WeatherAndEnvironmentHome)
 
+    functionalHome = fake_home.get_functionalHome(AccessControlHome)
+    assert isinstance(functionalHome, AccessControlHome)
+
     functionalHome = fake_home.get_functionalHome(Home)
     assert functionalHome is None
 
