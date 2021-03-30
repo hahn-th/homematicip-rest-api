@@ -332,6 +332,7 @@ class FunctionalHomeType(AutoNameEnum):
     LIGHT_AND_SHADOW = auto()
     SECURITY_AND_ALARM = auto()
     WEATHER_AND_ENVIRONMENT = auto()
+    ACCESS_CONTROL = auto()
 
 
 class EventType(AutoNameEnum):

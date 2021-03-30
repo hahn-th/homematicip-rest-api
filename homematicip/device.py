@@ -40,6 +40,7 @@ class Device(HomeMaticIPObject):
         "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
         "IFeatureMulticastRouter": ["multicastRoutingEnabled"],
         "IFeatureDeviceIdentify": [],
+        "IFeatureProfilePeriodLimit": [],
     }
 
     def __init__(self, connection):
