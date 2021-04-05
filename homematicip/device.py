@@ -2052,9 +2052,9 @@ class RainSensor(Device):
 
     def __init__(self, connection):
         super().__init__(connection)
-        #:float:
-        self.raining = False
         #:bool:
+        self.raining = False
+        #:float:
         self.rainSensorSensitivity = 0.0
 
     def from_json(self, js):
@@ -2063,3 +2063,24 @@ class RainSensor(Device):
         if c:
             self.set_attr_from_dict("rainSensorSensitivity", c)
             self.set_attr_from_dict("raining", c)
+
+
+class TemperaturDifferenceSensor2(Device):
+    """ HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors) """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.temperatureExternalDelta = 0.0
+        #:float:
+        self.temperatureExternalOne = 0.0
+        #:float:
+        self.temperatureExternalTwo = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("temperatureExternalDelta", c)
+            self.set_attr_from_dict("temperatureExternalOne", c)
+            self.set_attr_from_dict("temperatureExternalTwo", c)
