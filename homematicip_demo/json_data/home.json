@@ -8396,8 +8396,13 @@
                 "solution": "WEATHER_AND_ENVIRONMENT"
             },
             "ACCESS_CONTROL": {
-                "active": true,
+                "accessAuthorizationProfileGroups": [],
+                "active": false,
+                "autoRelockProfileGroups": [],
+                "extendedLinkedGarageDoorGroups": [],
+                "extendedLinkedNotificationGroups": [],
                 "functionalGroups": [],
+                "lockProfileGroups": [],
                 "solution": "ACCESS_CONTROL"
             }
         },
