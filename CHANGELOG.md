@@ -373,7 +373,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[Unreleased]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...HEAD
+[1.0.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...1.0.0
 [0.13.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...0.13.1
 [0.13.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...0.13.0
 [0.12.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.0...0.12.1
