@@ -141,9 +141,7 @@ class AccessControlHome(FunctionalHome):
         self.accessAuthorizationProfileGroups = self.assignGroups(
             js["accessAuthorizationProfileGroups"], groups
         )
-        self.lockProfileGroups = self.assignGroups(
-            js["lockProfileGroups"], groups
-        )
+        self.lockProfileGroups = self.assignGroups(js["lockProfileGroups"], groups)
         self.autoRelockProfileGroups = self.assignGroups(
             js["autoRelockProfileGroups"], groups
         )

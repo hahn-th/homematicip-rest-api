@@ -986,8 +986,9 @@ def test_push_button_6(fake_home: Home):
 
 
 def test_push_button_flat(fake_home: Home):
-    d = PushButton6(fake_home._connection)
+    d = PushButtonFlat(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711PUSH_BUTTON_FLAT")
+    assert isinstance(d, PushButtonFlat)
     assert d.modelId == 431
     assert d.label == "Wandtaster"
 

@@ -53,6 +53,7 @@ TYPE_CLASS_MAP = {
     DeviceType.PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY: AsyncPrintedCircuitBoardSwitchBattery,
     DeviceType.PUSH_BUTTON: AsyncPushButton,
     DeviceType.PUSH_BUTTON_6: AsyncPushButton6,
+    DeviceType.PUSH_BUTTON_FLAT: AsyncPushButtonFlat,
     DeviceType.REMOTE_CONTROL_8: AsyncRemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: AsyncRemoteControl8Module,
     DeviceType.ROOM_CONTROL_DEVICE: AsyncRoomControlDevice,
