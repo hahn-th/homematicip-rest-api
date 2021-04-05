@@ -996,3 +996,20 @@ class RainDetectionChannel(FunctionalChannel):
         super().from_json(js, groups)
         self.set_attr_from_dict("rainSensorSensitivity", js)
         self.set_attr_from_dict("raining", js)
+
+class TemperaturDifferenceSensor2Channel(FunctionalChannel):
+    """ this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.temperatureExternalDelta = 0.0
+        #:float:
+        self.temperatureExternalOne = 0.0
+        #:float:
+        self.temperatureExternalTwo = 0.0
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("temperatureExternalDelta", js)
+        self.set_attr_from_dict("temperatureExternalOne", js)
+        self.set_attr_from_dict("temperatureExternalTwo", js)

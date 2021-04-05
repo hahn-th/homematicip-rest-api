@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ADDED
+- API
+- Devices
+    - [HmIP-STE2-PCB] (Temperature Difference Sensors - 2x sensors) 
+
 ## [0.13.1] 2021-01-23
 
 ### ADDED
@@ -420,4 +425,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-SRD]: https://github.com/coreGreenberet/homematicip-rest-api/issues/375
 [HMIP-WRCC2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
 [HMIP-DRSI1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
+[HmIP-STE2-PCB]: https://github.com/coreGreenberet/homematicip-rest-api/issues/386
 [activate_absence_permanent]: https://github.com/coreGreenberet/homematicip-rest-api/issues/357

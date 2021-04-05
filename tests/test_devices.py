@@ -1368,3 +1368,16 @@ def test_din_rail_switch(fake_home: Home):
         "profileMode(None) userDesiredProfileMode(AUTOMATIC) on(None) profileMode(None) "
         "userDesiredProfileMode(AUTOMATIC)"
     )
+
+def test_temperatur_sensor_2_delta(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711000HmIP-STE2-PCB")
+    assert isinstance(d, TemperaturDifferenceSensor2)
+    assert d.temperatureExternalDelta  ==  -0.3
+    assert d.temperatureExternalOne  ==  37.8
+    assert d.temperatureExternalTwo  ==  38.1
+
+    assert str(d) == (
+        "HmIP-STE2-PCB Temperatursensor Speicher lowBat(False) unreach(False) "
+        "rssiDeviceValue(-61) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+        "temperatureExternalDelta(-0.3) temperatureExternalOne(37.8) temperatureExternalTwo(38.1)"
+        )
