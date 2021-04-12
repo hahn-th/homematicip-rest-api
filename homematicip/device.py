@@ -1410,6 +1410,21 @@ class WiredDimmer3(Dimmer):
     """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
 
 
+class DinRailDimmer3(Dimmer):
+    """ HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail """
+
+    # copied from Switch, as they can also be switched
+    def set_switch_state(self, on=True, channelIndex=1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+
+    def turn_on(self, channelIndex=1):
+        return self.set_switch_state(True, channelIndex)
+
+    def turn_off(self, channelIndex=1):
+        return self.set_switch_state(False, channelIndex)
+
+
 class WeatherSensor(Device):
     """ HMIP-SWO-B """
 
