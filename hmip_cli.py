@@ -547,7 +547,7 @@ def main():
                 command_entered = True
 
             if args.device_switch_state is not None:
-                if isinstance(device, Switch):
+                if isinstance(device, Switch) or isinstance(device, Dimmer):
                     for c in args.channels:
                         device.set_switch_state(args.device_switch_state, c)
                 else:
