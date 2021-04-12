@@ -560,7 +560,8 @@ def main():
 
             if args.device_dim_level is not None:
                 if isinstance(device, Dimmer):
-                    device.set_dim_level(args.device_dim_level)
+                    for c in args.channels:
+                        device.set_dim_level(args.device_dim_level, c)
                 else:
                     logger.error(
                         "can't set dim level of device %s of type %s",
