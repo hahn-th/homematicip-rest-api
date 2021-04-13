@@ -1415,6 +1415,7 @@ class DinRailDimmer3(Dimmer):
 
     def __init__(self, connection):
         super().__init__(connection)
+        self.c1dimLevel = 0.0
         self.c2dimLevel = 0.0
         self.c3dimLevel = 0.0
 
@@ -1423,6 +1424,7 @@ class DinRailDimmer3(Dimmer):
         channels = get_functional_channels("MULTI_MODE_INPUT_DIMMER_CHANNEL", js)
         if channels:
             self.c1dimLevel = channels[1]["dimLevel"]
+            self.dimLevel = self.c1dimLevel
             self.c2dimLevel = channels[1]["dimLevel"]
             self.c3dimLevel = channels[2]["dimLevel"]
 
