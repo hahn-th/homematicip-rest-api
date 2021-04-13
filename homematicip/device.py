@@ -1423,7 +1423,7 @@ class DinRailDimmer3(Dimmer):
         super().from_json(js)
         channels = get_functional_channels("MULTI_MODE_INPUT_DIMMER_CHANNEL", js)
         if channels:
-            self.c1dimLevel = channels[1]["dimLevel"]
+            self.c1dimLevel = channels[0]["dimLevel"]
             self.dimLevel = self.c1dimLevel
             self.c2dimLevel = channels[1]["dimLevel"]
             self.c3dimLevel = channels[2]["dimLevel"]
