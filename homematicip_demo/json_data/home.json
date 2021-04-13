@@ -271,14 +271,14 @@
                     "deviceId": "3014F711A000DIN_RAIL_DIMMER3",
                     "deviceOverheated": false,
                     "deviceOverloaded": false,
-                    "dimLevel": 0.0,
+                    "dimLevel": 0.1,
                     "functionalChannelType": "MULTI_MODE_INPUT_DIMMER_CHANNEL",
                     "groupIndex": 2,
                     "groups": [],
                     "index": 2,
                     "label": "",
                     "multiModeInputMode": "KEY_BEHAVIOR",
-                    "on": false,
+                    "on": true,
                     "profileMode": "AUTOMATIC",
                     "supportedOptionalFeatures": {
                         "IFeatureDeviceOverloaded": true
@@ -295,10 +295,7 @@
                     "dimLevel": 0.3,
                     "functionalChannelType": "MULTI_MODE_INPUT_DIMMER_CHANNEL",
                     "groupIndex": 3,
-                    "groups": [
-                        "5d0f8e1a-aabf-41cf-85d6-72a639b8fe7f",
-                        "0844113e-3c5c-4375-a1ce-ba15928f78d4"
-                    ],
+                    "groups": [],
                     "index": 3,
                     "label": "Esstisch",
                     "multiModeInputMode": "KEY_BEHAVIOR",

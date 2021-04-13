@@ -1369,10 +1369,15 @@ def test_din_rail_switch(fake_home: Home):
         "userDesiredProfileMode(AUTOMATIC)"
     )
 
-def test_din_rail_dimmer3(fake_home: Home):
+
+def test_din_rail_dimmer_3(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
     assert isinstance(d, DinRailDimmer3)
-    assert d.dimLevel == 0.0
+    assert d.dimLevel == d.c1dimLevel
+    assert d.c1dimLevel == 0.9
+    assert d.c2dimLevel == 0.1
+    assert d.c3dimLevel == 0.3
+
 
 def test_temperatur_sensor_2_delta(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000HmIP-STE2-PCB")
