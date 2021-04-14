@@ -6,7 +6,7 @@ from datetime import datetime
 from typing import Iterable
 
 from homematicip.base.enums import *
-from homematicip.base.helpers import get_functional_channel
+from homematicip.base.helpers import get_functional_channel, get_functional_channels
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
 
@@ -1408,6 +1408,34 @@ class FullFlushDimmer(Dimmer):
 
 class WiredDimmer3(Dimmer):
     """HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)"""
+
+
+class DinRailDimmer3(Dimmer):
+    """ HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.c1dimLevel = 0.0
+        self.c2dimLevel = 0.0
+        self.c3dimLevel = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        channels = get_functional_channels("MULTI_MODE_INPUT_DIMMER_CHANNEL", js)
+        if channels:
+            self.c1dimLevel = channels[0]["dimLevel"]
+            self.dimLevel = self.c1dimLevel
+            self.c2dimLevel = channels[1]["dimLevel"]
+            self.c3dimLevel = channels[2]["dimLevel"]
+
+
+    def __str__(self):
+        return "{} c1DimLevel({}) c2DimLevel({}) c3DimLevel({})".format(
+            super().__str__(),
+            self.c1dimLevel,
+            self.c2dimLevel,
+            self.c3dimLevel
+        )
 
 
 class WeatherSensor(Device):

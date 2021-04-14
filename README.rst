@@ -93,7 +93,7 @@ Homematic IP Devices:
 -  [ ] HMIP-DLD        (Door Lock Drive)
 -  [X] HMIP-DRBLI4     (Blind Actuator for DIN rail mount – 4 channels)
 -  [X] HMIP-DRSI1      (Switch Actuator for DIN rail mount – 1x channel)
--  [ ] HMIP-DRDI3      (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
+-  [X] HMIP-DRDI3      (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
 -  [X] HMIP-DRSI4      (Switch Actuator for DIN rail mount – 4x channels)
 -  [ ] HMIP-DSD-PCB    (Door Signal Dector PCB) 
 -  [X] HMIP-eTRV       (Heating-Thermostat with Display)

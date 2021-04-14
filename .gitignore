@@ -106,3 +106,9 @@ ENV/
 /apk
 /TestResults
 /venv38
+
+#Vscode folder
+.vscode/
+
+#own config file
+homematic.ini
