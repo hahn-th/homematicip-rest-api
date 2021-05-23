@@ -111,7 +111,8 @@ class SecurityAndAlarmHome(FunctionalHome):
         super().from_json(js, groups)
         self.activationInProgress = js["activationInProgress"]
         self.alarmActive = js["alarmActive"]
-        self.alarmEventDeviceId = js["alarmEventDeviceId"]
+        if js["alarmEventDeviceChannel"] != None:
+            self.alarmEventDeviceId = js["alarmEventDeviceChannel"]["deviceId"]
         self.alarmEventTimestamp = self.fromtimestamp(js["alarmEventTimestamp"])
         self.intrusionAlertThroughSmokeDetectors = js[
             "intrusionAlertThroughSmokeDetectors"
