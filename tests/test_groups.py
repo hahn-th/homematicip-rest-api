@@ -218,7 +218,7 @@ def test_security_zone(fake_home: Home):
 
     assert str(g) == (
         "SECURITY_ZONE EXTERNAL active(False) silent(True) windowState(OPEN)"
-        " motionDetected(None) sabotage(False) presenceDetected(None) ignorableDevices(0)"
+        " motionDetected(None) sabotage(False) presenceDetected(None) ignorableDevices(#0)"
     )
 
 
