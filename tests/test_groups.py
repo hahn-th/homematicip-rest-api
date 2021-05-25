@@ -196,12 +196,13 @@ def test_security_zone(fake_home: Home):
             "3014F7110000000000000003", 
             "3014F7110000000000000004", 
             "3014F7110000000000000005", 
-            "3014F7110000000000000006"]
+            "3014F7110000000000000006",
+        ]
 
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000005"
     assert g.label == "EXTERNAL"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 46, 504000) + timedelta(
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 46, 498000) + timedelta(
         0, utc_offset
     )
     assert g.metaGroup.id is None
