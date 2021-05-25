@@ -213,7 +213,7 @@ def test_security_zone(fake_home: Home):
     assert g.windowState == "OPEN"
     assert g.motionDetected is None
     assert g.sabotage is False
-    assert g.ignorableDevices is None
+    assert len(g.ignorableDevices) == 0
     assert g.presenceDetected is None # not in from_json()?
 
     assert str(g) == (
