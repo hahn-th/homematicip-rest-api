@@ -205,7 +205,7 @@ def test_security_zone(fake_home: Home):
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 46, 498000) + timedelta(
         0, utc_offset
     )
-    assert g.metaGroup.id is None
+    assert g.metaGroup is None
     assert g.unreach is False
 
     assert g.active is False 
