@@ -185,6 +185,43 @@ def test_security_group(fake_home: Home):
     )
 
 
+def test_security_zone(fake_home: Home):
+    g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000005")
+    assert isinstance(g, SecurityZoneGroup) # asserts groupType also
+    for d in g.devices:
+        assert d.id in [
+            "3014F7110000000000000000", 
+            "3014F7110000000000000001", 
+            "3014F7110000000000000002", 
+            "3014F7110000000000000003", 
+            "3014F7110000000000000004", 
+            "3014F7110000000000000005", 
+            "3014F7110000000000000006",
+        ]
+
+    assert g.homeId == "00000000-0000-0000-0000-000000000001"
+    assert g.id == "00000000-0000-0000-0000-000000000005"
+    assert g.label == "EXTERNAL"
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 46, 498000) + timedelta(
+        0, utc_offset
+    )
+    assert g.metaGroup is None
+    assert g.unreach is False
+
+    assert g.active is False 
+    assert g.silent is True
+    assert g.windowState == "OPEN"
+    assert g.motionDetected is None
+    assert g.sabotage is False
+    assert len(g.ignorableDevices) == 0
+    assert g.presenceDetected is None # not in from_json()?
+
+    assert str(g) == (
+        "SECURITY_ZONE EXTERNAL active(False) silent(True) windowState(OPEN)"
+        " motionDetected(None) sabotage(False) presenceDetected(None) ignorableDevices(#0)"
+    )
+
+
 def test_switching_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000018")
