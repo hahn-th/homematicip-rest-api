@@ -4,12 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [UNRELEASED]
+
+## [1.0.1] 2021-05-27
+
+### ADDED
+- Devices
+    - [HMIP-DRDI3] (Dimming Actuator Inbound 230V – 3x channels, 200W per channel)
+- API
+  - Groups
+    - [PR: 410] Add support for channel parsing in SECURITY_ZONES and SECURITY_AND_ALARM
+
 ## [1.0.0] 2021-04-05
 
 ### ADDED
 - Devices
     - [HmIP-STE2-PCB] (Temperature Difference Sensors - 2x sensors) 
-
+	
 ### FIXED
 - API
  - [BUG: 387] Groups were missing in the functional channels of devices
@@ -373,6 +384,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
+[UNRELEASED]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.1...master
+[1.0.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...1.0.0
 [0.13.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...0.13.1
 [0.13.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...0.13.0
@@ -418,6 +431,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 387]: https://github.com/coreGreenberet/homematicip-rest-api/issues/387
 [BUG: 391]: https://github.com/coreGreenberet/homematicip-rest-api/issues/391
 [BUG: 398]: https://github.com/coreGreenberet/homematicip-rest-api/issues/398
+[PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/410
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
@@ -435,3 +449,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [HMIP-DRSI1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
 [HmIP-STE2-PCB]: https://github.com/coreGreenberet/homematicip-rest-api/issues/386
 [activate_absence_permanent]: https://github.com/coreGreenberet/homematicip-rest-api/issues/357
+[HMIP-DRDI3]: https://github.com/coreGreenberet/homematicip-rest-api/pull/405
