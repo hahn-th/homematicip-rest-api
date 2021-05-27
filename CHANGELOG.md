@@ -23,9 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	
 ### FIXED
 - API
- - [BUG: 387] Groups were missing in the functional channels of devices
- - [BUG: 398] 'ACCESS_CONTROL' isn't a valid option for class 'FunctionalHomeType'
- - [BUG: 391] There is no class for device 'PUSH_BUTTON_FLAT' yet
+  - [BUG: 387] Groups were missing in the functional channels of devices
+  - [BUG: 398] 'ACCESS_CONTROL' isn't a valid option for class 'FunctionalHomeType'
+  - [BUG: 391] There is no class for device 'PUSH_BUTTON_FLAT' yet
 
 ## [0.13.1] 2021-01-23
 
