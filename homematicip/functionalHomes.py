@@ -111,7 +111,8 @@ class SecurityAndAlarmHome(FunctionalHome):
         super().from_json(js, groups)
         self.activationInProgress = js["activationInProgress"]
         self.alarmActive = js["alarmActive"]
-        self.alarmEventDeviceId = js["alarmEventDeviceId"]
+        if js["alarmEventDeviceChannel"] != None:
+            self.alarmEventDeviceId = js["alarmEventDeviceChannel"]["deviceId"]
         self.alarmEventTimestamp = self.fromtimestamp(js["alarmEventTimestamp"])
         self.intrusionAlertThroughSmokeDetectors = js[
             "intrusionAlertThroughSmokeDetectors"
@@ -125,3 +126,29 @@ class SecurityAndAlarmHome(FunctionalHome):
             js["securitySwitchingGroups"].values(), groups
         )
         self.securityZones = self.assignGroups(js["securityZones"].values(), groups)
+
+
+class AccessControlHome(FunctionalHome):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.accessAuthorizationProfileGroups = []
+        self.lockProfileGroups = []
+        self.autoRelockProfileGroups = []
+        self.extendedLinkedGarageDoorGroups = []
+        self.extendedLinkedNotificationGroups = []
+
+    def from_json(self, js, groups: List[Group]):
+        super().from_json(js, groups)
+        self.accessAuthorizationProfileGroups = self.assignGroups(
+            js["accessAuthorizationProfileGroups"], groups
+        )
+        self.lockProfileGroups = self.assignGroups(js["lockProfileGroups"], groups)
+        self.autoRelockProfileGroups = self.assignGroups(
+            js["autoRelockProfileGroups"], groups
+        )
+        self.extendedLinkedGarageDoorGroups = self.assignGroups(
+            js["extendedLinkedGarageDoorGroups"], groups
+        )
+        self.extendedLinkedNotificationGroups = self.assignGroups(
+            js["extendedLinkedNotificationGroups"], groups
+        )

@@ -213,6 +213,7 @@ class DeviceType(AutoNameEnum):
     DIN_RAIL_BLIND_4 = auto()
     DIN_RAIL_SWITCH = auto()
     DIN_RAIL_SWITCH_4 = auto()
+    DIN_RAIL_DIMMER_3 = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
     FLOOR_TERMINAL_BLOCK_12 = auto()
@@ -262,6 +263,7 @@ class DeviceType(AutoNameEnum):
     TEMPERATURE_HUMIDITY_SENSOR = auto()
     TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()
     TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR = auto()
+    TEMPERATURE_SENSOR_2_EXTERNAL_DELTA = auto()
     TILT_VIBRATION_SENSOR = auto()
     TORMATIC_MODULE = auto()
     WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY = auto()
@@ -328,6 +330,7 @@ class AutomationRuleType(AutoNameEnum):
 
 
 class FunctionalHomeType(AutoNameEnum):
+    ACCESS_CONTROL = auto()
     INDOOR_CLIMATE = auto()
     LIGHT_AND_SHADOW = auto()
     SECURITY_AND_ALARM = auto()
@@ -423,6 +426,7 @@ class FunctionalChannelType(AutoNameEnum):
     MULTI_MODE_INPUT_CHANNEL = auto()
     MULTI_MODE_INPUT_BLIND_CHANNEL = auto()
     MULTI_MODE_INPUT_SWITCH_CHANNEL = auto()
+    MULTI_MODE_INPUT_DIMMER_CHANNEL = auto()
     NOTIFICATION_LIGHT_CHANNEL = auto()
     PASSAGE_DETECTOR_CHANNEL = auto()
     PRESENCE_DETECTION_CHANNEL = auto()
@@ -435,6 +439,7 @@ class FunctionalChannelType(AutoNameEnum):
     SMOKE_DETECTOR_CHANNEL = auto()
     SWITCH_CHANNEL = auto()
     SWITCH_MEASURING_CHANNEL = auto()
+    TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL = auto()
     TILT_VIBRATION_SENSOR_CHANNEL = auto()
     WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL = auto()
     WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL = auto()

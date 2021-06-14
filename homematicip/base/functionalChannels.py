@@ -890,6 +890,28 @@ class MultiModeInputSwitchChannel(FunctionalChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
+class MultiModeInputDimmerChannel(FunctionalChannel):
+    """ this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel  """
+
+    def __init__(self):
+        super().__init__()
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_CLOSE
+        self.dimLevel = 0
+        self.multiModeInputMode = MultiModeInputMode.KEY_BEHAVIOR
+        self.on = False
+        self.profileMode = ProfileMode.AUTOMATIC
+        self.userDesiredProfileMode = ProfileMode.AUTOMATIC
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
+
 class TiltVibrationSensorChannel(FunctionalChannel):
     """ this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
 
@@ -996,3 +1018,20 @@ class RainDetectionChannel(FunctionalChannel):
         super().from_json(js, groups)
         self.set_attr_from_dict("rainSensorSensitivity", js)
         self.set_attr_from_dict("raining", js)
+
+class TemperaturDifferenceSensor2Channel(FunctionalChannel):
+    """ this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.temperatureExternalDelta = 0.0
+        #:float:
+        self.temperatureExternalOne = 0.0
+        #:float:
+        self.temperatureExternalTwo = 0.0
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("temperatureExternalDelta", js)
+        self.set_attr_from_dict("temperatureExternalOne", js)
+        self.set_attr_from_dict("temperatureExternalTwo", js)

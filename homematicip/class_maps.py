@@ -22,6 +22,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DIN_RAIL_BLIND_4: DinRailBlind4,
     DeviceType.DIN_RAIL_SWITCH: DinRailSwitch,
     DeviceType.DIN_RAIL_SWITCH_4: DinRailSwitch4,
+    DeviceType.DIN_RAIL_DIMMER_3: DinRailDimmer3,
     DeviceType.FLOOR_TERMINAL_BLOCK_10: FloorTerminalBlock10,
     DeviceType.FLOOR_TERMINAL_BLOCK_12: FloorTerminalBlock12,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
@@ -71,6 +72,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
+    DeviceType.TEMPERATURE_SENSOR_2_EXTERNAL_DELTA: TemperaturDifferenceSensor2,
     DeviceType.TILT_VIBRATION_SENSOR: TiltVibrationSensor,
     DeviceType.TORMATIC_MODULE: GarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
@@ -139,6 +141,7 @@ TYPE_FUNCTIONALHOME_MAP = {
     FunctionalHomeType.LIGHT_AND_SHADOW: LightAndShadowHome,
     FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome,
     FunctionalHomeType.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
+    FunctionalHomeType.ACCESS_CONTROL: AccessControlHome,
 }
 
 TYPE_FUNCTIONALCHANNEL_MAP = {
@@ -176,6 +179,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.MULTI_MODE_INPUT_CHANNEL: MultiModeInputChannel,
     FunctionalChannelType.MULTI_MODE_INPUT_BLIND_CHANNEL: MultiModeInputBlindChannel,
     FunctionalChannelType.MULTI_MODE_INPUT_SWITCH_CHANNEL: MultiModeInputSwitchChannel,
+    FunctionalChannelType.MULTI_MODE_INPUT_DIMMER_CHANNEL: MultiModeInputDimmerChannel, 
     FunctionalChannelType.NOTIFICATION_LIGHT_CHANNEL: NotificationLightChannel,
     FunctionalChannelType.PASSAGE_DETECTOR_CHANNEL: PassageDetectorChannel,
     FunctionalChannelType.PRESENCE_DETECTION_CHANNEL: PresenceDetectionChannel,
@@ -188,6 +192,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.SMOKE_DETECTOR_CHANNEL: SmokeDetectorChannel,
     FunctionalChannelType.SWITCH_CHANNEL: SwitchChannel,
     FunctionalChannelType.SWITCH_MEASURING_CHANNEL: SwitchMeasuringChannel,
+    FunctionalChannelType.TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL: TemperaturDifferenceSensor2Channel,
     FunctionalChannelType.TILT_VIBRATION_SENSOR_CHANNEL: TiltVibrationSensorChannel,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL: WallMountedThermostatProChannel,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL: WallMountedThermostatWithoutDisplayChannel,

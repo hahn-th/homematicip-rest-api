@@ -17,7 +17,7 @@
     <InterpreterArguments>
     </InterpreterArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
-    <CommandLineArguments>--dump-configuration</CommandLineArguments>
+    <CommandLineArguments>--dump-configuration --config-file homematicip_demo/json_data/home.json</CommandLineArguments>
     <InterpreterId>MSBuild|venv|$(MSBuildProjectFullPath)</InterpreterId>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <TestFramework>pytest</TestFramework>

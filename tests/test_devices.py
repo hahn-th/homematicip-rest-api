@@ -986,8 +986,9 @@ def test_push_button_6(fake_home: Home):
 
 
 def test_push_button_flat(fake_home: Home):
-    d = PushButton6(fake_home._connection)
+    d = PushButtonFlat(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711PUSH_BUTTON_FLAT")
+    assert isinstance(d, PushButtonFlat)
     assert d.modelId == 431
     assert d.label == "Wandtaster"
 
@@ -1367,3 +1368,26 @@ def test_din_rail_switch(fake_home: Home):
         "profileMode(None) userDesiredProfileMode(AUTOMATIC) on(None) profileMode(None) "
         "userDesiredProfileMode(AUTOMATIC)"
     )
+
+
+def test_din_rail_dimmer_3(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert isinstance(d, DinRailDimmer3)
+    assert d.dimLevel == d.c1dimLevel
+    assert d.c1dimLevel == 0.1
+    assert d.c2dimLevel == 0.2
+    assert d.c3dimLevel == 0.3
+
+
+def test_temperatur_sensor_2_delta(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711000HmIP-STE2-PCB")
+    assert isinstance(d, TemperaturDifferenceSensor2)
+    assert d.temperatureExternalDelta  ==  -0.3
+    assert d.temperatureExternalOne  ==  37.8
+    assert d.temperatureExternalTwo  ==  38.1
+
+    assert str(d) == (
+        "HmIP-STE2-PCB Temperatursensor Speicher lowBat(False) unreach(False) "
+        "rssiDeviceValue(-61) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+        "temperatureExternalDelta(-0.3) temperatureExternalOne(37.8) temperatureExternalTwo(38.1)"
+        )

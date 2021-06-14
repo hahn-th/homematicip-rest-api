@@ -578,3 +578,6 @@ class AsyncBlindModule(BlindModule, AsyncDevice):
 
 class AsyncRainSensor(RainSensor, AsyncDevice):
     """ HMIP-SRD (Rain Sensor)  """
+
+class AsyncTemperaturDifferenceSensor2(TemperaturDifferenceSensor2, AsyncDevice):
+    """ HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors) """

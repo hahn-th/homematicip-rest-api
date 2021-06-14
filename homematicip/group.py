@@ -477,8 +477,11 @@ class SecurityZoneGroup(Group):
         self.motionDetected = js["motionDetected"]
         self.sabotage = js["sabotage"]
         self.ignorableDevices = []
-        for device in js["ignorableDevices"]:
-            self.ignorableDevices.append([d for d in devices if d.id == device][0])
+        for channel in js["ignorableDeviceChannels"]:
+            # there are multiple channels per device and we only need each deviceId once
+            # as each device has at least channel 0, we skip the other ones
+            if channel["channelIndex"] == 0:
+                self.ignorableDevices.append([d for d in devices if d.id == channel["deviceId"]][0])
 
     def __str__(self):
         return "{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
