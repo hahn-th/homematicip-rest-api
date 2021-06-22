@@ -9,6 +9,12 @@ Any help from the community thru e.g. Pull Request would be highly appreciated.
 
 |discord| |CircleCI| |Docs| |PyPi| |python-version| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal| |commit-activity|
 
+DISCONTINUED
+============
+
+As described in https://github.com/coreGreenberet/homematicip-rest-api/issues/383 I'm not actively working on this library anymore. If you want to maintain this library, then feel free to contact me.
+I'm still accepting pull requests!
+
 Documentation
 =============
 Documentation can be found under https://homematicip-rest-api.readthedocs.io
