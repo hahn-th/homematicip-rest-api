@@ -1,0 +1,2 @@
+homematicip>=0.9.1
+ping3
