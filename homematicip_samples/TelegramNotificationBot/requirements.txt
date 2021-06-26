@@ -1,0 +1,2 @@
+homematicip>=0.9.3.4
+python-telegram-bot>=10.1.0 
