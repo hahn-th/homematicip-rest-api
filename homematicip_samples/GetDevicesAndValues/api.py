@@ -15,7 +15,6 @@ home.init(config.access_point)
 
 def write_shutter(room,device):
 	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.windowState)
-	#print(device)
 
 def write_plugableswitchmeasuring(room,device):
 	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.currentPowerConsumption, " ", device.energyCounter)
