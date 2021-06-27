@@ -1,9 +1,14 @@
+
+import sys
 import homematicip
 from homematicip.home import Home
 from homematicip.device import ShutterContact,HeatingThermostat,PlugableSwitchMeasuring,WallMountedThermostatPro
 
 config = homematicip.find_and_load_config_file()
-
+if config == None:
+    print("Cannot find config.ini!")
+    sys.exit()
+    
 home = Home()
 home.set_auth_token(config.auth_token)
 home.init(config.access_point)
