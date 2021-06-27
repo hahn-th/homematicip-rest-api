@@ -15,19 +15,19 @@ home.set_auth_token(config.auth_token)
 home.init(config.access_point)
 
 def write_shutter(room,device):
-	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.windowState)
+	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.rssiDeviceValue, " ", device.windowState)
 
 def write_plugableswitchmeasuring(room,device):
-	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.currentPowerConsumption, " ", device.energyCounter)
+	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.rssiDeviceValue, " ", device.currentPowerConsumption, " ", device.energyCounter)
 
 def write_heatingthermostat(room,device):
-	print(room, " ", device.label, " ", device.lastStatusUpdate)
+	print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.rssiDeviceValue)
 
 def write_wallmountedthermostatpro(room,device):
-    print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.actualTemperature, " ", device.setPointTemperature, " ", device.humidity)
+    print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.rssiDeviceValue, " ", device.actualTemperature, " ", device.setPointTemperature, " ", device.humidity)
 
 def write_watersensor(room,device):
-    print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.moistureDetected, " ", device.waterlevelDetected, " ", device.incorrectPositioned)
+    print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.rssiDeviceValue, " ", device.moistureDetected, " ", device.waterlevelDetected, " ", device.incorrectPositioned)
     
 def main():
     global home
@@ -46,7 +46,7 @@ def main():
                 elif isinstance(d,WaterSensor):
                     write_watersensor(g.label,d)
                 else:
-                    print(g.label, " ", d.deviceType, " ", d.label, " ", d.lastStatusUpdate)
+                    print(g.label, " ", d.deviceType, " ", d.label, " ", d.lastStatusUpdate, " ", d.rssiDeviceValue)
 
 if __name__ == "__main__":
     main()
