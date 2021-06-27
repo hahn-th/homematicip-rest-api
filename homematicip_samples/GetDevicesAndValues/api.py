@@ -40,6 +40,8 @@ def main():
                     write_plugableswitchmeasuring(g.label,d)
                 elif isinstance(d,WallMountedThermostatPro):
                     write_wallmountedthermostatpro(g.label,d)
+                else:
+                    print(g.label, " ", d.deviceType, " ", d.label, " ", d.lastStatusUpdate)
 
 if __name__ == "__main__":
     main()
