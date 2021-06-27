@@ -3,6 +3,7 @@ import sys
 import homematicip
 from homematicip.home import Home
 from homematicip.device import ShutterContact,HeatingThermostat,PlugableSwitchMeasuring,WallMountedThermostatPro
+from homematicip.device import WaterSensor
 
 config = homematicip.find_and_load_config_file()
 if config == None:
@@ -25,6 +26,9 @@ def write_heatingthermostat(room,device):
 def write_wallmountedthermostatpro(room,device):
     print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.actualTemperature, " ", device.setPointTemperature, " ", device.humidity)
 
+def write_watersensor(room,device):
+    print(room, " ", device.label, " ", device.lastStatusUpdate, " ", device.moistureDetected, " ", device.waterlevelDetected, " ", device.incorrectPositioned)
+    
 def main():
     global home
     home.get_current_state()
@@ -39,6 +43,8 @@ def main():
                     write_plugableswitchmeasuring(g.label,d)
                 elif isinstance(d,WallMountedThermostatPro):
                     write_wallmountedthermostatpro(g.label,d)
+                elif isinstance(d,WaterSensor):
+                    write_watersensor(g.label,d)
                 else:
                     print(g.label, " ", d.deviceType, " ", d.label, " ", d.lastStatusUpdate)
 
