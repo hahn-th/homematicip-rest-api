@@ -62,8 +62,7 @@ Examples
 ========
 
 -  hmip_cli.py for listing devices, groups, securityJournal; setting labels, turning switches on/off
--  Sample Projects are under
-   https://github.com/coreGreenberet/homematicip-samples
+-  Sample Projects are under ./homematicip-samples
 
 Implemented Stuff
 =================
