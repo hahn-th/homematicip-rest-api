@@ -5,9 +5,15 @@ A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
 Since there is no official documentation about this API everything was
 done via reverse engineering. Use at your own risk.
 
-Any help from the community thru e.g. Pull Request would be highly appreciated.
+Any help from the community through e.g. pull requests would be highly appreciated.
 
 |discord| |CircleCI| |Docs| |PyPi| |python-version| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal| |commit-activity|
+
+DISCONTINUED
+============
+
+As described in https://github.com/coreGreenberet/homematicip-rest-api/issues/383 I'm not actively working on this library anymore. If you want to maintain this library, then feel free to contact me.
+I'm still accepting pull requests!
 
 Documentation
 =============
@@ -21,7 +27,7 @@ Just run **pip install -U homematicip** to get the package
 "Nightly" Builds
 ----------------
 
-each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
+Each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
 Just run **pip install -U homematicip --pre** to get the package.
 
 Usage
@@ -55,10 +61,8 @@ locations so that it will be accessible for the scripts.
 Examples
 ========
 
--  hmip_cli.py for list devices,groups,securityJournal; set label, turn
-   switches on/off
--  Sample Projects are under
-   https://github.com/coreGreenberet/homematicip-samples
+-  hmip_cli.py for listing devices, groups, securityJournal; setting labels, turning switches on/off
+-  Sample Projects are under ./homematicip-samples
 
 Implemented Stuff
 =================
@@ -124,7 +128,7 @@ Homematic IP Devices:
 -  [ ] HMIP-K-DRBLI4   (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
 -  [ ] HMIP-K-DRSI1    (Actuator Inbound 230V – 1x channel) electrical DIN rail
 -  [ ] HMIP-K-DRDI3    (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
--  [ ] HMIP-K-DRSI4    (Swich Actuator – 4x channels, 16A per channel) electrical DIN rail
+-  [ ] HMIP-K-DRSI4    (Switch Actuator – 4x channels, 16A per channel) electrical DIN rail
 -  [X] HMIP-KRCA       (Key Ring Remote Control & Alarm)
 -  [X] HMIP-KRC4       (Key Ring Remote Control - 4x buttons)
 -  [ ] HMIP-MIO16-PCB  (Multi Analog/Digitial Interface - Switch Circuit Board)
@@ -218,8 +222,7 @@ Homematic IP Wired Devices (no radio signal):
 Events
 ------
 
-It’s also possible to use push notifications based on a websocket
-connection
+It’s also possible to use push notifications based on a websocket connection:
 
 .. code:: python
 

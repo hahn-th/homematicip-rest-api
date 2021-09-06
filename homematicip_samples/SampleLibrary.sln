@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SampleTemplate", "SampleTemplate\SampleTemplate.pyproj", "{C03CB7C3-D75F-4EFF-9EC1-BBA23976C974}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CheckPresenceOnPing", "CheckPresenceOnPing\CheckPresenceOnPing.pyproj", "{3173CC74-73C8-474D-93AE-309618AB1514}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "QRCodeGenerator", "QRCodeGenerator\QRCodeGenerator.pyproj", "{C156BB38-6D66-4790-8F5E-BCCA5755451E}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TelegramNotificationBot", "TelegramNotificationBot\TelegramNotificationBot.pyproj", "{87E7A3B8-96E1-4954-B053-BE05A3585C94}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C03CB7C3-D75F-4EFF-9EC1-BBA23976C974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C03CB7C3-D75F-4EFF-9EC1-BBA23976C974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3173CC74-73C8-474D-93AE-309618AB1514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3173CC74-73C8-474D-93AE-309618AB1514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C156BB38-6D66-4790-8F5E-BCCA5755451E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C156BB38-6D66-4790-8F5E-BCCA5755451E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E7A3B8-96E1-4954-B053-BE05A3585C94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E7A3B8-96E1-4954-B053-BE05A3585C94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E37884A2-9AF2-4CE7-9A90-EBCDFEE2C2D9}
+	EndGlobalSection
+EndGlobal
