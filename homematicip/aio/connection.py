@@ -83,7 +83,7 @@ class AsyncConnection(BaseConnection):
             path = self.full_url(path)
         for i in range(self._restCallRequestCounter):
             try:
-                with async_timeout.timeout(self._restCallTimout, loop=self._loop):
+                with async_timeout.timeout(self._restCallTimout):
                     result = await self._websession.post(
                         path, data=body, headers=self.headers
                     )
