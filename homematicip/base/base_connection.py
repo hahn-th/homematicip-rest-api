@@ -33,8 +33,8 @@ class BaseConnection:
     _urlREST = ""
     _urlWebSocket = ""
     # the homematic ip cloud tends to time out. retry the call X times.
-    _restCallRequestCounter = 3
-    _restCallTimout = 6
+    _restCallRequestCounter = 1
+    _restCallTimout = 8
 
     def __init__(self):
         self.headers = {

@@ -25,7 +25,7 @@ class AsyncConnection(BaseConnection):
 
     connect_timeout = 20
     ping_timeout = 3
-    ping_loop = 60
+    ping_loop = 600
 
     def __init__(self, loop, session=None):
         super().__init__()
