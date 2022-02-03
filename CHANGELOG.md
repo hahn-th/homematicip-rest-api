@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [UNRELEASED]
+## [1.0.2] 2022-02-03
+
+### Added
+- General
+  - [PR: 413]: added samples
+  
+### CHANGED
+- API
+  - [PR: 424]: Drop loop kwarg from async_timeout.timeout
+
 
 ## [1.0.1] 2021-05-27
 
@@ -384,7 +394,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[UNRELEASED]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.1...master
+[UNRELEASED]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.2...master
+[1.0.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...1.0.0
 [0.13.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...0.13.1
@@ -432,6 +443,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [BUG: 391]: https://github.com/coreGreenberet/homematicip-rest-api/issues/391
 [BUG: 398]: https://github.com/coreGreenberet/homematicip-rest-api/issues/398
 [PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/410
+[PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/413
+[PR: 424]: https://github.com/coreGreenberet/homematicip-rest-api/pull/424
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
