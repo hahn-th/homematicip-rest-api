@@ -36,6 +36,7 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_SWITCH_2: HeatingSwitch2,
     DeviceType.HEATING_THERMOSTAT: HeatingThermostat,
     DeviceType.HEATING_THERMOSTAT_COMPACT: HeatingThermostatCompact,
+    DeviceType.HEATING_THERMOSTAT_EVO: HeatingThermostatEvo,
     DeviceType.HOME_CONTROL_ACCESS_POINT: HomeControlAccessPoint,
     DeviceType.HOERMANN_DRIVES_MODULE: HoermannDrivesModule,
     DeviceType.KEY_REMOTE_CONTROL_4: KeyRemoteControl4,
