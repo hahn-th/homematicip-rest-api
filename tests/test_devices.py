@@ -547,6 +547,35 @@ def test_heating_thermostat_compact(fake_home: Home):
     )
 
 
+def test_heating_thermostat_evo(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000E70")
+    assert isinstance(d, HeatingThermostatEvo)
+    assert d.label == "Wohnzimmer 4"
+    assert d.modelType == "HmIP-eTRV-E"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000E70"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.setPointTemperature == 19.0
+    assert d.temperatureOffset == 0.5
+    assert d.valvePosition == 0.33
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.operationLockActive is False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -64
+    assert d.rssiPeerValue == -67
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
+    assert d.valveActualTemperature == 18.7
+    assert str(d) == (
+        "HmIP-eTRV-E Wohnzimmer 4 lowBat(False) unreach(False) rssiDeviceValue(-64) "
+        "rssiPeerValue(-67) configPending(False) dutyCycle(False) operationLockActive(False) "
+        "valvePosition(0.33) valveState(ADAPTION_DONE) temperatureOffset(0.5) "
+        "setPointTemperature(19.0) valveActualTemperature(18.7)"
+    )
+
+
 def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000002")
     assert isinstance(d, TemperatureHumiditySensorOutdoor)
