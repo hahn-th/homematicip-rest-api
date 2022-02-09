@@ -41,6 +41,8 @@ class Device(HomeMaticIPObject):
         "IFeatureMulticastRouter": ["multicastRoutingEnabled"],
         "IFeatureDeviceIdentify": [],
         "IFeatureProfilePeriodLimit": [],
+        "IOptionalFeatureDisplayContrast": [],
+        "IOptionalFeatureMountingOrientation": [],
     }
 
     def __init__(self, connection):
