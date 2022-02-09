@@ -108,7 +108,7 @@ Homematic IP Devices:
 -  [X] HMIP-eTRV-B1    (Heating-Thermostat basic with Display) *Silvercrest Edition*
 -  [X] HMIP-eTRV-C     (Heating-Thermostat compact without display)
 -  [X] HMIP-eTRV-C2    (Heating-Thermostat compact without display) New Version
--  [ ] HMIP-eTRV-E     (Heating-Thermostat *New Generation*)
+-  [X] HMIP-eTRV-E     (Heating-Thermostat *New Generation*)
 -  [X] HMIP-FAL230-C6  (Floor Heating Actuator – 6x channels, 230V)
 -  [X] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 -  [X] HMIP-FAL24-C6   (Floor Heating Actuator – 6x channels, 24V)
