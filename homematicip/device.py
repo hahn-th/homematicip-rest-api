@@ -326,7 +326,7 @@ class HeatingThermostatCompact(SabotageDevice):
         )
 
 
-class HeatingThermostatEvo(SabotageDevice):
+class HeatingThermostatEvo(OperationLockableDevice):
     """ HMIP-eTRV-E (Heating-thermostat new evo version) """
 
     def __init__(self, connection):
