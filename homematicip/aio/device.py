@@ -163,7 +163,7 @@ class AsyncHeatingThermostatCompact(HeatingThermostatCompact, AsyncSabotageDevic
 
 
 class AsyncHeatingThermostatEvo(HeatingThermostatEvo, AsyncSabotageDevice):
-    """ HMIP-eTRV-C (Heating-thermostat new evo version) """
+    """ HMIP-eTRV-E (Heating-thermostat new evo version) """
 
 
 class AsyncTemperatureHumiditySensorWithoutDisplay(
