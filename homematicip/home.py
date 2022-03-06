@@ -735,8 +735,8 @@ class Home(HomeMaticIPObject):
         data = {"deviceId": deviceId}
         return self._restCall("home/startInclusionModeForDevice", body=json.dumps(data))
 
-    def enable_events(self):
-        websocket.enableTrace(True)
+    def enable_events(self, enable_trace=False, ping_interval=20):
+        websocket.enableTrace(enable_trace)
 
         self.__webSocket = websocket.WebSocketApp(
             self._connection.urlWebSocket,
@@ -749,7 +749,7 @@ class Home(HomeMaticIPObject):
             on_close=self._ws_on_close,
         )
 
-        websocket_kwargs = {"ping_interval": 3}
+        websocket_kwargs = {"ping_interval": ping_interval}
         if hasattr(sys, "_called_from_test"):  # disable ssl during a test run
             sslopt = {"cert_reqs": ssl.CERT_NONE}
             websocket_kwargs = {"sslopt": sslopt, "ping_interval": 2, "ping_timeout": 1}
@@ -759,7 +759,7 @@ class Home(HomeMaticIPObject):
             target=self.__webSocket.run_forever,
             kwargs=websocket_kwargs,
         )
-        self.__webSocketThread.setDaemon(True)
+        self.__webSocketThread.daemon = True
         self.__webSocketThread.start()
 
     def disable_events(self):
@@ -767,10 +767,10 @@ class Home(HomeMaticIPObject):
             self.__webSocket.close()
             self.__webSocket = None
 
-    def _ws_on_close(self):
+    def _ws_on_close(self, *_):
         self.__webSocket = None
 
-    def _ws_on_error(self, err):
+    def _ws_on_error(self, _, err):
         LOGGER.exception(err)
         self.onWsError.fire(err)
         if self.websocket_reconnect_on_error:
@@ -778,7 +778,7 @@ class Home(HomeMaticIPObject):
             self.disable_events()
             self.enable_events()
 
-    def _ws_on_message(self, message):
+    def _ws_on_message(self, _, message):
         # json.loads doesn't support bytes as parameter before python 3.6
         js = json.loads(bytes2str(message))
         # LOGGER.debug(js)

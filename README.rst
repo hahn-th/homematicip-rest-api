@@ -226,23 +226,27 @@ It’s also possible to use push notifications based on a websocket connection:
 
 .. code:: python
 
-    ##initialize the api
-    #...
-    #get the home object
-    home = homematicip.Home()
-    #add a function to handle new events
-    home.onEvent += printEvents
-    #enable the event connection -> this will also start the websocket connection to the homeMaticIP Cloud
+    # Example function to display incoming events.
+    def print_events(event_list):
+        for event in event_list:
+            print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
+
+
+    # Initialise the API.
+    config = homematicip.find_and_load_config_file()
+    home = Home()
+    home.set_auth_token(config.auth_token)
+    home.init(config.access_point)
+
+    # Add function to handle events and start the connection.
+    home.onEvent += print_events
     home.enable_events()
 
-
-    #example function to display incoming events
-    def printEvents(eventList):
-        for event in eventList:
-            print "EventType: {} Data: {}".format(event["eventType"], event["data"])
-
-    #if needed you can close the websocket connection with
-    home.disable_events()
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Interrupt.")
 
 .. |CircleCI| image:: https://circleci.com/gh/coreGreenberet/homematicip-rest-api.svg?style=shield
    :target: https://circleci.com/gh/coreGreenberet/homematicip-rest-api
