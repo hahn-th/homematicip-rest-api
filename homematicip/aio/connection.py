@@ -31,7 +31,7 @@ class AsyncConnection(BaseConnection):
         super().__init__()
         self._loop = loop
         if session is None:
-            self._websession = aiohttp.ClientSession(loop=loop)
+            self._websession = aiohttp.ClientSession()
         else:
             self._websession = session
         self.socket_connection = None  # ClientWebSocketResponse
@@ -117,7 +117,6 @@ class AsyncConnection(BaseConnection):
                     },
                 ),
                 timeout=self.connect_timeout,
-                loop=self._loop,
             )
         except asyncio.TimeoutError:
             raise HmipConnectionError("Connecting to hmip ws socket timed out.")
