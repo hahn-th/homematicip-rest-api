@@ -32,9 +32,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
-            python3 -m pip install -r requirements_dev.txt
+            python -m pip install -r requirements_dev.txt
 
       - save_cache:
           paths:
@@ -59,7 +59,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/python:3.10
+      - image: cimg/python:3.10.5
     steps:
       - checkout
 
@@ -69,7 +69,7 @@ jobs:
       - run:
           name: install python dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install coverage codecov pylint twine sphinx sphinx-autobuild sphinx_rtd_theme
             pip install -r requirements.txt
@@ -124,9 +124,9 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
-            python3 -m pip install -r requirements_dev.txt
+            python -m pip install -r requirements_dev.txt
 
       - save_cache:
           paths:
