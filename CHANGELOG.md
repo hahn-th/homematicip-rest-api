@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [UNRELEASED]
+
+## [1.0.3] 2022-07-01
+- General 
+  - [PR: 440]: Do not pass loop for Py3.10 compat
+
 ## [1.0.2] 2022-02-03
 
 ### Added
@@ -445,6 +450,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/410
 [PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/413
 [PR: 424]: https://github.com/coreGreenberet/homematicip-rest-api/pull/424
+[PR: 440]: https://github.com/coreGreenberet/homematicip-rest-api/pull/440
 
 [HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
 [HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
