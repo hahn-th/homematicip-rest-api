@@ -4,117 +4,11 @@
 #
 version: 2
 jobs:
-  test_3_6:
+  test_3_10:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.12
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-        environment:
-           TZ: "/usr/share/zoneinfo/Europe/Berlin"
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements_dev.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            python3 -m pip install -r requirements_dev.txt
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements_dev.txt" }}
-        
-      # run tests!
-      # https://pytest.org
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            export PYTHONPATH=`pwd`;
-            pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
-            bash <(curl -s https://codecov.io/bash)
-
-      - store_test_results:
-          path: test-reports
-          
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
-
-  test_3_7:
-    docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.7.9
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-        environment:
-           TZ: "/usr/share/zoneinfo/Europe/Berlin"
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements_dev.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            python3 -m pip install -r requirements_dev.txt
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements_dev.txt" }}
-        
-      # run tests!
-      # https://pytest.org
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            export PYTHONPATH=`pwd`;
-            pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
-
-      - store_test_results:
-          path: test-reports
-          
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
-
-  test_3_8:
-    docker:
-      # specify the version you desire here
-      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.8.7
+      - image: circleci/python:3.10.5
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -165,7 +59,7 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/python:3.8.7
+      - image: circleci/python:3.10
     steps:
       - checkout
 
@@ -207,7 +101,7 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.9.1
+      - image: circleci/python:3.9
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -260,28 +154,18 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - test_3_6:
+      - test_3_10:
           filters:
             tags:
               only: /.*/
-      - test_3_7:
+      - test_3_9:
           filters:
             tags:
               only: /.*/
-      - test_3_8:
-          filters:
-            tags:
-              only: /.*/
-      #- test_3_9:
-      #    filters:
-      #      tags:
-      #        only: /.*/
       - deploy:
           requires:
-            - test_3_6
-            - test_3_7
-            - test_3_8
-            #- test_3_9
+            - test_3_9
+            - test_3_10
           filters:
             branches:
               only: master
