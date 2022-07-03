@@ -26,7 +26,7 @@ def home_data():
     path = Path(__file__).parent.parent.joinpath("homematicip_demo/json_data/home.json")
     data = None
     with open(path, encoding="utf-8") as file:
-        data = json.load(file, encoding="UTF-8")
+        data = json.load(file)
     return data
 
 
