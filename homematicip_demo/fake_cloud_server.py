@@ -207,7 +207,7 @@ class AsyncFakeCloudServer:
             Path(__file__).parent.joinpath("json_data/security_journal.json"),
             encoding="utf-8",
         ) as file:
-            js = json.load(file, encoding="UTF-8")
+            js = json.load(file)
             # going through json load + dumps. Maybe we have to alter the data in the future
             return web.json_response(js)
 
@@ -1111,7 +1111,7 @@ class AsyncFakeCloudServer:
     async def post_hmip_fake_loadConfig(self, request: web.Request) -> web.Response:
         js = json.loads(request.data)
         with open(Path(__file__).parent.joinpath("json_data", js["file"])) as file:
-            self.data = json.load(file, encoding="UTF-8")
+            self.data = json.load(file)
         return web.json_response(None)
 
     # endregion
