@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.0.3] 2022-07-01
+## [1.0.3] 2022-07-06
 - General 
   - [PR: 440]: Do not pass loop for Py3.10 compat
 
@@ -399,8 +399,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[UNRELEASED]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.2...master
-[1.0.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.1...1.0.2
+[UNRELEASED]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.3...master
+[1.0.3]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...1.0.0
 [0.13.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...0.13.1
