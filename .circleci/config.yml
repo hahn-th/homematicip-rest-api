@@ -46,7 +46,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            #. venv/bin/activate
             export PYTHONPATH=`pwd`;
             pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
 
