@@ -3,6 +3,13 @@
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
 version: 2.1
+orbs:
+  # The python orb contains a set of prepackaged circleci configuration you can use repeatedly in your configurations files
+  # Orb commands and jobs help you with common scripting around a language/tool
+  # so you dont have to copy and paste it everywhere.
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
+  python: circleci/python@1.2
+
 jobs:
   test_3_10:
     docker:
