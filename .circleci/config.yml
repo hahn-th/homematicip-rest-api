@@ -2,7 +2,14 @@
 #
 # Check https://circleci.com/docs/2.0/language-python/ for more details
 #
-version: 2
+version: 2.1
+orbs:
+  # The python orb contains a set of prepackaged circleci configuration you can use repeatedly in your configurations files
+  # Orb commands and jobs help you with common scripting around a language/tool
+  # so you dont have to copy and paste it everywhere.
+  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
+  python: circleci/python@1.2
+
 jobs:
   test_3_10:
     docker:
@@ -21,34 +28,16 @@ jobs:
 
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements_dev.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            python -m venv venv
-            . venv/bin/activate
-            python -m pip install -r requirements_dev.txt
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements_dev.txt" }}
+      - python/install-packages:
+          pkg-manager: pip
+          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
+          pip-dependency-file: requirements_dev.txt
         
       # run tests!
       # https://pytest.org
       - run:
           name: run tests
-          command: |
-            . venv/bin/activate
-            export PYTHONPATH=`pwd`;
-            pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
+          command: pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
 
       - store_test_results:
           path: test-reports
@@ -59,7 +48,7 @@ jobs:
 
   deploy:
     docker:
-      - image: cimg/python:3.10
+      - image: circleci/python:3.9
     steps:
       - checkout
 
@@ -154,10 +143,10 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
-      - test_3_10:
-          filters:
-            tags:
-              only: /.*/
+      #- test_3_10:
+      #    filters:
+      #      tags:
+      #        only: /.*/
       - test_3_9:
           filters:
             tags:
@@ -165,7 +154,7 @@ workflows:
       - deploy:
           requires:
             - test_3_9
-            - test_3_10
+            #- test_3_10
           filters:
             branches:
               only: master
