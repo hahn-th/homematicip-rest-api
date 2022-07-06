@@ -21,34 +21,17 @@ jobs:
 
     steps:
       - checkout
-
+      - python/install-packages:
+          pkg-manager: pip
+          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
+          pip-dependency-file: requirements_dev.txt
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements_dev.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run:
-          name: install dependencies
-          command: |
-            #python -m venv venv
-            #. venv/bin/activate
-            python -m pip install -r requirements_dev.txt
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements_dev.txt" }}
         
       # run tests!
       # https://pytest.org
       - run:
           name: run tests
-          command: |
-            #. venv/bin/activate
-            export PYTHONPATH=`pwd`;
-            pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
+          command: pytest -x --cov=./ --junitxml=test-reports/junit.xml tests -vv
 
       - store_test_results:
           path: test-reports
