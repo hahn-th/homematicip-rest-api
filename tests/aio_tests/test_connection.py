@@ -1,8 +1,6 @@
 import asyncio
-from http import client
 import logging
 from asyncio import ensure_future
-from pydoc import cli
 from unittest.mock import Mock
 
 import pytest
