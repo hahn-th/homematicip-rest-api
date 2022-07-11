@@ -1,6 +1,8 @@
 import asyncio
+from http import client
 import logging
 from asyncio import ensure_future
+from pydoc import cli
 from unittest.mock import Mock
 
 import pytest
@@ -222,4 +224,4 @@ async def test_ws_message(single_message_server, client_connection):
     assert client_connection.ws_reader_task.done()
     assert not client_connection.ws_connected
 
-    on_message_mock.assert_called_once_with("this is a message")
+    on_message_mock.assert_called_once_with(None,"this is a message")
