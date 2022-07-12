@@ -55,22 +55,15 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "requirements.txt" }}
-
       - run:
           name: install python dependencies
           command: |
             python -m venv venv
             . venv/bin/activate
+            export PYTHONPATH=`pwd`;
             pip install coverage codecov pylint twine sphinx sphinx-autobuild sphinx_rtd_theme
             pip install -r requirements.txt
             pip install -e .
-            
-      - save_cache:
-          key: v1-dependency-cache-{{ checksum "setup.py" }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
 
       - run:
           name: init .pypirc
