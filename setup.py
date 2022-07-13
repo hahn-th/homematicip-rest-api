@@ -14,8 +14,8 @@ setup(
     packages=find_packages(exclude="tests"),
     long_description=long_description,
     description="An API for the homematicip cloud",
-    author="Heimo Stieg",
-    author_email="stieg@corona-bytes.net",
+    author="Thomas Hahn",
+    author_email="post@thomas-hahn.org",
     url="https://github.com/hahn-th/homematicip-rest-api",
     download_url="https://github.com/hahn-th/homematicip-rest-api/tarball/"
     + versioneer.get_version(),
