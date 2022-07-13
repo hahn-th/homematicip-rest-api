@@ -246,8 +246,8 @@ It’s also possible to use push notifications based on a websocket connection:
     except KeyboardInterrupt:
         print("Interrupt.")
 
-.. |CircleCI| image:: https://circleci.com/gh/coreGreenberet/homematicip-rest-api.svg?style=shield
-   :target: https://circleci.com/gh/coreGreenberet/homematicip-rest-api
+.. |CircleCI| image:: https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield
+   :target: https://circleci.com/gh/hahn-th/homematicip-rest-api
 .. |PyPi| image:: https://badge.fury.io/py/homematicip.svg
    :target: https://badge.fury.io/py/homematicip
 .. |codecov| image:: https://codecov.io/gh/coreGreenberet/homematicip-rest-api/branch/master/graph/badge.svg
@@ -263,5 +263,5 @@ It’s also possible to use push notifications based on a websocket connection:
    :target: https://homematicip-rest-api.readthedocs.io
 .. |requirements| image:: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements.svg?branch=master
    :target: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements/?branch=master
-.. |commit-activity| image:: https://img.shields.io/github/commit-activity/y/coreGreenberet/homematicip-rest-api.svg
+.. |commit-activity| image:: https://img.shields.io/github/commit-activity/y/hahn-th/homematicip-rest-api.svg
 .. |python-version| image:: https://img.shields.io/pypi/pyversions/homematicip?style=plastic
