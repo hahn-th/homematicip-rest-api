@@ -10,7 +10,7 @@ Any help from the community through e.g. pull requests would be highly appreciat
 |discord| |CircleCI| |Docs| |PyPi| |python-version| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal| |commit-activity|
 
 New Maintainers
-============
+===============
 From today gtaWelt and me are maintaining this project.
 
 Documentation
