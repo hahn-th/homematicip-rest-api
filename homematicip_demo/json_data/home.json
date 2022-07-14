@@ -1719,8 +1719,7 @@
             "type": "TEMPERATURE_SENSOR_2_EXTERNAL_DELTA",
             "updateState": "UP_TO_DATE"
         },
-        "3014F7110000000000000015": {
-		
+        "3014F7110000000000300015": {
             "availableFirmwareVersion": "1.0.26",
             "connectionType": "HMIP_RF",
             "firmwareVersion": "1.0.18",
@@ -1732,7 +1731,7 @@
                     "coProRestartNeeded": false,
                     "coProUpdateFailure": false,
                     "configPending": false,
-                    "deviceId": "3014F7110000000000000015",
+                    "deviceId": "3014F7110000000000300015",
                     "deviceOverheated": false,
                     "deviceOverloaded": false,
                     "devicePowerFailureDetected": false,
@@ -1789,7 +1788,7 @@
                     "unreach": false
                 },
                 "1": {
-                    "deviceId": "3014F7110000000000000015",
+                    "deviceId": "3014F7110000000000300015",
                     "functionalChannelType": "TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL",
                     "groupIndex": 1,
                     "groups": [],
@@ -1801,7 +1800,7 @@
                 }
             },
             "homeId": "00000000-0000-0000-0000-000000000001",
-            "id": "3014F7110000000000000015",
+            "id": "3014F7110000000000300015",
             "label": "Temperatursensor mit externen F\u00fchlern \u2013 2-fach",
             "lastStatusUpdate": 1645012379988,
             "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
@@ -1810,7 +1809,7 @@
             "modelType": "HmIP-STE2-PCB",
             "oem": "eQ-3",
             "permanentlyReachable": false,
-            "serializedGlobalTradeItemNumber": "3014F7110000000000000015",
+            "serializedGlobalTradeItemNumber": "3014F7110000000000300015",
             "type": "TEMPERATURE_SENSOR_2_EXTERNAL_DELTA",
             "updateState": "TRANSFERING_UPDATE"
         },
