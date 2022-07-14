@@ -1420,3 +1420,16 @@ def test_temperatur_sensor_2_delta(fake_home: Home):
         "rssiDeviceValue(-61) rssiPeerValue(None) configPending(False) dutyCycle(False) "
         "temperatureExternalDelta(-0.3) temperatureExternalOne(37.8) temperatureExternalTwo(38.1)"
         )
+
+def test_temperatur_sensor_2_delta_2(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000300015")
+    assert isinstance(d, TemperaturDifferenceSensor2)
+    assert d.temperatureExternalDelta  ==  -0.1
+    assert d.temperatureExternalOne  ==  22.4
+    assert d.temperatureExternalTwo  ==  22.5
+
+    assert str(d) == (
+        "HmIP-STE2-PCB Temperatursensor mit externen F\u00fchlern \u2013 2-fach lowBat(False) unreach(False) "
+        "rssiDeviceValue(-60) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+        "temperatureExternalDelta(-0.1) temperatureExternalOne(22.4) temperatureExternalTwo(22.5)"
+        )
