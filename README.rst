@@ -7,7 +7,7 @@ done via reverse engineering. Use at your own risk.
 
 Any help from the community through e.g. pull requests would be highly appreciated.
 
-|discord| |CircleCI| |Docs| |PyPi| |python-version| |codecov| |requirements| |Average time to resolve an issue| |commits-since-latest-release| |donate-paypal| |commit-activity|
+|discord| |CircleCI| |Docs| |PyPi| |python-version| |codecov| |requirements| |ko-fi|
 
 New Maintainers
 ===============
@@ -250,6 +250,8 @@ It’s also possible to use push notifications based on a websocket connection:
    :target: https://circleci.com/gh/hahn-th/homematicip-rest-api
 .. |PyPi| image:: https://badge.fury.io/py/homematicip.svg
    :target: https://badge.fury.io/py/homematicip
+.. |ko-fi| image:: https://ko-fi.com/img/githubbutton_sm.svg
+   :target: https://ko-fi.com/G2G1DTA9B
 .. |codecov| image:: https://codecov.io/gh/coreGreenberet/homematicip-rest-api/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/coreGreenberet/homematicip-rest-api
 .. |Average time to resolve an issue| image:: http://isitmaintained.com/badge/resolution/coreGreenberet/homematicip-rest-api.svg
