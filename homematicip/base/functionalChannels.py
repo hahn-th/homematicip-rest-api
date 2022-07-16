@@ -1022,8 +1022,8 @@ class RainDetectionChannel(FunctionalChannel):
 class TemperaturDifferenceSensor2Channel(FunctionalChannel):
     """ this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel """
 
-    def __init__(self, connection):
-        super().__init__(connection)
+    def __init__(self):
+        super().__init__()
         #:float:
         self.temperatureExternalDelta = 0.0
         #:float:
