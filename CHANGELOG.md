@@ -5,18 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [UNRELEASED]
-## [1.0.3] 2022-07-06
-- FIXED 
+
+## [1.0.5] 2022-07-16
+### FIXED
+  - [PR: 447]: Error message when using HmIP-STE2-PCB (There is no class for functionalChannel 'TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL' yet)
+  
+### CHANGED
+  - [PR: 448]: HomematicIP Rest API should be tested against python versions 3.8, 3.9, 3.10 
+  
+## [1.0.4] 2022-07-12
+### FIXED 
   - [PR: 444]: the function _ws_on_message in homematicip/home.py expected two arguments, but just one was provided.
   
 ## [1.0.3] 2022-07-06
-- General 
+### General 
   - [PR: 440]: Do not pass loop for Py3.10 compat
 
 ## [1.0.2] 2022-02-03
-
 ### Added
-- General
+### General
   - [PR: 413]: added samples
   
 ### CHANGED
@@ -402,76 +409,79 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
 -- Support for the new HMIP Cloud Update
 
-[UNRELEASED]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.4...master
-[1.0.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.3...1.0.4
-[1.0.3]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.2...1.0.3
-[1.0.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.1...1.0.2
-[1.0.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/1.0.0...1.0.1
-[1.0.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.1...1.0.0
-[0.13.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.13.0...0.13.1
-[0.13.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.1...0.13.0
-[0.12.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.12.0...0.12.1
-[0.12.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.11.0...0.12.0
-[0.11.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.19...0.11.0
-[0.10.19]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.18...0.10.19
-[0.10.18]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.17...0.10.18
-[0.10.17]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.16...0.10.17
-[0.10.16]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.15...0.10.16
-[0.10.15]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.14...0.10.15
-[0.10.14]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.13...0.10.14
-[0.10.13]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.12...0.10.13
-[0.10.12]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.11...0.10.12
-[0.10.11]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.10...0.10.11
-[0.10.10]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.9...0.10.10
-[0.10.9]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.8...0.10.9
-[0.10.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.7...0.10.8
-[0.10.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.6...0.10.7
-[0.10.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.5...0.10.6
-[0.10.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.4...0.10.5
-[0.10.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.3...0.10.4
-[0.10.3]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.2...0.10.3
-[0.10.2]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.1...0.10.2
-[0.10.1]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.10.0...0.10.1
-[0.10.0]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.8...0.10.0
-[0.9.8]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.7...0.9.8
-[0.9.7]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.6...0.9.7
-[0.9.6]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.5...0.9.6
-[0.9.5]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.4...0.9.5
-[0.9.4]: https://github.com/coreGreenberet/homematicip-rest-api/compare/0.9.3.3...0.9.4
+[UNRELEASED]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...master
+[1.0.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.4...1.0.5
+[1.0.4]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.3...1.0.4
+[1.0.3]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.0...1.0.1
+[1.0.0]: https://github.com/hahn-th/homematicip-rest-api/compare/0.13.1...1.0.0
+[0.13.1]: https://github.com/hahn-th/homematicip-rest-api/compare/0.13.0...0.13.1
+[0.13.0]: https://github.com/hahn-th/homematicip-rest-api/compare/0.12.1...0.13.0
+[0.12.1]: https://github.com/hahn-th/homematicip-rest-api/compare/0.12.0...0.12.1
+[0.12.0]: https://github.com/hahn-th/homematicip-rest-api/compare/0.11.0...0.12.0
+[0.11.0]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.19...0.11.0
+[0.10.19]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.18...0.10.19
+[0.10.18]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.17...0.10.18
+[0.10.17]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.16...0.10.17
+[0.10.16]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.15...0.10.16
+[0.10.15]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.14...0.10.15
+[0.10.14]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.13...0.10.14
+[0.10.13]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.12...0.10.13
+[0.10.12]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.11...0.10.12
+[0.10.11]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.10...0.10.11
+[0.10.10]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.9...0.10.10
+[0.10.9]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.8...0.10.9
+[0.10.8]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.7...0.10.8
+[0.10.7]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.6...0.10.7
+[0.10.6]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.5...0.10.6
+[0.10.5]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.4...0.10.5
+[0.10.4]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.3...0.10.4
+[0.10.3]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.2...0.10.3
+[0.10.2]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.1...0.10.2
+[0.10.1]: https://github.com/hahn-th/homematicip-rest-api/compare/0.10.0...0.10.1
+[0.10.0]: https://github.com/hahn-th/homematicip-rest-api/compare/0.9.8...0.10.0
+[0.9.8]: https://github.com/hahn-th/homematicip-rest-api/compare/0.9.7...0.9.8
+[0.9.7]: https://github.com/hahn-th/homematicip-rest-api/compare/0.9.6...0.9.7
+[0.9.6]: https://github.com/hahn-th/homematicip-rest-api/compare/0.9.5...0.9.6
+[0.9.5]: https://github.com/hahn-th/homematicip-rest-api/compare/0.9.4...0.9.5
+[0.9.4]: https://github.com/hahn-th/homematicip-rest-api/compare/0.9.3.3...0.9.4
 
-[BUG: 141]: https://github.com/coreGreenberet/homematicip-rest-api/issues/141
-[BUG: 188]: https://github.com/coreGreenberet/homematicip-rest-api/issues/188
-[BUG: 220]: https://github.com/coreGreenberet/homematicip-rest-api/issues/220
-[BUG: 223]: https://github.com/coreGreenberet/homematicip-rest-api/issues/223
-[BUG: 266]: https://github.com/coreGreenberet/homematicip-rest-api/issues/266
-[BUG: 294]: https://github.com/coreGreenberet/homematicip-rest-api/issues/294
-[PR: 300]: https://github.com/coreGreenberet/homematicip-rest-api/pull/300
-[PR: 320]: https://github.com/coreGreenberet/homematicip-rest-api/pull/320
-[BUG: 325]: https://github.com/coreGreenberet/homematicip-rest-api/issues/325
-[BUG: 342]: https://github.com/coreGreenberet/homematicip-rest-api/issues/342
-[BUG: 387]: https://github.com/coreGreenberet/homematicip-rest-api/issues/387
-[BUG: 391]: https://github.com/coreGreenberet/homematicip-rest-api/issues/391
-[BUG: 398]: https://github.com/coreGreenberet/homematicip-rest-api/issues/398
-[PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/410
-[PR: 410]: https://github.com/coreGreenberet/homematicip-rest-api/pull/413
-[PR: 424]: https://github.com/coreGreenberet/homematicip-rest-api/pull/424
-[PR: 440]: https://github.com/coreGreenberet/homematicip-rest-api/pull/440
-[PR: 440]: https://github.com/coreGreenberet/homematicip-rest-api/pull/444
+[BUG: 141]: https://github.com/hahn-th/homematicip-rest-api/issues/141
+[BUG: 188]: https://github.com/hahn-th/homematicip-rest-api/issues/188
+[BUG: 220]: https://github.com/hahn-th/homematicip-rest-api/issues/220
+[BUG: 223]: https://github.com/hahn-th/homematicip-rest-api/issues/223
+[BUG: 266]: https://github.com/hahn-th/homematicip-rest-api/issues/266
+[BUG: 294]: https://github.com/hahn-th/homematicip-rest-api/issues/294
+[PR: 300]: https://github.com/hahn-th/homematicip-rest-api/pull/300
+[PR: 320]: https://github.com/hahn-th/homematicip-rest-api/pull/320
+[BUG: 325]: https://github.com/hahn-th/homematicip-rest-api/issues/325
+[BUG: 342]: https://github.com/hahn-th/homematicip-rest-api/issues/342
+[BUG: 387]: https://github.com/hahn-th/homematicip-rest-api/issues/387
+[BUG: 391]: https://github.com/hahn-th/homematicip-rest-api/issues/391
+[BUG: 398]: https://github.com/hahn-th/homematicip-rest-api/issues/398
+[PR: 410]: https://github.com/hahn-th/homematicip-rest-api/pull/410
+[PR: 410]: https://github.com/hahn-th/homematicip-rest-api/pull/413
+[PR: 424]: https://github.com/hahn-th/homematicip-rest-api/pull/424
+[PR: 440]: https://github.com/hahn-th/homematicip-rest-api/pull/440
+[PR: 440]: https://github.com/hahn-th/homematicip-rest-api/pull/444
+[PR: 447]: https://github.com/hahn-th/homematicip-rest-api/pull/447
+[PR: 448]: https://github.com/hahn-th/homematicip-rest-api/pull/448
 
-[HMIP-FALMOT-C12]: https://github.com/coreGreenberet/homematicip-rest-api/issues/281
-[HMIP-WHS2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/280
-[HMIP-PMFS]: https://github.com/coreGreenberet/homematicip-rest-api/issues/282 
-[HMIP-WTH-B]: https://github.com/coreGreenberet/homematicip-rest-api/issues/286
-[ALPHA-IP-RBG]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
-[ALPHA-IP-RBGa]: https://github.com/coreGreenberet/homematicip-rest-api/issues/290
-[HMIP-MOD-HO]: https://github.com/coreGreenberet/homematicip-rest-api/issues/304
-[HMIP-FSI16]: https://github.com/coreGreenberet/homematicip-rest-api/issues/310
-[HMIP-SWDO-PL]: https://github.com/coreGreenberet/homematicip-rest-api/issues/315
-[HMIP-HDM1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/332
-[HMIP-HAP]: https://github.com/coreGreenberet/homematicip-rest-api/issues/335
-[HMIP-SRD]: https://github.com/coreGreenberet/homematicip-rest-api/issues/375
-[HMIP-WRCC2]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
-[HMIP-DRSI1]: https://github.com/coreGreenberet/homematicip-rest-api/issues/373
-[HmIP-STE2-PCB]: https://github.com/coreGreenberet/homematicip-rest-api/issues/386
-[activate_absence_permanent]: https://github.com/coreGreenberet/homematicip-rest-api/issues/357
-[HMIP-DRDI3]: https://github.com/coreGreenberet/homematicip-rest-api/pull/405
+[HMIP-FALMOT-C12]: https://github.com/hahn-th/homematicip-rest-api/issues/281
+[HMIP-WHS2]: https://github.com/hahn-th/homematicip-rest-api/issues/280
+[HMIP-PMFS]: https://github.com/hahn-th/homematicip-rest-api/issues/282 
+[HMIP-WTH-B]: https://github.com/hahn-th/homematicip-rest-api/issues/286
+[ALPHA-IP-RBG]: https://github.com/hahn-th/homematicip-rest-api/issues/290
+[ALPHA-IP-RBGa]: https://github.com/hahn-th/homematicip-rest-api/issues/290
+[HMIP-MOD-HO]: https://github.com/hahn-th/homematicip-rest-api/issues/304
+[HMIP-FSI16]: https://github.com/hahn-th/homematicip-rest-api/issues/310
+[HMIP-SWDO-PL]: https://github.com/hahn-th/homematicip-rest-api/issues/315
+[HMIP-HDM1]: https://github.com/hahn-th/homematicip-rest-api/issues/332
+[HMIP-HAP]: https://github.com/hahn-th/homematicip-rest-api/issues/335
+[HMIP-SRD]: https://github.com/hahn-th/homematicip-rest-api/issues/375
+[HMIP-WRCC2]: https://github.com/hahn-th/homematicip-rest-api/issues/373
+[HMIP-DRSI1]: https://github.com/hahn-th/homematicip-rest-api/issues/373
+[HmIP-STE2-PCB]: https://github.com/hahn-th/homematicip-rest-api/issues/386
+[activate_absence_permanent]: https://github.com/hahn-th/homematicip-rest-api/issues/357
+[HMIP-DRDI3]: https://github.com/hahn-th/homematicip-rest-api/pull/405
