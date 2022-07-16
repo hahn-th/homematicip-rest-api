@@ -13,6 +13,13 @@ from homematicip_demo.helper import (
     no_ssl_verification,
 )
 
+from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+
+def test_getTypeFunctionalChannelMap(fake_home: Home):
+    for channelType in TYPE_FUNCTIONALCHANNEL_MAP.keys():
+        fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType]()
+        assert fc != None
+
 
 def test_room_control_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000BBBB000000000")
