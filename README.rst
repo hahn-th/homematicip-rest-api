@@ -182,7 +182,7 @@ Homematic IP Devices:
 -  [ ] HMIP-USBSM      (USB Switching Measurement Actuator)
 -  [ ] HMIP-WGC        (Garage Door Button)
 -  [X] HMIP-WHS2       (Switch Actuator for heating systems – 2x channels)
--  [ ] HMIP-WLAN-HAP   (WLAN Access Point)
+-  [X] HMIP-WLAN-HAP   (WLAN Access Point)
 -  [X] HMIP-WRC2       (Wall-mount Remote Control - 2x buttons)
 -  [X] HMIP-WRC6       (Wall-mount Remote Control - 6x buttons)
 -  [X] HMIP-WRCC2      (Wall-mount Remote Control – flat)
