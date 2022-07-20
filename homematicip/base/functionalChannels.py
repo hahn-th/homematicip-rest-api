@@ -708,6 +708,17 @@ class InternalSwitchChannel(FunctionalChannel):
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
 
+class ImpulseOutputChannel(FunctionalChannel):
+    """ this is the representation of the IMPULSE_OUTPUT_CHANNEL """
+
+    def __init__(self):
+        super().__init__()
+        
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.impulseDuration = js["impulseDuration"]
+        self.processing = js["processing"]
+
 
 class MultiModeInputChannel(FunctionalChannel):
     """ this is the representative of the MULTI_MODE_INPUT_CHANNEL channel"""

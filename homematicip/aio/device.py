@@ -585,3 +585,9 @@ class AsyncRainSensor(RainSensor, AsyncDevice):
 
 class AsyncTemperaturDifferenceSensor2(TemperaturDifferenceSensor2, AsyncDevice):
     """ HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors) """
+
+class AsyncWallMountedGarageDoorController(WallMountedGarageDoorController, AsyncDevice):
+    """ HmIP-WGC (Garage Door Controller) """
+    
+    async def send_start_impulse(self):
+        return await self._connection.api_call(*super().send_start_impulse())
