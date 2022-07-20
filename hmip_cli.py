@@ -156,6 +156,13 @@ def main():
 
     group = parser.add_argument_group("Device Settings")
     group.add_argument(
+        "--toggle-garage-door",
+        action="store_true",
+        dest="toggle_garage_door",
+        help="HmIP WGC Toggle Garage Door",
+        default=None,
+    )
+    group.add_argument(
         "--turn-on",
         action="store_true",
         dest="device_switch_state",
@@ -565,6 +572,18 @@ def main():
                 else:
                     logger.error(
                         "can't set dim level of device %s of type %s",
+                        device.id,
+                        device.deviceType,
+                    )
+                command_entered = True
+
+            if args.toggle_garage_door is not None:
+                if isinstance(device, WallMountedGarageDoorController):
+                    for c in args.channels:
+                        device.send_impulse_start()
+                else:
+                    logger.error(
+                        "can't toggle garage door with device %s of type %s",
                         device.id,
                         device.deviceType,
                     )

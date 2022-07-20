@@ -1,3 +1,5 @@
+codecov:
+  token: 45592767-5d72-4324-8470-aeda8ac812c1
 ignore:
  - "hmip_cli.py"
  - "hmip_generate_auth_token.py"
