@@ -161,10 +161,6 @@ jobs:
           
 workflows:
   version: 2
-  upload-to-codecov:
-    jobs:
-      - checkout
-      - codecov/upload
   build_and_deploy:
     jobs:
       - test_3_8:
@@ -187,3 +183,4 @@ workflows:
           filters:
             branches:
               only: master
+      - codecov/upload
