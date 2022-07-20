@@ -183,4 +183,3 @@ workflows:
           filters:
             branches:
               only: master
-      - codecov/upload
