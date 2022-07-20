@@ -15,6 +15,7 @@ from homematicip_demo.helper import (
 
 from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
 
+
 def test_getTypeFunctionalChannelMap(fake_home: Home):
     for channelType in TYPE_FUNCTIONALCHANNEL_MAP.keys():
         fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType]()
@@ -1418,25 +1419,42 @@ def test_din_rail_dimmer_3(fake_home: Home):
 def test_temperatur_sensor_2_delta(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000HmIP-STE2-PCB")
     assert isinstance(d, TemperaturDifferenceSensor2)
-    assert d.temperatureExternalDelta  ==  -0.3
-    assert d.temperatureExternalOne  ==  37.8
-    assert d.temperatureExternalTwo  ==  38.1
+    assert d.temperatureExternalDelta == -0.3
+    assert d.temperatureExternalOne == 37.8
+    assert d.temperatureExternalTwo == 38.1
 
     assert str(d) == (
         "HmIP-STE2-PCB Temperatursensor Speicher lowBat(False) unreach(False) "
         "rssiDeviceValue(-61) rssiPeerValue(None) configPending(False) dutyCycle(False) "
         "temperatureExternalDelta(-0.3) temperatureExternalOne(37.8) temperatureExternalTwo(38.1)"
-        )
+    )
+
 
 def test_temperatur_sensor_2_delta_2(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000300015")
     assert isinstance(d, TemperaturDifferenceSensor2)
-    assert d.temperatureExternalDelta  ==  -0.1
-    assert d.temperatureExternalOne  ==  22.4
-    assert d.temperatureExternalTwo  ==  22.5
+    assert d.temperatureExternalDelta == -0.1
+    assert d.temperatureExternalOne == 22.4
+    assert d.temperatureExternalTwo == 22.5
 
     assert str(d) == (
         "HmIP-STE2-PCB Temperatursensor mit externen F\u00fchlern \u2013 2-fach lowBat(False) unreach(False) "
         "rssiDeviceValue(-60) rssiPeerValue(None) configPending(False) dutyCycle(False) "
         "temperatureExternalDelta(-0.1) temperatureExternalOne(22.4) temperatureExternalTwo(22.5)"
+    )
+
+
+def test_wall_mounted_garage_door_controller(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000WGC")
+        assert isinstance(d, WallMountedGarageDoorController)
+        assert d.impulseDuration == 0.10000000149011612
+        assert d.processing == False
+
+        result = d.send_start_impulse()
+
+        assert str(d) == (
+            "HmIP-WGC Garagentortaster lowBat(False) unreach(False) "
+            "rssiDeviceValue(-30) rssiPeerValue(-34) configPending(False) dutyCycle(False) deviceUndervoltage(False) "
+            "impulseDuration(0.10000000149011612) processing(False)"
         )

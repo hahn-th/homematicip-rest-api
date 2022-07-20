@@ -2039,6 +2039,29 @@ class PluggableMainsFailureSurveillance(Device):
             self.set_attr_from_dict("genericAlarmSignal", c, AlarmSignalType)
 
 
+class WallMountedGarageDoorController(Device):
+    """ HmIP-WGC Wall mounted Garage Door Controller """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.impulseDuration = 0
+        self.processing = False
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("IMPULSE_OUTPUT_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("impulseDuration", c)
+            self.set_attr_from_dict("processing", c)
+    
+    def send_start_impulse(self, channelIndex = 2):
+        """ Toggle Wall mounted Garage Door Controller. """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id
+        }
+        return self._restCall("device/control/startImpulse", body=json.dumps(data))
+
 class TiltVibrationSensor(Device):
     """ HMIP-STV (Inclination and vibration Sensor) """
 
