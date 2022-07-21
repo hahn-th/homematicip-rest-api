@@ -14,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Device(HomeMaticIPObject):
-    """ this class represents a generic homematic ip device """
+    """this class represents a generic homematic ip device"""
 
     _supportedFeatureAttributeMap = {
         "IFeatureDeviceOverheated": ["deviceOverheated"],
@@ -141,7 +141,8 @@ class Device(HomeMaticIPObject):
                                 self.set_attr_from_dict(attribute, c)
                         else:  # pragma: no cover
                             LOGGER.warning(
-                                "Optional Device Feature '%s' is not yet supported", k,
+                                "Optional Device Feature '%s' is not yet supported",
+                                k,
                             )
 
     def __str__(self):
@@ -172,7 +173,7 @@ class Device(HomeMaticIPObject):
         )
 
     def load_functionalChannels(self, groups: Iterable[Group]):
-        """ this function will load the functionalChannels into the device """
+        """this function will load the functionalChannels into the device"""
         self.functionalChannels = []
         for channel in self._rawJSONData["functionalChannels"].values():
             fc = self._parse_functionalChannel(channel, groups)
@@ -249,7 +250,7 @@ class OperationLockableDevice(Device):
 
 
 class HeatingThermostat(OperationLockableDevice):
-    """ HMIP-eTRV (Radiator Thermostat) """
+    """HMIP-eTRV (Radiator Thermostat)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -289,7 +290,7 @@ class HeatingThermostat(OperationLockableDevice):
 
 
 class HeatingThermostatCompact(SabotageDevice):
-    """ HMIP-eTRV-C (Heating-thermostat compact without display) """
+    """HMIP-eTRV-C (Heating-thermostat compact without display)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -329,7 +330,7 @@ class HeatingThermostatCompact(SabotageDevice):
 
 
 class HeatingThermostatEvo(OperationLockableDevice):
-    """ HMIP-eTRV-E (Heating-thermostat new evo version) """
+    """HMIP-eTRV-E (Heating-thermostat new evo version)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -369,7 +370,7 @@ class HeatingThermostatEvo(OperationLockableDevice):
 
 
 class ShutterContact(SabotageDevice):
-    """ HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
+    """HMIP-SWDO (Door / Window Contact - optical) / HMIP-SWDO-I (Door / Window Contact Invisible - optical)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -388,7 +389,7 @@ class ShutterContact(SabotageDevice):
 
 
 class ShutterContactMagnetic(Device):
-    """ HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic )"""
+    """HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic )"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -407,11 +408,11 @@ class ShutterContactMagnetic(Device):
 
 
 class ShutterContactOpticalPlus(ShutterContact):
-    """ HmIP-SWDO-PL ( Window / Door Contact – optical, plus )"""
+    """HmIP-SWDO-PL ( Window / Door Contact – optical, plus )"""
 
 
 class ContactInterface(SabotageDevice):
-    """ HMIP-SCI (Contact Interface Sensor)"""
+    """HMIP-SCI (Contact Interface Sensor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -430,7 +431,7 @@ class ContactInterface(SabotageDevice):
 
 
 class RotaryHandleSensor(SabotageDevice):
-    """ HMIP-SRH """
+    """HMIP-SRH"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -449,7 +450,7 @@ class RotaryHandleSensor(SabotageDevice):
 
 
 class TemperatureHumiditySensorOutdoor(Device):
-    """ HMIP-STHO (Temperature and Humidity Sensor outdoor) """
+    """HMIP-STHO (Temperature and Humidity Sensor outdoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -472,7 +473,7 @@ class TemperatureHumiditySensorOutdoor(Device):
 
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
-    """ HMIP-STH (Temperature and Humidity Sensor without display - indoor) """
+    """HMIP-STH (Temperature and Humidity Sensor without display - indoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -499,7 +500,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
 
 
 class TemperatureHumiditySensorDisplay(Device):
-    """ HMIP-STHD (Temperature and Humidity Sensor with display - indoor) """
+    """HMIP-STHD (Temperature and Humidity Sensor with display - indoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -542,7 +543,7 @@ class TemperatureHumiditySensorDisplay(Device):
 class WallMountedThermostatPro(
     TemperatureHumiditySensorDisplay, OperationLockableDevice
 ):
-    """ HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)"""
+    """HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor) / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)"""
 
     def from_json(self, js):
         super().from_json(js)
@@ -556,13 +557,13 @@ class WallMountedThermostatPro(
 
 
 class RoomControlDevice(WallMountedThermostatPro):
-    """ ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display) """
+    """ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)"""
 
     pass
 
 
 class RoomControlDeviceAnalog(Device):
-    """ ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog) """
+    """ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -580,13 +581,13 @@ class RoomControlDeviceAnalog(Device):
 
 
 class WallMountedThermostatBasicHumidity(WallMountedThermostatPro):
-    """ HMIP-WTH-B (Wall Thermostat – basic)"""
+    """HMIP-WTH-B (Wall Thermostat – basic)"""
 
     pass
 
 
 class SmokeDetector(Device):
-    """ HMIP-SWSD (Smoke Alarm with Q label) """
+    """HMIP-SWSD (Smoke Alarm with Q label)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -607,7 +608,7 @@ class SmokeDetector(Device):
 
 
 class FloorTerminalBlock6(Device):
-    """ HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V) """
+    """HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -673,11 +674,11 @@ class FloorTerminalBlock6(Device):
 
 
 class FloorTerminalBlock10(FloorTerminalBlock6):
-    """ HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V) """
+    """HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)"""
 
 
 class FloorTerminalBlock12(Device):
-    """ HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised) """
+    """HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -702,7 +703,7 @@ class FloorTerminalBlock12(Device):
     def set_minimum_floor_heating_valve_position(
         self, minimumFloorHeatingValvePosition: float
     ):
-        """ sets the minimum floot heating valve position
+        """sets the minimum floot heating valve position
 
         Args:
             minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
@@ -722,7 +723,7 @@ class FloorTerminalBlock12(Device):
 
 
 class Switch(Device):
-    """ Generic Switch class """
+    """Generic Switch class"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -755,35 +756,35 @@ class Switch(Device):
 
 
 class PlugableSwitch(Switch):
-    """ HMIP-PS (Pluggable Switch), HMIP-PCBS (Switch Circuit Board - 1 channel) """
+    """HMIP-PS (Pluggable Switch), HMIP-PCBS (Switch Circuit Board - 1 channel)"""
 
 
 class PrintedCircuitBoardSwitchBattery(Switch):
-    """ HMIP-PCBS-BAT (Printed Circuit Board Switch Battery) """
+    """HMIP-PCBS-BAT (Printed Circuit Board Switch Battery)"""
 
 
 class PrintedCircuitBoardSwitch2(Switch):
-    """ HMIP-PCBS2 (Switch Circuit Board - 2x channels) """
+    """HMIP-PCBS2 (Switch Circuit Board - 2x channels)"""
 
 
 class OpenCollector8Module(Switch):
-    """ HMIP-MOD-OC8 ( Open Collector Module ) """
+    """HMIP-MOD-OC8 ( Open Collector Module )"""
 
 
 class HeatingSwitch2(Switch):
-    """ HMIP-WHS2 (Switch Actuator for heating systems – 2x channels) """
+    """HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)"""
 
 
 class WiredSwitch8(Switch):
-    """ HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels) """
+    """HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)"""
 
 
 class DinRailSwitch4(Switch):
-    """ HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels) """
+    """HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels)"""
 
 
 class SwitchMeasuring(Switch):
-    """ Generic class for Switch and Meter """
+    """Generic class for Switch and Meter"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -813,7 +814,7 @@ class SwitchMeasuring(Switch):
 
 
 class MultiIOBox(Switch):
-    """ HMIP-MIOB (Multi IO Box for floor heating & cooling)  """
+    """HMIP-MIOB (Multi IO Box for floor heating & cooling)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -832,7 +833,7 @@ class MultiIOBox(Switch):
 
 
 class BrandSwitchNotificationLight(Switch):
-    """ HMIP-BSL (Switch Actuator for brand switches – with signal lamp) """
+    """HMIP-BSL (Switch Actuator for brand switches – with signal lamp)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -844,16 +845,18 @@ class BrandSwitchNotificationLight(Switch):
     def __str__(self):
         top = self.functionalChannels[self.topLightChannelIndex]
         bottom = self.functionalChannels[self.bottomLightChannelIndex]
-        return "{} topDimLevel({}) topColor({}) bottomDimLevel({}) bottomColor({})".format(
-            super().__str__(),
-            top.dimLevel,
-            top.simpleRGBColorState,
-            bottom.dimLevel,
-            bottom.simpleRGBColorState,
+        return (
+            "{} topDimLevel({}) topColor({}) bottomDimLevel({}) bottomColor({})".format(
+                super().__str__(),
+                top.dimLevel,
+                top.simpleRGBColorState,
+                bottom.dimLevel,
+                bottom.simpleRGBColorState,
+            )
         )
 
     def set_rgb_dim_level(self, channelIndex: int, rgb: RGBColorState, dimLevel: float):
-        """ sets the color and dimlevel of the lamp
+        """sets the color and dimlevel of the lamp
 
         Args:
             channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
@@ -881,7 +884,7 @@ class BrandSwitchNotificationLight(Switch):
         onTime: float,
         rampTime: float,
     ):
-        """ sets the color and dimlevel of the lamp
+        """sets the color and dimlevel of the lamp
 
         Args:
             channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
@@ -906,47 +909,47 @@ class BrandSwitchNotificationLight(Switch):
 
 
 class PlugableSwitchMeasuring(SwitchMeasuring):
-    """ HMIP-PSM (Pluggable Switch and Meter) """
+    """HMIP-PSM (Pluggable Switch and Meter)"""
 
 
 class BrandSwitchMeasuring(SwitchMeasuring):
-    """ HMIP-BSM (Brand Switch and Meter) """
+    """HMIP-BSM (Brand Switch and Meter)"""
 
 
 class FullFlushSwitchMeasuring(SwitchMeasuring):
-    """ HMIP-FSM, HMIP-FSM16 (Full flush Switch and Meter) """
+    """HMIP-FSM, HMIP-FSM16 (Full flush Switch and Meter)"""
 
 
 class PushButton(Device):
-    """ HMIP-WRC2 (Wall-mount Remote Control - 2-button) """
+    """HMIP-WRC2 (Wall-mount Remote Control - 2-button)"""
 
 
 class PushButton6(PushButton):
-    """ HMIP-WRC6 (Wall-mount Remote Control - 6-button) """
+    """HMIP-WRC6 (Wall-mount Remote Control - 6-button)"""
 
 
 class PushButtonFlat(PushButton):
-    """ HmIP-WRCC2 (Wall-mount Remote Control – flat) """
+    """HmIP-WRCC2 (Wall-mount Remote Control – flat)"""
 
 
 class BrandPushButton(PushButton):
-    """ HMIP-BRC2 (Remote Control for brand switches – 2x channels) """
+    """HMIP-BRC2 (Remote Control for brand switches – 2x channels)"""
 
 
 class KeyRemoteControl4(PushButton):
-    """ HMIP-KRC4 (Key Ring Remote Control - 4 buttons) """
+    """HMIP-KRC4 (Key Ring Remote Control - 4 buttons)"""
 
 
 class RemoteControl8(PushButton):
-    """ HMIP-RC8 (Remote Control - 8 buttons) """
+    """HMIP-RC8 (Remote Control - 8 buttons)"""
 
 
 class RemoteControl8Module(RemoteControl8):
-    """ HMIP-MOD-RC8 (Open Collector Module Sender - 8x) """
+    """HMIP-MOD-RC8 (Open Collector Module Sender - 8x)"""
 
 
 class AlarmSirenIndoor(SabotageDevice):
-    """ HMIP-ASIR (Alarm Siren) """
+    """HMIP-ASIR (Alarm Siren)"""
 
     def from_json(self, js):
         super().from_json(js)
@@ -957,7 +960,7 @@ class AlarmSirenIndoor(SabotageDevice):
 
 
 class AlarmSirenOutdoor(AlarmSirenIndoor):
-    """ HMIP-ASIR-O (Alarm Siren Outdoor) """
+    """HMIP-ASIR-O (Alarm Siren Outdoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -972,7 +975,7 @@ class AlarmSirenOutdoor(AlarmSirenIndoor):
 
 
 class MotionDetectorIndoor(SabotageDevice):
-    """ HMIP-SMI (Motion Detector with Brightness Sensor - indoor) """
+    """HMIP-SMI (Motion Detector with Brightness Sensor - indoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1008,7 +1011,7 @@ class MotionDetectorIndoor(SabotageDevice):
 
 
 class MotionDetectorOutdoor(Device):
-    """ HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor) """
+    """HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1032,7 +1035,7 @@ class MotionDetectorOutdoor(Device):
 
 
 class MotionDetectorPushButton(MotionDetectorOutdoor):
-    """ HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button) """
+    """HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1047,7 +1050,7 @@ class MotionDetectorPushButton(MotionDetectorOutdoor):
 
 
 class PresenceDetectorIndoor(SabotageDevice):
-    """ HMIP-SPI (Presence Sensor - indoor) """
+    """HMIP-SPI (Presence Sensor - indoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1083,7 +1086,7 @@ class PresenceDetectorIndoor(SabotageDevice):
 
 
 class PassageDetector(SabotageDevice):
-    """ HMIP-SPDR (Passage Detector) """
+    """HMIP-SPDR (Passage Detector)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1121,14 +1124,14 @@ class PassageDetector(SabotageDevice):
 
 
 class KeyRemoteControlAlarm(Device):
-    """ HMIP-KRCA (Key Ring Remote Control - alarm) """
+    """HMIP-KRCA (Key Ring Remote Control - alarm)"""
 
 
 class Shutter(Device):
-    """ Base class for shutter devices"""
+    """Base class for shutter devices"""
 
     def set_shutter_level(self, level=0.0, channelIndex=1):
-        """ sets the shutter level
+        """sets the shutter level
 
         Args:
             level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
@@ -1144,7 +1147,7 @@ class Shutter(Device):
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self, channelIndex=1):
-        """ stops the current shutter operation
+        """stops the current shutter operation
 
         Args:
             channelIndex(int): the channel to control
@@ -1156,10 +1159,10 @@ class Shutter(Device):
 
 
 class Blind(Shutter):
-    """ Base class for blind devices"""
+    """Base class for blind devices"""
 
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None, channelIndex=1):
-        """ sets the slats and shutter level
+        """sets the slats and shutter level
 
         Args:
             slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
@@ -1273,15 +1276,15 @@ class FullFlushBlind(FullFlushShutter, Blind):
 
 
 class BrandBlind(FullFlushBlind):
-    """ HMIP-BBL (Blind Actuator for brand switches) """
+    """HMIP-BBL (Blind Actuator for brand switches)"""
 
 
 class DinRailBlind4(Blind):
-    """ HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels) """
+    """HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
 
 
 class BlindModule(Device):
-    """ HMIP-HDM1 (Hunter Douglas & erfal window blinds) """
+    """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1365,7 +1368,7 @@ class BlindModule(Device):
         )
 
     def stop(self):
-        """ stops the current operation
+        """stops the current operation
         Returns:
             the result of the _restCall
         """
@@ -1374,7 +1377,7 @@ class BlindModule(Device):
 
 
 class LightSensor(Device):
-    """ HMIP-SLO (Light Sensor outdoor) """
+    """HMIP-SLO (Light Sensor outdoor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1453,7 +1456,7 @@ class WiredDimmer3(Dimmer):
 
 
 class DinRailDimmer3(Dimmer):
-    """ HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail """
+    """HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1470,18 +1473,14 @@ class DinRailDimmer3(Dimmer):
             self.c2dimLevel = channels[1]["dimLevel"]
             self.c3dimLevel = channels[2]["dimLevel"]
 
-
     def __str__(self):
         return "{} c1DimLevel({}) c2DimLevel({}) c3DimLevel({})".format(
-            super().__str__(),
-            self.c1dimLevel,
-            self.c2dimLevel,
-            self.c3dimLevel
+            super().__str__(), self.c1dimLevel, self.c2dimLevel, self.c3dimLevel
         )
 
 
 class WeatherSensor(Device):
-    """ HMIP-SWO-B """
+    """HMIP-SWO-B"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1540,7 +1539,7 @@ class WeatherSensor(Device):
 
 
 class WeatherSensorPlus(Device):
-    """ HMIP-SWO-PL """
+    """HMIP-SWO-PL"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1610,7 +1609,7 @@ class WeatherSensorPlus(Device):
 
 
 class WeatherSensorPro(Device):
-    """ HMIP-SWO-PR """
+    """HMIP-SWO-PR"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1692,7 +1691,7 @@ class WeatherSensorPro(Device):
 
 
 class WaterSensor(Device):
-    """ HMIP-SWD ( Water Sensor ) """
+    """HMIP-SWD ( Water Sensor )"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1805,7 +1804,7 @@ class WaterSensor(Device):
 
 
 class FullFlushContactInterface(Device):
-    """ HMIP-FCI1 (Contact Interface flush-mount – 1 channel) """
+    """HMIP-FCI1 (Contact Interface flush-mount – 1 channel)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1826,24 +1825,26 @@ class FullFlushContactInterface(Device):
             self.windowState = WindowState.from_str(c["windowState"])
 
     def __str__(self):
-        return "{} binaryBehaviorType({}) multiModeInputMode({}) windowState({})".format(
-            super().__str__(),
-            self.binaryBehaviorType,
-            self.multiModeInputMode,
-            self.windowState,
+        return (
+            "{} binaryBehaviorType({}) multiModeInputMode({}) windowState({})".format(
+                super().__str__(),
+                self.binaryBehaviorType,
+                self.multiModeInputMode,
+                self.windowState,
+            )
         )
 
 
 class FullFlushContactInterface6(Device):
-    """ HMIP-FCI6 (Contact Interface flush-mount – 6 channels) """
+    """HMIP-FCI6 (Contact Interface flush-mount – 6 channels)"""
 
 
 class WiredInput32(FullFlushContactInterface):
-    """ HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels) """
+    """HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)"""
 
 
 class FullFlushInputSwitch(Switch):
-    """ HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A) """
+    """HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1865,11 +1866,11 @@ class FullFlushInputSwitch(Switch):
 
 
 class DinRailSwitch(FullFlushInputSwitch):
-    """ HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel) """
+    """HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)"""
 
 
 class AccelerationSensor(Device):
-    """ HMIP-SAM (Contact Interface flush-mount – 1 channel) """
+    """HMIP-SAM (Contact Interface flush-mount – 1 channel)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -1992,7 +1993,7 @@ class AccelerationSensor(Device):
 
 
 class DoorModule(Device):
-    """ Generic class for a door module """
+    """Generic class for a door module"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -2016,15 +2017,15 @@ class DoorModule(Device):
 
 
 class GarageDoorModuleTormatic(DoorModule):
-    """ HMIP-MOD-TM (Garage Door Module Tormatic) """
+    """HMIP-MOD-TM (Garage Door Module Tormatic)"""
 
 
 class HoermannDrivesModule(DoorModule):
-    """ HMIP-MOD-HO (Garage Door Module for Hörmann) """
+    """HMIP-MOD-HO (Garage Door Module for Hörmann)"""
 
 
 class PluggableMainsFailureSurveillance(Device):
-    """ HMIP-PMFS (Plugable Power Supply Monitoring) """
+    """HMIP-PMFS (Plugable Power Supply Monitoring)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -2040,7 +2041,7 @@ class PluggableMainsFailureSurveillance(Device):
 
 
 class WallMountedGarageDoorController(Device):
-    """ HmIP-WGC Wall mounted Garage Door Controller """
+    """HmIP-WGC Wall mounted Garage Door Controller"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -2053,17 +2054,15 @@ class WallMountedGarageDoorController(Device):
         if c:
             self.set_attr_from_dict("impulseDuration", c)
             self.set_attr_from_dict("processing", c)
-    
-    def send_start_impulse(self, channelIndex = 2):
-        """ Toggle Wall mounted Garage Door Controller. """
-        data = {
-            "channelIndex": channelIndex,
-            "deviceId": self.id
-        }
+
+    def send_start_impulse(self, channelIndex=2):
+        """Toggle Wall mounted Garage Door Controller."""
+        data = {"channelIndex": channelIndex, "deviceId": self.id}
         return self._restCall("device/control/startImpulse", body=json.dumps(data))
 
+
 class TiltVibrationSensor(Device):
-    """ HMIP-STV (Inclination and vibration Sensor) """
+    """HMIP-STV (Inclination and vibration Sensor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -2141,7 +2140,7 @@ class TiltVibrationSensor(Device):
 
 
 class RainSensor(Device):
-    """ HMIP-SRD (Rain Sensor)  """
+    """HMIP-SRD (Rain Sensor)"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -2159,7 +2158,7 @@ class RainSensor(Device):
 
 
 class TemperaturDifferenceSensor2(Device):
-    """ HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors) """
+    """HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors)"""
 
     def __init__(self, connection):
         super().__init__(connection)
