@@ -7467,7 +7467,9 @@
                     "deviceId": "3014F7110000000000000WGC",
                     "functionalChannelType": "SINGLE_KEY_CHANNEL",
                     "groupIndex": 1,
-                    "groups": [],
+                    "groups": [
+                        "2c9b31ed-42b4-4882-9b23-a8146475226c"
+                    ],
                     "index": 1,
                     "label": ""
                 },
@@ -7911,6 +7913,23 @@
             "unreach": false,
             "windowState": "CLOSED"
         },
+        "b27049fd-ba6c-4fed-0000-eb063742ff75": {
+            "channels": [],
+            "doorState": null,
+            "dutyCycle": null,
+            "groupVisibility": "VISIBLE",
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "b27049fd-ba6c-4fed-0000-eb063742ff75",
+            "label": "Garagengruppe",
+            "lastStatusUpdate": 0,
+            "lowBat": null,
+            "metaGroupId": "00000000-0000-0000-0000-000000000008",
+            "processing": null,
+            "sensorSpecificParameters": {},
+            "type": "EXTENDED_LINKED_GARAGE_DOOR",
+            "unreach": null,
+            "ventilationPositionSupported": false
+        },
         "00000000-0000-0000-0000-000000000013": {
             "channels": [
                 {
@@ -8257,7 +8276,8 @@
             "dutyCycle": false,
             "groups": [
                 "00000000-0000-0000-0000-000000000010",
-                "00000000-0000-0000-0000-000000000009"
+                "00000000-0000-0000-0000-000000000009",
+                "b27049fd-ba6c-4fed-0000-eb063742ff75"
             ],
             "homeId": "00000000-0000-0000-0000-000000000001",
             "id": "00000000-0000-0000-0000-000000000008",
@@ -9031,11 +9051,15 @@
             },
             "ACCESS_CONTROL": {
                 "accessAuthorizationProfileGroups": [],
-                "active": false,
+                "active": true,
                 "autoRelockProfileGroups": [],
-                "extendedLinkedGarageDoorGroups": [],
+                "extendedLinkedGarageDoorGroups": [
+                    "b27049fd-ba6c-4fed-0000-eb063742ff75"
+                ],
                 "extendedLinkedNotificationGroups": [],
-                "functionalGroups": [],
+                "functionalGroups": [
+                    "2c9b31ed-42b4-4882-9b23-a8146475226c"
+                ],
                 "lockProfileGroups": [],
                 "solution": "ACCESS_CONTROL"
             }

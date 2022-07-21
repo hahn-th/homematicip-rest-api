@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class AutoNameEnum(str, Enum):
-    """ auto() will generate the name of the attribute as value """
+    """auto() will generate the name of the attribute as value"""
 
     def _generate_next_value_(name, start, count, last_values):
         return name
@@ -17,7 +17,7 @@ class AutoNameEnum(str, Enum):
 
     @classmethod
     def from_str(cls, text: str, default=None):
-        """ this function will create the enum object based on its string value
+        """this function will create the enum object based on its string value
 
         Args:
             text(str): the string value of the enum
@@ -304,6 +304,7 @@ class GroupType(AutoNameEnum):
     ALARM_SWITCHING = auto()
     LINKED_SWITCHING = auto()
     EXTENDED_LINKED_SWITCHING = auto()
+    EXTENDED_LINKED_GARAGE_DOOR = auto()
     SWITCHING = auto()
     SECURITY = auto()
     ENVIRONMENT = auto()

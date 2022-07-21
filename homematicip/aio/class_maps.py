@@ -90,6 +90,7 @@ TYPE_GROUP_MAP = {
     GroupType.ENVIRONMENT: AsyncEnvironmentGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: AsyncExtendedLinkedShutterGroup,
     GroupType.EXTENDED_LINKED_SWITCHING: AsyncExtendedLinkedSwitchingGroup,
+    GroupType.EXTENDED_LINKED_GARAGE_DOOR: AsyncExtendedGarageDoorGroup,
     GroupType.HEATING: AsyncHeatingGroup,
     GroupType.HEATING_CHANGEOVER: AsyncHeatingChangeoverGroup,
     GroupType.HEATING_COOLING_DEMAND: AsyncHeatingCoolingDemandGroup,

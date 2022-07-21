@@ -6,6 +6,7 @@ from homematicip.group import (
     EnvironmentGroup,
     ExtendedLinkedShutterGroup,
     ExtendedLinkedSwitchingGroup,
+    ExtendedLinkedGarageDoorGroup,
     Group,
     HeatingChangeoverGroup,
     HeatingCoolingDemandBoilerGroup,
@@ -44,7 +45,7 @@ class AsyncGroup(Group):
 
 
 class AsyncMetaGroup(MetaGroup, AsyncGroup):
-    """ a meta group is a "Room" inside the homematic configuration """
+    """a meta group is a "Room" inside the homematic configuration"""
 
     pass
 
@@ -108,6 +109,10 @@ class AsyncExtendedLinkedSwitchingGroup(
     async def set_on_time(self, onTimeSeconds):
         url, data = super().set_on_time(onTimeSeconds)
         return await self._connection.api_call(url, data)
+
+
+class AsyncExtendedGarageDoorGroup(ExtendedLinkedGarageDoorGroup, AsyncGroup):
+    """Class which represents Extended Garage Door Group."""
 
 
 class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):

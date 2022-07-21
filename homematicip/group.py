@@ -9,7 +9,7 @@ from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 
 
 class Group(HomeMaticIPObject):
-    """this class represents a group """
+    """this class represents a group"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -56,7 +56,7 @@ class Group(HomeMaticIPObject):
 
 
 class MetaGroup(Group):
-    """ a meta group is a "Room" inside the homematic configuration """
+    """a meta group is a "Room" inside the homematic configuration"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -353,6 +353,37 @@ class ExtendedLinkedShutterGroup(Group):
         return self._restCall("group/switching/stop", body=json.dumps(data))
 
 
+class ExtendedLinkedGarageDoorGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.doorState = None
+        self.dutyCycle = None
+        self.groupVisibility = GroupVisibility.INVISIBLE_GROUP_AND_CONTROL
+        self.lowBat = None
+        self.processing = None
+        self.unreach = None
+        self.ventilationPositionSupported = False
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("doorState", js)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("groupVisibility", js, GroupVisibility)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("unreach", js)
+        self.set_attr_from_dict("ventilationPositionSupported", js)
+
+    def __str__(self):
+        return "{} doorState({}) dutyCycle({}) lowBat({}) ventilationPositionSupported({})".format(
+            super().__str__(),
+            self.doorState,
+            self.dutyCycle,
+            self.lowBat,
+            self.ventilationPositionSupported,
+        )
+
+
 class AlarmSwitchingGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
@@ -481,7 +512,9 @@ class SecurityZoneGroup(Group):
             # there are multiple channels per device and we only need each deviceId once
             # as each device has at least channel 0, we skip the other ones
             if channel["channelIndex"] == 0:
-                self.ignorableDevices.append([d for d in devices if d.id == channel["deviceId"]][0])
+                self.ignorableDevices.append(
+                    [d for d in devices if d.id == channel["deviceId"]][0]
+                )
 
     def __str__(self):
         return "{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
