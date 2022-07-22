@@ -499,7 +499,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.6...master
+[1.0.6]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...1.0.6
 [1.0.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.2...1.0.3
@@ -556,6 +557,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [pr: 440]: https://github.com/hahn-th/homematicip-rest-api/pull/444
 [pr: 447]: https://github.com/hahn-th/homematicip-rest-api/pull/447
 [pr: 448]: https://github.com/hahn-th/homematicip-rest-api/pull/448
+[pr: 449]: https://github.com/hahn-th/homematicip-rest-api/pull/449
 [hmip-falmot-c12]: https://github.com/hahn-th/homematicip-rest-api/issues/281
 [hmip-whs2]: https://github.com/hahn-th/homematicip-rest-api/issues/280
 [hmip-pmfs]: https://github.com/hahn-th/homematicip-rest-api/issues/282
