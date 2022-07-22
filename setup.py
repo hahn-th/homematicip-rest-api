@@ -36,7 +36,7 @@ setup(
     ],
     package_data={"homematicip_demo": ["json_data/*.json"],},  # Optional
     scripts=["hmip_cli.py", "hmip_generate_auth_token.py"],
-    python_requires="~=3.6",
+    python_requires="~=3.8",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
 )
