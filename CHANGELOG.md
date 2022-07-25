@@ -502,8 +502,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.6...master
-[1.0.6]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...1.0.6
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.7...master
+[1.0.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...1.0.7
 [1.0.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.3...1.0.4
 [1.0.3]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.2...1.0.3
