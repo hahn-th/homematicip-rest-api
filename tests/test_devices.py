@@ -1418,7 +1418,7 @@ def test_din_rail_dimmer_3(fake_home: Home):
 
 def test_temperatur_sensor_2_delta(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000HmIP-STE2-PCB")
-    assert isinstance(d, TemperaturDifferenceSensor2)
+    assert isinstance(d, TemperatureDifferenceSensor2)
     assert d.temperatureExternalDelta == -0.3
     assert d.temperatureExternalOne == 37.8
     assert d.temperatureExternalTwo == 38.1
@@ -1432,7 +1432,7 @@ def test_temperatur_sensor_2_delta(fake_home: Home):
 
 def test_temperatur_sensor_2_delta_2(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000300015")
-    assert isinstance(d, TemperaturDifferenceSensor2)
+    assert isinstance(d, TemperatureDifferenceSensor2)
     assert d.temperatureExternalDelta == -0.1
     assert d.temperatureExternalOne == 22.4
     assert d.temperatureExternalTwo == 22.5

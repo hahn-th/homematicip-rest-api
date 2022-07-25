@@ -2157,7 +2157,7 @@ class RainSensor(Device):
             self.set_attr_from_dict("raining", c)
 
 
-class TemperaturDifferenceSensor2(Device):
+class TemperatureDifferenceSensor2(Device):
     """HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors)"""
 
     def __init__(self, connection):

@@ -1030,7 +1030,7 @@ class RainDetectionChannel(FunctionalChannel):
         self.set_attr_from_dict("rainSensorSensitivity", js)
         self.set_attr_from_dict("raining", js)
 
-class TemperaturDifferenceSensor2Channel(FunctionalChannel):
+class TemperatureDifferenceSensor2Channel(FunctionalChannel):
     """ this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel """
 
     def __init__(self):
