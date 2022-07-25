@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.0.6] 2022-07-22
+## [1.0.6] 2022-07-25
 
 ### ADDED
 
-- [PR: 449] Add support for Device Hm-IP WGC
+- [PR: 449] Add support for Device HmIP-WGC
+
+### FIXED
+- Fixed some typos from Version 1.0.5
 
 ## [1.0.5] 2022-07-16
 
