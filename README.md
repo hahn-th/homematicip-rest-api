@@ -5,13 +5,14 @@ done via reverse engineering. Use at your own risk.
 
 Any help from the community through e.g. pull requests would be highly appreciated.
 
-|discord| |CircleCI| |Docs| |PyPi| |python-version| |codecov| |requirements| |ko-fi|
+[![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![CircleCI](https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/hahn-th/homematicip-rest-api)
 
-## New Maintainers
-From today gtaWelt and me are maintaining this project.
+## Thanks
+Kudos and big thank you to @greenberet, who created this library.
 
 ## Documentation
 **Documentation is currently not updated**
+
 Documentation can be found under https://homematicip-rest-api.readthedocs.io
 
 ## Installation
@@ -226,26 +227,4 @@ It’s also possible to use push notifications based on a websocket connection:
     except KeyboardInterrupt:
         print("Interrupt.")
 ```
-        
-        
-.. |CircleCI| image:: https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield
-   :target: https://circleci.com/gh/hahn-th/homematicip-rest-api
-.. |PyPi| image:: https://badge.fury.io/py/homematicip.svg
-   :target: https://badge.fury.io/py/homematicip
-.. |ko-fi| image:: https://ko-fi.com/img/githubbutton_sm.svg
-   :target: https://ko-fi.com/G2G1DTA9B
-.. |codecov| image:: https://codecov.io/gh/coreGreenberet/homematicip-rest-api/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/coreGreenberet/homematicip-rest-api
-.. |Average time to resolve an issue| image:: http://isitmaintained.com/badge/resolution/coreGreenberet/homematicip-rest-api.svg
-   :target: http://isitmaintained.com/project/coreGreenberet/homematicip-rest-api
-.. |commits-since-latest-release| image:: https://img.shields.io/github/commits-since/coreGreenberet/homematicip-rest-api/latest.svg 
-.. |donate-paypal| image:: https://img.shields.io/badge/Donate-PayPal-green.svg 
-   :target: https://paypal.me/coreGreenberet
-.. |discord| image:: https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic
-   :target: https://discord.gg/mZG2myJ
-.. |Docs| image:: https://readthedocs.org/projects/homematicip-rest-api/badge/?version=latest
-   :target: https://homematicip-rest-api.readthedocs.io
-.. |requirements| image:: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements.svg?branch=master
-   :target: https://requires.io/github/coreGreenberet/homematicip-rest-api/requirements/?branch=master
-.. |commit-activity| image:: https://img.shields.io/github/commit-activity/y/hahn-th/homematicip-rest-api.svg
-.. |python-version| image:: https://img.shields.io/pypi/pyversions/homematicip?style=plastic
+
