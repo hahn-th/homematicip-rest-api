@@ -1223,6 +1223,12 @@ def test_key_remote_control(fake_home: Home):
         assert isinstance(d, KeyRemoteControl4)
 
 
+def test_brand_switch2(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000075")
+        assert isinstance(d, BrandSwitch2)
+
+
 def test_brand_switch_notification_light(fake_home: Home):
     with no_ssl_verification():
         d = BrandSwitchNotificationLight(fake_home._connection)

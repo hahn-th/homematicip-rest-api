@@ -207,6 +207,7 @@ class DeviceType(AutoNameEnum):
     BRAND_DIMMER = auto()
     BRAND_PUSH_BUTTON = auto()
     BRAND_SHUTTER = auto()
+    BRAND_SWITCH_2 = auto()
     BRAND_SWITCH_MEASURING = auto()
     BRAND_SWITCH_NOTIFICATION_LIGHT = auto()
     BRAND_WALL_MOUNTED_THERMOSTAT = auto()

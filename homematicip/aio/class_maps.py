@@ -14,6 +14,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_DIMMER: AsyncBrandDimmer,
     DeviceType.BRAND_PUSH_BUTTON: AsyncBrandPushButton,
     DeviceType.BRAND_SHUTTER: AsyncFullFlushShutter,
+    DeviceType.BRAND_SWITCH_2: AsyncBrandSwitch2,
     DeviceType.BRAND_SWITCH_MEASURING: AsyncBrandSwitchMeasuring,
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: AsyncBrandSwitchNotificationLight,
     DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
