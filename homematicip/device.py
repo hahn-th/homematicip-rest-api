@@ -3,6 +3,7 @@ import json
 import logging
 from collections import Counter
 from datetime import datetime
+from msvcrt import kbhit
 from typing import Iterable
 
 from homematicip.base.enums import *
@@ -2176,3 +2177,27 @@ class TemperatureDifferenceSensor2(Device):
             self.set_attr_from_dict("temperatureExternalDelta", c)
             self.set_attr_from_dict("temperatureExternalOne", c)
             self.set_attr_from_dict("temperatureExternalTwo", c)
+
+class DoorLockDrive(Device):
+    """HmIP-DLD"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+
+    def set_lock_state(self, doorLockState, pin = "", channelIndex = 1):        
+        """sets the door lock state
+
+        Args:
+            doorLockState(float): the state of the door. See LockState from base/enums.py
+            pin(string): Pin, if specified.
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "authorizationPin": pin,
+            "targetLockState": doorLockState
+        }
+        return self._restCall("device/control/setLockState", json.dumps(data))

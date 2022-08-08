@@ -592,3 +592,13 @@ class ShadingPackagePosition(AutoNameEnum):
     BOTTOM = auto()
     TDBU = auto()
     NOT_USED = auto()
+
+class LockState(AutoNameEnum):
+    OPEN = auto()
+    UNLOCKED = auto()
+    LOCKED = auto()
+
+class MotorState(AutoNameEnum):
+    STOPPED = auto()
+    CLOSING = auto()
+    OPENING = auto()
