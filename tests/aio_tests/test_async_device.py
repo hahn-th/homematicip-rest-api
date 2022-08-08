@@ -701,3 +701,16 @@ async def test_rain_sensor(no_ssl_fake_async_home: AsyncHome):
         "rssiPeerValue(None) configPending(False) dutyCycle(False) "
         "rainSensorSensitivity(50.0) raining(True)"
     )
+
+
+@pytest.mark.asyncio
+async def test_door_lock_drive(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000DLD")
+
+    assert d.lockState == LockState.LOCKED
+    assert d.motorState == MotorState.STOPPED
+
+    await no_ssl_fake_async_home.get_current_state()
+    await d.set_lock_state(LockState.OPEN)
+    await no_ssl_fake_async_home.get_current_state()
+    assert d.lockState == LockState.OPEN

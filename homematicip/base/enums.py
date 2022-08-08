@@ -214,6 +214,7 @@ class DeviceType(AutoNameEnum):
     DIN_RAIL_SWITCH = auto()
     DIN_RAIL_SWITCH_4 = auto()
     DIN_RAIL_DIMMER_3 = auto()
+    DOOR_LOCK_DRIVE = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
     FLOOR_TERMINAL_BLOCK_12 = auto()
@@ -415,6 +416,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEVICE_RECHARGEABLE_WITH_SABOTAGE = auto()
     DEVICE_SABOTAGE = auto()
     DOOR_CHANNEL = auto()
+    DOOR_LOCK_CHANNEL = auto()
     DIMMER_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
@@ -593,10 +595,12 @@ class ShadingPackagePosition(AutoNameEnum):
     TDBU = auto()
     NOT_USED = auto()
 
+
 class LockState(AutoNameEnum):
     OPEN = auto()
     UNLOCKED = auto()
     LOCKED = auto()
+
 
 class MotorState(AutoNameEnum):
     STOPPED = auto()

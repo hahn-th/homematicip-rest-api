@@ -2178,13 +2178,33 @@ class TemperatureDifferenceSensor2(Device):
             self.set_attr_from_dict("temperatureExternalOne", c)
             self.set_attr_from_dict("temperatureExternalTwo", c)
 
+
 class DoorLockDrive(Device):
     """HmIP-DLD"""
 
     def __init__(self, connection):
         super().__init__(connection)
+        self.autoRelockDelay = False
+        self.doorHandleType = "UNKNOWN"
+        self.doorLockDirection = False
+        self.doorLockNeutralPosition = False
+        self.doorLockTurns = False
+        self.lockState = LockState.UNLOCKED
+        self.motorState = MotorState.STOPPED
 
-    def set_lock_state(self, doorLockState, pin = "", channelIndex = 1):        
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DOOR_LOCK_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("autoRelockDelay", c)
+            self.set_attr_from_dict("doorHandleType", c)
+            self.set_attr_from_dict("doorLockDirection", c)
+            self.set_attr_from_dict("doorLockNeutralPosition", c)
+            self.set_attr_from_dict("doorLockTurns", c)
+            self.set_attr_from_dict("lockState", c, LockState)
+            self.set_attr_from_dict("motorState", c, MotorState)
+
+    def set_lock_state(self, doorLockState: LockState, pin="", channelIndex=1):
         """sets the door lock state
 
         Args:
@@ -2198,6 +2218,6 @@ class DoorLockDrive(Device):
             "channelIndex": channelIndex,
             "deviceId": self.id,
             "authorizationPin": pin,
-            "targetLockState": doorLockState
+            "targetLockState": doorLockState.name,
         }
         return self._restCall("device/control/setLockState", json.dumps(data))

@@ -10,7 +10,7 @@ from aiohttp import web
 
 
 class AsyncFakeCloudServer:
-    """ a fake server to act as the HMIP cloud"""
+    """a fake server to act as the HMIP cloud"""
 
     # region __init__ & helper functions
     def __init__(self, home_path=Path(__file__).parent.joinpath("json_data/home.json")):
@@ -541,6 +541,18 @@ class AsyncFakeCloudServer:
 
         except:
             response = self.errorCode("INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    async def post_hmip_device_control_setLockState(
+        self, request: web.Request
+    ) -> web.Response:
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        d = self.data["devices"][js["deviceId"]]
+        channelIndex = str(js["channelIndex"])
+        d["functionalChannels"][channelIndex]["lockState"] = js["targetLockState"]
+
         return response
 
     @validate_authorization
@@ -1134,12 +1146,12 @@ class AsyncFakeCloudServer:
         return self.ws
 
     async def post_hmip_ws_send(self, request):
-        """ this function will send specific data to the websocket """
+        """this function will send specific data to the websocket"""
         await self.ws.send_json(json.loads(request.data))
         return web.json_response(None)
 
     async def post_hmip_ws_sleep(self, request):
-        """ this function will send specific data to the websocket """
+        """this function will send specific data to the websocket"""
         js = json.loads(request.data)
         # the server thread must be blocked here to simulate a timeout for the client
         # NO AWAIT VERSION!

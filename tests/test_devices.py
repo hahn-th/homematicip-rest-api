@@ -1458,3 +1458,13 @@ def test_wall_mounted_garage_door_controller(fake_home: Home):
             "rssiDeviceValue(-30) rssiPeerValue(-34) configPending(False) dutyCycle(False) deviceUndervoltage(False) "
             "impulseDuration(0.10000000149011612) processing(False)"
         )
+
+
+def test_door_lock_drive(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000DLD")
+        assert isinstance(d, DoorLockDrive)
+        assert d.lockState == LockState.LOCKED
+        assert d.motorState == MotorState.STOPPED
+
+        result = d.set_lock_state(LockState.OPEN)
