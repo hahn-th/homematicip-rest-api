@@ -2,8 +2,6 @@
 import json
 import logging
 from collections import Counter
-from datetime import datetime
-from msvcrt import kbhit
 from typing import Iterable
 
 from homematicip.base.enums import *
