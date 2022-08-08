@@ -151,6 +151,7 @@ TYPE_FUNCTIONALHOME_MAP = {
 TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.FUNCTIONAL_CHANNEL: FunctionalChannel,
     FunctionalChannelType.ACCELERATION_SENSOR_CHANNEL: AccelerationSensorChannel,
+    FunctionalChannelType.ACCESS_AUTHORIZATION_CHANNEL: AccessAuthorizationChannel,
     FunctionalChannelType.ACCESS_CONTROLLER_CHANNEL: AccessControllerChannel,
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
     FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,

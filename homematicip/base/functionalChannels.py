@@ -93,6 +93,7 @@ class DeviceBaseChannel(FunctionalChannel):
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
+
 class AccessControllerChannel(DeviceBaseChannel):
     """ this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
 
@@ -156,6 +157,16 @@ class DevicePermanentFullRxChannel(DeviceBaseChannel):
         super().from_json(js, groups)
         self.permanentFullRx = js["permanentFullRx"]
 
+
+class AccessAuthorizationChannel(FunctionalChannel):
+    """ this represents ACCESS_AUTHORIZATION_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.authorized = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.authorized = js['authorized']
 
 class WaterSensorChannel(FunctionalChannel):
     """ this is the representative of the WATER_SENSOR_CHANNEL channel"""
