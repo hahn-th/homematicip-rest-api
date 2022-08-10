@@ -182,7 +182,7 @@ def main():
         nargs="*",
         dest="channels",
         help="used together with --turn-on and --turn-off to specify one or more specific channels",
-        default=[5],
+        default=None,
     )
 
     group.add_argument(
