@@ -18,35 +18,24 @@ Documentation can be found under https://homematicip-rest-api.readthedocs.io
 ## Installation
 Just run **pip install -U homematicip** to get the package
 
-## "Nightly" Builds
+### "Nightly" Builds
 Each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
 Just run `pip install -U homematicip --pre` to get the package.
 
 ## Usage
-First run hmip_generate_auth_token.py (from the command line) to get an
-auth token for your access point. it will generate a “config.ini” in
-your current directory. The scripts will look for a config.ini in 3
-different locations depending on your OS. Copy the file to one of these
-locations so that it will be accessible for the scripts.
+### Generate Token
+First run `python hmip_generate_auth_token.py` (from the command line) to get an auth token for your access point. it will generate a “config.ini” in your current directory. 
 
--  General
+### Use the CLI
+You can send commands to homematicIP using the `hmip_cli.py` script. To get an overview, use -h or --help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from --list-devices.
 
-   -  current working directory
+A few examples:
+- `python hmip_cli.py --help` to get help
+- `python hmip_cli.py --list-devices` to get a list of your devices.
+- `python hmip_cli.py -d <id-from-device-list> --toggle-garage-door` to toogle the garage door with HmIP-WGC.
+- `python hmip_cli.py --list-events` to listen to events and changes in your homematicIP system
+- `python hmip_cli.py -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
 
--  Windows
-
-   -  %APPDATA%\\homematicip-rest-api
-   -  %PROGRAMDATA%\\homematicip-rest-api
-
--  Linux
-
-   -  ~/.homematicip-rest-api/
-   -  /etc/homematicip-rest-api/
-
--  MAC OS
-
-   -  ~/Library/Preferences/homematicip-rest-api/
-   -  /Library/Application Support/homematicip-rest-api/
 
 ## Examples
 -  hmip_cli.py for listing devices, groups, securityJournal; setting labels, turning switches on/off
@@ -228,3 +217,19 @@ It’s also possible to use push notifications based on a websocket connection:
         print("Interrupt.")
 ```
 
+## Pathes for config.ini
+The scripts will look for a config.ini in 3
+different locations depending on your OS. Copy the file to one of these
+locations so that it will be accessible for the scripts.
+
+-  General
+   -  current working directory
+-  Windows
+   -  %APPDATA%\\homematicip-rest-api
+   -  %PROGRAMDATA%\\homematicip-rest-api
+-  Linux
+   -  ~/.homematicip-rest-api/
+   -  /etc/homematicip-rest-api/
+-  MAC OS
+   -  ~/Library/Preferences/homematicip-rest-api/
+   -  /Library/Application Support/homematicip-rest-api/
