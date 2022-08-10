@@ -1,3 +1,4 @@
+from os import device_encoding
 from homematicip.aio.device import *
 from homematicip.aio.group import *
 from homematicip.aio.rule import *
@@ -89,6 +90,8 @@ TYPE_CLASS_MAP = {
 TYPE_GROUP_MAP = {
     GroupType.GROUP: AsyncGroup,
     GroupType.ALARM_SWITCHING: AsyncAlarmSwitchingGroup,
+    GroupType.ACCESS_AUTHORIZATION_PROFILE: AsyncAccessAuthorizationProfileGroup,
+    GroupType.ACCESS_CONTROL: AsyncAccessControlGroup,
     GroupType.ENVIRONMENT: AsyncEnvironmentGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: AsyncExtendedLinkedShutterGroup,
     GroupType.EXTENDED_LINKED_SWITCHING: AsyncExtendedLinkedSwitchingGroup,

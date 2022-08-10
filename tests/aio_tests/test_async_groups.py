@@ -348,3 +348,25 @@ async def test_switching_alarm_group(no_ssl_fake_async_home: AsyncHome):
     assert g.signalAcoustic == AcousticAlarmSignal.FREQUENCY_HIGHON_OFF
     assert g.signalOptical == OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
     assert g.onTime == 5
+
+@pytest.mark.asyncio
+async def test_access_control(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000033"
+    )
+    await no_ssl_fake_async_home.get_current_state()
+    
+    assert str(g) == "ACCESS_CONTROL AmHaustuere2"
+
+@pytest.mark.asyncio
+async def test_access_authorization_profile_group(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id(
+        "00000000-0000-0000-0000-000000000032"  
+    )
+    await no_ssl_fake_async_home.get_current_state()
+        
+    assert g.label == "Walter"
+    assert g.active == True
+    assert g.authorizationPinAssigned == True
+    assert g.authorized == True
+    
