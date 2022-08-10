@@ -23,7 +23,7 @@ Each push on the master branch will trigger a build. That way you can test the l
 Just run `pip install -U homematicip --pre` to get the package.
 
 ## New devices and config dump
-If you missing a device which is not implemented yet, open an issue and append a dump of your configuration to it. To create a dump the CLI: `python hmip_cli.py --dump-configuration --anonymize`. See [Usage](#usage) for more instructions.
+If you missing a device which is not implemented yet, open an issue and append a dump of your configuration to it using https://gist.github.com. To create a dump use the CLI: `python hmip_cli.py --dump-configuration --anonymize`. See [Usage](#usage) for more instructions. 
 
 ## Usage
 ### Generate Token
