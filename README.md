@@ -22,6 +22,9 @@ Just run **pip install -U homematicip** to get the package
 Each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
 Just run `pip install -U homematicip --pre` to get the package.
 
+## New devices and config dump
+If you missing a device which is not implemented yet, open an issue and append a dump of your configuration to it. To create a dump the CLI: `python hmip_cli.py --dump-configuration --anonymize`. See [Usage](#usage) for more instructions.
+
 ## Usage
 ### Generate Token
 First run `python hmip_generate_auth_token.py` (from the command line) to get an auth token for your access point. it will generate a “config.ini” in your current directory. 
@@ -35,6 +38,7 @@ A few examples:
 - `python hmip_cli.py -d <id-from-device-list> --toggle-garage-door` to toogle the garage door with HmIP-WGC.
 - `python hmip_cli.py --list-events` to listen to events and changes in your homematicIP system
 - `python hmip_cli.py -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
+- `python hmip_cli.py --dump-configuration --anonymize` to dump the current config and anonymize it.
 
 
 ## Examples
