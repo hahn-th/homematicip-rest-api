@@ -282,6 +282,8 @@ class DeviceType(AutoNameEnum):
 
 class GroupType(AutoNameEnum):
     GROUP = auto()
+    ACCESS_AUTHORIZATION_PROFILE = auto()
+    ACCESS_CONTROL = auto()
     EXTENDED_LINKED_SHUTTER = auto()
     SHUTTER_WIND_PROTECTION_RULE = auto()
     LOCK_OUT_PROTECTION_RULE = auto()

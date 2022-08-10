@@ -91,6 +91,8 @@ TYPE_CLASS_MAP = {
 
 TYPE_GROUP_MAP = {
     GroupType.GROUP: Group,
+    GroupType.ACCESS_AUTHORIZATION_PROFILE: AccessAuthorizationProfileGroup,
+    GroupType.ACCESS_CONTROL: AccessControlGroup,
     GroupType.ALARM_SWITCHING: AlarmSwitchingGroup,
     GroupType.ENVIRONMENT: EnvironmentGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,
