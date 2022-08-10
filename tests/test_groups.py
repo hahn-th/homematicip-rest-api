@@ -514,6 +514,20 @@ def test_extended_linked_shutter_group(fake_home: Home):
         assert g.shutterLevel == 30
 
 
+def test_access_authorization_profile_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000032")
+        assert g.label == "Walter"
+        assert g.active == True
+        assert g.authorizationPinAssigned == True
+        assert g.authorized == True
+
+def test_access_control_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000033")
+        assert g.label == "AmHaustuere2"
+
+
 def test_hot_water(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000067")
