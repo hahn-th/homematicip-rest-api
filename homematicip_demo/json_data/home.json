@@ -7594,7 +7594,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 2,
                     "label": ""
@@ -7605,7 +7605,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 3,
                     "label": ""
@@ -7616,7 +7616,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 4,
                     "label": ""
@@ -7627,7 +7627,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 5,
                     "label": ""
@@ -7638,7 +7638,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 6,
                     "label": ""
@@ -7649,7 +7649,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 7,
                     "label": ""
@@ -7660,7 +7660,7 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028"
+                        "00000000-0000-0000-0000-000000000033"
                     ],
                     "index": 8,
                     "label": ""
@@ -7671,8 +7671,8 @@
                     "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
                     "groupIndex": 1,
                     "groups": [
-                        "00000000-0000-0000-0000-000000000028",
-                        "00000000-0000-0000-0000-000000000029"
+                        "00000000-0000-0000-0000-000000000033",
+                        "00000000-0000-0000-0000-000000000032"
                     ],
                     "index": 9,
                     "label": ""
@@ -9137,6 +9137,78 @@
             "shutterLevel": 0.97,
             "slatsLevel": null,
             "type": "SHUTTER_PROFILE",
+            "unreach": false
+        },
+        "00000000-0000-0000-0000-000000000032": {
+            "active": true,
+            "authorizationPinAssigned": true,
+            "authorized": true,
+            "channels": [
+                {
+                    "channelIndex": 9,
+                    "deviceId": "3014F7110000000000000DLD"
+                }
+            ],
+            "clientIds": [],
+            "dutyCycle": false,
+            "groupVisibility": "VISIBLE",
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000032",
+            "label": "Walter",
+            "lastStatusUpdate": 1618727020725,
+            "lowBat": false,
+            "metaGroupId": null,
+            "profileId": "00000000-0000-0000-0000-000000000040",
+            "type": "ACCESS_AUTHORIZATION_PROFILE",
+            "unreach": false
+        },
+        "00000000-0000-0000-0000-000000000033": {
+            "channels": [
+                {
+                    "channelIndex": 9,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 3,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 4,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 2,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 7,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 8,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 5,
+                    "deviceId": "3014F7110000000000000DLD"
+                },
+                {
+                    "channelIndex": 6,
+                    "deviceId": "3014F7110000000000000DLD"
+                }
+            ],
+            "dutyCycle": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-000000000033",
+            "label": "AmHaustuere2",
+            "lastStatusUpdate": 1618727020725,
+            "lowBat": false,
+            "metaGroupId": "00000000-0000-0000-0000-000000000025",
+            "type": "ACCESS_CONTROL",
             "unreach": false
         }
     },
