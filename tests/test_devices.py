@@ -1466,5 +1466,6 @@ def test_door_lock_drive(fake_home: Home):
         assert isinstance(d, DoorLockDrive)
         assert d.lockState == LockState.LOCKED
         assert d.motorState == MotorState.STOPPED
+        assert d.door_lock_channel == 1
 
         result = d.set_lock_state(LockState.OPEN)

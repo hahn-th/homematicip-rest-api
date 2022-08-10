@@ -2190,6 +2190,8 @@ class DoorLockDrive(Device):
         self.lockState = LockState.UNLOCKED
         self.motorState = MotorState.STOPPED
 
+        self.door_lock_channel = -1
+
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("DOOR_LOCK_CHANNEL", js)
@@ -2201,6 +2203,7 @@ class DoorLockDrive(Device):
             self.set_attr_from_dict("doorLockTurns", c)
             self.set_attr_from_dict("lockState", c, LockState)
             self.set_attr_from_dict("motorState", c, MotorState)
+            self.door_lock_channel = c["index"]
 
     def set_lock_state(self, doorLockState: LockState, pin="", channelIndex=1):
         """sets the door lock state
@@ -2208,10 +2211,13 @@ class DoorLockDrive(Device):
         Args:
             doorLockState(float): the state of the door. See LockState from base/enums.py
             pin(string): Pin, if specified.
-            channelIndex(int): the channel to control
+            channelIndex(int): the channel to control. Normally the channel from DOOR_LOCK_CHANNEL is used.
         Returns:
             the result of the _restCall
         """
+        if channelIndex == 1:
+            channelIndex = self.door_lock_channel
+
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
