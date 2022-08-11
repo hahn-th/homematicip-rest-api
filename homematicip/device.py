@@ -2219,9 +2219,9 @@ class DoorLockDrive(Device):
             channelIndex = self.door_lock_channel
 
         data = {
-            "channelIndex": channelIndex,
             "deviceId": self.id,
+            "channelIndex": channelIndex,
             "authorizationPin": pin,
-            "targetLockState": doorLockState.name,
+            "targetLockState": doorLockState,
         }
         return self._restCall("device/control/setLockState", json.dumps(data))

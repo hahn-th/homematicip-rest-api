@@ -599,10 +599,13 @@ def main():
                     logger.error("%s is not a lock state.", args.device_set_lock_state)
                 elif isinstance(device, DoorLockDrive):
                     res = None
+                    pin = args.pin[0] if len(args.pin) > 0 else ""
                     if args.channels is not None:
-                        res = device.set_lock_state(targetLockState, args.pin, args.channels)
+                        res = device.set_lock_state(
+                            targetLockState, pin, args.channels[0]
+                        )
                     else:
-                        res = device.set_lock_state(targetLockState, args.pin)
+                        res = device.set_lock_state(targetLockState, pin)
 
                     print("Result: " + json.dumps(res))
                 else:
