@@ -9,7 +9,6 @@ orbs:
   # so you dont have to copy and paste it everywhere.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@2.0.3
-  codecov: codecov/codecov@3.2.3
 
 jobs:
 
@@ -125,40 +124,6 @@ jobs:
           path: test-reports
           destination: test-reports
 
-  deploy:
-    docker:
-      - image: cimg/python:3.10
-    steps:
-      - checkout
-
-      - run:
-          name: install python dependencies
-          command: |
-            python -m venv venv
-            . venv/bin/activate
-            export PYTHONPATH=`pwd`;
-            pip install coverage codecov pylint twine sphinx sphinx-autobuild sphinx_rtd_theme
-            pip install -r requirements.txt
-            pip install -e .
-
-      - run:
-          name: init .pypirc
-          command: |
-            echo -e "[pypi]" >> ~/.pypirc
-            echo -e "username = $PYPI_USERNAME" >> ~/.pypirc
-            echo -e "password = $PYPI_PASSWORD" >> ~/.pypirc
-      - run:
-          name: create packages
-          command: |
-            python setup.py sdist
-            python setup.py bdist_wheel
-      - run:
-          name: upload to pypi
-          command: |
-            . venv/bin/activate
-            twine upload dist/*
-            
-          
 workflows:
   version: 2
   build_and_deploy:
@@ -175,11 +140,3 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - deploy:
-          requires:
-            - test_3_8
-            - test_3_9
-            - test_3_10
-          filters:
-            branches:
-              only: master
