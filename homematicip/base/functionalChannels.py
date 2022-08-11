@@ -93,6 +93,7 @@ class DeviceBaseChannel(FunctionalChannel):
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
+
 class AccessControllerChannel(DeviceBaseChannel):
     """ this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
 
@@ -156,6 +157,16 @@ class DevicePermanentFullRxChannel(DeviceBaseChannel):
         super().from_json(js, groups)
         self.permanentFullRx = js["permanentFullRx"]
 
+
+class AccessAuthorizationChannel(FunctionalChannel):
+    """ this represents ACCESS_AUTHORIZATION_CHANNEL channel"""
+    def __init__(self):
+        super().__init__()
+        self.authorized = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.authorized = js['authorized']
 
 class WaterSensorChannel(FunctionalChannel):
     """ this is the representative of the WATER_SENSOR_CHANNEL channel"""
@@ -283,6 +294,31 @@ class DoorChannel(FunctionalChannel):
         self.processing = js["processing"]
         self.ventilationPositionSupported = js["ventilationPositionSupported"]
 
+
+class DoorLockChannel(FunctionalChannel):
+    """This respresents of the DoorLockChannel"""
+
+    def __init__(self):
+        super().__init__()
+        self.autoRelockDelay = False
+        self.doorHandleType = "UNKNOWN"
+        self.doorLockDirection = False
+        self.doorLockNeutralPosition = False
+        self.doorLockTurns = False
+        self.lockState = LockState.UNLOCKED
+        self.motorState = MotorState.STOPPED
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.autoRelockDelay = js['autoRelockDelay']
+        self.doorHandleType = js['doorHandleType']
+        self.doorLockDirection = js['doorLockDirection']
+        self.doorLockNeutralPosition = js['doorLockNeutralPosition']
+        self.doorLockTurns = js['doorLockTurns']
+        self.lockState = LockState.from_str(js['lockState'])
+        self.motorState = MotorState.from_str(js['motorState'])
+        
 
 class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
     """ this is the representative of the WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL channel"""

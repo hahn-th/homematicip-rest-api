@@ -3,6 +3,8 @@ import json
 from homematicip.base.enums import *
 from homematicip.group import (
     AlarmSwitchingGroup,
+    AccessAuthorizationProfileGroup,
+    AccessControlGroup,
     EnvironmentGroup,
     ExtendedLinkedShutterGroup,
     ExtendedLinkedSwitchingGroup,
@@ -276,3 +278,9 @@ class AsyncEnvironmentGroup(EnvironmentGroup, AsyncGroup):
 class AsyncHotWaterGroup(HotWaterGroup, AsyncGroup):
     async def set_profile_mode(self, profileMode: ProfileMode):
         return await self._connection.api_call(*super().set_profile_mode(profileMode))
+
+class AsyncAccessAuthorizationProfileGroup(AccessAuthorizationProfileGroup,AsyncGroup):
+    pass
+
+class AsyncAccessControlGroup(AccessControlGroup,AsyncGroup):
+    pass

@@ -214,6 +214,7 @@ class DeviceType(AutoNameEnum):
     DIN_RAIL_SWITCH = auto()
     DIN_RAIL_SWITCH_4 = auto()
     DIN_RAIL_DIMMER_3 = auto()
+    DOOR_LOCK_DRIVE = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
     FLOOR_TERMINAL_BLOCK_12 = auto()
@@ -281,6 +282,8 @@ class DeviceType(AutoNameEnum):
 
 class GroupType(AutoNameEnum):
     GROUP = auto()
+    ACCESS_AUTHORIZATION_PROFILE = auto()
+    ACCESS_CONTROL = auto()
     EXTENDED_LINKED_SHUTTER = auto()
     SHUTTER_WIND_PROTECTION_RULE = auto()
     LOCK_OUT_PROTECTION_RULE = auto()
@@ -397,6 +400,7 @@ class WindValueType(AutoNameEnum):
 class FunctionalChannelType(AutoNameEnum):
     FUNCTIONAL_CHANNEL = auto()
     ACCELERATION_SENSOR_CHANNEL = auto()
+    ACCESS_AUTHORIZATION_CHANNEL = auto()
     ACCESS_CONTROLLER_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
@@ -415,6 +419,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEVICE_RECHARGEABLE_WITH_SABOTAGE = auto()
     DEVICE_SABOTAGE = auto()
     DOOR_CHANNEL = auto()
+    DOOR_LOCK_CHANNEL = auto()
     DIMMER_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
@@ -592,3 +597,15 @@ class ShadingPackagePosition(AutoNameEnum):
     BOTTOM = auto()
     TDBU = auto()
     NOT_USED = auto()
+
+
+class LockState(AutoNameEnum):
+    OPEN = auto()
+    UNLOCKED = auto()
+    LOCKED = auto()
+
+
+class MotorState(AutoNameEnum):
+    STOPPED = auto()
+    CLOSING = auto()
+    OPENING = auto()

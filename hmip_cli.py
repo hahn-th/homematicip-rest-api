@@ -38,7 +38,7 @@ def fake_download_configuration():
     global server_config
     if server_config:
         with open(server_config) as file:
-            return json.load(file, encoding="UTF-8")
+            return json.load(file)
     return None
 
 
@@ -182,7 +182,23 @@ def main():
         nargs="*",
         dest="channels",
         help="used together with --turn-on and --turn-off to specify one or more specific channels",
-        default=[5],
+        default=None,
+    )
+
+    group.add_argument(
+        "--pin",
+        nargs="*",
+        dest="pin",
+        help="special pin used for door lock drive if set in the app",
+        default="",
+    )
+
+    group.add_argument(
+        "--set-lock-state",
+        action="store",
+        dest="device_set_lock_state",
+        help="set door lock state to OPEN, LOCKED or UNLOCKED. Add --pin for special pin or --channel.",
+        default=None,
     )
 
     group.add_argument(
@@ -572,6 +588,29 @@ def main():
                 else:
                     logger.error(
                         "can't set dim level of device %s of type %s",
+                        device.id,
+                        device.deviceType,
+                    )
+                command_entered = True
+
+            if args.device_set_lock_state is not None:
+                targetLockState = LockState.from_str(args.device_set_lock_state)
+                if not targetLockState in LockState:
+                    logger.error("%s is not a lock state.", args.device_set_lock_state)
+                elif isinstance(device, DoorLockDrive):
+                    res = None
+                    pin = args.pin[0] if len(args.pin) > 0 else ""
+                    if args.channels is not None:
+                        res = device.set_lock_state(
+                            targetLockState, pin, args.channels[0]
+                        )
+                    else:
+                        res = device.set_lock_state(targetLockState, pin)
+
+                    print("Result: " + json.dumps(res))
+                else:
+                    logger.error(
+                        "can't set lock level of device %s of type %s",
                         device.id,
                         device.deviceType,
                     )
