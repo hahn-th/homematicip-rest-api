@@ -6,7 +6,7 @@ from homematicip.group import Group
 
 
 class FunctionalChannel(HomeMaticIPObject):
-    """ this is the base class for the functional channels """
+    """this is the base class for the functional channels"""
 
     def __init__(self):
         super().__init__(None)
@@ -21,9 +21,9 @@ class FunctionalChannel(HomeMaticIPObject):
         self._connection = None
 
     def from_json(self, js, groups: Iterable[Group]):
-        """ this function will load the functional channel object 
-        from a json object and the given groups 
-        
+        """this function will load the functional channel object
+        from a json object and the given groups
+
         Args:
             js(dict): the json object
             groups(Iterable[Group]): the groups for referencing
@@ -45,7 +45,7 @@ class FunctionalChannel(HomeMaticIPObject):
 
 
 class DeviceBaseChannel(FunctionalChannel):
-    """ this is the representative of the DEVICE_BASE channel"""
+    """this is the representative of the DEVICE_BASE channel"""
 
     def __init__(self):
         super().__init__()
@@ -93,9 +93,8 @@ class DeviceBaseChannel(FunctionalChannel):
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
-
 class AccessControllerChannel(DeviceBaseChannel):
-    """ this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
+    """this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -111,7 +110,7 @@ class AccessControllerChannel(DeviceBaseChannel):
 
 
 class DeviceSabotageChannel(DeviceBaseChannel):
-    """ this is the representative of the DEVICE_SABOTAGE channel"""
+    """this is the representative of the DEVICE_SABOTAGE channel"""
 
     def __init__(self):
         super().__init__()
@@ -123,7 +122,7 @@ class DeviceSabotageChannel(DeviceBaseChannel):
 
 
 class DeviceOperationLockChannel(DeviceBaseChannel):
-    """ this is the representative of the DEVICE_OPERATIONLOCK channel"""
+    """this is the representative of the DEVICE_OPERATIONLOCK channel"""
 
     def __init__(self):
         super().__init__()
@@ -135,7 +134,7 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
 
 
 class DeviceIncorrectPositionedChannel(DeviceBaseChannel):
-    """ this is the representative of the DEVICE_INCORRECT_POSITIONED channel"""
+    """this is the representative of the DEVICE_INCORRECT_POSITIONED channel"""
 
     def __init__(self):
         super().__init__()
@@ -147,7 +146,7 @@ class DeviceIncorrectPositionedChannel(DeviceBaseChannel):
 
 
 class DevicePermanentFullRxChannel(DeviceBaseChannel):
-    """ this is the representative of the DEVICE_PERMANENT_FULL_RX channel"""
+    """this is the representative of the DEVICE_PERMANENT_FULL_RX channel"""
 
     def __init__(self):
         super().__init__()
@@ -159,17 +158,19 @@ class DevicePermanentFullRxChannel(DeviceBaseChannel):
 
 
 class AccessAuthorizationChannel(FunctionalChannel):
-    """ this represents ACCESS_AUTHORIZATION_CHANNEL channel"""
+    """this represents ACCESS_AUTHORIZATION_CHANNEL channel"""
+
     def __init__(self):
         super().__init__()
         self.authorized = False
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.authorized = js['authorized']
+        self.authorized = js["authorized"]
+
 
 class WaterSensorChannel(FunctionalChannel):
-    """ this is the representative of the WATER_SENSOR_CHANNEL channel"""
+    """this is the representative of the WATER_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -203,7 +204,7 @@ class WaterSensorChannel(FunctionalChannel):
 
 
 class HeatingThermostatChannel(FunctionalChannel):
-    """ this is the representative of the HEATING_THERMOSTAT_CHANNEL channel"""
+    """this is the representative of the HEATING_THERMOSTAT_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -230,7 +231,7 @@ class HeatingThermostatChannel(FunctionalChannel):
 
 
 class ShutterContactChannel(FunctionalChannel):
-    """ this is the representative of the SHUTTER_CONTACT_CHANNEL channel"""
+    """this is the representative of the SHUTTER_CONTACT_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -244,11 +245,11 @@ class ShutterContactChannel(FunctionalChannel):
 
 
 class RotaryHandleChannel(ShutterContactChannel):
-    """ this is the representative of the ROTARY_HANDLE_CHANNEL channel"""
+    """this is the representative of the ROTARY_HANDLE_CHANNEL channel"""
 
 
 class ContactInterfaceChannel(ShutterContactChannel):
-    """ this is the representative of the CONTACT_INTERFACE_CHANNEL channel"""
+    """this is the representative of the CONTACT_INTERFACE_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -262,7 +263,7 @@ class ContactInterfaceChannel(ShutterContactChannel):
 
 
 class ClimateSensorChannel(FunctionalChannel):
-    """ this is the representative of the CLIMATE_SENSOR_CHANNEL channel"""
+    """this is the representative of the CLIMATE_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -278,7 +279,7 @@ class ClimateSensorChannel(FunctionalChannel):
 
 
 class DoorChannel(FunctionalChannel):
-    """ this is the representative of the DoorChannel channel"""
+    """this is the representative of the DoorChannel channel"""
 
     def __init__(self):
         super().__init__()
@@ -311,17 +312,35 @@ class DoorLockChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
 
-        self.autoRelockDelay = js['autoRelockDelay']
-        self.doorHandleType = js['doorHandleType']
-        self.doorLockDirection = js['doorLockDirection']
-        self.doorLockNeutralPosition = js['doorLockNeutralPosition']
-        self.doorLockTurns = js['doorLockTurns']
-        self.lockState = LockState.from_str(js['lockState'])
-        self.motorState = MotorState.from_str(js['motorState'])
-        
+        self.autoRelockDelay = js["autoRelockDelay"]
+        self.doorHandleType = js["doorHandleType"]
+        self.doorLockDirection = js["doorLockDirection"]
+        self.doorLockNeutralPosition = js["doorLockNeutralPosition"]
+        self.doorLockTurns = js["doorLockTurns"]
+        self.lockState = LockState.from_str(js["lockState"])
+        self.motorState = MotorState.from_str(js["motorState"])
+
+
+class DoorLockSensorChannel(FunctionalChannel):
+    """This respresents of the DoorLockSensorChannel"""
+
+    def __init__(self):
+        super().__init__()
+        self.doorLockDirection = False
+        self.doorLockNeutralPosition = False
+        self.doorLockTurns = False
+        self.lockState = LockState.UNLOCKED
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.doorLockDirection = js["doorLockDirection"]
+        self.doorLockNeutralPosition = js["doorLockNeutralPosition"]
+        self.doorLockTurns = js["doorLockTurns"]
+        self.lockState = LockState.from_str(js["lockState"])
+
 
 class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
-    """ this is the representative of the WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL channel"""
+    """this is the representative of the WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -333,7 +352,7 @@ class WallMountedThermostatWithoutDisplayChannel(ClimateSensorChannel):
 
 
 class AnalogRoomControlChannel(FunctionalChannel):
-    """ this is the representative of the ANALOG_ROOM_CONTROL_CHANNEL channel"""
+    """this is the representative of the ANALOG_ROOM_CONTROL_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -349,7 +368,7 @@ class AnalogRoomControlChannel(FunctionalChannel):
 
 
 class WallMountedThermostatProChannel(WallMountedThermostatWithoutDisplayChannel):
-    """ this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
+    """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -363,7 +382,7 @@ class WallMountedThermostatProChannel(WallMountedThermostatWithoutDisplayChannel
 
 
 class SmokeDetectorChannel(FunctionalChannel):
-    """ this is the representative of the SMOKE_DETECTOR_CHANNEL channel"""
+    """this is the representative of the SMOKE_DETECTOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -377,7 +396,7 @@ class SmokeDetectorChannel(FunctionalChannel):
 
 
 class SwitchChannel(FunctionalChannel):
-    """ this is the representative of the SWITCH_CHANNEL channel"""
+    """this is the representative of the SWITCH_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -393,7 +412,7 @@ class SwitchChannel(FunctionalChannel):
 
 
 class SwitchMeasuringChannel(SwitchChannel):
-    """ this is the representative of the SWITCH_MEASURING_CHANNEL channel"""
+    """this is the representative of the SWITCH_MEASURING_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -407,7 +426,7 @@ class SwitchMeasuringChannel(SwitchChannel):
 
 
 class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
-    """ this is the representative of the DEVICE_GLOBAL_PUMP_CONTROL channel"""
+    """this is the representative of the DEVICE_GLOBAL_PUMP_CONTROL channel"""
 
     def __init__(self):
         super().__init__()
@@ -434,7 +453,7 @@ class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
 
 
 class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
-    """ this is the representative of the DEVICE_BASE_FLOOR_HEATING channel"""
+    """this is the representative of the DEVICE_BASE_FLOOR_HEATING channel"""
 
     def __init__(self):
         super().__init__()
@@ -452,7 +471,7 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
 
 
 class MotionDetectionChannel(FunctionalChannel):
-    """ this is the representative of the MOTION_DETECTION_CHANNEL channel"""
+    """this is the representative of the MOTION_DETECTION_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -478,7 +497,7 @@ class MotionDetectionChannel(FunctionalChannel):
 
 
 class PresenceDetectionChannel(FunctionalChannel):
-    """ this is the representative of the PRESENCE_DETECTION_CHANNEL channel"""
+    """this is the representative of the PRESENCE_DETECTION_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -502,7 +521,7 @@ class PresenceDetectionChannel(FunctionalChannel):
 
 
 class ShutterChannel(FunctionalChannel):
-    """ this is the representative of the SHUTTER_CHANNEL channel"""
+    """this is the representative of the SHUTTER_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -542,7 +561,7 @@ class ShutterChannel(FunctionalChannel):
 
 
 class BlindChannel(ShutterChannel):
-    """ this is the representative of the BLIND_CHANNEL channel"""
+    """this is the representative of the BLIND_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -561,7 +580,7 @@ class BlindChannel(ShutterChannel):
 
 
 class MultiModeInputBlindChannel(BlindChannel):
-    """ this is the representative of the MULTI_MODE_INPUT_BLIND_CHANNEL channel"""
+    """this is the representative of the MULTI_MODE_INPUT_BLIND_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -580,7 +599,7 @@ class MultiModeInputBlindChannel(BlindChannel):
 
 
 class DimmerChannel(FunctionalChannel):
-    """ this is the representative of the DIMMER_CHANNEL channel"""
+    """this is the representative of the DIMMER_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -596,7 +615,7 @@ class DimmerChannel(FunctionalChannel):
 
 
 class WeatherSensorChannel(FunctionalChannel):
-    """ this is the representative of the WEATHER_SENSOR_CHANNEL channel"""
+    """this is the representative of the WEATHER_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -630,7 +649,7 @@ class WeatherSensorChannel(FunctionalChannel):
 
 
 class WeatherSensorPlusChannel(WeatherSensorChannel):
-    """ this is the representative of the WEATHER_SENSOR_PLUS_CHANNEL channel"""
+    """this is the representative of the WEATHER_SENSOR_PLUS_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -648,7 +667,7 @@ class WeatherSensorPlusChannel(WeatherSensorChannel):
 
 
 class WeatherSensorProChannel(WeatherSensorPlusChannel):
-    """ this is the representative of the WEATHER_SENSOR_PRO_CHANNEL channel"""
+    """this is the representative of the WEATHER_SENSOR_PRO_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -664,19 +683,19 @@ class WeatherSensorProChannel(WeatherSensorPlusChannel):
 
 
 class SingleKeyChannel(FunctionalChannel):
-    """ this is the representative of the SINGLE_KEY_CHANNEL channel"""
+    """this is the representative of the SINGLE_KEY_CHANNEL channel"""
 
 
 class AlarmSirenChannel(FunctionalChannel):
-    """ this is the representative of the ALARM_SIREN_CHANNEL channel"""
+    """this is the representative of the ALARM_SIREN_CHANNEL channel"""
 
 
 class FloorTeminalBlockChannel(FunctionalChannel):
-    """ this is the representative of the FLOOR_TERMINAL_BLOCK_CHANNEL channel"""
+    """this is the representative of the FLOOR_TERMINAL_BLOCK_CHANNEL channel"""
 
 
 class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
-    """ this is the representative of the FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL  channel"""
+    """this is the representative of the FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL  channel"""
 
     def __init__(self):
         super().__init__()
@@ -694,15 +713,15 @@ class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
 
 
 class HeatDemandChannel(FunctionalChannel):
-    """ this is the representative of the HEAT_DEMAND_CHANNEL channel"""
+    """this is the representative of the HEAT_DEMAND_CHANNEL channel"""
 
 
 class DehumidifierDemandChannel(FunctionalChannel):
-    """ this is the representative of the DEHUMIDIFIER_DEMAND_CHANNEL channel"""
+    """this is the representative of the DEHUMIDIFIER_DEMAND_CHANNEL channel"""
 
 
 class PassageDetectorChannel(FunctionalChannel):
-    """ this is the representative of the PASSAGE_DETECTOR_CHANNEL channel"""
+    """this is the representative of the PASSAGE_DETECTOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -726,7 +745,7 @@ class PassageDetectorChannel(FunctionalChannel):
 
 
 class InternalSwitchChannel(FunctionalChannel):
-    """ this is the representative of the INTERNAL_SWITCH_CHANNEL channel"""
+    """this is the representative of the INTERNAL_SWITCH_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -744,12 +763,13 @@ class InternalSwitchChannel(FunctionalChannel):
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
 
+
 class ImpulseOutputChannel(FunctionalChannel):
-    """ this is the representation of the IMPULSE_OUTPUT_CHANNEL """
+    """this is the representation of the IMPULSE_OUTPUT_CHANNEL"""
 
     def __init__(self):
         super().__init__()
-        
+
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.impulseDuration = js["impulseDuration"]
@@ -757,7 +777,7 @@ class ImpulseOutputChannel(FunctionalChannel):
 
 
 class MultiModeInputChannel(FunctionalChannel):
-    """ this is the representative of the MULTI_MODE_INPUT_CHANNEL channel"""
+    """this is the representative of the MULTI_MODE_INPUT_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -773,7 +793,7 @@ class MultiModeInputChannel(FunctionalChannel):
 
 
 class NotificationLightChannel(DimmerChannel):
-    """ this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
+    """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -789,7 +809,7 @@ class NotificationLightChannel(DimmerChannel):
 
 
 class LightSensorChannel(FunctionalChannel):
-    """ this is the representative of the LIGHT_SENSOR_CHANNEL channel"""
+    """this is the representative of the LIGHT_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -811,11 +831,11 @@ class LightSensorChannel(FunctionalChannel):
 
 
 class GenericInputChannel(FunctionalChannel):
-    """ this is the representative of the GENERIC_INPUT_CHANNEL channel"""
+    """this is the representative of the GENERIC_INPUT_CHANNEL channel"""
 
 
 class AnalogOutputChannel(FunctionalChannel):
-    """ this is the representative of the ANALOG_OUTPUT_CHANNEL channel"""
+    """this is the representative of the ANALOG_OUTPUT_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -828,7 +848,7 @@ class AnalogOutputChannel(FunctionalChannel):
 
 
 class AccelerationSensorChannel(FunctionalChannel):
-    """ this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
+    """this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -874,7 +894,7 @@ class AccelerationSensorChannel(FunctionalChannel):
 
 
 class DeviceRechargeableWithSabotage(DeviceSabotageChannel):
-    """ this is the representative of the DEVICE_RECHARGEABLE_WITH_SABOTAGE channel"""
+    """this is the representative of the DEVICE_RECHARGEABLE_WITH_SABOTAGE channel"""
 
     def __init__(self):
         super().__init__()
@@ -887,7 +907,7 @@ class DeviceRechargeableWithSabotage(DeviceSabotageChannel):
 
 
 class FloorTerminalBlockMechanicChannel(FunctionalChannel):
-    """ this is the representative of the class FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL(FunctionalChannel) channel"""
+    """this is the representative of the class FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL(FunctionalChannel) channel"""
 
     def __init__(self):
         super().__init__()
@@ -900,11 +920,11 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
 
 
 class ChangeOverChannel(FunctionalChannel):
-    """ this is the representative of the CHANGE_OVER_CHANNEL channel"""
+    """this is the representative of the CHANGE_OVER_CHANNEL channel"""
 
 
 class MainsFailureChannel(FunctionalChannel):
-    """ this is the representative of the MAINS_FAILURE_CHANNEL channel"""
+    """this is the representative of the MAINS_FAILURE_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -918,7 +938,7 @@ class MainsFailureChannel(FunctionalChannel):
 
 
 class MultiModeInputSwitchChannel(FunctionalChannel):
-    """ this is the representative of the MULTI_MODE_INPUT_SWITCH_CHANNEL channel"""
+    """this is the representative of the MULTI_MODE_INPUT_SWITCH_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -938,7 +958,7 @@ class MultiModeInputSwitchChannel(FunctionalChannel):
 
 
 class MultiModeInputDimmerChannel(FunctionalChannel):
-    """ this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel  """
+    """this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -960,7 +980,7 @@ class MultiModeInputDimmerChannel(FunctionalChannel):
 
 
 class TiltVibrationSensorChannel(FunctionalChannel):
-    """ this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
+    """this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -989,7 +1009,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
 
 
 class ShadingChannel(FunctionalChannel):
-    """ this is the representative of the SHADING_CHANNEL channel"""
+    """this is the representative of the SHADING_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -1052,7 +1072,7 @@ class ShadingChannel(FunctionalChannel):
 
 
 class RainDetectionChannel(FunctionalChannel):
-    """ this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
+    """this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -1066,8 +1086,9 @@ class RainDetectionChannel(FunctionalChannel):
         self.set_attr_from_dict("rainSensorSensitivity", js)
         self.set_attr_from_dict("raining", js)
 
+
 class TemperatureDifferenceSensor2Channel(FunctionalChannel):
-    """ this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel """
+    """this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel"""
 
     def __init__(self):
         super().__init__()
@@ -1077,6 +1098,7 @@ class TemperatureDifferenceSensor2Channel(FunctionalChannel):
         self.temperatureExternalOne = 0.0
         #:float:
         self.temperatureExternalTwo = 0.0
+
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("temperatureExternalDelta", js)

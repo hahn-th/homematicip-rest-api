@@ -714,3 +714,13 @@ async def test_door_lock_drive(no_ssl_fake_async_home: AsyncHome):
     await d.set_lock_state(LockState.OPEN)
     await no_ssl_fake_async_home.get_current_state()
     assert d.lockState == LockState.OPEN
+
+
+@pytest.mark.asyncio
+async def test_door_lock_sensor(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000DLS")
+
+    assert d.doorLockDirection == "LEFT"
+    assert d.doorLockNeutralPosition == "HORIZONTAL"
+    assert d.doorLockTurns == 2
+    assert d.lockState == None

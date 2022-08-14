@@ -10,7 +10,7 @@ Any help from the community through e.g. pull requests would be highly appreciat
 
 ## Thanks
 
-Kudos and a big thank you to @greenberet, who created this library.
+Kudos and a big thank you to @coreGreenberet, who created this library.
 
 ## Documentation
 
@@ -84,6 +84,7 @@ A few examples:
 - [ ] HMIP-BWTH24 (Wall Thermostat Display with switching output – for brand switches, 24V)
 - [ ] HMIP-DBB (Doorbell Push-Button)
 - [x] HMIP-DLD (Door Lock Drive)
+- [x] HMIP-DLS (Door Lock Sensor)
 - [x] HMIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)
 - [x] HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)
 - [x] HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
