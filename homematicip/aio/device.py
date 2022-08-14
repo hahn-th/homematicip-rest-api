@@ -613,3 +613,7 @@ class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
         return await self._connection.api_call(
             *super().set_lock_state(doorLockState, pin, channelIndex)
         )
+
+
+class AsyncDoorLockSensor(DoorLockSensor, AsyncDevice):
+    """HmIP-DLS"""

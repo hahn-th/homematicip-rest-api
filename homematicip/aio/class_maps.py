@@ -22,6 +22,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DIN_RAIL_SWITCH: AsyncDinRailSwitch,
     DeviceType.DIN_RAIL_SWITCH_4: AsyncDinRailSwitch4,
     DeviceType.DOOR_LOCK_DRIVE: AsyncDoorLockDrive,
+    DeviceType.DOOR_LOCK_SENSOR: AsyncDoorLockSensor,
     DeviceType.FLOOR_TERMINAL_BLOCK_10: AsyncFloorTerminalBlock10,
     DeviceType.FLOOR_TERMINAL_BLOCK_12: AsyncFloorTerminalBlock12,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: AsyncFloorTerminalBlock6,

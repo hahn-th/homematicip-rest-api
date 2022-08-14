@@ -1469,3 +1469,13 @@ def test_door_lock_drive(fake_home: Home):
         assert d.door_lock_channel == 1
 
         result = d.set_lock_state(LockState.OPEN)
+
+
+def test_door_lock_sensor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000DLS")
+        assert isinstance(d, DoorLockSensor)
+        assert d.doorLockDirection == "LEFT"
+        assert d.doorLockNeutralPosition == "HORIZONTAL"
+        assert d.doorLockTurns == 2
+        assert d.lockState == None

@@ -2225,3 +2225,25 @@ class DoorLockDrive(Device):
             "targetLockState": doorLockState,
         }
         return self._restCall("device/control/setLockState", json.dumps(data))
+
+
+class DoorLockSensor(Device):
+    """HmIP-DLS"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.doorLockDirection = ""
+        self.doorLockNeutralPosition = ""
+        self.doorLockTurns = 0
+        self.lockState = LockState.OPEN
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DOOR_LOCK_SENSOR_CHANNEL", js)
+        if c:
+
+            self.set_attr_from_dict("doorLockDirection", c)
+            self.set_attr_from_dict("doorLockNeutralPosition", c)
+            self.set_attr_from_dict("doorLockTurns", c)
+            self.set_attr_from_dict("lockState", c, LockState)
+            self.door_lock_channel = c["index"]

@@ -215,6 +215,7 @@ class DeviceType(AutoNameEnum):
     DIN_RAIL_SWITCH_4 = auto()
     DIN_RAIL_DIMMER_3 = auto()
     DOOR_LOCK_DRIVE = auto()
+    DOOR_LOCK_SENSOR = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
     FLOOR_TERMINAL_BLOCK_12 = auto()
@@ -420,6 +421,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEVICE_SABOTAGE = auto()
     DOOR_CHANNEL = auto()
     DOOR_LOCK_CHANNEL = auto()
+    DOOR_LOCK_SENSOR_CHANNEL = auto()
     DIMMER_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
@@ -603,6 +605,7 @@ class LockState(AutoNameEnum):
     OPEN = auto()
     UNLOCKED = auto()
     LOCKED = auto()
+    NONE = auto()
 
 
 class MotorState(AutoNameEnum):
