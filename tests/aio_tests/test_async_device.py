@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
+from conftest import utc_offset
 from homematicip.aio.device import *
 from homematicip.aio.home import AsyncHome
 from homematicip.base.base_connection import HmipWrongHttpStatusError
@@ -282,7 +283,9 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
     assert isinstance(d, AsyncWallMountedThermostatPro)
     assert d.id == "3014F7110000000000000022"
     assert d.label == "Wandthermostat"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 22, 48, 54, 382000)
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
+        0, utc_offset
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 297
     assert d.modelType == "HmIP-WTH-2"
@@ -317,7 +320,9 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000009")
     assert isinstance(d, AsyncPlugableSwitchMeasuring)
     assert d.label == "Brunnen"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 22, 36, 26, 303000) 
+    assert d.lastStatusUpdate == (
+        datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0, utc_offset)
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 262
     assert d.modelType == "HMIP-PSM"
@@ -368,7 +373,9 @@ async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000005521")
     assert isinstance(d, AsyncDinRailSwitch4)
     assert d.label == "Schaltaktor Verteiler"
-    assert d.lastStatusUpdate == datetime(2020, 11, 13, 13, 49, 43, 993000)
+    assert d.lastStatusUpdate == (
+        datetime(2020, 11, 13, 11, 49, 43, 993000) + timedelta(0, utc_offset)
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 405
     assert d.modelType == "HmIP-DRSI4"
@@ -414,7 +421,9 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000015")
     assert isinstance(d, AsyncHeatingThermostat)
     assert d.label == "Wohnzimmer-Heizung"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 22, 5, 50, 325000)
+    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
+        0, utc_offset
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 269
     assert d.modelType == "HMIP-eTRV"
@@ -539,7 +548,9 @@ async def test_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000022311")
     assert isinstance(d, AsyncDinRailBlind4)
     assert d.label == "Jalousieaktor 1 für Hutschienenmontage – 4-fach"
-    assert d.lastStatusUpdate == datetime(2020, 11, 3, 15, 35, 24, 509000)
+    assert d.lastStatusUpdate == (
+        datetime(2020, 11, 3, 13, 35, 24, 509000) + timedelta(0, utc_offset)
+    )
     assert d.manufacturerCode == 1
     assert d.modelId == 406
     assert d.modelType == "HmIP-DRBLI4"

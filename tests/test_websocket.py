@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 
+from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
 from homematicip.device import AccelerationSensor, Device
