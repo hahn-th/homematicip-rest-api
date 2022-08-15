@@ -6,7 +6,6 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 
-from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
 from homematicip.device import AccelerationSensor, Device
@@ -379,5 +378,5 @@ def test_home_getOAuthOTK(fake_home: Home):
         token = fake_home.get_OAuth_OTK()
         assert token.authToken == "C001ED"
         assert token.expirationTimestamp == datetime(
-            2018, 12, 23, 11, 38, 21, 680000
-        ) + timedelta(0, utc_offset)
+            2018, 12, 23, 13, 38, 21, 680000
+        )

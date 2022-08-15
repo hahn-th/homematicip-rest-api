@@ -3,7 +3,6 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from conftest import utc_offset
 from homematicip.group import *
 from homematicip.home import Home
 from homematicip_demo.helper import (
@@ -16,9 +15,7 @@ def test_meta_group(fake_home: Home):
     g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000020")
     assert isinstance(g, MetaGroup)
     assert g.label == "Badezimmer"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 16, 479000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 22, 49, 16, 479000) 
     assert g.lowBat is False
     assert g.metaGroup is None
     assert g.sabotage is None
@@ -89,9 +86,7 @@ def test_heating_group(fake_home: Home):
     assert g.humidityLimitEnabled is True
     assert g.humidityLimitValue == 60
     assert g.label == "Schlafzimmer"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 22, 48, 54, 382000) 
     assert g.lowBat is False
     assert g.maxTemperature == 30.0
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000011"
@@ -167,9 +162,7 @@ def test_security_group(fake_home: Home):
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000009"
     assert g.label == "Büro"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 22, 37, 34, 304000) 
     assert g.lowBat is False
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000008"
     assert g.motionDetected is None
@@ -220,9 +213,7 @@ def test_security_zone(fake_home: Home):
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000005"
     assert g.label == "EXTERNAL"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 46, 498000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 22, 48, 46, 498000) 
     assert g.metaGroup is None
     assert g.unreach is False
 
@@ -257,8 +248,8 @@ def test_switching_group(fake_home: Home):
         assert g.id == "00000000-0000-0000-0000-000000000018"
         assert g.label == "Strom"
         assert g.lastStatusUpdate == datetime(
-            2018, 4, 23, 20, 49, 14, 56000
-        ) + timedelta(0, utc_offset)
+            2018, 4, 23, 22, 49, 14, 56000
+        ) 
         assert g.lowBat is None
         assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
         assert g.on is True

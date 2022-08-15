@@ -2,7 +2,6 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from conftest import utc_offset
 from homematicip.aio.home import AsyncHome
 from homematicip.aio.rule import *
 from homematicip.aio.securityEvent import *
@@ -247,8 +246,8 @@ async def test_home_getOAuthOTK(no_ssl_fake_async_home: AsyncHome):
     token = await no_ssl_fake_async_home.get_OAuth_OTK()
     assert token.authToken == "C001ED"
     assert token.expirationTimestamp == datetime(
-        2018, 12, 23, 11, 38, 21, 680000
-    ) + timedelta(0, utc_offset)
+        2018, 12, 23, 13, 38, 21, 680000
+    )
 
 
 @pytest.mark.asyncio

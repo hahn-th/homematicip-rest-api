@@ -3,7 +3,6 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from conftest import utc_offset
 from homematicip.aio.group import *
 from homematicip.aio.home import AsyncHome
 from homematicip.base.base_connection import HmipWrongHttpStatusError
@@ -59,9 +58,7 @@ async def test_heating_group(no_ssl_fake_async_home: AsyncHome):
     assert g.humidityLimitEnabled is True
     assert g.humidityLimitValue == 60
     assert g.label == "Schlafzimmer"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 22, 48, 54, 382000) 
     assert g.lowBat is False
     assert g.maxTemperature == 30.0
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000011"
@@ -140,9 +137,7 @@ async def test_switching_group(no_ssl_fake_async_home: AsyncHome):
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000018"
     assert g.label == "Strom"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 14, 56000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == datetime(2018, 4, 23, 22, 49, 14, 56000)
     assert g.lowBat is None
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
     assert g.on is True
