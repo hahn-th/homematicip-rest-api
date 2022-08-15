@@ -1,4 +1,4 @@
-name: Pylint
+name: TestVersion
 
 on: [push,workflow_dispatch]
 
@@ -14,13 +14,10 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint
-    - name: Analysing the code with pylint
-      run: |
-        pylint $(git ls-files '*.py')
+   # - name: Install dependencies
+   #   run: |
+   #     python -m pip install --upgrade pip
+   #     pip install pylint
     - name: Show Version
       run: |
         python setup.py --version
