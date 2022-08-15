@@ -10,6 +10,12 @@ jobs:
         #python-version: ["3.8","3.9","3.10"]
         python-version: ["3.10"]
     steps:
+    - name: Set Timezone
+      uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: "Europe/Berlin"
+        timezoneMacos: "Europe/Berlin"
+        timezoneWindows: "Europe/Berlin"
     - uses: actions/checkout@v3
     - name: Set up Python
       uses: actions/setup-python@v4
