@@ -139,7 +139,7 @@ A few examples:
 - [x] HMIP-PMFS (Plugable Power Supply Monitoring)
 - [x] HMIP-PS (Plugable Switch)
 - [x] HMIP-PSM (Plugable Switch Measuring, Type F - Standard for Homematic)
-- [ ] HMIP-PSM-CH (Type J not tested, but it should work)
+- [x] HMIP-PSM-CH (Plugable Switch Measuring, Type J)
 - [ ] HMIP-PSM-IT (Type L not tested, but it should work)
 - [ ] HMIP-PSM-PE (Type E not tested, but it should work)
 - [ ] HMIP-PSM-UK (Type G not tested, but it should work)
