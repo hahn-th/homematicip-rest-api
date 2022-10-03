@@ -619,7 +619,7 @@ def main():
             if args.toggle_garage_door is not None:
                 if isinstance(device, WallMountedGarageDoorController):
                     for c in args.channels:
-                        device.send_impulse_start()
+                        device.send_start_impulse()
                 else:
                     logger.error(
                         "can't toggle garage door with device %s of type %s",
