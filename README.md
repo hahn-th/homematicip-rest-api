@@ -8,6 +8,9 @@ Any help from the community through e.g. pull requests would be highly appreciat
 
 [![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![CircleCI](https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/hahn-th/homematicip-rest-api) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip)
 
+## Get Help / Discord
+If you want to get in contact with me or need help with the library, you can get in touch with me via discord. There is a **[discord server](https://discord.gg/mZG2myJ)** and my discord tag is **agonist#6159**
+
 ## Thanks
 
 Kudos and a big thank you to @coreGreenberet, who created this library.
@@ -136,7 +139,7 @@ A few examples:
 - [x] HMIP-PMFS (Plugable Power Supply Monitoring)
 - [x] HMIP-PS (Plugable Switch)
 - [x] HMIP-PSM (Plugable Switch Measuring, Type F - Standard for Homematic)
-- [ ] HMIP-PSM-CH (Type J not tested, but it should work)
+- [x] HMIP-PSM-CH (Plugable Switch Measuring, Type J)
 - [ ] HMIP-PSM-IT (Type L not tested, but it should work)
 - [ ] HMIP-PSM-PE (Type E not tested, but it should work)
 - [ ] HMIP-PSM-UK (Type G not tested, but it should work)
