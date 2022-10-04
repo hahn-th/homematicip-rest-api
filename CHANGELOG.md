@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.0.8] 2022-08-14
+## [1.0.8] 2022-10-04
+
+### FIXED
+
+- [bug: 463] Add valvePosition for device HmIP-FALMOT-C12
+- Fixed --toggle-garage-door in hmip_cli.py
 
 ### ADDED
 
@@ -16,11 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Group AccessAuthorizationProfileGroup
 - Add Group AccessControlGroup
 - Add argument `--pin 1234` to hmip_cli.py
-- Add argument `--set-lock-state OPEN/LOCKED/UNLOCKED` to hmip_cli.py 
+- Add argument `--set-lock-state OPEN/LOCKED/UNLOCKED` to hmip_cli.py
 
 ### CHANGED
 
 - README.md has been created which replaces README.rst
+- Github actions is used for releases and testing
 
 ## [1.0.7] 2022-07-25
 
@@ -579,6 +585,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [pr: 449]: https://github.com/hahn-th/homematicip-rest-api/pull/449
 [pr: 451]: https://github.com/hahn-th/homematicip-rest-api/pull/451
 [pr: 453]: https://github.com/hahn-th/homematicip-rest-api/pull/453
+[bug: 463]: https://github.com/hahn-th/homematicip-rest-api/issues/463
 [hmip-falmot-c12]: https://github.com/hahn-th/homematicip-rest-api/issues/281
 [hmip-whs2]: https://github.com/hahn-th/homematicip-rest-api/issues/280
 [hmip-pmfs]: https://github.com/hahn-th/homematicip-rest-api/issues/282
