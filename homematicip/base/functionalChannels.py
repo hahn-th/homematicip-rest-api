@@ -913,10 +913,12 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
         super().__init__()
         #:ValveState:the current valve state
         self.valveState = ValveState.ADAPTION_DONE
+        self.valvePosition = 0.0
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("valveState", js)
+        self.set_attr_from_dict("valvePosition", js)
 
 
 class ChangeOverChannel(FunctionalChannel):
