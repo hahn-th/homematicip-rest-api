@@ -9577,6 +9577,52 @@
             "metaGroupId": "00000000-0000-0000-0000-000000000025",
             "type": "ACCESS_CONTROL",
             "unreach": false
+        },
+        "00000000-0000-0000-0000-0000000000IC": {
+            "channels": [
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000005"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000008"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000002"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000017"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000009"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000007"
+                },
+                {
+                    "channelIndex": 1,
+                    "deviceId": "3014F7110000000000000001"
+                }
+            ],
+            "dutyCycle": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "00000000-0000-0000-0000-0000000000IC",
+            "label": "Stanovanje",
+            "lastStatusUpdate": 1665090976995,
+            "lowBat": false,
+            "metaGroupId": "00000000-0000-0000-0000-000000000009",
+            "processing": null,
+            "sabotage": false,
+            "type": "INDOOR_CLIMATE",
+            "unreach": false,
+            "ventilationLevel": 0.5,
+            "ventilationState": null,
+            "windowState": "CLOSED"
         }
     },
     "home": {

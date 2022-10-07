@@ -23,6 +23,7 @@ from homematicip.group import (
     HotWaterGroup,
     HumidityWarningRuleGroup,
     InboxGroup,
+    IndoorClimateGroup,
     LinkedSwitchingGroup,
     LockOutProtectionRule,
     MetaGroup,
@@ -187,6 +188,10 @@ class AsyncInboxGroup(InboxGroup, AsyncGroup):
     pass
 
 
+class AsyncIndoorClimateGroup(IndoorClimateGroup, AsyncGroup):
+    pass
+
+
 class AsyncSecurityZoneGroup(SecurityZoneGroup, AsyncGroup):
     pass
 
@@ -279,8 +284,10 @@ class AsyncHotWaterGroup(HotWaterGroup, AsyncGroup):
     async def set_profile_mode(self, profileMode: ProfileMode):
         return await self._connection.api_call(*super().set_profile_mode(profileMode))
 
-class AsyncAccessAuthorizationProfileGroup(AccessAuthorizationProfileGroup,AsyncGroup):
+
+class AsyncAccessAuthorizationProfileGroup(AccessAuthorizationProfileGroup, AsyncGroup):
     pass
 
-class AsyncAccessControlGroup(AccessControlGroup,AsyncGroup):
+
+class AsyncAccessControlGroup(AccessControlGroup, AsyncGroup):
     pass

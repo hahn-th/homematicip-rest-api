@@ -110,6 +110,7 @@ TYPE_GROUP_MAP = {
     GroupType.HOT_WATER: AsyncHotWaterGroup,
     GroupType.HUMIDITY_WARNING_RULE_GROUP: AsyncHumidityWarningRuleGroup,
     GroupType.INBOX: AsyncInboxGroup,
+    GroupType.INDOOR_CLIMATE: AsyncIndoorClimateGroup,
     GroupType.LINKED_SWITCHING: AsyncLinkedSwitchingGroup,
     GroupType.LOCK_OUT_PROTECTION_RULE: AsyncLockOutProtectionRule,
     GroupType.OVER_HEAT_PROTECTION_RULE: AsyncOverHeatProtectionRule,
