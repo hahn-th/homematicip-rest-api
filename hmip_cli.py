@@ -147,6 +147,12 @@ def main():
         help='the group you want to modify (see "Group Settings")',
     )
     parser.add_argument(
+        "--print-infos",
+        action="store_true",
+        dest="print_infos",
+        help="Print channels or devices, which belongs to devices or groups.",
+    )
+    parser.add_argument(
         "-r",
         "--rule",
         dest="rules",
@@ -617,6 +623,7 @@ def main():
                 command_entered = True
 
             if args.toggle_garage_door is not None:
+                command_entered = True
                 if isinstance(device, WallMountedGarageDoorController):
                     for c in args.channels:
                         device.send_start_impulse()
@@ -691,6 +698,12 @@ def main():
                         device.deviceType,
                     )
                 command_entered = True
+
+            if args.print_infos:
+                command_entered = True
+                print(d)
+                for fc in d.functionalChannels:
+                    print("   Ch {}: {}".format(fc.index, str(fc)))
 
     if args.set_zones_device_assignment:
         internal = []
@@ -792,6 +805,16 @@ def main():
                 group.set_boost_duration(args.group_boost_duration)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
+
+        if args.print_infos:
+            command_entered = True
+            print(group)
+            print("------")
+            if group.metaGroup:
+                print("   Metagroup: {}".format(str(group.metaGroup)))
+                print("------")
+            for fc in group.devices:
+                print("   Assigned device: {}".format(str(fc)))
 
     if args.rules:
         command_entered = False
