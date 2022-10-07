@@ -43,6 +43,13 @@ class FunctionalChannel(HomeMaticIPObject):
 
         super().from_json(js)
 
+    def __str__(self):
+        return "{} {} Index({})".format(
+            self.functionalChannelType,
+            self.label if self.label else "unknown",
+            self.index,
+        )
+
 
 class DeviceBaseChannel(FunctionalChannel):
     """this is the representative of the DEVICE_BASE channel"""

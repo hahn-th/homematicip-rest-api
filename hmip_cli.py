@@ -702,6 +702,7 @@ def main():
             if args.print_infos:
                 command_entered = True
                 print(d)
+                print("------")
                 for fc in d.functionalChannels:
                     print("   Ch {}: {}".format(fc.index, str(fc)))
 
