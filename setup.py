@@ -6,13 +6,14 @@ from distutils.core import setup
 import versioneer
 
 here = os.path.abspath(os.path.dirname(__file__))
-with io.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
+with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 setup(
     name="homematicip",
     packages=find_packages(exclude="tests"),
     long_description=long_description,
+    long_description_content_type="text/markdown",
     description="An API for the homematicip cloud",
     author="Thomas Hahn",
     author_email="post@thomas-hahn.org",

@@ -2,7 +2,6 @@
 import json
 import logging
 from collections import Counter
-from datetime import datetime
 from typing import Iterable
 
 from homematicip.base.enums import *
@@ -2180,3 +2179,75 @@ class TemperatureDifferenceSensor2(Device):
             self.set_attr_from_dict("temperatureExternalDelta", c)
             self.set_attr_from_dict("temperatureExternalOne", c)
             self.set_attr_from_dict("temperatureExternalTwo", c)
+
+
+class DoorLockDrive(Device):
+    """HmIP-DLD"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.autoRelockDelay = False
+        self.doorHandleType = "UNKNOWN"
+        self.doorLockDirection = False
+        self.doorLockNeutralPosition = False
+        self.doorLockTurns = False
+        self.lockState = LockState.UNLOCKED
+        self.motorState = MotorState.STOPPED
+
+        self.door_lock_channel = -1
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DOOR_LOCK_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("autoRelockDelay", c)
+            self.set_attr_from_dict("doorHandleType", c)
+            self.set_attr_from_dict("doorLockDirection", c)
+            self.set_attr_from_dict("doorLockNeutralPosition", c)
+            self.set_attr_from_dict("doorLockTurns", c)
+            self.set_attr_from_dict("lockState", c, LockState)
+            self.set_attr_from_dict("motorState", c, MotorState)
+            self.door_lock_channel = c["index"]
+
+    def set_lock_state(self, doorLockState: LockState, pin="", channelIndex=1):
+        """sets the door lock state
+
+        Args:
+            doorLockState(float): the state of the door. See LockState from base/enums.py
+            pin(string): Pin, if specified.
+            channelIndex(int): the channel to control. Normally the channel from DOOR_LOCK_CHANNEL is used.
+        Returns:
+            the result of the _restCall
+        """
+        if channelIndex == 1:
+            channelIndex = self.door_lock_channel
+
+        data = {
+            "deviceId": self.id,
+            "channelIndex": channelIndex,
+            "authorizationPin": pin,
+            "targetLockState": doorLockState,
+        }
+        return self._restCall("device/control/setLockState", json.dumps(data))
+
+
+class DoorLockSensor(Device):
+    """HmIP-DLS"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.doorLockDirection = ""
+        self.doorLockNeutralPosition = ""
+        self.doorLockTurns = 0
+        self.lockState = LockState.OPEN
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DOOR_LOCK_SENSOR_CHANNEL", js)
+        if c:
+
+            self.set_attr_from_dict("doorLockDirection", c)
+            self.set_attr_from_dict("doorLockNeutralPosition", c)
+            self.set_attr_from_dict("doorLockTurns", c)
+            self.set_attr_from_dict("lockState", c, LockState)
+            self.door_lock_channel = c["index"]

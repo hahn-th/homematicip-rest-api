@@ -489,6 +489,31 @@ class InboxGroup(Group):
     pass
 
 
+class IndoorClimateGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.sabotage = None
+        self.ventilationLevel = None
+        self.ventilationState = None
+        self.windowState = ""
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.sabotage = js["sabotage"]
+        self.ventilationLevel = js["ventilationLevel"]
+        self.ventilationState = js["ventilationState"]
+        self.windowState = js["windowState"]
+
+    def __str__(self):
+        return "{} sabotage({}) ventilationLevel({}) ventilationState({}) windowState({})".format(
+            super().__str__(),
+            self.sabotage,
+            self.ventilationLevel,
+            self.ventilationState,
+            self.windowState,
+        )
+
+
 class SecurityZoneGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
@@ -1200,3 +1225,25 @@ class HotWaterGroup(Group):
     def set_profile_mode(self, profileMode: ProfileMode):
         data = {"groupId": self.id, "profileMode": profileMode}
         return self._restCall("group/heating/setProfileMode", body=json.dumps(data))
+
+
+class AccessAuthorizationProfileGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.active = False
+        self.authorizationPinAssigned = False
+        self.authorized = False
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.active = js["active"]
+        self.authorizationPinAssigned = js["authorizationPinAssigned"]
+        self.authorized = js["authorized"]
+
+
+class AccessControlGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)

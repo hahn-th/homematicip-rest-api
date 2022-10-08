@@ -1216,6 +1216,27 @@ def test_floor_terminal_block(fake_home: Home):
             "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
         )
 
+        d = FloorTerminalBlock12(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000FALMOT")
+        assert d.minimumFloorHeatingValvePosition == 0.0
+        d.set_minimum_floor_heating_valve_position(0.2)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000FALMOT")
+        assert d.minimumFloorHeatingValvePosition == 0.2
+        assert str(d) == (
+            "HmIP-FALMOT-C12 Fussbodenheizungsaktor lowBat(None) unreach(False) "
+            "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "minimumFloorHeatingValvePosition(0.2) "
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
+            "frostProtectionTemperature(5.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+        )
+
+        c = d.functionalChannels[1]
+        assert isinstance(c, FloorTerminalBlockMechanicChannel)
+        assert c.valveState == ValveState.ADAPTION_DONE
+        assert c.valvePosition == 0.5
+        assert c.label == "Kanal 1"
+
 
 def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():
@@ -1478,3 +1499,24 @@ def test_wall_mounted_garage_door_controller(fake_home: Home):
             "rssiDeviceValue(-30) rssiPeerValue(-34) configPending(False) dutyCycle(False) deviceUndervoltage(False) "
             "impulseDuration(0.10000000149011612) processing(False)"
         )
+
+
+def test_door_lock_drive(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000DLD")
+        assert isinstance(d, DoorLockDrive)
+        assert d.lockState == LockState.LOCKED
+        assert d.motorState == MotorState.STOPPED
+        assert d.door_lock_channel == 1
+
+        result = d.set_lock_state(LockState.OPEN)
+
+
+def test_door_lock_sensor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000DLS")
+        assert isinstance(d, DoorLockSensor)
+        assert d.doorLockDirection == "LEFT"
+        assert d.doorLockNeutralPosition == "HORIZONTAL"
+        assert d.doorLockTurns == 2
+        assert d.lockState == None

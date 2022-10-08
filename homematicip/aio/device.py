@@ -328,8 +328,8 @@ class AsyncBlind(Blind, AsyncShutter):
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncShutter):
     """HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)"""
-
-
+    
+    
 class AsyncBrandSwitch2(BrandSwitch2, AsyncSwitch):
     """ELV-SH-BS2 (ELV Smart Home ARR-Bausatz Schaltaktor für Markenschalter – 2-fach powered by Homematic IP)"""
 
@@ -599,3 +599,24 @@ class AsyncWallMountedGarageDoorController(
 
     async def send_start_impulse(self):
         return await self._connection.api_call(*super().send_start_impulse())
+
+class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
+    """HmIP-DLD (DoorLockDrive)"""
+
+    async def set_lock_state(self, doorLockState: LockState, pin="", channelIndex=1):
+        """sets the door lock state
+
+        Args:
+            doorLockState(float): the state of the door. See LockState from base/enums.py
+            pin(string): Pin, if specified.
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        return await self._connection.api_call(
+            *super().set_lock_state(doorLockState, pin, channelIndex)
+        )
+
+
+class AsyncDoorLockSensor(DoorLockSensor, AsyncDevice):
+    """HmIP-DLS"""

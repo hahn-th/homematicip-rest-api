@@ -1,3 +1,4 @@
+from os import device_encoding
 from homematicip.aio.device import *
 from homematicip.aio.group import *
 from homematicip.aio.rule import *
@@ -21,6 +22,8 @@ TYPE_CLASS_MAP = {
     DeviceType.DIN_RAIL_BLIND_4: AsyncDinRailBlind4,
     DeviceType.DIN_RAIL_SWITCH: AsyncDinRailSwitch,
     DeviceType.DIN_RAIL_SWITCH_4: AsyncDinRailSwitch4,
+    DeviceType.DOOR_LOCK_DRIVE: AsyncDoorLockDrive,
+    DeviceType.DOOR_LOCK_SENSOR: AsyncDoorLockSensor,
     DeviceType.FLOOR_TERMINAL_BLOCK_10: AsyncFloorTerminalBlock10,
     DeviceType.FLOOR_TERMINAL_BLOCK_12: AsyncFloorTerminalBlock12,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: AsyncFloorTerminalBlock6,
@@ -89,6 +92,8 @@ TYPE_CLASS_MAP = {
 TYPE_GROUP_MAP = {
     GroupType.GROUP: AsyncGroup,
     GroupType.ALARM_SWITCHING: AsyncAlarmSwitchingGroup,
+    GroupType.ACCESS_AUTHORIZATION_PROFILE: AsyncAccessAuthorizationProfileGroup,
+    GroupType.ACCESS_CONTROL: AsyncAccessControlGroup,
     GroupType.ENVIRONMENT: AsyncEnvironmentGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: AsyncExtendedLinkedShutterGroup,
     GroupType.EXTENDED_LINKED_SWITCHING: AsyncExtendedLinkedSwitchingGroup,
@@ -106,6 +111,7 @@ TYPE_GROUP_MAP = {
     GroupType.HOT_WATER: AsyncHotWaterGroup,
     GroupType.HUMIDITY_WARNING_RULE_GROUP: AsyncHumidityWarningRuleGroup,
     GroupType.INBOX: AsyncInboxGroup,
+    GroupType.INDOOR_CLIMATE: AsyncIndoorClimateGroup,
     GroupType.LINKED_SWITCHING: AsyncLinkedSwitchingGroup,
     GroupType.LOCK_OUT_PROTECTION_RULE: AsyncLockOutProtectionRule,
     GroupType.OVER_HEAT_PROTECTION_RULE: AsyncOverHeatProtectionRule,

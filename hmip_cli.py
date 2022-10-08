@@ -38,7 +38,7 @@ def fake_download_configuration():
     global server_config
     if server_config:
         with open(server_config) as file:
-            return json.load(file, encoding="UTF-8")
+            return json.load(file)
     return None
 
 
@@ -147,6 +147,12 @@ def main():
         help='the group you want to modify (see "Group Settings")',
     )
     parser.add_argument(
+        "--print-infos",
+        action="store_true",
+        dest="print_infos",
+        help="Print channels or devices, which belongs to devices or groups.",
+    )
+    parser.add_argument(
         "-r",
         "--rule",
         dest="rules",
@@ -182,7 +188,23 @@ def main():
         nargs="*",
         dest="channels",
         help="used together with --turn-on and --turn-off to specify one or more specific channels",
-        default=[5],
+        default=None,
+    )
+
+    group.add_argument(
+        "--pin",
+        nargs="*",
+        dest="pin",
+        help="special pin used for door lock drive if set in the app",
+        default="",
+    )
+
+    group.add_argument(
+        "--set-lock-state",
+        action="store",
+        dest="device_set_lock_state",
+        help="set door lock state to OPEN, LOCKED or UNLOCKED. Add --pin for special pin or --channel.",
+        default=None,
     )
 
     group.add_argument(
@@ -577,10 +599,34 @@ def main():
                     )
                 command_entered = True
 
+            if args.device_set_lock_state is not None:
+                targetLockState = LockState.from_str(args.device_set_lock_state)
+                if not targetLockState in LockState:
+                    logger.error("%s is not a lock state.", args.device_set_lock_state)
+                elif isinstance(device, DoorLockDrive):
+                    res = None
+                    pin = args.pin[0] if len(args.pin) > 0 else ""
+                    if args.channels is not None:
+                        res = device.set_lock_state(
+                            targetLockState, pin, args.channels[0]
+                        )
+                    else:
+                        res = device.set_lock_state(targetLockState, pin)
+
+                    print("Result: " + json.dumps(res))
+                else:
+                    logger.error(
+                        "can't set lock level of device %s of type %s",
+                        device.id,
+                        device.deviceType,
+                    )
+                command_entered = True
+
             if args.toggle_garage_door is not None:
+                command_entered = True
                 if isinstance(device, WallMountedGarageDoorController):
                     for c in args.channels:
-                        device.send_impulse_start()
+                        device.send_start_impulse()
                 else:
                     logger.error(
                         "can't toggle garage door with device %s of type %s",
@@ -652,6 +698,13 @@ def main():
                         device.deviceType,
                     )
                 command_entered = True
+
+            if args.print_infos:
+                command_entered = True
+                print(d)
+                print("------")
+                for fc in d.functionalChannels:
+                    print("   Ch {}: {}".format(fc.index, str(fc)))
 
     if args.set_zones_device_assignment:
         internal = []
@@ -753,6 +806,16 @@ def main():
                 group.set_boost_duration(args.group_boost_duration)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
+
+        if args.print_infos:
+            command_entered = True
+            print(group)
+            print("------")
+            if group.metaGroup:
+                print("   Metagroup: {}".format(str(group.metaGroup)))
+                print("------")
+            for fc in group.devices:
+                print("   Assigned device: {}".format(str(fc)))
 
     if args.rules:
         command_entered = False

@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.8] 2022-10-04
+
+### FIXED
+
+- [bug: 463] Add valvePosition for device HmIP-FALMOT-C12
+- Fixed --toggle-garage-door in hmip_cli.py
+
+### ADDED
+
+- [PR: 453] Add support for device HmIP-DLS (Door Lock Sensor)
+- [PR: 451] Add support for device HmIP-DLD (Door Lock Drive)
+- Add Group AccessAuthorizationProfileGroup
+- Add Group AccessControlGroup
+- Add argument `--pin 1234` to hmip_cli.py
+- Add argument `--set-lock-state OPEN/LOCKED/UNLOCKED` to hmip_cli.py
+
+### CHANGED
+
+- README.md has been created which replaces README.rst
+- Github actions is used for releases and testing
+
 ## [1.0.7] 2022-07-25
 
 ### ADDED
@@ -502,7 +523,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.7...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.8...master
+[1.0.8]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.7...1.0.8
 [1.0.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...1.0.7
 [1.0.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.4...1.0.5
 [1.0.4]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.3...1.0.4
@@ -561,6 +583,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [pr: 447]: https://github.com/hahn-th/homematicip-rest-api/pull/447
 [pr: 448]: https://github.com/hahn-th/homematicip-rest-api/pull/448
 [pr: 449]: https://github.com/hahn-th/homematicip-rest-api/pull/449
+[pr: 451]: https://github.com/hahn-th/homematicip-rest-api/pull/451
+[pr: 453]: https://github.com/hahn-th/homematicip-rest-api/pull/453
+[bug: 463]: https://github.com/hahn-th/homematicip-rest-api/issues/463
 [hmip-falmot-c12]: https://github.com/hahn-th/homematicip-rest-api/issues/281
 [hmip-whs2]: https://github.com/hahn-th/homematicip-rest-api/issues/280
 [hmip-pmfs]: https://github.com/hahn-th/homematicip-rest-api/issues/282

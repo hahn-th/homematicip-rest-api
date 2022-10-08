@@ -514,6 +514,21 @@ def test_extended_linked_shutter_group(fake_home: Home):
         assert g.shutterLevel == 30
 
 
+def test_access_authorization_profile_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000032")
+        assert g.label == "Walter"
+        assert g.active == True
+        assert g.authorizationPinAssigned == True
+        assert g.authorized == True
+
+
+def test_access_control_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000033")
+        assert g.label == "AmHaustuere2"
+
+
 def test_hot_water(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000067")
@@ -527,6 +542,20 @@ def test_hot_water(fake_home: Home):
         assert (
             str(g)
             == "HOT_WATER HOT_WATER on(None) onTime(900.0) profileMode(AUTOMATIC)"
+        )
+
+
+def test_indoor_climate_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000IC")
+        assert g.label == "Stanovanje"
+        assert g.sabotage == False
+        assert g.ventilationLevel == 0.5
+        assert g.ventilationState == None
+        assert g.windowState == WindowState.CLOSED
+        assert (
+            str(g)
+            == "INDOOR_CLIMATE Stanovanje sabotage(False) ventilationLevel(0.5) ventilationState(None) windowState(CLOSED)"
         )
 
 
