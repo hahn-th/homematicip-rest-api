@@ -782,6 +782,10 @@ class DinRailSwitch4(Switch):
     """HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels)"""
 
 
+class BrandSwitch2(Switch):
+    """ELV-SH-BS2 (ELV Smart Home ARR-Bausatz Schaltaktor für Markenschalter – 2-fach powered by Homematic IP)"""
+
+
 class SwitchMeasuring(Switch):
     """Generic class for Switch and Meter"""
 

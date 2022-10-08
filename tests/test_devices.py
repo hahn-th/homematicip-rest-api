@@ -1244,6 +1244,26 @@ def test_key_remote_control(fake_home: Home):
         assert isinstance(d, KeyRemoteControl4)
 
 
+def test_brand_switch2(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000075")
+        assert isinstance(d, BrandSwitch2)
+
+        d.turn_on(1)
+        fake_home.get_current_state()
+        assert d.functionalChannels[1].on == True
+        d.turn_off(1)
+        fake_home.get_current_state()
+        assert d.functionalChannels[1].on == False
+
+        d.turn_on(2)
+        fake_home.get_current_state()
+        assert d.functionalChannels[2].on == True
+        d.turn_off(2)
+        fake_home.get_current_state()
+        assert d.functionalChannels[2].on == False
+
+
 def test_brand_switch_notification_light(fake_home: Home):
     with no_ssl_verification():
         d = BrandSwitchNotificationLight(fake_home._connection)
