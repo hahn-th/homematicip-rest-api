@@ -724,3 +724,16 @@ async def test_door_lock_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.doorLockNeutralPosition == "HORIZONTAL"
     assert d.doorLockTurns == 2
     assert d.lockState == None
+
+
+@pytest.mark.asyncio
+async def test_multibox_io(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711ABCD0ABCD000002")
+    assert isinstance(d, AsyncMultiIOBox)
+
+    await d.turn_on(1)
+    await no_ssl_fake_async_home.get_current_state()
+    assert d.functionalChannels[1].on == True
+    await d.turn_off(1)
+    await no_ssl_fake_async_home.get_current_state()
+    assert d.functionalChannels[1].on == False

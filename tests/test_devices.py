@@ -154,6 +154,12 @@ def test_multi_io_box(fake_home: Home):
         "userDesiredProfileMode(AUTOMATIC) analogOutputLevel(12.5)"
     )
 
+    with no_ssl_verification():
+        assert d.functionalChannels[1].on is True
+        d.turn_off(1)
+        fake_home.get_current_state()
+        assert d.functionalChannels[1].on is False
+
 
 def test_full_flush_contact_interface(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000029")
