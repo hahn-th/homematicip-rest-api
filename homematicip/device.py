@@ -2251,3 +2251,27 @@ class DoorLockSensor(Device):
             self.set_attr_from_dict("doorLockTurns", c)
             self.set_attr_from_dict("lockState", c, LockState)
             self.door_lock_channel = c["index"]
+
+
+class WallMountedUniversalActuator(Device):
+    """HmIP-WUA WALL_MOUNTED_UNIVERSAL_ACTUATOR"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+
+    def from_json(self, js):
+        super().from_json(js)
+
+    def set_dim_level(self, dimLevel=0.0, channelIndex=1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
+        return self._restCall("device/control/setDimLevel", json.dumps(data))
+
+    def set_switch_state(self, on=True, channelIndex=1):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+
+    def turn_on(self, channelIndex=1):
+        return self.set_switch_state(True, channelIndex)
+
+    def turn_off(self, channelIndex=1):
+        return self.set_switch_state(False, channelIndex)

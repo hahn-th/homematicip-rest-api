@@ -576,7 +576,11 @@ def main():
                 command_entered = True
 
             if args.device_switch_state is not None:
-                if isinstance(device, Switch) or isinstance(device, Dimmer):
+                if (
+                    isinstance(device, Switch)
+                    or isinstance(device, Dimmer)
+                    or isinstance(device, WallMountedUniversalActuator)
+                ):
                     for c in args.channels:
                         device.set_switch_state(args.device_switch_state, c)
                 else:
@@ -588,7 +592,9 @@ def main():
                 command_entered = True
 
             if args.device_dim_level is not None:
-                if isinstance(device, Dimmer):
+                if isinstance(device, Dimmer) or isinstance(
+                    device, WallMountedUniversalActuator
+                ):
                     for c in args.channels:
                         device.set_dim_level(args.device_dim_level, c)
                 else:
