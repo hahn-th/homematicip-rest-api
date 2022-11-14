@@ -620,3 +620,6 @@ class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
 
 class AsyncDoorLockSensor(DoorLockSensor, AsyncDevice):
     """HmIP-DLS"""
+
+class AsyncWallMountedUniversalActuator(WallMountedUniversalActuator, AsyncDevice):
+    """HmIP-WUA"""

@@ -1017,6 +1017,45 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         self.set_attr_from_dict("accelerationSensorTriggered", js)
 
 
+class UniversalActuatorChannel(FunctionalChannel):
+    """this is the representative of the UniversalActuatorChannel UNIVERSAL_ACTUATOR_CHANNEL"""
+
+    def __init__(self):
+        super().__init__()
+
+        self.channelRole = None  # String
+        self.dimLevel = 0.0
+        self.on = True
+        self.profileMode = None  # String "AUTOMATIC",
+        self.relayMode = None  # "RELAY_INACTIVE"
+        self.userDesiredProfileMode = None  # "AUTOMATIC"
+        self.ventilationLevel = 0.0  # 0.35,
+        self.ventilationState = None  # "VENTILATION"
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.channelRole = js["channelRole"]
+        self.dimLevel = js["dimLevel"]
+        self.on = js["on"]
+        self.profileMode = js["profileMode"]
+        self.relayMode = js["relayMode"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+        self.ventilationLevel = js["ventilationLevel"]
+        self.ventilationState = js["ventilationState"]
+
+    def __str__(self):
+        return "{} channelRole({}) dimLevel({}) ventilationLevel({}) ventilationState({}) on({}) profileMode({}) relayMode({})".format(
+            super().__str__(),
+            self.channelRole,
+            self.dimLevel,
+            self.ventilationLevel,
+            self.ventilationState,
+            self.on,
+            self.profileMode,
+            self.relayMode,
+        )
+
+
 class ShadingChannel(FunctionalChannel):
     """this is the representative of the SHADING_CHANNEL channel"""
 
