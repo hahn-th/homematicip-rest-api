@@ -582,7 +582,8 @@ def main():
                     or isinstance(device, WallMountedUniversalActuator)
                 ):
                     for c in args.channels:
-                        device.set_switch_state(args.device_switch_state, c)
+                        res = device.set_switch_state(args.device_switch_state, c)
+                        print("Result from channel {0}: {1}".format(c, json.dumps(res)))
                 else:
                     logger.error(
                         "can't turn on/off device %s of type %s",
@@ -594,9 +595,11 @@ def main():
             if args.device_dim_level is not None:
                 if isinstance(device, Dimmer) or isinstance(
                     device, WallMountedUniversalActuator
-                ):
+                ) or isinstance(device, TemperatureDifferenceSensor2):
+
                     for c in args.channels:
-                        device.set_dim_level(args.device_dim_level, c)
+                        res = device.set_dim_level(args.device_dim_level, c)
+                        print("Result from channel {0}: {1}".format(c, json.dumps(res)))
                 else:
                     logger.error(
                         "can't set dim level of device %s of type %s",
