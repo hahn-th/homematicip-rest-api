@@ -6,7 +6,7 @@ import platform
 
 import requests
 
-from homematicip.base.base_connection import BaseConnection
+from homematicip.base.base_connection import BaseConnection, HmipThrottlingError
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +49,13 @@ class Connection(BaseConnection):
                     headers=self.headers,
                     timeout=self._restCallTimout,
                 )
+
+                # The HMIP cloud returns a 429 Error when it has received too
+                # many requests from a given client
+                if result.status_code == 429:
+                    logger.warning(f"_restcall {requestPath} returned 429 status code.")
+                    raise HmipThrottlingError
+
                 ret = result.json() if len(result.content) != 0 else ""
                 logger.debug(
                     "_restcall result: Errorcode=%s content(%s)",

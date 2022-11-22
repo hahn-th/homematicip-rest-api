@@ -23,6 +23,10 @@ class HmipServerCloseError(HmipConnectionError):
     pass
 
 
+class HmipThrottlingError(HmipConnectionError):
+    pass
+
+
 class BaseConnection:
     """Base connection class.
 
