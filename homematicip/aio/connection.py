@@ -14,6 +14,7 @@ from homematicip.base.base_connection import (
     ATTR_CLIENT_AUTH,
     BaseConnection,
     HmipConnectionError,
+    HmipThrottlingError,
     HmipWrongHttpStatusError,
 )
 
@@ -93,6 +94,8 @@ class AsyncConnection(BaseConnection):
                         else:
                             ret = True
                         return ret
+                    elif result.status == 429:
+                        raise HmipThrottlingError
                     else:
                         raise HmipWrongHttpStatusError(result.status)
             except (asyncio.TimeoutError, aiohttp.ClientConnectionError):
