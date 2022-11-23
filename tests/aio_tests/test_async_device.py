@@ -737,10 +737,3 @@ async def test_multibox_io(no_ssl_fake_async_home: AsyncHome):
     await d.turn_off(1)
     await no_ssl_fake_async_home.get_current_state()
     assert d.functionalChannels[1].on == False
-
-
-@pytest.mark.asyncio
-async def test_wall_mounted_universal_actuator(no_ssl_fake_async_home: AsyncHome):
-    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000WUA")
-
-    assert isinstance(d, AsyncWallMountedUniversalActuator)
