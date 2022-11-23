@@ -1506,26 +1506,6 @@ def test_wall_mounted_garage_door_controller(fake_home: Home):
             "impulseDuration(0.10000000149011612) processing(False)"
         )
 
-
-def test_wall_mounted_universal_actuator(fake_home: Home):
-    with no_ssl_verification():
-        d = fake_home.search_device_by_id("3014F7110000000000000WUA")
-        assert isinstance(d, WallMountedUniversalActuator)
-
-        ch = d.functionalChannels[1]
-        assert isinstance(ch, UniversalActuatorChannel)
-        assert ch.channelRole == "DIMMING_ACTUATOR"
-        assert ch.dimLevel == 0.35
-        assert ch.functionalChannelType == "UNIVERSAL_ACTUATOR_CHANNEL"
-        assert ch.index == 1
-        assert ch.on == True
-        assert ch.profileMode == "AUTOMATIC"
-        assert ch.relayMode == "RELAY_INACTIVE"
-        assert ch.userDesiredProfileMode == "AUTOMATIC"
-        assert ch.ventilationLevel == 0.35
-        assert ch.ventilationState == "VENTILATION"
-
-
 def test_door_lock_drive(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000DLD")
