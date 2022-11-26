@@ -11,6 +11,11 @@ Any help from the community through e.g. pull requests would be highly appreciat
 ## Get Help / Discord
 If you want to get in contact with me or need help with the library, you can get in touch with me via discord. There is a **[discord server](https://discord.gg/mZG2myJ)** and my discord tag is **agonist#6159**
 
+## Support me
+
+:heart: If you want to say thank you or want to support me, you can do that via PayPal. 
+[https://paypal.me/thomas08154711](https://paypal.me/thomas08154711?country.x=DE&locale.x=de_DE)
+
 ## Thanks
 
 Kudos and a big thank you to @coreGreenberet, who created this library.
