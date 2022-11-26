@@ -16,7 +16,7 @@ setup(
     long_description_content_type="text/markdown",
     description="An API for the homematicip cloud",
     author="Thomas Hahn",
-    author_email="post@thomas-hahn.org",
+    author_email="homematicip-rest-api@thomas-hahn.org",
     url="https://github.com/hahn-th/homematicip-rest-api",
     download_url="https://github.com/hahn-th/homematicip-rest-api/tarball/"
     + versioneer.get_version(),
@@ -35,7 +35,9 @@ setup(
         "async_timeout>=3.0.1",
         "aenum>=2.2.4",
     ],
-    package_data={"homematicip_demo": ["json_data/*.json"],},  # Optional
+    package_data={
+        "homematicip_demo": ["json_data/*.json"],
+    },  # Optional
     scripts=["hmip_cli.py", "hmip_generate_auth_token.py"],
     python_requires="~=3.8",
     version=versioneer.get_version(),
