@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.10] 2022-11-26
+
+### ADDED
+
+- CLI: Print result when using set_switch_state and set_dim_level
+- Add tests for Multi IO Box HmIP-MIOB
+
+### FIXED
+
+- [issue: 471] Fix AsyncHeatingThermostatEvo
+
+### CHANGED
+
+- Changed contact email-address for pypi-Package
+
 ## [1.0.9] 2022-10-08
 
 ### ADDED
@@ -531,7 +546,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.9...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.10...master
+[1.0.10]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.9...1.0.10
 [1.0.9]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.8...1.0.9
 [1.0.8]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.7...1.0.8
 [1.0.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...1.0.7
@@ -598,6 +614,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [bug: 463]: https://github.com/hahn-th/homematicip-rest-api/issues/463
 [issue: 464]: https://github.com/hahn-th/homematicip-rest-api/issues/464
 [issue: 465]: https://github.com/hahn-th/homematicip-rest-api/issues/465
+[issue: 471]: https://github.com/hahn-th/homematicip-rest-api/issues/471
 [hmip-falmot-c12]: https://github.com/hahn-th/homematicip-rest-api/issues/281
 [hmip-whs2]: https://github.com/hahn-th/homematicip-rest-api/issues/280
 [hmip-pmfs]: https://github.com/hahn-th/homematicip-rest-api/issues/282
