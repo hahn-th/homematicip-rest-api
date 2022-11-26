@@ -162,7 +162,7 @@ class AsyncHeatingThermostatCompact(HeatingThermostatCompact, AsyncSabotageDevic
     """HMIP-eTRV-C (Heating-thermostat compact without display)"""
 
 
-class AsyncHeatingThermostatEvo(HeatingThermostatEvo, AsyncSabotageDevice):
+class AsyncHeatingThermostatEvo(HeatingThermostatEvo, AsyncOperationLockableDevice):
     """HMIP-eTRV-E (Heating-thermostat new evo version)"""
 
 

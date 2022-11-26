@@ -464,6 +464,47 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.set_operation_lock(True)
 
+@pytest.mark.asyncio
+async def test_heating_thermostat_evo(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000E70")
+    assert isinstance(d, AsyncHeatingThermostatEvo)
+    assert d.label == "Wohnzimmer 4"
+    assert d.manufacturerCode == 1
+    assert d.modelId == 425
+    assert d.modelType == "HmIP-eTRV-E"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000E70"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.setPointTemperature == 19.0
+    assert d.temperatureOffset == 0.5
+    assert d.valvePosition == 0.33
+    assert d.valveActualTemperature == 18.7
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.lowBat is False
+    assert d.operationLockActive is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -64
+    assert d.rssiPeerValue == -67
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
+
+    assert str(d) == (
+        "HmIP-eTRV-E Wohnzimmer 4 lowBat(False) unreach(False) "
+        "rssiDeviceValue(-64) rssiPeerValue(-67) configPending(False) "
+        "dutyCycle(False) operationLockActive(False) valvePosition(0.33) "
+        "valveState(ADAPTION_DONE) temperatureOffset(0.5) "
+        "setPointTemperature(19.0) valveActualTemperature(18.7)"
+    )
+
+    await d.set_operation_lock(True)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000E70")
+    assert d.operationLockActive is True
+
+    d.id = "INVALID_ID"
+    with pytest.raises(HmipWrongHttpStatusError):
+        result = await d.set_operation_lock(True)
 
 @pytest.mark.asyncio
 async def test_brand_switch_notification_light(no_ssl_fake_async_home: AsyncHome):
