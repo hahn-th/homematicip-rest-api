@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.11] 2022-11-27
+
+### ADDED
+
+- Support for Hue devices 
+  - Unknown devices are now represented by class BaseDevice
+  - Add device type ExternalDevice (which represents external devices (Hue))
+  - Add deviceArchetype (which differentiates between HMIP and EXTERNAL devices)
+  - Add ExternalBaseChannel
+  - Add ExternalUniversalLightChannel
+
 ## [1.0.10] 2022-11-26
 
 ### ADDED
@@ -546,7 +557,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.10...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.11...master
+[1.0.11]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.10...1.0.11
 [1.0.10]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.9...1.0.10
 [1.0.9]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.8...1.0.9
 [1.0.8]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.7...1.0.8
