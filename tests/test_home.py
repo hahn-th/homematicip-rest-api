@@ -9,7 +9,7 @@ import pytest
 from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
 from homematicip.base.enums import *
-from homematicip.device import AccelerationSensor, Device
+from homematicip.device import AccelerationSensor, Device, BaseDevice
 from homematicip.EventHook import EventHook
 from homematicip.functionalHomes import *
 from homematicip.group import Group, MetaGroup
@@ -366,7 +366,7 @@ def test_home_unknown_types(fake_home: Home):
         assert group.groupType == "DUMMY_GROUP"
 
         device = fake_home.devices[0]
-        assert type(device) == Device
+        assert type(device) == BaseDevice
         assert device.deviceType == "DUMMY_DEVICE"
 
         funcHome = fake_home.functionalHomes[0]

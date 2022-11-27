@@ -8,6 +8,14 @@ ERROR_CODE = "errorCode"
 _LOGGER = logging.getLogger(__name__)
 
 
+class AsyncBaseDevice(BaseDevice):
+    """Async implementation of a generic homematic ip device (hmip and external)"""
+
+
+class AsyncExternalDevice(ExternalDevice):
+    """Async implementation of external device (hue)"""
+
+
 class AsyncDevice(Device):
     """Async implementation of a genereric homematic ip device"""
 
@@ -328,8 +336,8 @@ class AsyncBlind(Blind, AsyncShutter):
 
 class AsyncFullFlushShutter(FullFlushShutter, AsyncShutter):
     """HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)"""
-    
-    
+
+
 class AsyncBrandSwitch2(BrandSwitch2, AsyncSwitch):
     """ELV-SH-BS2 (ELV Smart Home ARR-Bausatz Schaltaktor für Markenschalter – 2-fach powered by Homematic IP)"""
 
@@ -599,6 +607,7 @@ class AsyncWallMountedGarageDoorController(
 
     async def send_start_impulse(self):
         return await self._connection.api_call(*super().send_start_impulse())
+
 
 class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
     """HmIP-DLD (DoorLockDrive)"""
