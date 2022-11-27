@@ -16,7 +16,7 @@ jobs:
         python-version: ["3.8","3.9","3.10"]
     steps:
     - name: Set Timezone
-      uses: szenius/set-timezone@v1.0
+      uses: szenius/set-timezone@v1.1
       with:
         timezoneLinux: "Europe/Berlin"
         timezoneMacos: "Europe/Berlin"
