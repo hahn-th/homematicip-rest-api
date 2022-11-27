@@ -8197,6 +8197,272 @@
             "serializedGlobalTradeItemNumber": "3014F7110000000000000DLS",
             "type": "DOOR_LOCK_SENSOR",
             "updateState": "UP_TO_DATE"
+        },
+        "HUE00000-0000-0000-0000-000000000008": {
+            "connectionType": "EXTERNAL",
+            "deviceArchetype": "EXTERNAL",
+            "externalService": "HUE",
+            "firmwareVersion": "1.88.1",
+            "functionalChannels": {
+                "0": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000009",
+                    "deviceId": "HUE00000-0000-0000-0000-000000000008",
+                    "functionalChannelType": "EXTERNAL_BASE_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "unreach": false
+                },
+                "1": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000011",
+                    "channelRole": "UNIVERSAL_LIGHT_ACTUATOR",
+                    "colorTemperature": 3165,
+                    "deviceId": "HUE00000-0000-0000-0000-000000000008",
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "EXTERNAL_UNIVERSAL_LIGHT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000012"
+                    ],
+                    "hue": null,
+                    "index": 1,
+                    "label": "",
+                    "maximumColorTemperature": 6500,
+                    "minimalColorTemperature": 2000,
+                    "on": false,
+                    "saturationLevel": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureLightGroupActuatorChannel": true,
+                        "IOptionalFeatureColorTemperature": true,
+                        "IOptionalFeatureDimmerState": true
+                    }
+                }
+            },
+            "hasCustomLabel": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "HUE00000-0000-0000-0000-000000000008",
+            "label": "Hinten rechts",
+            "lastStatusUpdate": 1669539365772,
+            "modelType": "LTW013",
+            "permanentlyReachable": true,
+            "supported": true,
+            "type": "EXTERNAL"
+        },
+		"HUE00000-0000-0000-0000-000000000028": {
+            "connectionType": "EXTERNAL",
+            "deviceArchetype": "EXTERNAL",
+            "externalService": "HUE",
+            "firmwareVersion": "1.88.1",
+            "functionalChannels": {
+                "0": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000029",
+                    "deviceId": "HUE00000-0000-0000-0000-000000000028",
+                    "functionalChannelType": "EXTERNAL_BASE_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "unreach": false
+                },
+                "1": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000030",
+                    "channelRole": "UNIVERSAL_LIGHT_ACTUATOR",
+                    "colorTemperature": 2525,
+                    "deviceId": "HUE00000-0000-0000-0000-000000000028",
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "EXTERNAL_UNIVERSAL_LIGHT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000012"
+                    ],
+                    "hue": null,
+                    "index": 1,
+                    "label": "",
+                    "maximumColorTemperature": 6500,
+                    "minimalColorTemperature": 2000,
+                    "on": false,
+                    "saturationLevel": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureLightGroupActuatorChannel": true,
+                        "IOptionalFeatureColorTemperature": true,
+                        "IOptionalFeatureDimmerState": true
+                    }
+                }
+            },
+            "hasCustomLabel": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "HUE00000-0000-0000-0000-000000000028",
+            "label": "Vorne links",
+            "lastStatusUpdate": 1669539365772,
+            "modelType": "LTW013",
+            "permanentlyReachable": true,
+            "supported": true,
+            "type": "EXTERNAL"
+        },
+        "HUE00000-0000-0000-0000-000000000031": {
+            "connectionType": "EXTERNAL",
+            "deviceArchetype": "EXTERNAL",
+            "externalService": "HUE",
+            "firmwareVersion": "1.88.1",
+            "functionalChannels": {
+                "0": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000032",
+                    "deviceId": "HUE00000-0000-0000-0000-000000000031",
+                    "functionalChannelType": "EXTERNAL_BASE_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "unreach": false
+                },
+                "1": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000033",
+                    "channelRole": "UNIVERSAL_LIGHT_ACTUATOR",
+                    "colorTemperature": 2950,
+                    "deviceId": "HUE00000-0000-0000-0000-000000000031",
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "EXTERNAL_UNIVERSAL_LIGHT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000012"
+                    ],
+                    "hue": null,
+                    "index": 1,
+                    "label": "",
+                    "maximumColorTemperature": 6500,
+                    "minimalColorTemperature": 2000,
+                    "on": false,
+                    "saturationLevel": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureLightGroupActuatorChannel": true,
+                        "IOptionalFeatureColorTemperature": true,
+                        "IOptionalFeatureDimmerState": true,
+                        "IOptionalFeatureHueSaturationValue": true
+                    }
+                }
+            },
+            "hasCustomLabel": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "HUE00000-0000-0000-0000-000000000031",
+            "label": "Schrankbeleuchtung",
+            "lastStatusUpdate": 1669539365772,
+            "modelType": "LST002",
+            "permanentlyReachable": true,
+            "supported": true,
+            "type": "EXTERNAL"
+        },
+        "HUE00000-0000-0000-0000-000000000034": {
+            "connectionType": "EXTERNAL",
+            "deviceArchetype": "EXTERNAL",
+            "externalService": "HUE",
+            "firmwareVersion": "1.93.11",
+            "functionalChannels": {
+                "0": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000035",
+                    "deviceId": "HUE00000-0000-0000-0000-000000000034",
+                    "functionalChannelType": "EXTERNAL_BASE_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "unreach": false
+                },
+                "1": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000036",
+                    "channelRole": "UNIVERSAL_LIGHT_ACTUATOR",
+                    "colorTemperature": 3195,
+                    "deviceId": "HUE00000-0000-0000-0000-000000000034",
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "EXTERNAL_UNIVERSAL_LIGHT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000012"
+                    ],
+                    "hue": null,
+                    "index": 1,
+                    "label": "",
+                    "maximumColorTemperature": 6500,
+                    "minimalColorTemperature": 2000,
+                    "on": false,
+                    "saturationLevel": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureLightGroupActuatorChannel": true,
+                        "IOptionalFeatureColorTemperature": true,
+                        "IOptionalFeatureDimmerState": true
+                    }
+                }
+            },
+            "hasCustomLabel": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "HUE00000-0000-0000-0000-000000000034",
+            "label": "Hinten links",
+            "lastStatusUpdate": 1669539365772,
+            "modelType": "LTG002",
+            "permanentlyReachable": true,
+            "supported": true,
+            "type": "EXTERNAL"
+        },
+        "HUE00000-0000-0000-0000-000000000037": {
+            "connectionType": "EXTERNAL",
+            "deviceArchetype": "EXTERNAL",
+            "externalService": "HUE",
+            "firmwareVersion": "1.88.1",
+            "functionalChannels": {
+                "0": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000038",
+                    "deviceId": "HUE00000-0000-0000-0000-000000000037",
+                    "functionalChannelType": "EXTERNAL_BASE_CHANNEL",
+                    "groupIndex": 0,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000010"
+                    ],
+                    "index": 0,
+                    "label": "",
+                    "unreach": false
+                },
+                "1": {
+                    "channelId": "HUE00000-0000-0000-0000-000000000039",
+                    "channelRole": "UNIVERSAL_LIGHT_ACTUATOR",
+                    "colorTemperature": 2525,
+                    "deviceId": "HUE00000-0000-0000-0000-000000000037",
+                    "dimLevel": 0.0,
+                    "functionalChannelType": "EXTERNAL_UNIVERSAL_LIGHT_CHANNEL",
+                    "groupIndex": 1,
+                    "groups": [
+                        "HUE00000-0000-0000-0000-000000000012"
+                    ],
+                    "hue": null,
+                    "index": 1,
+                    "label": "",
+                    "maximumColorTemperature": 6500,
+                    "minimalColorTemperature": 2000,
+                    "on": false,
+                    "saturationLevel": null,
+                    "supportedOptionalFeatures": {
+                        "IFeatureLightGroupActuatorChannel": true,
+                        "IOptionalFeatureColorTemperature": true,
+                        "IOptionalFeatureDimmerState": true
+                    }
+                }
+            },
+            "hasCustomLabel": false,
+            "homeId": "00000000-0000-0000-0000-000000000001",
+            "id": "HUE00000-0000-0000-0000-000000000037",
+            "label": "Vorne rechts",
+            "lastStatusUpdate": 1669539365772,
+            "modelType": "LTW013",
+            "permanentlyReachable": true,
+            "supported": true,
+            "type": "EXTERNAL"
         }
     },
     "groups": {

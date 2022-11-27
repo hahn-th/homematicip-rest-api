@@ -11,8 +11,78 @@ from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
 
+class BaseDevice(HomeMaticIPObject):
+    """Base device class. This is the foundation for homematicip and external (hue) devices"""
 
-class Device(HomeMaticIPObject):
+    _supportedFeatureAttributeMap = {}
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.id = None
+        self.homeId = None
+        self.label = None
+        self.connectionType = ConnectionType.HMIP_LAN
+        self.deviceArchetype = DeviceArchetype.HMIP
+        self.lastStatusUpdate = None
+        self.firmwareVersion = None
+        self.modelType = ""
+        self.permanentlyReachable = False
+        self.functionalChannels = []
+        self.functionalChannelCount = Counter()
+        self.deviceType = None
+
+        # must be imported in init. otherwise we have cross import issues
+        from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+        self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
+
+    
+    def from_json(self, js):
+        super().from_json(js)
+        self.id = js["id"]
+        self.homeId = js["homeId"]
+        self.label = js["label"]
+
+        self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
+        self.firmwareVersion = js["firmwareVersion"]
+        self.modelType = js["modelType"]
+        self.permanentlyReachable = js["permanentlyReachable"]
+        self.deviceType = js["type"]
+        
+        self.connectionType = ConnectionType.from_str(js["connectionType"])
+
+        if "deviceArchetype" in js:
+            self.deviceArchetype = DeviceArchetype.from_str(js["deviceArchetype"])
+
+    def load_functionalChannels(self, groups: Iterable[Group]):
+        """this function will load the functionalChannels into the device"""
+        self.functionalChannels = []
+        for channel in self._rawJSONData["functionalChannels"].values():
+            fc = self._parse_functionalChannel(channel, groups)
+            self.functionalChannels.append(fc)
+        self.functionalChannelCount = Counter(
+            x.functionalChannelType for x in self.functionalChannels
+        )
+
+    def _parse_functionalChannel(self, json_state, groups: Iterable[Group]):
+        fc = None
+        try:
+            channelType = FunctionalChannelType.from_str(
+                json_state["functionalChannelType"]
+            )
+            fc = self._typeFunctionalChannelMap[channelType]()
+            fc.from_json(json_state, groups)
+        except:
+            fc = self._typeFunctionalChannelMap[
+                FunctionalChannelType.FUNCTIONAL_CHANNEL
+            ]()
+            fc.from_json(json_state, groups)
+            LOGGER.warning(
+                "There is no class for functionalChannel '%s' yet",
+                json_state["functionalChannelType"],
+            )
+        return fc
+
+class Device(BaseDevice):
     """this class represents a generic homematic ip device"""
 
     _supportedFeatureAttributeMap = {
@@ -46,23 +116,16 @@ class Device(HomeMaticIPObject):
 
     def __init__(self, connection):
         super().__init__(connection)
-        self.id = None
-        self.homeId = None
-        self.label = None
-        self.connectionType = ConnectionType.HMIP_LAN
-        self.lastStatusUpdate = None
-        self.deviceType = None
+        
         self.updateState = DeviceUpdateState.UP_TO_DATE
-        self.firmwareVersion = None
+        self.availableFirmwareVersion = None
         self.firmwareVersionInteger = (
             0  # firmwareVersion = A.B.C -> firmwareVersionInteger ((A<<16)|(B<<8)|C)
         )
-        self.availableFirmwareVersion = None
         self.unreach = False
         self.lowBat = False
         self.routerModuleSupported = False
         self.routerModuleEnabled = False
-        self.modelType = ""
         self.modelId = 0
         self.oem = ""
         self.manufacturerCode = 0
@@ -71,15 +134,7 @@ class Device(HomeMaticIPObject):
         self.rssiPeerValue = 0
         self.dutyCycle = False
         self.configPending = False
-        self.permanentlyReachable = False
-        self.liveUpdateState = LiveUpdateState.LIVE_UPDATE_NOT_SUPPORTED
-        self.functionalChannels = []
-        self.functionalChannelCount = Counter()
 
-        # must be imported in init. otherwise we have cross import issues
-        from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
-
-        self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
 
         self._baseChannel = "DEVICE_BASE"
 
@@ -101,25 +156,15 @@ class Device(HomeMaticIPObject):
 
     def from_json(self, js):
         super().from_json(js)
-        self.id = js["id"]
-        self.homeId = js["homeId"]
-        self.label = js["label"]
 
-        self.lastStatusUpdate = self.fromtimestamp(js["lastStatusUpdate"])
-
-        self.deviceType = js["type"]
         self.updateState = DeviceUpdateState.from_str(js["updateState"])
-        self.firmwareVersion = js["firmwareVersion"]
         self.firmwareVersionInteger = js["firmwareVersionInteger"]
         self.availableFirmwareVersion = js["availableFirmwareVersion"]
-        self.modelType = js["modelType"]
         self.modelId = js["modelId"]
         self.oem = js["oem"]
         self.manufacturerCode = js["manufacturerCode"]
         self.serializedGlobalTradeItemNumber = js["serializedGlobalTradeItemNumber"]
-        self.permanentlyReachable = js["permanentlyReachable"]
         self.liveUpdateState = LiveUpdateState.from_str(js["liveUpdateState"])
-        self.connectionType = ConnectionType.from_str(js["connectionType"])
         c = get_functional_channel(self._baseChannel, js)
         if c:
             self.set_attr_from_dict("lowBat", c)
@@ -171,34 +216,24 @@ class Device(HomeMaticIPObject):
             "device/configuration/setRouterModuleEnabled", json.dumps(data)
         )
 
-    def load_functionalChannels(self, groups: Iterable[Group]):
-        """this function will load the functionalChannels into the device"""
-        self.functionalChannels = []
-        for channel in self._rawJSONData["functionalChannels"].values():
-            fc = self._parse_functionalChannel(channel, groups)
-            self.functionalChannels.append(fc)
-        self.functionalChannelCount = Counter(
-            x.functionalChannelType for x in self.functionalChannels
-        )
+    
 
-    def _parse_functionalChannel(self, json_state, groups: Iterable[Group]):
-        fc = None
-        try:
-            channelType = FunctionalChannelType.from_str(
-                json_state["functionalChannelType"]
-            )
-            fc = self._typeFunctionalChannelMap[channelType]()
-            fc.from_json(json_state, groups)
-        except:
-            fc = self._typeFunctionalChannelMap[
-                FunctionalChannelType.FUNCTIONAL_CHANNEL
-            ]()
-            fc.from_json(json_state, groups)
-            LOGGER.warning(
-                "There is no class for functionalChannel '%s' yet",
-                json_state["functionalChannelType"],
-            )
-        return fc
+class ExternalDevice(BaseDevice):
+    """Represents devices with archtetype EXTERNAL"""
+    
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.hasCustomLabel = None
+        self.externalService = ""
+        self.supported = None
+        self._baseChannel = "EXTERNAL_BASE_CHANNEL"
+    
+    def from_json(self, js):
+        super().from_json(js)
+
+        self.hasCustomLabel = js["hasCustomLabel"]
+        self.externalService = js["externalService"]
+        self.supported = js["supported"]
 
 
 class HomeControlAccessPoint(Device):
