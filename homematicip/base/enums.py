@@ -199,6 +199,8 @@ class ClientType(AutoNameEnum):
 
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
+    BASE_DEVICE = auto()
+    EXTERNAL = auto() 
     ACCELERATION_SENSOR = auto()
     ALARM_SIREN_INDOOR = auto()
     ALARM_SIREN_OUTDOOR = auto()
@@ -426,6 +428,8 @@ class FunctionalChannelType(AutoNameEnum):
     DOOR_CHANNEL = auto()
     DOOR_LOCK_CHANNEL = auto()
     DOOR_LOCK_SENSOR_CHANNEL = auto()
+    EXTERNAL_BASE_CHANNEL = auto()
+    EXTERNAL_UNIVERSAL_LIGHT_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL = auto()
@@ -572,11 +576,15 @@ class AlarmSignalType(AutoNameEnum):
 
 
 class ConnectionType(AutoNameEnum):
+    EXTERNAL = auto()
     HMIP_RF = auto()
     HMIP_WIRED = auto()
     HMIP_LAN = auto()
     HMIP_WLAN = auto()
 
+class DeviceArchetype(AutoNameEnum):
+    EXTERNAL = auto()
+    HMIP = auto()
 
 class ShadingStateType(AutoNameEnum):
     NOT_POSSIBLE = auto()

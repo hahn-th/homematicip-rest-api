@@ -8,6 +8,8 @@ from homematicip.securityEvent import *
 
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
+    DeviceType.BASE_DEVICE: BaseDevice,
+    DeviceType.EXTERNAL: ExternalDevice,
     DeviceType.ACCELERATION_SENSOR: AccelerationSensor,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
     DeviceType.ALARM_SIREN_OUTDOOR: AlarmSirenOutdoor,
@@ -178,6 +180,8 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DOOR_CHANNEL: DoorChannel,
     FunctionalChannelType.DOOR_LOCK_CHANNEL: DoorLockChannel,
     FunctionalChannelType.DOOR_LOCK_SENSOR_CHANNEL: DoorLockSensorChannel,
+    FunctionalChannelType.EXTERNAL_BASE_CHANNEL: ExternalBaseChannel,
+    FunctionalChannelType.EXTERNAL_UNIVERSAL_LIGHT_CHANNEL: ExternalUniversalLightChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_CHANNEL: FloorTeminalBlockChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL: FloorTerminalBlockLocalPumpChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL: FloorTerminalBlockMechanicChannel,

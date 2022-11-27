@@ -1152,3 +1152,37 @@ class TemperatureDifferenceSensor2Channel(FunctionalChannel):
         self.set_attr_from_dict("temperatureExternalDelta", js)
         self.set_attr_from_dict("temperatureExternalOne", js)
         self.set_attr_from_dict("temperatureExternalTwo", js)
+
+class ExternalBaseChannel(FunctionalChannel):
+    """this represents the EXTERNAL_BASE_CHANNEL function-channel for external devices"""
+    def __init__(self):
+        super().__init__()
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js,groups)
+
+class ExternalUniversalLightChannel(FunctionalChannel):
+    """this represents the EXTERNAL_UNIVERSAL_LIGHT_CHANNEL function-channel for external devices"""
+    def __init__(self):
+        super().__init__()
+
+        self.channelRole = ""
+        self.colorTemperature = 0
+        self.dimLevel = 0.0
+        self.hue = None
+        self.maximumColorTemperature = 0
+        self.minimalColorTemperature = 0
+        self.on = None
+        self.saturationLevel = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js,groups)
+
+        self.set_attr_from_dict("channelRole", js)
+        self.set_attr_from_dict("colorTemperature", js)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("hue", js)
+        self.set_attr_from_dict("maximumColorTemperature", js)
+        self.set_attr_from_dict("minimalColorTemperature", js)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("saturationLevel", js)

@@ -360,7 +360,7 @@ class Home(HomeMaticIPObject):
             d.from_json(json_state)
             return d
         except:
-            d = self._typeClassMap[DeviceType.DEVICE](self._connection)
+            d = self._typeClassMap[DeviceType.BASE_DEVICE](self._connection)
             d.from_json(json_state)
             LOGGER.warning("There is no class for device '%s' yet", json_state["type"])
             return d

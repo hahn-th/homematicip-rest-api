@@ -897,6 +897,41 @@ def test_basic_device_functions(fake_home: Home):
         result = d.set_router_module_enabled(False)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+def test_external_device(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
+        assert isinstance(d, ExternalDevice)
+        assert d.connectionType == ConnectionType.EXTERNAL
+        assert d.deviceArchetype == DeviceArchetype.EXTERNAL
+        assert d.externalService == "HUE"
+        assert d.firmwareVersion == "1.88.1"
+        assert d.hasCustomLabel == False
+        assert d.homeId == "00000000-0000-0000-0000-000000000001"
+        assert d.id == "HUE00000-0000-0000-0000-000000000008"
+        assert d.label == "Hinten rechts"
+        #1669539365772 
+        assert d.lastStatusUpdate == datetime(2022, 11, 27, 9, 56, 5, 772000) #+ timedelta(0, utc_offset)
+        assert d.modelType == "LTW013"
+        assert d.permanentlyReachable == True
+        assert d.supported == True
+        assert d.deviceType ==  DeviceType.EXTERNAL
+
+        assert len(d.functionalChannels) == 2
+
+        fc0 = d.functionalChannels[0]
+        fc1 = d.functionalChannels[1]
+        assert isinstance(fc0, ExternalBaseChannel)
+
+        assert isinstance(fc1, ExternalUniversalLightChannel)
+        assert fc1.channelRole == "UNIVERSAL_LIGHT_ACTUATOR"
+        assert fc1.colorTemperature == 3165
+        assert fc1.dimLevel == 0.0
+        assert fc1.hue == None
+        assert fc1.maximumColorTemperature == 6500
+        assert fc1.minimalColorTemperature == 2000
+        assert fc1.on == False
+        assert fc1.saturationLevel == None
+
 
 def test_all_devices_implemented(fake_home: Home):
     not_implemented = False
