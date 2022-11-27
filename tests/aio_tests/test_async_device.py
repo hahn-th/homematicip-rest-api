@@ -271,11 +271,45 @@ async def test_water_sensor(no_ssl_fake_async_home: AsyncHome):
 def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
     not_implemented = False
     for d in no_ssl_fake_async_home.devices:
-        if type(d) != AsyncDevice:  # pragma: no cover
+        if type(d) != AsyncBaseDevice:  # pragma: no cover
             print(f"{d.deviceType} isn't implemented yet")
             not_implemented = True
     assert not_implemented
 
+@pytest.mark.asyncio
+def test_external_device(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
+    assert isinstance(d, AsyncExternalDevice)
+    assert d.connectionType == ConnectionType.EXTERNAL
+    assert d.deviceArchetype == DeviceArchetype.EXTERNAL
+    assert d.externalService == "HUE"
+    assert d.firmwareVersion == "1.88.1"
+    assert d.hasCustomLabel == False
+    assert d.homeId == "00000000-0000-0000-0000-000000000001"
+    assert d.id == "HUE00000-0000-0000-0000-000000000008"
+    assert d.label == "Hinten rechts"
+    #1669539365772 
+    assert d.lastStatusUpdate == datetime(2022, 11, 27, 9, 56, 5, 772000) #+ timedelta(0, utc_offset)
+    assert d.modelType == "LTW013"
+    assert d.permanentlyReachable == True
+    assert d.supported == True
+    assert d.deviceType ==  DeviceType.EXTERNAL
+
+    assert len(d.functionalChannels) == 2
+
+    fc0 = d.functionalChannels[0]
+    fc1 = d.functionalChannels[1]
+    assert isinstance(fc0, ExternalBaseChannel)
+
+    assert isinstance(fc1, ExternalUniversalLightChannel)
+    assert fc1.channelRole == "UNIVERSAL_LIGHT_ACTUATOR"
+    assert fc1.colorTemperature == 3165
+    assert fc1.dimLevel == 0.0
+    assert fc1.hue == None
+    assert fc1.maximumColorTemperature == 6500
+    assert fc1.minimalColorTemperature == 2000
+    assert fc1.on == False
+    assert fc1.saturationLevel == None
 
 @pytest.mark.asyncio
 async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
@@ -464,6 +498,7 @@ async def test_heating_thermostat(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.set_operation_lock(True)
 
+
 @pytest.mark.asyncio
 async def test_heating_thermostat_evo(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000E70")
@@ -505,6 +540,7 @@ async def test_heating_thermostat_evo(no_ssl_fake_async_home: AsyncHome):
     d.id = "INVALID_ID"
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.set_operation_lock(True)
+
 
 @pytest.mark.asyncio
 async def test_brand_switch_notification_light(no_ssl_fake_async_home: AsyncHome):

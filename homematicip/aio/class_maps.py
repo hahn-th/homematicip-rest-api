@@ -8,7 +8,7 @@ from homematicip.base.enums import *
 TYPE_CLASS_MAP = {
     DeviceType.DEVICE: AsyncDevice,
     DeviceType.BASE_DEVICE: AsyncBaseDevice,
-    DeviceType.EXTERNAL: ExternalDevice,
+    DeviceType.EXTERNAL: AsyncExternalDevice,
     DeviceType.ACCELERATION_SENSOR: AsyncAccelerationSensor,
     DeviceType.ALARM_SIREN_INDOOR: AsyncAlarmSirenIndoor,
     DeviceType.ALARM_SIREN_OUTDOOR: AsyncAlarmSirenOutdoor,
