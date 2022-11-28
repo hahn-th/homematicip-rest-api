@@ -400,6 +400,14 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+@pytest.mark.asyncio
+async def test_din_rail_dimmer_3(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert isinstance(d, AsyncDinRailDimmer3)
+    assert d.dimLevel == d.c1dimLevel
+    assert d.c1dimLevel == 0.1
+    assert d.c2dimLevel == 0.2
+    assert d.c3dimLevel == 0.3
 
 @pytest.mark.asyncio
 async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### ADDED
+
+- Add Async device for HmIP-DRDI3
+
 ## [1.0.11] 2022-11-27
 
 ### ADDED

@@ -308,6 +308,8 @@ class AsyncFullFlushContactInterface6(FullFlushContactInterface6, AsyncDevice):
 class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)"""
 
+class AsyncDinRailDimmer3(DinRailDimmer3, AsyncSwitch):
+    """HmIP-DRDI3 (Din Rail Dimmer 3 Inbound)"""
 
 class AsyncDinRailSwitch(DinRailSwitch, AsyncFullFlushInputSwitch):
     """HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)"""
