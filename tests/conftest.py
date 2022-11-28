@@ -73,8 +73,8 @@ async def session_stop_threads():
         name="aio_fake_cloud",
         target=start_background_loop,
         args=(lambda: stop_threads, loop),
+        daemon=True
     )
-    t.setDaemon(True)
     t.start()
     yield loop
 
