@@ -7,7 +7,8 @@ from threading import Thread
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import pytest
 from aiohttp import web
@@ -36,7 +37,7 @@ def pytest_unconfigure(config):  # pragma: no cover
 
 @pytest.fixture
 def ssl_ctx():
-    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
     # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
     # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
     ssl_ctx.load_cert_chain(get_full_path("server.crt"), get_full_path("server.key"))
@@ -73,8 +74,8 @@ async def session_stop_threads():
         name="aio_fake_cloud",
         target=start_background_loop,
         args=(lambda: stop_threads, loop),
-        daemon=True
     )
+    t.setDaemon(True)
     t.start()
     yield loop
 

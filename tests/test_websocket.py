@@ -220,7 +220,7 @@ def test_websocket_error(fake_home: Home, home_data):
     client_changed = home_data["clients"][client_base_id].copy()
     client_changed["label"] = "CHANGED"
     send_event(fake_home, EventType.CLIENT_CHANGED, "client", client_changed)
-    time.sleep(2)
+    time.sleep(1)
     d = fake_home.search_client_by_id(client_base_id)
     assert d.label == "CHANGED"
     assert isinstance(d, Client)
