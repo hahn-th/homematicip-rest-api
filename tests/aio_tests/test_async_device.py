@@ -276,7 +276,6 @@ def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
             not_implemented = True
     assert not_implemented
 
-@pytest.mark.asyncio
 def test_external_device(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
     assert isinstance(d, AsyncExternalDevice)
@@ -400,6 +399,33 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+@pytest.mark.asyncio
+async def test_din_rail_dimmer_3(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert isinstance(d, AsyncDinRailDimmer3)
+    assert d.dimLevel == d.c1dimLevel
+    assert d.c1dimLevel == 0.1
+    assert d.c2dimLevel == 0.2
+    assert d.c3dimLevel == 0.3
+
+    
+    assert d.functionalChannels[1].dimLevel == 0.1
+    await d.set_dim_level(0.5, 1)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert d.functionalChannels[1].dimLevel == 0.5
+
+    assert d.functionalChannels[2].dimLevel == 0.2
+    await d.set_dim_level(0.67, 2)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert d.functionalChannels[2].dimLevel == 0.67
+    
+    assert d.functionalChannels[3].dimLevel == 0.3
+    await d.set_dim_level(0.8, 3)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert d.functionalChannels[3].dimLevel == 0.8
 
 @pytest.mark.asyncio
 async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):

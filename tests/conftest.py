@@ -36,7 +36,9 @@ def pytest_unconfigure(config):  # pragma: no cover
 
 @pytest.fixture
 def ssl_ctx():
-    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+    ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+    # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
     ssl_ctx.load_cert_chain(get_full_path("server.crt"), get_full_path("server.key"))
     return ssl_ctx
 
@@ -71,8 +73,8 @@ async def session_stop_threads():
         name="aio_fake_cloud",
         target=start_background_loop,
         args=(lambda: stop_threads, loop),
+        daemon=True
     )
-    t.setDaemon(True)
     t.start()
     yield loop
 
