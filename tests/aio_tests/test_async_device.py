@@ -276,7 +276,6 @@ def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
             not_implemented = True
     assert not_implemented
 
-@pytest.mark.asyncio
 def test_external_device(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
     assert isinstance(d, AsyncExternalDevice)
