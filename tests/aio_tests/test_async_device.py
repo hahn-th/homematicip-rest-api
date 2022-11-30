@@ -409,6 +409,25 @@ async def test_din_rail_dimmer_3(no_ssl_fake_async_home: AsyncHome):
     assert d.c2dimLevel == 0.2
     assert d.c3dimLevel == 0.3
 
+    
+    assert d.functionalChannels[1].dimLevel == 0.1
+    await d.set_dim_level(0.5, 1)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert d.functionalChannels[1].dimLevel == 0.5
+
+    assert d.functionalChannels[2].dimLevel == 0.2
+    await d.set_dim_level(0.67, 2)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert d.functionalChannels[2].dimLevel == 0.67
+    
+    assert d.functionalChannels[3].dimLevel == 0.3
+    await d.set_dim_level(0.8, 3)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
+    assert d.functionalChannels[3].dimLevel == 0.8
+
 @pytest.mark.asyncio
 async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
     no_ssl_fake_async_home = no_ssl_fake_async_home

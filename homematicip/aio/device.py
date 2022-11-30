@@ -308,8 +308,6 @@ class AsyncFullFlushContactInterface6(FullFlushContactInterface6, AsyncDevice):
 class AsyncFullFlushInputSwitch(FullFlushInputSwitch, AsyncSwitch):
     """HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)"""
 
-class AsyncDinRailDimmer3(DinRailDimmer3, AsyncSwitch):
-    """HmIP-DRDI3 (Din Rail Dimmer 3 Inbound)"""
 
 class AsyncDinRailSwitch(DinRailSwitch, AsyncFullFlushInputSwitch):
     """HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)"""
@@ -364,18 +362,17 @@ class AsyncDimmer(Dimmer, AsyncDevice):
             *super().set_dim_level(dimLevel=dimLevel, channelIndex=channelIndex)
         )
 
-
-class AsyncPluggableDimmer(AsyncDimmer):
-    """HMIP-PDT Pluggable Dimmer"""
-
-
 class AsyncBrandDimmer(AsyncDimmer):
     """HMIP-BDT Brand Dimmer"""
 
+class AsyncDinRailDimmer3(DinRailDimmer3, AsyncDimmer):
+    """HmIP-DRDI3 (Din Rail Dimmer 3 Inbound)"""
 
 class AsyncFullFlushDimmer(AsyncDimmer):
     """HMIP-FDT Dimming Actuator flush-mount"""
 
+class AsyncPluggableDimmer(AsyncDimmer):
+    """HMIP-PDT Pluggable Dimmer"""
 
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """HMIP-SWO-B"""
