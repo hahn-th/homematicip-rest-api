@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.13] 2022-12-05
+
+### FIXED
+
+- Fixed device HmIP-DRDI3. Changed parent class from AsyncSwitch to AsyncDimmer
+
 ## [1.0.12] 2022-11-30
 
 ### ADDED
@@ -563,7 +569,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...master
+[1.0.13]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...1.0.13
 [1.0.12]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.11...1.0.12
 [1.0.11]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.10...1.0.11
 [1.0.10]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.9...1.0.10
