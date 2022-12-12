@@ -283,6 +283,7 @@ class DeviceType(AutoNameEnum):
     WIRED_DIMMER_3 = auto()
     WIRED_INPUT_32 = auto()
     WIRED_SWITCH_8 = auto()
+    WIRED_SWITCH_4 = auto()
 
 
 class GroupType(AutoNameEnum):
