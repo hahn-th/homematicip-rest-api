@@ -532,7 +532,7 @@ class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)"""
 
 
-class AsyncWiredSwitch4(WiredSwitch8, AsyncSwitch):
+class AsyncWiredSwitch4(WiredSwitch4, AsyncSwitch):
     """HMIPW-DRS4 (Homematic IP Wired Switch Actuator – 4x channels)"""
 
 
