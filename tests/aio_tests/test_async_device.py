@@ -840,3 +840,17 @@ async def test_multibox_io(no_ssl_fake_async_home: AsyncHome):
     await d.turn_off(1)
     await no_ssl_fake_async_home.get_current_state()
     assert d.functionalChannels[1].on == False
+
+
+@pytest.mark.asyncio
+async def test_wired_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000WIREDSWITCH4")
+    assert isinstance(d, AsyncWiredSwitch4)
+
+    for i in range(1, 4):
+        await d.turn_on(i)
+        await no_ssl_fake_async_home.get_current_state()
+        assert d.functionalChannels[i].on == True
+        await d.turn_off(i)
+        await no_ssl_fake_async_home.get_current_state()
+        assert d.functionalChannels[i].on == False
