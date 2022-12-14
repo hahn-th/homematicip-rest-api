@@ -1560,3 +1560,17 @@ def test_door_lock_sensor(fake_home: Home):
         assert d.doorLockNeutralPosition == "HORIZONTAL"
         assert d.doorLockTurns == 2
         assert d.lockState == None
+
+
+def test_wired_din_rail_switch4(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000WIREDSWITCH4")
+        assert isinstance(d, WiredSwitch4)
+
+        for i in range(1, 4):
+            d.turn_on(i)
+            fake_home.get_current_state()
+            assert d.functionalChannels[i].on == True
+            d.turn_off(i)
+            fake_home.get_current_state()
+            assert d.functionalChannels[i].on == False
