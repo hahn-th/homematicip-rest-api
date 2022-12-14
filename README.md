@@ -199,7 +199,7 @@ A few examples:
 - [ ] HMIPW-BRC2 (Homematic IP Wired Remote Control for brand switches – 2x channels)
 - [ ] HMIPW-DRBL4 (Homematic IP Wired Blinds Actuator – 4x channels)
 - [x] HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)
-- [ ] HMIPW-DRS4 (Homematic IP Wired Switch Actuator – 4x channels)
+- [x] HMIPW-DRS4 (Homematic IP Wired Switch Actuator – 4x channels)
 - [ ] HMIPW-DRI16 (Homematic IP Wired Inbound module – 16x channels)
 - [x] HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)
 - [x] HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)
