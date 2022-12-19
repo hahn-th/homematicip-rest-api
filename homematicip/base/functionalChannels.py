@@ -771,11 +771,10 @@ class InternalSwitchChannel(FunctionalChannel):
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
 
     def __str__(self):
-        return "{} frostProtectionTemperature({}) heatingValveType({}) internalSwitchOutputEnabled({}) internalSwitchOutputEnabled({}) valveProtectionDuration({}) valveProtectionSwitchingInterval({})".format(
+        return "{} frostProtectionTemperature({}) heatingValveType({}) internalSwitchOutputEnabled({}) valveProtectionDuration({}) valveProtectionSwitchingInterval({})".format(
             super().__str__(),
             self.frostProtectionTemperature,
             self.heatingValveType,
-            self.internalSwitchOutputEnabled,
             self.internalSwitchOutputEnabled,
             self.valveProtectionDuration,
             self.valveProtectionSwitchingInterval,
