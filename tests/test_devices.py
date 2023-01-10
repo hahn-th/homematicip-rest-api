@@ -1278,6 +1278,22 @@ def test_floor_terminal_block(fake_home: Home):
         assert c.valvePosition == 0.5
         assert c.label == "Kanal 1"
 
+        d = WiredFloorTerminalBlock12(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000000053")
+        assert d.minimumFloorHeatingValvePosition == 0.0
+        d.set_minimum_floor_heating_valve_position(0.2)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000053")
+        assert d.minimumFloorHeatingValvePosition == 0.2
+        assert str(d) == (
+            "HmIPW-FALMOT-C12 Wired Fußbodenheizungsaktor – 12-fach, motorisch lowBat(None) unreach(False) "
+            "rssiDeviceValue(None) rssiPeerValue(None) configPending(False) dutyCycle(None) "
+            "minimumFloorHeatingValvePosition(0.2) "
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
+            "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+        )
+
+
 
 def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():

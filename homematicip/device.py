@@ -11,6 +11,7 @@ from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
 
+
 class BaseDevice(HomeMaticIPObject):
     """Base device class. This is the foundation for homematicip and external (hue) devices"""
 
@@ -33,9 +34,9 @@ class BaseDevice(HomeMaticIPObject):
 
         # must be imported in init. otherwise we have cross import issues
         from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+
         self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
 
-    
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
@@ -47,7 +48,7 @@ class BaseDevice(HomeMaticIPObject):
         self.modelType = js["modelType"]
         self.permanentlyReachable = js["permanentlyReachable"]
         self.deviceType = js["type"]
-        
+
         self.connectionType = ConnectionType.from_str(js["connectionType"])
 
         if "deviceArchetype" in js:
@@ -81,6 +82,7 @@ class BaseDevice(HomeMaticIPObject):
                 json_state["functionalChannelType"],
             )
         return fc
+
 
 class Device(BaseDevice):
     """this class represents a generic homematic ip device"""
@@ -116,7 +118,7 @@ class Device(BaseDevice):
 
     def __init__(self, connection):
         super().__init__(connection)
-        
+
         self.updateState = DeviceUpdateState.UP_TO_DATE
         self.availableFirmwareVersion = None
         self.firmwareVersionInteger = (
@@ -134,7 +136,6 @@ class Device(BaseDevice):
         self.rssiPeerValue = 0
         self.dutyCycle = False
         self.configPending = False
-
 
         self._baseChannel = "DEVICE_BASE"
 
@@ -216,18 +217,17 @@ class Device(BaseDevice):
             "device/configuration/setRouterModuleEnabled", json.dumps(data)
         )
 
-    
 
 class ExternalDevice(BaseDevice):
     """Represents devices with archtetype EXTERNAL"""
-    
+
     def __init__(self, connection):
         super().__init__(connection)
         self.hasCustomLabel = None
         self.externalService = ""
         self.supported = None
         self._baseChannel = "EXTERNAL_BASE_CHANNEL"
-    
+
     def from_json(self, js):
         super().from_json(js)
 
@@ -754,6 +754,10 @@ class FloorTerminalBlock12(Device):
             "device/configuration/setMinimumFloorHeatingValvePosition",
             body=json.dumps(data),
         )
+
+
+class WiredFloorTerminalBlock12(FloorTerminalBlock12):
+    """Implementation of HmIPW-FALMOT-C12"""
 
 
 class Switch(Device):

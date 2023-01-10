@@ -9,11 +9,12 @@ Any help from the community through e.g. pull requests would be highly appreciat
 [![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![CircleCI](https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/hahn-th/homematicip-rest-api) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip)
 
 ## Get Help / Discord
+
 If you want to get in contact with me or need help with the library, you can get in touch with me via discord. There is a **[discord server](https://discord.gg/mZG2myJ)** and my discord tag is **agonist#6159**
 
 ## Support me
 
-:heart: If you want to say thank you or want to support me, you can do that via PayPal. 
+:heart: If you want to say thank you or want to support me, you can do that via PayPal.
 [https://paypal.me/thomas08154711](https://paypal.me/thomas08154711?country.x=DE&locale.x=de_DE)
 
 ## Thanks
@@ -207,7 +208,7 @@ A few examples:
 - [ ] HMIPW-FAL24-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 24V)
 - [ ] HMIPW-FAL230-C6 (Homematic IP Wired Floor Heating Actuator – 6x channels, 230V)
 - [ ] HMIPW-FAL230-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 230V)
-- [ ] HMIPW-FALMOT-C12 (Homematic IP Wired Floor Heating Actuator – 12x channels, motorised)
+- [x] HMIPW-FALMOT-C12 (Homematic IP Wired Floor Heating Actuator – 12x channels, motorised)
 - [ ] HMIPW-FIO6 (Homematic IP Wired IO Module flush-mount – 6x channels)
 - [ ] HMIPW-SMI55 (Homematic IP Wired Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
 - [ ] HMIPW-SPI (Homematic IP Wired Presence Sensor - indoor)

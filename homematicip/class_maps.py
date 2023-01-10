@@ -89,6 +89,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WEATHER_SENSOR_PLUS: WeatherSensorPlus,
     DeviceType.WEATHER_SENSOR_PRO: WeatherSensorPro,
     DeviceType.WIRED_DIMMER_3: WiredDimmer3,
+    DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: WiredFloorTerminalBlock12,
     DeviceType.WIRED_INPUT_32: WiredInput32,
     DeviceType.WIRED_SWITCH_8: WiredSwitch8,
     DeviceType.WIRED_SWITCH_4: WiredSwitch4,

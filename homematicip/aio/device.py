@@ -224,17 +224,21 @@ class AsyncFloorTerminalBlock12(FloorTerminalBlock12, AsyncDevice):
     ):
         """sets the minimum floot heating valve position
 
-        Args:
-            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
-
-        Returns:
-            the result of the _restCall
+                Args:
+                    minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
+        AsyncFloorTerminalBlock12
+                Returns:
+                    the result of the _restCall
         """
         await self._connection.api_call(
             *super().set_minimum_floor_heating_valve_position(
                 minimumFloorHeatingValvePosition=minimumFloorHeatingValvePosition
             )
         )
+
+
+class AsyncWiredFloorTerminalBlock12(AsyncFloorTerminalBlock12):
+    """HmIPW-FALMOT-C12"""
 
 
 class AsyncPushButton(PushButton, AsyncDevice):
@@ -362,17 +366,22 @@ class AsyncDimmer(Dimmer, AsyncDevice):
             *super().set_dim_level(dimLevel=dimLevel, channelIndex=channelIndex)
         )
 
+
 class AsyncBrandDimmer(AsyncDimmer):
     """HMIP-BDT Brand Dimmer"""
+
 
 class AsyncDinRailDimmer3(DinRailDimmer3, AsyncDimmer):
     """HmIP-DRDI3 (Din Rail Dimmer 3 Inbound)"""
 
+
 class AsyncFullFlushDimmer(AsyncDimmer):
     """HMIP-FDT Dimming Actuator flush-mount"""
 
+
 class AsyncPluggableDimmer(AsyncDimmer):
     """HMIP-PDT Pluggable Dimmer"""
+
 
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """HMIP-SWO-B"""

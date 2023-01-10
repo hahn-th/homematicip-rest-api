@@ -200,7 +200,7 @@ class ClientType(AutoNameEnum):
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
     BASE_DEVICE = auto()
-    EXTERNAL = auto() 
+    EXTERNAL = auto()
     ACCELERATION_SENSOR = auto()
     ALARM_SIREN_INDOOR = auto()
     ALARM_SIREN_OUTDOOR = auto()
@@ -281,6 +281,7 @@ class DeviceType(AutoNameEnum):
     WEATHER_SENSOR_PLUS = auto()
     WEATHER_SENSOR_PRO = auto()
     WIRED_DIMMER_3 = auto()
+    WIRED_FLOOR_TERMINAL_BLOCK_12 = auto()
     WIRED_INPUT_32 = auto()
     WIRED_SWITCH_8 = auto()
     WIRED_SWITCH_4 = auto()
@@ -583,9 +584,11 @@ class ConnectionType(AutoNameEnum):
     HMIP_LAN = auto()
     HMIP_WLAN = auto()
 
+
 class DeviceArchetype(AutoNameEnum):
     EXTERNAL = auto()
     HMIP = auto()
+
 
 class ShadingStateType(AutoNameEnum):
     NOT_POSSIBLE = auto()
