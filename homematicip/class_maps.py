@@ -93,6 +93,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_INPUT_32: WiredInput32,
     DeviceType.WIRED_SWITCH_8: WiredSwitch8,
     DeviceType.WIRED_SWITCH_4: WiredSwitch4,
+    DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
 }
 
 TYPE_GROUP_MAP = {

@@ -285,6 +285,7 @@ class DeviceType(AutoNameEnum):
     WIRED_INPUT_32 = auto()
     WIRED_SWITCH_8 = auto()
     WIRED_SWITCH_4 = auto()
+    WIRED_WALL_MOUNTED_THERMOSTAT = auto()
 
 
 class GroupType(AutoNameEnum):

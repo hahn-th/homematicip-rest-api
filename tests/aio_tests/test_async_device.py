@@ -370,6 +370,9 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
 
     assert d.display == ClimateControlDisplay.ACTUAL
 
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000WTH")
+    assert isinstance(d, AsyncWallMountedThermostatPro)
+
 
 @pytest.mark.asyncio
 async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):

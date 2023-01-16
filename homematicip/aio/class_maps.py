@@ -92,6 +92,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_INPUT_32: AsyncWiredInput32,
     DeviceType.WIRED_SWITCH_8: AsyncWiredSwitch8,
     DeviceType.WIRED_SWITCH_4: AsyncWiredSwitch4,
+    DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
 }
 
 TYPE_GROUP_MAP = {

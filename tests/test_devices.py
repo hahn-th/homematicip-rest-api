@@ -481,6 +481,10 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
         result = d.set_display(ClimateControlDisplay.ACTUAL)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+    d = fake_home.search_device_by_id("3014F7110000000000000WTH")
+    assert isinstance(d, WallMountedThermostatPro)
+    assert d.id == "3014F7110000000000000WTH"
+
 
 def test_heating_thermostat(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000015")
@@ -897,6 +901,7 @@ def test_basic_device_functions(fake_home: Home):
         result = d.set_router_module_enabled(False)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+
 def test_external_device(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
@@ -909,12 +914,14 @@ def test_external_device(fake_home: Home):
         assert d.homeId == "00000000-0000-0000-0000-000000000001"
         assert d.id == "HUE00000-0000-0000-0000-000000000008"
         assert d.label == "Hinten rechts"
-        #1669539365772 
-        assert d.lastStatusUpdate == datetime(2022, 11, 27, 9, 56, 5, 772000) #+ timedelta(0, utc_offset)
+        # 1669539365772
+        assert d.lastStatusUpdate == datetime(
+            2022, 11, 27, 9, 56, 5, 772000
+        )  # + timedelta(0, utc_offset)
         assert d.modelType == "LTW013"
         assert d.permanentlyReachable == True
         assert d.supported == True
-        assert d.deviceType ==  DeviceType.EXTERNAL
+        assert d.deviceType == DeviceType.EXTERNAL
 
         assert len(d.functionalChannels) == 2
 
@@ -1294,7 +1301,6 @@ def test_floor_terminal_block(fake_home: Home):
         )
 
 
-
 def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711ABCDEF0000000014")
@@ -1556,6 +1562,7 @@ def test_wall_mounted_garage_door_controller(fake_home: Home):
             "rssiDeviceValue(-30) rssiPeerValue(-34) configPending(False) dutyCycle(False) deviceUndervoltage(False) "
             "impulseDuration(0.10000000149011612) processing(False)"
         )
+
 
 def test_door_lock_drive(fake_home: Home):
     with no_ssl_verification():
