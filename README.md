@@ -210,7 +210,7 @@ A few examples:
 - [ ] HMIPW-FAL230-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 230V)
 - [x] HMIPW-FALMOT-C12 (Homematic IP Wired Floor Heating Actuator – 12x channels, motorised)
 - [x] HMIPW-FIO6 (Homematic IP Wired IO Module flush-mount – 6x channels)
-- [ ] HMIPW-SMI55 (Homematic IP Wired Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
+- [x] HMIPW-SMI55 (Homematic IP Wired Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
 - [ ] HMIPW-SPI (Homematic IP Wired Presence Sensor - indoor)
 - [ ] HMIPW-STH (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
 - [ ] HMIPW-STHD (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)

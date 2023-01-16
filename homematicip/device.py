@@ -1099,6 +1099,10 @@ class MotionDetectorPushButton(MotionDetectorOutdoor):
             self.set_attr_from_dict("permanentFullRx", c)
 
 
+class WiredMotionDetectorPushButton(MotionDetectorOutdoor):
+    """HmIPW-SMI55"""
+
+
 class PresenceDetectorIndoor(SabotageDevice):
     """HMIP-SPI (Presence Sensor - indoor)"""
 

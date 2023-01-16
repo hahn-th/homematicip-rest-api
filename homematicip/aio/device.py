@@ -293,6 +293,10 @@ class AsyncMotionDetectorPushButton(MotionDetectorPushButton, AsyncDevice):
     """HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)"""
 
 
+class AsyncWiredMotionDetectorPushButton(WiredMotionDetectorPushButton, AsyncDevice):
+    """HMIPW-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)"""
+
+
 class AsyncPresenceDetectorIndoor(PresenceDetectorIndoor, AsyncSabotageDevice):
     """HMIP-SPI (Presence Sensor - indoor)"""
 

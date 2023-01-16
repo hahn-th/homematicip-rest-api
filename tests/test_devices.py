@@ -1017,6 +1017,9 @@ def test_motion_detector_push_button(fake_home: Home):
         "numberOfBrightnessMeasurements(7) currentIllumination(None) permanentFullRx(True)"
     )
 
+    d = fake_home.search_device_by_id("3014F71100000000000SMI55")
+    assert isinstance(d, WiredMotionDetectorPushButton)
+
 
 def test_motion_detector(fake_home: Home):
     d = MotionDetectorIndoor(fake_home._connection)

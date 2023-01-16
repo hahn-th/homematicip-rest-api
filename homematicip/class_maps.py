@@ -93,6 +93,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: WiredFloorTerminalBlock12,
     DeviceType.WIRED_INPUT_32: WiredInput32,
     DeviceType.WIRED_INPUT_SWITCH_6: WiredInputSwitch6,
+    DeviceType.WIRED_MOTION_DETECTOR_PUSH_BUTTON: WiredMotionDetectorPushButton,
     DeviceType.WIRED_PUSH_BUTTON_2: WiredPushButton,
     DeviceType.WIRED_PUSH_BUTTON_6: WiredPushButton,
     DeviceType.WIRED_SWITCH_8: WiredSwitch8,
