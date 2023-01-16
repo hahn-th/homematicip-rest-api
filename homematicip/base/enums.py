@@ -283,6 +283,7 @@ class DeviceType(AutoNameEnum):
     WIRED_DIMMER_3 = auto()
     WIRED_FLOOR_TERMINAL_BLOCK_12 = auto()
     WIRED_INPUT_32 = auto()
+    WIRED_INPUT_SWITCH_6 = auto()
     WIRED_SWITCH_8 = auto()
     WIRED_SWITCH_4 = auto()
     WIRED_WALL_MOUNTED_THERMOSTAT = auto()

@@ -91,6 +91,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_DIMMER_3: WiredDimmer3,
     DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: WiredFloorTerminalBlock12,
     DeviceType.WIRED_INPUT_32: WiredInput32,
+    DeviceType.WIRED_INPUT_SWITCH_6: WiredInputSwitch6,
     DeviceType.WIRED_SWITCH_8: WiredSwitch8,
     DeviceType.WIRED_SWITCH_4: WiredSwitch4,
     DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,

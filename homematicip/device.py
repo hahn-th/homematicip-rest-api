@@ -813,6 +813,10 @@ class HeatingSwitch2(Switch):
     """HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)"""
 
 
+class WiredInputSwitch6(Switch):
+    """HmIPW-FIO6"""
+
+
 class WiredSwitch8(Switch):
     """HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)"""
 

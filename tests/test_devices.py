@@ -1597,3 +1597,11 @@ def test_wired_din_rail_switch4(fake_home: Home):
             d.turn_off(i)
             fake_home.get_current_state()
             assert d.functionalChannels[i].on == False
+
+
+def test_wired_input_switch_6(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000FIO6")
+        assert isinstance(d, WiredInputSwitch6)
+
+        

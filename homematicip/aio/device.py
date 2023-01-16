@@ -537,6 +537,10 @@ class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
     """HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)"""
 
 
+class AsyncWiredInputSwitch6(WiredInputSwitch6, AsyncSwitch):
+    """HmIPW-FIO6"""
+
+
 class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)"""
 
