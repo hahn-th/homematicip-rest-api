@@ -1227,3 +1227,15 @@ class OpticalSignalChannel(FunctionalChannel):
         self.set_attr_from_dict("profileMode", js)
         self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
         self.set_attr_from_dict("userDesiredProfileMode", js)
+
+    def __str__(self):
+        return "{} dimLevel({}) on({}) opticalSignalBehaviour({}) powerUpSwitchState({}) profileMode({}) simpleRGBColorState({}) userDesiredProfileMode({})".format(
+            super().__str__(),
+            self.dimLevel,
+            self.on,
+            self.opticalSignalBehaviour,
+            self.powerUpSwitchState,
+            self.profileMode,
+            self.simpleRGBColorState,
+            self.userDesiredProfileMode,
+        )

@@ -1093,6 +1093,10 @@ def test_wired_push_button(fake_home: Home):
     assert c.on == False
     assert c.opticalSignalBehaviour == OpticalSignalBehaviour.OFF
     assert c.simpleRGBColorState == RGBColorState.BLACK
+    assert (
+        str(c)
+        == "OPTICAL_SIGNAL_CHANNEL unknown Index(10) dimLevel(0.0) on(False) opticalSignalBehaviour(OFF) powerUpSwitchState(PERMANENT_OFF) profileMode(None) simpleRGBColorState(BLACK) userDesiredProfileMode(AUTOMATIC)"
+    )
 
 
 def test_remote_control_8(fake_home: Home):
