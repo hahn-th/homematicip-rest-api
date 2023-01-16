@@ -249,6 +249,10 @@ class AsyncPushButton6(PushButton6, AsyncPushButton):
     """HMIP-WRC6 (Wall-mount Remote Control - 6-button)"""
 
 
+class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
+    """HmIPW-WRC6 and HmIPW-WRC2"""
+
+
 class AsyncPushButtonFlat(PushButtonFlat, AsyncPushButton):
     """HMIP-WRCC2 (Wall-mount Remote Control – flat)"""
 

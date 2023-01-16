@@ -779,7 +779,6 @@ class InternalSwitchChannel(FunctionalChannel):
             self.valveProtectionDuration,
             self.valveProtectionSwitchingInterval,
         )
-    
 
 
 class ImpulseOutputChannel(FunctionalChannel):
@@ -1164,16 +1163,20 @@ class TemperatureDifferenceSensor2Channel(FunctionalChannel):
         self.set_attr_from_dict("temperatureExternalOne", js)
         self.set_attr_from_dict("temperatureExternalTwo", js)
 
+
 class ExternalBaseChannel(FunctionalChannel):
     """this represents the EXTERNAL_BASE_CHANNEL function-channel for external devices"""
+
     def __init__(self):
         super().__init__()
 
     def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js,groups)
+        super().from_json(js, groups)
+
 
 class ExternalUniversalLightChannel(FunctionalChannel):
     """this represents the EXTERNAL_UNIVERSAL_LIGHT_CHANNEL function-channel for external devices"""
+
     def __init__(self):
         super().__init__()
 
@@ -1187,7 +1190,7 @@ class ExternalUniversalLightChannel(FunctionalChannel):
         self.saturationLevel = None
 
     def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js,groups)
+        super().from_json(js, groups)
 
         self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("colorTemperature", js)
@@ -1197,3 +1200,30 @@ class ExternalUniversalLightChannel(FunctionalChannel):
         self.set_attr_from_dict("minimalColorTemperature", js)
         self.set_attr_from_dict("on", js)
         self.set_attr_from_dict("saturationLevel", js)
+
+
+class OpticalSignalChannel(FunctionalChannel):
+    """this class represents the OPTICAL_SIGNAL_CHANNEL"""
+
+    def __init__(self):
+        super().__init__()
+
+        self.dimLevel = -1
+        self.on = None
+        self.opticalSignalBehaviour = None
+        self.powerUpSwitchState = None
+        self.profileMode = None
+        self.simpleRGBColorState = None
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("opticalSignalBehaviour", js, OpticalSignalBehaviour)
+        self.set_attr_from_dict("powerUpSwitchState", js)
+        self.set_attr_from_dict("profileMode", js)
+        self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
+        self.set_attr_from_dict("userDesiredProfileMode", js)

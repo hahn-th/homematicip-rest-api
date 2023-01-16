@@ -214,7 +214,8 @@ A few examples:
 - [ ] HMIPW-SPI (Homematic IP Wired Presence Sensor - indoor)
 - [ ] HMIPW-STH (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
 - [ ] HMIPW-STHD (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
-- [ ] HMIPW-WRC2 (Homematic IP Wired Wall-mount Remote Control - 2x channels)
+- [x] HMIPW-WRC2 (Homematic IP Wired Wall-mount Remote Control - 2x channels)
+- [x] HMIPW-WRC6 (Homematic IP Wired Wall-mount Remote Control - 6x channels)
 - [ ] HMIPW-WTH (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
 
 ## Events

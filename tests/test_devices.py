@@ -1078,6 +1078,20 @@ def test_push_button_flat(fake_home: Home):
     assert d.label == "Wandtaster"
 
 
+def test_wired_push_button(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+    assert isinstance(d, WiredPushButton)
+
+    c = d.functionalChannels[2]
+
+    assert isinstance(c, OpticalSignalChannel)
+    assert c.index == 10
+    assert c.dimLevel == 0.0
+    assert c.on == False
+    assert c.opticalSignalBehaviour == OpticalSignalBehaviour.OFF
+    assert c.simpleRGBColorState == RGBColorState.BLACK
+
+
 def test_remote_control_8(fake_home: Home):
     d = PushButton6(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB016")

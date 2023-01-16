@@ -894,3 +894,9 @@ async def test_wired_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
 async def test_async_wired_input_switch_6(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000FIO6")
     assert isinstance(d, AsyncWiredInputSwitch6)
+
+
+@pytest.mark.asyncio
+async def test_async_wired_push_button(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    assert isinstance(d, AsyncWiredPushButton)

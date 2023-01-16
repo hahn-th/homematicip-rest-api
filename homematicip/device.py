@@ -1332,8 +1332,13 @@ class BrandBlind(FullFlushBlind):
 class DinRailBlind4(Blind):
     """HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
 
+
 class WiredDinRailBlind4(Blind):
     """HmIPW-DRBL4"""
+
+
+class WiredPushButton(PushButton):
+    """HmIPW-WRC6 and HmIPW-WRC2"""
 
 
 class BlindModule(Device):

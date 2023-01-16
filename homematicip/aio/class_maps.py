@@ -92,6 +92,8 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: AsyncWiredFloorTerminalBlock12,
     DeviceType.WIRED_INPUT_32: AsyncWiredInput32,
     DeviceType.WIRED_INPUT_SWITCH_6: AsyncWiredInputSwitch6,
+    DeviceType.WIRED_PUSH_BUTTON_2: AsyncWiredPushButton,
+    DeviceType.WIRED_PUSH_BUTTON_6: AsyncWiredPushButton,
     DeviceType.WIRED_SWITCH_8: AsyncWiredSwitch8,
     DeviceType.WIRED_SWITCH_4: AsyncWiredSwitch4,
     DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
