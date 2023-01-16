@@ -87,6 +87,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
     DeviceType.WEATHER_SENSOR_PLUS: AsyncWeatherSensorPlus,
     DeviceType.WEATHER_SENSOR_PRO: AsyncWeatherSensorPro,
+    DeviceType.WIRED_BLIND_4: AsyncWiredDinRailBlind4,
     DeviceType.WIRED_DIMMER_3: AsyncWiredDimmer3,
     DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: AsyncWiredFloorTerminalBlock12,
     DeviceType.WIRED_INPUT_32: AsyncWiredInput32,

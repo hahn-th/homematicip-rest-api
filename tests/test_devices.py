@@ -1604,4 +1604,8 @@ def test_wired_input_switch_6(fake_home: Home):
         d = fake_home.search_device_by_id("3014F711000000000000FIO6")
         assert isinstance(d, WiredInputSwitch6)
 
-        
+
+def test_wired_din_rail_blind(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
+        assert isinstance(d, WiredDinRailBlind4)

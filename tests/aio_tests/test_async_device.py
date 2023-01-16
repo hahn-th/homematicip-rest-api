@@ -721,6 +721,12 @@ async def test_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_wired_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000DRBL4")
+    assert isinstance(d, AsyncWiredDinRailBlind4)
+
+
+@pytest.mark.asyncio
 async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F0000000000000FAF9B4")
 

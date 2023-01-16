@@ -1332,6 +1332,9 @@ class BrandBlind(FullFlushBlind):
 class DinRailBlind4(Blind):
     """HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
 
+class WiredDinRailBlind4(Blind):
+    """HmIPW-DRBL4"""
+
 
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""

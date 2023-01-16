@@ -280,6 +280,7 @@ class DeviceType(AutoNameEnum):
     WEATHER_SENSOR = auto()
     WEATHER_SENSOR_PLUS = auto()
     WEATHER_SENSOR_PRO = auto()
+    WIRED_BLIND_4 = auto()
     WIRED_DIMMER_3 = auto()
     WIRED_FLOOR_TERMINAL_BLOCK_12 = auto()
     WIRED_INPUT_32 = auto()

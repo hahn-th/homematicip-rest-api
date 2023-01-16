@@ -358,6 +358,10 @@ class AsyncDinRailBlind4(DinRailBlind4, AsyncBlind):
     """HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
 
 
+class AsyncWiredDinRailBlind4(WiredDinRailBlind4, AsyncBlind):
+    """HmIPW-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
+
+
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
 
