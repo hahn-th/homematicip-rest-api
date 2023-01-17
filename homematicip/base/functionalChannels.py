@@ -115,6 +115,7 @@ class AccessControllerChannel(DeviceBaseChannel):
         self.set_attr_from_dict("accessPointPriority", js)
         self.set_attr_from_dict("signalBrightness", js)
 
+
 class AccessControllerWiredChannel(DeviceBaseChannel):
     """this is the representative of the ACCESS_CONTROLLER_WIRED_CHANNEL channel"""
 
@@ -167,6 +168,7 @@ class AccessControllerWiredChannel(DeviceBaseChannel):
         self.set_attr_from_dict("profilePeriodLimitReached", js)
         self.set_attr_from_dict("shortCircuitDataLine", js)
         self.set_attr_from_dict("signalBrightness", js)
+
 
 class DeviceSabotageChannel(DeviceBaseChannel):
     """this is the representative of the DEVICE_SABOTAGE channel"""
@@ -1256,6 +1258,47 @@ class ExternalUniversalLightChannel(FunctionalChannel):
 
 class OpticalSignalChannel(FunctionalChannel):
     """this class represents the OPTICAL_SIGNAL_CHANNEL"""
+
+    def __init__(self):
+        super().__init__()
+
+        self.channelRole = ""
+        self.dimLevel = -1
+        self.on = None
+        self.opticalSignalBehaviour = None
+        self.powerUpSwitchState = None
+        self.profileMode = None
+        self.simpleRGBColorState = None
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("channelRole", js)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("opticalSignalBehaviour", js, OpticalSignalBehaviour)
+        self.set_attr_from_dict("powerUpSwitchState", js)
+        self.set_attr_from_dict("profileMode", js)
+        self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
+        self.set_attr_from_dict("userDesiredProfileMode", js)
+
+    def __str__(self):
+        return "{} dimLevel({}) on({}) opticalSignalBehaviour({}) powerUpSwitchState({}) profileMode({}) simpleRGBColorState({}) userDesiredProfileMode({})".format(
+            super().__str__(),
+            self.dimLevel,
+            self.on,
+            self.opticalSignalBehaviour,
+            self.powerUpSwitchState,
+            self.profileMode,
+            self.simpleRGBColorState,
+            self.userDesiredProfileMode,
+        )
+
+
+class OpticalSignalGroupChannel(FunctionalChannel):
+    """this class represents the OPTICAL_SIGNAL_GROUP_CHANNEL"""
 
     def __init__(self):
         super().__init__()

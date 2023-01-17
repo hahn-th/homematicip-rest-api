@@ -1098,6 +1098,9 @@ def test_wired_push_button(fake_home: Home):
         == "OPTICAL_SIGNAL_CHANNEL unknown Index(10) dimLevel(0.0) on(False) opticalSignalBehaviour(OFF) powerUpSwitchState(PERMANENT_OFF) profileMode(None) simpleRGBColorState(BLACK) userDesiredProfileMode(AUTOMATIC)"
     )
 
+    c = d.functionalChannels[5]
+    assert isinstance(c, OpticalSignalGroupChannel)
+
 
 def test_remote_control_8(fake_home: Home):
     d = PushButton6(fake_home._connection)
@@ -1469,6 +1472,7 @@ def test_home_control_access_point(fake_home: Home):
             "accessPointPriority(1) signalBrightness(1.0)"
         )
 
+
 def test_wired_din_rail_access_point(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000WDRAP")
@@ -1637,6 +1641,7 @@ def test_wired_din_rail_blind(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
         assert isinstance(d, WiredDinRailBlind4)
+
 
 def test_wired_presence_detector(fake_home: Home):
     with no_ssl_verification():

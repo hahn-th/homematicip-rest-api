@@ -210,6 +210,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.MULTI_MODE_INPUT_SWITCH_CHANNEL: MultiModeInputSwitchChannel,
     FunctionalChannelType.NOTIFICATION_LIGHT_CHANNEL: NotificationLightChannel,
     FunctionalChannelType.OPTICAL_SIGNAL_CHANNEL: OpticalSignalChannel,
+    FunctionalChannelType.OPTICAL_SIGNAL_GROUP_CHANNEL: OpticalSignalGroupChannel,
     FunctionalChannelType.PASSAGE_DETECTOR_CHANNEL: PassageDetectorChannel,
     FunctionalChannelType.PRESENCE_DETECTION_CHANNEL: PresenceDetectionChannel,
     FunctionalChannelType.RAIN_DETECTION_CHANNEL: RainDetectionChannel,
