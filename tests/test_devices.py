@@ -1462,12 +1462,19 @@ def test_wall_thermostat_basic(fake_home: Home):
 
 def test_home_control_access_point(fake_home: Home):
     with no_ssl_verification():
-        d = fake_home.search_device_by_id("3014F711A000000BAD0C0DED")
+        d = fake_home.search_device_by_id("3014F71 1A000000BAD0C0DED")
         assert str(d) == (
             "HmIP-HAP HOME_CONTROL_ACCESS_POINT lowBat(None) unreach(False) rssiDeviceValue(None) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) dutyCycleLevel(8.0) "
             "accessPointPriority(1) signalBrightness(1.0)"
         )
+
+def test_wired_din_rail_access_point(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000WDRAP")
+        c = d.functionalChannels[0]
+        assert isinstance(c, AccessControllerWiredChannel)
+        assert isinstance(d, WiredDinRailAccessPoint)
 
 
 def test_blind_module(fake_home: Home):

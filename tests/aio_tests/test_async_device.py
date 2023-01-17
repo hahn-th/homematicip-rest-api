@@ -825,6 +825,10 @@ async def test_home_control_access_point(no_ssl_fake_async_home: AsyncHome):
         "accessPointPriority(1) signalBrightness(1.0)"
     )
 
+@pytest.mark.asyncio
+async def test_wired_din_rail_access_point(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WDRAP")
+    assert isinstance(d, AsyncWiredDinRailAccessPoint)
 
 @pytest.mark.asyncio
 async def test_rain_sensor(no_ssl_fake_async_home: AsyncHome):
