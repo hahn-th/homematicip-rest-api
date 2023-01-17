@@ -1344,6 +1344,27 @@ class WiredDinRailBlind4(Blind):
 class WiredPushButton(PushButton):
     """HmIPW-WRC6 and HmIPW-WRC2"""
 
+    def set_rgb_dim_level(self, channelIndex: int, rgb: RGBColorState, dimLevel: float):
+        """sets the color and dimlevel of the lamp
+
+        Args:
+            channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+            rgb(RGBColorState): the color of the lamp
+            dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
+
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "simpleRGBColorState": rgb,
+            "dimLevel": dimLevel,
+        }
+        return self._restCall(
+            "device/control/setSimpleRGBColorDimLevel", body=json.dumps(data)
+        )
+
 
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
