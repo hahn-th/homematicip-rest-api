@@ -825,6 +825,10 @@ async def test_home_control_access_point(no_ssl_fake_async_home: AsyncHome):
         "accessPointPriority(1) signalBrightness(1.0)"
     )
 
+@pytest.mark.asyncio
+async def test_wired_din_rail_access_point(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WDRAP")
+    assert isinstance(d, AsyncWiredDinRailAccessPoint)
 
 @pytest.mark.asyncio
 async def test_rain_sensor(no_ssl_fake_async_home: AsyncHome):
@@ -908,3 +912,8 @@ async def test_async_wired_motion_detector_push_button(
 ):
     d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000SMI55")
     assert isinstance(d, AsyncWiredMotionDetectorPushButton)
+
+@pytest.mark.asyncio
+async def test_async_wired_presence_detector(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000WSPI")
+    assert isinstance(d, AsyncPresenceDetectorIndoor)

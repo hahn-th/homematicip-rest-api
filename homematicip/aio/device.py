@@ -598,6 +598,8 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
 class AsyncHomeControlAccessPoint(HomeControlAccessPoint, AsyncDevice):
     """HMIP-HAP"""
 
+class AsyncWiredDinRailAccessPoint(WiredDinRailAccessPoint, AsyncDevice):
+    """HmIPW-DRAP"""
 
 class AsyncBlindModule(BlindModule, AsyncDevice):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
