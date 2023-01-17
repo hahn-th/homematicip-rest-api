@@ -286,6 +286,7 @@ class DeviceType(AutoNameEnum):
     WIRED_INPUT_32 = auto()
     WIRED_INPUT_SWITCH_6 = auto()
     WIRED_MOTION_DETECTOR_PUSH_BUTTON = auto()
+    WIRED_PRESENCE_DETECTOR_INDOOR = auto()
     WIRED_PUSH_BUTTON_2 = auto()
     WIRED_PUSH_BUTTON_6 = auto()
     WIRED_SWITCH_8 = auto()

@@ -908,3 +908,8 @@ async def test_async_wired_motion_detector_push_button(
 ):
     d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000SMI55")
     assert isinstance(d, AsyncWiredMotionDetectorPushButton)
+
+@pytest.mark.asyncio
+async def test_async_wired_presence_detector(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000WSPI")
+    assert isinstance(d, AsyncPresenceDetectorIndoor)

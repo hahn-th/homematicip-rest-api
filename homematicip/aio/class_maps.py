@@ -93,6 +93,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_INPUT_32: AsyncWiredInput32,
     DeviceType.WIRED_INPUT_SWITCH_6: AsyncWiredInputSwitch6,
     DeviceType.WIRED_MOTION_DETECTOR_PUSH_BUTTON: AsyncWiredMotionDetectorPushButton,
+    DeviceType.WIRED_PRESENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
     DeviceType.WIRED_PUSH_BUTTON_2: AsyncWiredPushButton,
     DeviceType.WIRED_PUSH_BUTTON_6: AsyncWiredPushButton,
     DeviceType.WIRED_SWITCH_8: AsyncWiredSwitch8,
