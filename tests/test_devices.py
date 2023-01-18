@@ -1465,7 +1465,7 @@ def test_wall_thermostat_basic(fake_home: Home):
 
 def test_home_control_access_point(fake_home: Home):
     with no_ssl_verification():
-        d = fake_home.search_device_by_id("3014F71 1A000000BAD0C0DED")
+        d = fake_home.search_device_by_id("3014F711A000000BAD0C0DED")
         assert str(d) == (
             "HmIP-HAP HOME_CONTROL_ACCESS_POINT lowBat(None) unreach(False) rssiDeviceValue(None) "
             "rssiPeerValue(None) configPending(False) dutyCycle(False) dutyCycleLevel(8.0) "
