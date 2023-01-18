@@ -2,11 +2,14 @@ import asyncio
 import functools
 import hashlib
 import json
+import logging
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
 from aiohttp import web
+
+logger = logging.Logger(__name__)
 
 
 class AsyncFakeCloudServer:
@@ -554,8 +557,12 @@ class AsyncFakeCloudServer:
             d = self.data["devices"][js["deviceId"]]
             channelIndex = str(js["channelIndex"])
             d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
-            d["functionalChannels"][channelIndex]["opticalSignalBehaviour"] = js["opticalSignalBehaviour"]
-            d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js["simpleRGBColorState"]
+            d["functionalChannels"][channelIndex]["opticalSignalBehaviour"] = js[
+                "opticalSignalBehaviour"
+            ]
+            d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js[
+                "simpleRGBColorState"
+            ]
 
         except:
             response = self.errorCode("INVALID_DEVICE", 404)
@@ -667,7 +674,6 @@ class AsyncFakeCloudServer:
         # not sure what to do with onTime and rampTime :/
 
         return web.json_response(None)
-
 
     @validate_authorization
     async def post_hmip_device_configuration_setMinimumFloorHeatingValvePosition(
@@ -1166,7 +1172,10 @@ class AsyncFakeCloudServer:
 
     async def post_hmip_ws_send(self, request):
         """this function will send specific data to the websocket"""
+        if self.ws is None:
+            logger.error("self.ws is None in post_hmip_ws_send")
         await self.ws.send_json(json.loads(request.data))
+        time.sleep(2)
         return web.json_response(None)
 
     async def post_hmip_ws_sleep(self, request):
