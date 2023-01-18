@@ -936,6 +936,23 @@ async def test_async_wired_push_button(no_ssl_fake_async_home: AsyncHome):
     assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
     assert c.simpleRGBColorState == "BLUE"
 
+    
+    await d.turn_on(13)
+    await no_ssl_fake_async_home.get_current_state()
+    c = d.functionalChannels[5]
+    assert c.on == True
+
+    await d.turn_off(13)
+    await no_ssl_fake_async_home.get_current_state()
+    c = d.functionalChannels[5]
+    assert c.on == False
+
+    await d.turn_on(13)
+    await no_ssl_fake_async_home.get_current_state()
+    c = d.functionalChannels[5]
+    assert c.on == True
+    
+
 
 @pytest.mark.asyncio
 async def test_async_wired_motion_detector_push_button(

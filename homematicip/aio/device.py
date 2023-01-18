@@ -282,6 +282,19 @@ class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
         return await self._connection.api_call (
             *super().set_dim_level(channelIndex, dimLevel)
         )
+    
+    async def set_switch_state(self, on=True, channelIndex=1):
+        _LOGGER.debug("Async set_switch_state")
+        url, data = super().set_switch_state(on, channelIndex)
+        return await self._connection.api_call(url, data)
+
+    async def turn_on(self, channelIndex=1):
+        _LOGGER.debug("Async turn_on")
+        return await self.set_switch_state(True, channelIndex)
+
+    async def turn_off(self, channelIndex=1):
+        _LOGGER.debug("Async turn_off")
+        return await self.set_switch_state(False, channelIndex)
 
 
 class AsyncPushButtonFlat(PushButtonFlat, AsyncPushButton):

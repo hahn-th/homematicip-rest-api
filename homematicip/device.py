@@ -1395,6 +1395,16 @@ class WiredPushButton(PushButton):
             "dimLevel": dimLevel
         }
         return self._restCall("device/control/setDimLevel", body = json.dumps(data))
+    
+    def set_switch_state(self, on, channelIndex):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+
+    def turn_on(self, channelIndex):
+        return self.set_switch_state(True, channelIndex)
+
+    def turn_off(self, channelIndex):
+        return self.set_switch_state(False, channelIndex)
 
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
