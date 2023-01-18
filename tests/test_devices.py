@@ -1082,24 +1082,53 @@ def test_push_button_flat(fake_home: Home):
 
 
 def test_wired_push_button(fake_home: Home):
-    d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
-    assert isinstance(d, WiredPushButton)
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        assert isinstance(d, WiredPushButton)
 
-    c = d.functionalChannels[2]
+        c = d.functionalChannels[2]
 
-    assert isinstance(c, OpticalSignalChannel)
-    assert c.index == 10
-    assert c.dimLevel == 0.0
-    assert c.on == False
-    assert c.opticalSignalBehaviour == OpticalSignalBehaviour.OFF
-    assert c.simpleRGBColorState == RGBColorState.BLACK
-    assert (
-        str(c)
-        == "OPTICAL_SIGNAL_CHANNEL unknown Index(10) dimLevel(0.0) on(False) opticalSignalBehaviour(OFF) powerUpSwitchState(PERMANENT_OFF) profileMode(None) simpleRGBColorState(BLACK) userDesiredProfileMode(AUTOMATIC)"
-    )
+        assert isinstance(c, OpticalSignalChannel)
+        assert c.index == 10
+        assert c.dimLevel == 0.0
+        assert c.on == False
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.OFF
+        assert c.simpleRGBColorState == RGBColorState.BLACK
+        assert (
+            str(c)
+            == "OPTICAL_SIGNAL_CHANNEL unknown Index(10) dimLevel(0.0) on(False) opticalSignalBehaviour(OFF) powerUpSwitchState(PERMANENT_OFF) profileMode(None) simpleRGBColorState(BLACK) userDesiredProfileMode(AUTOMATIC)"
+        )
 
-    c = d.functionalChannels[5]
-    assert isinstance(c, OpticalSignalGroupChannel)
+        d.set_dim_level(10, 0.5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[2]
+        assert c.dimLevel == 0.5
+
+        d.set_optical_signal(10, OpticalSignalBehaviour.BILLOW_MIDDLE,RGBColorState.BLUE)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[2]
+        assert c.dimLevel == 1.01
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+        assert c.simpleRGBColorState == "BLUE"
+
+
+        c = d.functionalChannels[5]
+        assert isinstance(c, OpticalSignalGroupChannel)
+        d.set_dim_level(13, 0.5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[5]
+        assert c.dimLevel == 0.5
+
+        d.set_optical_signal(13, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[5]
+        assert c.dimLevel == 1.01
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+        assert c.simpleRGBColorState == "BLUE"
 
 
 def test_remote_control_8(fake_home: Home):

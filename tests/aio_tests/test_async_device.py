@@ -905,6 +905,37 @@ async def test_async_wired_push_button(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
     assert isinstance(d, AsyncWiredPushButton)
 
+    result = await d.set_dim_level(10, 0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[2]
+    assert c.dimLevel == 0.5
+
+    await d.set_optical_signal(10, OpticalSignalBehaviour.BILLOW_MIDDLE,RGBColorState.BLUE)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[2]
+    assert c.dimLevel == 1.01
+    assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+    assert c.simpleRGBColorState == "BLUE"
+
+
+    c = d.functionalChannels[5]
+    assert isinstance(c, OpticalSignalGroupChannel)
+    await d.set_dim_level(13, 0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[5]
+    assert c.dimLevel == 0.5
+
+    await d.set_optical_signal(13, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[5]
+    assert c.dimLevel == 1.01
+    assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+    assert c.simpleRGBColorState == "BLUE"
+
 
 @pytest.mark.asyncio
 async def test_async_wired_motion_detector_push_button(

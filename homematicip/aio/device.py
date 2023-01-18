@@ -252,6 +252,37 @@ class AsyncPushButton6(PushButton6, AsyncPushButton):
 class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
     """HmIPW-WRC6 and HmIPW-WRC2"""
 
+    async def set_optical_signal(self, channelIndex, opticalSignalBehaviour: OpticalSignalBehaviour, rgb: RGBColorState, dimLevel = 1.01):
+        """sets the signal type for the leds
+        
+        Args:
+            channelIndex(int): Channel which is affected
+            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+            rgb(RGBColorState): Color 
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        return await self._connection.api_call(
+            *super().set_optical_signal(channelIndex,opticalSignalBehaviour,rgb,dimLevel)
+        )
+
+    async def set_dim_level(self, channelIndex, dimLevel):
+        """sets the signal type for the leds
+        Args:
+            channelIndex(int): Channel which is affected
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        return await self._connection.api_call (
+            *super().set_dim_level(channelIndex, dimLevel)
+        )
+
 
 class AsyncPushButtonFlat(PushButtonFlat, AsyncPushButton):
     """HMIP-WRCC2 (Wall-mount Remote Control – flat)"""

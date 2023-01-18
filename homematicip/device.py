@@ -1357,27 +1357,44 @@ class WiredDinRailBlind4(Blind):
 class WiredPushButton(PushButton):
     """HmIPW-WRC6 and HmIPW-WRC2"""
 
-    def set_rgb_dim_level(self, channelIndex: int, rgb: RGBColorState, dimLevel: float):
-        """sets the color and dimlevel of the lamp
-
+    def set_optical_signal(self, channelIndex, opticalSignalBehaviour: OpticalSignalBehaviour, rgb: RGBColorState, dimLevel = 1.01):
+        """sets the signal type for the leds
+        
         Args:
-            channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
-            rgb(RGBColorState): the color of the lamp
-            dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
-
+            channelIndex(int): Channel which is affected
+            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+            rgb(RGBColorState): Color 
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
         Returns:
-            the result of the _restCall
+            Result of the _restCall 
+
         """
         data = {
             "channelIndex": channelIndex,
             "deviceId": self.id,
-            "simpleRGBColorState": rgb,
             "dimLevel": dimLevel,
+            "opticalSignalBehaviour": opticalSignalBehaviour,
+            "simpleRGBColorState": rgb
         }
-        return self._restCall(
-            "device/control/setSimpleRGBColorDimLevel", body=json.dumps(data)
-        )
+        return self._restCall("device/control/setOpticalSignal", body = json.dumps(data))
 
+    def set_dim_level(self, channelIndex, dimLevel):
+        """sets the signal type for the leds
+        Args:
+            channelIndex(int): Channel which is affected
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "dimLevel": dimLevel
+        }
+        return self._restCall("device/control/setDimLevel", body = json.dumps(data))
 
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
