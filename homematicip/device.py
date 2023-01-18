@@ -11,6 +11,7 @@ from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
 
+
 class BaseDevice(HomeMaticIPObject):
     """Base device class. This is the foundation for homematicip and external (hue) devices"""
 
@@ -33,9 +34,9 @@ class BaseDevice(HomeMaticIPObject):
 
         # must be imported in init. otherwise we have cross import issues
         from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+
         self._typeFunctionalChannelMap = TYPE_FUNCTIONALCHANNEL_MAP
 
-    
     def from_json(self, js):
         super().from_json(js)
         self.id = js["id"]
@@ -47,7 +48,7 @@ class BaseDevice(HomeMaticIPObject):
         self.modelType = js["modelType"]
         self.permanentlyReachable = js["permanentlyReachable"]
         self.deviceType = js["type"]
-        
+
         self.connectionType = ConnectionType.from_str(js["connectionType"])
 
         if "deviceArchetype" in js:
@@ -81,6 +82,7 @@ class BaseDevice(HomeMaticIPObject):
                 json_state["functionalChannelType"],
             )
         return fc
+
 
 class Device(BaseDevice):
     """this class represents a generic homematic ip device"""
@@ -116,7 +118,7 @@ class Device(BaseDevice):
 
     def __init__(self, connection):
         super().__init__(connection)
-        
+
         self.updateState = DeviceUpdateState.UP_TO_DATE
         self.availableFirmwareVersion = None
         self.firmwareVersionInteger = (
@@ -134,7 +136,6 @@ class Device(BaseDevice):
         self.rssiPeerValue = 0
         self.dutyCycle = False
         self.configPending = False
-
 
         self._baseChannel = "DEVICE_BASE"
 
@@ -216,18 +217,17 @@ class Device(BaseDevice):
             "device/configuration/setRouterModuleEnabled", json.dumps(data)
         )
 
-    
 
 class ExternalDevice(BaseDevice):
     """Represents devices with archtetype EXTERNAL"""
-    
+
     def __init__(self, connection):
         super().__init__(connection)
         self.hasCustomLabel = None
         self.externalService = ""
         self.supported = None
         self._baseChannel = "EXTERNAL_BASE_CHANNEL"
-    
+
     def from_json(self, js):
         super().from_json(js)
 
@@ -252,6 +252,19 @@ class HomeControlAccessPoint(Device):
             self.set_attr_from_dict("accessPointPriority", c)
             self.set_attr_from_dict("signalBrightness", c)
 
+class WiredDinRailAccessPoint(Device):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.accessPointPriority = 0
+        self.signalBrightness = 0
+        self._baseChannel = "ACCESS_CONTROLLER_WIRED_CHANNEL"
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel(self._baseChannel, js)
+        if c:
+            self.set_attr_from_dict("accessPointPriority", c)
+            self.set_attr_from_dict("signalBrightness", c)
 
 class SabotageDevice(Device):
     def __init__(self, connection):
@@ -756,6 +769,10 @@ class FloorTerminalBlock12(Device):
         )
 
 
+class WiredFloorTerminalBlock12(FloorTerminalBlock12):
+    """Implementation of HmIPW-FALMOT-C12"""
+
+
 class Switch(Device):
     """Generic Switch class"""
 
@@ -807,6 +824,10 @@ class OpenCollector8Module(Switch):
 
 class HeatingSwitch2(Switch):
     """HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)"""
+
+
+class WiredInputSwitch6(Switch):
+    """HmIPW-FIO6"""
 
 
 class WiredSwitch8(Switch):
@@ -1091,6 +1112,10 @@ class MotionDetectorPushButton(MotionDetectorOutdoor):
             self.set_attr_from_dict("permanentFullRx", c)
 
 
+class WiredMotionDetectorPushButton(MotionDetectorOutdoor):
+    """HmIPW-SMI55"""
+
+
 class PresenceDetectorIndoor(SabotageDevice):
     """HMIP-SPI (Presence Sensor - indoor)"""
 
@@ -1324,6 +1349,62 @@ class BrandBlind(FullFlushBlind):
 class DinRailBlind4(Blind):
     """HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
 
+
+class WiredDinRailBlind4(Blind):
+    """HmIPW-DRBL4"""
+
+
+class WiredPushButton(PushButton):
+    """HmIPW-WRC6 and HmIPW-WRC2"""
+
+    def set_optical_signal(self, channelIndex, opticalSignalBehaviour: OpticalSignalBehaviour, rgb: RGBColorState, dimLevel = 1.01):
+        """sets the signal type for the leds
+        
+        Args:
+            channelIndex(int): Channel which is affected
+            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+            rgb(RGBColorState): Color 
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "dimLevel": dimLevel,
+            "opticalSignalBehaviour": opticalSignalBehaviour,
+            "simpleRGBColorState": rgb
+        }
+        return self._restCall("device/control/setOpticalSignal", body = json.dumps(data))
+
+    def set_dim_level(self, channelIndex, dimLevel):
+        """sets the signal type for the leds
+        Args:
+            channelIndex(int): Channel which is affected
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "dimLevel": dimLevel
+        }
+        return self._restCall("device/control/setDimLevel", body = json.dumps(data))
+    
+    def set_switch_state(self, on, channelIndex):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+
+    def turn_on(self, channelIndex):
+        return self.set_switch_state(True, channelIndex)
+
+    def turn_off(self, channelIndex):
+        return self.set_switch_state(False, channelIndex)
 
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""

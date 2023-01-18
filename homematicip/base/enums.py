@@ -200,7 +200,7 @@ class ClientType(AutoNameEnum):
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
     BASE_DEVICE = auto()
-    EXTERNAL = auto() 
+    EXTERNAL = auto()
     ACCELERATION_SENSOR = auto()
     ALARM_SIREN_INDOOR = auto()
     ALARM_SIREN_OUTDOOR = auto()
@@ -280,10 +280,19 @@ class DeviceType(AutoNameEnum):
     WEATHER_SENSOR = auto()
     WEATHER_SENSOR_PLUS = auto()
     WEATHER_SENSOR_PRO = auto()
+    WIRED_BLIND_4 = auto()
     WIRED_DIMMER_3 = auto()
+    WIRED_DIN_RAIL_ACCESS_POINT = auto()
+    WIRED_FLOOR_TERMINAL_BLOCK_12 = auto()
     WIRED_INPUT_32 = auto()
+    WIRED_INPUT_SWITCH_6 = auto()
+    WIRED_MOTION_DETECTOR_PUSH_BUTTON = auto()
+    WIRED_PRESENCE_DETECTOR_INDOOR = auto()
+    WIRED_PUSH_BUTTON_2 = auto()
+    WIRED_PUSH_BUTTON_6 = auto()
     WIRED_SWITCH_8 = auto()
     WIRED_SWITCH_4 = auto()
+    WIRED_WALL_MOUNTED_THERMOSTAT = auto()
 
 
 class GroupType(AutoNameEnum):
@@ -409,6 +418,7 @@ class FunctionalChannelType(AutoNameEnum):
     ACCELERATION_SENSOR_CHANNEL = auto()
     ACCESS_AUTHORIZATION_CHANNEL = auto()
     ACCESS_CONTROLLER_CHANNEL = auto()
+    ACCESS_CONTROLLER_WIRED_CHANNEL = auto()
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     ANALOG_ROOM_CONTROL_CHANNEL = auto()
@@ -447,6 +457,8 @@ class FunctionalChannelType(AutoNameEnum):
     MULTI_MODE_INPUT_DIMMER_CHANNEL = auto()
     MULTI_MODE_INPUT_SWITCH_CHANNEL = auto()
     NOTIFICATION_LIGHT_CHANNEL = auto()
+    OPTICAL_SIGNAL_CHANNEL = auto()
+    OPTICAL_SIGNAL_GROUP_CHANNEL = auto()
     PASSAGE_DETECTOR_CHANNEL = auto()
     PRESENCE_DETECTION_CHANNEL = auto()
     RAIN_DETECTION_CHANNEL = auto()
@@ -583,9 +595,11 @@ class ConnectionType(AutoNameEnum):
     HMIP_LAN = auto()
     HMIP_WLAN = auto()
 
+
 class DeviceArchetype(AutoNameEnum):
     EXTERNAL = auto()
     HMIP = auto()
+
 
 class ShadingStateType(AutoNameEnum):
     NOT_POSSIBLE = auto()
@@ -625,3 +639,11 @@ class MotorState(AutoNameEnum):
     STOPPED = auto()
     CLOSING = auto()
     OPENING = auto()
+
+
+class OpticalSignalBehaviour(AutoNameEnum):
+    ON = auto()
+    BLINKING_MIDDLE = auto()
+    FLASH_MIDDLE = auto()
+    BILLOW_MIDDLE = auto()
+    OFF = auto()

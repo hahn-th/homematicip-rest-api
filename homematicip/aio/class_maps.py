@@ -87,10 +87,19 @@ TYPE_CLASS_MAP = {
     DeviceType.WEATHER_SENSOR: AsyncWeatherSensor,
     DeviceType.WEATHER_SENSOR_PLUS: AsyncWeatherSensorPlus,
     DeviceType.WEATHER_SENSOR_PRO: AsyncWeatherSensorPro,
+    DeviceType.WIRED_BLIND_4: AsyncWiredDinRailBlind4,
     DeviceType.WIRED_DIMMER_3: AsyncWiredDimmer3,
+    DeviceType.WIRED_DIN_RAIL_ACCESS_POINT: AsyncWiredDinRailAccessPoint,
+    DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: AsyncWiredFloorTerminalBlock12,
     DeviceType.WIRED_INPUT_32: AsyncWiredInput32,
+    DeviceType.WIRED_INPUT_SWITCH_6: AsyncWiredInputSwitch6,
+    DeviceType.WIRED_MOTION_DETECTOR_PUSH_BUTTON: AsyncWiredMotionDetectorPushButton,
+    DeviceType.WIRED_PRESENCE_DETECTOR_INDOOR: AsyncPresenceDetectorIndoor,
+    DeviceType.WIRED_PUSH_BUTTON_2: AsyncWiredPushButton,
+    DeviceType.WIRED_PUSH_BUTTON_6: AsyncWiredPushButton,
     DeviceType.WIRED_SWITCH_8: AsyncWiredSwitch8,
     DeviceType.WIRED_SWITCH_4: AsyncWiredSwitch4,
+    DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
 }
 
 TYPE_GROUP_MAP = {

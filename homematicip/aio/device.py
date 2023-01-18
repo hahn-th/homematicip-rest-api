@@ -224,11 +224,11 @@ class AsyncFloorTerminalBlock12(FloorTerminalBlock12, AsyncDevice):
     ):
         """sets the minimum floot heating valve position
 
-        Args:
-            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
-
-        Returns:
-            the result of the _restCall
+                Args:
+                    minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
+        AsyncFloorTerminalBlock12
+                Returns:
+                    the result of the _restCall
         """
         await self._connection.api_call(
             *super().set_minimum_floor_heating_valve_position(
@@ -237,12 +237,64 @@ class AsyncFloorTerminalBlock12(FloorTerminalBlock12, AsyncDevice):
         )
 
 
+class AsyncWiredFloorTerminalBlock12(AsyncFloorTerminalBlock12):
+    """HmIPW-FALMOT-C12"""
+
+
 class AsyncPushButton(PushButton, AsyncDevice):
     """HMIP-WRC2 (Wall-mount Remote Control - 2-button)"""
 
 
 class AsyncPushButton6(PushButton6, AsyncPushButton):
     """HMIP-WRC6 (Wall-mount Remote Control - 6-button)"""
+
+
+class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
+    """HmIPW-WRC6 and HmIPW-WRC2"""
+
+    async def set_optical_signal(self, channelIndex, opticalSignalBehaviour: OpticalSignalBehaviour, rgb: RGBColorState, dimLevel = 1.01):
+        """sets the signal type for the leds
+        
+        Args:
+            channelIndex(int): Channel which is affected
+            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+            rgb(RGBColorState): Color 
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        return await self._connection.api_call(
+            *super().set_optical_signal(channelIndex,opticalSignalBehaviour,rgb,dimLevel)
+        )
+
+    async def set_dim_level(self, channelIndex, dimLevel):
+        """sets the signal type for the leds
+        Args:
+            channelIndex(int): Channel which is affected
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+        
+        Returns:
+            Result of the _restCall 
+
+        """
+        return await self._connection.api_call (
+            *super().set_dim_level(channelIndex, dimLevel)
+        )
+    
+    async def set_switch_state(self, on=True, channelIndex=1):
+        _LOGGER.debug("Async set_switch_state")
+        url, data = super().set_switch_state(on, channelIndex)
+        return await self._connection.api_call(url, data)
+
+    async def turn_on(self, channelIndex=1):
+        _LOGGER.debug("Async turn_on")
+        return await self.set_switch_state(True, channelIndex)
+
+    async def turn_off(self, channelIndex=1):
+        _LOGGER.debug("Async turn_off")
+        return await self.set_switch_state(False, channelIndex)
 
 
 class AsyncPushButtonFlat(PushButtonFlat, AsyncPushButton):
@@ -283,6 +335,10 @@ class AsyncMotionDetectorOutdoor(MotionDetectorOutdoor, AsyncDevice):
 
 class AsyncMotionDetectorPushButton(MotionDetectorPushButton, AsyncDevice):
     """HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)"""
+
+
+class AsyncWiredMotionDetectorPushButton(WiredMotionDetectorPushButton, AsyncDevice):
+    """HMIPW-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)"""
 
 
 class AsyncPresenceDetectorIndoor(PresenceDetectorIndoor, AsyncSabotageDevice):
@@ -354,6 +410,10 @@ class AsyncDinRailBlind4(DinRailBlind4, AsyncBlind):
     """HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
 
 
+class AsyncWiredDinRailBlind4(WiredDinRailBlind4, AsyncBlind):
+    """HmIPW-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)"""
+
+
 class AsyncDimmer(Dimmer, AsyncDevice):
     """Base dimmer device class"""
 
@@ -362,17 +422,22 @@ class AsyncDimmer(Dimmer, AsyncDevice):
             *super().set_dim_level(dimLevel=dimLevel, channelIndex=channelIndex)
         )
 
+
 class AsyncBrandDimmer(AsyncDimmer):
     """HMIP-BDT Brand Dimmer"""
+
 
 class AsyncDinRailDimmer3(DinRailDimmer3, AsyncDimmer):
     """HmIP-DRDI3 (Din Rail Dimmer 3 Inbound)"""
 
+
 class AsyncFullFlushDimmer(AsyncDimmer):
     """HMIP-FDT Dimming Actuator flush-mount"""
 
+
 class AsyncPluggableDimmer(AsyncDimmer):
     """HMIP-PDT Pluggable Dimmer"""
+
 
 class AsyncWeatherSensor(WeatherSensor, AsyncDevice):
     """HMIP-SWO-B"""
@@ -528,6 +593,10 @@ class AsyncWiredInput32(WiredInput32, AsyncFullFlushContactInterface):
     """HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)"""
 
 
+class AsyncWiredInputSwitch6(WiredInputSwitch6, AsyncSwitch):
+    """HmIPW-FIO6"""
+
+
 class AsyncWiredSwitch8(WiredSwitch8, AsyncSwitch):
     """HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)"""
 
@@ -573,6 +642,8 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
 class AsyncHomeControlAccessPoint(HomeControlAccessPoint, AsyncDevice):
     """HMIP-HAP"""
 
+class AsyncWiredDinRailAccessPoint(WiredDinRailAccessPoint, AsyncDevice):
+    """HmIPW-DRAP"""
 
 class AsyncBlindModule(BlindModule, AsyncDevice):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""

@@ -481,6 +481,10 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
         result = d.set_display(ClimateControlDisplay.ACTUAL)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+    d = fake_home.search_device_by_id("3014F7110000000000000WTH")
+    assert isinstance(d, WallMountedThermostatPro)
+    assert d.id == "3014F7110000000000000WTH"
+
 
 def test_heating_thermostat(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000015")
@@ -897,6 +901,7 @@ def test_basic_device_functions(fake_home: Home):
         result = d.set_router_module_enabled(False)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+
 def test_external_device(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
@@ -909,12 +914,14 @@ def test_external_device(fake_home: Home):
         assert d.homeId == "00000000-0000-0000-0000-000000000001"
         assert d.id == "HUE00000-0000-0000-0000-000000000008"
         assert d.label == "Hinten rechts"
-        #1669539365772 
-        assert d.lastStatusUpdate == datetime(2022, 11, 27, 9, 56, 5, 772000) #+ timedelta(0, utc_offset)
+        # 1669539365772
+        assert d.lastStatusUpdate == datetime(
+            2022, 11, 27, 9, 56, 5, 772000
+        )  # + timedelta(0, utc_offset)
         assert d.modelType == "LTW013"
         assert d.permanentlyReachable == True
         assert d.supported == True
-        assert d.deviceType ==  DeviceType.EXTERNAL
+        assert d.deviceType == DeviceType.EXTERNAL
 
         assert len(d.functionalChannels) == 2
 
@@ -1010,6 +1017,9 @@ def test_motion_detector_push_button(fake_home: Home):
         "numberOfBrightnessMeasurements(7) currentIllumination(None) permanentFullRx(True)"
     )
 
+    d = fake_home.search_device_by_id("3014F71100000000000SMI55")
+    assert isinstance(d, WiredMotionDetectorPushButton)
+
 
 def test_motion_detector(fake_home: Home):
     d = MotionDetectorIndoor(fake_home._connection)
@@ -1069,6 +1079,56 @@ def test_push_button_flat(fake_home: Home):
     assert isinstance(d, PushButtonFlat)
     assert d.modelId == 431
     assert d.label == "Wandtaster"
+
+
+def test_wired_push_button(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        assert isinstance(d, WiredPushButton)
+
+        c = d.functionalChannels[2]
+
+        assert isinstance(c, OpticalSignalChannel)
+        assert c.index == 10
+        assert c.dimLevel == 0.0
+        assert c.on == False
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.OFF
+        assert c.simpleRGBColorState == RGBColorState.BLACK
+        assert (
+            str(c)
+            == "OPTICAL_SIGNAL_CHANNEL unknown Index(10) dimLevel(0.0) on(False) opticalSignalBehaviour(OFF) powerUpSwitchState(PERMANENT_OFF) profileMode(None) simpleRGBColorState(BLACK) userDesiredProfileMode(AUTOMATIC)"
+        )
+
+        d.set_dim_level(10, 0.5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[2]
+        assert c.dimLevel == 0.5
+
+        d.set_optical_signal(10, OpticalSignalBehaviour.BILLOW_MIDDLE,RGBColorState.BLUE)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[2]
+        assert c.dimLevel == 1.01
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+        assert c.simpleRGBColorState == "BLUE"
+
+
+        c = d.functionalChannels[5]
+        assert isinstance(c, OpticalSignalGroupChannel)
+        d.set_dim_level(13, 0.5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[5]
+        assert c.dimLevel == 0.5
+
+        d.set_optical_signal(13, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
+        c = d.functionalChannels[5]
+        assert c.dimLevel == 1.01
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+        assert c.simpleRGBColorState == "BLUE"
 
 
 def test_remote_control_8(fake_home: Home):
@@ -1278,6 +1338,21 @@ def test_floor_terminal_block(fake_home: Home):
         assert c.valvePosition == 0.5
         assert c.label == "Kanal 1"
 
+        d = WiredFloorTerminalBlock12(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000000053")
+        assert d.minimumFloorHeatingValvePosition == 0.0
+        d.set_minimum_floor_heating_valve_position(0.2)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000053")
+        assert d.minimumFloorHeatingValvePosition == 0.2
+        assert str(d) == (
+            "HmIPW-FALMOT-C12 Wired Fußbodenheizungsaktor – 12-fach, motorisch lowBat(None) unreach(False) "
+            "rssiDeviceValue(None) rssiPeerValue(None) configPending(False) dutyCycle(None) "
+            "minimumFloorHeatingValvePosition(0.2) "
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
+            "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+        )
+
 
 def test_key_remote_control(fake_home: Home):
     with no_ssl_verification():
@@ -1427,6 +1502,14 @@ def test_home_control_access_point(fake_home: Home):
         )
 
 
+def test_wired_din_rail_access_point(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000WDRAP")
+        c = d.functionalChannels[0]
+        assert isinstance(c, AccessControllerWiredChannel)
+        assert isinstance(d, WiredDinRailAccessPoint)
+
+
 def test_blind_module(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100BLIND_MODULE00")
@@ -1541,6 +1624,7 @@ def test_wall_mounted_garage_door_controller(fake_home: Home):
             "impulseDuration(0.10000000149011612) processing(False)"
         )
 
+
 def test_door_lock_drive(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000DLD")
@@ -1574,3 +1658,21 @@ def test_wired_din_rail_switch4(fake_home: Home):
             d.turn_off(i)
             fake_home.get_current_state()
             assert d.functionalChannels[i].on == False
+
+
+def test_wired_input_switch_6(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000FIO6")
+        assert isinstance(d, WiredInputSwitch6)
+
+
+def test_wired_din_rail_blind(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
+        assert isinstance(d, WiredDinRailBlind4)
+
+
+def test_wired_presence_detector(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000WSPI")
+        assert isinstance(d, PresenceDetectorIndoor)

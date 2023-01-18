@@ -200,6 +200,24 @@ async def test_floor_terminal_block(no_ssl_fake_async_home: AsyncHome):
         "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
     )
 
+    d = AsyncWiredFloorTerminalBlock12(no_ssl_fake_async_home._connection)
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000053")
+    assert d.minimumFloorHeatingValvePosition == 0.0
+
+    await d.set_minimum_floor_heating_valve_position(0.2)
+
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000053")
+    assert d.minimumFloorHeatingValvePosition == 0.2
+
+    assert str(d) == (
+        "HmIPW-FALMOT-C12 Wired Fußbodenheizungsaktor – 12-fach, motorisch lowBat(None) unreach(False) "
+        "rssiDeviceValue(None) rssiPeerValue(None) configPending(False) dutyCycle(None) "
+        "minimumFloorHeatingValvePosition(0.2) "
+        "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
+        "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+    )
+
 
 @pytest.mark.asyncio
 async def test_basic_device_functions(no_ssl_fake_async_home: AsyncHome):
@@ -276,8 +294,11 @@ def test_all_devices_implemented(no_ssl_fake_async_home: AsyncHome):
             not_implemented = True
     assert not_implemented
 
+
 def test_external_device(no_ssl_fake_async_home: AsyncHome):
-    d = no_ssl_fake_async_home.search_device_by_id("HUE00000-0000-0000-0000-000000000008")
+    d = no_ssl_fake_async_home.search_device_by_id(
+        "HUE00000-0000-0000-0000-000000000008"
+    )
     assert isinstance(d, AsyncExternalDevice)
     assert d.connectionType == ConnectionType.EXTERNAL
     assert d.deviceArchetype == DeviceArchetype.EXTERNAL
@@ -287,12 +308,14 @@ def test_external_device(no_ssl_fake_async_home: AsyncHome):
     assert d.homeId == "00000000-0000-0000-0000-000000000001"
     assert d.id == "HUE00000-0000-0000-0000-000000000008"
     assert d.label == "Hinten rechts"
-    #1669539365772 
-    assert d.lastStatusUpdate == datetime(2022, 11, 27, 9, 56, 5, 772000) #+ timedelta(0, utc_offset)
+    # 1669539365772
+    assert d.lastStatusUpdate == datetime(
+        2022, 11, 27, 9, 56, 5, 772000
+    )  # + timedelta(0, utc_offset)
     assert d.modelType == "LTW013"
     assert d.permanentlyReachable == True
     assert d.supported == True
-    assert d.deviceType ==  DeviceType.EXTERNAL
+    assert d.deviceType == DeviceType.EXTERNAL
 
     assert len(d.functionalChannels) == 2
 
@@ -309,6 +332,7 @@ def test_external_device(no_ssl_fake_async_home: AsyncHome):
     assert fc1.minimalColorTemperature == 2000
     assert fc1.on == False
     assert fc1.saturationLevel == None
+
 
 @pytest.mark.asyncio
 async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
@@ -345,6 +369,9 @@ async def test_wall_mounted_thermostat_pro(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000022")
 
     assert d.display == ClimateControlDisplay.ACTUAL
+
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000WTH")
+    assert isinstance(d, AsyncWallMountedThermostatPro)
 
 
 @pytest.mark.asyncio
@@ -399,6 +426,7 @@ async def test_pluggable_switch_measuring(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.turn_off()
 
+
 @pytest.mark.asyncio
 async def test_din_rail_dimmer_3(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
@@ -408,7 +436,6 @@ async def test_din_rail_dimmer_3(no_ssl_fake_async_home: AsyncHome):
     assert d.c2dimLevel == 0.2
     assert d.c3dimLevel == 0.3
 
-    
     assert d.functionalChannels[1].dimLevel == 0.1
     await d.set_dim_level(0.5, 1)
     await no_ssl_fake_async_home.get_current_state()
@@ -420,12 +447,13 @@ async def test_din_rail_dimmer_3(no_ssl_fake_async_home: AsyncHome):
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
     assert d.functionalChannels[2].dimLevel == 0.67
-    
+
     assert d.functionalChannels[3].dimLevel == 0.3
     await d.set_dim_level(0.8, 3)
     await no_ssl_fake_async_home.get_current_state()
     d = no_ssl_fake_async_home.search_device_by_id("3014F711A000DIN_RAIL_DIMMER3")
     assert d.functionalChannels[3].dimLevel == 0.8
+
 
 @pytest.mark.asyncio
 async def test_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
@@ -693,6 +721,12 @@ async def test_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_wired_din_rail_blind_4(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000DRBL4")
+    assert isinstance(d, AsyncWiredDinRailBlind4)
+
+
+@pytest.mark.asyncio
 async def test_door_sensor_tm(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F0000000000000FAF9B4")
 
@@ -791,6 +825,10 @@ async def test_home_control_access_point(no_ssl_fake_async_home: AsyncHome):
         "accessPointPriority(1) signalBrightness(1.0)"
     )
 
+@pytest.mark.asyncio
+async def test_wired_din_rail_access_point(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WDRAP")
+    assert isinstance(d, AsyncWiredDinRailAccessPoint)
 
 @pytest.mark.asyncio
 async def test_rain_sensor(no_ssl_fake_async_home: AsyncHome):
@@ -854,3 +892,76 @@ async def test_wired_din_rail_switch_4(no_ssl_fake_async_home: AsyncHome):
         await d.turn_off(i)
         await no_ssl_fake_async_home.get_current_state()
         assert d.functionalChannels[i].on == False
+
+
+@pytest.mark.asyncio
+async def test_async_wired_input_switch_6(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000FIO6")
+    assert isinstance(d, AsyncWiredInputSwitch6)
+
+
+@pytest.mark.asyncio
+async def test_async_wired_push_button(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    assert isinstance(d, AsyncWiredPushButton)
+
+    result = await d.set_dim_level(10, 0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[2]
+    assert c.dimLevel == 0.5
+
+    await d.set_optical_signal(10, OpticalSignalBehaviour.BILLOW_MIDDLE,RGBColorState.BLUE)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[2]
+    assert c.dimLevel == 1.01
+    assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+    assert c.simpleRGBColorState == "BLUE"
+
+
+    c = d.functionalChannels[5]
+    assert isinstance(c, OpticalSignalGroupChannel)
+    await d.set_dim_level(13, 0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[5]
+    assert c.dimLevel == 0.5
+
+    await d.set_optical_signal(13, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000WWRC6")
+    c = d.functionalChannels[5]
+    assert c.dimLevel == 1.01
+    assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+    assert c.simpleRGBColorState == "BLUE"
+
+    
+    await d.turn_on(13)
+    await no_ssl_fake_async_home.get_current_state()
+    c = d.functionalChannels[5]
+    assert c.on == True
+
+    await d.turn_off(13)
+    await no_ssl_fake_async_home.get_current_state()
+    c = d.functionalChannels[5]
+    assert c.on == False
+
+    await d.turn_on(13)
+    await no_ssl_fake_async_home.get_current_state()
+    c = d.functionalChannels[5]
+    assert c.on == True
+    
+
+
+@pytest.mark.asyncio
+async def test_async_wired_motion_detector_push_button(
+    no_ssl_fake_async_home: AsyncHome,
+):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000SMI55")
+    assert isinstance(d, AsyncWiredMotionDetectorPushButton)
+
+@pytest.mark.asyncio
+async def test_async_wired_presence_detector(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000WSPI")
+    assert isinstance(d, AsyncPresenceDetectorIndoor)

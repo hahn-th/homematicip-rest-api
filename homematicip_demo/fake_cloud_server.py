@@ -544,6 +544,24 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
+    async def post_hmip_device_control_setOpticalSignal(
+        self, request: web.Request
+    ) -> web.Response:
+
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = str(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["dimLevel"] = js["dimLevel"]
+            d["functionalChannels"][channelIndex]["opticalSignalBehaviour"] = js["opticalSignalBehaviour"]
+            d["functionalChannels"][channelIndex]["simpleRGBColorState"] = js["simpleRGBColorState"]
+
+        except:
+            response = self.errorCode("INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
     async def post_hmip_device_control_setLockState(
         self, request: web.Request
     ) -> web.Response:
@@ -649,6 +667,7 @@ class AsyncFakeCloudServer:
         # not sure what to do with onTime and rampTime :/
 
         return web.json_response(None)
+
 
     @validate_authorization
     async def post_hmip_device_configuration_setMinimumFloorHeatingValvePosition(
