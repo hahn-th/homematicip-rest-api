@@ -105,6 +105,45 @@ class DeviceBaseChannel(FunctionalChannel):
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
+class SwitchChannel(FunctionalChannel):
+    """this is the representative of the SWITCH_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.on = False
+        self.powerUpSwitchState = ""
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.on = js["on"]
+        self.powerUpSwitchState = (
+            js["powerUpSwitchState"] if "powerUpSwitchState" in js else ""
+        )
+        self.profileMode = js["profileMode"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+
+    def set_switch_state(self, on=True):
+        data = {"channelIndex": self.index, "deviceId": self.device.id, "on": on}
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+
+    def turn_on(self):
+        return self.set_switch_state(True)
+
+    def turn_off(self):
+        return self.set_switch_state(False)
+
+    async def async_set_switch_state(self, on=True):
+        return await self._connection.api_call(*self.set_switch_state(on))
+
+    async def async_turn_on(self):
+        return await self.async_set_switch_state(True)
+
+    async def async_turn_off(self):
+        return await self.async_set_switch_state(False)
+
+
 class AccelerationSensorChannel(FunctionalChannel):
     """this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
 
@@ -528,6 +567,26 @@ class MultiModeInputDimmerChannel(DimmerChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
+class MultiModeInputSwitchChannel(SwitchChannel):
+    """this is the representative of the MULTI_MODE_INPUT_SWITCH_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.SWITCH_BEHAVIOR
+        self.on = False
+        self.profileMode = ProfileMode.MANUAL
+        self.userDesiredProfileMode = ProfileMode.MANUAL
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
+        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
+
 class NotificationLightChannel(DimmerChannel):
     """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
 
@@ -804,45 +863,6 @@ class ShutterChannel(FunctionalChannel):
 
     async def async_set_shutter_level(self, level=0.0):
         return await self._connection.api_call(*self.set_shutter_level(level))
-
-
-class SwitchChannel(FunctionalChannel):
-    """this is the representative of the SWITCH_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.on = False
-        self.powerUpSwitchState = ""
-        self.profileMode = None
-        self.userDesiredProfileMode = None
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.on = js["on"]
-        self.powerUpSwitchState = (
-            js["powerUpSwitchState"] if "powerUpSwitchState" in js else ""
-        )
-        self.profileMode = js["profileMode"]
-        self.userDesiredProfileMode = js["userDesiredProfileMode"]
-
-    def set_switch_state(self, on=True):
-        data = {"channelIndex": self.index, "deviceId": self.device.id, "on": on}
-        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
-
-    def turn_on(self):
-        return self.set_switch_state(True)
-
-    def turn_off(self):
-        return self.set_switch_state(False)
-
-    async def async_set_switch_state(self, on=True):
-        return await self._connection.api_call(*self.set_switch_state(on))
-
-    async def async_turn_on(self):
-        return await self.async_set_switch_state(True)
-
-    async def async_turn_off(self):
-        return await self.async_set_switch_state(False)
 
 
 class SwitchMeasuringChannel(SwitchChannel):
@@ -1701,26 +1721,6 @@ class MainsFailureChannel(FunctionalChannel):
         super().from_json(js, groups)
         self.set_attr_from_dict("powerMainsFailure", js)
         self.set_attr_from_dict("genericAlarmSignal", js, AlarmSignalType)
-
-
-class MultiModeInputSwitchChannel(FunctionalChannel):
-    """this is the representative of the MULTI_MODE_INPUT_SWITCH_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
-        self.multiModeInputMode = MultiModeInputMode.SWITCH_BEHAVIOR
-        self.on = False
-        self.profileMode = ProfileMode.MANUAL
-        self.userDesiredProfileMode = ProfileMode.MANUAL
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
-        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
-        self.set_attr_from_dict("on", js)
-        self.set_attr_from_dict("profileMode", js, ProfileMode)
-        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
 class UniversalActuatorChannel(FunctionalChannel):
