@@ -259,6 +259,28 @@ class AccelerationSensorChannel(FunctionalChannel):
             )
         )
 
+class DimmerChannel(FunctionalChannel):
+    """this is the representative of the DIMMER_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.dimLevel = 0
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.dimLevel = js["dimLevel"]
+        self.profileMode = js["profileMode"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+
+    def set_dim_level(self, dimLevel=0.0): 
+        data = {"channelIndex": self.index, "deviceId": self.device.id, "dimLevel": dimLevel}
+        return self._restCall("device/control/setDimLevel", json.dumps(data))
+    
+    async def async_set_dim_level(self, dimLevel=0.0):
+        return await self._connection.api_call(*self.set_dim_level(dimLevel))
+
 class DoorLockChannel(FunctionalChannel):
     """This respresents of the DoorLockChannel"""
 
@@ -312,6 +334,84 @@ class DoorLockChannel(FunctionalChannel):
             the result of the _restCall
         """
         return await self._connection.api_call(*self.set_lock_state(doorLockState,pin))
+
+class NotificationLightChannel(DimmerChannel):
+    """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        #:boolean: is the light turned on?
+        self.on = False
+        #:RGBColorState:the color of the light
+        self.simpleRGBColorState = RGBColorState.BLACK
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.on = js["on"]
+        self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
+
+    def set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
+        """sets the color and dimlevel of the lamp
+
+        Args:
+            channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+            rgb(RGBColorState): the color of the lamp
+            dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
+
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "simpleRGBColorState": rgb,
+            "dimLevel": dimLevel,
+        }
+        return self._restCall(
+            "device/control/setSimpleRGBColorDimLevel", body=json.dumps(data)
+        )
+
+    async def async_set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
+        return await self._connection.api_call(*self.set_rgb_dim_level(rgb,dimLevel))
+
+    def set_rgb_dim_level_with_time(
+        self,
+        rgb: RGBColorState,
+        dimLevel: float,
+        onTime: float,
+        rampTime: float,
+    ):
+        """sets the color and dimlevel of the lamp
+
+        Args:
+            channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+            rgb(RGBColorState): the color of the lamp
+            dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
+            onTime(float):
+            rampTime(float):
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "simpleRGBColorState": rgb,
+            "dimLevel": dimLevel,
+            "onTime": onTime,
+            "rampTime": rampTime,
+        }
+        return self._restCall(
+            "device/control/setSimpleRGBColorDimLevelWithTime", body=json.dumps(data)
+        )
+
+    async def async_set_rgb_dim_level_with_time(
+        self,
+        rgb: RGBColorState,
+        dimLevel: float,
+        onTime: float,
+        rampTime: float,
+    ):
+        return await self._connection.api_call(*self.set_rgb_dim_level_with_time(rgb,dimLevel,onTime,rampTime))
 
 class SwitchChannel(FunctionalChannel):
     """this is the representative of the SWITCH_CHANNEL channel"""
@@ -372,7 +472,6 @@ class SwitchMeasuringChannel(SwitchChannel):
     
     async def async_reset_energy_counter(self):
         return await self._connection.api_call(*self.reset_energy_counter())
-
 
 class WallMountedThermostatProChannel(FunctionalChannel):
     """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
@@ -617,7 +716,6 @@ class DoorChannel(FunctionalChannel):
         self.ventilationPositionSupported = js["ventilationPositionSupported"]
 
 
-
 class DoorLockSensorChannel(FunctionalChannel):
     """This respresents of the DoorLockSensorChannel"""
 
@@ -851,22 +949,6 @@ class MultiModeInputBlindChannel(BlindChannel):
         self.favoriteSecondaryShadingPosition = js["favoriteSecondaryShadingPosition"]
 
 
-class DimmerChannel(FunctionalChannel):
-    """this is the representative of the DIMMER_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.dimLevel = 0
-        self.profileMode = None
-        self.userDesiredProfileMode = None
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.dimLevel = js["dimLevel"]
-        self.profileMode = js["profileMode"]
-        self.userDesiredProfileMode = js["userDesiredProfileMode"]
-
-
 class WeatherSensorChannel(FunctionalChannel):
     """this is the representative of the WEATHER_SENSOR_CHANNEL channel"""
 
@@ -1055,20 +1137,6 @@ class MultiModeInputChannel(FunctionalChannel):
         self.windowState = WindowState.from_str(js["windowState"])
 
 
-class NotificationLightChannel(DimmerChannel):
-    """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        #:boolean: is the light turned on?
-        self.on = False
-        #:RGBColorState:the color of the light
-        self.simpleRGBColorState = RGBColorState.BLACK
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.on = js["on"]
-        self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
 
 
 class LightSensorChannel(FunctionalChannel):

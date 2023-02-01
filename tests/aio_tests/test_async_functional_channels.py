@@ -41,6 +41,17 @@ async def test_async_acceleration_sensor_channel(no_ssl_fake_async_home: AsyncHo
     assert ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
 
 @pytest.mark.asyncio
+async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F711AAAA000000000005",1)
+    assert isinstance(ch,DimmerChannel)
+    assert ch.dimLevel == 0.0
+
+    await ch.async_set_dim_level(0.8)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711AAAA000000000005",1)
+    assert ch.dimLevel == 0.8
+    
+@pytest.mark.asyncio
 async def test_async_door_lock_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000DLD",1)
     assert isinstance(ch, DoorLockChannel)
@@ -52,6 +63,25 @@ async def test_async_door_lock_channel(no_ssl_fake_async_home: AsyncHome):
     await no_ssl_fake_async_home.get_current_state()
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000DLD",1)
     assert ch.lockState == LockState.OPEN
+
+@pytest.mark.asyncio
+async def test_notification_light_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F711BSL0000000000050",2)
+    assert isinstance(ch, NotificationLightChannel)
+    assert ch.dimLevel == 0.0
+    assert ch.simpleRGBColorState == RGBColorState.RED
+    
+    await ch.async_set_rgb_dim_level_with_time(RGBColorState.BLUE, 0.2, 10, 20)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711BSL0000000000050",2)
+    assert ch.dimLevel == 0.2
+    assert ch.simpleRGBColorState == RGBColorState.BLUE
+    
+    await ch.async_set_rgb_dim_level(RGBColorState.BLACK, 0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711BSL0000000000050",2)
+    assert ch.dimLevel == 0.5
+    assert ch.simpleRGBColorState == RGBColorState.BLACK
 
 @pytest.mark.asyncio
 async def test_switch_channel(no_ssl_fake_async_home: AsyncHome):

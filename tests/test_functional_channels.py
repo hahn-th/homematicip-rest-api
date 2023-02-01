@@ -47,6 +47,17 @@ def test_acceleration_sensor_channel(fake_home: Home):
         assert ch.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
         assert ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
         
+def test_dimmer_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711AAAA000000000005",1)
+        assert isinstance(ch,DimmerChannel)
+        assert ch.dimLevel == 0.0
+
+        ch.set_dim_level(0.8)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711AAAA000000000005",1)
+        assert ch.dimLevel == 0.8
+    
 def test_door_lock_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000DLD",1)
@@ -59,6 +70,26 @@ def test_door_lock_channel(fake_home: Home):
         fake_home.get_current_state()
         ch = fake_home.search_channel("3014F7110000000000000DLD",1)
         assert ch.lockState == LockState.OPEN
+
+def test_notification_light_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711BSL0000000000050",2)
+        assert isinstance(ch, NotificationLightChannel)
+        assert ch.dimLevel == 0.0
+        assert ch.simpleRGBColorState == RGBColorState.RED
+        
+        ch.set_rgb_dim_level_with_time(RGBColorState.BLUE, 0.2, 10, 20)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711BSL0000000000050",2)
+        assert ch.dimLevel == 0.2
+        assert ch.simpleRGBColorState == RGBColorState.BLUE
+        
+        ch.set_rgb_dim_level(RGBColorState.BLACK, 0.5)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711BSL0000000000050",2)
+        assert ch.dimLevel == 0.5
+        assert ch.simpleRGBColorState == RGBColorState.BLACK
+
 
 def test_switch_channel(fake_home: Home):
     with no_ssl_verification():
