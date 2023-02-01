@@ -868,6 +868,102 @@ class SwitchMeasuringChannel(SwitchChannel):
         return await self._connection.api_call(*self.reset_energy_counter())
 
 
+class TiltVibrationSensorChannel(FunctionalChannel):
+    """this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        self.accelerationSensorNeutralPosition = None
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict(
+            "accelerationSensorNeutralPosition", js, AccelerationSensorNeutralPosition
+        )
+        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
+        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
+        self.set_attr_from_dict(
+            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
+        )
+        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
+        self.set_attr_from_dict("accelerationSensorTriggered", js)
+
+    def set_acceleration_sensor_mode(self, mode: AccelerationSensorMode):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorMode": str(mode),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorMode", json.dumps(data)
+        )
+
+    async def async_set_acceleration_sensor_mode(self, mode: AccelerationSensorMode):
+        return await self._connection.api_call(*self.set_acceleration_sensor_mode(mode))
+
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity
+    ):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorSensitivity": str(sensitivity),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
+        )
+
+    async def async_set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity
+    ):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_sensitivity(sensitivity)
+        )
+
+    def set_acceleration_sensor_trigger_angle(self, angle: int):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorTriggerAngle": angle,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
+        )
+
+    async def async_set_acceleration_sensor_trigger_angle(self, angle: int):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_trigger_angle(angle)
+        )
+
+    def set_acceleration_sensor_event_filter_period(self, period: float):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorEventFilterPeriod": period,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
+        )
+
+    async def async_set_acceleration_sensor_event_filter_period(self, period: float):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_event_filter_period(period)
+        )
+
+
 class WallMountedThermostatProChannel(FunctionalChannel):
     """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
 
@@ -1625,35 +1721,6 @@ class MultiModeInputSwitchChannel(FunctionalChannel):
         self.set_attr_from_dict("on", js)
         self.set_attr_from_dict("profileMode", js, ProfileMode)
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
-
-
-class TiltVibrationSensorChannel(FunctionalChannel):
-    """this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        #:float:
-        self.accelerationSensorEventFilterPeriod = 100.0
-        #:AccelerationSensorMode:
-        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
-        #:AccelerationSensorSensitivity:
-        self.accelerationSensorSensitivity = (
-            AccelerationSensorSensitivity.SENSOR_RANGE_2G
-        )
-        #:int:
-        self.accelerationSensorTriggerAngle = 0
-        #:bool:
-        self.accelerationSensorTriggered = False
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
-        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
-        self.set_attr_from_dict(
-            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
-        )
-        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
-        self.set_attr_from_dict("accelerationSensorTriggered", js)
 
 
 class UniversalActuatorChannel(FunctionalChannel):

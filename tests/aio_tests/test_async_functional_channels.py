@@ -231,6 +231,42 @@ async def test_switch_measuring_channel(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_tilt_vibration_sensor_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F7110TILTVIBRATIONSENSOR", 1)
+    assert isinstance(ch, TiltVibrationSensorChannel)
+
+    assert ch.accelerationSensorEventFilterPeriod == 0.5
+    assert ch.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
+    assert (
+        ch.accelerationSensorNeutralPosition
+        == AccelerationSensorNeutralPosition.VERTICAL
+    )
+    assert (
+        ch.accelerationSensorSensitivity
+        == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+    )
+    assert ch.accelerationSensorTriggerAngle == 45
+    assert ch.accelerationSensorTriggered == True
+
+    await ch.async_set_acceleration_sensor_event_filter_period(10.0)
+    await ch.async_set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
+    await ch.async_set_acceleration_sensor_sensitivity(
+        AccelerationSensorSensitivity.SENSOR_RANGE_4G
+    )
+    await ch.async_set_acceleration_sensor_trigger_angle(30)
+
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
+    assert ch.accelerationSensorEventFilterPeriod == 10.0
+    assert ch.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
+    assert (
+        ch.accelerationSensorSensitivity
+        == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+    )
+    assert ch.accelerationSensorTriggerAngle == 30
+
+
+@pytest.mark.asyncio
 async def test_wall_mounted_thermostate_pro_channel(
     no_ssl_fake_async_home: AsyncHome,
 ):

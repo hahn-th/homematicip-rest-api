@@ -248,6 +248,42 @@ def test_switch_measuring_channel(fake_home: Home):
         assert ch.on == True
 
 
+def test_tilt_vibration_sensor_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110TILTVIBRATIONSENSOR", 1)
+        assert isinstance(ch, TiltVibrationSensorChannel)
+
+        assert ch.accelerationSensorEventFilterPeriod == 0.5
+        assert ch.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
+        assert (
+            ch.accelerationSensorNeutralPosition
+            == AccelerationSensorNeutralPosition.VERTICAL
+        )
+        assert (
+            ch.accelerationSensorSensitivity
+            == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        assert ch.accelerationSensorTriggerAngle == 45
+        assert ch.accelerationSensorTriggered == True
+
+        ch.set_acceleration_sensor_event_filter_period(10.0)
+        ch.set_acceleration_sensor_mode(AccelerationSensorMode.ANY_MOTION)
+        ch.set_acceleration_sensor_sensitivity(
+            AccelerationSensorSensitivity.SENSOR_RANGE_4G
+        )
+        ch.set_acceleration_sensor_trigger_angle(30)
+
+        fake_home.get_current_state()
+        ch = fake_home.search_device_by_id("3014F7110TILTVIBRATIONSENSOR")
+        assert ch.accelerationSensorEventFilterPeriod == 10.0
+        assert ch.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
+        assert (
+            ch.accelerationSensorSensitivity
+            == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+        )
+        assert ch.accelerationSensorTriggerAngle == 30
+
+
 def test_wall_mounted_thermostate_pro_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000022", 1)
