@@ -65,9 +65,10 @@ def test_acceleration_sensor_channel(fake_home: Home):
             ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
         )
 
+
 def test_blind_channel(fake_home: Home):
     with no_ssl_verification():
-        ch = fake_home.search_channel("3014F711BADCAFE000000001",1)
+        ch = fake_home.search_channel("3014F711BADCAFE000000001", 1)
         assert isinstance(ch, BlindChannel)
         assert ch.blindModeActive == True
         assert ch.bottomToTopReferenceTime == 41.0
@@ -84,12 +85,12 @@ def test_blind_channel(fake_home: Home):
 
         ch.set_shutter_level(0.5)
         fake_home.get_current_state()
-        ch = fake_home.search_channel("3014F711BADCAFE000000001",1)
+        ch = fake_home.search_channel("3014F711BADCAFE000000001", 1)
         assert ch.shutterLevel == 0.5
 
-        ch.set_slats_level(0.4,0.6)        
+        ch.set_slats_level(0.4, 0.6)
         fake_home.get_current_state()
-        ch = fake_home.search_channel("3014F711BADCAFE000000001",1)
+        ch = fake_home.search_channel("3014F711BADCAFE000000001", 1)
         assert ch.shutterLevel == 0.6
         assert ch.slatsLevel == 0.4
 
@@ -106,6 +107,19 @@ def test_dimmer_channel(fake_home: Home):
         assert ch.dimLevel == 0.8
 
 
+def test_door_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F0000000000000FAF9B4", 1)
+        assert isinstance(ch, DoorChannel)
+        assert ch.doorState == DoorState.CLOSED
+
+        ch.send_door_command(DoorCommand.OPEN)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F0000000000000FAF9B4", 1)
+
+        assert ch.doorState == DoorState.OPEN
+
+
 def test_door_lock_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000DLD", 1)
@@ -118,6 +132,17 @@ def test_door_lock_channel(fake_home: Home):
         fake_home.get_current_state()
         ch = fake_home.search_channel("3014F7110000000000000DLD", 1)
         assert ch.lockState == LockState.OPEN
+
+
+def test_impulse_output_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000WGC", 2)
+        assert isinstance(ch, ImpulseOutputChannel)
+        assert ch.impulseDuration == 0.10000000149011612
+
+        ch.send_start_impulse()
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000WGC", 2)
 
 
 def test_notification_light_channel(fake_home: Home):
@@ -238,9 +263,10 @@ def test_wall_mounted_thermostate_pro_channel(fake_home: Home):
         ch = fake_home.search_channel("3014F7110000000000000022", 1)
         assert ch.display == ClimateControlDisplay.ACTUAL
 
+
 def test_water_sensor_channel(fake_home: Home):
     with no_ssl_verification():
-        ch = fake_home.search_channel("3014F7110000000000000050",1)
+        ch = fake_home.search_channel("3014F7110000000000000050", 1)
         assert isinstance(ch, WaterSensorChannel)
         assert ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
         assert ch.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
@@ -249,7 +275,7 @@ def test_water_sensor_channel(fake_home: Home):
         assert ch.moistureDetected is False
         assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
         assert ch.waterlevelDetected is False
-        
+
         ch.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
         ch.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
         ch.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
@@ -257,7 +283,7 @@ def test_water_sensor_channel(fake_home: Home):
         ch.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
 
         fake_home.get_current_state()
-        d = fake_home.search_channel("3014F7110000000000000050",1)
+        d = fake_home.search_channel("3014F7110000000000000050", 1)
         assert ch.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
         assert (
             ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH

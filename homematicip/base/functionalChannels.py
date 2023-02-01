@@ -7,6 +7,7 @@ from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
 
+
 class FunctionalChannel(HomeMaticIPObject):
     """this is the base class for the functional channels"""
 
@@ -301,7 +302,6 @@ class BlindChannel(FunctionalChannel):
         self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
-    
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
         """sets the slats and shutter level
 
@@ -319,10 +319,12 @@ class BlindChannel(FunctionalChannel):
             "shutterLevel": shutterLevel,
         }
         return self._restCall("device/control/setSlatsLevel", json.dumps(data))
-    
+
     async def async_set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
-        return await self._connection.api_call(*self.set_slats_level(slatsLevel,shutterLevel))
-    
+        return await self._connection.api_call(
+            *self.set_slats_level(slatsLevel, shutterLevel)
+        )
+
     def set_shutter_level(self, level=0.0):
         """sets the shutter level
 
@@ -338,7 +340,7 @@ class BlindChannel(FunctionalChannel):
             "shutterLevel": level,
         }
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
-    
+
     async def async_set_shutter_level(self, level=0.0):
         return await self._connection.api_call(*self.set_shutter_level(level))
 
@@ -352,7 +354,7 @@ class BlindChannel(FunctionalChannel):
         """
         data = {"channelIndex": self.index, "deviceId": self.device.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
-    
+
     async def async_set_shutter_stop(self):
         return await self._connection.api_call(*self.set_shutter_stop())
 
@@ -382,6 +384,35 @@ class DimmerChannel(FunctionalChannel):
 
     async def async_set_dim_level(self, dimLevel=0.0):
         return await self._connection.api_call(*self.set_dim_level(dimLevel))
+
+
+class DoorChannel(FunctionalChannel):
+    """this is the representative of the DoorChannel channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.doorState = DoorState.POSITION_UNKNOWN
+        self.on = False
+        self.processing = False
+        self.ventilationPositionSupported = True
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.doorState = js["doorState"]
+        self.on = js["on"]
+        self.processing = js["processing"]
+        self.ventilationPositionSupported = js["ventilationPositionSupported"]
+
+    def send_door_command(self, doorCommand=DoorCommand.STOP):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "doorCommand": doorCommand,
+        }
+        return self._restCall("device/control/sendDoorCommand", json.dumps(data))
+
+    async def async_send_door_command(self, doorCommand=DoorCommand.STOP):
+        return await self._connection.api_call(*self.send_door_command(doorCommand))
 
 
 class DoorLockChannel(FunctionalChannel):
@@ -437,6 +468,26 @@ class DoorLockChannel(FunctionalChannel):
             the result of the _restCall
         """
         return await self._connection.api_call(*self.set_lock_state(doorLockState, pin))
+
+
+class ImpulseOutputChannel(FunctionalChannel):
+    """this is the representation of the IMPULSE_OUTPUT_CHANNEL"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.impulseDuration = js["impulseDuration"]
+        self.processing = js["processing"]
+
+    def send_start_impulse(self):
+        """Toggle Wall mounted Garage Door Controller."""
+        data = {"channelIndex": self.index, "deviceId": self.device.id}
+        return self._restCall("device/control/startImpulse", body=json.dumps(data))
+
+    async def async_send_start_impulse(self):
+        return await self._connection.api_call(*self.send_start_impulse())
 
 
 class MultiModeInputChannel(FunctionalChannel):
@@ -650,7 +701,9 @@ class ShadingChannel(FunctionalChannel):
         self, primaryShadingLevel: float, secondaryShadingLevel: float
     ):
         return await self._connection.api_call(
-            *self.set_secondary_shading_level(primaryShadingLevel,secondaryShadingLevel)
+            *self.set_secondary_shading_level(
+                primaryShadingLevel, secondaryShadingLevel
+            )
         )
 
     def stop(self):
@@ -887,7 +940,7 @@ class WaterSensorChannel(FunctionalChannel):
             js["sirenWaterAlarmTrigger"]
         )
         self.waterlevelDetected = js["waterlevelDetected"]
-    
+
     def set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
         data = {
             "channelIndex": self.index,
@@ -897,9 +950,13 @@ class WaterSensorChannel(FunctionalChannel):
         return self._restCall(
             "device/configuration/setAcousticAlarmSignal", json.dumps(data)
         )
-    
-    async def async_set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
-        return await self._connection.api_call(*self.set_acoustic_alarm_signal(acousticAlarmSignal))
+
+    async def async_set_acoustic_alarm_signal(
+        self, acousticAlarmSignal: AcousticAlarmSignal
+    ):
+        return await self._connection.api_call(
+            *self.set_acoustic_alarm_signal(acousticAlarmSignal)
+        )
 
     def set_acoustic_alarm_timing(self, acousticAlarmTiming: AcousticAlarmTiming):
         data = {
@@ -910,12 +967,12 @@ class WaterSensorChannel(FunctionalChannel):
         return self._restCall(
             "device/configuration/setAcousticAlarmTiming", json.dumps(data)
         )
-    
-    async def async_set_acoustic_alarm_timing(self, acousticAlarmTiming: AcousticAlarmTiming):
+
+    async def async_set_acoustic_alarm_timing(
+        self, acousticAlarmTiming: AcousticAlarmTiming
+    ):
         return await self._connection.api_call(
-            *self.set_acoustic_alarm_timing(
-                acousticAlarmTiming
-            )
+            *self.set_acoustic_alarm_timing(acousticAlarmTiming)
         )
 
     def set_acoustic_water_alarm_trigger(
@@ -929,11 +986,13 @@ class WaterSensorChannel(FunctionalChannel):
         return self._restCall(
             "device/configuration/setAcousticWaterAlarmTrigger", json.dumps(data)
         )
-    
+
     async def async_set_acoustic_water_alarm_trigger(
         self, acousticWaterAlarmTrigger: WaterAlarmTrigger
     ):
-        return await self._connection.api_call(*self.set_acoustic_water_alarm_trigger(acousticWaterAlarmTrigger))
+        return await self._connection.api_call(
+            *self.set_acoustic_water_alarm_trigger(acousticWaterAlarmTrigger)
+        )
 
     def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger: WaterAlarmTrigger):
         data = {
@@ -944,9 +1003,13 @@ class WaterSensorChannel(FunctionalChannel):
         return self._restCall(
             "device/configuration/setInAppWaterAlarmTrigger", json.dumps(data)
         )
-    
-    async def async_set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger: WaterAlarmTrigger):
-        return await self._connection.api_call(*self.set_inapp_water_alarm_trigger(inAppWaterAlarmTrigger))
+
+    async def async_set_inapp_water_alarm_trigger(
+        self, inAppWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        return await self._connection.api_call(
+            *self.set_inapp_water_alarm_trigger(inAppWaterAlarmTrigger)
+        )
 
     def set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger: WaterAlarmTrigger):
         LOGGER.warning(
@@ -960,9 +1023,13 @@ class WaterSensorChannel(FunctionalChannel):
         return self._restCall(
             "device/configuration/setSirenWaterAlarmTrigger", json.dumps(data)
         )
-    
-    async def async_set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger: WaterAlarmTrigger):
-        return await self._connection.api_call(*self.set_siren_water_alarm_trigger(sirenWaterAlarmTrigger))
+
+    async def async_set_siren_water_alarm_trigger(
+        self, sirenWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        return await self._connection.api_call(
+            *self.set_siren_water_alarm_trigger(sirenWaterAlarmTrigger)
+        )
 
 
 #################
@@ -1119,24 +1186,6 @@ class ClimateSensorChannel(FunctionalChannel):
         self.actualTemperature = js["actualTemperature"]
         self.humidity = js["humidity"]
         self.vaporAmount = js["vaporAmount"]
-
-
-class DoorChannel(FunctionalChannel):
-    """this is the representative of the DoorChannel channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.doorState = DoorState.POSITION_UNKNOWN
-        self.on = False
-        self.processing = False
-        self.ventilationPositionSupported = True
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.doorState = js["doorState"]
-        self.on = js["on"]
-        self.processing = js["processing"]
-        self.ventilationPositionSupported = js["ventilationPositionSupported"]
 
 
 class DoorLockSensorChannel(FunctionalChannel):
@@ -1471,18 +1520,6 @@ class InternalSwitchChannel(FunctionalChannel):
             self.valveProtectionDuration,
             self.valveProtectionSwitchingInterval,
         )
-
-
-class ImpulseOutputChannel(FunctionalChannel):
-    """this is the representation of the IMPULSE_OUTPUT_CHANNEL"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.impulseDuration = js["impulseDuration"]
-        self.processing = js["processing"]
 
 
 class LightSensorChannel(FunctionalChannel):

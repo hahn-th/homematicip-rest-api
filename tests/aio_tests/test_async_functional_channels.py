@@ -59,21 +59,23 @@ async def test_acceleration_sensor_channel(no_ssl_fake_async_home: AsyncHome):
     assert ch.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
     assert ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
 
+
 @pytest.mark.asyncio
 async def test_blind_channel(no_ssl_fake_async_home: AsyncHome):
-    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001",1)
+    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001", 1)
     assert isinstance(ch, BlindChannel)
 
     await ch.async_set_shutter_level(0.5)
     await no_ssl_fake_async_home.get_current_state()
-    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001",1)
+    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001", 1)
     assert ch.shutterLevel == 0.5
 
-    await ch.async_set_slats_level(0.4,0.6)        
+    await ch.async_set_slats_level(0.4, 0.6)
     await no_ssl_fake_async_home.get_current_state()
-    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001",1)
+    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001", 1)
     assert ch.shutterLevel == 0.6
     assert ch.slatsLevel == 0.4
+
 
 @pytest.mark.asyncio
 async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
@@ -88,6 +90,19 @@ async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_door_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F0000000000000FAF9B4", 1)
+    assert isinstance(ch, DoorChannel)
+    assert ch.doorState == DoorState.CLOSED
+
+    await ch.async_send_door_command(DoorCommand.OPEN)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F0000000000000FAF9B4", 1)
+
+    assert ch.doorState == DoorState.OPEN
+
+
+@pytest.mark.asyncio
 async def test_door_lock_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000DLD", 1)
     assert isinstance(ch, DoorLockChannel)
@@ -99,6 +114,17 @@ async def test_door_lock_channel(no_ssl_fake_async_home: AsyncHome):
     await no_ssl_fake_async_home.get_current_state()
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000DLD", 1)
     assert ch.lockState == LockState.OPEN
+
+
+@pytest.mark.asyncio
+async def test_impulse_output_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000WGC", 2)
+    assert isinstance(ch, ImpulseOutputChannel)
+    assert ch.impulseDuration == 0.10000000149011612
+
+    await ch.async_send_start_impulse()
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000WGC", 2)
 
 
 @pytest.mark.asyncio
@@ -139,6 +165,7 @@ async def test_shading_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F71100BLIND_MODULE00", 1)
     assert ch.primaryShadingLevel == 0.5
     assert ch.secondaryShadingLevel == 1.0
+
 
 @pytest.mark.asyncio
 async def test_shutter_channel(no_ssl_fake_async_home: AsyncHome):
@@ -223,7 +250,7 @@ async def test_wall_mounted_thermostate_pro_channel(
 
 @pytest.mark.asyncio
 async def test_water_sensor_channel(no_ssl_fake_async_home: AsyncHome):
-    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000050",1)
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000050", 1)
     assert isinstance(ch, WaterSensorChannel)
     assert ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
     assert ch.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
@@ -232,19 +259,19 @@ async def test_water_sensor_channel(no_ssl_fake_async_home: AsyncHome):
     assert ch.moistureDetected is False
     assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
     assert ch.waterlevelDetected is False
-    
+
     await ch.async_set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
-    await ch.async_set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+    await ch.async_set_acoustic_alarm_signal(
+        AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
+    )
     await ch.async_set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
     await ch.async_set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
     await ch.async_set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
 
     await no_ssl_fake_async_home.get_current_state()
-    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000050",1)
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000050", 1)
     assert ch.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
-    assert (
-        ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
-    )
+    assert ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
     assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
     assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
     assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
