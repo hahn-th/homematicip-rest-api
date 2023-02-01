@@ -78,6 +78,26 @@ async def test_blind_channel(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_device_base_floor_heating_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000049", 0)
+    assert isinstance(ch, DeviceBaseFloorHeatingChannel)
+
+    assert ch.coolingEmergencyValue == 0
+    assert ch.frostProtectionTemperature == 8.0
+    assert ch.heatingEmergencyValue == 0.25
+    assert ch.minimumFloorHeatingValvePosition == 0.0
+    assert ch.temperatureOutOfRange == False
+    assert ch.valveProtectionDuration == 5
+    assert ch.valveProtectionSwitchingInterval == 14
+
+    assert ch.minimumFloorHeatingValvePosition == 0.0
+    await ch.async_set_minimum_floor_heating_valve_position(0.2)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000049", 0)
+    assert ch.minimumFloorHeatingValvePosition == 0.2
+
+
+@pytest.mark.asyncio
 async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F711AAAA000000000005", 1)
     assert isinstance(ch, DimmerChannel)

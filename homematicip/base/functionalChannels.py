@@ -398,6 +398,60 @@ class BlindChannel(FunctionalChannel):
         return await self._connection.api_call(*self.set_shutter_stop())
 
 
+class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
+    """this is the representative of the DEVICE_BASE_FLOOR_HEATING channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.coolingEmergencyValue = 0
+        self.frostProtectionTemperature = 0.0
+        self.heatingEmergencyValue = 0.0
+        self.minimumFloorHeatingValvePosition = 0.0
+        self.temperatureOutOfRange = False
+        self.valveProtectionDuration = 0
+        self.valveProtectionSwitchingInterval = 20
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("coolingEmergencyValue", js)
+        self.set_attr_from_dict("frostProtectionTemperature", js)
+        self.set_attr_from_dict("heatingEmergencyValue", js)
+        self.set_attr_from_dict("minimumFloorHeatingValvePosition", js)
+        self.set_attr_from_dict("temperatureOutOfRange", js)
+        self.set_attr_from_dict("valveProtectionDuration", js)
+        self.set_attr_from_dict("valveProtectionSwitchingInterval", js)
+
+    def set_minimum_floor_heating_valve_position(
+        self, minimumFloorHeatingValvePosition: float
+    ):
+        """sets the minimum floot heating valve position
+
+        Args:
+            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
+
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "minimumFloorHeatingValvePosition": minimumFloorHeatingValvePosition,
+        }
+        return self._restCall(
+            "device/configuration/setMinimumFloorHeatingValvePosition",
+            body=json.dumps(data),
+        )
+
+    async def async_set_minimum_floor_heating_valve_position(
+        self, minimumFloorHeatingValvePosition: float
+    ):
+        return await self._connection.api_call(
+            *self.set_minimum_floor_heating_valve_position(
+                minimumFloorHeatingValvePosition
+            )
+        )
+
+
 class DimmerChannel(FunctionalChannel):
     """this is the representative of the DIMMER_CHANNEL channel"""
 
@@ -1389,24 +1443,6 @@ class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
         self.heatingEmergencyValue = js["heatingEmergencyValue"]
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
-
-
-class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
-    """this is the representative of the DEVICE_BASE_FLOOR_HEATING channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.frostProtectionTemperature = 0.0
-        self.valveProtectionDuration = 0
-        self.valveProtectionSwitchingInterval = 20
-        self.coolingEmergencyValue = 0
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.set_attr_from_dict("coolingEmergencyValue", js)
-        self.set_attr_from_dict("frostProtectionTemperature", js)
-        self.set_attr_from_dict("valveProtectionDuration", js)
-        self.set_attr_from_dict("valveProtectionSwitchingInterval", js)
 
 
 class MotionDetectionChannel(FunctionalChannel):

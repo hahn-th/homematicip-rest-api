@@ -95,6 +95,26 @@ def test_blind_channel(fake_home: Home):
         assert ch.slatsLevel == 0.4
 
 
+def test_device_base_floor_heating_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000049", 0)
+        assert isinstance(ch, DeviceBaseFloorHeatingChannel)
+
+        assert ch.coolingEmergencyValue == 0
+        assert ch.frostProtectionTemperature == 8.0
+        assert ch.heatingEmergencyValue == 0.25
+        assert ch.minimumFloorHeatingValvePosition == 0.0
+        assert ch.temperatureOutOfRange == False
+        assert ch.valveProtectionDuration == 5
+        assert ch.valveProtectionSwitchingInterval == 14
+
+        assert ch.minimumFloorHeatingValvePosition == 0.0
+        ch.set_minimum_floor_heating_valve_position(0.2)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000049", 0)
+        assert ch.minimumFloorHeatingValvePosition == 0.2
+
+
 def test_dimmer_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F711AAAA000000000005", 1)
