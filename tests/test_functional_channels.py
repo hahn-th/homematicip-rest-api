@@ -154,6 +154,12 @@ def test_door_lock_channel(fake_home: Home):
         assert ch.lockState == LockState.OPEN
 
 
+def test_floor_terminal_block_mechanic_channel(fake_home: Home):
+    ch = fake_home.search_channel("3014F7110000000000000049", 12)
+    assert isinstance(ch, FloorTerminalBlockMechanicChannel)
+    assert ch.valveState == ValveState.ADJUSTMENT_TOO_SMALL
+
+
 def test_impulse_output_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000WGC", 2)
