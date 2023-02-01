@@ -335,6 +335,42 @@ class DoorLockChannel(FunctionalChannel):
         """
         return await self._connection.api_call(*self.set_lock_state(doorLockState,pin))
 
+class MultiModeInputChannel(FunctionalChannel):
+    """this is the representative of the MULTI_MODE_INPUT_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
+        self.windowState = WindowState.OPEN
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
+        self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
+        self.windowState = WindowState.from_str(js["windowState"])
+
+class MultiModeInputDimmerChannel(DimmerChannel):
+    """this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_CLOSE
+        self.dimLevel = 0
+        self.multiModeInputMode = MultiModeInputMode.KEY_BEHAVIOR
+        self.on = False
+        self.profileMode = ProfileMode.AUTOMATIC
+        self.userDesiredProfileMode = ProfileMode.AUTOMATIC
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
 class NotificationLightChannel(DimmerChannel):
     """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
 
@@ -412,6 +448,93 @@ class NotificationLightChannel(DimmerChannel):
         rampTime: float,
     ):
         return await self._connection.api_call(*self.set_rgb_dim_level_with_time(rgb,dimLevel,onTime,rampTime))
+
+class ShutterChannel(FunctionalChannel):
+    """this is the representative of the SHUTTER_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.shutterLevel = 0
+        self.changeOverDelay = 0.0
+        self.bottomToTopReferenceTime = 0.0
+        self.topToBottomReferenceTime = 0.0
+        self.delayCompensationValue = 0
+        self.endpositionAutoDetectionEnabled = False
+        self.previousShutterLevel = None
+        self.processing = False
+        self.profileMode = "AUTOMATIC"
+        self.selfCalibrationInProgress = None
+        self.supportingDelayCompensation = False
+        self.supportingEndpositionAutoDetection = False
+        self.supportingSelfCalibration = False
+        self.userDesiredProfileMode = "AUTOMATIC"
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.shutterLevel = js["shutterLevel"]
+        self.changeOverDelay = js["changeOverDelay"]
+        self.delayCompensationValue = js["delayCompensationValue"]
+        self.bottomToTopReferenceTime = js["bottomToTopReferenceTime"]
+        self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
+        self.endpositionAutoDetectionEnabled = js["endpositionAutoDetectionEnabled"]
+        self.previousShutterLevel = js["previousShutterLevel"]
+        self.processing = js["processing"]
+        self.profileMode = js["profileMode"]
+        self.selfCalibrationInProgress = js["selfCalibrationInProgress"]
+        self.supportingDelayCompensation = js["supportingDelayCompensation"]
+        self.supportingEndpositionAutoDetection = js[
+            "supportingEndpositionAutoDetection"
+        ]
+        self.supportingSelfCalibration = js["supportingSelfCalibration"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+
+    def set_shutter_level(self, level=0.0, channelIndex=1):
+        """sets the shutter level
+
+        Args:
+            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": channelIndex,
+            "deviceId": self.id,
+            "shutterLevel": level,
+        }
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+
+    def set_shutter_stop(self):
+        """stops the current shutter operation
+
+        Args:
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {"channelIndex": self.index, "deviceId": self.device.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
+
+    async def async_set_shutter_stop(self):
+        return await self._connection.api_call(*self.set_shutter_stop())
+
+    def set_shutter_level(self, level=0.0):
+        """sets the shutter level
+
+        Args:
+            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "shutterLevel": level,
+        }
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+
+    async def async_set_shutter_level(self,level=0.0):
+        return await self._connection.api_call(*self.set_shutter_level(level))
 
 class SwitchChannel(FunctionalChannel):
     """this is the representative of the SWITCH_CHANNEL channel"""
@@ -871,44 +994,6 @@ class PresenceDetectionChannel(FunctionalChannel):
         self.numberOfBrightnessMeasurements = js["numberOfBrightnessMeasurements"]
 
 
-class ShutterChannel(FunctionalChannel):
-    """this is the representative of the SHUTTER_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.shutterLevel = 0
-        self.changeOverDelay = 0.0
-        self.bottomToTopReferenceTime = 0.0
-        self.topToBottomReferenceTime = 0.0
-        self.delayCompensationValue = 0
-        self.endpositionAutoDetectionEnabled = False
-        self.previousShutterLevel = None
-        self.processing = False
-        self.profileMode = "AUTOMATIC"
-        self.selfCalibrationInProgress = None
-        self.supportingDelayCompensation = False
-        self.supportingEndpositionAutoDetection = False
-        self.supportingSelfCalibration = False
-        self.userDesiredProfileMode = "AUTOMATIC"
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.shutterLevel = js["shutterLevel"]
-        self.changeOverDelay = js["changeOverDelay"]
-        self.delayCompensationValue = js["delayCompensationValue"]
-        self.bottomToTopReferenceTime = js["bottomToTopReferenceTime"]
-        self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
-        self.endpositionAutoDetectionEnabled = js["endpositionAutoDetectionEnabled"]
-        self.previousShutterLevel = js["previousShutterLevel"]
-        self.processing = js["processing"]
-        self.profileMode = js["profileMode"]
-        self.selfCalibrationInProgress = js["selfCalibrationInProgress"]
-        self.supportingDelayCompensation = js["supportingDelayCompensation"]
-        self.supportingEndpositionAutoDetection = js[
-            "supportingEndpositionAutoDetection"
-        ]
-        self.supportingSelfCalibration = js["supportingSelfCalibration"]
-        self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
 
 class BlindChannel(ShutterChannel):
@@ -1121,20 +1206,6 @@ class ImpulseOutputChannel(FunctionalChannel):
         self.processing = js["processing"]
 
 
-class MultiModeInputChannel(FunctionalChannel):
-    """this is the representative of the MULTI_MODE_INPUT_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
-        self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
-        self.windowState = WindowState.OPEN
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
-        self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
-        self.windowState = WindowState.from_str(js["windowState"])
 
 
 
@@ -1244,26 +1315,6 @@ class MultiModeInputSwitchChannel(FunctionalChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
-class MultiModeInputDimmerChannel(FunctionalChannel):
-    """this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_CLOSE
-        self.dimLevel = 0
-        self.multiModeInputMode = MultiModeInputMode.KEY_BEHAVIOR
-        self.on = False
-        self.profileMode = ProfileMode.AUTOMATIC
-        self.userDesiredProfileMode = ProfileMode.AUTOMATIC
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
-        self.set_attr_from_dict("dimLevel", js)
-        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
-        self.set_attr_from_dict("on", js)
-        self.set_attr_from_dict("profileMode", js, ProfileMode)
-        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
 class TiltVibrationSensorChannel(FunctionalChannel):

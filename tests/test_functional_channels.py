@@ -90,6 +90,23 @@ def test_notification_light_channel(fake_home: Home):
         assert ch.dimLevel == 0.5
         assert ch.simpleRGBColorState == RGBColorState.BLACK
 
+def test_shutter_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711ACBCDABCADCA66",1)
+        assert isinstance(ch, ShutterChannel)
+        assert ch.bottomToTopReferenceTime == 30.080000000000002
+        assert ch.changeOverDelay == 0.5
+        assert ch.delayCompensationValue == 12.7
+        assert ch.endpositionAutoDetectionEnabled == True
+        assert ch.shutterLevel == 1.0
+        assert ch.previousShutterLevel == None
+        assert ch.selfCalibrationInProgress == None
+        assert ch.topToBottomReferenceTime == 24.68
+
+        ch.set_shutter_level(0.5)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711ACBCDABCADCA66",1)
+        assert ch.shutterLevel == 0.5
 
 def test_switch_channel(fake_home: Home):
     with no_ssl_verification():
