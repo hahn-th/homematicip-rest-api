@@ -1737,8 +1737,9 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.set_attr_from_dict("valveState", js)
-        self.set_attr_from_dict("valvePosition", js)
+        self.set_attr_from_dict("valveState", js, ValveState)
+        if "valvePosition" in js:
+            self.set_attr_from_dict("valvePosition", js)
 
 
 class ChangeOverChannel(FunctionalChannel):
