@@ -65,6 +65,34 @@ def test_acceleration_sensor_channel(fake_home: Home):
             ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
         )
 
+def test_blind_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711BADCAFE000000001",1)
+        assert isinstance(ch, BlindChannel)
+        assert ch.blindModeActive == True
+        assert ch.bottomToTopReferenceTime == 41.0
+        assert ch.changeOverDelay == 0.5
+        assert ch.delayCompensationValue == 1.0
+        assert ch.endpositionAutoDetectionEnabled == False
+        assert ch.previousShutterLevel == None
+        assert ch.previousSlatsLevel == None
+        assert ch.selfCalibrationInProgress == None
+        assert ch.shutterLevel == 1.0
+        assert ch.slatsLevel == 1.0
+        assert ch.slatsReferenceTime == 2.0
+        assert ch.topToBottomReferenceTime == 41.0
+
+        ch.set_shutter_level(0.5)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711BADCAFE000000001",1)
+        assert ch.shutterLevel == 0.5
+
+        ch.set_slats_level(0.4,0.6)        
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711BADCAFE000000001",1)
+        assert ch.shutterLevel == 0.6
+        assert ch.slatsLevel == 0.4
+
 
 def test_dimmer_channel(fake_home: Home):
     with no_ssl_verification():

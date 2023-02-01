@@ -251,6 +251,109 @@ class AccelerationSensorChannel(FunctionalChannel):
             *self.set_notification_sound_type(soundType, isHighToLow)
         )
 
+class BlindChannel(FunctionalChannel):
+    """this is the representative of the BLIND_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.blindModeActive = False
+        self.bottomToTopReferenceTime = 0.0
+        self.changeOverDelay = 0.0
+        self.delayCompensationValue = 0.0
+        self.endpositionAutoDetectionEnabled = False
+        self.previousShutterLevel = None
+        self.previousSlatsLevel = None
+        self.processing = None
+        self.profileMode = None
+        self.shutterLevel = 0.0
+        self.selfCalibrationInProgress = None
+        self.supportingDelayCompensation = None
+        self.supportingEndpositionAutoDetection = None
+        self.supportingSelfCalibration = None
+        self.slatsLevel = 0.0
+        self.slatsReferenceTime = 0.0
+        self.topToBottomReferenceTime = 0.0
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.blindModeActive = js["blindModeActive"]
+        self.bottomToTopReferenceTime = js["bottomToTopReferenceTime"]
+        self.changeOverDelay = js["changeOverDelay"]
+        self.delayCompensationValue = js["delayCompensationValue"]
+        self.endpositionAutoDetectionEnabled = js["endpositionAutoDetectionEnabled"]
+        self.previousShutterLevel = js["previousShutterLevel"]
+        self.previousSlatsLevel = js["previousSlatsLevel"]
+        self.processing = js["processing"]
+        self.profileMode = js["profileMode"]
+        self.shutterLevel = js["shutterLevel"]
+        self.slatsLevel = js["slatsLevel"]
+        self.selfCalibrationInProgress = js["selfCalibrationInProgress"]
+        self.supportingDelayCompensation = js["supportingDelayCompensation"]
+        self.supportingEndpositionAutoDetection = js[
+            "supportingEndpositionAutoDetection"
+        ]
+        self.supportingSelfCalibration = js["supportingSelfCalibration"]
+        self.slatsReferenceTime = js["slatsReferenceTime"]
+        self.topToBottomReferenceTime = js["topToBottomReferenceTime"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+
+    
+    def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        """sets the slats and shutter level
+
+        Args:
+            slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
+            shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "slatsLevel": slatsLevel,
+            "shutterLevel": shutterLevel,
+        }
+        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+    
+    async def async_set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        return await self._connection.api_call(*self.set_slats_level(slatsLevel,shutterLevel))
+    
+    def set_shutter_level(self, level=0.0):
+        """sets the shutter level
+
+        Args:
+            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "shutterLevel": level,
+        }
+        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+    
+    async def async_set_shutter_level(self, level=0.0):
+        return await self._connection.api_call(*self.set_shutter_level(level))
+
+    def set_shutter_stop(self):
+        """stops the current shutter operation
+
+        Args:
+            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        data = {"channelIndex": self.index, "deviceId": self.device.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
+    
+    async def async_set_shutter_stop(self):
+        return await self._connection.api_call(*self.set_shutter_stop())
+
 
 class DimmerChannel(FunctionalChannel):
     """this is the representative of the DIMMER_CHANNEL channel"""
@@ -1110,25 +1213,6 @@ class PresenceDetectionChannel(FunctionalChannel):
             js["motionDetectionSendInterval"]
         )
         self.numberOfBrightnessMeasurements = js["numberOfBrightnessMeasurements"]
-
-
-class BlindChannel(ShutterChannel):
-    """this is the representative of the BLIND_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.slatsLevel = 0
-        self.slatsReferenceTime = 0.0
-        self.previousSlatsLevel = 0
-        self.blindModeActive = False
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-
-        self.slatsLevel = js["slatsLevel"]
-        self.slatsReferenceTime = js["slatsReferenceTime"]
-        self.previousSlatsLevel = js["previousSlatsLevel"]
-        self.blindModeActive = js["blindModeActive"]
 
 
 class MultiModeInputBlindChannel(BlindChannel):

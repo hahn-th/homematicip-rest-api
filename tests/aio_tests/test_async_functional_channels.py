@@ -11,7 +11,7 @@ from homematicip.base.functionalChannels import *
 
 
 @pytest.mark.asyncio
-async def test_async_acceleration_sensor_channel(no_ssl_fake_async_home: AsyncHome):
+async def test_acceleration_sensor_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000031", 1)
     assert isinstance(ch, AccelerationSensorChannel)
 
@@ -59,6 +59,21 @@ async def test_async_acceleration_sensor_channel(no_ssl_fake_async_home: AsyncHo
     assert ch.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
     assert ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
 
+@pytest.mark.asyncio
+async def test_blind_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001",1)
+    assert isinstance(ch, BlindChannel)
+
+    await ch.async_set_shutter_level(0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001",1)
+    assert ch.shutterLevel == 0.5
+
+    await ch.async_set_slats_level(0.4,0.6)        
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711BADCAFE000000001",1)
+    assert ch.shutterLevel == 0.6
+    assert ch.slatsLevel == 0.4
 
 @pytest.mark.asyncio
 async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
@@ -73,7 +88,7 @@ async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
-async def test_async_door_lock_channel(no_ssl_fake_async_home: AsyncHome):
+async def test_door_lock_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000DLD", 1)
     assert isinstance(ch, DoorLockChannel)
     assert ch.lockState == LockState.LOCKED
@@ -107,7 +122,7 @@ async def test_notification_light_channel(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
-async def test_async_shading_channel(no_ssl_fake_async_home: AsyncHome):
+async def test_shading_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F71100BLIND_MODULE00", 1)
     assert isinstance(ch, ShadingChannel)
 
@@ -124,6 +139,24 @@ async def test_async_shading_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F71100BLIND_MODULE00", 1)
     assert ch.primaryShadingLevel == 0.5
     assert ch.secondaryShadingLevel == 1.0
+
+@pytest.mark.asyncio
+async def test_shutter_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F711ACBCDABCADCA66", 1)
+    assert isinstance(ch, ShutterChannel)
+    assert ch.bottomToTopReferenceTime == 30.080000000000002
+    assert ch.changeOverDelay == 0.5
+    assert ch.delayCompensationValue == 12.7
+    assert ch.endpositionAutoDetectionEnabled == True
+    assert ch.shutterLevel == 1.0
+    assert ch.previousShutterLevel == None
+    assert ch.selfCalibrationInProgress == None
+    assert ch.topToBottomReferenceTime == 24.68
+
+    await ch.async_set_shutter_level(0.5)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711ACBCDABCADCA66", 1)
+    assert ch.shutterLevel == 0.5
 
 
 @pytest.mark.asyncio
@@ -171,7 +204,7 @@ async def test_switch_measuring_channel(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
-async def test_async_wall_mounted_thermostate_pro_channel(
+async def test_wall_mounted_thermostate_pro_channel(
     no_ssl_fake_async_home: AsyncHome,
 ):
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000022", 1)
