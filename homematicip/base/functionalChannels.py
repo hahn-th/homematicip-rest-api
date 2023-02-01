@@ -102,6 +102,294 @@ class DeviceBaseChannel(FunctionalChannel):
             if sof["IFeatureDeviceUndervoltage"]:
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
+class AccelerationSensorChannel(FunctionalChannel):
+    """this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        #:float:
+        self.accelerationSensorEventFilterPeriod = 100.0
+        #:AccelerationSensorMode:
+        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
+        #:AccelerationSensorNeutralPosition:
+        self.accelerationSensorNeutralPosition = (
+            AccelerationSensorNeutralPosition.HORIZONTAL
+        )
+        #:AccelerationSensorSensitivity:
+        self.accelerationSensorSensitivity = (
+            AccelerationSensorSensitivity.SENSOR_RANGE_2G
+        )
+        #:int:
+        self.accelerationSensorTriggerAngle = 0
+        #:bool:
+        self.accelerationSensorTriggered = False
+        #:NotificationSoundType:
+        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
+        #:NotificationSoundType:
+        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
+        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
+        self.set_attr_from_dict(
+            "accelerationSensorNeutralPosition", js, AccelerationSensorNeutralPosition
+        )
+        self.set_attr_from_dict(
+            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
+        )
+        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
+        self.set_attr_from_dict("accelerationSensorTriggered", js)
+        self.set_attr_from_dict(
+            "notificationSoundTypeHighToLow", js, NotificationSoundType
+        )
+        self.set_attr_from_dict(
+            "notificationSoundTypeLowToHigh", js, NotificationSoundType
+        )
+
+    def set_acceleration_sensor_mode(
+        self, mode: AccelerationSensorMode
+    ):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorMode": str(mode),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorMode", json.dumps(data)
+        )
+
+    async def async_set_acceleration_sensor_mode(self, mode):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_mode(
+                mode 
+            )
+        )
+    
+    def set_acceleration_sensor_neutral_position(
+        self, neutralPosition: AccelerationSensorNeutralPosition
+    ):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorNeutralPosition": str(neutralPosition),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorNeutralPosition",
+            json.dumps(data),
+        )
+
+    async def async_set_acceleration_sensor_neutral_position(
+        self, neutralPosition: AccelerationSensorNeutralPosition
+    ):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_neutral_position(
+                neutralPosition 
+            )
+        )
+
+    def set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorSensitivity": str(sensitivity),
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
+        )
+
+    async def async_set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_sensitivity(
+                sensitivity 
+            )
+        )
+
+    def set_acceleration_sensor_trigger_angle(self, angle: int):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorTriggerAngle": angle,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
+        )
+
+    async def async_set_acceleration_sensor_trigger_angle(self, angle: int):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_trigger_angle(
+                angle 
+            )
+        )
+
+    def set_acceleration_sensor_event_filter_period(self, period: float):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "accelerationSensorEventFilterPeriod": period,
+        }
+        return self._restCall(
+            "device/configuration/setAccelerationSensorEventFilterPeriod",
+            json.dumps(data),
+        )
+
+    async def async_set_acceleration_sensor_event_filter_period(self, period: float):
+        return await self._connection.api_call(
+            *self.set_acceleration_sensor_event_filter_period(
+                period 
+            )
+        )
+
+    def set_notification_sound_type(self, soundType: NotificationSoundType, isHighToLow: bool):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "notificationSoundType": str(soundType),
+            "isHighToLow": isHighToLow,
+        }
+        return self._restCall(
+            "device/configuration/setNotificationSoundType", json.dumps(data)
+        )
+        
+    async def async_set_notification_sound_type(self, soundType: NotificationSoundType, isHighToLow: bool):
+        return await self._connection.api_call(
+            *self.set_notification_sound_type(
+                soundType,
+                isHighToLow 
+            )
+        )
+
+class DoorLockChannel(FunctionalChannel):
+    """This respresents of the DoorLockChannel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.autoRelockDelay = False
+        self.doorHandleType = "UNKNOWN"
+        self.doorLockDirection = False
+        self.doorLockNeutralPosition = False
+        self.doorLockTurns = False
+        self.lockState = LockState.UNLOCKED
+        self.motorState = MotorState.STOPPED
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.autoRelockDelay = js["autoRelockDelay"]
+        self.doorHandleType = js["doorHandleType"]
+        self.doorLockDirection = js["doorLockDirection"]
+        self.doorLockNeutralPosition = js["doorLockNeutralPosition"]
+        self.doorLockTurns = js["doorLockTurns"]
+        self.lockState = LockState.from_str(js["lockState"])
+        self.motorState = MotorState.from_str(js["motorState"])
+
+    def set_lock_state(self, doorLockState: LockState, pin=""):
+        """sets the door lock state
+
+        Args:
+            doorLockState(float): the state of the door. See LockState from base/enums.py
+            pin(string): Pin, if specified.
+            channelIndex(int): the channel to control. Normally the channel from DOOR_LOCK_CHANNEL is used.
+        Returns:
+            the result of the _restCall
+        """
+        data = {
+            "deviceId": self.device.id,
+            "channelIndex": self.index,
+            "authorizationPin": pin,
+            "targetLockState": doorLockState,
+        }
+        return self._restCall("device/control/setLockState", json.dumps(data))
+    
+    async def async_set_lock_state(self, doorLockState: LockState, pin=""):
+        """sets the door lock state
+
+        Args:
+            doorLockState(float): the state of the door. See LockState from base/enums.py
+            pin(string): Pin, if specified.
+            channelIndex(int): the channel to control. Normally the channel from DOOR_LOCK_CHANNEL is used.
+        Returns:
+            the result of the _restCall
+        """
+        return await self._connection.api_call(*self.set_lock_state(doorLockState,pin))
+
+class SwitchChannel(FunctionalChannel):
+    """this is the representative of the SWITCH_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.on = False
+        self.powerUpSwitchState = ""
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.on = js["on"]
+        self.powerUpSwitchState = js["powerUpSwitchState"] if "powerUpSwitchState" in js else ""
+        self.profileMode = js["profileMode"]
+        self.userDesiredProfileMode = js["userDesiredProfileMode"]
+
+    def set_switch_state(self, on=True):
+        data = {"channelIndex": self.index, "deviceId": self.device.id, "on": on}
+        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+
+    def turn_on(self):
+        return self.set_switch_state(True)
+
+    def turn_off(self):
+        return self.set_switch_state(False)
+    
+    async def async_set_switch_state(self, on=True):
+        return await self._connection.api_call(
+            *self.set_switch_state(on)
+        )
+    
+    async def async_turn_on(self):
+        return await self.async_set_switch_state(True)
+    
+    async def async_turn_off(self):
+        return await self.async_set_switch_state(False)
+
+class WallMountedThermostatProChannel(FunctionalChannel):
+    """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.display = ClimateControlDisplay.ACTUAL
+        self.setPointTemperature = 0
+        self.temperatureOffset = 0
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.vaporAmount = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.temperatureOffset = js["temperatureOffset"]
+        self.setPointTemperature = js["setPointTemperature"]
+        self.display = ClimateControlDisplay.from_str(js["display"])
+        self.actualTemperature = js["actualTemperature"]
+        self.humidity = js["humidity"]
+        self.vaporAmount = js["vaporAmount"]
+
+    def set_display(
+        self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
+    ):
+        data = {"channelIndex": self.index, "deviceId": self.device.id, "display": str(display)}
+        return self._restCall(
+            "device/configuration/setClimateControlDisplay", json.dumps(data)
+        )
+
+    async def async_set_display(
+        self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
+    ):
+        return await self._connection.api_call(
+            *self.set_display(display)
+        )
+    
+################# 
+#################
+#################
 
 class AccessControllerChannel(DeviceBaseChannel):
     """this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
@@ -306,30 +594,6 @@ class DoorChannel(FunctionalChannel):
         self.ventilationPositionSupported = js["ventilationPositionSupported"]
 
 
-class DoorLockChannel(FunctionalChannel):
-    """This respresents of the DoorLockChannel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.autoRelockDelay = False
-        self.doorHandleType = "UNKNOWN"
-        self.doorLockDirection = False
-        self.doorLockNeutralPosition = False
-        self.doorLockTurns = False
-        self.lockState = LockState.UNLOCKED
-        self.motorState = MotorState.STOPPED
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-
-        self.autoRelockDelay = js["autoRelockDelay"]
-        self.doorHandleType = js["doorHandleType"]
-        self.doorLockDirection = js["doorLockDirection"]
-        self.doorLockNeutralPosition = js["doorLockNeutralPosition"]
-        self.doorLockTurns = js["doorLockTurns"]
-        self.lockState = LockState.from_str(js["lockState"])
-        self.motorState = MotorState.from_str(js["motorState"])
-
 
 class DoorLockSensorChannel(FunctionalChannel):
     """This respresents of the DoorLockSensorChannel"""
@@ -377,20 +641,6 @@ class AnalogRoomControlChannel(FunctionalChannel):
         self.set_attr_from_dict("temperatureOffset", js)
 
 
-class WallMountedThermostatProChannel(WallMountedThermostatWithoutDisplayChannel):
-    """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.display = ClimateControlDisplay.ACTUAL
-        self.setPointTemperature = 0
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.setPointTemperature = js["setPointTemperature"]
-        self.display = ClimateControlDisplay.from_str(js["display"])
-
-
 class SmokeDetectorChannel(FunctionalChannel):
     """this is the representative of the SMOKE_DETECTOR_CHANNEL channel"""
 
@@ -403,22 +653,6 @@ class SmokeDetectorChannel(FunctionalChannel):
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(
             js["smokeDetectorAlarmType"]
         )
-
-
-class SwitchChannel(FunctionalChannel):
-    """this is the representative of the SWITCH_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.on = False
-        self.profileMode = None
-        self.userDesiredProfileMode = None
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.on = js["on"]
-        self.profileMode = js["profileMode"]
-        self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
 
 class SwitchMeasuringChannel(SwitchChannel):
@@ -865,164 +1099,6 @@ class AnalogOutputChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.analogOutputLevel = js["analogOutputLevel"]
-
-
-class AccelerationSensorChannel(FunctionalChannel):
-    """this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        #:float:
-        self.accelerationSensorEventFilterPeriod = 100.0
-        #:AccelerationSensorMode:
-        self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
-        #:AccelerationSensorNeutralPosition:
-        self.accelerationSensorNeutralPosition = (
-            AccelerationSensorNeutralPosition.HORIZONTAL
-        )
-        #:AccelerationSensorSensitivity:
-        self.accelerationSensorSensitivity = (
-            AccelerationSensorSensitivity.SENSOR_RANGE_2G
-        )
-        #:int:
-        self.accelerationSensorTriggerAngle = 0
-        #:bool:
-        self.accelerationSensorTriggered = False
-        #:NotificationSoundType:
-        self.notificationSoundTypeHighToLow = NotificationSoundType.SOUND_NO_SOUND
-        #:NotificationSoundType:
-        self.notificationSoundTypeLowToHigh = NotificationSoundType.SOUND_NO_SOUND
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
-        self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
-        self.set_attr_from_dict(
-            "accelerationSensorNeutralPosition", js, AccelerationSensorNeutralPosition
-        )
-        self.set_attr_from_dict(
-            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
-        )
-        self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
-        self.set_attr_from_dict("accelerationSensorTriggered", js)
-        self.set_attr_from_dict(
-            "notificationSoundTypeHighToLow", js, NotificationSoundType
-        )
-        self.set_attr_from_dict(
-            "notificationSoundTypeLowToHigh", js, NotificationSoundType
-        )
-
-    def set_acceleration_sensor_mode(
-        self, mode: AccelerationSensorMode
-    ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorMode": str(mode),
-        }
-        return self._restCall(
-            "device/configuration/setAccelerationSensorMode", json.dumps(data)
-        )
-
-    async def async_set_acceleration_sensor_mode(self, mode):
-        return await self._connection.api_call(
-            *self.set_acceleration_sensor_mode(
-                mode 
-            )
-        )
-    
-    def set_acceleration_sensor_neutral_position(
-        self, neutralPosition: AccelerationSensorNeutralPosition
-    ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorNeutralPosition": str(neutralPosition),
-        }
-        return self._restCall(
-            "device/configuration/setAccelerationSensorNeutralPosition",
-            json.dumps(data),
-        )
-
-    async def async_set_acceleration_sensor_neutral_position(
-        self, neutralPosition: AccelerationSensorNeutralPosition
-    ):
-        return await self._connection.api_call(
-            *self.set_acceleration_sensor_neutral_position(
-                neutralPosition 
-            )
-        )
-
-    def set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorSensitivity": str(sensitivity),
-        }
-        return self._restCall(
-            "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
-        )
-
-    async def async_set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity):
-        return await self._connection.api_call(
-            *self.set_acceleration_sensor_sensitivity(
-                sensitivity 
-            )
-        )
-
-    def set_acceleration_sensor_trigger_angle(self, angle: int):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorTriggerAngle": angle,
-        }
-        return self._restCall(
-            "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
-        )
-
-    async def async_set_acceleration_sensor_trigger_angle(self, angle: int):
-        return await self._connection.api_call(
-            *self.set_acceleration_sensor_trigger_angle(
-                angle 
-            )
-        )
-
-    def set_acceleration_sensor_event_filter_period(self, period: float):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorEventFilterPeriod": period,
-        }
-        return self._restCall(
-            "device/configuration/setAccelerationSensorEventFilterPeriod",
-            json.dumps(data),
-        )
-
-    async def async_set_acceleration_sensor_event_filter_period(self, period: float):
-        return await self._connection.api_call(
-            *self.set_acceleration_sensor_event_filter_period(
-                period 
-            )
-        )
-
-    def set_notification_sound_type(self, soundType: NotificationSoundType, isHighToLow: bool):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "notificationSoundType": str(soundType),
-            "isHighToLow": isHighToLow,
-        }
-        return self._restCall(
-            "device/configuration/setNotificationSoundType", json.dumps(data)
-        )
-        
-    async def async_set_notification_sound_type(self, soundType: NotificationSoundType, isHighToLow: bool):
-        return await self._connection.api_call(
-            *self.set_notification_sound_type(
-                soundType,
-                isHighToLow 
-            )
-        )
 
 
 class DeviceRechargeableWithSabotage(DeviceSabotageChannel):

@@ -18,7 +18,7 @@ from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
 
 def test_getTypeFunctionalChannelMap(fake_home: Home):
     for channelType in TYPE_FUNCTIONALCHANNEL_MAP.keys():
-        fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType]()
+        fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType](None, None)
         assert fc != None
 
 
