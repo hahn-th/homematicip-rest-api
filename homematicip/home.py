@@ -208,6 +208,8 @@ class Home(HomeMaticIPObject):
         self.clients = []
         #:List[Group]: a collection of all groups in the home
         self.groups = []
+        #:List[FunctionalChannel]: a collection of all channels in the home
+        self.channels = []
         #:List[Rule]: a collection of all rules in the home
         self.rules = []
         #: a collection of all functionalHomes in the home
@@ -310,6 +312,7 @@ class Home(HomeMaticIPObject):
             self.devices = []
             self.clients = []
             self.groups = []
+            self.channels = []
 
         self._get_devices(json_state)
         self._get_clients(json_state)
@@ -364,6 +367,17 @@ class Home(HomeMaticIPObject):
             d.from_json(json_state)
             LOGGER.warning("There is no class for device '%s' yet", json_state["type"])
             return d
+    
+    # def update_device(self, data):
+    #     obj = self.search_device_by_id(data["id"])
+    #     if obj is None:  # no DEVICE_ADDED Event?
+    #         obj = self._parse_device(data)
+    #         self.devices.append(obj)
+    #         pushEventType = EventType.DEVICE_ADDED
+    #         self.fire_create_event(data, event_type=pushEventType, obj=obj)
+    #     else:
+    #         obj.from_json(data)
+    #     obj.load_functionalChannels(self.groups)
 
     def _get_rules(self, json_state):
         self.rules = [
@@ -459,7 +473,7 @@ class Home(HomeMaticIPObject):
 
     def _load_functionalChannels(self):
         for d in self.devices:
-            d.load_functionalChannels(self.groups)
+            d.load_functionalChannels(self.groups, self.channels)
 
     def get_functionalHome(self, functionalHomeType: type) -> FunctionalHome:
         """ gets the specified functionalHome
@@ -489,6 +503,16 @@ class Home(HomeMaticIPObject):
             if d.id == deviceID:
                 return d
         return None
+    
+    def search_channel(self, deviceID, channelIndex) -> FunctionalChannel:
+        """ searches a channel by given deviceID and channelIndex"""
+        foundD = [d for d in self.devices if d.id == deviceID]
+        d = foundD[0] if foundD else None
+        if d is not None:
+            foundC = [ch for ch in d.functionalChannels if ch.index == channelIndex]
+            return foundC[0] if foundC else None
+        return None
+                
 
     def search_group_by_id(self, groupID) -> Group:
         """ searches a group by given id
@@ -814,14 +838,14 @@ class Home(HomeMaticIPObject):
                 elif pushEventType == EventType.CLIENT_CHANGED:
                     data = event["client"]
                     obj = self.search_client_by_id(data["id"])
-                    obj.from_json(data)
+                    obj.from_json(data) 
                 elif pushEventType == EventType.CLIENT_REMOVED:
                     obj = self.search_client_by_id(event["id"])
                     self.clients.remove(obj)
                 elif pushEventType == EventType.DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)
-                    obj.load_functionalChannels(self.groups)
+                    obj.load_functionalChannels(self.groups, self.channels)
                     self.devices.append(obj)
                     self.fire_create_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_CHANGED:
@@ -834,7 +858,7 @@ class Home(HomeMaticIPObject):
                         self.fire_create_event(data, event_type=pushEventType, obj=obj)
                     else:
                         obj.from_json(data)
-                    obj.load_functionalChannels(self.groups)
+                    obj.load_functionalChannels(self.groups, self.channels)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])
