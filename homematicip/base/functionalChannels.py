@@ -102,6 +102,7 @@ class DeviceBaseChannel(FunctionalChannel):
             if sof["IFeatureDeviceUndervoltage"]:
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
+
 class AccelerationSensorChannel(FunctionalChannel):
     """this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
 
@@ -147,9 +148,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "notificationSoundTypeLowToHigh", js, NotificationSoundType
         )
 
-    def set_acceleration_sensor_mode(
-        self, mode: AccelerationSensorMode
-    ):
+    def set_acceleration_sensor_mode(self, mode: AccelerationSensorMode):
         data = {
             "channelIndex": self.index,
             "deviceId": self.device.id,
@@ -160,12 +159,8 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_mode(self, mode):
-        return await self._connection.api_call(
-            *self.set_acceleration_sensor_mode(
-                mode 
-            )
-        )
-    
+        return await self._connection.api_call(*self.set_acceleration_sensor_mode(mode))
+
     def set_acceleration_sensor_neutral_position(
         self, neutralPosition: AccelerationSensorNeutralPosition
     ):
@@ -183,12 +178,12 @@ class AccelerationSensorChannel(FunctionalChannel):
         self, neutralPosition: AccelerationSensorNeutralPosition
     ):
         return await self._connection.api_call(
-            *self.set_acceleration_sensor_neutral_position(
-                neutralPosition 
-            )
+            *self.set_acceleration_sensor_neutral_position(neutralPosition)
         )
 
-    def set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity):
+    def set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity
+    ):
         data = {
             "channelIndex": self.index,
             "deviceId": self.device.id,
@@ -198,11 +193,11 @@ class AccelerationSensorChannel(FunctionalChannel):
             "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
         )
 
-    async def async_set_acceleration_sensor_sensitivity(self, sensitivity: AccelerationSensorSensitivity):
+    async def async_set_acceleration_sensor_sensitivity(
+        self, sensitivity: AccelerationSensorSensitivity
+    ):
         return await self._connection.api_call(
-            *self.set_acceleration_sensor_sensitivity(
-                sensitivity 
-            )
+            *self.set_acceleration_sensor_sensitivity(sensitivity)
         )
 
     def set_acceleration_sensor_trigger_angle(self, angle: int):
@@ -217,9 +212,7 @@ class AccelerationSensorChannel(FunctionalChannel):
 
     async def async_set_acceleration_sensor_trigger_angle(self, angle: int):
         return await self._connection.api_call(
-            *self.set_acceleration_sensor_trigger_angle(
-                angle 
-            )
+            *self.set_acceleration_sensor_trigger_angle(angle)
         )
 
     def set_acceleration_sensor_event_filter_period(self, period: float):
@@ -235,12 +228,12 @@ class AccelerationSensorChannel(FunctionalChannel):
 
     async def async_set_acceleration_sensor_event_filter_period(self, period: float):
         return await self._connection.api_call(
-            *self.set_acceleration_sensor_event_filter_period(
-                period 
-            )
+            *self.set_acceleration_sensor_event_filter_period(period)
         )
 
-    def set_notification_sound_type(self, soundType: NotificationSoundType, isHighToLow: bool):
+    def set_notification_sound_type(
+        self, soundType: NotificationSoundType, isHighToLow: bool
+    ):
         data = {
             "channelIndex": self.index,
             "deviceId": self.device.id,
@@ -250,14 +243,14 @@ class AccelerationSensorChannel(FunctionalChannel):
         return self._restCall(
             "device/configuration/setNotificationSoundType", json.dumps(data)
         )
-        
-    async def async_set_notification_sound_type(self, soundType: NotificationSoundType, isHighToLow: bool):
+
+    async def async_set_notification_sound_type(
+        self, soundType: NotificationSoundType, isHighToLow: bool
+    ):
         return await self._connection.api_call(
-            *self.set_notification_sound_type(
-                soundType,
-                isHighToLow 
-            )
+            *self.set_notification_sound_type(soundType, isHighToLow)
         )
+
 
 class DimmerChannel(FunctionalChannel):
     """this is the representative of the DIMMER_CHANNEL channel"""
@@ -274,12 +267,17 @@ class DimmerChannel(FunctionalChannel):
         self.profileMode = js["profileMode"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
-    def set_dim_level(self, dimLevel=0.0): 
-        data = {"channelIndex": self.index, "deviceId": self.device.id, "dimLevel": dimLevel}
+    def set_dim_level(self, dimLevel=0.0):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "dimLevel": dimLevel,
+        }
         return self._restCall("device/control/setDimLevel", json.dumps(data))
-    
+
     async def async_set_dim_level(self, dimLevel=0.0):
         return await self._connection.api_call(*self.set_dim_level(dimLevel))
+
 
 class DoorLockChannel(FunctionalChannel):
     """This respresents of the DoorLockChannel"""
@@ -322,7 +320,7 @@ class DoorLockChannel(FunctionalChannel):
             "targetLockState": doorLockState,
         }
         return self._restCall("device/control/setLockState", json.dumps(data))
-    
+
     async def async_set_lock_state(self, doorLockState: LockState, pin=""):
         """sets the door lock state
 
@@ -333,7 +331,8 @@ class DoorLockChannel(FunctionalChannel):
         Returns:
             the result of the _restCall
         """
-        return await self._connection.api_call(*self.set_lock_state(doorLockState,pin))
+        return await self._connection.api_call(*self.set_lock_state(doorLockState, pin))
+
 
 class MultiModeInputChannel(FunctionalChannel):
     """this is the representative of the MULTI_MODE_INPUT_CHANNEL channel"""
@@ -349,6 +348,7 @@ class MultiModeInputChannel(FunctionalChannel):
         self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
         self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
         self.windowState = WindowState.from_str(js["windowState"])
+
 
 class MultiModeInputDimmerChannel(DimmerChannel):
     """this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel"""
@@ -370,6 +370,7 @@ class MultiModeInputDimmerChannel(DimmerChannel):
         self.set_attr_from_dict("on", js)
         self.set_attr_from_dict("profileMode", js, ProfileMode)
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
 
 class NotificationLightChannel(DimmerChannel):
     """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
@@ -408,7 +409,7 @@ class NotificationLightChannel(DimmerChannel):
         )
 
     async def async_set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
-        return await self._connection.api_call(*self.set_rgb_dim_level(rgb,dimLevel))
+        return await self._connection.api_call(*self.set_rgb_dim_level(rgb, dimLevel))
 
     def set_rgb_dim_level_with_time(
         self,
@@ -447,7 +448,117 @@ class NotificationLightChannel(DimmerChannel):
         onTime: float,
         rampTime: float,
     ):
-        return await self._connection.api_call(*self.set_rgb_dim_level_with_time(rgb,dimLevel,onTime,rampTime))
+        return await self._connection.api_call(
+            *self.set_rgb_dim_level_with_time(rgb, dimLevel, onTime, rampTime)
+        )
+
+
+class ShadingChannel(FunctionalChannel):
+    """this is the representative of the SHADING_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.automationDriveSpeed = DriveSpeed.CREEP_SPEED
+        self.manualDriveSpeed = DriveSpeed.CREEP_SPEED
+        self.favoritePrimaryShadingPosition = 0.0
+        self.favoriteSecondaryShadingPosition = 0.0
+        self.primaryShadingLevel = 0.0
+        self.secondaryShadingLevel = 0.0
+        self.previousPrimaryShadingLevel = 0.0
+        self.previousSecondaryShadingLevel = 0.0
+        self.identifyOemSupported = False
+        self.productId = 0
+        self.primaryCloseAdjustable = False
+        self.primaryOpenAdjustable = False
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.primaryCloseAdjustable = False
+        self.primaryOpenAdjustable = False
+        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
+        self.profileMode = ProfileMode.MANUAL
+        self.userDesiredProfileMode = ProfileMode.MANUAL
+        self.processing = False
+        self.shadingDriveVersion = None
+        self.shadingPackagePosition = ShadingPackagePosition.NOT_USED
+        self.shadingPositionAdjustmentActive = None
+        self.shadingPositionAdjustmentClientId = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("automationDriveSpeed", js, DriveSpeed)
+        self.set_attr_from_dict("manualDriveSpeed", js, DriveSpeed)
+
+        self.set_attr_from_dict("favoritePrimaryShadingPosition", js)
+        self.set_attr_from_dict("favoriteSecondaryShadingPosition", js)
+
+        self.set_attr_from_dict("primaryCloseAdjustable", js)
+        self.set_attr_from_dict("primaryOpenAdjustable", js)
+        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
+        self.set_attr_from_dict("secondaryCloseAdjustable", js)
+        self.set_attr_from_dict("secondaryOpenAdjustable", js)
+        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
+
+        self.set_attr_from_dict("primaryShadingLevel", js)
+        self.set_attr_from_dict("secondaryShadingLevel", js)
+
+        self.set_attr_from_dict("previousPrimaryShadingLevel", js)
+        self.set_attr_from_dict("previousSecondaryShadingLevel", js)
+
+        self.set_attr_from_dict("identifyOemSupported", js)
+        self.set_attr_from_dict("productId", js)
+
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
+        self.set_attr_from_dict("shadingDriveVersion", js)
+        self.set_attr_from_dict("shadingPackagePosition", js, ShadingPackagePosition)
+        self.set_attr_from_dict("shadingPositionAdjustmentActive", js)
+        self.set_attr_from_dict("shadingPositionAdjustmentClientId", js)
+
+    def set_primary_shading_level(self, primaryShadingLevel: float):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "primaryShadingLevel": primaryShadingLevel,
+        }
+        return self._restCall("device/control/setPrimaryShadingLevel", json.dumps(data))
+
+    async def async_set_primary_shading_level(self, primaryShadingLevel: float):
+        return await self._connection.api_call(
+            *self.set_primary_shading_level(primaryShadingLevel)
+        )
+
+    def set_secondary_shading_level(
+        self, primaryShadingLevel: float, secondaryShadingLevel: float
+    ):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "primaryShadingLevel": primaryShadingLevel,
+            "secondaryShadingLevel": secondaryShadingLevel,
+        }
+        return self._restCall(
+            "device/control/setSecondaryShadingLevel", json.dumps(data)
+        )
+
+    async def async_set_secondary_shading_level(
+        self, primaryShadingLevel: float, secondaryShadingLevel: float
+    ):
+        return await self._connection.api_call(
+            *self.set_secondary_shading_level(primaryShadingLevel,secondaryShadingLevel)
+        )
+
+    def stop(self):
+        """stops the current operation
+        Returns:
+            the result of the _restCall
+        """
+        data = {"channelIndex": self.index, "deviceId": self.device.id}
+        return self._restCall("device/control/stop", body=json.dumps(data))
+
+    async def async_stop(self):
+        return await self._connection.api_call(*self.stop())
+
 
 class ShutterChannel(FunctionalChannel):
     """this is the representative of the SHUTTER_CHANNEL channel"""
@@ -533,8 +644,9 @@ class ShutterChannel(FunctionalChannel):
         }
         return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
 
-    async def async_set_shutter_level(self,level=0.0):
+    async def async_set_shutter_level(self, level=0.0):
         return await self._connection.api_call(*self.set_shutter_level(level))
+
 
 class SwitchChannel(FunctionalChannel):
     """this is the representative of the SWITCH_CHANNEL channel"""
@@ -549,7 +661,9 @@ class SwitchChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.on = js["on"]
-        self.powerUpSwitchState = js["powerUpSwitchState"] if "powerUpSwitchState" in js else ""
+        self.powerUpSwitchState = (
+            js["powerUpSwitchState"] if "powerUpSwitchState" in js else ""
+        )
         self.profileMode = js["profileMode"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
@@ -562,17 +676,16 @@ class SwitchChannel(FunctionalChannel):
 
     def turn_off(self):
         return self.set_switch_state(False)
-    
+
     async def async_set_switch_state(self, on=True):
-        return await self._connection.api_call(
-            *self.set_switch_state(on)
-        )
-    
+        return await self._connection.api_call(*self.set_switch_state(on))
+
     async def async_turn_on(self):
         return await self.async_set_switch_state(True)
-    
+
     async def async_turn_off(self):
         return await self.async_set_switch_state(False)
+
 
 class SwitchMeasuringChannel(SwitchChannel):
     """this is the representative of the SWITCH_MEASURING_CHANNEL channel"""
@@ -586,15 +699,16 @@ class SwitchMeasuringChannel(SwitchChannel):
         super().from_json(js, groups)
         self.energyCounter = js["energyCounter"]
         self.currentPowerConsumption = js["currentPowerConsumption"]
-    
+
     def reset_energy_counter(self):
         data = {"channelIndex": self.index, "deviceId": self.device.id}
         return self._restCall(
             "device/control/resetEnergyCounter", body=json.dumps(data)
         )
-    
+
     async def async_reset_energy_counter(self):
         return await self._connection.api_call(*self.reset_energy_counter())
+
 
 class WallMountedThermostatProChannel(FunctionalChannel):
     """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
@@ -620,7 +734,11 @@ class WallMountedThermostatProChannel(FunctionalChannel):
     def set_display(
         self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
-        data = {"channelIndex": self.index, "deviceId": self.device.id, "display": str(display)}
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "display": str(display),
+        }
         return self._restCall(
             "device/configuration/setClimateControlDisplay", json.dumps(data)
         )
@@ -628,13 +746,13 @@ class WallMountedThermostatProChannel(FunctionalChannel):
     async def async_set_display(
         self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
-        return await self._connection.api_call(
-            *self.set_display(display)
-        )
-    
-################# 
+        return await self._connection.api_call(*self.set_display(display))
+
+
 #################
 #################
+#################
+
 
 class AccessControllerChannel(DeviceBaseChannel):
     """this is the representative of the ACCESS_CONTROLLER_CHANNEL channel"""
@@ -994,8 +1112,6 @@ class PresenceDetectionChannel(FunctionalChannel):
         self.numberOfBrightnessMeasurements = js["numberOfBrightnessMeasurements"]
 
 
-
-
 class BlindChannel(ShutterChannel):
     """this is the representative of the BLIND_CHANNEL channel"""
 
@@ -1206,10 +1322,6 @@ class ImpulseOutputChannel(FunctionalChannel):
         self.processing = js["processing"]
 
 
-
-
-
-
 class LightSensorChannel(FunctionalChannel):
     """this is the representative of the LIGHT_SENSOR_CHANNEL channel"""
 
@@ -1315,8 +1427,6 @@ class MultiModeInputSwitchChannel(FunctionalChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
-
-
 class TiltVibrationSensorChannel(FunctionalChannel):
     """this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel"""
 
@@ -1383,69 +1493,6 @@ class UniversalActuatorChannel(FunctionalChannel):
             self.profileMode,
             self.relayMode,
         )
-
-
-class ShadingChannel(FunctionalChannel):
-    """this is the representative of the SHADING_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.automationDriveSpeed = DriveSpeed.CREEP_SPEED
-        self.manualDriveSpeed = DriveSpeed.CREEP_SPEED
-        self.favoritePrimaryShadingPosition = 0.0
-        self.favoriteSecondaryShadingPosition = 0.0
-        self.primaryShadingLevel = 0.0
-        self.secondaryShadingLevel = 0.0
-        self.previousPrimaryShadingLevel = 0.0
-        self.previousSecondaryShadingLevel = 0.0
-        self.identifyOemSupported = False
-        self.productId = 0
-        self.primaryCloseAdjustable = False
-        self.primaryOpenAdjustable = False
-        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
-        self.primaryCloseAdjustable = False
-        self.primaryOpenAdjustable = False
-        self.primaryShadingStateType = ShadingStateType.NOT_EXISTENT
-        self.profileMode = ProfileMode.MANUAL
-        self.userDesiredProfileMode = ProfileMode.MANUAL
-        self.processing = False
-        self.shadingDriveVersion = None
-        self.shadingPackagePosition = ShadingPackagePosition.NOT_USED
-        self.shadingPositionAdjustmentActive = None
-        self.shadingPositionAdjustmentClientId = None
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-
-        self.set_attr_from_dict("automationDriveSpeed", js, DriveSpeed)
-        self.set_attr_from_dict("manualDriveSpeed", js, DriveSpeed)
-
-        self.set_attr_from_dict("favoritePrimaryShadingPosition", js)
-        self.set_attr_from_dict("favoriteSecondaryShadingPosition", js)
-
-        self.set_attr_from_dict("primaryCloseAdjustable", js)
-        self.set_attr_from_dict("primaryOpenAdjustable", js)
-        self.set_attr_from_dict("primaryShadingStateType", js, ShadingStateType)
-        self.set_attr_from_dict("secondaryCloseAdjustable", js)
-        self.set_attr_from_dict("secondaryOpenAdjustable", js)
-        self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
-
-        self.set_attr_from_dict("primaryShadingLevel", js)
-        self.set_attr_from_dict("secondaryShadingLevel", js)
-
-        self.set_attr_from_dict("previousPrimaryShadingLevel", js)
-        self.set_attr_from_dict("previousSecondaryShadingLevel", js)
-
-        self.set_attr_from_dict("identifyOemSupported", js)
-        self.set_attr_from_dict("productId", js)
-
-        self.set_attr_from_dict("profileMode", js, ProfileMode)
-        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
-
-        self.set_attr_from_dict("shadingDriveVersion", js)
-        self.set_attr_from_dict("shadingPackagePosition", js, ShadingPackagePosition)
-        self.set_attr_from_dict("shadingPositionAdjustmentActive", js)
-        self.set_attr_from_dict("shadingPositionAdjustmentClientId", js)
 
 
 class RainDetectionChannel(FunctionalChannel):
