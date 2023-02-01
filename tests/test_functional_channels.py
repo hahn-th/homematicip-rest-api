@@ -83,7 +83,26 @@ def test_switch_channel(fake_home: Home):
         fake_home.get_current_state()
         ch = fake_home.search_channel("3014F711000000000000FIO6",11)
         assert ch.on == True
-        
+
+def test_switch_measuring_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000108",1)
+        assert isinstance(ch, SwitchMeasuringChannel)
+        assert ch.energyCounter == 6.333200000000001
+        assert ch.currentPowerConsumption == 0.0
+        assert ch.on == False
+
+        ch.reset_energy_counter()
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000108",1)
+        assert ch.energyCounter == 0.0
+
+        ch.turn_on()
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000108",1)
+        assert ch.on == True
+
+
 def test_wall_mounted_thermostate_pro_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000022",1)

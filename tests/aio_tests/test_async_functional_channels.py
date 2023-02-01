@@ -78,6 +78,24 @@ async def test_switch_channel(no_ssl_fake_async_home: AsyncHome):
     assert ch.on == True
 
 @pytest.mark.asyncio
+async def test_switch_measuring_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000108",1)
+    assert isinstance(ch, SwitchMeasuringChannel)
+    assert ch.energyCounter == 6.333200000000001
+    assert ch.currentPowerConsumption == 0.0
+    assert ch.on == False
+
+    await ch.async_reset_energy_counter()
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000108",1)
+    assert ch.energyCounter == 0.0
+
+    await ch.async_turn_on()
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000108",1)
+    assert ch.on == True
+
+@pytest.mark.asyncio
 async def test_async_wall_mounted_thermostate_pro_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000022",1)
     assert ch.actualTemperature == 24.7

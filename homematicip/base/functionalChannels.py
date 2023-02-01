@@ -351,6 +351,29 @@ class SwitchChannel(FunctionalChannel):
     async def async_turn_off(self):
         return await self.async_set_switch_state(False)
 
+class SwitchMeasuringChannel(SwitchChannel):
+    """this is the representative of the SWITCH_MEASURING_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.energyCounter = 0
+        self.currentPowerConsumption = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.energyCounter = js["energyCounter"]
+        self.currentPowerConsumption = js["currentPowerConsumption"]
+    
+    def reset_energy_counter(self):
+        data = {"channelIndex": self.index, "deviceId": self.device.id}
+        return self._restCall(
+            "device/control/resetEnergyCounter", body=json.dumps(data)
+        )
+    
+    async def async_reset_energy_counter(self):
+        return await self._connection.api_call(*self.reset_energy_counter())
+
+
 class WallMountedThermostatProChannel(FunctionalChannel):
     """this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel"""
 
@@ -653,20 +676,6 @@ class SmokeDetectorChannel(FunctionalChannel):
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(
             js["smokeDetectorAlarmType"]
         )
-
-
-class SwitchMeasuringChannel(SwitchChannel):
-    """this is the representative of the SWITCH_MEASURING_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.energyCounter = 0
-        self.currentPowerConsumption = 0
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.energyCounter = js["energyCounter"]
-        self.currentPowerConsumption = js["currentPowerConsumption"]
 
 
 class DeviceGlobalPumpControlChannel(DeviceBaseChannel):
