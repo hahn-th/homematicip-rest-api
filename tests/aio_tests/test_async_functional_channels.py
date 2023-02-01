@@ -219,3 +219,32 @@ async def test_wall_mounted_thermostate_pro_channel(
     await no_ssl_fake_async_home.get_current_state()
     ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000022", 1)
     assert ch.display == ClimateControlDisplay.ACTUAL
+
+
+@pytest.mark.asyncio
+async def test_water_sensor_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000050",1)
+    assert isinstance(ch, WaterSensorChannel)
+    assert ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
+    assert ch.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
+    assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.WATER_DETECTION
+    assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
+    assert ch.moistureDetected is False
+    assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
+    assert ch.waterlevelDetected is False
+    
+    await ch.async_set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
+    await ch.async_set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+    await ch.async_set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
+    await ch.async_set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+    await ch.async_set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000050",1)
+    assert ch.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
+    assert (
+        ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
+    )
+    assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
+    assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
+    assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM

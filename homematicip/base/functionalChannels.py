@@ -5,6 +5,7 @@ from homematicip.base.enums import *
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
 
+LOGGER = logging.getLogger(__name__)
 
 class FunctionalChannel(HomeMaticIPObject):
     """this is the base class for the functional channels"""
@@ -250,6 +251,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         return await self._connection.api_call(
             *self.set_notification_sound_type(soundType, isHighToLow)
         )
+
 
 class BlindChannel(FunctionalChannel):
     """this is the representative of the BLIND_CHANNEL channel"""
@@ -852,6 +854,117 @@ class WallMountedThermostatProChannel(FunctionalChannel):
         return await self._connection.api_call(*self.set_display(display))
 
 
+class WaterSensorChannel(FunctionalChannel):
+    """this is the representative of the WATER_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+        self.acousticAlarmSignal = AcousticAlarmSignal.DISABLE_ACOUSTIC_SIGNAL
+        self.acousticAlarmTiming = AcousticAlarmTiming.PERMANENT
+        self.acousticWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.inAppWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.moistureDetected = False
+        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
+        self.waterlevelDetected = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.acousticAlarmSignal = AcousticAlarmSignal.from_str(
+            js["acousticAlarmSignal"]
+        )
+        self.acousticAlarmTiming = AcousticAlarmTiming.from_str(
+            js["acousticAlarmTiming"]
+        )
+        self.acousticWaterAlarmTrigger = WaterAlarmTrigger.from_str(
+            js["acousticWaterAlarmTrigger"]
+        )
+        self.inAppWaterAlarmTrigger = WaterAlarmTrigger.from_str(
+            js["inAppWaterAlarmTrigger"]
+        )
+        self.moistureDetected = js["moistureDetected"]
+        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.from_str(
+            js["sirenWaterAlarmTrigger"]
+        )
+        self.waterlevelDetected = js["waterlevelDetected"]
+    
+    def set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "acousticAlarmSignal": str(acousticAlarmSignal),
+        }
+        return self._restCall(
+            "device/configuration/setAcousticAlarmSignal", json.dumps(data)
+        )
+    
+    async def async_set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
+        return await self._connection.api_call(*self.set_acoustic_alarm_signal(acousticAlarmSignal))
+
+    def set_acoustic_alarm_timing(self, acousticAlarmTiming: AcousticAlarmTiming):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "acousticAlarmTiming": str(acousticAlarmTiming),
+        }
+        return self._restCall(
+            "device/configuration/setAcousticAlarmTiming", json.dumps(data)
+        )
+    
+    async def async_set_acoustic_alarm_timing(self, acousticAlarmTiming: AcousticAlarmTiming):
+        return await self._connection.api_call(
+            *self.set_acoustic_alarm_timing(
+                acousticAlarmTiming
+            )
+        )
+
+    def set_acoustic_water_alarm_trigger(
+        self, acousticWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "acousticWaterAlarmTrigger": str(acousticWaterAlarmTrigger),
+        }
+        return self._restCall(
+            "device/configuration/setAcousticWaterAlarmTrigger", json.dumps(data)
+        )
+    
+    async def async_set_acoustic_water_alarm_trigger(
+        self, acousticWaterAlarmTrigger: WaterAlarmTrigger
+    ):
+        return await self._connection.api_call(*self.set_acoustic_water_alarm_trigger(acousticWaterAlarmTrigger))
+
+    def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger: WaterAlarmTrigger):
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "inAppWaterAlarmTrigger": str(inAppWaterAlarmTrigger),
+        }
+        return self._restCall(
+            "device/configuration/setInAppWaterAlarmTrigger", json.dumps(data)
+        )
+    
+    async def async_set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger: WaterAlarmTrigger):
+        return await self._connection.api_call(*self.set_inapp_water_alarm_trigger(inAppWaterAlarmTrigger))
+
+    def set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger: WaterAlarmTrigger):
+        LOGGER.warning(
+            "set_siren_water_alarm_trigger is currently not available in the HMIP App. It might not be available in the cloud yet"
+        )
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "sirenWaterAlarmTrigger": str(sirenWaterAlarmTrigger),
+        }
+        return self._restCall(
+            "device/configuration/setSirenWaterAlarmTrigger", json.dumps(data)
+        )
+    
+    async def async_set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger: WaterAlarmTrigger):
+        return await self._connection.api_call(*self.set_siren_water_alarm_trigger(sirenWaterAlarmTrigger))
+
+
 #################
 #################
 #################
@@ -931,40 +1044,6 @@ class AccessAuthorizationChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.authorized = js["authorized"]
-
-
-class WaterSensorChannel(FunctionalChannel):
-    """this is the representative of the WATER_SENSOR_CHANNEL channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.acousticAlarmSignal = AcousticAlarmSignal.DISABLE_ACOUSTIC_SIGNAL
-        self.acousticAlarmTiming = AcousticAlarmTiming.PERMANENT
-        self.acousticWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
-        self.inAppWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
-        self.moistureDetected = False
-        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.NO_ALARM
-        self.waterlevelDetected = False
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.acousticAlarmSignal = AcousticAlarmSignal.from_str(
-            js["acousticAlarmSignal"]
-        )
-        self.acousticAlarmTiming = AcousticAlarmTiming.from_str(
-            js["acousticAlarmTiming"]
-        )
-        self.acousticWaterAlarmTrigger = WaterAlarmTrigger.from_str(
-            js["acousticWaterAlarmTrigger"]
-        )
-        self.inAppWaterAlarmTrigger = WaterAlarmTrigger.from_str(
-            js["inAppWaterAlarmTrigger"]
-        )
-        self.moistureDetected = js["moistureDetected"]
-        self.sirenWaterAlarmTrigger = WaterAlarmTrigger.from_str(
-            js["sirenWaterAlarmTrigger"]
-        )
-        self.waterlevelDetected = js["waterlevelDetected"]
 
 
 class HeatingThermostatChannel(FunctionalChannel):

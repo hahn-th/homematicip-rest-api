@@ -237,3 +237,31 @@ def test_wall_mounted_thermostate_pro_channel(fake_home: Home):
         fake_home.get_current_state()
         ch = fake_home.search_channel("3014F7110000000000000022", 1)
         assert ch.display == ClimateControlDisplay.ACTUAL
+
+def test_water_sensor_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000050",1)
+        assert isinstance(ch, WaterSensorChannel)
+        assert ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_RISING
+        assert ch.acousticAlarmTiming == AcousticAlarmTiming.ONCE_PER_MINUTE
+        assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.WATER_DETECTION
+        assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
+        assert ch.moistureDetected is False
+        assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.WATER_MOISTURE_DETECTION
+        assert ch.waterlevelDetected is False
+        
+        ch.set_acoustic_alarm_timing(AcousticAlarmTiming.SIX_MINUTES)
+        ch.set_acoustic_alarm_signal(AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH)
+        ch.set_inapp_water_alarm_trigger(WaterAlarmTrigger.MOISTURE_DETECTION)
+        ch.set_acoustic_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+        ch.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
+
+        fake_home.get_current_state()
+        d = fake_home.search_channel("3014F7110000000000000050",1)
+        assert ch.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
+        assert (
+            ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
+        )
+        assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
+        assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
+        assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
