@@ -98,6 +98,22 @@ async def test_device_base_floor_heating_channel(no_ssl_fake_async_home: AsyncHo
 
 
 @pytest.mark.asyncio
+async def test_device_operation_lock_channel(no_ssl_fake_async_home: AsyncHome):
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000015",0)
+    assert isinstance(ch, DeviceOperationLockChannel)
+
+    await ch.async_set_operation_lock(False)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000015",0)
+    assert ch.operationLockActive is False
+    
+    await ch.async_set_operation_lock(True)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F7110000000000000015",0)
+    assert ch.operationLockActive is True
+
+
+@pytest.mark.asyncio
 async def test_dimmer_channel(no_ssl_fake_async_home: AsyncHome):
     ch = no_ssl_fake_async_home.search_channel("3014F711AAAA000000000005", 1)
     assert isinstance(ch, DimmerChannel)
