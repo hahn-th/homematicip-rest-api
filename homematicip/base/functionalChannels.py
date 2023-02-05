@@ -464,9 +464,13 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
         self.operationLockActive = js["operationLockActive"]
 
     def set_operation_lock(self, operationLock=True):
-        data = {"channelIndex": self.index, "deviceId": self.device.id, "operationLock": operationLock}
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "operationLock": operationLock,
+        }
         return self._restCall("device/configuration/setOperationLock", json.dumps(data))
-    
+
     async def async_set_operation_lock(self, operationLock=True):
         return await self._connection.api_call(*self.set_operation_lock(operationLock))
 
@@ -838,7 +842,7 @@ class ShadingChannel(FunctionalChannel):
             )
         )
 
-    def stop(self):
+    def set_shutter_stop(self):
         """stops the current operation
         Returns:
             the result of the _restCall
@@ -846,7 +850,7 @@ class ShadingChannel(FunctionalChannel):
         data = {"channelIndex": self.index, "deviceId": self.device.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
 
-    async def async_stop(self):
+    async def async_set_shutter_stop(self):
         return await self._connection.api_call(*self.stop())
 
 
