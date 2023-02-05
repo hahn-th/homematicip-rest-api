@@ -1,0 +1,2393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>homematicip.aio.group API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>homematicip.aio.group</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import json
+
+from homematicip.base.enums import *
+from homematicip.group import (
+    AlarmSwitchingGroup,
+    AccessAuthorizationProfileGroup,
+    AccessControlGroup,
+    EnvironmentGroup,
+    ExtendedLinkedShutterGroup,
+    ExtendedLinkedSwitchingGroup,
+    ExtendedLinkedGarageDoorGroup,
+    Group,
+    HeatingChangeoverGroup,
+    HeatingCoolingDemandBoilerGroup,
+    HeatingCoolingDemandGroup,
+    HeatingCoolingDemandPumpGroup,
+    HeatingDehumidifierGroup,
+    HeatingExternalClockGroup,
+    HeatingFailureAlertRuleGroup,
+    HeatingGroup,
+    HeatingHumidyLimiterGroup,
+    HeatingTemperatureLimiterGroup,
+    HotWaterGroup,
+    HumidityWarningRuleGroup,
+    InboxGroup,
+    IndoorClimateGroup,
+    LinkedSwitchingGroup,
+    LockOutProtectionRule,
+    MetaGroup,
+    OverHeatProtectionRule,
+    SecurityGroup,
+    SecurityZoneGroup,
+    ShutterProfile,
+    ShutterWindProtectionRule,
+    SmokeAlarmDetectionRule,
+    SwitchGroupBase,
+    SwitchingGroup,
+    SwitchingProfileGroup,
+)
+
+
+class AsyncGroup(Group):
+    async def set_label(self, label):
+        return await self._connection.api_call(*super().set_label(label))
+
+    async def delete(self):
+        return await self._connection.api_call(*super().delete())
+
+
+class AsyncMetaGroup(MetaGroup, AsyncGroup):
+    &#34;&#34;&#34;a meta group is a &#34;Room&#34; inside the homematic configuration&#34;&#34;&#34;
+
+    pass
+
+
+class AsyncSecurityGroup(SecurityGroup, AsyncGroup):
+    pass
+
+
+class AsyncSwitchGroupBase(SwitchGroupBase, AsyncGroup):
+    async def turn_on(self):
+        return await self.set_switch_state(True)
+
+    async def turn_off(self):
+        return await self.set_switch_state(False)
+
+    async def set_switch_state(self, on=True):
+        url, data = super().set_switch_state(on=on)
+        return await self._connection.api_call(url, data)
+
+
+class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel, shutterlevel):
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
+        return await self._connection.api_call(url, data)
+
+
+class AsyncShutterProfile(ShutterProfile, AsyncGroup):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel, shutterlevel):
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
+        return await self._connection.api_call(url, data)
+
+    async def set_profile_mode(self, profileMode: ProfileMode):
+        return await self._connection.api_call(*super().set_profile_mode(profileMode))
+
+
+class AsyncLinkedSwitchingGroup(LinkedSwitchingGroup, AsyncGroup):
+    async def set_light_group_switches(self, devices):
+        url, data = super().set_light_group_switches(devices)
+        return await self._connection.api_call(url, data)
+
+
+class AsyncExtendedLinkedSwitchingGroup(
+    ExtendedLinkedSwitchingGroup, AsyncSwitchGroupBase
+):
+    async def set_on_time(self, onTimeSeconds):
+        url, data = super().set_on_time(onTimeSeconds)
+        return await self._connection.api_call(url, data)
+
+
+class AsyncExtendedGarageDoorGroup(ExtendedLinkedGarageDoorGroup, AsyncGroup):
+    &#34;&#34;&#34;Class which represents Extended Garage Door Group.&#34;&#34;&#34;
+
+
+class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        url, data = super().set_slats_level(slatsLevel, shutterLevel)
+        return await self._connection.api_call(url, data)
+
+
+class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
+    async def set_on_time(self, onTimeSeconds):
+        url, data = super().set_on_time(onTimeSeconds)
+        return await self._connection.api_call(url, data)
+
+    async def test_signal_optical(
+        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    ):
+        url, data = super().test_signal_optical(signalOptical=signalOptical)
+        return await self._connection.api_call(url, data)
+
+    async def set_signal_optical(
+        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    ):
+        url, data = super().set_signal_optical(signalOptical=signalOptical)
+        return await self._connection.api_call(url, data)
+
+    async def test_signal_acoustic(
+        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+    ):
+        url, data = super().test_signal_acoustic(signalAcoustic=signalAcoustic)
+        return await self._connection.api_call(url, data)
+
+    async def set_signal_acoustic(
+        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+    ):
+        url, data = super().set_signal_acoustic(signalAcoustic=signalAcoustic)
+        return await self._connection.api_call(url, data)
+
+
+# at the moment it doesn&#39;t look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
+class AsyncHeatingHumidyLimiterGroup(HeatingHumidyLimiterGroup, AsyncGroup):
+    pass
+
+
+# at the moment it doesn&#39;t look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
+class AsyncHeatingTemperatureLimiterGroup(HeatingTemperatureLimiterGroup, AsyncGroup):
+    pass
+
+
+class AsyncHeatingChangeoverGroup(HeatingChangeoverGroup, AsyncGroup):
+    pass
+
+
+class AsyncHeatingFailureAlertRuleGroup(HeatingFailureAlertRuleGroup, AsyncGroup):
+    pass
+
+
+# at the moment it doesn&#39;t look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
+class AsyncInboxGroup(InboxGroup, AsyncGroup):
+    pass
+
+
+class AsyncIndoorClimateGroup(IndoorClimateGroup, AsyncGroup):
+    pass
+
+
+class AsyncSecurityZoneGroup(SecurityZoneGroup, AsyncGroup):
+    pass
+
+
+class AsyncHeatingGroup(HeatingGroup, AsyncGroup):
+    async def set_point_temperature(self, temperature):
+        return await self._connection.api_call(
+            *super().set_point_temperature(temperature)
+        )
+
+    async def set_boost(self, enable=True):
+        return await self._connection.api_call(*super().set_boost(enable=enable))
+
+    async def set_active_profile(self, index):
+        return await self._connection.api_call(*super().set_active_profile(index))
+
+    async def set_boost_duration(self, duration: int):
+        return await self._connection.api_call(*super().set_boost_duration(duration))
+
+    async def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
+        return await self._connection.api_call(*super().set_control_mode(mode=mode))
+
+
+class AsyncHeatingDehumidifierGroup(HeatingDehumidifierGroup, AsyncGroup):
+    pass
+
+
+class AsyncHeatingCoolingDemandGroup(HeatingCoolingDemandGroup, AsyncGroup):
+    pass
+
+
+# at the moment it doesn&#39;t look like this class has any special properties/functions
+# keep it as a placeholder in the meantime
+class AsyncHeatingExternalClockGroup(HeatingExternalClockGroup, AsyncGroup):
+    pass
+
+
+class AsyncHeatingCoolingDemandBoilerGroup(HeatingCoolingDemandBoilerGroup, AsyncGroup):
+    pass
+
+
+class AsyncHeatingCoolingDemandPumpGroup(HeatingCoolingDemandPumpGroup, AsyncGroup):
+    pass
+
+
+class AsyncHumidityWarningRuleGroup(HumidityWarningRuleGroup, AsyncGroup):
+    pass
+
+
+class AsyncSwitchingProfileGroup(SwitchingProfileGroup, AsyncGroup):
+    async def set_group_channels(self):
+        return await self._connection.api_call(*super().set_group_channels())
+
+    async def set_profile_mode(self, devices, automatic=True):
+        return await self._connection.api_call(
+            *super().set_profile_mode(devices, automatic=automatic)
+        )
+
+    async def create(self, label):
+        data = {&#34;label&#34;: label}
+        result = await self._connection.api_call(
+            &#34;group/switching/profile/createSwitchingProfileGroup&#34;, body=json.dumps(data)
+        )
+        if &#34;groupId&#34; in result:
+            self.id = result[&#34;groupId&#34;]
+        return result
+
+
+class AsyncOverHeatProtectionRule(OverHeatProtectionRule, AsyncGroup):
+    pass
+
+
+class AsyncSmokeAlarmDetectionRule(SmokeAlarmDetectionRule, AsyncGroup):
+    pass
+
+
+class AsyncShutterWindProtectionRule(ShutterWindProtectionRule, AsyncGroup):
+    pass
+
+
+class AsyncLockOutProtectionRule(LockOutProtectionRule, AsyncGroup):
+    pass
+
+
+class AsyncEnvironmentGroup(EnvironmentGroup, AsyncGroup):
+    pass
+
+
+class AsyncHotWaterGroup(HotWaterGroup, AsyncGroup):
+    async def set_profile_mode(self, profileMode: ProfileMode):
+        return await self._connection.api_call(*super().set_profile_mode(profileMode))
+
+
+class AsyncAccessAuthorizationProfileGroup(AccessAuthorizationProfileGroup, AsyncGroup):
+    pass
+
+
+class AsyncAccessControlGroup(AccessControlGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="homematicip.aio.group.AsyncAccessAuthorizationProfileGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncAccessAuthorizationProfileGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncAccessAuthorizationProfileGroup(AccessAuthorizationProfileGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.AccessAuthorizationProfileGroup" href="../group.html#homematicip.group.AccessAuthorizationProfileGroup">AccessAuthorizationProfileGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.AccessAuthorizationProfileGroup" href="../group.html#homematicip.group.AccessAuthorizationProfileGroup">AccessAuthorizationProfileGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.AccessAuthorizationProfileGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncAccessControlGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncAccessControlGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncAccessControlGroup(AccessControlGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.AccessControlGroup" href="../group.html#homematicip.group.AccessControlGroup">AccessControlGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.AccessControlGroup" href="../group.html#homematicip.group.AccessControlGroup">AccessControlGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.AccessControlGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.AccessControlGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncAlarmSwitchingGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncAlarmSwitchingGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncAlarmSwitchingGroup(AlarmSwitchingGroup, AsyncGroup):
+    async def set_on_time(self, onTimeSeconds):
+        url, data = super().set_on_time(onTimeSeconds)
+        return await self._connection.api_call(url, data)
+
+    async def test_signal_optical(
+        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    ):
+        url, data = super().test_signal_optical(signalOptical=signalOptical)
+        return await self._connection.api_call(url, data)
+
+    async def set_signal_optical(
+        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+    ):
+        url, data = super().set_signal_optical(signalOptical=signalOptical)
+        return await self._connection.api_call(url, data)
+
+    async def test_signal_acoustic(
+        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+    ):
+        url, data = super().test_signal_acoustic(signalAcoustic=signalAcoustic)
+        return await self._connection.api_call(url, data)
+
+    async def set_signal_acoustic(
+        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+    ):
+        url, data = super().set_signal_acoustic(signalAcoustic=signalAcoustic)
+        return await self._connection.api_call(url, data)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.AlarmSwitchingGroup" href="../group.html#homematicip.group.AlarmSwitchingGroup">AlarmSwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncAlarmSwitchingGroup.set_on_time"><code class="name flex">
+<span>async def <span class="ident">set_on_time</span></span>(<span>self, onTimeSeconds)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_on_time(self, onTimeSeconds):
+    url, data = super().set_on_time(onTimeSeconds)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncAlarmSwitchingGroup.set_signal_acoustic"><code class="name flex">
+<span>async def <span class="ident">set_signal_acoustic</span></span>(<span>self, signalAcoustic=FREQUENCY_FALLING)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_signal_acoustic(
+    self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+):
+    url, data = super().set_signal_acoustic(signalAcoustic=signalAcoustic)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncAlarmSwitchingGroup.set_signal_optical"><code class="name flex">
+<span>async def <span class="ident">set_signal_optical</span></span>(<span>self, signalOptical=BLINKING_ALTERNATELY_REPEATING)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_signal_optical(
+    self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+):
+    url, data = super().set_signal_optical(signalOptical=signalOptical)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncAlarmSwitchingGroup.test_signal_acoustic"><code class="name flex">
+<span>async def <span class="ident">test_signal_acoustic</span></span>(<span>self, signalAcoustic=FREQUENCY_FALLING)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def test_signal_acoustic(
+    self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+):
+    url, data = super().test_signal_acoustic(signalAcoustic=signalAcoustic)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncAlarmSwitchingGroup.test_signal_optical"><code class="name flex">
+<span>async def <span class="ident">test_signal_optical</span></span>(<span>self, signalOptical=BLINKING_ALTERNATELY_REPEATING)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def test_signal_optical(
+    self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+):
+    url, data = super().test_signal_optical(signalOptical=signalOptical)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.AlarmSwitchingGroup" href="../group.html#homematicip.group.AlarmSwitchingGroup">AlarmSwitchingGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.AlarmSwitchingGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncEnvironmentGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncEnvironmentGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncEnvironmentGroup(EnvironmentGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.EnvironmentGroup" href="../group.html#homematicip.group.EnvironmentGroup">EnvironmentGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.EnvironmentGroup" href="../group.html#homematicip.group.EnvironmentGroup">EnvironmentGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.EnvironmentGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.EnvironmentGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncExtendedGarageDoorGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncExtendedGarageDoorGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class which represents Extended Garage Door Group.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncExtendedGarageDoorGroup(ExtendedLinkedGarageDoorGroup, AsyncGroup):
+    &#34;&#34;&#34;Class which represents Extended Garage Door Group.&#34;&#34;&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.ExtendedLinkedGarageDoorGroup" href="../group.html#homematicip.group.ExtendedLinkedGarageDoorGroup">ExtendedLinkedGarageDoorGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.ExtendedLinkedGarageDoorGroup" href="../group.html#homematicip.group.ExtendedLinkedGarageDoorGroup">ExtendedLinkedGarageDoorGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedGarageDoorGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncExtendedLinkedShutterGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncExtendedLinkedShutterGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncExtendedLinkedShutterGroup(ExtendedLinkedShutterGroup, AsyncGroup):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+        url, data = super().set_slats_level(slatsLevel, shutterLevel)
+        return await self._connection.api_call(url, data)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.ExtendedLinkedShutterGroup" href="../group.html#homematicip.group.ExtendedLinkedShutterGroup">ExtendedLinkedShutterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_shutter_level"><code class="name flex">
+<span>async def <span class="ident">set_shutter_level</span></span>(<span>self, level)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_shutter_level(self, level):
+    url, data = super().set_shutter_level(level)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_shutter_stop"><code class="name flex">
+<span>async def <span class="ident">set_shutter_stop</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_shutter_stop(self):
+    url, data = super().set_shutter_stop()
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_slats_level"><code class="name flex">
+<span>async def <span class="ident">set_slats_level</span></span>(<span>self, slatsLevel=0.0, shutterLevel=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
+    url, data = super().set_slats_level(slatsLevel, shutterLevel)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.ExtendedLinkedShutterGroup" href="../group.html#homematicip.group.ExtendedLinkedShutterGroup">ExtendedLinkedShutterGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedShutterGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncExtendedLinkedSwitchingGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncExtendedLinkedSwitchingGroup(
+    ExtendedLinkedSwitchingGroup, AsyncSwitchGroupBase
+):
+    async def set_on_time(self, onTimeSeconds):
+        url, data = super().set_on_time(onTimeSeconds)
+        return await self._connection.api_call(url, data)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.ExtendedLinkedSwitchingGroup" href="../group.html#homematicip.group.ExtendedLinkedSwitchingGroup">ExtendedLinkedSwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncSwitchGroupBase" href="#homematicip.aio.group.AsyncSwitchGroupBase">AsyncSwitchGroupBase</a></li>
+<li><a title="homematicip.group.SwitchGroupBase" href="../group.html#homematicip.group.SwitchGroupBase">SwitchGroupBase</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup.set_on_time"><code class="name flex">
+<span>async def <span class="ident">set_on_time</span></span>(<span>self, onTimeSeconds)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_on_time(self, onTimeSeconds):
+    url, data = super().set_on_time(onTimeSeconds)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.ExtendedLinkedSwitchingGroup" href="../group.html#homematicip.group.ExtendedLinkedSwitchingGroup">ExtendedLinkedSwitchingGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.ExtendedLinkedSwitchingGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncGroup(Group):
+    async def set_label(self, label):
+        return await self._connection.api_call(*super().set_label(label))
+
+    async def delete(self):
+        return await self._connection.api_call(*super().delete())</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="homematicip.aio.group.AsyncAccessAuthorizationProfileGroup" href="#homematicip.aio.group.AsyncAccessAuthorizationProfileGroup">AsyncAccessAuthorizationProfileGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncAccessControlGroup" href="#homematicip.aio.group.AsyncAccessControlGroup">AsyncAccessControlGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup">AsyncAlarmSwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncEnvironmentGroup" href="#homematicip.aio.group.AsyncEnvironmentGroup">AsyncEnvironmentGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncExtendedGarageDoorGroup" href="#homematicip.aio.group.AsyncExtendedGarageDoorGroup">AsyncExtendedGarageDoorGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncExtendedLinkedShutterGroup" href="#homematicip.aio.group.AsyncExtendedLinkedShutterGroup">AsyncExtendedLinkedShutterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingChangeoverGroup" href="#homematicip.aio.group.AsyncHeatingChangeoverGroup">AsyncHeatingChangeoverGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingCoolingDemandBoilerGroup" href="#homematicip.aio.group.AsyncHeatingCoolingDemandBoilerGroup">AsyncHeatingCoolingDemandBoilerGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingCoolingDemandGroup" href="#homematicip.aio.group.AsyncHeatingCoolingDemandGroup">AsyncHeatingCoolingDemandGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingCoolingDemandPumpGroup" href="#homematicip.aio.group.AsyncHeatingCoolingDemandPumpGroup">AsyncHeatingCoolingDemandPumpGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingDehumidifierGroup" href="#homematicip.aio.group.AsyncHeatingDehumidifierGroup">AsyncHeatingDehumidifierGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingExternalClockGroup" href="#homematicip.aio.group.AsyncHeatingExternalClockGroup">AsyncHeatingExternalClockGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingFailureAlertRuleGroup" href="#homematicip.aio.group.AsyncHeatingFailureAlertRuleGroup">AsyncHeatingFailureAlertRuleGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingGroup" href="#homematicip.aio.group.AsyncHeatingGroup">AsyncHeatingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingHumidyLimiterGroup" href="#homematicip.aio.group.AsyncHeatingHumidyLimiterGroup">AsyncHeatingHumidyLimiterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHeatingTemperatureLimiterGroup" href="#homematicip.aio.group.AsyncHeatingTemperatureLimiterGroup">AsyncHeatingTemperatureLimiterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHotWaterGroup" href="#homematicip.aio.group.AsyncHotWaterGroup">AsyncHotWaterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncHumidityWarningRuleGroup" href="#homematicip.aio.group.AsyncHumidityWarningRuleGroup">AsyncHumidityWarningRuleGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncInboxGroup" href="#homematicip.aio.group.AsyncInboxGroup">AsyncInboxGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncIndoorClimateGroup" href="#homematicip.aio.group.AsyncIndoorClimateGroup">AsyncIndoorClimateGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncLinkedSwitchingGroup" href="#homematicip.aio.group.AsyncLinkedSwitchingGroup">AsyncLinkedSwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncLockOutProtectionRule" href="#homematicip.aio.group.AsyncLockOutProtectionRule">AsyncLockOutProtectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncMetaGroup" href="#homematicip.aio.group.AsyncMetaGroup">AsyncMetaGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncOverHeatProtectionRule" href="#homematicip.aio.group.AsyncOverHeatProtectionRule">AsyncOverHeatProtectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncSecurityGroup" href="#homematicip.aio.group.AsyncSecurityGroup">AsyncSecurityGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncSecurityZoneGroup" href="#homematicip.aio.group.AsyncSecurityZoneGroup">AsyncSecurityZoneGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncShutterProfile" href="#homematicip.aio.group.AsyncShutterProfile">AsyncShutterProfile</a></li>
+<li><a title="homematicip.aio.group.AsyncShutterWindProtectionRule" href="#homematicip.aio.group.AsyncShutterWindProtectionRule">AsyncShutterWindProtectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncSmokeAlarmDetectionRule" href="#homematicip.aio.group.AsyncSmokeAlarmDetectionRule">AsyncSmokeAlarmDetectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncSwitchGroupBase" href="#homematicip.aio.group.AsyncSwitchGroupBase">AsyncSwitchGroupBase</a></li>
+<li><a title="homematicip.aio.group.AsyncSwitchingProfileGroup" href="#homematicip.aio.group.AsyncSwitchingProfileGroup">AsyncSwitchingProfileGroup</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncGroup.delete"><code class="name flex">
+<span>async def <span class="ident">delete</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def delete(self):
+    return await self._connection.api_call(*super().delete())</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncGroup.set_label"><code class="name flex">
+<span>async def <span class="ident">set_label</span></span>(<span>self, label)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_label(self, label):
+    return await self._connection.api_call(*super().set_label(label))</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.Group.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.Group.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.Group.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.Group.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.Group.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.Group.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.Group.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.Group.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.Group.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingChangeoverGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingChangeoverGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingChangeoverGroup(HeatingChangeoverGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingChangeoverGroup" href="../group.html#homematicip.group.HeatingChangeoverGroup">HeatingChangeoverGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingChangeoverGroup" href="../group.html#homematicip.group.HeatingChangeoverGroup">HeatingChangeoverGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingChangeoverGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingCoolingDemandBoilerGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingCoolingDemandBoilerGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingCoolingDemandBoilerGroup(HeatingCoolingDemandBoilerGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingCoolingDemandBoilerGroup" href="../group.html#homematicip.group.HeatingCoolingDemandBoilerGroup">HeatingCoolingDemandBoilerGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingCoolingDemandBoilerGroup" href="../group.html#homematicip.group.HeatingCoolingDemandBoilerGroup">HeatingCoolingDemandBoilerGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandBoilerGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingCoolingDemandGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingCoolingDemandGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingCoolingDemandGroup(HeatingCoolingDemandGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingCoolingDemandGroup" href="../group.html#homematicip.group.HeatingCoolingDemandGroup">HeatingCoolingDemandGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingCoolingDemandGroup" href="../group.html#homematicip.group.HeatingCoolingDemandGroup">HeatingCoolingDemandGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingCoolingDemandPumpGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingCoolingDemandPumpGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingCoolingDemandPumpGroup(HeatingCoolingDemandPumpGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingCoolingDemandPumpGroup" href="../group.html#homematicip.group.HeatingCoolingDemandPumpGroup">HeatingCoolingDemandPumpGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingCoolingDemandPumpGroup" href="../group.html#homematicip.group.HeatingCoolingDemandPumpGroup">HeatingCoolingDemandPumpGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingCoolingDemandPumpGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingDehumidifierGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingDehumidifierGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingDehumidifierGroup(HeatingDehumidifierGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingDehumidifierGroup" href="../group.html#homematicip.group.HeatingDehumidifierGroup">HeatingDehumidifierGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingDehumidifierGroup" href="../group.html#homematicip.group.HeatingDehumidifierGroup">HeatingDehumidifierGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingDehumidifierGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingExternalClockGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingExternalClockGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingExternalClockGroup(HeatingExternalClockGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingExternalClockGroup" href="../group.html#homematicip.group.HeatingExternalClockGroup">HeatingExternalClockGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingExternalClockGroup" href="../group.html#homematicip.group.HeatingExternalClockGroup">HeatingExternalClockGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingExternalClockGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingFailureAlertRuleGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingFailureAlertRuleGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingFailureAlertRuleGroup(HeatingFailureAlertRuleGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingFailureAlertRuleGroup" href="../group.html#homematicip.group.HeatingFailureAlertRuleGroup">HeatingFailureAlertRuleGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingFailureAlertRuleGroup" href="../group.html#homematicip.group.HeatingFailureAlertRuleGroup">HeatingFailureAlertRuleGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingFailureAlertRuleGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingGroup(HeatingGroup, AsyncGroup):
+    async def set_point_temperature(self, temperature):
+        return await self._connection.api_call(
+            *super().set_point_temperature(temperature)
+        )
+
+    async def set_boost(self, enable=True):
+        return await self._connection.api_call(*super().set_boost(enable=enable))
+
+    async def set_active_profile(self, index):
+        return await self._connection.api_call(*super().set_active_profile(index))
+
+    async def set_boost_duration(self, duration: int):
+        return await self._connection.api_call(*super().set_boost_duration(duration))
+
+    async def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
+        return await self._connection.api_call(*super().set_control_mode(mode=mode))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingGroup" href="../group.html#homematicip.group.HeatingGroup">HeatingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncHeatingGroup.set_active_profile"><code class="name flex">
+<span>async def <span class="ident">set_active_profile</span></span>(<span>self, index)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_active_profile(self, index):
+    return await self._connection.api_call(*super().set_active_profile(index))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingGroup.set_boost"><code class="name flex">
+<span>async def <span class="ident">set_boost</span></span>(<span>self, enable=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_boost(self, enable=True):
+    return await self._connection.api_call(*super().set_boost(enable=enable))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingGroup.set_boost_duration"><code class="name flex">
+<span>async def <span class="ident">set_boost_duration</span></span>(<span>self, duration: int)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_boost_duration(self, duration: int):
+    return await self._connection.api_call(*super().set_boost_duration(duration))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingGroup.set_control_mode"><code class="name flex">
+<span>async def <span class="ident">set_control_mode</span></span>(<span>self, mode=AUTOMATIC)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
+    return await self._connection.api_call(*super().set_control_mode(mode=mode))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingGroup.set_point_temperature"><code class="name flex">
+<span>async def <span class="ident">set_point_temperature</span></span>(<span>self, temperature)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_point_temperature(self, temperature):
+    return await self._connection.api_call(
+        *super().set_point_temperature(temperature)
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingGroup" href="../group.html#homematicip.group.HeatingGroup">HeatingGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingHumidyLimiterGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingHumidyLimiterGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingHumidyLimiterGroup(HeatingHumidyLimiterGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingHumidyLimiterGroup" href="../group.html#homematicip.group.HeatingHumidyLimiterGroup">HeatingHumidyLimiterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingHumidyLimiterGroup" href="../group.html#homematicip.group.HeatingHumidyLimiterGroup">HeatingHumidyLimiterGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingHumidyLimiterGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHeatingTemperatureLimiterGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHeatingTemperatureLimiterGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHeatingTemperatureLimiterGroup(HeatingTemperatureLimiterGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HeatingTemperatureLimiterGroup" href="../group.html#homematicip.group.HeatingTemperatureLimiterGroup">HeatingTemperatureLimiterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HeatingTemperatureLimiterGroup" href="../group.html#homematicip.group.HeatingTemperatureLimiterGroup">HeatingTemperatureLimiterGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HeatingTemperatureLimiterGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHotWaterGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHotWaterGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHotWaterGroup(HotWaterGroup, AsyncGroup):
+    async def set_profile_mode(self, profileMode: ProfileMode):
+        return await self._connection.api_call(*super().set_profile_mode(profileMode))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HotWaterGroup" href="../group.html#homematicip.group.HotWaterGroup">HotWaterGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncHotWaterGroup.set_profile_mode"><code class="name flex">
+<span>async def <span class="ident">set_profile_mode</span></span>(<span>self, profileMode: <a title="homematicip.base.enums.ProfileMode" href="../base/enums.html#homematicip.base.enums.ProfileMode">ProfileMode</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_profile_mode(self, profileMode: ProfileMode):
+    return await self._connection.api_call(*super().set_profile_mode(profileMode))</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HotWaterGroup" href="../group.html#homematicip.group.HotWaterGroup">HotWaterGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HotWaterGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HotWaterGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncHumidityWarningRuleGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncHumidityWarningRuleGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHumidityWarningRuleGroup(HumidityWarningRuleGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.HumidityWarningRuleGroup" href="../group.html#homematicip.group.HumidityWarningRuleGroup">HumidityWarningRuleGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.HumidityWarningRuleGroup" href="../group.html#homematicip.group.HumidityWarningRuleGroup">HumidityWarningRuleGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.HumidityWarningRuleGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncInboxGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncInboxGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncInboxGroup(InboxGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.InboxGroup" href="../group.html#homematicip.group.InboxGroup">InboxGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.InboxGroup" href="../group.html#homematicip.group.InboxGroup">InboxGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.InboxGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.InboxGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncIndoorClimateGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncIndoorClimateGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncIndoorClimateGroup(IndoorClimateGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.IndoorClimateGroup" href="../group.html#homematicip.group.IndoorClimateGroup">IndoorClimateGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.IndoorClimateGroup" href="../group.html#homematicip.group.IndoorClimateGroup">IndoorClimateGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.IndoorClimateGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.IndoorClimateGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncLinkedSwitchingGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncLinkedSwitchingGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncLinkedSwitchingGroup(LinkedSwitchingGroup, AsyncGroup):
+    async def set_light_group_switches(self, devices):
+        url, data = super().set_light_group_switches(devices)
+        return await self._connection.api_call(url, data)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.LinkedSwitchingGroup" href="../group.html#homematicip.group.LinkedSwitchingGroup">LinkedSwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncLinkedSwitchingGroup.set_light_group_switches"><code class="name flex">
+<span>async def <span class="ident">set_light_group_switches</span></span>(<span>self, devices)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_light_group_switches(self, devices):
+    url, data = super().set_light_group_switches(devices)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.LinkedSwitchingGroup" href="../group.html#homematicip.group.LinkedSwitchingGroup">LinkedSwitchingGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.LinkedSwitchingGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncLockOutProtectionRule"><code class="flex name class">
+<span>class <span class="ident">AsyncLockOutProtectionRule</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncLockOutProtectionRule(LockOutProtectionRule, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.LockOutProtectionRule" href="../group.html#homematicip.group.LockOutProtectionRule">LockOutProtectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.LockOutProtectionRule" href="../group.html#homematicip.group.LockOutProtectionRule">LockOutProtectionRule</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.LockOutProtectionRule.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.LockOutProtectionRule.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncMetaGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncMetaGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>a meta group is a "Room" inside the homematic configuration</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncMetaGroup(MetaGroup, AsyncGroup):
+    &#34;&#34;&#34;a meta group is a &#34;Room&#34; inside the homematic configuration&#34;&#34;&#34;
+
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.MetaGroup" href="../group.html#homematicip.group.MetaGroup">MetaGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.MetaGroup" href="../group.html#homematicip.group.MetaGroup">MetaGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.MetaGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.MetaGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncOverHeatProtectionRule"><code class="flex name class">
+<span>class <span class="ident">AsyncOverHeatProtectionRule</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncOverHeatProtectionRule(OverHeatProtectionRule, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.OverHeatProtectionRule" href="../group.html#homematicip.group.OverHeatProtectionRule">OverHeatProtectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.OverHeatProtectionRule" href="../group.html#homematicip.group.OverHeatProtectionRule">OverHeatProtectionRule</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.OverHeatProtectionRule.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.OverHeatProtectionRule.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncSecurityGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncSecurityGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncSecurityGroup(SecurityGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.SecurityGroup" href="../group.html#homematicip.group.SecurityGroup">SecurityGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.SecurityGroup" href="../group.html#homematicip.group.SecurityGroup">SecurityGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.SecurityGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.SecurityGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncSecurityZoneGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncSecurityZoneGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncSecurityZoneGroup(SecurityZoneGroup, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.SecurityZoneGroup" href="../group.html#homematicip.group.SecurityZoneGroup">SecurityZoneGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.SecurityZoneGroup" href="../group.html#homematicip.group.SecurityZoneGroup">SecurityZoneGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.SecurityZoneGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.SecurityZoneGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncShutterProfile"><code class="flex name class">
+<span>class <span class="ident">AsyncShutterProfile</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncShutterProfile(ShutterProfile, AsyncGroup):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel, shutterlevel):
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
+        return await self._connection.api_call(url, data)
+
+    async def set_profile_mode(self, profileMode: ProfileMode):
+        return await self._connection.api_call(*super().set_profile_mode(profileMode))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.ShutterProfile" href="../group.html#homematicip.group.ShutterProfile">ShutterProfile</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncShutterProfile.set_profile_mode"><code class="name flex">
+<span>async def <span class="ident">set_profile_mode</span></span>(<span>self, profileMode: <a title="homematicip.base.enums.ProfileMode" href="../base/enums.html#homematicip.base.enums.ProfileMode">ProfileMode</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_profile_mode(self, profileMode: ProfileMode):
+    return await self._connection.api_call(*super().set_profile_mode(profileMode))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncShutterProfile.set_shutter_level"><code class="name flex">
+<span>async def <span class="ident">set_shutter_level</span></span>(<span>self, level)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_shutter_level(self, level):
+    url, data = super().set_shutter_level(level)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncShutterProfile.set_shutter_stop"><code class="name flex">
+<span>async def <span class="ident">set_shutter_stop</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_shutter_stop(self):
+    url, data = super().set_shutter_stop()
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncShutterProfile.set_slats_level"><code class="name flex">
+<span>async def <span class="ident">set_slats_level</span></span>(<span>self, slatsLevel, shutterlevel)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_slats_level(self, slatsLevel, shutterlevel):
+    url, data = super().set_slats_level(slatsLevel, shutterlevel)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.ShutterProfile" href="../group.html#homematicip.group.ShutterProfile">ShutterProfile</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.ShutterProfile.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.ShutterProfile.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncShutterWindProtectionRule"><code class="flex name class">
+<span>class <span class="ident">AsyncShutterWindProtectionRule</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncShutterWindProtectionRule(ShutterWindProtectionRule, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.ShutterWindProtectionRule" href="../group.html#homematicip.group.ShutterWindProtectionRule">ShutterWindProtectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.ShutterWindProtectionRule" href="../group.html#homematicip.group.ShutterWindProtectionRule">ShutterWindProtectionRule</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.ShutterWindProtectionRule.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncSmokeAlarmDetectionRule"><code class="flex name class">
+<span>class <span class="ident">AsyncSmokeAlarmDetectionRule</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncSmokeAlarmDetectionRule(SmokeAlarmDetectionRule, AsyncGroup):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.SmokeAlarmDetectionRule" href="../group.html#homematicip.group.SmokeAlarmDetectionRule">SmokeAlarmDetectionRule</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.SmokeAlarmDetectionRule" href="../group.html#homematicip.group.SmokeAlarmDetectionRule">SmokeAlarmDetectionRule</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.SmokeAlarmDetectionRule.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchGroupBase"><code class="flex name class">
+<span>class <span class="ident">AsyncSwitchGroupBase</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncSwitchGroupBase(SwitchGroupBase, AsyncGroup):
+    async def turn_on(self):
+        return await self.set_switch_state(True)
+
+    async def turn_off(self):
+        return await self.set_switch_state(False)
+
+    async def set_switch_state(self, on=True):
+        url, data = super().set_switch_state(on=on)
+        return await self._connection.api_call(url, data)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.SwitchGroupBase" href="../group.html#homematicip.group.SwitchGroupBase">SwitchGroupBase</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup" href="#homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup">AsyncExtendedLinkedSwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncSwitchingGroup" href="#homematicip.aio.group.AsyncSwitchingGroup">AsyncSwitchingGroup</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncSwitchGroupBase.set_switch_state"><code class="name flex">
+<span>async def <span class="ident">set_switch_state</span></span>(<span>self, on=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_switch_state(self, on=True):
+    url, data = super().set_switch_state(on=on)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchGroupBase.turn_off"><code class="name flex">
+<span>async def <span class="ident">turn_off</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def turn_off(self):
+    return await self.set_switch_state(False)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchGroupBase.turn_on"><code class="name flex">
+<span>async def <span class="ident">turn_on</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def turn_on(self):
+    return await self.set_switch_state(True)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.SwitchGroupBase" href="../group.html#homematicip.group.SwitchGroupBase">SwitchGroupBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.SwitchGroupBase.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.SwitchGroupBase.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchingGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncSwitchingGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncSwitchingGroup(SwitchingGroup, AsyncSwitchGroupBase):
+    async def set_shutter_level(self, level):
+        url, data = super().set_shutter_level(level)
+        return await self._connection.api_call(url, data)
+
+    async def set_shutter_stop(self):
+        url, data = super().set_shutter_stop()
+        return await self._connection.api_call(url, data)
+
+    async def set_slats_level(self, slatsLevel, shutterlevel):
+        url, data = super().set_slats_level(slatsLevel, shutterlevel)
+        return await self._connection.api_call(url, data)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.SwitchingGroup" href="../group.html#homematicip.group.SwitchingGroup">SwitchingGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncSwitchGroupBase" href="#homematicip.aio.group.AsyncSwitchGroupBase">AsyncSwitchGroupBase</a></li>
+<li><a title="homematicip.group.SwitchGroupBase" href="../group.html#homematicip.group.SwitchGroupBase">SwitchGroupBase</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncSwitchingGroup.set_shutter_level"><code class="name flex">
+<span>async def <span class="ident">set_shutter_level</span></span>(<span>self, level)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_shutter_level(self, level):
+    url, data = super().set_shutter_level(level)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchingGroup.set_shutter_stop"><code class="name flex">
+<span>async def <span class="ident">set_shutter_stop</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_shutter_stop(self):
+    url, data = super().set_shutter_stop()
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchingGroup.set_slats_level"><code class="name flex">
+<span>async def <span class="ident">set_slats_level</span></span>(<span>self, slatsLevel, shutterlevel)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_slats_level(self, slatsLevel, shutterlevel):
+    url, data = super().set_slats_level(slatsLevel, shutterlevel)
+    return await self._connection.api_call(url, data)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.SwitchingGroup" href="../group.html#homematicip.group.SwitchingGroup">SwitchingGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.SwitchingGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.SwitchingGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchingProfileGroup"><code class="flex name class">
+<span>class <span class="ident">AsyncSwitchingProfileGroup</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncSwitchingProfileGroup(SwitchingProfileGroup, AsyncGroup):
+    async def set_group_channels(self):
+        return await self._connection.api_call(*super().set_group_channels())
+
+    async def set_profile_mode(self, devices, automatic=True):
+        return await self._connection.api_call(
+            *super().set_profile_mode(devices, automatic=automatic)
+        )
+
+    async def create(self, label):
+        data = {&#34;label&#34;: label}
+        result = await self._connection.api_call(
+            &#34;group/switching/profile/createSwitchingProfileGroup&#34;, body=json.dumps(data)
+        )
+        if &#34;groupId&#34; in result:
+            self.id = result[&#34;groupId&#34;]
+        return result</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.group.SwitchingProfileGroup" href="../group.html#homematicip.group.SwitchingProfileGroup">SwitchingProfileGroup</a></li>
+<li><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></li>
+<li><a title="homematicip.group.Group" href="../group.html#homematicip.group.Group">Group</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.group.AsyncSwitchingProfileGroup.create"><code class="name flex">
+<span>async def <span class="ident">create</span></span>(<span>self, label)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def create(self, label):
+    data = {&#34;label&#34;: label}
+    result = await self._connection.api_call(
+        &#34;group/switching/profile/createSwitchingProfileGroup&#34;, body=json.dumps(data)
+    )
+    if &#34;groupId&#34; in result:
+        self.id = result[&#34;groupId&#34;]
+    return result</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchingProfileGroup.set_group_channels"><code class="name flex">
+<span>async def <span class="ident">set_group_channels</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_group_channels(self):
+    return await self._connection.api_call(*super().set_group_channels())</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.group.AsyncSwitchingProfileGroup.set_profile_mode"><code class="name flex">
+<span>async def <span class="ident">set_profile_mode</span></span>(<span>self, devices, automatic=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_profile_mode(self, devices, automatic=True):
+    return await self._connection.api_call(
+        *super().set_profile_mode(devices, automatic=automatic)
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.group.SwitchingProfileGroup" href="../group.html#homematicip.group.SwitchingProfileGroup">SwitchingProfileGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.group.SwitchingProfileGroup.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.group.SwitchingProfileGroup.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="homematicip.aio" href="index.html">homematicip.aio</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncAccessAuthorizationProfileGroup" href="#homematicip.aio.group.AsyncAccessAuthorizationProfileGroup">AsyncAccessAuthorizationProfileGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncAccessControlGroup" href="#homematicip.aio.group.AsyncAccessControlGroup">AsyncAccessControlGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup">AsyncAlarmSwitchingGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup.set_on_time" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup.set_on_time">set_on_time</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup.set_signal_acoustic" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup.set_signal_acoustic">set_signal_acoustic</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup.set_signal_optical" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup.set_signal_optical">set_signal_optical</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup.test_signal_acoustic" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup.test_signal_acoustic">test_signal_acoustic</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncAlarmSwitchingGroup.test_signal_optical" href="#homematicip.aio.group.AsyncAlarmSwitchingGroup.test_signal_optical">test_signal_optical</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncEnvironmentGroup" href="#homematicip.aio.group.AsyncEnvironmentGroup">AsyncEnvironmentGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncExtendedGarageDoorGroup" href="#homematicip.aio.group.AsyncExtendedGarageDoorGroup">AsyncExtendedGarageDoorGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncExtendedLinkedShutterGroup" href="#homematicip.aio.group.AsyncExtendedLinkedShutterGroup">AsyncExtendedLinkedShutterGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_shutter_level" href="#homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_shutter_level">set_shutter_level</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_shutter_stop" href="#homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_shutter_stop">set_shutter_stop</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_slats_level" href="#homematicip.aio.group.AsyncExtendedLinkedShutterGroup.set_slats_level">set_slats_level</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup" href="#homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup">AsyncExtendedLinkedSwitchingGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup.set_on_time" href="#homematicip.aio.group.AsyncExtendedLinkedSwitchingGroup.set_on_time">set_on_time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncGroup" href="#homematicip.aio.group.AsyncGroup">AsyncGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncGroup.delete" href="#homematicip.aio.group.AsyncGroup.delete">delete</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncGroup.set_label" href="#homematicip.aio.group.AsyncGroup.set_label">set_label</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingChangeoverGroup" href="#homematicip.aio.group.AsyncHeatingChangeoverGroup">AsyncHeatingChangeoverGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingCoolingDemandBoilerGroup" href="#homematicip.aio.group.AsyncHeatingCoolingDemandBoilerGroup">AsyncHeatingCoolingDemandBoilerGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingCoolingDemandGroup" href="#homematicip.aio.group.AsyncHeatingCoolingDemandGroup">AsyncHeatingCoolingDemandGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingCoolingDemandPumpGroup" href="#homematicip.aio.group.AsyncHeatingCoolingDemandPumpGroup">AsyncHeatingCoolingDemandPumpGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingDehumidifierGroup" href="#homematicip.aio.group.AsyncHeatingDehumidifierGroup">AsyncHeatingDehumidifierGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingExternalClockGroup" href="#homematicip.aio.group.AsyncHeatingExternalClockGroup">AsyncHeatingExternalClockGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingFailureAlertRuleGroup" href="#homematicip.aio.group.AsyncHeatingFailureAlertRuleGroup">AsyncHeatingFailureAlertRuleGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingGroup" href="#homematicip.aio.group.AsyncHeatingGroup">AsyncHeatingGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncHeatingGroup.set_active_profile" href="#homematicip.aio.group.AsyncHeatingGroup.set_active_profile">set_active_profile</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncHeatingGroup.set_boost" href="#homematicip.aio.group.AsyncHeatingGroup.set_boost">set_boost</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncHeatingGroup.set_boost_duration" href="#homematicip.aio.group.AsyncHeatingGroup.set_boost_duration">set_boost_duration</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncHeatingGroup.set_control_mode" href="#homematicip.aio.group.AsyncHeatingGroup.set_control_mode">set_control_mode</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncHeatingGroup.set_point_temperature" href="#homematicip.aio.group.AsyncHeatingGroup.set_point_temperature">set_point_temperature</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingHumidyLimiterGroup" href="#homematicip.aio.group.AsyncHeatingHumidyLimiterGroup">AsyncHeatingHumidyLimiterGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHeatingTemperatureLimiterGroup" href="#homematicip.aio.group.AsyncHeatingTemperatureLimiterGroup">AsyncHeatingTemperatureLimiterGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHotWaterGroup" href="#homematicip.aio.group.AsyncHotWaterGroup">AsyncHotWaterGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncHotWaterGroup.set_profile_mode" href="#homematicip.aio.group.AsyncHotWaterGroup.set_profile_mode">set_profile_mode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncHumidityWarningRuleGroup" href="#homematicip.aio.group.AsyncHumidityWarningRuleGroup">AsyncHumidityWarningRuleGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncInboxGroup" href="#homematicip.aio.group.AsyncInboxGroup">AsyncInboxGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncIndoorClimateGroup" href="#homematicip.aio.group.AsyncIndoorClimateGroup">AsyncIndoorClimateGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncLinkedSwitchingGroup" href="#homematicip.aio.group.AsyncLinkedSwitchingGroup">AsyncLinkedSwitchingGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncLinkedSwitchingGroup.set_light_group_switches" href="#homematicip.aio.group.AsyncLinkedSwitchingGroup.set_light_group_switches">set_light_group_switches</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncLockOutProtectionRule" href="#homematicip.aio.group.AsyncLockOutProtectionRule">AsyncLockOutProtectionRule</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncMetaGroup" href="#homematicip.aio.group.AsyncMetaGroup">AsyncMetaGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncOverHeatProtectionRule" href="#homematicip.aio.group.AsyncOverHeatProtectionRule">AsyncOverHeatProtectionRule</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncSecurityGroup" href="#homematicip.aio.group.AsyncSecurityGroup">AsyncSecurityGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncSecurityZoneGroup" href="#homematicip.aio.group.AsyncSecurityZoneGroup">AsyncSecurityZoneGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncShutterProfile" href="#homematicip.aio.group.AsyncShutterProfile">AsyncShutterProfile</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncShutterProfile.set_profile_mode" href="#homematicip.aio.group.AsyncShutterProfile.set_profile_mode">set_profile_mode</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncShutterProfile.set_shutter_level" href="#homematicip.aio.group.AsyncShutterProfile.set_shutter_level">set_shutter_level</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncShutterProfile.set_shutter_stop" href="#homematicip.aio.group.AsyncShutterProfile.set_shutter_stop">set_shutter_stop</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncShutterProfile.set_slats_level" href="#homematicip.aio.group.AsyncShutterProfile.set_slats_level">set_slats_level</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncShutterWindProtectionRule" href="#homematicip.aio.group.AsyncShutterWindProtectionRule">AsyncShutterWindProtectionRule</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncSmokeAlarmDetectionRule" href="#homematicip.aio.group.AsyncSmokeAlarmDetectionRule">AsyncSmokeAlarmDetectionRule</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncSwitchGroupBase" href="#homematicip.aio.group.AsyncSwitchGroupBase">AsyncSwitchGroupBase</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncSwitchGroupBase.set_switch_state" href="#homematicip.aio.group.AsyncSwitchGroupBase.set_switch_state">set_switch_state</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncSwitchGroupBase.turn_off" href="#homematicip.aio.group.AsyncSwitchGroupBase.turn_off">turn_off</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncSwitchGroupBase.turn_on" href="#homematicip.aio.group.AsyncSwitchGroupBase.turn_on">turn_on</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncSwitchingGroup" href="#homematicip.aio.group.AsyncSwitchingGroup">AsyncSwitchingGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncSwitchingGroup.set_shutter_level" href="#homematicip.aio.group.AsyncSwitchingGroup.set_shutter_level">set_shutter_level</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncSwitchingGroup.set_shutter_stop" href="#homematicip.aio.group.AsyncSwitchingGroup.set_shutter_stop">set_shutter_stop</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncSwitchingGroup.set_slats_level" href="#homematicip.aio.group.AsyncSwitchingGroup.set_slats_level">set_slats_level</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.aio.group.AsyncSwitchingProfileGroup" href="#homematicip.aio.group.AsyncSwitchingProfileGroup">AsyncSwitchingProfileGroup</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.group.AsyncSwitchingProfileGroup.create" href="#homematicip.aio.group.AsyncSwitchingProfileGroup.create">create</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncSwitchingProfileGroup.set_group_channels" href="#homematicip.aio.group.AsyncSwitchingProfileGroup.set_group_channels">set_group_channels</a></code></li>
+<li><code><a title="homematicip.aio.group.AsyncSwitchingProfileGroup.set_profile_mode" href="#homematicip.aio.group.AsyncSwitchingProfileGroup.set_profile_mode">set_profile_mode</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

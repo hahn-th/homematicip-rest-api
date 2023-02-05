@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>homematicip.aio.home API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>homematicip.aio.home</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import asyncio
+import json
+import logging
+
+from homematicip.aio.class_maps import (
+    TYPE_CLASS_MAP,
+    TYPE_GROUP_MAP,
+    TYPE_RULE_MAP,
+    TYPE_SECURITY_EVENT_MAP,
+)
+from homematicip.aio.connection import AsyncConnection
+from homematicip.aio.securityEvent import AsyncSecurityEvent
+from homematicip.base.enums import *
+from homematicip.home import Home, OAuthOTK
+
+LOGGER = logging.getLogger(__name__)
+
+
+class AsyncHome(Home):
+    &#34;&#34;&#34;this class represents the &#39;Async Home&#39; of the homematic ip&#34;&#34;&#34;
+
+    _typeClassMap = TYPE_CLASS_MAP
+    _typeGroupMap = TYPE_GROUP_MAP
+    _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+    _typeRuleMap = TYPE_RULE_MAP
+
+    def __init__(self, loop, websession=None):
+        super().__init__(connection=AsyncConnection(loop, websession))
+
+    async def init(self, access_point_id, lookup=True):
+        await self._connection.init(access_point_id, lookup)
+
+    async def get_current_state(self, clearConfig: bool = False):
+        &#34;&#34;&#34;downloads the current configuration and parses it into self
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        json_state = await self.download_configuration()
+        return self.update_home(json_state, clearConfig)
+
+    async def download_configuration(self):
+        return await self._connection.api_call(*super().download_configuration())
+
+    async def enable_events(self) -&gt; asyncio.Task:
+        &#34;&#34;&#34;Connects to the websocket. Returns a listening task.&#34;&#34;&#34;
+        return await self._connection.ws_connect(
+            on_message=self._ws_on_message, on_error=self._ws_on_error
+        )
+
+    async def disable_events(self):
+        await self._connection.close_websocket_connection()
+
+    async def get_OAuth_OTK(self):
+        token = OAuthOTK(self._connection)
+        token.from_json(await self._connection.api_call(&#34;home/getOAuthOTK&#34;))
+        return token
+
+    async def activate_absence_with_duration(self, duration):
+        return await self._connection.api_call(
+            *super().activate_absence_with_duration(duration)
+        )
+
+    async def set_powermeter_unit_price(self, price):
+        return await self._connection.api_call(
+            *super().set_powermeter_unit_price(price)
+        )
+
+    async def set_intrusion_alert_through_smoke_detectors(self, activate=True):
+        return await self._connection.api_call(
+            *super().set_intrusion_alert_through_smoke_detectors(activate)
+        )
+
+    async def set_timezone(self, timezone):
+        return await self._connection.api_call(*super().set_timezone(timezone))
+
+    async def set_zones_device_assignment(self, internal_devices, external_devices):
+        return await self._connection.api_call(
+            *super().set_zones_device_assignment(internal_devices, internal_devices)
+        )
+
+    async def set_pin(self, newPin, oldPin=None):
+        if newPin is None:
+            newPin = &#34;&#34;
+        data = {&#34;pin&#34;: newPin}
+        if oldPin:
+            self._connection.headers[&#34;PIN&#34;] = str(oldPin)
+        result = await self._connection.api_call(&#34;home/setPin&#34;, body=json.dumps(data))
+        if oldPin:
+            del self._connection.headers[&#34;PIN&#34;]
+        return result
+
+    async def get_security_journal(self):
+        journal = await self._connection.api_call(
+            &#34;home/security/getSecurityJournal&#34;,
+            json.dumps(self._connection.clientCharacteristics),
+        )
+        if journal is None or &#34;errorCode&#34; in journal:
+            LOGGER.error(
+                &#34;Could not get the security journal. Error: %s&#34;, journal[&#34;errorCode&#34;]
+            )
+            return None
+        ret = []
+        for entry in journal[&#34;entries&#34;]:
+            try:
+                eventType = SecurityEventType(entry[&#34;eventType&#34;])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
+                j = AsyncSecurityEvent(self._connection)
+                LOGGER.warning(&#34;There is no class for %s yet&#34;, entry[&#34;eventType&#34;])
+            j.from_json(entry)
+            ret.append(j)
+
+        return ret
+
+    async def activate_absence_with_period(self, endtime):
+        return await self._connection.api_call(
+            *super().activate_absence_with_period(endtime)
+        )
+
+    async def activate_absence_permanent(self):
+        return await self._connection.api_call(*super().activate_absence_permanent())
+
+    async def deactivate_absence(self):
+        return await self._connection.api_call(*super().deactivate_absence())
+
+    async def activate_vacation(self, endtime, temperature):
+        return await self._connection.api_call(
+            *super().activate_vacation(endtime, temperature)
+        )
+
+    async def deactivate_vacation(self):
+        return await self._connection.api_call(*super().deactivate_vacation())
+
+    async def set_zone_activation_delay(self, delay):
+        return await self._connection.api_call(
+            *super().set_zone_activation_delay(delay)
+        )
+
+    async def set_security_zones_activation(self, internal=True, external=True):
+        return await self._connection.api_call(
+            *super().set_security_zones_activation(internal, external)
+        )
+
+    async def delete_group(self, group):
+        return await group.delete()
+
+    async def set_location(self, city, latitude, longitude):
+        return await self._connection.api_call(
+            *super().set_location(city, latitude, longitude)
+        )</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="homematicip.aio.home.AsyncHome"><code class="flex name class">
+<span>class <span class="ident">AsyncHome</span></span>
+<span>(</span><span>loop, websession=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents the 'Async Home' of the homematic ip</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AsyncHome(Home):
+    &#34;&#34;&#34;this class represents the &#39;Async Home&#39; of the homematic ip&#34;&#34;&#34;
+
+    _typeClassMap = TYPE_CLASS_MAP
+    _typeGroupMap = TYPE_GROUP_MAP
+    _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+    _typeRuleMap = TYPE_RULE_MAP
+
+    def __init__(self, loop, websession=None):
+        super().__init__(connection=AsyncConnection(loop, websession))
+
+    async def init(self, access_point_id, lookup=True):
+        await self._connection.init(access_point_id, lookup)
+
+    async def get_current_state(self, clearConfig: bool = False):
+        &#34;&#34;&#34;downloads the current configuration and parses it into self
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        json_state = await self.download_configuration()
+        return self.update_home(json_state, clearConfig)
+
+    async def download_configuration(self):
+        return await self._connection.api_call(*super().download_configuration())
+
+    async def enable_events(self) -&gt; asyncio.Task:
+        &#34;&#34;&#34;Connects to the websocket. Returns a listening task.&#34;&#34;&#34;
+        return await self._connection.ws_connect(
+            on_message=self._ws_on_message, on_error=self._ws_on_error
+        )
+
+    async def disable_events(self):
+        await self._connection.close_websocket_connection()
+
+    async def get_OAuth_OTK(self):
+        token = OAuthOTK(self._connection)
+        token.from_json(await self._connection.api_call(&#34;home/getOAuthOTK&#34;))
+        return token
+
+    async def activate_absence_with_duration(self, duration):
+        return await self._connection.api_call(
+            *super().activate_absence_with_duration(duration)
+        )
+
+    async def set_powermeter_unit_price(self, price):
+        return await self._connection.api_call(
+            *super().set_powermeter_unit_price(price)
+        )
+
+    async def set_intrusion_alert_through_smoke_detectors(self, activate=True):
+        return await self._connection.api_call(
+            *super().set_intrusion_alert_through_smoke_detectors(activate)
+        )
+
+    async def set_timezone(self, timezone):
+        return await self._connection.api_call(*super().set_timezone(timezone))
+
+    async def set_zones_device_assignment(self, internal_devices, external_devices):
+        return await self._connection.api_call(
+            *super().set_zones_device_assignment(internal_devices, internal_devices)
+        )
+
+    async def set_pin(self, newPin, oldPin=None):
+        if newPin is None:
+            newPin = &#34;&#34;
+        data = {&#34;pin&#34;: newPin}
+        if oldPin:
+            self._connection.headers[&#34;PIN&#34;] = str(oldPin)
+        result = await self._connection.api_call(&#34;home/setPin&#34;, body=json.dumps(data))
+        if oldPin:
+            del self._connection.headers[&#34;PIN&#34;]
+        return result
+
+    async def get_security_journal(self):
+        journal = await self._connection.api_call(
+            &#34;home/security/getSecurityJournal&#34;,
+            json.dumps(self._connection.clientCharacteristics),
+        )
+        if journal is None or &#34;errorCode&#34; in journal:
+            LOGGER.error(
+                &#34;Could not get the security journal. Error: %s&#34;, journal[&#34;errorCode&#34;]
+            )
+            return None
+        ret = []
+        for entry in journal[&#34;entries&#34;]:
+            try:
+                eventType = SecurityEventType(entry[&#34;eventType&#34;])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
+                j = AsyncSecurityEvent(self._connection)
+                LOGGER.warning(&#34;There is no class for %s yet&#34;, entry[&#34;eventType&#34;])
+            j.from_json(entry)
+            ret.append(j)
+
+        return ret
+
+    async def activate_absence_with_period(self, endtime):
+        return await self._connection.api_call(
+            *super().activate_absence_with_period(endtime)
+        )
+
+    async def activate_absence_permanent(self):
+        return await self._connection.api_call(*super().activate_absence_permanent())
+
+    async def deactivate_absence(self):
+        return await self._connection.api_call(*super().deactivate_absence())
+
+    async def activate_vacation(self, endtime, temperature):
+        return await self._connection.api_call(
+            *super().activate_vacation(endtime, temperature)
+        )
+
+    async def deactivate_vacation(self):
+        return await self._connection.api_call(*super().deactivate_vacation())
+
+    async def set_zone_activation_delay(self, delay):
+        return await self._connection.api_call(
+            *super().set_zone_activation_delay(delay)
+        )
+
+    async def set_security_zones_activation(self, internal=True, external=True):
+        return await self._connection.api_call(
+            *super().set_security_zones_activation(internal, external)
+        )
+
+    async def delete_group(self, group):
+        return await group.delete()
+
+    async def set_location(self, city, latitude, longitude):
+        return await self._connection.api_call(
+            *super().set_location(city, latitude, longitude)
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.home.Home" href="../home.html#homematicip.home.Home">Home</a></li>
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.aio.home.AsyncHome.disable_events"><code class="name flex">
+<span>async def <span class="ident">disable_events</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def disable_events(self):
+    await self._connection.close_websocket_connection()</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.enable_events"><code class="name flex">
+<span>async def <span class="ident">enable_events</span></span>(<span>self) ‑> _asyncio.Task</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Connects to the websocket. Returns a listening task.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def enable_events(self) -&gt; asyncio.Task:
+    &#34;&#34;&#34;Connects to the websocket. Returns a listening task.&#34;&#34;&#34;
+    return await self._connection.ws_connect(
+        on_message=self._ws_on_message, on_error=self._ws_on_error
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.get_OAuth_OTK"><code class="name flex">
+<span>async def <span class="ident">get_OAuth_OTK</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_OAuth_OTK(self):
+    token = OAuthOTK(self._connection)
+    token.from_json(await self._connection.api_call(&#34;home/getOAuthOTK&#34;))
+    return token</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.get_current_state"><code class="name flex">
+<span>async def <span class="ident">get_current_state</span></span>(<span>self, clearConfig: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>downloads the current configuration and parses it into self</p>
+<h2 id="args">Args</h2>
+<p>clearConfig(bool): if set to true, this function will remove all old objects
+from self.devices, self.client, &hellip; to have a fresh config instead of reparsing them</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_current_state(self, clearConfig: bool = False):
+    &#34;&#34;&#34;downloads the current configuration and parses it into self
+
+    Args:
+        clearConfig(bool): if set to true, this function will remove all old objects
+        from self.devices, self.client, ... to have a fresh config instead of reparsing them
+    &#34;&#34;&#34;
+    json_state = await self.download_configuration()
+    return self.update_home(json_state, clearConfig)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.get_security_journal"><code class="name flex">
+<span>async def <span class="ident">get_security_journal</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def get_security_journal(self):
+    journal = await self._connection.api_call(
+        &#34;home/security/getSecurityJournal&#34;,
+        json.dumps(self._connection.clientCharacteristics),
+    )
+    if journal is None or &#34;errorCode&#34; in journal:
+        LOGGER.error(
+            &#34;Could not get the security journal. Error: %s&#34;, journal[&#34;errorCode&#34;]
+        )
+        return None
+    ret = []
+    for entry in journal[&#34;entries&#34;]:
+        try:
+            eventType = SecurityEventType(entry[&#34;eventType&#34;])
+            if eventType in self._typeSecurityEventMap:
+                j = self._typeSecurityEventMap[eventType](self._connection)
+        except:
+            j = AsyncSecurityEvent(self._connection)
+            LOGGER.warning(&#34;There is no class for %s yet&#34;, entry[&#34;eventType&#34;])
+        j.from_json(entry)
+        ret.append(j)
+
+    return ret</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.init"><code class="name flex">
+<span>async def <span class="ident">init</span></span>(<span>self, access_point_id, lookup=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def init(self, access_point_id, lookup=True):
+    await self._connection.init(access_point_id, lookup)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.set_location"><code class="name flex">
+<span>async def <span class="ident">set_location</span></span>(<span>self, city, latitude, longitude)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_location(self, city, latitude, longitude):
+    return await self._connection.api_call(
+        *super().set_location(city, latitude, longitude)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.set_powermeter_unit_price"><code class="name flex">
+<span>async def <span class="ident">set_powermeter_unit_price</span></span>(<span>self, price)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_powermeter_unit_price(self, price):
+    return await self._connection.api_call(
+        *super().set_powermeter_unit_price(price)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.aio.home.AsyncHome.set_zone_activation_delay"><code class="name flex">
+<span>async def <span class="ident">set_zone_activation_delay</span></span>(<span>self, delay)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def set_zone_activation_delay(self, delay):
+    return await self._connection.api_call(
+        *super().set_zone_activation_delay(delay)
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.home.Home" href="../home.html#homematicip.home.Home">Home</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.home.Home.activate_absence_permanent" href="../home.html#homematicip.home.Home.activate_absence_permanent">activate_absence_permanent</a></code></li>
+<li><code><a title="homematicip.home.Home.activate_absence_with_duration" href="../home.html#homematicip.home.Home.activate_absence_with_duration">activate_absence_with_duration</a></code></li>
+<li><code><a title="homematicip.home.Home.activate_absence_with_period" href="../home.html#homematicip.home.Home.activate_absence_with_period">activate_absence_with_period</a></code></li>
+<li><code><a title="homematicip.home.Home.activate_vacation" href="../home.html#homematicip.home.Home.activate_vacation">activate_vacation</a></code></li>
+<li><code><a title="homematicip.home.Home.deactivate_absence" href="../home.html#homematicip.home.Home.deactivate_absence">deactivate_absence</a></code></li>
+<li><code><a title="homematicip.home.Home.deactivate_vacation" href="../home.html#homematicip.home.Home.deactivate_vacation">deactivate_vacation</a></code></li>
+<li><code><a title="homematicip.home.Home.delete_group" href="../home.html#homematicip.home.Home.delete_group">delete_group</a></code></li>
+<li><code><a title="homematicip.home.Home.download_configuration" href="../home.html#homematicip.home.Home.download_configuration">download_configuration</a></code></li>
+<li><code><a title="homematicip.home.Home.fire_create_event" href="../home.html#homematicip.home.Home.fire_create_event">fire_create_event</a></code></li>
+<li><code><a title="homematicip.home.Home.fire_remove_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.home.Home.fire_update_event" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.home.Home.from_json" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.home.Home.fromtimestamp" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.home.Home.functionalHomes" href="../home.html#homematicip.home.Home.functionalHomes">functionalHomes</a></code></li>
+<li><code><a title="homematicip.home.Home.get_functionalHome" href="../home.html#homematicip.home.Home.get_functionalHome">get_functionalHome</a></code></li>
+<li><code><a title="homematicip.home.Home.get_security_zones_activation" href="../home.html#homematicip.home.Home.get_security_zones_activation">get_security_zones_activation</a></code></li>
+<li><code><a title="homematicip.home.Home.on_create" href="../home.html#homematicip.home.Home.on_create">on_create</a></code></li>
+<li><code><a title="homematicip.home.Home.on_remove" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.home.Home.on_update" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.home.Home.remove_callback" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.home.Home.search_channel" href="../home.html#homematicip.home.Home.search_channel">search_channel</a></code></li>
+<li><code><a title="homematicip.home.Home.search_client_by_id" href="../home.html#homematicip.home.Home.search_client_by_id">search_client_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.search_device_by_id" href="../home.html#homematicip.home.Home.search_device_by_id">search_device_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.search_group_by_id" href="../home.html#homematicip.home.Home.search_group_by_id">search_group_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.search_rule_by_id" href="../home.html#homematicip.home.Home.search_rule_by_id">search_rule_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.set_attr_from_dict" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.home.Home.set_intrusion_alert_through_smoke_detectors" href="../home.html#homematicip.home.Home.set_intrusion_alert_through_smoke_detectors">set_intrusion_alert_through_smoke_detectors</a></code></li>
+<li><code><a title="homematicip.home.Home.set_pin" href="../home.html#homematicip.home.Home.set_pin">set_pin</a></code></li>
+<li><code><a title="homematicip.home.Home.set_security_zones_activation" href="../home.html#homematicip.home.Home.set_security_zones_activation">set_security_zones_activation</a></code></li>
+<li><code><a title="homematicip.home.Home.set_timezone" href="../home.html#homematicip.home.Home.set_timezone">set_timezone</a></code></li>
+<li><code><a title="homematicip.home.Home.set_zones_device_assignment" href="../home.html#homematicip.home.Home.set_zones_device_assignment">set_zones_device_assignment</a></code></li>
+<li><code><a title="homematicip.home.Home.start_inclusion" href="../home.html#homematicip.home.Home.start_inclusion">start_inclusion</a></code></li>
+<li><code><a title="homematicip.home.Home.str_from_attr_map" href="../base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+<li><code><a title="homematicip.home.Home.update_home" href="../home.html#homematicip.home.Home.update_home">update_home</a></code></li>
+<li><code><a title="homematicip.home.Home.update_home_only" href="../home.html#homematicip.home.Home.update_home_only">update_home_only</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="homematicip.aio" href="index.html">homematicip.aio</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="homematicip.aio.home.AsyncHome" href="#homematicip.aio.home.AsyncHome">AsyncHome</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.aio.home.AsyncHome.disable_events" href="#homematicip.aio.home.AsyncHome.disable_events">disable_events</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.enable_events" href="#homematicip.aio.home.AsyncHome.enable_events">enable_events</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.get_OAuth_OTK" href="#homematicip.aio.home.AsyncHome.get_OAuth_OTK">get_OAuth_OTK</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.get_current_state" href="#homematicip.aio.home.AsyncHome.get_current_state">get_current_state</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.get_security_journal" href="#homematicip.aio.home.AsyncHome.get_security_journal">get_security_journal</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.init" href="#homematicip.aio.home.AsyncHome.init">init</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.set_location" href="#homematicip.aio.home.AsyncHome.set_location">set_location</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.set_powermeter_unit_price" href="#homematicip.aio.home.AsyncHome.set_powermeter_unit_price">set_powermeter_unit_price</a></code></li>
+<li><code><a title="homematicip.aio.home.AsyncHome.set_zone_activation_delay" href="#homematicip.aio.home.AsyncHome.set_zone_activation_delay">set_zone_activation_delay</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

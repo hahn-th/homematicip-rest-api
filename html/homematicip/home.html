@@ -1,0 +1,2912 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>homematicip.home API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>homematicip.home</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import logging
+import ssl
+import sys
+import threading
+from typing import List
+
+import websocket
+
+from homematicip.base.enums import *
+from homematicip.base.helpers import bytes2str
+from homematicip.class_maps import *
+from homematicip.connection import Connection
+from homematicip.device import *
+from homematicip.EventHook import *
+from homematicip.group import *
+from homematicip.rule import *
+from homematicip.securityEvent import *
+
+LOGGER = logging.getLogger(__name__)
+
+
+class Weather(HomeMaticIPObject):
+    &#34;&#34;&#34; this class represents the weather of the home location&#34;&#34;&#34;
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float: the current temperature
+        self.temperature = 0.0
+        #:WeatherCondition: the current weather
+        self.weatherCondition = WeatherCondition.UNKNOWN
+        #:datetime: the current datime
+        self.weatherDayTime = WeatherDayTime.DAY
+        #:float: the minimum temperature of the day
+        self.minTemperature = 0.0
+        #:float: the maximum temperature of the day
+        self.maxTemperature = 0.0
+        #:float: the current humidity
+        self.humidity = 0
+        #:float: the current windspeed
+        self.windSpeed = 0.0
+        #:int: the current wind direction in 360° where 0° is north
+        self.windDirection = 0
+        #:float: the current vapor
+        self.vaporAmount = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.temperature = js[&#34;temperature&#34;]
+        self.weatherCondition = WeatherCondition.from_str(js[&#34;weatherCondition&#34;])
+        self.weatherDayTime = WeatherDayTime.from_str(js[&#34;weatherDayTime&#34;])
+        self.minTemperature = js[&#34;minTemperature&#34;]
+        self.maxTemperature = js[&#34;maxTemperature&#34;]
+        self.humidity = js[&#34;humidity&#34;]
+        self.windSpeed = js[&#34;windSpeed&#34;]
+        self.windDirection = js[&#34;windDirection&#34;]
+        self.vaporAmount = js[&#34;vaporAmount&#34;]
+
+    def __str__(self):
+        return &#34;temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) vaporAmount({}) windSpeed({}) windDirection({})&#34;.format(
+            self.temperature,
+            self.weatherCondition,
+            self.weatherDayTime,
+            self.minTemperature,
+            self.maxTemperature,
+            self.humidity,
+            self.vaporAmount,
+            self.windSpeed,
+            self.windDirection,
+        )
+
+
+class Location(HomeMaticIPObject):
+    &#34;&#34;&#34;This class represents the possible location&#34;&#34;&#34;
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:str: the name of the city
+        self.city = &#34;London&#34;
+        #:float: the latitude of the location
+        self.latitude = 51.509865
+        #:float: the longitue of the location
+        self.longitude = -0.118092
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.city = js[&#34;city&#34;]
+        self.latitude = js[&#34;latitude&#34;]
+        self.longitude = js[&#34;longitude&#34;]
+
+    def __str__(self):
+        return &#34;city({}) latitude({}) longitude({})&#34;.format(
+            self.city, self.latitude, self.longitude
+        )
+
+
+class Client(HomeMaticIPObject):
+    &#34;&#34;&#34;A client is an app which has access to the access point. 
+    e.g. smartphone, 3th party apps, google home, conrad connect
+    &#34;&#34;&#34;
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:str: the unique id of the client
+        self.id = &#34;&#34;
+        #:str: a human understandable name of the client
+        self.label = &#34;&#34;
+        #:str: the home where the client belongs to
+        self.homeId = &#34;&#34;
+        #:str: the c2c service name
+        self.c2cServiceIdentifier = &#34;&#34;
+        #:ClientType: the type of this client
+        self.clientType = ClientType.APP
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.id = js[&#34;id&#34;]
+        self.label = js[&#34;label&#34;]
+        self.homeId = js[&#34;homeId&#34;]
+        self.clientType = ClientType.from_str(js[&#34;clientType&#34;])
+        if &#34;c2cServiceIdentifier&#34; in js:
+            self.c2cServiceIdentifier = js[&#34;c2cServiceIdentifier&#34;]
+
+    def __str__(self):
+        return &#34;label({})&#34;.format(self.label)
+
+
+class OAuthOTK(HomeMaticIPObject):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.authToken = None
+        self.expirationTimestamp = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.authToken = js[&#34;authToken&#34;]
+        self.expirationTimestamp = self.fromtimestamp(js[&#34;expirationTimestamp&#34;])
+
+
+class AccessPointUpdateState(HomeMaticIPObject):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.accessPointUpdateState = DeviceUpdateState.UP_TO_DATE
+        self.successfulUpdateTimestamp = None
+        self.updateStateChangedTimestamp = None
+
+    def from_json(self, js):
+        self.accessPointUpdateState = js[&#34;accessPointUpdateState&#34;]
+        self.successfulUpdateTimestamp = self.fromtimestamp(
+            js[&#34;successfulUpdateTimestamp&#34;]
+        )
+        self.updateStateChangedTimestamp = self.fromtimestamp(
+            js[&#34;updateStateChangedTimestamp&#34;]
+        )
+
+
+class Home(HomeMaticIPObject):
+    &#34;&#34;&#34;this class represents the &#39;Home&#39; of the homematic ip&#34;&#34;&#34;
+
+    _typeClassMap = TYPE_CLASS_MAP
+    _typeGroupMap = TYPE_GROUP_MAP
+    _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+    _typeRuleMap = TYPE_RULE_MAP
+    _typeFunctionalHomeMap = TYPE_FUNCTIONALHOME_MAP
+
+    def __init__(self, connection=None):
+        if connection is None:
+            connection = Connection()
+        super().__init__(connection)
+
+        # List with create handlers.
+        self._on_create = []
+
+        self.apExchangeClientId = None
+        self.apExchangeState = ApExchangeState.NONE
+        self.availableAPVersion = None
+        self.carrierSense = None
+        #:bool:displays if the access point is connected to the hmip cloud or
+        # not
+        self.connected = None
+        #:str:the current version of the access point
+        self.currentAPVersion = None
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
+        self.dutyCycle = None
+        #:str:the SGTIN of the access point
+        self.id = None
+        self.lastReadyForUpdateTimestamp = None
+        #:Location:the location of the AP
+        self.location = None
+        #:bool:determines if a pin is set on this access point
+        self.pinAssigned = None
+        self.powerMeterCurrency = None
+        self.powerMeterUnitPrice = None
+        self.timeZoneId = None
+        self.updateState = HomeUpdateState.UP_TO_DATE
+        #:Weather:the current weather
+        self.weather = None
+
+        self.__webSocket = None
+        self.__webSocketThread = None
+        self.onEvent = EventHook()
+        self.onWsError = EventHook()
+        #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
+        self.websocket_reconnect_on_error = True
+
+        #:List[Device]: a collection of all devices in home
+        self.devices = []
+        #:List[Client]: a collection of all clients in home
+        self.clients = []
+        #:List[Group]: a collection of all groups in the home
+        self.groups = []
+        #:List[FunctionalChannel]: a collection of all channels in the home
+        self.channels = []
+        #:List[Rule]: a collection of all rules in the home
+        self.rules = []
+        #: a collection of all functionalHomes in the home
+        self.functionalHomes = []
+        #:Map: a map of all access points and their updateStates
+        self.accessPointUpdateStates = {}
+
+    def init(self, access_point_id, lookup=True):
+        self._connection.init(access_point_id, lookup)
+
+    def set_auth_token(self, auth_token):
+        self._connection.set_auth_token(auth_token)
+
+    def from_json(self, js_home):
+        super().from_json(js_home)
+
+        self.weather = Weather(self._connection)
+        self.weather.from_json(js_home[&#34;weather&#34;])
+        if js_home[&#34;location&#34;] != None:
+            self.location = Location(self._connection)
+            self.location.from_json(js_home[&#34;location&#34;])
+
+        self.connected = js_home[&#34;connected&#34;]
+        self.currentAPVersion = js_home[&#34;currentAPVersion&#34;]
+        self.availableAPVersion = js_home[&#34;availableAPVersion&#34;]
+        self.timeZoneId = js_home[&#34;timeZoneId&#34;]
+        self.pinAssigned = js_home[&#34;pinAssigned&#34;]
+        self.dutyCycle = js_home[&#34;dutyCycle&#34;]
+        self.updateState = HomeUpdateState.from_str(js_home[&#34;updateState&#34;])
+        self.powerMeterUnitPrice = js_home[&#34;powerMeterUnitPrice&#34;]
+        self.powerMeterCurrency = js_home[&#34;powerMeterCurrency&#34;]
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.from_str(
+            js_home[&#34;deviceUpdateStrategy&#34;]
+        )
+        self.lastReadyForUpdateTimestamp = js_home[&#34;lastReadyForUpdateTimestamp&#34;]
+        self.apExchangeClientId = js_home[&#34;apExchangeClientId&#34;]
+        self.apExchangeState = ApExchangeState.from_str(js_home[&#34;apExchangeState&#34;])
+        self.id = js_home[&#34;id&#34;]
+        self.carrierSense = js_home[&#34;carrierSense&#34;]
+
+        for ap, state in js_home[&#34;accessPointUpdateStates&#34;].items():
+            ap_state = AccessPointUpdateState(self._connection)
+            ap_state.from_json(state)
+            self.accessPointUpdateStates[ap] = ap_state
+
+        self._get_rules(js_home)
+
+    def on_create(self, handler):
+        &#34;&#34;&#34;Adds an event handler to the create method. Fires when a device
+        is created.&#34;&#34;&#34;
+        self._on_create.append(handler)
+
+    def fire_create_event(self, *args, **kwargs):
+        &#34;&#34;&#34;Trigger the method tied to _on_create&#34;&#34;&#34;
+        for _handler in self._on_create:
+            _handler(*args, **kwargs)
+
+    def remove_callback(self, handler):
+        &#34;&#34;&#34;Remove event handler.&#34;&#34;&#34;
+        super().remove_callback(handler)
+        if handler in self._on_create:
+            self._on_create.remove(handler)
+
+    def download_configuration(self) -&gt; str:
+        &#34;&#34;&#34;downloads the current configuration from the cloud
+
+        Returns
+            the downloaded configuration or an errorCode
+        &#34;&#34;&#34;
+        return self._restCall(
+            &#34;home/getCurrentState&#34;, json.dumps(self._connection.clientCharacteristics)
+        )
+
+    def get_current_state(self, clearConfig: bool = False):
+        &#34;&#34;&#34;downloads the current configuration and parses it into self
+           
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects 
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        json_state = self.download_configuration()
+        return self.update_home(json_state, clearConfig)
+
+    def update_home(self, json_state, clearConfig: bool = False):
+        &#34;&#34;&#34;parse a given json configuration into self.
+        This will update the whole home including devices, clients and groups.
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        if &#34;errorCode&#34; in json_state:
+            LOGGER.error(
+                &#34;Could not get the current configuration. Error: %s&#34;,
+                json_state[&#34;errorCode&#34;],
+            )
+            return False
+
+        if clearConfig:
+            self.devices = []
+            self.clients = []
+            self.groups = []
+            self.channels = []
+
+        self._get_devices(json_state)
+        self._get_clients(json_state)
+        self._get_groups(json_state)
+        self._load_functionalChannels()
+
+        js_home = json_state[&#34;home&#34;]
+
+        return self.update_home_only(js_home, clearConfig)
+
+    def update_home_only(self, js_home, clearConfig: bool = False):
+        &#34;&#34;&#34;parse a given home json configuration into self.
+        This will update only the home without updating devices, clients and groups.
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        if &#34;errorCode&#34; in js_home:
+            LOGGER.error(
+                &#34;Could not get the current configuration. Error: %s&#34;,
+                js_home[&#34;errorCode&#34;],
+            )
+            return False
+
+        if clearConfig:
+            self.rules = []
+            self.functionalHomes = []
+
+        self.from_json(js_home)
+        self._get_functionalHomes(js_home)
+
+        return True
+
+    def _get_devices(self, json_state):
+        self.devices = [x for x in self.devices if x.id in json_state[&#34;devices&#34;].keys()]
+        for id_, raw in json_state[&#34;devices&#34;].items():
+            _device = self.search_device_by_id(id_)
+            if _device:
+                _device.from_json(raw)
+            else:
+                self.devices.append(self._parse_device(raw))
+
+    def _parse_device(self, json_state):
+        try:
+            deviceType = DeviceType.from_str(json_state[&#34;type&#34;])
+            d = self._typeClassMap[deviceType](self._connection)
+            d.from_json(json_state)
+            return d
+        except:
+            d = self._typeClassMap[DeviceType.BASE_DEVICE](self._connection)
+            d.from_json(json_state)
+            LOGGER.warning(&#34;There is no class for device &#39;%s&#39; yet&#34;, json_state[&#34;type&#34;])
+            return d
+    
+    # def update_device(self, data):
+    #     obj = self.search_device_by_id(data[&#34;id&#34;])
+    #     if obj is None:  # no DEVICE_ADDED Event?
+    #         obj = self._parse_device(data)
+    #         self.devices.append(obj)
+    #         pushEventType = EventType.DEVICE_ADDED
+    #         self.fire_create_event(data, event_type=pushEventType, obj=obj)
+    #     else:
+    #         obj.from_json(data)
+    #     obj.load_functionalChannels(self.groups)
+
+    def _get_rules(self, json_state):
+        self.rules = [
+            x for x in self.rules if x.id in json_state[&#34;ruleMetaDatas&#34;].keys()
+        ]
+        for id_, raw in json_state[&#34;ruleMetaDatas&#34;].items():
+            _rule = self.search_rule_by_id(id_)
+            if _rule:
+                _rule.from_json(raw)
+            else:
+                self.rules.append(self._parse_rule(raw))
+
+    def _parse_rule(self, json_state):
+        try:
+            ruleType = AutomationRuleType.from_str(json_state[&#34;type&#34;])
+            r = self._typeRuleMap[ruleType](self._connection)
+            r.from_json(json_state)
+            return r
+        except:
+            r = Rule(self._connection)
+            r.from_json(json_state)
+            LOGGER.warning(&#34;There is no class for rule  &#39;%s&#39; yet&#34;, json_state[&#34;type&#34;])
+            return r
+
+    def _get_clients(self, json_state):
+        self.clients = [x for x in self.clients if x.id in json_state[&#34;clients&#34;].keys()]
+        for id_, raw in json_state[&#34;clients&#34;].items():
+            _client = self.search_client_by_id(id_)
+            if _client:
+                _client.from_json(raw)
+            else:
+                c = Client(self._connection)
+                c.from_json(raw)
+                self.clients.append(c)
+
+    def _parse_group(self, json_state):
+        g = None
+        if json_state[&#34;type&#34;] == &#34;META&#34;:
+            g = MetaGroup(self._connection)
+            g.from_json(json_state, self.devices, self.groups)
+        else:
+            try:
+                groupType = GroupType.from_str(json_state[&#34;type&#34;])
+                g = self._typeGroupMap[groupType](self._connection)
+                g.from_json(json_state, self.devices)
+            except:
+                g = self._typeGroupMap[GroupType.GROUP](self._connection)
+                g.from_json(json_state, self.devices)
+                LOGGER.warning(
+                    &#34;There is no class for group &#39;%s&#39; yet&#34;, json_state[&#34;type&#34;]
+                )
+        return g
+
+    def _get_groups(self, json_state):
+        self.groups = [x for x in self.groups if x.id in json_state[&#34;groups&#34;].keys()]
+        metaGroups = []
+        for id_, raw in json_state[&#34;groups&#34;].items():
+            _group = self.search_group_by_id(id_)
+            if _group:
+                if isinstance(_group, MetaGroup):
+                    _group.from_json(raw, self.devices, self.groups)
+                else:
+                    _group.from_json(raw, self.devices)
+            else:
+                group_type = raw[&#34;type&#34;]
+                if group_type == &#34;META&#34;:
+                    metaGroups.append(raw)
+                else:
+                    self.groups.append(self._parse_group(raw))
+        for mg in metaGroups:
+            self.groups.append(self._parse_group(mg))
+
+    def _get_functionalHomes(self, json_state):
+        for solution, functionalHome in json_state[&#34;functionalHomes&#34;].items():
+            try:
+                solutionType = FunctionalHomeType.from_str(solution)
+                h = None
+                for fh in self.functionalHomes:
+                    if fh.solution == solution:
+                        h = fh
+                        break
+                if h is None:
+                    h = self._typeFunctionalHomeMap[solutionType](self._connection)
+                    self.functionalHomes.append(h)
+                h.from_json(functionalHome, self.groups)
+            except:
+                h = FunctionalHome(self._connection)
+                h.from_json(functionalHome, self.groups)
+                LOGGER.warning(
+                    &#34;There is no class for functionalHome &#39;%s&#39; yet&#34;, solution
+                )
+                self.functionalHomes.append(h)
+
+    def _load_functionalChannels(self):
+        for d in self.devices:
+            d.load_functionalChannels(self.groups, self.channels)
+
+    def get_functionalHome(self, functionalHomeType: type) -&gt; FunctionalHome:
+        &#34;&#34;&#34; gets the specified functionalHome
+        
+        Args:
+            functionalHome(type): the type of the functionalHome which should be returned
+
+        Returns:
+            the FunctionalHome or None if it couldn&#39;t be found
+        &#34;&#34;&#34;
+        for x in self.functionalHomes:
+            if isinstance(x, functionalHomeType):
+                return x
+
+        return None
+
+    def search_device_by_id(self, deviceID) -&gt; Device:
+        &#34;&#34;&#34; searches a device by given id
+        
+        Args:
+          deviceID(str): the device to search for
+          
+        Returns
+          the Device object or None if it couldn&#39;t find a device
+        &#34;&#34;&#34;
+        for d in self.devices:
+            if d.id == deviceID:
+                return d
+        return None
+    
+    def search_channel(self, deviceID, channelIndex) -&gt; FunctionalChannel:
+        &#34;&#34;&#34; searches a channel by given deviceID and channelIndex&#34;&#34;&#34;
+        foundD = [d for d in self.devices if d.id == deviceID]
+        d = foundD[0] if foundD else None
+        if d is not None:
+            foundC = [ch for ch in d.functionalChannels if ch.index == channelIndex]
+            return foundC[0] if foundC else None
+        return None
+                
+
+    def search_group_by_id(self, groupID) -&gt; Group:
+        &#34;&#34;&#34; searches a group by given id
+        
+        Args:
+          groupID(str): groupID the group to search for
+          
+        Returns
+          the group object or None if it couldn&#39;t find a group
+        &#34;&#34;&#34;
+        for g in self.groups:
+            if g.id == groupID:
+                return g
+        return None
+
+    def search_client_by_id(self, clientID) -&gt; Client:
+        &#34;&#34;&#34; searches a client by given id
+        
+        Args:
+          clientID(str): the client to search for
+        
+        Returns
+          the client object or None if it couldn&#39;t find a client
+        &#34;&#34;&#34;
+        for c in self.clients:
+            if c.id == clientID:
+                return c
+        return None
+
+    def search_rule_by_id(self, ruleID) -&gt; Rule:
+        &#34;&#34;&#34; searches a rule by given id
+        
+        Args:
+          ruleID(str): the rule to search for
+        
+        Returns
+          the rule object or None if it couldn&#39;t find a rule
+        &#34;&#34;&#34;
+        for r in self.rules:
+            if r.id == ruleID:
+                return r
+        return None
+
+    def get_security_zones_activation(self) -&gt; (bool, bool):
+        &#34;&#34;&#34; returns the value of the security zones if they are armed or not
+        
+        Returns
+            internal
+              True if the internal zone is armed
+            external
+              True if the external zone is armed
+        &#34;&#34;&#34;
+        internal_active = False
+        external_active = False
+        for g in self.groups:
+            if isinstance(g, SecurityZoneGroup):
+                if g.label == &#34;EXTERNAL&#34;:
+                    external_active = g.active
+                elif g.label == &#34;INTERNAL&#34;:
+                    internal_active = g.active
+        return internal_active, external_active
+
+    def set_security_zones_activation(self, internal=True, external=True):
+        &#34;&#34;&#34; this function will set the alarm system to armed or disable it
+        
+        Args:
+          internal(bool): activates/deactivates the internal zone
+          external(bool): activates/deactivates the external zone
+        
+        Examples:
+          arming while being at home
+          
+          &gt;&gt;&gt; home.set_security_zones_activation(False,True)
+          
+          arming without being at home
+          
+          &gt;&gt;&gt; home.set_security_zones_activation(True,True)
+          
+          disarming the alarm system
+          
+          &gt;&gt;&gt; home.set_security_zones_activation(False,False)
+        &#34;&#34;&#34;
+        data = {&#34;zonesActivation&#34;: {&#34;EXTERNAL&#34;: external, &#34;INTERNAL&#34;: internal}}
+        return self._restCall(&#34;home/security/setZonesActivation&#34;, json.dumps(data))
+
+    def set_location(self, city, latitude, longitude):
+        data = {&#34;city&#34;: city, &#34;latitude&#34;: latitude, &#34;longitude&#34;: longitude}
+        return self._restCall(&#34;home/setLocation&#34;, json.dumps(data))
+
+    def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
+        &#34;&#34;&#34; activate or deactivate if smoke detectors should &#34;ring&#34; during an alarm
+
+        Args:
+            activate(bool): True will let the smoke detectors &#34;ring&#34; during an alarm
+        &#34;&#34;&#34;
+        data = {&#34;intrusionAlertThroughSmokeDetectors&#34;: activate}
+        return self._restCall(
+            &#34;home/security/setIntrusionAlertThroughSmokeDetectors&#34;, json.dumps(data)
+        )
+
+    def activate_absence_with_period(self, endtime: datetime):
+        &#34;&#34;&#34; activates the absence mode until the given time
+
+        Args:
+            endtime(datetime): the time when the absence should automatically be disabled
+        &#34;&#34;&#34;
+        data = {&#34;endTime&#34;: endtime.strftime(&#34;%Y_%m_%d %H:%M&#34;)}
+        return self._restCall(
+            &#34;home/heating/activateAbsenceWithPeriod&#34;, json.dumps(data)
+        )
+
+    def activate_absence_permanent(self):
+        &#34;&#34;&#34; activates the absence forever
+        &#34;&#34;&#34;
+        return self._restCall(&#34;home/heating/activateAbsencePermanent&#34;)
+
+    def activate_absence_with_duration(self, duration: int):
+        &#34;&#34;&#34; activates the absence mode for a given time
+
+        Args:
+            duration(int): the absence duration in minutes
+        &#34;&#34;&#34;
+        data = {&#34;duration&#34;: duration}
+        return self._restCall(
+            &#34;home/heating/activateAbsenceWithDuration&#34;, json.dumps(data)
+        )
+
+    def deactivate_absence(self):
+        &#34;&#34;&#34; deactivates the absence mode immediately&#34;&#34;&#34;
+        return self._restCall(&#34;home/heating/deactivateAbsence&#34;)
+
+    def activate_vacation(self, endtime: datetime, temperature: float):
+        &#34;&#34;&#34; activates the vatation mode until the given time
+
+        Args:
+            endtime(datetime): the time when the vatation mode should automatically be disabled
+            temperature(float): the settemperature during the vacation mode
+        &#34;&#34;&#34;
+        data = {
+            &#34;endTime&#34;: endtime.strftime(&#34;%Y_%m_%d %H:%M&#34;),
+            &#34;temperature&#34;: temperature,
+        }
+        return self._restCall(&#34;home/heating/activateVacation&#34;, json.dumps(data))
+
+    def deactivate_vacation(self):
+        &#34;&#34;&#34; deactivates the vacation mode immediately&#34;&#34;&#34;
+        return self._restCall(&#34;home/heating/deactivateVacation&#34;)
+
+    def set_pin(self, newPin: str, oldPin: str = None) -&gt; dict:
+        &#34;&#34;&#34; sets a new pin for the home
+
+        Args:
+            newPin(str): the new pin
+            oldPin(str): optional, if there is currently a pin active it must be given here.
+                        Otherwise it will not be possible to set the new pin
+
+        Returns:
+            the result of the call
+        &#34;&#34;&#34;
+        if newPin is None:
+            newPin = &#34;&#34;
+        data = {&#34;pin&#34;: newPin}
+        if oldPin:
+            self._connection.headers[&#34;PIN&#34;] = str(oldPin)
+        result = self._restCall(&#34;home/setPin&#34;, body=json.dumps(data))
+        if oldPin:
+            del self._connection.headers[&#34;PIN&#34;]
+        return result
+
+    def set_zone_activation_delay(self, delay):
+        data = {&#34;zoneActivationDelay&#34;: delay}
+        return self._restCall(
+            &#34;home/security/setZoneActivationDelay&#34;, body=json.dumps(data)
+        )
+
+    def get_security_journal(self):
+        journal = self._restCall(&#34;home/security/getSecurityJournal&#34;)
+        if &#34;errorCode&#34; in journal:
+            LOGGER.error(
+                &#34;Could not get the security journal. Error: %s&#34;, journal[&#34;errorCode&#34;]
+            )
+            return None
+        ret = []
+        for entry in journal[&#34;entries&#34;]:
+            try:
+                eventType = SecurityEventType(entry[&#34;eventType&#34;])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
+                j = SecurityEvent(self._connection)
+                LOGGER.warning(&#34;There is no class for %s yet&#34;, entry[&#34;eventType&#34;])
+
+            j.from_json(entry)
+            ret.append(j)
+
+        return ret
+
+    def delete_group(self, group: Group):
+        &#34;&#34;&#34;deletes the given group from the cloud
+        
+        Args:
+            group(Group):the group to delete
+        &#34;&#34;&#34;
+        return group.delete()
+
+    def get_OAuth_OTK(self):
+        token = OAuthOTK(self._connection)
+        token.from_json(self._restCall(&#34;home/getOAuthOTK&#34;))
+        return token
+
+    def set_timezone(self, timezone: str):
+        &#34;&#34;&#34; sets the timezone for the AP. e.g. &#34;Europe/Berlin&#34; 
+        Args:
+            timezone(str): the new timezone
+        &#34;&#34;&#34;
+        data = {&#34;timezoneId&#34;: timezone}
+        return self._restCall(&#34;home/setTimezone&#34;, body=json.dumps(data))
+
+    def set_powermeter_unit_price(self, price):
+        data = {&#34;powerMeterUnitPrice&#34;: price}
+        return self._restCall(&#34;home/setPowerMeterUnitPrice&#34;, body=json.dumps(data))
+
+    def set_zones_device_assignment(self, internal_devices, external_devices) -&gt; dict:
+        &#34;&#34;&#34; sets the devices for the security zones
+        Args:
+            internal_devices(List[Device]): the devices which should be used for the internal zone
+            external_devices(List[Device]):  the devices which should be used for the external(hull) zone
+        
+        Returns:
+            the result of _restCall
+        &#34;&#34;&#34;
+        internal = [x.id for x in internal_devices]
+        external = [x.id for x in external_devices]
+        data = {&#34;zonesDeviceAssignment&#34;: {&#34;INTERNAL&#34;: internal, &#34;EXTERNAL&#34;: external}}
+        return self._restCall(
+            &#34;home/security/setZonesDeviceAssignment&#34;, body=json.dumps(data)
+        )
+
+    def start_inclusion(self, deviceId):
+        &#34;&#34;&#34; start inclusion mode for specific device
+        Args:
+            deviceId: sgtin of device        
+        &#34;&#34;&#34;
+        data = {&#34;deviceId&#34;: deviceId}
+        return self._restCall(&#34;home/startInclusionModeForDevice&#34;, body=json.dumps(data))
+
+    def enable_events(self, enable_trace=False, ping_interval=20):
+        websocket.enableTrace(enable_trace)
+
+        self.__webSocket = websocket.WebSocketApp(
+            self._connection.urlWebSocket,
+            header=[
+                &#34;AUTHTOKEN: {}&#34;.format(self._connection.auth_token),
+                &#34;CLIENTAUTH: {}&#34;.format(self._connection.clientauth_token),
+            ],
+            on_message=self._ws_on_message,
+            on_error=self._ws_on_error,
+            on_close=self._ws_on_close,
+        )
+
+        websocket_kwargs = {&#34;ping_interval&#34;: ping_interval}
+        if hasattr(sys, &#34;_called_from_test&#34;):  # disable ssl during a test run
+            sslopt = {&#34;cert_reqs&#34;: ssl.CERT_NONE}
+            websocket_kwargs = {&#34;sslopt&#34;: sslopt, &#34;ping_interval&#34;: 2, &#34;ping_timeout&#34;: 1}
+
+        self.__webSocketThread = threading.Thread(
+            name=&#34;hmip-websocket&#34;,
+            target=self.__webSocket.run_forever,
+            kwargs=websocket_kwargs,
+        )
+        self.__webSocketThread.daemon = True
+        self.__webSocketThread.start()
+
+    def disable_events(self):
+        if self.__webSocket:
+            self.__webSocket.close()
+            self.__webSocket = None
+
+    def _ws_on_close(self, *_):
+        self.__webSocket = None
+
+    def _ws_on_error(self, _, err):
+        LOGGER.exception(err)
+        self.onWsError.fire(err)
+        if self.websocket_reconnect_on_error:
+            logger.debug(&#34;Trying to reconnect websocket&#34;)
+            self.disable_events()
+            self.enable_events()
+
+    def _ws_on_message(self, _, message):
+        # json.loads doesn&#39;t support bytes as parameter before python 3.6
+        js = json.loads(bytes2str(message))
+        # LOGGER.debug(js)
+        eventList = []
+        for event in js[&#34;events&#34;].values():
+            try:
+                pushEventType = EventType(event[&#34;pushEventType&#34;])
+                LOGGER.debug(pushEventType)
+                obj = None
+                if pushEventType == EventType.GROUP_CHANGED:
+                    data = event[&#34;group&#34;]
+                    obj = self.search_group_by_id(data[&#34;id&#34;])
+                    if obj is None:
+                        obj = self._parse_group(data)
+                        self.groups.append(obj)
+                        pushEventType = EventType.GROUP_ADDED
+                        self.fire_create_event(obj, event_type=pushEventType, obj=obj)
+                    if type(obj) is MetaGroup:
+                        obj.from_json(data, self.devices, self.groups)
+                    else:
+                        obj.from_json(data, self.devices)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.HOME_CHANGED:
+                    data = event[&#34;home&#34;]
+                    obj = self
+                    obj.update_home_only(data)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.CLIENT_ADDED:
+                    data = event[&#34;client&#34;]
+                    obj = Client(self._connection)
+                    obj.from_json(data)
+                    self.clients.append(obj)
+                elif pushEventType == EventType.CLIENT_CHANGED:
+                    data = event[&#34;client&#34;]
+                    obj = self.search_client_by_id(data[&#34;id&#34;])
+                    obj.from_json(data) 
+                elif pushEventType == EventType.CLIENT_REMOVED:
+                    obj = self.search_client_by_id(event[&#34;id&#34;])
+                    self.clients.remove(obj)
+                elif pushEventType == EventType.DEVICE_ADDED:
+                    data = event[&#34;device&#34;]
+                    obj = self._parse_device(data)
+                    obj.load_functionalChannels(self.groups, self.channels)
+                    self.devices.append(obj)
+                    self.fire_create_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.DEVICE_CHANGED:
+                    data = event[&#34;device&#34;]
+                    obj = self.search_device_by_id(data[&#34;id&#34;])
+                    if obj is None:  # no DEVICE_ADDED Event?
+                        obj = self._parse_device(data)
+                        self.devices.append(obj)
+                        pushEventType = EventType.DEVICE_ADDED
+                        self.fire_create_event(data, event_type=pushEventType, obj=obj)
+                    else:
+                        obj.from_json(data)
+                    obj.load_functionalChannels(self.groups, self.channels)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.DEVICE_REMOVED:
+                    obj = self.search_device_by_id(event[&#34;id&#34;])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
+                    self.devices.remove(obj)
+                elif pushEventType == EventType.GROUP_REMOVED:
+                    obj = self.search_group_by_id(event[&#34;id&#34;])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
+                    self.groups.remove(obj)
+                elif pushEventType == EventType.GROUP_ADDED:
+                    group = event[&#34;group&#34;]
+                    obj = self._parse_group(group)
+                    self.groups.append(obj)
+                    self.fire_create_event(obj, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.SECURITY_JOURNAL_CHANGED:
+                    pass  # data is just none so nothing to do here
+
+                # TODO: implement INCLUSION_REQUESTED, NONE
+                eventList.append({&#34;eventType&#34;: pushEventType, &#34;data&#34;: obj})
+            except ValueError as valerr:  # pragma: no cover
+                LOGGER.warning(
+                    &#34;Uknown EventType &#39;%s&#39; Data: %s&#34;, event[&#34;pushEventType&#34;], event
+                )
+
+            except Exception as err:  # pragma: no cover
+                LOGGER.exception(err)
+        self.onEvent.fire(eventList)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="homematicip.home.AccessPointUpdateState"><code class="flex name class">
+<span>class <span class="ident">AccessPointUpdateState</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class represents a generic homematic ip object to make
+basic requests to the access point</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AccessPointUpdateState(HomeMaticIPObject):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.accessPointUpdateState = DeviceUpdateState.UP_TO_DATE
+        self.successfulUpdateTimestamp = None
+        self.updateStateChangedTimestamp = None
+
+    def from_json(self, js):
+        self.accessPointUpdateState = js[&#34;accessPointUpdateState&#34;]
+        self.successfulUpdateTimestamp = self.fromtimestamp(
+            js[&#34;successfulUpdateTimestamp&#34;]
+        )
+        self.updateStateChangedTimestamp = self.fromtimestamp(
+            js[&#34;updateStateChangedTimestamp&#34;]
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.home.Client"><code class="flex name class">
+<span>class <span class="ident">Client</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A client is an app which has access to the access point.
+e.g. smartphone, 3th party apps, google home, conrad connect</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Client(HomeMaticIPObject):
+    &#34;&#34;&#34;A client is an app which has access to the access point. 
+    e.g. smartphone, 3th party apps, google home, conrad connect
+    &#34;&#34;&#34;
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:str: the unique id of the client
+        self.id = &#34;&#34;
+        #:str: a human understandable name of the client
+        self.label = &#34;&#34;
+        #:str: the home where the client belongs to
+        self.homeId = &#34;&#34;
+        #:str: the c2c service name
+        self.c2cServiceIdentifier = &#34;&#34;
+        #:ClientType: the type of this client
+        self.clientType = ClientType.APP
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.id = js[&#34;id&#34;]
+        self.label = js[&#34;label&#34;]
+        self.homeId = js[&#34;homeId&#34;]
+        self.clientType = ClientType.from_str(js[&#34;clientType&#34;])
+        if &#34;c2cServiceIdentifier&#34; in js:
+            self.c2cServiceIdentifier = js[&#34;c2cServiceIdentifier&#34;]
+
+    def __str__(self):
+        return &#34;label({})&#34;.format(self.label)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.home.Home"><code class="flex name class">
+<span>class <span class="ident">Home</span></span>
+<span>(</span><span>connection=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents the 'Home' of the homematic ip</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Home(HomeMaticIPObject):
+    &#34;&#34;&#34;this class represents the &#39;Home&#39; of the homematic ip&#34;&#34;&#34;
+
+    _typeClassMap = TYPE_CLASS_MAP
+    _typeGroupMap = TYPE_GROUP_MAP
+    _typeSecurityEventMap = TYPE_SECURITY_EVENT_MAP
+    _typeRuleMap = TYPE_RULE_MAP
+    _typeFunctionalHomeMap = TYPE_FUNCTIONALHOME_MAP
+
+    def __init__(self, connection=None):
+        if connection is None:
+            connection = Connection()
+        super().__init__(connection)
+
+        # List with create handlers.
+        self._on_create = []
+
+        self.apExchangeClientId = None
+        self.apExchangeState = ApExchangeState.NONE
+        self.availableAPVersion = None
+        self.carrierSense = None
+        #:bool:displays if the access point is connected to the hmip cloud or
+        # not
+        self.connected = None
+        #:str:the current version of the access point
+        self.currentAPVersion = None
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
+        self.dutyCycle = None
+        #:str:the SGTIN of the access point
+        self.id = None
+        self.lastReadyForUpdateTimestamp = None
+        #:Location:the location of the AP
+        self.location = None
+        #:bool:determines if a pin is set on this access point
+        self.pinAssigned = None
+        self.powerMeterCurrency = None
+        self.powerMeterUnitPrice = None
+        self.timeZoneId = None
+        self.updateState = HomeUpdateState.UP_TO_DATE
+        #:Weather:the current weather
+        self.weather = None
+
+        self.__webSocket = None
+        self.__webSocketThread = None
+        self.onEvent = EventHook()
+        self.onWsError = EventHook()
+        #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
+        self.websocket_reconnect_on_error = True
+
+        #:List[Device]: a collection of all devices in home
+        self.devices = []
+        #:List[Client]: a collection of all clients in home
+        self.clients = []
+        #:List[Group]: a collection of all groups in the home
+        self.groups = []
+        #:List[FunctionalChannel]: a collection of all channels in the home
+        self.channels = []
+        #:List[Rule]: a collection of all rules in the home
+        self.rules = []
+        #: a collection of all functionalHomes in the home
+        self.functionalHomes = []
+        #:Map: a map of all access points and their updateStates
+        self.accessPointUpdateStates = {}
+
+    def init(self, access_point_id, lookup=True):
+        self._connection.init(access_point_id, lookup)
+
+    def set_auth_token(self, auth_token):
+        self._connection.set_auth_token(auth_token)
+
+    def from_json(self, js_home):
+        super().from_json(js_home)
+
+        self.weather = Weather(self._connection)
+        self.weather.from_json(js_home[&#34;weather&#34;])
+        if js_home[&#34;location&#34;] != None:
+            self.location = Location(self._connection)
+            self.location.from_json(js_home[&#34;location&#34;])
+
+        self.connected = js_home[&#34;connected&#34;]
+        self.currentAPVersion = js_home[&#34;currentAPVersion&#34;]
+        self.availableAPVersion = js_home[&#34;availableAPVersion&#34;]
+        self.timeZoneId = js_home[&#34;timeZoneId&#34;]
+        self.pinAssigned = js_home[&#34;pinAssigned&#34;]
+        self.dutyCycle = js_home[&#34;dutyCycle&#34;]
+        self.updateState = HomeUpdateState.from_str(js_home[&#34;updateState&#34;])
+        self.powerMeterUnitPrice = js_home[&#34;powerMeterUnitPrice&#34;]
+        self.powerMeterCurrency = js_home[&#34;powerMeterCurrency&#34;]
+        self.deviceUpdateStrategy = DeviceUpdateStrategy.from_str(
+            js_home[&#34;deviceUpdateStrategy&#34;]
+        )
+        self.lastReadyForUpdateTimestamp = js_home[&#34;lastReadyForUpdateTimestamp&#34;]
+        self.apExchangeClientId = js_home[&#34;apExchangeClientId&#34;]
+        self.apExchangeState = ApExchangeState.from_str(js_home[&#34;apExchangeState&#34;])
+        self.id = js_home[&#34;id&#34;]
+        self.carrierSense = js_home[&#34;carrierSense&#34;]
+
+        for ap, state in js_home[&#34;accessPointUpdateStates&#34;].items():
+            ap_state = AccessPointUpdateState(self._connection)
+            ap_state.from_json(state)
+            self.accessPointUpdateStates[ap] = ap_state
+
+        self._get_rules(js_home)
+
+    def on_create(self, handler):
+        &#34;&#34;&#34;Adds an event handler to the create method. Fires when a device
+        is created.&#34;&#34;&#34;
+        self._on_create.append(handler)
+
+    def fire_create_event(self, *args, **kwargs):
+        &#34;&#34;&#34;Trigger the method tied to _on_create&#34;&#34;&#34;
+        for _handler in self._on_create:
+            _handler(*args, **kwargs)
+
+    def remove_callback(self, handler):
+        &#34;&#34;&#34;Remove event handler.&#34;&#34;&#34;
+        super().remove_callback(handler)
+        if handler in self._on_create:
+            self._on_create.remove(handler)
+
+    def download_configuration(self) -&gt; str:
+        &#34;&#34;&#34;downloads the current configuration from the cloud
+
+        Returns
+            the downloaded configuration or an errorCode
+        &#34;&#34;&#34;
+        return self._restCall(
+            &#34;home/getCurrentState&#34;, json.dumps(self._connection.clientCharacteristics)
+        )
+
+    def get_current_state(self, clearConfig: bool = False):
+        &#34;&#34;&#34;downloads the current configuration and parses it into self
+           
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects 
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        json_state = self.download_configuration()
+        return self.update_home(json_state, clearConfig)
+
+    def update_home(self, json_state, clearConfig: bool = False):
+        &#34;&#34;&#34;parse a given json configuration into self.
+        This will update the whole home including devices, clients and groups.
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        if &#34;errorCode&#34; in json_state:
+            LOGGER.error(
+                &#34;Could not get the current configuration. Error: %s&#34;,
+                json_state[&#34;errorCode&#34;],
+            )
+            return False
+
+        if clearConfig:
+            self.devices = []
+            self.clients = []
+            self.groups = []
+            self.channels = []
+
+        self._get_devices(json_state)
+        self._get_clients(json_state)
+        self._get_groups(json_state)
+        self._load_functionalChannels()
+
+        js_home = json_state[&#34;home&#34;]
+
+        return self.update_home_only(js_home, clearConfig)
+
+    def update_home_only(self, js_home, clearConfig: bool = False):
+        &#34;&#34;&#34;parse a given home json configuration into self.
+        This will update only the home without updating devices, clients and groups.
+
+        Args:
+            clearConfig(bool): if set to true, this function will remove all old objects
+            from self.devices, self.client, ... to have a fresh config instead of reparsing them
+        &#34;&#34;&#34;
+        if &#34;errorCode&#34; in js_home:
+            LOGGER.error(
+                &#34;Could not get the current configuration. Error: %s&#34;,
+                js_home[&#34;errorCode&#34;],
+            )
+            return False
+
+        if clearConfig:
+            self.rules = []
+            self.functionalHomes = []
+
+        self.from_json(js_home)
+        self._get_functionalHomes(js_home)
+
+        return True
+
+    def _get_devices(self, json_state):
+        self.devices = [x for x in self.devices if x.id in json_state[&#34;devices&#34;].keys()]
+        for id_, raw in json_state[&#34;devices&#34;].items():
+            _device = self.search_device_by_id(id_)
+            if _device:
+                _device.from_json(raw)
+            else:
+                self.devices.append(self._parse_device(raw))
+
+    def _parse_device(self, json_state):
+        try:
+            deviceType = DeviceType.from_str(json_state[&#34;type&#34;])
+            d = self._typeClassMap[deviceType](self._connection)
+            d.from_json(json_state)
+            return d
+        except:
+            d = self._typeClassMap[DeviceType.BASE_DEVICE](self._connection)
+            d.from_json(json_state)
+            LOGGER.warning(&#34;There is no class for device &#39;%s&#39; yet&#34;, json_state[&#34;type&#34;])
+            return d
+    
+    # def update_device(self, data):
+    #     obj = self.search_device_by_id(data[&#34;id&#34;])
+    #     if obj is None:  # no DEVICE_ADDED Event?
+    #         obj = self._parse_device(data)
+    #         self.devices.append(obj)
+    #         pushEventType = EventType.DEVICE_ADDED
+    #         self.fire_create_event(data, event_type=pushEventType, obj=obj)
+    #     else:
+    #         obj.from_json(data)
+    #     obj.load_functionalChannels(self.groups)
+
+    def _get_rules(self, json_state):
+        self.rules = [
+            x for x in self.rules if x.id in json_state[&#34;ruleMetaDatas&#34;].keys()
+        ]
+        for id_, raw in json_state[&#34;ruleMetaDatas&#34;].items():
+            _rule = self.search_rule_by_id(id_)
+            if _rule:
+                _rule.from_json(raw)
+            else:
+                self.rules.append(self._parse_rule(raw))
+
+    def _parse_rule(self, json_state):
+        try:
+            ruleType = AutomationRuleType.from_str(json_state[&#34;type&#34;])
+            r = self._typeRuleMap[ruleType](self._connection)
+            r.from_json(json_state)
+            return r
+        except:
+            r = Rule(self._connection)
+            r.from_json(json_state)
+            LOGGER.warning(&#34;There is no class for rule  &#39;%s&#39; yet&#34;, json_state[&#34;type&#34;])
+            return r
+
+    def _get_clients(self, json_state):
+        self.clients = [x for x in self.clients if x.id in json_state[&#34;clients&#34;].keys()]
+        for id_, raw in json_state[&#34;clients&#34;].items():
+            _client = self.search_client_by_id(id_)
+            if _client:
+                _client.from_json(raw)
+            else:
+                c = Client(self._connection)
+                c.from_json(raw)
+                self.clients.append(c)
+
+    def _parse_group(self, json_state):
+        g = None
+        if json_state[&#34;type&#34;] == &#34;META&#34;:
+            g = MetaGroup(self._connection)
+            g.from_json(json_state, self.devices, self.groups)
+        else:
+            try:
+                groupType = GroupType.from_str(json_state[&#34;type&#34;])
+                g = self._typeGroupMap[groupType](self._connection)
+                g.from_json(json_state, self.devices)
+            except:
+                g = self._typeGroupMap[GroupType.GROUP](self._connection)
+                g.from_json(json_state, self.devices)
+                LOGGER.warning(
+                    &#34;There is no class for group &#39;%s&#39; yet&#34;, json_state[&#34;type&#34;]
+                )
+        return g
+
+    def _get_groups(self, json_state):
+        self.groups = [x for x in self.groups if x.id in json_state[&#34;groups&#34;].keys()]
+        metaGroups = []
+        for id_, raw in json_state[&#34;groups&#34;].items():
+            _group = self.search_group_by_id(id_)
+            if _group:
+                if isinstance(_group, MetaGroup):
+                    _group.from_json(raw, self.devices, self.groups)
+                else:
+                    _group.from_json(raw, self.devices)
+            else:
+                group_type = raw[&#34;type&#34;]
+                if group_type == &#34;META&#34;:
+                    metaGroups.append(raw)
+                else:
+                    self.groups.append(self._parse_group(raw))
+        for mg in metaGroups:
+            self.groups.append(self._parse_group(mg))
+
+    def _get_functionalHomes(self, json_state):
+        for solution, functionalHome in json_state[&#34;functionalHomes&#34;].items():
+            try:
+                solutionType = FunctionalHomeType.from_str(solution)
+                h = None
+                for fh in self.functionalHomes:
+                    if fh.solution == solution:
+                        h = fh
+                        break
+                if h is None:
+                    h = self._typeFunctionalHomeMap[solutionType](self._connection)
+                    self.functionalHomes.append(h)
+                h.from_json(functionalHome, self.groups)
+            except:
+                h = FunctionalHome(self._connection)
+                h.from_json(functionalHome, self.groups)
+                LOGGER.warning(
+                    &#34;There is no class for functionalHome &#39;%s&#39; yet&#34;, solution
+                )
+                self.functionalHomes.append(h)
+
+    def _load_functionalChannels(self):
+        for d in self.devices:
+            d.load_functionalChannels(self.groups, self.channels)
+
+    def get_functionalHome(self, functionalHomeType: type) -&gt; FunctionalHome:
+        &#34;&#34;&#34; gets the specified functionalHome
+        
+        Args:
+            functionalHome(type): the type of the functionalHome which should be returned
+
+        Returns:
+            the FunctionalHome or None if it couldn&#39;t be found
+        &#34;&#34;&#34;
+        for x in self.functionalHomes:
+            if isinstance(x, functionalHomeType):
+                return x
+
+        return None
+
+    def search_device_by_id(self, deviceID) -&gt; Device:
+        &#34;&#34;&#34; searches a device by given id
+        
+        Args:
+          deviceID(str): the device to search for
+          
+        Returns
+          the Device object or None if it couldn&#39;t find a device
+        &#34;&#34;&#34;
+        for d in self.devices:
+            if d.id == deviceID:
+                return d
+        return None
+    
+    def search_channel(self, deviceID, channelIndex) -&gt; FunctionalChannel:
+        &#34;&#34;&#34; searches a channel by given deviceID and channelIndex&#34;&#34;&#34;
+        foundD = [d for d in self.devices if d.id == deviceID]
+        d = foundD[0] if foundD else None
+        if d is not None:
+            foundC = [ch for ch in d.functionalChannels if ch.index == channelIndex]
+            return foundC[0] if foundC else None
+        return None
+                
+
+    def search_group_by_id(self, groupID) -&gt; Group:
+        &#34;&#34;&#34; searches a group by given id
+        
+        Args:
+          groupID(str): groupID the group to search for
+          
+        Returns
+          the group object or None if it couldn&#39;t find a group
+        &#34;&#34;&#34;
+        for g in self.groups:
+            if g.id == groupID:
+                return g
+        return None
+
+    def search_client_by_id(self, clientID) -&gt; Client:
+        &#34;&#34;&#34; searches a client by given id
+        
+        Args:
+          clientID(str): the client to search for
+        
+        Returns
+          the client object or None if it couldn&#39;t find a client
+        &#34;&#34;&#34;
+        for c in self.clients:
+            if c.id == clientID:
+                return c
+        return None
+
+    def search_rule_by_id(self, ruleID) -&gt; Rule:
+        &#34;&#34;&#34; searches a rule by given id
+        
+        Args:
+          ruleID(str): the rule to search for
+        
+        Returns
+          the rule object or None if it couldn&#39;t find a rule
+        &#34;&#34;&#34;
+        for r in self.rules:
+            if r.id == ruleID:
+                return r
+        return None
+
+    def get_security_zones_activation(self) -&gt; (bool, bool):
+        &#34;&#34;&#34; returns the value of the security zones if they are armed or not
+        
+        Returns
+            internal
+              True if the internal zone is armed
+            external
+              True if the external zone is armed
+        &#34;&#34;&#34;
+        internal_active = False
+        external_active = False
+        for g in self.groups:
+            if isinstance(g, SecurityZoneGroup):
+                if g.label == &#34;EXTERNAL&#34;:
+                    external_active = g.active
+                elif g.label == &#34;INTERNAL&#34;:
+                    internal_active = g.active
+        return internal_active, external_active
+
+    def set_security_zones_activation(self, internal=True, external=True):
+        &#34;&#34;&#34; this function will set the alarm system to armed or disable it
+        
+        Args:
+          internal(bool): activates/deactivates the internal zone
+          external(bool): activates/deactivates the external zone
+        
+        Examples:
+          arming while being at home
+          
+          &gt;&gt;&gt; home.set_security_zones_activation(False,True)
+          
+          arming without being at home
+          
+          &gt;&gt;&gt; home.set_security_zones_activation(True,True)
+          
+          disarming the alarm system
+          
+          &gt;&gt;&gt; home.set_security_zones_activation(False,False)
+        &#34;&#34;&#34;
+        data = {&#34;zonesActivation&#34;: {&#34;EXTERNAL&#34;: external, &#34;INTERNAL&#34;: internal}}
+        return self._restCall(&#34;home/security/setZonesActivation&#34;, json.dumps(data))
+
+    def set_location(self, city, latitude, longitude):
+        data = {&#34;city&#34;: city, &#34;latitude&#34;: latitude, &#34;longitude&#34;: longitude}
+        return self._restCall(&#34;home/setLocation&#34;, json.dumps(data))
+
+    def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
+        &#34;&#34;&#34; activate or deactivate if smoke detectors should &#34;ring&#34; during an alarm
+
+        Args:
+            activate(bool): True will let the smoke detectors &#34;ring&#34; during an alarm
+        &#34;&#34;&#34;
+        data = {&#34;intrusionAlertThroughSmokeDetectors&#34;: activate}
+        return self._restCall(
+            &#34;home/security/setIntrusionAlertThroughSmokeDetectors&#34;, json.dumps(data)
+        )
+
+    def activate_absence_with_period(self, endtime: datetime):
+        &#34;&#34;&#34; activates the absence mode until the given time
+
+        Args:
+            endtime(datetime): the time when the absence should automatically be disabled
+        &#34;&#34;&#34;
+        data = {&#34;endTime&#34;: endtime.strftime(&#34;%Y_%m_%d %H:%M&#34;)}
+        return self._restCall(
+            &#34;home/heating/activateAbsenceWithPeriod&#34;, json.dumps(data)
+        )
+
+    def activate_absence_permanent(self):
+        &#34;&#34;&#34; activates the absence forever
+        &#34;&#34;&#34;
+        return self._restCall(&#34;home/heating/activateAbsencePermanent&#34;)
+
+    def activate_absence_with_duration(self, duration: int):
+        &#34;&#34;&#34; activates the absence mode for a given time
+
+        Args:
+            duration(int): the absence duration in minutes
+        &#34;&#34;&#34;
+        data = {&#34;duration&#34;: duration}
+        return self._restCall(
+            &#34;home/heating/activateAbsenceWithDuration&#34;, json.dumps(data)
+        )
+
+    def deactivate_absence(self):
+        &#34;&#34;&#34; deactivates the absence mode immediately&#34;&#34;&#34;
+        return self._restCall(&#34;home/heating/deactivateAbsence&#34;)
+
+    def activate_vacation(self, endtime: datetime, temperature: float):
+        &#34;&#34;&#34; activates the vatation mode until the given time
+
+        Args:
+            endtime(datetime): the time when the vatation mode should automatically be disabled
+            temperature(float): the settemperature during the vacation mode
+        &#34;&#34;&#34;
+        data = {
+            &#34;endTime&#34;: endtime.strftime(&#34;%Y_%m_%d %H:%M&#34;),
+            &#34;temperature&#34;: temperature,
+        }
+        return self._restCall(&#34;home/heating/activateVacation&#34;, json.dumps(data))
+
+    def deactivate_vacation(self):
+        &#34;&#34;&#34; deactivates the vacation mode immediately&#34;&#34;&#34;
+        return self._restCall(&#34;home/heating/deactivateVacation&#34;)
+
+    def set_pin(self, newPin: str, oldPin: str = None) -&gt; dict:
+        &#34;&#34;&#34; sets a new pin for the home
+
+        Args:
+            newPin(str): the new pin
+            oldPin(str): optional, if there is currently a pin active it must be given here.
+                        Otherwise it will not be possible to set the new pin
+
+        Returns:
+            the result of the call
+        &#34;&#34;&#34;
+        if newPin is None:
+            newPin = &#34;&#34;
+        data = {&#34;pin&#34;: newPin}
+        if oldPin:
+            self._connection.headers[&#34;PIN&#34;] = str(oldPin)
+        result = self._restCall(&#34;home/setPin&#34;, body=json.dumps(data))
+        if oldPin:
+            del self._connection.headers[&#34;PIN&#34;]
+        return result
+
+    def set_zone_activation_delay(self, delay):
+        data = {&#34;zoneActivationDelay&#34;: delay}
+        return self._restCall(
+            &#34;home/security/setZoneActivationDelay&#34;, body=json.dumps(data)
+        )
+
+    def get_security_journal(self):
+        journal = self._restCall(&#34;home/security/getSecurityJournal&#34;)
+        if &#34;errorCode&#34; in journal:
+            LOGGER.error(
+                &#34;Could not get the security journal. Error: %s&#34;, journal[&#34;errorCode&#34;]
+            )
+            return None
+        ret = []
+        for entry in journal[&#34;entries&#34;]:
+            try:
+                eventType = SecurityEventType(entry[&#34;eventType&#34;])
+                if eventType in self._typeSecurityEventMap:
+                    j = self._typeSecurityEventMap[eventType](self._connection)
+            except:
+                j = SecurityEvent(self._connection)
+                LOGGER.warning(&#34;There is no class for %s yet&#34;, entry[&#34;eventType&#34;])
+
+            j.from_json(entry)
+            ret.append(j)
+
+        return ret
+
+    def delete_group(self, group: Group):
+        &#34;&#34;&#34;deletes the given group from the cloud
+        
+        Args:
+            group(Group):the group to delete
+        &#34;&#34;&#34;
+        return group.delete()
+
+    def get_OAuth_OTK(self):
+        token = OAuthOTK(self._connection)
+        token.from_json(self._restCall(&#34;home/getOAuthOTK&#34;))
+        return token
+
+    def set_timezone(self, timezone: str):
+        &#34;&#34;&#34; sets the timezone for the AP. e.g. &#34;Europe/Berlin&#34; 
+        Args:
+            timezone(str): the new timezone
+        &#34;&#34;&#34;
+        data = {&#34;timezoneId&#34;: timezone}
+        return self._restCall(&#34;home/setTimezone&#34;, body=json.dumps(data))
+
+    def set_powermeter_unit_price(self, price):
+        data = {&#34;powerMeterUnitPrice&#34;: price}
+        return self._restCall(&#34;home/setPowerMeterUnitPrice&#34;, body=json.dumps(data))
+
+    def set_zones_device_assignment(self, internal_devices, external_devices) -&gt; dict:
+        &#34;&#34;&#34; sets the devices for the security zones
+        Args:
+            internal_devices(List[Device]): the devices which should be used for the internal zone
+            external_devices(List[Device]):  the devices which should be used for the external(hull) zone
+        
+        Returns:
+            the result of _restCall
+        &#34;&#34;&#34;
+        internal = [x.id for x in internal_devices]
+        external = [x.id for x in external_devices]
+        data = {&#34;zonesDeviceAssignment&#34;: {&#34;INTERNAL&#34;: internal, &#34;EXTERNAL&#34;: external}}
+        return self._restCall(
+            &#34;home/security/setZonesDeviceAssignment&#34;, body=json.dumps(data)
+        )
+
+    def start_inclusion(self, deviceId):
+        &#34;&#34;&#34; start inclusion mode for specific device
+        Args:
+            deviceId: sgtin of device        
+        &#34;&#34;&#34;
+        data = {&#34;deviceId&#34;: deviceId}
+        return self._restCall(&#34;home/startInclusionModeForDevice&#34;, body=json.dumps(data))
+
+    def enable_events(self, enable_trace=False, ping_interval=20):
+        websocket.enableTrace(enable_trace)
+
+        self.__webSocket = websocket.WebSocketApp(
+            self._connection.urlWebSocket,
+            header=[
+                &#34;AUTHTOKEN: {}&#34;.format(self._connection.auth_token),
+                &#34;CLIENTAUTH: {}&#34;.format(self._connection.clientauth_token),
+            ],
+            on_message=self._ws_on_message,
+            on_error=self._ws_on_error,
+            on_close=self._ws_on_close,
+        )
+
+        websocket_kwargs = {&#34;ping_interval&#34;: ping_interval}
+        if hasattr(sys, &#34;_called_from_test&#34;):  # disable ssl during a test run
+            sslopt = {&#34;cert_reqs&#34;: ssl.CERT_NONE}
+            websocket_kwargs = {&#34;sslopt&#34;: sslopt, &#34;ping_interval&#34;: 2, &#34;ping_timeout&#34;: 1}
+
+        self.__webSocketThread = threading.Thread(
+            name=&#34;hmip-websocket&#34;,
+            target=self.__webSocket.run_forever,
+            kwargs=websocket_kwargs,
+        )
+        self.__webSocketThread.daemon = True
+        self.__webSocketThread.start()
+
+    def disable_events(self):
+        if self.__webSocket:
+            self.__webSocket.close()
+            self.__webSocket = None
+
+    def _ws_on_close(self, *_):
+        self.__webSocket = None
+
+    def _ws_on_error(self, _, err):
+        LOGGER.exception(err)
+        self.onWsError.fire(err)
+        if self.websocket_reconnect_on_error:
+            logger.debug(&#34;Trying to reconnect websocket&#34;)
+            self.disable_events()
+            self.enable_events()
+
+    def _ws_on_message(self, _, message):
+        # json.loads doesn&#39;t support bytes as parameter before python 3.6
+        js = json.loads(bytes2str(message))
+        # LOGGER.debug(js)
+        eventList = []
+        for event in js[&#34;events&#34;].values():
+            try:
+                pushEventType = EventType(event[&#34;pushEventType&#34;])
+                LOGGER.debug(pushEventType)
+                obj = None
+                if pushEventType == EventType.GROUP_CHANGED:
+                    data = event[&#34;group&#34;]
+                    obj = self.search_group_by_id(data[&#34;id&#34;])
+                    if obj is None:
+                        obj = self._parse_group(data)
+                        self.groups.append(obj)
+                        pushEventType = EventType.GROUP_ADDED
+                        self.fire_create_event(obj, event_type=pushEventType, obj=obj)
+                    if type(obj) is MetaGroup:
+                        obj.from_json(data, self.devices, self.groups)
+                    else:
+                        obj.from_json(data, self.devices)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.HOME_CHANGED:
+                    data = event[&#34;home&#34;]
+                    obj = self
+                    obj.update_home_only(data)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.CLIENT_ADDED:
+                    data = event[&#34;client&#34;]
+                    obj = Client(self._connection)
+                    obj.from_json(data)
+                    self.clients.append(obj)
+                elif pushEventType == EventType.CLIENT_CHANGED:
+                    data = event[&#34;client&#34;]
+                    obj = self.search_client_by_id(data[&#34;id&#34;])
+                    obj.from_json(data) 
+                elif pushEventType == EventType.CLIENT_REMOVED:
+                    obj = self.search_client_by_id(event[&#34;id&#34;])
+                    self.clients.remove(obj)
+                elif pushEventType == EventType.DEVICE_ADDED:
+                    data = event[&#34;device&#34;]
+                    obj = self._parse_device(data)
+                    obj.load_functionalChannels(self.groups, self.channels)
+                    self.devices.append(obj)
+                    self.fire_create_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.DEVICE_CHANGED:
+                    data = event[&#34;device&#34;]
+                    obj = self.search_device_by_id(data[&#34;id&#34;])
+                    if obj is None:  # no DEVICE_ADDED Event?
+                        obj = self._parse_device(data)
+                        self.devices.append(obj)
+                        pushEventType = EventType.DEVICE_ADDED
+                        self.fire_create_event(data, event_type=pushEventType, obj=obj)
+                    else:
+                        obj.from_json(data)
+                    obj.load_functionalChannels(self.groups, self.channels)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.DEVICE_REMOVED:
+                    obj = self.search_device_by_id(event[&#34;id&#34;])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
+                    self.devices.remove(obj)
+                elif pushEventType == EventType.GROUP_REMOVED:
+                    obj = self.search_group_by_id(event[&#34;id&#34;])
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
+                    self.groups.remove(obj)
+                elif pushEventType == EventType.GROUP_ADDED:
+                    group = event[&#34;group&#34;]
+                    obj = self._parse_group(group)
+                    self.groups.append(obj)
+                    self.fire_create_event(obj, event_type=pushEventType, obj=obj)
+                elif pushEventType == EventType.SECURITY_JOURNAL_CHANGED:
+                    pass  # data is just none so nothing to do here
+
+                # TODO: implement INCLUSION_REQUESTED, NONE
+                eventList.append({&#34;eventType&#34;: pushEventType, &#34;data&#34;: obj})
+            except ValueError as valerr:  # pragma: no cover
+                LOGGER.warning(
+                    &#34;Uknown EventType &#39;%s&#39; Data: %s&#34;, event[&#34;pushEventType&#34;], event
+                )
+
+            except Exception as err:  # pragma: no cover
+                LOGGER.exception(err)
+        self.onEvent.fire(eventList)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="homematicip.aio.home.AsyncHome" href="aio/home.html#homematicip.aio.home.AsyncHome">AsyncHome</a></li>
+</ul>
+<h3>Instance variables</h3>
+<dl>
+<dt id="homematicip.home.Home.functionalHomes"><code class="name">var <span class="ident">functionalHomes</span></code></dt>
+<dd>
+<div class="desc"><p>a collection of all functionalHomes in the home</p></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="homematicip.home.Home.activate_absence_permanent"><code class="name flex">
+<span>def <span class="ident">activate_absence_permanent</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>activates the absence forever</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_absence_permanent(self):
+    &#34;&#34;&#34; activates the absence forever
+    &#34;&#34;&#34;
+    return self._restCall(&#34;home/heating/activateAbsencePermanent&#34;)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.activate_absence_with_duration"><code class="name flex">
+<span>def <span class="ident">activate_absence_with_duration</span></span>(<span>self, duration: int)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>activates the absence mode for a given time</p>
+<h2 id="args">Args</h2>
+<p>duration(int): the absence duration in minutes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_absence_with_duration(self, duration: int):
+    &#34;&#34;&#34; activates the absence mode for a given time
+
+    Args:
+        duration(int): the absence duration in minutes
+    &#34;&#34;&#34;
+    data = {&#34;duration&#34;: duration}
+    return self._restCall(
+        &#34;home/heating/activateAbsenceWithDuration&#34;, json.dumps(data)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.activate_absence_with_period"><code class="name flex">
+<span>def <span class="ident">activate_absence_with_period</span></span>(<span>self, endtime: datetime.datetime)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>activates the absence mode until the given time</p>
+<h2 id="args">Args</h2>
+<p>endtime(datetime): the time when the absence should automatically be disabled</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_absence_with_period(self, endtime: datetime):
+    &#34;&#34;&#34; activates the absence mode until the given time
+
+    Args:
+        endtime(datetime): the time when the absence should automatically be disabled
+    &#34;&#34;&#34;
+    data = {&#34;endTime&#34;: endtime.strftime(&#34;%Y_%m_%d %H:%M&#34;)}
+    return self._restCall(
+        &#34;home/heating/activateAbsenceWithPeriod&#34;, json.dumps(data)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.activate_vacation"><code class="name flex">
+<span>def <span class="ident">activate_vacation</span></span>(<span>self, endtime: datetime.datetime, temperature: float)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>activates the vatation mode until the given time</p>
+<h2 id="args">Args</h2>
+<p>endtime(datetime): the time when the vatation mode should automatically be disabled
+temperature(float): the settemperature during the vacation mode</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def activate_vacation(self, endtime: datetime, temperature: float):
+    &#34;&#34;&#34; activates the vatation mode until the given time
+
+    Args:
+        endtime(datetime): the time when the vatation mode should automatically be disabled
+        temperature(float): the settemperature during the vacation mode
+    &#34;&#34;&#34;
+    data = {
+        &#34;endTime&#34;: endtime.strftime(&#34;%Y_%m_%d %H:%M&#34;),
+        &#34;temperature&#34;: temperature,
+    }
+    return self._restCall(&#34;home/heating/activateVacation&#34;, json.dumps(data))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.deactivate_absence"><code class="name flex">
+<span>def <span class="ident">deactivate_absence</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>deactivates the absence mode immediately</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deactivate_absence(self):
+    &#34;&#34;&#34; deactivates the absence mode immediately&#34;&#34;&#34;
+    return self._restCall(&#34;home/heating/deactivateAbsence&#34;)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.deactivate_vacation"><code class="name flex">
+<span>def <span class="ident">deactivate_vacation</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>deactivates the vacation mode immediately</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deactivate_vacation(self):
+    &#34;&#34;&#34; deactivates the vacation mode immediately&#34;&#34;&#34;
+    return self._restCall(&#34;home/heating/deactivateVacation&#34;)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.delete_group"><code class="name flex">
+<span>def <span class="ident">delete_group</span></span>(<span>self, group: <a title="homematicip.group.Group" href="group.html#homematicip.group.Group">Group</a>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>deletes the given group from the cloud</p>
+<h2 id="args">Args</h2>
+<p>group(Group):the group to delete</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_group(self, group: Group):
+    &#34;&#34;&#34;deletes the given group from the cloud
+    
+    Args:
+        group(Group):the group to delete
+    &#34;&#34;&#34;
+    return group.delete()</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.disable_events"><code class="name flex">
+<span>def <span class="ident">disable_events</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def disable_events(self):
+    if self.__webSocket:
+        self.__webSocket.close()
+        self.__webSocket = None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.download_configuration"><code class="name flex">
+<span>def <span class="ident">download_configuration</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>downloads the current configuration from the cloud</p>
+<p>Returns
+the downloaded configuration or an errorCode</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def download_configuration(self) -&gt; str:
+    &#34;&#34;&#34;downloads the current configuration from the cloud
+
+    Returns
+        the downloaded configuration or an errorCode
+    &#34;&#34;&#34;
+    return self._restCall(
+        &#34;home/getCurrentState&#34;, json.dumps(self._connection.clientCharacteristics)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.enable_events"><code class="name flex">
+<span>def <span class="ident">enable_events</span></span>(<span>self, enable_trace=False, ping_interval=20)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enable_events(self, enable_trace=False, ping_interval=20):
+    websocket.enableTrace(enable_trace)
+
+    self.__webSocket = websocket.WebSocketApp(
+        self._connection.urlWebSocket,
+        header=[
+            &#34;AUTHTOKEN: {}&#34;.format(self._connection.auth_token),
+            &#34;CLIENTAUTH: {}&#34;.format(self._connection.clientauth_token),
+        ],
+        on_message=self._ws_on_message,
+        on_error=self._ws_on_error,
+        on_close=self._ws_on_close,
+    )
+
+    websocket_kwargs = {&#34;ping_interval&#34;: ping_interval}
+    if hasattr(sys, &#34;_called_from_test&#34;):  # disable ssl during a test run
+        sslopt = {&#34;cert_reqs&#34;: ssl.CERT_NONE}
+        websocket_kwargs = {&#34;sslopt&#34;: sslopt, &#34;ping_interval&#34;: 2, &#34;ping_timeout&#34;: 1}
+
+    self.__webSocketThread = threading.Thread(
+        name=&#34;hmip-websocket&#34;,
+        target=self.__webSocket.run_forever,
+        kwargs=websocket_kwargs,
+    )
+    self.__webSocketThread.daemon = True
+    self.__webSocketThread.start()</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.fire_create_event"><code class="name flex">
+<span>def <span class="ident">fire_create_event</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trigger the method tied to _on_create</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fire_create_event(self, *args, **kwargs):
+    &#34;&#34;&#34;Trigger the method tied to _on_create&#34;&#34;&#34;
+    for _handler in self._on_create:
+        _handler(*args, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.get_OAuth_OTK"><code class="name flex">
+<span>def <span class="ident">get_OAuth_OTK</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_OAuth_OTK(self):
+    token = OAuthOTK(self._connection)
+    token.from_json(self._restCall(&#34;home/getOAuthOTK&#34;))
+    return token</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.get_current_state"><code class="name flex">
+<span>def <span class="ident">get_current_state</span></span>(<span>self, clearConfig: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>downloads the current configuration and parses it into self</p>
+<h2 id="args">Args</h2>
+<p>clearConfig(bool): if set to true, this function will remove all old objects
+from self.devices, self.client, &hellip; to have a fresh config instead of reparsing them</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_current_state(self, clearConfig: bool = False):
+    &#34;&#34;&#34;downloads the current configuration and parses it into self
+       
+    Args:
+        clearConfig(bool): if set to true, this function will remove all old objects 
+        from self.devices, self.client, ... to have a fresh config instead of reparsing them
+    &#34;&#34;&#34;
+    json_state = self.download_configuration()
+    return self.update_home(json_state, clearConfig)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.get_functionalHome"><code class="name flex">
+<span>def <span class="ident">get_functionalHome</span></span>(<span>self, functionalHomeType: type) ‑> <a title="homematicip.functionalHomes.FunctionalHome" href="functionalHomes.html#homematicip.functionalHomes.FunctionalHome">FunctionalHome</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>gets the specified functionalHome</p>
+<h2 id="args">Args</h2>
+<p>functionalHome(type): the type of the functionalHome which should be returned</p>
+<h2 id="returns">Returns</h2>
+<p>the FunctionalHome or None if it couldn't be found</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_functionalHome(self, functionalHomeType: type) -&gt; FunctionalHome:
+    &#34;&#34;&#34; gets the specified functionalHome
+    
+    Args:
+        functionalHome(type): the type of the functionalHome which should be returned
+
+    Returns:
+        the FunctionalHome or None if it couldn&#39;t be found
+    &#34;&#34;&#34;
+    for x in self.functionalHomes:
+        if isinstance(x, functionalHomeType):
+            return x
+
+    return None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.get_security_journal"><code class="name flex">
+<span>def <span class="ident">get_security_journal</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_security_journal(self):
+    journal = self._restCall(&#34;home/security/getSecurityJournal&#34;)
+    if &#34;errorCode&#34; in journal:
+        LOGGER.error(
+            &#34;Could not get the security journal. Error: %s&#34;, journal[&#34;errorCode&#34;]
+        )
+        return None
+    ret = []
+    for entry in journal[&#34;entries&#34;]:
+        try:
+            eventType = SecurityEventType(entry[&#34;eventType&#34;])
+            if eventType in self._typeSecurityEventMap:
+                j = self._typeSecurityEventMap[eventType](self._connection)
+        except:
+            j = SecurityEvent(self._connection)
+            LOGGER.warning(&#34;There is no class for %s yet&#34;, entry[&#34;eventType&#34;])
+
+        j.from_json(entry)
+        ret.append(j)
+
+    return ret</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.get_security_zones_activation"><code class="name flex">
+<span>def <span class="ident">get_security_zones_activation</span></span>(<span>self) ‑> (<class 'bool'>, <class 'bool'>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns the value of the security zones if they are armed or not</p>
+<p>Returns
+internal
+True if the internal zone is armed
+external
+True if the external zone is armed</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_security_zones_activation(self) -&gt; (bool, bool):
+    &#34;&#34;&#34; returns the value of the security zones if they are armed or not
+    
+    Returns
+        internal
+          True if the internal zone is armed
+        external
+          True if the external zone is armed
+    &#34;&#34;&#34;
+    internal_active = False
+    external_active = False
+    for g in self.groups:
+        if isinstance(g, SecurityZoneGroup):
+            if g.label == &#34;EXTERNAL&#34;:
+                external_active = g.active
+            elif g.label == &#34;INTERNAL&#34;:
+                internal_active = g.active
+    return internal_active, external_active</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.init"><code class="name flex">
+<span>def <span class="ident">init</span></span>(<span>self, access_point_id, lookup=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def init(self, access_point_id, lookup=True):
+    self._connection.init(access_point_id, lookup)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.on_create"><code class="name flex">
+<span>def <span class="ident">on_create</span></span>(<span>self, handler)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds an event handler to the create method. Fires when a device
+is created.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def on_create(self, handler):
+    &#34;&#34;&#34;Adds an event handler to the create method. Fires when a device
+    is created.&#34;&#34;&#34;
+    self._on_create.append(handler)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.search_channel"><code class="name flex">
+<span>def <span class="ident">search_channel</span></span>(<span>self, deviceID, channelIndex) ‑> <a title="homematicip.base.functionalChannels.FunctionalChannel" href="base/functionalChannels.html#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>searches a channel by given deviceID and channelIndex</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_channel(self, deviceID, channelIndex) -&gt; FunctionalChannel:
+    &#34;&#34;&#34; searches a channel by given deviceID and channelIndex&#34;&#34;&#34;
+    foundD = [d for d in self.devices if d.id == deviceID]
+    d = foundD[0] if foundD else None
+    if d is not None:
+        foundC = [ch for ch in d.functionalChannels if ch.index == channelIndex]
+        return foundC[0] if foundC else None
+    return None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.search_client_by_id"><code class="name flex">
+<span>def <span class="ident">search_client_by_id</span></span>(<span>self, clientID) ‑> <a title="homematicip.home.Client" href="#homematicip.home.Client">Client</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>searches a client by given id</p>
+<h2 id="args">Args</h2>
+<p>clientID(str): the client to search for
+Returns
+the client object or None if it couldn't find a client</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_client_by_id(self, clientID) -&gt; Client:
+    &#34;&#34;&#34; searches a client by given id
+    
+    Args:
+      clientID(str): the client to search for
+    
+    Returns
+      the client object or None if it couldn&#39;t find a client
+    &#34;&#34;&#34;
+    for c in self.clients:
+        if c.id == clientID:
+            return c
+    return None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.search_device_by_id"><code class="name flex">
+<span>def <span class="ident">search_device_by_id</span></span>(<span>self, deviceID) ‑> <a title="homematicip.device.Device" href="device.html#homematicip.device.Device">Device</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>searches a device by given id</p>
+<h2 id="args">Args</h2>
+<p>deviceID(str): the device to search for
+Returns
+the Device object or None if it couldn't find a device</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_device_by_id(self, deviceID) -&gt; Device:
+    &#34;&#34;&#34; searches a device by given id
+    
+    Args:
+      deviceID(str): the device to search for
+      
+    Returns
+      the Device object or None if it couldn&#39;t find a device
+    &#34;&#34;&#34;
+    for d in self.devices:
+        if d.id == deviceID:
+            return d
+    return None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.search_group_by_id"><code class="name flex">
+<span>def <span class="ident">search_group_by_id</span></span>(<span>self, groupID) ‑> <a title="homematicip.group.Group" href="group.html#homematicip.group.Group">Group</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>searches a group by given id</p>
+<h2 id="args">Args</h2>
+<p>groupID(str): groupID the group to search for
+Returns
+the group object or None if it couldn't find a group</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_group_by_id(self, groupID) -&gt; Group:
+    &#34;&#34;&#34; searches a group by given id
+    
+    Args:
+      groupID(str): groupID the group to search for
+      
+    Returns
+      the group object or None if it couldn&#39;t find a group
+    &#34;&#34;&#34;
+    for g in self.groups:
+        if g.id == groupID:
+            return g
+    return None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.search_rule_by_id"><code class="name flex">
+<span>def <span class="ident">search_rule_by_id</span></span>(<span>self, ruleID) ‑> <a title="homematicip.rule.Rule" href="rule.html#homematicip.rule.Rule">Rule</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>searches a rule by given id</p>
+<h2 id="args">Args</h2>
+<p>ruleID(str): the rule to search for
+Returns
+the rule object or None if it couldn't find a rule</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search_rule_by_id(self, ruleID) -&gt; Rule:
+    &#34;&#34;&#34; searches a rule by given id
+    
+    Args:
+      ruleID(str): the rule to search for
+    
+    Returns
+      the rule object or None if it couldn&#39;t find a rule
+    &#34;&#34;&#34;
+    for r in self.rules:
+        if r.id == ruleID:
+            return r
+    return None</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_auth_token"><code class="name flex">
+<span>def <span class="ident">set_auth_token</span></span>(<span>self, auth_token)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_auth_token(self, auth_token):
+    self._connection.set_auth_token(auth_token)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_intrusion_alert_through_smoke_detectors"><code class="name flex">
+<span>def <span class="ident">set_intrusion_alert_through_smoke_detectors</span></span>(<span>self, activate: bool = True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>activate or deactivate if smoke detectors should "ring" during an alarm</p>
+<h2 id="args">Args</h2>
+<p>activate(bool): True will let the smoke detectors "ring" during an alarm</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
+    &#34;&#34;&#34; activate or deactivate if smoke detectors should &#34;ring&#34; during an alarm
+
+    Args:
+        activate(bool): True will let the smoke detectors &#34;ring&#34; during an alarm
+    &#34;&#34;&#34;
+    data = {&#34;intrusionAlertThroughSmokeDetectors&#34;: activate}
+    return self._restCall(
+        &#34;home/security/setIntrusionAlertThroughSmokeDetectors&#34;, json.dumps(data)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_location"><code class="name flex">
+<span>def <span class="ident">set_location</span></span>(<span>self, city, latitude, longitude)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_location(self, city, latitude, longitude):
+    data = {&#34;city&#34;: city, &#34;latitude&#34;: latitude, &#34;longitude&#34;: longitude}
+    return self._restCall(&#34;home/setLocation&#34;, json.dumps(data))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_pin"><code class="name flex">
+<span>def <span class="ident">set_pin</span></span>(<span>self, newPin: str, oldPin: str = None) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>sets a new pin for the home</p>
+<h2 id="args">Args</h2>
+<p>newPin(str): the new pin
+oldPin(str): optional, if there is currently a pin active it must be given here.
+Otherwise it will not be possible to set the new pin</p>
+<h2 id="returns">Returns</h2>
+<p>the result of the call</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_pin(self, newPin: str, oldPin: str = None) -&gt; dict:
+    &#34;&#34;&#34; sets a new pin for the home
+
+    Args:
+        newPin(str): the new pin
+        oldPin(str): optional, if there is currently a pin active it must be given here.
+                    Otherwise it will not be possible to set the new pin
+
+    Returns:
+        the result of the call
+    &#34;&#34;&#34;
+    if newPin is None:
+        newPin = &#34;&#34;
+    data = {&#34;pin&#34;: newPin}
+    if oldPin:
+        self._connection.headers[&#34;PIN&#34;] = str(oldPin)
+    result = self._restCall(&#34;home/setPin&#34;, body=json.dumps(data))
+    if oldPin:
+        del self._connection.headers[&#34;PIN&#34;]
+    return result</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_powermeter_unit_price"><code class="name flex">
+<span>def <span class="ident">set_powermeter_unit_price</span></span>(<span>self, price)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_powermeter_unit_price(self, price):
+    data = {&#34;powerMeterUnitPrice&#34;: price}
+    return self._restCall(&#34;home/setPowerMeterUnitPrice&#34;, body=json.dumps(data))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_security_zones_activation"><code class="name flex">
+<span>def <span class="ident">set_security_zones_activation</span></span>(<span>self, internal=True, external=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this function will set the alarm system to armed or disable it</p>
+<h2 id="args">Args</h2>
+<p>internal(bool): activates/deactivates the internal zone
+external(bool): activates/deactivates the external zone</p>
+<h2 id="examples">Examples</h2>
+<p>arming while being at home</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; home.set_security_zones_activation(False,True)
+</code></pre>
+<p>arming without being at home</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; home.set_security_zones_activation(True,True)
+</code></pre>
+<p>disarming the alarm system</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; home.set_security_zones_activation(False,False)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_security_zones_activation(self, internal=True, external=True):
+    &#34;&#34;&#34; this function will set the alarm system to armed or disable it
+    
+    Args:
+      internal(bool): activates/deactivates the internal zone
+      external(bool): activates/deactivates the external zone
+    
+    Examples:
+      arming while being at home
+      
+      &gt;&gt;&gt; home.set_security_zones_activation(False,True)
+      
+      arming without being at home
+      
+      &gt;&gt;&gt; home.set_security_zones_activation(True,True)
+      
+      disarming the alarm system
+      
+      &gt;&gt;&gt; home.set_security_zones_activation(False,False)
+    &#34;&#34;&#34;
+    data = {&#34;zonesActivation&#34;: {&#34;EXTERNAL&#34;: external, &#34;INTERNAL&#34;: internal}}
+    return self._restCall(&#34;home/security/setZonesActivation&#34;, json.dumps(data))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_timezone"><code class="name flex">
+<span>def <span class="ident">set_timezone</span></span>(<span>self, timezone: str)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>sets the timezone for the AP. e.g. "Europe/Berlin" </p>
+<h2 id="args">Args</h2>
+<p>timezone(str): the new timezone</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_timezone(self, timezone: str):
+    &#34;&#34;&#34; sets the timezone for the AP. e.g. &#34;Europe/Berlin&#34; 
+    Args:
+        timezone(str): the new timezone
+    &#34;&#34;&#34;
+    data = {&#34;timezoneId&#34;: timezone}
+    return self._restCall(&#34;home/setTimezone&#34;, body=json.dumps(data))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_zone_activation_delay"><code class="name flex">
+<span>def <span class="ident">set_zone_activation_delay</span></span>(<span>self, delay)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_zone_activation_delay(self, delay):
+    data = {&#34;zoneActivationDelay&#34;: delay}
+    return self._restCall(
+        &#34;home/security/setZoneActivationDelay&#34;, body=json.dumps(data)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.set_zones_device_assignment"><code class="name flex">
+<span>def <span class="ident">set_zones_device_assignment</span></span>(<span>self, internal_devices, external_devices) ‑> dict</span>
+</code></dt>
+<dd>
+<div class="desc"><p>sets the devices for the security zones</p>
+<h2 id="args">Args</h2>
+<p>internal_devices(List[Device]): the devices which should be used for the internal zone
+external_devices(List[Device]):
+the devices which should be used for the external(hull) zone</p>
+<h2 id="returns">Returns</h2>
+<p>the result of _restCall</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_zones_device_assignment(self, internal_devices, external_devices) -&gt; dict:
+    &#34;&#34;&#34; sets the devices for the security zones
+    Args:
+        internal_devices(List[Device]): the devices which should be used for the internal zone
+        external_devices(List[Device]):  the devices which should be used for the external(hull) zone
+    
+    Returns:
+        the result of _restCall
+    &#34;&#34;&#34;
+    internal = [x.id for x in internal_devices]
+    external = [x.id for x in external_devices]
+    data = {&#34;zonesDeviceAssignment&#34;: {&#34;INTERNAL&#34;: internal, &#34;EXTERNAL&#34;: external}}
+    return self._restCall(
+        &#34;home/security/setZonesDeviceAssignment&#34;, body=json.dumps(data)
+    )</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.start_inclusion"><code class="name flex">
+<span>def <span class="ident">start_inclusion</span></span>(<span>self, deviceId)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>start inclusion mode for specific device</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>deviceId</code></strong></dt>
+<dd>sgtin of device</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_inclusion(self, deviceId):
+    &#34;&#34;&#34; start inclusion mode for specific device
+    Args:
+        deviceId: sgtin of device        
+    &#34;&#34;&#34;
+    data = {&#34;deviceId&#34;: deviceId}
+    return self._restCall(&#34;home/startInclusionModeForDevice&#34;, body=json.dumps(data))</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.update_home"><code class="name flex">
+<span>def <span class="ident">update_home</span></span>(<span>self, json_state, clearConfig: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>parse a given json configuration into self.
+This will update the whole home including devices, clients and groups.</p>
+<h2 id="args">Args</h2>
+<p>clearConfig(bool): if set to true, this function will remove all old objects
+from self.devices, self.client, &hellip; to have a fresh config instead of reparsing them</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_home(self, json_state, clearConfig: bool = False):
+    &#34;&#34;&#34;parse a given json configuration into self.
+    This will update the whole home including devices, clients and groups.
+
+    Args:
+        clearConfig(bool): if set to true, this function will remove all old objects
+        from self.devices, self.client, ... to have a fresh config instead of reparsing them
+    &#34;&#34;&#34;
+    if &#34;errorCode&#34; in json_state:
+        LOGGER.error(
+            &#34;Could not get the current configuration. Error: %s&#34;,
+            json_state[&#34;errorCode&#34;],
+        )
+        return False
+
+    if clearConfig:
+        self.devices = []
+        self.clients = []
+        self.groups = []
+        self.channels = []
+
+    self._get_devices(json_state)
+    self._get_clients(json_state)
+    self._get_groups(json_state)
+    self._load_functionalChannels()
+
+    js_home = json_state[&#34;home&#34;]
+
+    return self.update_home_only(js_home, clearConfig)</code></pre>
+</details>
+</dd>
+<dt id="homematicip.home.Home.update_home_only"><code class="name flex">
+<span>def <span class="ident">update_home_only</span></span>(<span>self, js_home, clearConfig: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>parse a given home json configuration into self.
+This will update only the home without updating devices, clients and groups.</p>
+<h2 id="args">Args</h2>
+<p>clearConfig(bool): if set to true, this function will remove all old objects
+from self.devices, self.client, &hellip; to have a fresh config instead of reparsing them</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_home_only(self, js_home, clearConfig: bool = False):
+    &#34;&#34;&#34;parse a given home json configuration into self.
+    This will update only the home without updating devices, clients and groups.
+
+    Args:
+        clearConfig(bool): if set to true, this function will remove all old objects
+        from self.devices, self.client, ... to have a fresh config instead of reparsing them
+    &#34;&#34;&#34;
+    if &#34;errorCode&#34; in js_home:
+        LOGGER.error(
+            &#34;Could not get the current configuration. Error: %s&#34;,
+            js_home[&#34;errorCode&#34;],
+        )
+        return False
+
+    if clearConfig:
+        self.rules = []
+        self.functionalHomes = []
+
+    self.from_json(js_home)
+    self._get_functionalHomes(js_home)
+
+    return True</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.home.Location"><code class="flex name class">
+<span>class <span class="ident">Location</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class represents the possible location</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Location(HomeMaticIPObject):
+    &#34;&#34;&#34;This class represents the possible location&#34;&#34;&#34;
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:str: the name of the city
+        self.city = &#34;London&#34;
+        #:float: the latitude of the location
+        self.latitude = 51.509865
+        #:float: the longitue of the location
+        self.longitude = -0.118092
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.city = js[&#34;city&#34;]
+        self.latitude = js[&#34;latitude&#34;]
+        self.longitude = js[&#34;longitude&#34;]
+
+    def __str__(self):
+        return &#34;city({}) latitude({}) longitude({})&#34;.format(
+            self.city, self.latitude, self.longitude
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.home.OAuthOTK"><code class="flex name class">
+<span>class <span class="ident">OAuthOTK</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This class represents a generic homematic ip object to make
+basic requests to the access point</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class OAuthOTK(HomeMaticIPObject):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.authToken = None
+        self.expirationTimestamp = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.authToken = js[&#34;authToken&#34;]
+        self.expirationTimestamp = self.fromtimestamp(js[&#34;expirationTimestamp&#34;])</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="homematicip.home.Weather"><code class="flex name class">
+<span>class <span class="ident">Weather</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>this class represents the weather of the home location</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Weather(HomeMaticIPObject):
+    &#34;&#34;&#34; this class represents the weather of the home location&#34;&#34;&#34;
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float: the current temperature
+        self.temperature = 0.0
+        #:WeatherCondition: the current weather
+        self.weatherCondition = WeatherCondition.UNKNOWN
+        #:datetime: the current datime
+        self.weatherDayTime = WeatherDayTime.DAY
+        #:float: the minimum temperature of the day
+        self.minTemperature = 0.0
+        #:float: the maximum temperature of the day
+        self.maxTemperature = 0.0
+        #:float: the current humidity
+        self.humidity = 0
+        #:float: the current windspeed
+        self.windSpeed = 0.0
+        #:int: the current wind direction in 360° where 0° is north
+        self.windDirection = 0
+        #:float: the current vapor
+        self.vaporAmount = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        self.temperature = js[&#34;temperature&#34;]
+        self.weatherCondition = WeatherCondition.from_str(js[&#34;weatherCondition&#34;])
+        self.weatherDayTime = WeatherDayTime.from_str(js[&#34;weatherDayTime&#34;])
+        self.minTemperature = js[&#34;minTemperature&#34;]
+        self.maxTemperature = js[&#34;maxTemperature&#34;]
+        self.humidity = js[&#34;humidity&#34;]
+        self.windSpeed = js[&#34;windSpeed&#34;]
+        self.windDirection = js[&#34;windDirection&#34;]
+        self.vaporAmount = js[&#34;vaporAmount&#34;]
+
+    def __str__(self):
+        return &#34;temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) vaporAmount({}) windSpeed({}) windDirection({})&#34;.format(
+            self.temperature,
+            self.weatherCondition,
+            self.weatherDayTime,
+            self.minTemperature,
+            self.maxTemperature,
+            self.humidity,
+            self.vaporAmount,
+            self.windSpeed,
+            self.windDirection,
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">HomeMaticIPObject</a></b></code>:
+<ul class="hlist">
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">fire_remove_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">fire_update_event</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">from_json</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">fromtimestamp</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">on_remove</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">on_update</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">remove_callback</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">set_attr_from_dict</a></code></li>
+<li><code><a title="homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map" href="base/HomeMaticIPObject.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">str_from_attr_map</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="homematicip" href="index.html">homematicip</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="homematicip.home.AccessPointUpdateState" href="#homematicip.home.AccessPointUpdateState">AccessPointUpdateState</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.home.Client" href="#homematicip.home.Client">Client</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.home.Home" href="#homematicip.home.Home">Home</a></code></h4>
+<ul class="">
+<li><code><a title="homematicip.home.Home.activate_absence_permanent" href="#homematicip.home.Home.activate_absence_permanent">activate_absence_permanent</a></code></li>
+<li><code><a title="homematicip.home.Home.activate_absence_with_duration" href="#homematicip.home.Home.activate_absence_with_duration">activate_absence_with_duration</a></code></li>
+<li><code><a title="homematicip.home.Home.activate_absence_with_period" href="#homematicip.home.Home.activate_absence_with_period">activate_absence_with_period</a></code></li>
+<li><code><a title="homematicip.home.Home.activate_vacation" href="#homematicip.home.Home.activate_vacation">activate_vacation</a></code></li>
+<li><code><a title="homematicip.home.Home.deactivate_absence" href="#homematicip.home.Home.deactivate_absence">deactivate_absence</a></code></li>
+<li><code><a title="homematicip.home.Home.deactivate_vacation" href="#homematicip.home.Home.deactivate_vacation">deactivate_vacation</a></code></li>
+<li><code><a title="homematicip.home.Home.delete_group" href="#homematicip.home.Home.delete_group">delete_group</a></code></li>
+<li><code><a title="homematicip.home.Home.disable_events" href="#homematicip.home.Home.disable_events">disable_events</a></code></li>
+<li><code><a title="homematicip.home.Home.download_configuration" href="#homematicip.home.Home.download_configuration">download_configuration</a></code></li>
+<li><code><a title="homematicip.home.Home.enable_events" href="#homematicip.home.Home.enable_events">enable_events</a></code></li>
+<li><code><a title="homematicip.home.Home.fire_create_event" href="#homematicip.home.Home.fire_create_event">fire_create_event</a></code></li>
+<li><code><a title="homematicip.home.Home.functionalHomes" href="#homematicip.home.Home.functionalHomes">functionalHomes</a></code></li>
+<li><code><a title="homematicip.home.Home.get_OAuth_OTK" href="#homematicip.home.Home.get_OAuth_OTK">get_OAuth_OTK</a></code></li>
+<li><code><a title="homematicip.home.Home.get_current_state" href="#homematicip.home.Home.get_current_state">get_current_state</a></code></li>
+<li><code><a title="homematicip.home.Home.get_functionalHome" href="#homematicip.home.Home.get_functionalHome">get_functionalHome</a></code></li>
+<li><code><a title="homematicip.home.Home.get_security_journal" href="#homematicip.home.Home.get_security_journal">get_security_journal</a></code></li>
+<li><code><a title="homematicip.home.Home.get_security_zones_activation" href="#homematicip.home.Home.get_security_zones_activation">get_security_zones_activation</a></code></li>
+<li><code><a title="homematicip.home.Home.init" href="#homematicip.home.Home.init">init</a></code></li>
+<li><code><a title="homematicip.home.Home.on_create" href="#homematicip.home.Home.on_create">on_create</a></code></li>
+<li><code><a title="homematicip.home.Home.search_channel" href="#homematicip.home.Home.search_channel">search_channel</a></code></li>
+<li><code><a title="homematicip.home.Home.search_client_by_id" href="#homematicip.home.Home.search_client_by_id">search_client_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.search_device_by_id" href="#homematicip.home.Home.search_device_by_id">search_device_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.search_group_by_id" href="#homematicip.home.Home.search_group_by_id">search_group_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.search_rule_by_id" href="#homematicip.home.Home.search_rule_by_id">search_rule_by_id</a></code></li>
+<li><code><a title="homematicip.home.Home.set_auth_token" href="#homematicip.home.Home.set_auth_token">set_auth_token</a></code></li>
+<li><code><a title="homematicip.home.Home.set_intrusion_alert_through_smoke_detectors" href="#homematicip.home.Home.set_intrusion_alert_through_smoke_detectors">set_intrusion_alert_through_smoke_detectors</a></code></li>
+<li><code><a title="homematicip.home.Home.set_location" href="#homematicip.home.Home.set_location">set_location</a></code></li>
+<li><code><a title="homematicip.home.Home.set_pin" href="#homematicip.home.Home.set_pin">set_pin</a></code></li>
+<li><code><a title="homematicip.home.Home.set_powermeter_unit_price" href="#homematicip.home.Home.set_powermeter_unit_price">set_powermeter_unit_price</a></code></li>
+<li><code><a title="homematicip.home.Home.set_security_zones_activation" href="#homematicip.home.Home.set_security_zones_activation">set_security_zones_activation</a></code></li>
+<li><code><a title="homematicip.home.Home.set_timezone" href="#homematicip.home.Home.set_timezone">set_timezone</a></code></li>
+<li><code><a title="homematicip.home.Home.set_zone_activation_delay" href="#homematicip.home.Home.set_zone_activation_delay">set_zone_activation_delay</a></code></li>
+<li><code><a title="homematicip.home.Home.set_zones_device_assignment" href="#homematicip.home.Home.set_zones_device_assignment">set_zones_device_assignment</a></code></li>
+<li><code><a title="homematicip.home.Home.start_inclusion" href="#homematicip.home.Home.start_inclusion">start_inclusion</a></code></li>
+<li><code><a title="homematicip.home.Home.update_home" href="#homematicip.home.Home.update_home">update_home</a></code></li>
+<li><code><a title="homematicip.home.Home.update_home_only" href="#homematicip.home.Home.update_home_only">update_home_only</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="homematicip.home.Location" href="#homematicip.home.Location">Location</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.home.OAuthOTK" href="#homematicip.home.OAuthOTK">OAuthOTK</a></code></h4>
+</li>
+<li>
+<h4><code><a title="homematicip.home.Weather" href="#homematicip.home.Weather">Weather</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
