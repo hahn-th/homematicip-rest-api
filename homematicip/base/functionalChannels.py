@@ -452,6 +452,25 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
         )
 
 
+class DeviceOperationLockChannel(DeviceBaseChannel):
+    """this is the representative of the DEVICE_OPERATIONLOCK channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.operationLockActive = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.operationLockActive = js["operationLockActive"]
+
+    def set_operation_lock(self, operationLock=True):
+        data = {"channelIndex": self.index, "deviceId": self.device.id, "operationLock": operationLock}
+        return self._restCall("device/configuration/setOperationLock", json.dumps(data))
+    
+    async def async_set_operation_lock(self, operationLock=True):
+        return await self._connection.api_call(*self.set_operation_lock(operationLock))
+
+
 class DimmerChannel(FunctionalChannel):
     """this is the representative of the DIMMER_CHANNEL channel"""
 
@@ -1233,18 +1252,6 @@ class DeviceSabotageChannel(DeviceBaseChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.sabotage = js["sabotage"]
-
-
-class DeviceOperationLockChannel(DeviceBaseChannel):
-    """this is the representative of the DEVICE_OPERATIONLOCK channel"""
-
-    def __init__(self, device, connection):
-        super().__init__(device, connection)
-        self.operationLockActive = False
-
-    def from_json(self, js, groups: Iterable[Group]):
-        super().from_json(js, groups)
-        self.operationLockActive = js["operationLockActive"]
 
 
 class DeviceIncorrectPositionedChannel(DeviceBaseChannel):

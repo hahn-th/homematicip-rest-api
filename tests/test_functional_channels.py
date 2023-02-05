@@ -115,6 +115,22 @@ def test_device_base_floor_heating_channel(fake_home: Home):
         assert ch.minimumFloorHeatingValvePosition == 0.2
 
 
+def test_device_operation_lock_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000015",0)
+        assert isinstance(ch, DeviceOperationLockChannel)
+
+        ch.set_operation_lock(False)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000015",0)
+        assert ch.operationLockActive is False
+        
+        ch.set_operation_lock(True)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000015",0)
+        assert ch.operationLockActive is True
+
+
 def test_dimmer_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F711AAAA000000000005", 1)
