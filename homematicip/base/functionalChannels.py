@@ -383,7 +383,7 @@ class BlindChannel(FunctionalChannel):
     async def async_set_shutter_level(self, level=0.0):
         return await self._connection.api_call(*self.set_shutter_level(level))
 
-    def set_shutter_stop(self):
+    def stop(self):
         """stops the current shutter operation
 
         Args:
@@ -394,8 +394,8 @@ class BlindChannel(FunctionalChannel):
         data = {"channelIndex": self.index, "deviceId": self.device.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
 
-    async def async_set_shutter_stop(self):
-        return await self._connection.api_call(*self.set_shutter_stop())
+    async def async_stop(self):
+        return await self._connection.api_call(*self.stop())
 
 
 class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
