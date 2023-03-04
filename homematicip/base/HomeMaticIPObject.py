@@ -88,6 +88,10 @@ class HomeMaticIPObject:
         """
         if not dict_attr:
             dict_attr = attr
+
+        if dict_attr not in dict:
+            return None
+        
         value = dict[dict_attr]
         if type:
             value = type.from_str(value)

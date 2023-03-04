@@ -892,8 +892,10 @@ class MultiIOBox(Switch):
     def __str__(self):
         return "{} analogOutputLevel({})".format(
             super().__str__(), self.analogOutputLevel
-        )
-
+        )    
+    
+class DoorBellContactInterface(Device):
+    """HMIP-DSD-PCB (Door Bell Contact Interface)"""
 
 class BrandSwitchNotificationLight(Switch):
     """HMIP-BSL (Switch Actuator for brand switches – with signal lamp)"""

@@ -855,13 +855,16 @@ class MultiModeInputChannel(FunctionalChannel):
         self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
         self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
         self.windowState = WindowState.OPEN
+        self.doorBellSensorEventTimestamp = None
+        self.corrosionPreventionActive = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.binaryBehaviorType = BinaryBehaviorType.from_str(js["binaryBehaviorType"])
-        self.multiModeInputMode = MultiModeInputMode.from_str(js["multiModeInputMode"])
-        self.windowState = WindowState.from_str(js["windowState"])
-
+        self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
+        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
+        self.set_attr_from_dict("windowState", js, WindowState)
+        self.set_attr_from_dict("doorBellSensorEventTimestamp", js)
+        self.set_attr_from_dict("corrosionPreventionActive", js)
 
 class NotificationLightChannel(DimmerChannel):
     """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""

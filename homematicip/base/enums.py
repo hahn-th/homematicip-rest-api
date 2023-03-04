@@ -217,6 +217,7 @@ class DeviceType(AutoNameEnum):
     DIN_RAIL_SWITCH = auto()
     DIN_RAIL_SWITCH_4 = auto()
     DIN_RAIL_DIMMER_3 = auto()
+    DOOR_BELL_CONTACT_INTERFACE = auto()
     DOOR_LOCK_DRIVE = auto()
     DOOR_LOCK_SENSOR = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()

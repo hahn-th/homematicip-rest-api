@@ -1451,6 +1451,13 @@ def test_door_sensor_tm(fake_home: Home):
         d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
         assert d.doorState == DoorState.OPEN
 
+def test_door_bell_contact_interface(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000DSDPCB")
+    assert isinstance(d, DoorBellContactInterface)
+    c = d.functionalChannels[1]
+    assert isinstance(c, MultiModeInputChannel)
+    assert c.doorBellSensorEventTimestamp == 1673006015756
+    assert c.corrosionPreventionActive == False
 
 def test_hoermann_drives_module(fake_home: Home):
     with no_ssl_verification():
