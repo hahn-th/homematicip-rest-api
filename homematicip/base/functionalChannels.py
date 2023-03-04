@@ -746,6 +746,20 @@ class WeatherSensorProChannel(WeatherSensorPlusChannel):
 class SingleKeyChannel(FunctionalChannel):
     """this is the representative of the SINGLE_KEY_CHANNEL channel"""
 
+    def __init__(self):
+        super().__init__()
+        self.acousticSendStateEnabled = None
+        self.actionParameter = None
+        self.doorBellSensorEventTimestamp = None
+        self.doublePressTime = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("acousticSendStateEnabled", js)
+        self.set_attr_from_dict("actionParameter", js)
+        self.set_attr_from_dict("doorBellSensorEventTimestamp", js)
+        self.set_attr_from_dict("doublePressTime", js)
+
 
 class AlarmSirenChannel(FunctionalChannel):
     """this is the representative of the ALARM_SIREN_CHANNEL channel"""

@@ -704,5 +704,8 @@ class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
 class AsyncDoorLockSensor(DoorLockSensor, AsyncDevice):
     """HmIP-DLS"""
 
+class AsyncDoorBellButton(DoorBellButton, AsyncDevice):
+    pass 
+
 class AsyncDoorBellContactInterface(DoorBellContactInterface, AsyncDevice):
     pass

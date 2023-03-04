@@ -1140,6 +1140,14 @@ def test_remote_control_8(fake_home: Home):
     assert d.modelId == 299
     assert d.label == "Fernbedienung - 8 Tasten"
 
+def test_door_bell_button(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000DBB")
+    assert isinstance(d, DoorBellButton)
+    c = d.functionalChannels[1]
+    assert isinstance(c, SingleKeyChannel)
+    assert c.doorBellSensorEventTimestamp == 1675197541117
+    assert c.doublePressTime == 0.0
+
 
 def test_open_collector_8(fake_home: Home):
     with no_ssl_verification():

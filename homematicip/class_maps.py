@@ -26,6 +26,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DIN_RAIL_SWITCH: DinRailSwitch,
     DeviceType.DIN_RAIL_SWITCH_4: DinRailSwitch4,
     DeviceType.DIN_RAIL_DIMMER_3: DinRailDimmer3,
+    DeviceType.DOOR_BELL_BUTTON: DoorBellButton,
     DeviceType.DOOR_BELL_CONTACT_INTERFACE: DoorBellContactInterface,
     DeviceType.DOOR_LOCK_DRIVE: DoorLockDrive,
     DeviceType.DOOR_LOCK_SENSOR: DoorLockSensor,

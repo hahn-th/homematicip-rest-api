@@ -894,6 +894,7 @@ class MultiIOBox(Switch):
             super().__str__(), self.analogOutputLevel
         )    
     
+
 class DoorBellContactInterface(Device):
     """HMIP-DSD-PCB (Door Bell Contact Interface)"""
 
@@ -988,6 +989,8 @@ class FullFlushSwitchMeasuring(SwitchMeasuring):
 class PushButton(Device):
     """HMIP-WRC2 (Wall-mount Remote Control - 2-button)"""
 
+class DoorBellButton(PushButton):
+    """HmIP-DBB"""
 
 class PushButton6(PushButton):
     """HMIP-WRC6 (Wall-mount Remote Control - 6-button)"""

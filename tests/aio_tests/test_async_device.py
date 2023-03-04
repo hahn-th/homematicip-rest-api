@@ -870,6 +870,11 @@ async def test_door_lock_sensor(no_ssl_fake_async_home: AsyncHome):
     assert d.doorLockNeutralPosition == "HORIZONTAL"
     assert d.doorLockTurns == 2
     assert d.lockState == None
+    
+@pytest.mark.asyncio
+async def test_door_bell_button(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000DBB")
+    assert isinstance(d, AsyncDoorBellButton)
 
 @pytest.mark.asyncio
 async def test_door_bell_contact_interface(no_ssl_fake_async_home: AsyncHome):
