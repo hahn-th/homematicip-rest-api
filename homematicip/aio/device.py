@@ -53,6 +53,8 @@ class AsyncSwitch(Switch, AsyncDevice):
         _LOGGER.debug("Async switch turn_off")
         return await self.set_switch_state(False, channelIndex)
 
+class AsyncCarbonDioxideSensor(CarbonDioxideSensor, AsyncSwitch):
+    """HmIP-SCTH230"""
 
 class AsyncSwitchMeasuring(SwitchMeasuring, AsyncSwitch):
     """Generic async switch measuring"""

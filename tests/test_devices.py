@@ -1694,3 +1694,14 @@ def test_wired_presence_detector(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000000WSPI")
         assert isinstance(d, PresenceDetectorIndoor)
+
+def test_carbon_dioxide_sensor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000SCTH230")
+        assert isinstance(d,CarbonDioxideSensor)
+        c = d.functionalChannels[1]
+        assert c.actualTemperature == 25.5
+        assert c.carbonDioxideConcentration == 1181.0
+        assert c.carbonDioxideVisualisationEnabled == True
+        assert c.humidity == 37
+        assert c.vaporAmount == 8.739326558877478

@@ -1008,6 +1008,25 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
         self.set_attr_from_dict("valveState", js)
         self.set_attr_from_dict("valvePosition", js)
 
+class CarbonDioxideSensorChannel(FunctionalChannel):
+    """Representation of the CarbonDioxideSensorChannel Channel"""
+
+    def __init__(self):
+        super().__init__()
+        self.actualTemperature = None
+        self.carbonDioxideConcentration = None
+        self.carbonDioxideVisualisationEnabled = None
+        self.humidity = None
+        self.vaporAmount = None
+    
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("actualTemperature",js)
+        self.set_attr_from_dict("carbonDioxideConcentration",js)
+        self.set_attr_from_dict("carbonDioxideVisualisationEnabled",js)
+        self.set_attr_from_dict("humidity",js)
+        self.set_attr_from_dict("vaporAmount",js)
+    
 
 class ChangeOverChannel(FunctionalChannel):
     """this is the representative of the CHANGE_OVER_CHANNEL channel"""

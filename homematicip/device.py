@@ -805,6 +805,9 @@ class Switch(Device):
     def turn_off(self, channelIndex=1):
         return self.set_switch_state(False, channelIndex)
 
+class CarbonDioxideSensor(Switch):
+    """HmIP-SCTH230"""
+    
 
 class PlugableSwitch(Switch):
     """HMIP-PS (Pluggable Switch), HMIP-PCBS (Switch Circuit Board - 1 channel)"""
