@@ -536,6 +536,9 @@ def test_heating_thermostat(fake_home: Home):
         result = d.set_operation_lock(True)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+def test_heating_thermostat_etrv_i9f(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711000000000ETRVI9F")
+    assert isinstance(d, HeatingThermostat)
 
 def test_heating_thermostat_compact(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000ABCDEF10")

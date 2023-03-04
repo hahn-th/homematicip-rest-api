@@ -595,6 +595,11 @@ async def test_heating_thermostat_evo(no_ssl_fake_async_home: AsyncHome):
     with pytest.raises(HmipWrongHttpStatusError):
         result = await d.set_operation_lock(True)
 
+@pytest.mark.asyncio
+async def test_heating_thermostat_etrv_i9f(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000ETRVI9F")
+    assert isinstance(d, AsyncHeatingThermostat)
+
 
 @pytest.mark.asyncio
 async def test_brand_switch_notification_light(no_ssl_fake_async_home: AsyncHome):
