@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.14] 2023-03-04
+
+### ADDED
+
+- Throw HmipThrottlingError, when REST API returns 429
+- Add device HmIPW-DRS4
+- Add output for InteralSwitchChannel
+- Add HmIPW-FALMOT-12
+- Add HmIPW-WTH
+- Add HmIPW-FIO6
+- Add HmIPW-DRBL4
+- Add HmIPW-WRC6
+- Add HmIPW-WRC2
+- Add OpticalSignalChannel
+- Add OpticalSignalGroupChannel
+- Add HmIPW-SMI55
+- Add HmIPW-SPI
+- Add HmIPW-DRAP
+- Add HmIP-DSD-PCB
+- Add HmIP-DBB
+- Add HmIP-SCTH230
+
 ## [1.0.13] 2022-12-05
 
 ### FIXED
@@ -23,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ADDED
 
-- Support for Hue devices 
+- Support for Hue devices
   - Unknown devices are now represented by class BaseDevice
   - Add device type ExternalDevice (which represents external devices (Hue))
   - Add deviceArchetype (which differentiates between HMIP and EXTERNAL devices)
@@ -81,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR: 449] Add support for Device HmIP-WGC
 
 ### FIXED
+
 - Fixed some typos from Version 1.0.5
 
 ## [1.0.5] 2022-07-16
@@ -569,7 +592,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...master
+[1.0.14]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...1.0.14
 [1.0.13]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...1.0.13
 [1.0.12]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.11...1.0.12
 [1.0.11]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.10...1.0.11
