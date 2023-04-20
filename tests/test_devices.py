@@ -536,9 +536,11 @@ def test_heating_thermostat(fake_home: Home):
         result = d.set_operation_lock(True)
         assert result["errorCode"] == "INVALID_DEVICE"
 
+
 def test_heating_thermostat_etrv_i9f(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000000000ETRVI9F")
     assert isinstance(d, HeatingThermostat)
+
 
 def test_heating_thermostat_compact(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000ABCDEF10")
@@ -1108,14 +1110,15 @@ def test_wired_push_button(fake_home: Home):
         c = d.functionalChannels[2]
         assert c.dimLevel == 0.5
 
-        d.set_optical_signal(10, OpticalSignalBehaviour.BILLOW_MIDDLE,RGBColorState.BLUE)
+        d.set_optical_signal(
+            10, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE
+        )
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
         c = d.functionalChannels[2]
         assert c.dimLevel == 1.01
         assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
         assert c.simpleRGBColorState == "BLUE"
-
 
         c = d.functionalChannels[5]
         assert isinstance(c, OpticalSignalGroupChannel)
@@ -1125,7 +1128,9 @@ def test_wired_push_button(fake_home: Home):
         c = d.functionalChannels[5]
         assert c.dimLevel == 0.5
 
-        d.set_optical_signal(13, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE)
+        d.set_optical_signal(
+            13, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE
+        )
         fake_home.get_current_state()
         d = fake_home.search_device_by_id("3014F71100000000000WWRC6")
         c = d.functionalChannels[5]
@@ -1139,6 +1144,7 @@ def test_remote_control_8(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711BBBBBBBBBBBBB016")
     assert d.modelId == 299
     assert d.label == "Fernbedienung - 8 Tasten"
+
 
 def test_door_bell_button(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000DBB")
@@ -1459,6 +1465,7 @@ def test_door_sensor_tm(fake_home: Home):
         d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
         assert d.doorState == DoorState.OPEN
 
+
 def test_door_bell_contact_interface(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000DSDPCB")
     assert isinstance(d, DoorBellContactInterface)
@@ -1466,6 +1473,8 @@ def test_door_bell_contact_interface(fake_home: Home):
     assert isinstance(c, MultiModeInputChannel)
     assert c.doorBellSensorEventTimestamp == 1673006015756
     assert c.corrosionPreventionActive == False
+    assert c.channelRole == "DOOR_BELL_INPUT"
+
 
 def test_hoermann_drives_module(fake_home: Home):
     with no_ssl_verification():
@@ -1695,10 +1704,11 @@ def test_wired_presence_detector(fake_home: Home):
         d = fake_home.search_device_by_id("3014F711000000000000WSPI")
         assert isinstance(d, PresenceDetectorIndoor)
 
+
 def test_carbon_dioxide_sensor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000SCTH230")
-        assert isinstance(d,CarbonDioxideSensor)
+        assert isinstance(d, CarbonDioxideSensor)
         c = d.functionalChannels[1]
         assert c.actualTemperature == 25.5
         assert c.carbonDioxideConcentration == 1181.0

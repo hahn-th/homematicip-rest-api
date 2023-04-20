@@ -867,6 +867,7 @@ class MultiModeInputChannel(FunctionalChannel):
     def __init__(self):
         super().__init__()
         self.binaryBehaviorType = BinaryBehaviorType.NORMALLY_OPEN
+        self.channelRole = None
         self.multiModeInputMode = MultiModeInputMode.BINARY_BEHAVIOR
         self.windowState = WindowState.OPEN
         self.doorBellSensorEventTimestamp = None
@@ -875,10 +876,23 @@ class MultiModeInputChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
+        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
         self.set_attr_from_dict("windowState", js, WindowState)
         self.set_attr_from_dict("doorBellSensorEventTimestamp", js)
         self.set_attr_from_dict("corrosionPreventionActive", js)
+
+    def __str__(self):
+        return "{} binaryBehaviorType({}) channelRole({}) multiModeInputMode({}) windowState({}) doorBellSensorEventTimestamp({}) corrosionPreventionActive({})".format(
+            super().__str__(),
+            self.binaryBehaviorType,
+            self.channelRole,
+            self.multiModeInputMode,
+            self.windowState,
+            self.doorBellSensorEventTimestamp,
+            self.corrosionPreventionActive,
+        )
+
 
 class NotificationLightChannel(DimmerChannel):
     """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
@@ -1008,6 +1022,7 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
         self.set_attr_from_dict("valveState", js)
         self.set_attr_from_dict("valvePosition", js)
 
+
 class CarbonDioxideSensorChannel(FunctionalChannel):
     """Representation of the CarbonDioxideSensorChannel Channel"""
 
@@ -1018,15 +1033,15 @@ class CarbonDioxideSensorChannel(FunctionalChannel):
         self.carbonDioxideVisualisationEnabled = None
         self.humidity = None
         self.vaporAmount = None
-    
+
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.set_attr_from_dict("actualTemperature",js)
-        self.set_attr_from_dict("carbonDioxideConcentration",js)
-        self.set_attr_from_dict("carbonDioxideVisualisationEnabled",js)
-        self.set_attr_from_dict("humidity",js)
-        self.set_attr_from_dict("vaporAmount",js)
-    
+        self.set_attr_from_dict("actualTemperature", js)
+        self.set_attr_from_dict("carbonDioxideConcentration", js)
+        self.set_attr_from_dict("carbonDioxideVisualisationEnabled", js)
+        self.set_attr_from_dict("humidity", js)
+        self.set_attr_from_dict("vaporAmount", js)
+
 
 class ChangeOverChannel(FunctionalChannel):
     """this is the representative of the CHANGE_OVER_CHANNEL channel"""
