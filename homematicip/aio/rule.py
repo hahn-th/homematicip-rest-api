@@ -8,14 +8,14 @@ from homematicip.rule import (
 
 
 class AsyncRule(Rule):
-    """ Async implementation of a homematic ip rule """
+    """Async implementation of a homematic ip rule"""
 
     async def set_label(self, label):
         return await self._connection.api_call(*super().set_label(label))
 
 
 class AsyncSimpleRule(SimpleRule, AsyncRule):
-    """ Async implementation of a homematic ip simple rule """
+    """Async implementation of a homematic ip simple rule"""
 
     async def enable(self):
         return await self.set_rule_enabled_state(True)

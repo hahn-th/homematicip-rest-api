@@ -4,13 +4,13 @@ from homematicip.securityEvent import *
 
 
 class AsyncSecurityEvent(SecurityEvent):
-    """this class represents a security event """
+    """this class represents a security event"""
 
     pass
 
 
 class AsyncSecurityZoneEvent(SecurityZoneEvent, AsyncSecurityEvent):
-    """ This class will be used by other events which are just adding "securityZoneValues" """
+    """This class will be used by other events which are just adding "securityZoneValues" """
 
     pass
 

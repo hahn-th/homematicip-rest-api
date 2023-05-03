@@ -68,7 +68,6 @@ class MetaGroup(Group):
         self.incorrectPositioned = None
 
     def from_json(self, js, devices, groups):
-
         super().from_json(js, devices)
 
         self.lowBat = js["lowBat"]

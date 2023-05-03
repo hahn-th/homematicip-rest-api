@@ -53,8 +53,10 @@ class AsyncSwitch(Switch, AsyncDevice):
         _LOGGER.debug("Async switch turn_off")
         return await self.set_switch_state(False, channelIndex)
 
+
 class AsyncCarbonDioxideSensor(CarbonDioxideSensor, AsyncSwitch):
     """HmIP-SCTH230"""
+
 
 class AsyncSwitchMeasuring(SwitchMeasuring, AsyncSwitch):
     """Generic async switch measuring"""
@@ -254,21 +256,29 @@ class AsyncPushButton6(PushButton6, AsyncPushButton):
 class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
     """HmIPW-WRC6 and HmIPW-WRC2"""
 
-    async def set_optical_signal(self, channelIndex, opticalSignalBehaviour: OpticalSignalBehaviour, rgb: RGBColorState, dimLevel = 1.01):
+    async def set_optical_signal(
+        self,
+        channelIndex,
+        opticalSignalBehaviour: OpticalSignalBehaviour,
+        rgb: RGBColorState,
+        dimLevel=1.01,
+    ):
         """sets the signal type for the leds
-        
+
         Args:
             channelIndex(int): Channel which is affected
             opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
-            rgb(RGBColorState): Color 
+            rgb(RGBColorState): Color
             dimLevel(float): usally 1.01. Use set_dim_level instead
-        
+
         Returns:
-            Result of the _restCall 
+            Result of the _restCall
 
         """
         return await self._connection.api_call(
-            *super().set_optical_signal(channelIndex,opticalSignalBehaviour,rgb,dimLevel)
+            *super().set_optical_signal(
+                channelIndex, opticalSignalBehaviour, rgb, dimLevel
+            )
         )
 
     async def set_dim_level(self, channelIndex, dimLevel):
@@ -276,15 +286,15 @@ class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
         Args:
             channelIndex(int): Channel which is affected
             dimLevel(float): usally 1.01. Use set_dim_level instead
-        
+
         Returns:
-            Result of the _restCall 
+            Result of the _restCall
 
         """
-        return await self._connection.api_call (
+        return await self._connection.api_call(
             *super().set_dim_level(channelIndex, dimLevel)
         )
-    
+
     async def set_switch_state(self, on=True, channelIndex=1):
         _LOGGER.debug("Async set_switch_state")
         url, data = super().set_switch_state(on, channelIndex)
@@ -644,8 +654,10 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
 class AsyncHomeControlAccessPoint(HomeControlAccessPoint, AsyncDevice):
     """HMIP-HAP"""
 
+
 class AsyncWiredDinRailAccessPoint(WiredDinRailAccessPoint, AsyncDevice):
     """HmIPW-DRAP"""
+
 
 class AsyncBlindModule(BlindModule, AsyncDevice):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
@@ -706,8 +718,10 @@ class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
 class AsyncDoorLockSensor(DoorLockSensor, AsyncDevice):
     """HmIP-DLS"""
 
+
 class AsyncDoorBellButton(DoorBellButton, AsyncDevice):
-    pass 
+    pass
+
 
 class AsyncDoorBellContactInterface(DoorBellContactInterface, AsyncDevice):
     pass

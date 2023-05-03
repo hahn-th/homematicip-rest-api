@@ -17,7 +17,7 @@ class Connection(BaseConnection):
         accesspoint_id,
         lookup=True,
         lookup_url="https://lookup.homematic.com:48335/getHost",
-        **kwargs
+        **kwargs,
     ):
         self.set_token_and_characteristics(accesspoint_id)
 

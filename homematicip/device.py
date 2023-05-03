@@ -252,6 +252,7 @@ class HomeControlAccessPoint(Device):
             self.set_attr_from_dict("accessPointPriority", c)
             self.set_attr_from_dict("signalBrightness", c)
 
+
 class WiredDinRailAccessPoint(Device):
     def __init__(self, connection):
         super().__init__(connection)
@@ -265,6 +266,7 @@ class WiredDinRailAccessPoint(Device):
         if c:
             self.set_attr_from_dict("accessPointPriority", c)
             self.set_attr_from_dict("signalBrightness", c)
+
 
 class SabotageDevice(Device):
     def __init__(self, connection):
@@ -805,9 +807,10 @@ class Switch(Device):
     def turn_off(self, channelIndex=1):
         return self.set_switch_state(False, channelIndex)
 
+
 class CarbonDioxideSensor(Switch):
     """HmIP-SCTH230"""
-    
+
 
 class PlugableSwitch(Switch):
     """HMIP-PS (Pluggable Switch), HMIP-PCBS (Switch Circuit Board - 1 channel)"""
@@ -895,11 +898,12 @@ class MultiIOBox(Switch):
     def __str__(self):
         return "{} analogOutputLevel({})".format(
             super().__str__(), self.analogOutputLevel
-        )    
-    
+        )
+
 
 class DoorBellContactInterface(Device):
     """HMIP-DSD-PCB (Door Bell Contact Interface)"""
+
 
 class BrandSwitchNotificationLight(Switch):
     """HMIP-BSL (Switch Actuator for brand switches – with signal lamp)"""
@@ -992,8 +996,10 @@ class FullFlushSwitchMeasuring(SwitchMeasuring):
 class PushButton(Device):
     """HMIP-WRC2 (Wall-mount Remote Control - 2-button)"""
 
+
 class DoorBellButton(PushButton):
     """HmIP-DBB"""
+
 
 class PushButton6(PushButton):
     """HMIP-WRC6 (Wall-mount Remote Control - 6-button)"""
@@ -1365,17 +1371,23 @@ class WiredDinRailBlind4(Blind):
 class WiredPushButton(PushButton):
     """HmIPW-WRC6 and HmIPW-WRC2"""
 
-    def set_optical_signal(self, channelIndex, opticalSignalBehaviour: OpticalSignalBehaviour, rgb: RGBColorState, dimLevel = 1.01):
+    def set_optical_signal(
+        self,
+        channelIndex,
+        opticalSignalBehaviour: OpticalSignalBehaviour,
+        rgb: RGBColorState,
+        dimLevel=1.01,
+    ):
         """sets the signal type for the leds
-        
+
         Args:
             channelIndex(int): Channel which is affected
             opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
-            rgb(RGBColorState): Color 
+            rgb(RGBColorState): Color
             dimLevel(float): usally 1.01. Use set_dim_level instead
-        
+
         Returns:
-            Result of the _restCall 
+            Result of the _restCall
 
         """
         data = {
@@ -1383,27 +1395,23 @@ class WiredPushButton(PushButton):
             "deviceId": self.id,
             "dimLevel": dimLevel,
             "opticalSignalBehaviour": opticalSignalBehaviour,
-            "simpleRGBColorState": rgb
+            "simpleRGBColorState": rgb,
         }
-        return self._restCall("device/control/setOpticalSignal", body = json.dumps(data))
+        return self._restCall("device/control/setOpticalSignal", body=json.dumps(data))
 
     def set_dim_level(self, channelIndex, dimLevel):
         """sets the signal type for the leds
         Args:
             channelIndex(int): Channel which is affected
             dimLevel(float): usally 1.01. Use set_dim_level instead
-        
+
         Returns:
-            Result of the _restCall 
+            Result of the _restCall
 
         """
-        data = {
-            "channelIndex": channelIndex,
-            "deviceId": self.id,
-            "dimLevel": dimLevel
-        }
-        return self._restCall("device/control/setDimLevel", body = json.dumps(data))
-    
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
+        return self._restCall("device/control/setDimLevel", body=json.dumps(data))
+
     def set_switch_state(self, on, channelIndex):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
         return self._restCall("device/control/setSwitchState", body=json.dumps(data))
@@ -1413,6 +1421,7 @@ class WiredPushButton(PushButton):
 
     def turn_off(self, channelIndex):
         return self.set_switch_state(False, channelIndex)
+
 
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
@@ -2373,7 +2382,6 @@ class DoorLockSensor(Device):
         super().from_json(js)
         c = get_functional_channel("DOOR_LOCK_SENSOR_CHANNEL", js)
         if c:
-
             self.set_attr_from_dict("doorLockDirection", c)
             self.set_attr_from_dict("doorLockNeutralPosition", c)
             self.set_attr_from_dict("doorLockTurns", c)
