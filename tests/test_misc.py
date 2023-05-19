@@ -1,6 +1,7 @@
 import json
 from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, Mock
+from aenum import AutoNumberEnum
 
 import pytest
 
@@ -61,6 +62,18 @@ def test_auto_name_enum():
     assert DeviceType.from_str("I_DONT_EXIST_EITHER") is None
 
 
+class TestEnum(AutoNameEnum):
+    V1 = auto()
+    V2 = auto()
+    V3 = auto()
+
+
+class TestHomematicIPObject(HomeMaticIPObject):
+    def __init__(self, connection):
+        super().__init__(None)
+        self.val = ""
+
+
 def test_hmipObject_set_attr_from_dict():
     dict = {
         "id": "DEVICE_ID",
@@ -68,6 +81,8 @@ def test_hmipObject_set_attr_from_dict():
         "window_state": "OPEN",
         "valve_state": "ERROR_POSITION",
         "label": "my label",
+        "val": "V1",
+        "val2": "V4",
     }
     hmip = HomeMaticIPObject(None)
     hmip.set_attr_from_dict("height", dict)
@@ -75,7 +90,13 @@ def test_hmipObject_set_attr_from_dict():
     hmip.set_attr_from_dict("valveState", dict, ValveState, "valve_state")
     hmip.set_attr_from_dict("name", dict, dict_attr="label")
 
+    hmip.set_attr_from_dict("val", dict, TestEnum)
+
     assert hmip.height == 1234
     assert hmip.window_state == WindowState.OPEN
     assert hmip.valveState == ValveState.ERROR_POSITION
     assert hmip.name == "my label"
+    assert hmip.val == TestEnum.V1
+
+    hmip.set_attr_from_dict("val2", dict, TestEnum)
+    assert hmip.val2 == "V4"
