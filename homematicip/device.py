@@ -2331,7 +2331,7 @@ class DoorLockDrive(Device):
         self.lockState = LockState.UNLOCKED
         self.motorState = MotorState.STOPPED
 
-        self.door_lock_channel = -1
+        self.door_lock_channel = 1
 
     def from_json(self, js):
         super().from_json(js)

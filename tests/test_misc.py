@@ -99,4 +99,6 @@ def test_hmipObject_set_attr_from_dict():
     assert hmip.val == TestEnum.V1
 
     hmip.set_attr_from_dict("val2", dict, TestEnum)
-    assert hmip.val2 == "V4"
+    assert hmip.val2 == None
+
+    hmip.set_attr_from_dict("not_found_key", dict)
