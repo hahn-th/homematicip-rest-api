@@ -37,6 +37,7 @@ class AsyncHome(Home):
             clearConfig(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
+        LOGGER.debug("get_current_state")
         json_state = await self.download_configuration()
         return self.update_home(json_state, clearConfig)
 

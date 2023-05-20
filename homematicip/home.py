@@ -20,7 +20,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Weather(HomeMaticIPObject):
-    """ this class represents the weather of the home location"""
+    """this class represents the weather of the home location"""
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -94,7 +94,7 @@ class Location(HomeMaticIPObject):
 
 
 class Client(HomeMaticIPObject):
-    """A client is an app which has access to the access point. 
+    """A client is an app which has access to the access point.
     e.g. smartphone, 3th party apps, google home, conrad connect
     """
 
@@ -208,6 +208,8 @@ class Home(HomeMaticIPObject):
         self.clients = []
         #:List[Group]: a collection of all groups in the home
         self.groups = []
+        #:List[FunctionalChannel]: a collection of all channels in the home
+        self.channels = []
         #:List[Rule]: a collection of all rules in the home
         self.rules = []
         #: a collection of all functionalHomes in the home
@@ -283,9 +285,9 @@ class Home(HomeMaticIPObject):
 
     def get_current_state(self, clearConfig: bool = False):
         """downloads the current configuration and parses it into self
-           
+
         Args:
-            clearConfig(bool): if set to true, this function will remove all old objects 
+            clearConfig(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
         json_state = self.download_configuration()
@@ -310,6 +312,7 @@ class Home(HomeMaticIPObject):
             self.devices = []
             self.clients = []
             self.groups = []
+            self.channels = []
 
         self._get_devices(json_state)
         self._get_clients(json_state)
@@ -347,11 +350,17 @@ class Home(HomeMaticIPObject):
     def _get_devices(self, json_state):
         self.devices = [x for x in self.devices if x.id in json_state["devices"].keys()]
         for id_, raw in json_state["devices"].items():
-            _device = self.search_device_by_id(id_)
-            if _device:
-                _device.from_json(raw)
-            else:
-                self.devices.append(self._parse_device(raw))
+            try:
+                _device = self.search_device_by_id(id_)
+                if _device:
+                    _device.from_json(raw)
+                else:
+                    self.devices.append(self._parse_device(raw))
+            except Exception as err:
+                LOGGER.error(
+                    f"An exception in _get_devices (device-id {id_}) of type {type(err).__name__} occurred: {err}"
+                )
+                return None
 
     def _parse_device(self, json_state):
         try:
@@ -459,11 +468,11 @@ class Home(HomeMaticIPObject):
 
     def _load_functionalChannels(self):
         for d in self.devices:
-            d.load_functionalChannels(self.groups)
+            d.load_functionalChannels(self.groups, self.channels)
 
     def get_functionalHome(self, functionalHomeType: type) -> FunctionalHome:
-        """ gets the specified functionalHome
-        
+        """gets the specified functionalHome
+
         Args:
             functionalHome(type): the type of the functionalHome which should be returned
 
@@ -477,11 +486,11 @@ class Home(HomeMaticIPObject):
         return None
 
     def search_device_by_id(self, deviceID) -> Device:
-        """ searches a device by given id
-        
+        """searches a device by given id
+
         Args:
           deviceID(str): the device to search for
-          
+
         Returns
           the Device object or None if it couldn't find a device
         """
@@ -490,12 +499,21 @@ class Home(HomeMaticIPObject):
                 return d
         return None
 
+    def search_channel(self, deviceID, channelIndex) -> FunctionalChannel:
+        """searches a channel by given deviceID and channelIndex"""
+        foundD = [d for d in self.devices if d.id == deviceID]
+        d = foundD[0] if foundD else None
+        if d is not None:
+            foundC = [ch for ch in d.functionalChannels if ch.index == channelIndex]
+            return foundC[0] if foundC else None
+        return None
+
     def search_group_by_id(self, groupID) -> Group:
-        """ searches a group by given id
-        
+        """searches a group by given id
+
         Args:
           groupID(str): groupID the group to search for
-          
+
         Returns
           the group object or None if it couldn't find a group
         """
@@ -505,11 +523,11 @@ class Home(HomeMaticIPObject):
         return None
 
     def search_client_by_id(self, clientID) -> Client:
-        """ searches a client by given id
-        
+        """searches a client by given id
+
         Args:
           clientID(str): the client to search for
-        
+
         Returns
           the client object or None if it couldn't find a client
         """
@@ -519,11 +537,11 @@ class Home(HomeMaticIPObject):
         return None
 
     def search_rule_by_id(self, ruleID) -> Rule:
-        """ searches a rule by given id
-        
+        """searches a rule by given id
+
         Args:
           ruleID(str): the rule to search for
-        
+
         Returns
           the rule object or None if it couldn't find a rule
         """
@@ -533,8 +551,8 @@ class Home(HomeMaticIPObject):
         return None
 
     def get_security_zones_activation(self) -> (bool, bool):
-        """ returns the value of the security zones if they are armed or not
-        
+        """returns the value of the security zones if they are armed or not
+
         Returns
             internal
               True if the internal zone is armed
@@ -552,23 +570,23 @@ class Home(HomeMaticIPObject):
         return internal_active, external_active
 
     def set_security_zones_activation(self, internal=True, external=True):
-        """ this function will set the alarm system to armed or disable it
-        
+        """this function will set the alarm system to armed or disable it
+
         Args:
           internal(bool): activates/deactivates the internal zone
           external(bool): activates/deactivates the external zone
-        
+
         Examples:
           arming while being at home
-          
+
           >>> home.set_security_zones_activation(False,True)
-          
+
           arming without being at home
-          
+
           >>> home.set_security_zones_activation(True,True)
-          
+
           disarming the alarm system
-          
+
           >>> home.set_security_zones_activation(False,False)
         """
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
@@ -579,7 +597,7 @@ class Home(HomeMaticIPObject):
         return self._restCall("home/setLocation", json.dumps(data))
 
     def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
-        """ activate or deactivate if smoke detectors should "ring" during an alarm
+        """activate or deactivate if smoke detectors should "ring" during an alarm
 
         Args:
             activate(bool): True will let the smoke detectors "ring" during an alarm
@@ -590,7 +608,7 @@ class Home(HomeMaticIPObject):
         )
 
     def activate_absence_with_period(self, endtime: datetime):
-        """ activates the absence mode until the given time
+        """activates the absence mode until the given time
 
         Args:
             endtime(datetime): the time when the absence should automatically be disabled
@@ -601,12 +619,11 @@ class Home(HomeMaticIPObject):
         )
 
     def activate_absence_permanent(self):
-        """ activates the absence forever
-        """
+        """activates the absence forever"""
         return self._restCall("home/heating/activateAbsencePermanent")
 
     def activate_absence_with_duration(self, duration: int):
-        """ activates the absence mode for a given time
+        """activates the absence mode for a given time
 
         Args:
             duration(int): the absence duration in minutes
@@ -617,11 +634,11 @@ class Home(HomeMaticIPObject):
         )
 
     def deactivate_absence(self):
-        """ deactivates the absence mode immediately"""
+        """deactivates the absence mode immediately"""
         return self._restCall("home/heating/deactivateAbsence")
 
     def activate_vacation(self, endtime: datetime, temperature: float):
-        """ activates the vatation mode until the given time
+        """activates the vatation mode until the given time
 
         Args:
             endtime(datetime): the time when the vatation mode should automatically be disabled
@@ -634,11 +651,11 @@ class Home(HomeMaticIPObject):
         return self._restCall("home/heating/activateVacation", json.dumps(data))
 
     def deactivate_vacation(self):
-        """ deactivates the vacation mode immediately"""
+        """deactivates the vacation mode immediately"""
         return self._restCall("home/heating/deactivateVacation")
 
     def set_pin(self, newPin: str, oldPin: str = None) -> dict:
-        """ sets a new pin for the home
+        """sets a new pin for the home
 
         Args:
             newPin(str): the new pin
@@ -688,7 +705,7 @@ class Home(HomeMaticIPObject):
 
     def delete_group(self, group: Group):
         """deletes the given group from the cloud
-        
+
         Args:
             group(Group):the group to delete
         """
@@ -700,7 +717,7 @@ class Home(HomeMaticIPObject):
         return token
 
     def set_timezone(self, timezone: str):
-        """ sets the timezone for the AP. e.g. "Europe/Berlin" 
+        """sets the timezone for the AP. e.g. "Europe/Berlin"
         Args:
             timezone(str): the new timezone
         """
@@ -712,11 +729,11 @@ class Home(HomeMaticIPObject):
         return self._restCall("home/setPowerMeterUnitPrice", body=json.dumps(data))
 
     def set_zones_device_assignment(self, internal_devices, external_devices) -> dict:
-        """ sets the devices for the security zones
+        """sets the devices for the security zones
         Args:
             internal_devices(List[Device]): the devices which should be used for the internal zone
             external_devices(List[Device]):  the devices which should be used for the external(hull) zone
-        
+
         Returns:
             the result of _restCall
         """
@@ -728,9 +745,9 @@ class Home(HomeMaticIPObject):
         )
 
     def start_inclusion(self, deviceId):
-        """ start inclusion mode for specific device
+        """start inclusion mode for specific device
         Args:
-            deviceId: sgtin of device        
+            deviceId: sgtin of device
         """
         data = {"deviceId": deviceId}
         return self._restCall("home/startInclusionModeForDevice", body=json.dumps(data))
@@ -821,7 +838,7 @@ class Home(HomeMaticIPObject):
                 elif pushEventType == EventType.DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)
-                    obj.load_functionalChannels(self.groups)
+                    obj.load_functionalChannels(self.groups, self.channels)
                     self.devices.append(obj)
                     self.fire_create_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_CHANGED:
@@ -834,7 +851,7 @@ class Home(HomeMaticIPObject):
                         self.fire_create_event(data, event_type=pushEventType, obj=obj)
                     else:
                         obj.from_json(data)
-                    obj.load_functionalChannels(self.groups)
+                    obj.load_functionalChannels(self.groups, self.channels)
                     obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_REMOVED:
                     obj = self.search_device_by_id(event["id"])

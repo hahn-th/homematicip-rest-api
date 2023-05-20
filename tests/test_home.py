@@ -381,3 +381,10 @@ def test_home_getOAuthOTK(fake_home: Home):
         assert token.expirationTimestamp == datetime(
             2018, 12, 23, 11, 38, 21, 680000
         ) + timedelta(0, utc_offset)
+
+
+def test_search_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F71100000000000WWRC6", 10)
+        assert ch.index == 10
+        assert ch.device.id == "3014F71100000000000WWRC6"

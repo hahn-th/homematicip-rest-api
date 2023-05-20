@@ -5,6 +5,7 @@ from collections import Counter
 from typing import Iterable
 
 from homematicip.base.enums import *
+from homematicip.base.functionalChannels import FunctionalChannel
 from homematicip.base.helpers import get_functional_channel, get_functional_channels
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
 from homematicip.group import Group
@@ -54,12 +55,23 @@ class BaseDevice(HomeMaticIPObject):
         if "deviceArchetype" in js:
             self.deviceArchetype = DeviceArchetype.from_str(js["deviceArchetype"])
 
-    def load_functionalChannels(self, groups: Iterable[Group]):
+    def load_functionalChannels(
+        self, groups: Iterable[Group], channels: Iterable[FunctionalChannel]
+    ):
         """this function will load the functionalChannels into the device"""
-        self.functionalChannels = []
         for channel in self._rawJSONData["functionalChannels"].values():
-            fc = self._parse_functionalChannel(channel, groups)
-            self.functionalChannels.append(fc)
+            items = [
+                ch for ch in self.functionalChannels if ch.index == channel["index"]
+            ]
+            fc = items[0] if items else None
+
+            if fc is not None:
+                fc.from_json(channel, groups)
+            else:
+                fc = self._parse_functionalChannel(channel, groups)
+                channels.append(fc)
+                self.functionalChannels.append(fc)
+
         self.functionalChannelCount = Counter(
             x.functionalChannelType for x in self.functionalChannels
         )
@@ -70,13 +82,14 @@ class BaseDevice(HomeMaticIPObject):
             channelType = FunctionalChannelType.from_str(
                 json_state["functionalChannelType"]
             )
-            fc = self._typeFunctionalChannelMap[channelType]()
+            fc = self._typeFunctionalChannelMap[channelType](self, self._connection)
             fc.from_json(json_state, groups)
         except:
             fc = self._typeFunctionalChannelMap[
                 FunctionalChannelType.FUNCTIONAL_CHANNEL
-            ]()
+            ](self, self._connection)
             fc.from_json(json_state, groups)
+            fc.device = self
             LOGGER.warning(
                 "There is no class for functionalChannel '%s' yet",
                 json_state["functionalChannelType"],

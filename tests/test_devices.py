@@ -18,7 +18,7 @@ from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
 
 def test_getTypeFunctionalChannelMap(fake_home: Home):
     for channelType in TYPE_FUNCTIONALCHANNEL_MAP.keys():
-        fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType]()
+        fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType](None, None)
         assert fc != None
 
 
@@ -1668,6 +1668,17 @@ def test_door_lock_drive2(fake_home: Home):
         d = fake_home.search_device_by_id("3014F711000000000000DLD2")
         assert isinstance(d, DoorLockDrive)
         assert d.lockState == LockState.UNLOCKED
+        assert d.motorState == MotorState.STOPPED
+        assert d.door_lock_channel == 1
+
+        result = d.set_lock_state(LockState.OPEN)
+
+
+def test_door_lock_drive3(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000DLD3")
+        assert isinstance(d, DoorLockDrive)
+        assert d.lockState == LockState.LOCKED
         assert d.motorState == MotorState.STOPPED
         assert d.door_lock_channel == 1
 

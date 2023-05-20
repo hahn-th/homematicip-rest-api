@@ -8433,6 +8433,238 @@
       "type": "DOOR_LOCK_DRIVE",
       "updateState": "TRANSFERING_UPDATE"
     },
+    "3014F711000000000000DLD3": {
+      "availableFirmwareVersion": "1.4.12",
+      "connectionType": "HMIP_RF",
+      "deviceArchetype": "HMIP",
+      "firmwareVersion": "1.4.12",
+      "firmwareVersionInteger": 66572,
+      "functionalChannels": {
+        "0": {
+          "busConfigMismatch": null,
+          "coProFaulty": false,
+          "coProRestartNeeded": false,
+          "coProUpdateFailure": false,
+          "configPending": false,
+          "controlsMountingOrientation": null,
+          "daliBusState": null,
+          "defaultLinkedGroup": [],
+          "deviceCommunicationError": null,
+          "deviceDriveError": null,
+          "deviceDriveModeError": null,
+          "deviceId": "3014F711000000000000DLD3",
+          "deviceOperationMode": null,
+          "deviceOverheated": false,
+          "deviceOverloaded": false,
+          "devicePowerFailureDetected": false,
+          "deviceUndervoltage": false,
+          "displayContrast": null,
+          "dutyCycle": false,
+          "functionalChannelType": "DEVICE_OPERATIONLOCK",
+          "groupIndex": 0,
+          "groups": ["00000000-0000-0000-0000-000000000012"],
+          "index": 0,
+          "label": "",
+          "lockJammed": false,
+          "lowBat": false,
+          "mountingOrientation": null,
+          "multicastRoutingEnabled": false,
+          "operationLockActive": true,
+          "particulateMatterSensorCommunicationError": null,
+          "particulateMatterSensorError": null,
+          "powerShortCircuit": null,
+          "profilePeriodLimitReached": false,
+          "routerModuleEnabled": false,
+          "routerModuleSupported": false,
+          "rssiDeviceValue": -71,
+          "rssiPeerValue": -68,
+          "shortCircuitDataLine": null,
+          "supportedOptionalFeatures": {
+            "IFeatureBusConfigMismatch": false,
+            "IFeatureDeviceCoProError": false,
+            "IFeatureDeviceCoProRestart": false,
+            "IFeatureDeviceCoProUpdate": false,
+            "IFeatureDeviceCommunicationError": false,
+            "IFeatureDeviceDaliBusError": false,
+            "IFeatureDeviceDriveError": false,
+            "IFeatureDeviceDriveModeError": false,
+            "IFeatureDeviceIdentify": false,
+            "IFeatureDeviceOverheated": false,
+            "IFeatureDeviceOverloaded": false,
+            "IFeatureDeviceParticulateMatterSensorCommunicationError": false,
+            "IFeatureDeviceParticulateMatterSensorError": false,
+            "IFeatureDevicePowerFailure": false,
+            "IFeatureDeviceTemperatureHumiditySensorCommunicationError": false,
+            "IFeatureDeviceTemperatureHumiditySensorError": false,
+            "IFeatureDeviceTemperatureOutOfRange": false,
+            "IFeatureDeviceUndervoltage": false,
+            "IFeatureMulticastRouter": false,
+            "IFeaturePowerShortCircuit": false,
+            "IFeatureProfilePeriodLimit": true,
+            "IFeatureRssiValue": true,
+            "IFeatureShortCircuitDataLine": false,
+            "IOptionalFeatureDefaultLinkedGroup": false,
+            "IOptionalFeatureDeviceErrorLockJammed": true,
+            "IOptionalFeatureDeviceOperationMode": false,
+            "IOptionalFeatureDisplayContrast": false,
+            "IOptionalFeatureDutyCycle": true,
+            "IOptionalFeatureLowBat": true,
+            "IOptionalFeatureMountingOrientation": false
+          },
+          "temperatureHumiditySensorCommunicationError": null,
+          "temperatureHumiditySensorError": null,
+          "temperatureOutOfRange": false,
+          "unreach": false
+        },
+        "1": {
+          "acousticChannelstateDisabled": false,
+          "autoRelockDelay": 300.0,
+          "autoRelockEnabled": false,
+          "channelRole": "DOOR_LOCK_ACTUATOR",
+          "deviceId": "3014F711000000000000DLD3",
+          "doorHandleType": "LEVER_HANDLE",
+          "doorLockDirection": "LEFT",
+          "doorLockEndStopOffsetLocked": "ANGLE_RANGE_ONE",
+          "doorLockEndStopOffsetOpen": "ANGLE_RANGE_ONE",
+          "doorLockNeutralPosition": "HORIZONTAL",
+          "doorLockTurns": 1,
+          "functionalChannelType": "DOOR_LOCK_CHANNEL",
+          "groupIndex": 1,
+          "groups": [
+            "00000000-0000-0000-0000-000000000043",
+            "00000000-0000-0000-0000-000000000044",
+            "00000000-0000-0000-0000-000000000045"
+          ],
+          "holdTime": "STANDARD",
+          "index": 1,
+          "label": "",
+          "lockState": "LOCKED",
+          "motorState": "STOPPED",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureAcousticChannelstateDisabled": true,
+            "IOptionalFeatureDoorLockEndStopOffsetLocked": true,
+            "IOptionalFeatureDoorLockEndStopOffsetOpen": true,
+            "IOptionalFeatureHoldTime": true
+          }
+        },
+        "2": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": ["00000000-0000-0000-0000-000000000045"],
+          "index": 2,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "3": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": [
+            "00000000-0000-0000-0000-000000000045",
+            "00000000-0000-0000-0000-000000000046"
+          ],
+          "index": 3,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "4": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": ["00000000-0000-0000-0000-000000000045"],
+          "index": 4,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "5": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": ["00000000-0000-0000-0000-000000000045"],
+          "index": 5,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "6": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": ["00000000-0000-0000-0000-000000000045"],
+          "index": 6,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "7": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": ["00000000-0000-0000-0000-000000000045"],
+          "index": 7,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "8": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": ["00000000-0000-0000-0000-000000000045"],
+          "index": 8,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        },
+        "9": {
+          "authorized": true,
+          "deviceId": "3014F711000000000000DLD3",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 1,
+          "groups": [
+            "00000000-0000-0000-0000-000000000047",
+            "00000000-0000-0000-0000-000000000045"
+          ],
+          "index": 9,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        }
+      },
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "3014F711000000000000DLD3",
+      "label": "T\u00fcrschlossantrieb",
+      "lastStatusUpdate": 1684523721476,
+      "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+      "manuallyUpdateForced": true,
+      "manufacturerCode": 1,
+      "modelId": 423,
+      "modelType": "HmIP-DLD",
+      "oem": "eQ-3",
+      "permanentlyReachable": true,
+      "serializedGlobalTradeItemNumber": "3014F711000000000000DLD3",
+      "type": "DOOR_LOCK_DRIVE",
+      "updateState": "UP_TO_DATE"
+    },
     "3014F7110000000000000DLS": {
       "availableFirmwareVersion": "1.2.4",
       "connectionType": "HMIP_RF",
