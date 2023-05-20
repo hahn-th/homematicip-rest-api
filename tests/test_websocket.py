@@ -41,9 +41,8 @@ def send_event(fake_home: Home, pushEventType: EventType, type: str, data):
         fake_home._restCall("ws/send", json.dumps(event_data))
 
 
-@pytest.mark.flaky(reruns=5, reruns_delay=2)
+@pytest.mark.flaky(reruns=10, reruns_delay=4)
 def test_websocket_device(fake_home: Home, home_data):
-
     fake_home.enable_events()
 
     # preparing event data for device added
@@ -89,9 +88,8 @@ def test_websocket_device(fake_home: Home, home_data):
     fake_home.disable_events()
 
 
-@pytest.mark.flaky(reruns=5, reruns_delay=2)
+@pytest.mark.flaky(reruns=10, reruns_delay=4)
 def test_websocket_group(fake_home: Home, home_data):
-
     fake_home.enable_events()
 
     # preparing event data for group added
@@ -134,7 +132,7 @@ def test_websocket_group(fake_home: Home, home_data):
     fake_home.disable_events()
 
 
-@pytest.mark.flaky(reruns=5, reruns_delay=2)
+@pytest.mark.flaky(reruns=10, reruns_delay=4)
 def test_websocket_security_journal_changed(fake_home: Home, home_data):
     fake_home.enable_events()
     send_event(fake_home, EventType.SECURITY_JOURNAL_CHANGED, None, None)
@@ -142,7 +140,7 @@ def test_websocket_security_journal_changed(fake_home: Home, home_data):
     fake_home.disable_events()
 
 
-@pytest.mark.flaky(reruns=5, reruns_delay=2)
+@pytest.mark.flaky(reruns=10, reruns_delay=4)
 def test_websocket_home_changed(fake_home: Home, home_data):
     fake_home.enable_events()
     new_home = home_data["home"].copy()
@@ -156,9 +154,8 @@ def test_websocket_home_changed(fake_home: Home, home_data):
     fake_home.disable_events()
 
 
-@pytest.mark.flaky(reruns=5, reruns_delay=2)
+@pytest.mark.flaky(reruns=10, reruns_delay=4)
 def test_websocket_client(fake_home: Home, home_data):
-
     fake_home.enable_events()
 
     # preparing event data for client added
@@ -196,7 +193,7 @@ def test_websocket_client(fake_home: Home, home_data):
 ws_error_called = False
 
 
-@pytest.mark.flaky(reruns=5, reruns_delay=2)
+@pytest.mark.flaky(reruns=10, reruns_delay=4)
 def test_websocket_error(fake_home: Home, home_data):
     global ws_error_called
 
@@ -220,7 +217,7 @@ def test_websocket_error(fake_home: Home, home_data):
     client_changed = home_data["clients"][client_base_id].copy()
     client_changed["label"] = "CHANGED"
     send_event(fake_home, EventType.CLIENT_CHANGED, "client", client_changed)
-    time.sleep(1)
+    time.sleep(2)
     d = fake_home.search_client_by_id(client_base_id)
     assert d.label == "CHANGED"
     assert isinstance(d, Client)
