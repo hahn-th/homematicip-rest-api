@@ -79,16 +79,24 @@ A few examples:
 
 - [x] ALPHA-IP-RBG (Alpha IP Wall Thermostat Display)
 - [x] ALPHA-IP-RBGa (ALpha IP Wall Thermostat Display analog)
+- [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) *powered by HmIP
+- [ ] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) *powered by HmIP
+- [ ] ELV-SH-GVI (Garden valve interface) *powered by HmIP
+- [ ] ELV-SH-IRS8 (Infared Remote control - 8x channels) *powered by HmIP
+- [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) *powered by HmIP 
 - [x] HMIP-ASIR (Alarm Siren - indoor)
 - [x] HMIP-ASIR-B1 (Alarm Siren - indoor) _Silvercrest Edition_
 - [x] HMIP-ASIR-2 (Alarm Siren - indoor) New Version
 - [x] HMIP-ASIR-O (Alarm Siren - outdoor)
 - [x] HMIP-BBL (Blind Actuator for brand switches)
+- [ ] HMIP-BBL-2 (Blind Actuator for brand switches) New Version
 - [x] HMIP-BDT (Dimming Actuator for brand switches)
 - [x] HMIP-BRC2 (Remote Control for brand switches – 2x channels)
 - [x] HMIP-BROLL (Shutter Actuator - brand-mount)
+- [ ] HMIP-BROLL-2 (Shutter Actuator - brand-mount) New Version
 - [x] HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
 - [x] HMIP-BSM (Brand Switch and Meter Actuator)
+- [ ] HMIP-BSM-I (Brand Switch and Meter Actuator, International)
 - [x] HMIP-BWTH (Wall Thermostat Display with switching output – for brand switches, 230V)
 - [ ] HMIP-BWTH24 (Wall Thermostat Display with switching output – for brand switches, 24V)
 - [x] HMIP-DBB (Doorbell Push-Button)
@@ -103,11 +111,15 @@ A few examples:
 - [x] HMIP-eTRV-2 (Heating-Thermostat with Display) New Version
 - [ ] HMIP-eTRV-2-UK (UK Version not tested, but it should work)
 - [x] HMIP-eTRV-B (Heating-Thermostat basic with Display)
+- [ ] HMIP-eTRV-B-2 (Heating-Thermostat basic with Display) New Version
 - [ ] HMIP-eTRV-B-UK (UK Version not tested, but it should work)
 - [x] HMIP-eTRV-B1 (Heating-Thermostat basic with Display) _Silvercrest Edition_
 - [x] HMIP-eTRV-C (Heating-Thermostat compact without display)
 - [x] HMIP-eTRV-C2 (Heating-Thermostat compact without display) New Version
-- [x] HMIP-eTRV-E (Heating-Thermostat _New Generation_)
+- [ ] HmIP-eTRV-CL (Heating-thermostat compact with dispay)
+- [x] HMIP-eTRV-E (Heating-Thermostat Design Evo _New Generation_, white)
+- [ ] HMIP-eTRV-E-A (Heating-Thermostat Design Evo _New Generation_, anthracite)
+- [ ] HMIP-eTRV-E-S (Heating-Thermostat Design Evo _New Generation_, silver)
 - [x] HMIP-FAL230-C6 (Floor Heating Actuator – 6x channels, 230V)
 - [x] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 - [x] HMIP-FAL24-C6 (Floor Heating Actuator – 6x channels, 24V)
@@ -137,6 +149,7 @@ A few examples:
 - [x] HMIP-MOD-RC8 (Open Collector Module Sender - 8x)
 - [x] HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)
 - [ ] HMIP-MP3P (Combination Signalling Device MP3)
+- [ ] HMIP-P-DRG-DALI (DALI Lights Gateway)
 - [x] HMIP-PCBS (Switch Circuit Board - 1x channel)
 - [x] HMIP-PCBS2 (Switch Circuit Board - 2x channels)
 - [x] HMIP-PCBS-BAT (Switch Circuit Board with Battery - 1x channel)
@@ -144,7 +157,9 @@ A few examples:
 - [ ] HMIP-PDT-UK (UK Version not tested, but it should work)
 - [x] HMIP-PMFS (Plugable Power Supply Monitoring)
 - [x] HMIP-PS (Plugable Switch)
+- [ ] HMIP-PS-2 (Plugable Switch) New Version
 - [x] HMIP-PSM (Plugable Switch Measuring, Type F - Standard for Homematic)
+- [ ] HMIP-PSM-2 (Plugable Switch Measuring, Type F - Standard for Homematic) New Version
 - [x] HMIP-PSM-CH (Plugable Switch Measuring, Type J)
 - [ ] HMIP-PSM-IT (Type L not tested, but it should work)
 - [ ] HMIP-PSM-PE (Type E not tested, but it should work)
@@ -158,8 +173,11 @@ A few examples:
 - [x] HMIP-SLO (Light Sensor - outdoor)
 - [x] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 - [x] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
+- [ ] HMIP-SMI55-2 (Motion Detector with Brightness Sensor and Remote Control - 2x buttons) New Version
 - [x] HMIP-SMO (Motion Detector with Brightness Sensor - outdoor)
+- [ ] HMIP-SMO-2 (Motion Detector with Brightness Sensor - outdoor) New Version
 - [x] HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor, anthracite)
+- [ ] HMIP-SMO-A-2 (Motion Detector with Brightness Sensor - outdoor, anthracite) New Version
 - [x] HMIP-SPDR (Passage Sensor with Direction Recognition)
 - [x] HMIP-SPI (Presence Sensor - indoor)
 - [x] HMIP-SRH (Window Rotary Handle Sensor)
@@ -172,10 +190,13 @@ A few examples:
 - [x] HMIP-STV (Inclination and vibration Sensor)
 - [x] HMIP-SWD (Water Sensor)
 - [x] HMIP-SWDM (Door / Window Contact - magnetic)
+- [ ] HMIP-SWDM2 (Door / Window Contact - magnetic) New Version
 - [x] HMIP-SWDM-B2 (Door / Window Contact - magnetic) _Silvercrest Edition_
-- [x] HMIP-SWDO (Shutter Contact)
-- [x] HMIP-SWDO-I (Shutter Contact Invisible)
-- [x] HMIP-SWDO-PL (Shutter Contact Plus)
+- [x] HMIP-SWDO (Shutter Contact Optical)
+- [ ] HMIP-SWDO-2 (Shutter Contact Optical) New Version
+- [x] HMIP-SWDO-I (Shutter Contact Optical Invisible)
+- [x] HMIP-SWDO-PL (Shutter Contact Optical Plus)
+- [ ] HMIP-SWDO-PL-2 (Shutter Contact Optical Plus) New Version
 - [x] HMIP-SWO-B (Weather Sensor - Basic)
 - [x] HMIP-SWO-PL (Weather Sensor – Plus)
 - [x] HMIP-SWO-PR (Weather Sensor – Pro)
@@ -191,8 +212,10 @@ A few examples:
 - [ ] HMIP-WRCR (Wall-mount Remote Control - Rotary)
 - [ ] HMIP-WT (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 - [x] HMIP-WTH (Wall Mounted Thermostat Pro with Display)
-- [x] HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display) New Version
+- [ ] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really) 
+- [x] HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-B (Wall Mounted Thermostat basic without adjusting wheel)
+- [ ] HMIP-WTH-B-2 (Wall Mounted Thermostat basic without adjusting wheel) New Version
 
 ## Homematic IP Wired Devices (no radio signal):
 
@@ -210,10 +233,13 @@ A few examples:
 - [ ] HMIPW-FAL230-C10 (Homematic IP Wired Floor Heating Actuator – 10x channels, 230V)
 - [x] HMIPW-FALMOT-C12 (Homematic IP Wired Floor Heating Actuator – 12x channels, motorised)
 - [x] HMIPW-FIO6 (Homematic IP Wired IO Module flush-mount – 6x channels)
+- [ ] HMIPW-SCTHD (Homematic IP Wired CO2, Temperature and Humidity Sensor with Display)
 - [x] HMIPW-SMI55 (Homematic IP Wired Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
 - [ ] HMIPW-SPI (Homematic IP Wired Presence Sensor - indoor)
 - [ ] HMIPW-STH (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
 - [ ] HMIPW-STHD (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
+- [ ] HMIPW-WGD (Homematic IP Wired Wall-mount Glas Display - black edition)
+- [ ] HMIPW-WGD-PL (Homematic IP Wired Wall-mount Glas Display Play - black edition)
 - [x] HMIPW-WRC2 (Homematic IP Wired Wall-mount Remote Control - 2x channels)
 - [x] HMIPW-WRC6 (Homematic IP Wired Wall-mount Remote Control - 6x channels)
 - [ ] HMIPW-WTH (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
