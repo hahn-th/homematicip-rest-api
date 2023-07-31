@@ -83,7 +83,9 @@ A few examples:
 - [ ] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) *powered by HmIP
 - [ ] ELV-SH-GVI (Garden valve interface) *powered by HmIP
 - [ ] ELV-SH-IRS8 (Infared Remote control - 8x channels) *powered by HmIP
-- [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) *powered by HmIP 
+- [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) *powered by HmIP
+- [ ] ELV-SH-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V) *powered by HmIP
+- [ ] ELV-SH-WSC (2x Servo Controls, 5v - 12V) *powered by HmIP
 - [x] HMIP-ASIR (Alarm Siren - indoor)
 - [x] HMIP-ASIR-B1 (Alarm Siren - indoor) _Silvercrest Edition_
 - [x] HMIP-ASIR-2 (Alarm Siren - indoor) New Version
@@ -109,13 +111,15 @@ A few examples:
 - [x] HMIP-DSD-PCB (Door Signal Dector PCB)
 - [x] HMIP-eTRV (Heating-Thermostat with Display)
 - [x] HMIP-eTRV-2 (Heating-Thermostat with Display) New Version
+- [ ] HMIP-eTRV-2 I9F (Heating-Thermostat with Display) New Version
 - [ ] HMIP-eTRV-2-UK (UK Version not tested, but it should work)
 - [x] HMIP-eTRV-B (Heating-Thermostat basic with Display)
 - [ ] HMIP-eTRV-B-2 (Heating-Thermostat basic with Display) New Version
+- [ ] HMIP-eTRV-B-2 R4M (Heating-Thermostat basic with Display) New Version
 - [ ] HMIP-eTRV-B-UK (UK Version not tested, but it should work)
 - [x] HMIP-eTRV-B1 (Heating-Thermostat basic with Display) _Silvercrest Edition_
 - [x] HMIP-eTRV-C (Heating-Thermostat compact without display)
-- [x] HMIP-eTRV-C2 (Heating-Thermostat compact without display) New Version
+- [x] HMIP-eTRV-C-2 (Heating-Thermostat compact without display) New Version
 - [ ] HmIP-eTRV-CL (Heating-thermostat compact with dispay)
 - [x] HMIP-eTRV-E (Heating-Thermostat Design Evo _New Generation_, white)
 - [ ] HMIP-eTRV-E-A (Heating-Thermostat Design Evo _New Generation_, anthracite)
@@ -130,12 +134,14 @@ A few examples:
 - [x] HMIP-FCI6 (Contact Interface flush-mount – 6x channels)
 - [x] HMIP-FDT (Dimming Actuator - flush-mount)
 - [x] HMIP-FROLL (Shutter Actuator - flush-mount)
+- [x] HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)
 - [x] HMIP-FSM (Switch Actuator and Meter 5A – flush-mount)
 - [x] HMIP-FSM16 (Switch Actuator and Meter 16A – flush-mount)
-- [x] HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)
+- [ ] HMIP-FWI (Wiegand Interface)
 - [x] HMIP-HAP (Cloud Access Point)
 - [x] HMIP-HAP-B1 (Cloud Access Point) _Silvercrest Edition_
-- [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds)
+- [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds
+- [ ] HMIP-HDRC (Hunter Douglas & erfal window blinds remote control) 
 - [ ] HMIP-K-DRBLI4 (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
 - [ ] HMIP-K-DRSI1 (Actuator Inbound 230V – 1x channel) electrical DIN rail
 - [ ] HMIP-K-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
@@ -190,7 +196,7 @@ A few examples:
 - [x] HMIP-STV (Inclination and vibration Sensor)
 - [x] HMIP-SWD (Water Sensor)
 - [x] HMIP-SWDM (Door / Window Contact - magnetic)
-- [ ] HMIP-SWDM2 (Door / Window Contact - magnetic) New Version
+- [ ] HMIP-SWDM-2 (Door / Window Contact - magnetic) New Version
 - [x] HMIP-SWDM-B2 (Door / Window Contact - magnetic) _Silvercrest Edition_
 - [x] HMIP-SWDO (Shutter Contact Optical)
 - [ ] HMIP-SWDO-2 (Shutter Contact Optical) New Version
@@ -204,6 +210,7 @@ A few examples:
 - [ ] HMIP-USBSM (USB Switching Measurement Actuator)
 - [x] HMIP-WGC (Garage Door Button)
 - [x] HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)
+- [ ] HMIP-WKP (Keypad)
 - [x] HMIP-WLAN-HAP (WLAN Access Point)
 - [x] HMIP-WRC2 (Wall-mount Remote Control - 2x buttons)
 - [x] HMIP-WRC6 (Wall-mount Remote Control - 6x buttons)
@@ -216,6 +223,7 @@ A few examples:
 - [x] HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-B (Wall Mounted Thermostat basic without adjusting wheel)
 - [ ] HMIP-WTH-B-2 (Wall Mounted Thermostat basic without adjusting wheel) New Version
+- [ ] HMIP-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V)
 
 ## Homematic IP Wired Devices (no radio signal):
 
