@@ -126,7 +126,7 @@ class Device(BaseDevice):
         "IFeatureDeviceIdentify": [],
         "IFeatureProfilePeriodLimit": [],
         "IOptionalFeatureDisplayContrast": [],
-        "IOptionalFeatureMountingOrientation": [],
+        "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
     }
 
     def __init__(self, connection):
