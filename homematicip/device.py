@@ -127,6 +127,7 @@ class Device(BaseDevice):
         "IFeatureProfilePeriodLimit": [],
         "IOptionalFeatureDisplayContrast": [],
         "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
+        "IOptionalFeatureControlsMountingOrientation": ["controlsMountingOrientation"],
     }
 
     def __init__(self, connection):
