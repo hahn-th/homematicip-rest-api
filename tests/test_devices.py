@@ -569,6 +569,9 @@ def test_heating_thermostat_compact(fake_home: Home):
         "setPointTemperature(21.0) valveActualTemperature(21.6)"
     )
 
+    d = fake_home.search_device_by_id("3014F7110000000000ETRVCL")
+    assert isinstance(d, HeatingThermostatCompact)
+
 
 def test_heating_thermostat_evo(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000E70")
@@ -593,7 +596,7 @@ def test_heating_thermostat_evo(fake_home: Home):
     assert d.valveActualTemperature == 18.7
     assert str(d) == (
         "HmIP-eTRV-E Wohnzimmer 4 lowBat(False) unreach(False) rssiDeviceValue(-64) "
-        "rssiPeerValue(-67) configPending(False) dutyCycle(False) operationLockActive(False) "
+        "rssiPeerValue(-67) configPending(False) dutyCycle(False) mountingOrientation(RIGHT) operationLockActive(False) "
         "valvePosition(0.33) valveState(ADAPTION_DONE) temperatureOffset(0.5) "
         "setPointTemperature(19.0) valveActualTemperature(18.7)"
     )
