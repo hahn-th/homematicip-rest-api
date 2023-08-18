@@ -16,7 +16,7 @@ setup(
     long_description_content_type="text/markdown",
     description="An API for the homematicip cloud",
     author="Thomas Hahn",
-    author_email="homematicip-rest-api@thomas-hahn.org",
+    author_email="homematicip-rest-api@outlook.com",
     url="https://github.com/hahn-th/homematicip-rest-api",
     download_url="https://github.com/hahn-th/homematicip-rest-api/tarball/"
     + versioneer.get_version(),
