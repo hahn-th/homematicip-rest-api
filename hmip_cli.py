@@ -423,10 +423,11 @@ def main():
         print("Could not find configuration file. Script will exit")
         return
 
+    debug_level = args.debug_level if args.debug_level else _config.log_level
+    logging.basicConfig(level=debug_level)
+
     global logger
-    logger = create_logger(
-        args.debug_level if args.debug_level else _config.log_level, _config.log_file
-    )
+    logger = create_logger(debug_level, _config.log_file)
 
     home = Home()
     home.set_auth_token(_config.auth_token)
@@ -570,16 +571,12 @@ def main():
                     devices.append(d)
 
         for device in devices:
-
             if args.device_new_label:
                 device.set_label(args.device_new_label)
                 command_entered = True
 
             if args.device_switch_state is not None:
-                if (
-                    isinstance(device, Switch)
-                    or isinstance(device, Dimmer)
-                ):
+                if isinstance(device, Switch) or isinstance(device, Dimmer):
                     for c in args.channels:
                         res = device.set_switch_state(args.device_switch_state, c)
                         print("Result from channel {0}: {1}".format(c, json.dumps(res)))
@@ -592,8 +589,9 @@ def main():
                 command_entered = True
 
             if args.device_dim_level is not None:
-                if isinstance(device, Dimmer) or isinstance(device, TemperatureDifferenceSensor2):
-
+                if isinstance(device, Dimmer) or isinstance(
+                    device, TemperatureDifferenceSensor2
+                ):
                     for c in args.channels:
                         res = device.set_dim_level(args.device_dim_level, c)
                         print("Result from channel {0}: {1}".format(c, json.dumps(res)))
