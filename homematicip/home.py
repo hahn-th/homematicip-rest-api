@@ -6,151 +6,22 @@ from typing import List
 
 import websocket
 
+from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.enums import *
 from homematicip.base.helpers import bytes2str
 from homematicip.class_maps import *
+from homematicip.client import Client
 from homematicip.connection import Connection
 from homematicip.device import *
 from homematicip.EventHook import *
 from homematicip.group import *
+from homematicip.location import Location
+from homematicip.oauth_otk import OAuthOTK
 from homematicip.rule import *
 from homematicip.securityEvent import *
+from homematicip.weather import Weather
 
 LOGGER = logging.getLogger(__name__)
-
-
-class Weather(HomeMaticIPObject):
-    """this class represents the weather of the home location"""
-
-    def __init__(self, connection):
-        super().__init__(connection)
-        #:float: the current temperature
-        self.temperature = 0.0
-        #:WeatherCondition: the current weather
-        self.weatherCondition = WeatherCondition.UNKNOWN
-        #:datetime: the current datime
-        self.weatherDayTime = WeatherDayTime.DAY
-        #:float: the minimum temperature of the day
-        self.minTemperature = 0.0
-        #:float: the maximum temperature of the day
-        self.maxTemperature = 0.0
-        #:float: the current humidity
-        self.humidity = 0
-        #:float: the current windspeed
-        self.windSpeed = 0.0
-        #:int: the current wind direction in 360° where 0° is north
-        self.windDirection = 0
-        #:float: the current vapor
-        self.vaporAmount = 0.0
-
-    def from_json(self, js):
-        super().from_json(js)
-        self.temperature = js["temperature"]
-        self.weatherCondition = WeatherCondition.from_str(js["weatherCondition"])
-        self.weatherDayTime = WeatherDayTime.from_str(js["weatherDayTime"])
-        self.minTemperature = js["minTemperature"]
-        self.maxTemperature = js["maxTemperature"]
-        self.humidity = js["humidity"]
-        self.windSpeed = js["windSpeed"]
-        self.windDirection = js["windDirection"]
-        self.vaporAmount = js["vaporAmount"]
-
-    def __str__(self):
-        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) vaporAmount({}) windSpeed({}) windDirection({})".format(
-            self.temperature,
-            self.weatherCondition,
-            self.weatherDayTime,
-            self.minTemperature,
-            self.maxTemperature,
-            self.humidity,
-            self.vaporAmount,
-            self.windSpeed,
-            self.windDirection,
-        )
-
-
-class Location(HomeMaticIPObject):
-    """This class represents the possible location"""
-
-    def __init__(self, connection):
-        super().__init__(connection)
-        #:str: the name of the city
-        self.city = "London"
-        #:float: the latitude of the location
-        self.latitude = 51.509865
-        #:float: the longitue of the location
-        self.longitude = -0.118092
-
-    def from_json(self, js):
-        super().from_json(js)
-        self.city = js["city"]
-        self.latitude = js["latitude"]
-        self.longitude = js["longitude"]
-
-    def __str__(self):
-        return "city({}) latitude({}) longitude({})".format(
-            self.city, self.latitude, self.longitude
-        )
-
-
-class Client(HomeMaticIPObject):
-    """A client is an app which has access to the access point.
-    e.g. smartphone, 3th party apps, google home, conrad connect
-    """
-
-    def __init__(self, connection):
-        super().__init__(connection)
-        #:str: the unique id of the client
-        self.id = ""
-        #:str: a human understandable name of the client
-        self.label = ""
-        #:str: the home where the client belongs to
-        self.homeId = ""
-        #:str: the c2c service name
-        self.c2cServiceIdentifier = ""
-        #:ClientType: the type of this client
-        self.clientType = ClientType.APP
-
-    def from_json(self, js):
-        super().from_json(js)
-        self.id = js["id"]
-        self.label = js["label"]
-        self.homeId = js["homeId"]
-        self.clientType = ClientType.from_str(js["clientType"])
-        if "c2cServiceIdentifier" in js:
-            self.c2cServiceIdentifier = js["c2cServiceIdentifier"]
-
-    def __str__(self):
-        return "label({})".format(self.label)
-
-
-class OAuthOTK(HomeMaticIPObject):
-    def __init__(self, connection):
-        super().__init__(connection)
-        self.authToken = None
-        self.expirationTimestamp = None
-
-    def from_json(self, js):
-        super().from_json(js)
-        self.authToken = js["authToken"]
-        self.expirationTimestamp = self.fromtimestamp(js["expirationTimestamp"])
-
-
-class AccessPointUpdateState(HomeMaticIPObject):
-    def __init__(self, connection):
-        super().__init__(connection)
-        self.accessPointUpdateState = DeviceUpdateState.UP_TO_DATE
-        self.successfulUpdateTimestamp = None
-        self.updateStateChangedTimestamp = None
-
-    def from_json(self, js):
-        self.accessPointUpdateState = js["accessPointUpdateState"]
-        self.successfulUpdateTimestamp = self.fromtimestamp(
-            js["successfulUpdateTimestamp"]
-        )
-        self.updateStateChangedTimestamp = self.fromtimestamp(
-            js["updateStateChangedTimestamp"]
-        )
 
 
 class Home(HomeMaticIPObject):

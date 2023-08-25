@@ -55,7 +55,7 @@ class HomeMaticIPObject:
 
     def from_json(self, js):
         """this method will parse the homematicip object from a json object
-        
+
         Args:
           js: the json object to parse
         """
@@ -64,7 +64,7 @@ class HomeMaticIPObject:
         pass
 
     def fromtimestamp(self, timestamp):
-        """ internal helper function which will create a datetime object from a timestamp """
+        """internal helper function which will create a datetime object from a timestamp"""
         if timestamp is None or timestamp <= 0:
             return None
         return datetime.fromtimestamp(timestamp / 1000.0)
@@ -91,14 +91,15 @@ class HomeMaticIPObject:
 
         if dict_attr not in dict:
             return None
-        
+
         value = dict[dict_attr]
         if type:
             value = type.from_str(value)
+
         self.__dict__[attr] = value
         if addToStrOutput and attr not in self._dictAttributes:
             self._dictAttributes.append(attr)
 
     def str_from_attr_map(self) -> str:
-        """ this method will return a string with all key/values which were added via the set_attr_from_dict method """
+        """this method will return a string with all key/values which were added via the set_attr_from_dict method"""
         return "".join([f"{x}({self.__dict__[x]}) " for x in self._dictAttributes])[:-1]
