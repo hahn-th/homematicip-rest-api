@@ -7,6 +7,11 @@ from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
 
 import homematicip
+from homematicip.base.functionalChannels import (
+    BlindChannel,
+    ShadingChannel,
+    ShutterChannel,
+)
 from homematicip.base.helpers import handle_config
 from homematicip.device import *
 from homematicip.group import *
@@ -640,25 +645,32 @@ def main():
                 command_entered = True
 
             if args.device_shutter_level is not None:
-                if isinstance(device, FullFlushShutter):
-                    device.set_shutter_level(args.device_shutter_level)
-                else:
-                    logger.error(
-                        "can't set shutter level of device %s of type %s",
-                        device.id,
-                        device.deviceType,
-                    )
+                target_channels = _get_target_channels(args, device)
+                for fc in target_channels:
+                    if isinstance(fc, (ShutterChannel, BlindChannel)):
+                        fc.set_shutter_level(args.device_shutter_level)
+                    else:
+                        logger.error(
+                            "can't set shutter level of channel %s device %s of type %s",
+                            fc.index,
+                            device.id,
+                            device.deviceType,
+                        )
+
                 command_entered = True
 
             if args.device_shutter_stop is not None:
-                if isinstance(device, FullFlushShutter):
-                    device.set_shutter_stop()
-                else:
-                    logger.error(
-                        "can't stop shutter of device %s of type %s",
-                        device.id,
-                        device.deviceType,
-                    )
+                target_channels = _get_target_channels(args, device)
+                for fc in target_channels:
+                    if isinstance(fc, (ShutterChannel, ShadingChannel)):
+                        fc.set_shutter_stop()
+                    else:
+                        logger.error(
+                            "can't set shutter level of channel %s device %s of type %s",
+                            fc.index,
+                            device.id,
+                            device.deviceType,
+                        )
                 command_entered = True
 
             if args.device_display is not None:
@@ -859,6 +871,20 @@ def main():
 
     if not command_entered:
         parser.print_help()
+
+
+def _get_target_channels(args, device: Device):
+    target_channels_indices = []
+    if args.channels:
+        target_channels_indices = [*args.channels]
+    else:
+        target_channels_indices.append(1)
+
+    target_channels = [
+        device.functionalChannels[int(channel_index)]
+        for channel_index in target_channels_indices
+    ]
+    return target_channels
 
 
 def printEvents(eventList):
