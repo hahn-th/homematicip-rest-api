@@ -23,9 +23,9 @@ setup(
     keywords=["homematicip"],  # arbitrary keywords
     classifiers=[
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     install_requires=[
         "requests>=2.24.0",
@@ -39,7 +39,7 @@ setup(
         "homematicip_demo": ["json_data/*.json"],
     },  # Optional
     scripts=["hmip_cli.py", "hmip_generate_auth_token.py"],
-    python_requires="~=3.8",
+    python_requires="~=3.9",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
 )
