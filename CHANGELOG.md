@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.15] 2023-08-26
+
+### ADDED
+
+- :warning: Functions for interacting with the device (set-shutter-level i.E.) are added to functionalChannel classes. This is because actions are bound to channels, not the devices. This is the foundation for more changes in the future. These functions in device classes are deprecated soon.
+- Add field channelRole to MultiModeInputChannel
+- Default Channel for device HmIP-DLD is set to 1
+- Add support for IOptionalFeatureMountingOrientation
+- Add support for IOptionalFeatureControlsMountingOrientation
+- Add support for HmIP-eTRV-CL
+
+### FIXED
+
+- hmip_cli: Set basic logger level in hmip_cli based on --debug-level argument
+- hmip_cli: Use functions from functionalChannels to execute set_shutter_level
+- Fix several deprecation warnings
+
+### CHANGED
+
+- Bump request from 2.28.1 to 2.31.0
+- Bump aiohttp from 3.8.1 to 3.8.5
+- Drop support for Python 3.8
+- Support for Python 3.11 is added
+
 ## [1.0.14] 2023-03-04
 
 ### ADDED
@@ -592,7 +616,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...master
+[1.0.15]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...1.1.15
 [1.0.14]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...1.0.14
 [1.0.13]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...1.0.13
 [1.0.12]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.11...1.0.12
