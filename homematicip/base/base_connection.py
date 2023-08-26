@@ -49,7 +49,7 @@ class BaseConnection:
             ATTR_CLIENT_AUTH: None,
         }
         lang = "en_US"
-        def_locale = locale.getdefaultlocale()
+        def_locale = locale.getlocale()
         if def_locale != None and def_locale[0] != None:
             lang = def_locale[0]
 
