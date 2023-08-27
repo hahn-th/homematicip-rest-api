@@ -2332,7 +2332,7 @@ class TemperatureDifferenceSensor2(Device):
             self.set_attr_from_dict("temperatureExternalTwo", c)
 
 
-class DoorLockDrive(Device):
+class DoorLockDrive(OperationLockableDevice):
     """HmIP-DLD"""
 
     def __init__(self, connection):

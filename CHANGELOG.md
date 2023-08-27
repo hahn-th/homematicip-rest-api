@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - :warning: Functions for interacting with the device (set-shutter-level i.E.) are added to functionalChannel classes. This is because actions are bound to channels, not the devices. This is the foundation for more changes in the future. These functions in device classes are deprecated soon.
 - Add field channelRole to MultiModeInputChannel
 - Default Channel for device HmIP-DLD is set to 1
+- HmIP-DLD is a OperationLockableDevice
 - Add support for IOptionalFeatureMountingOrientation
 - Add support for IOptionalFeatureControlsMountingOrientation
 - Add support for HmIP-eTRV-CL
