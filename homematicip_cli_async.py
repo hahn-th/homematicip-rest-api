@@ -4,8 +4,8 @@ import json
 import logging
 import os
 from pprint import pprint
+import homematicip
 
-import config
 from homematicip.aio.home import AsyncHome
 from homematicip.base.base_connection import HmipConnectionError
 
@@ -24,9 +24,14 @@ def on_update_handler(data, event_type, obj):
 
 
 async def get_home(loop):
+    _config = homematicip.find_and_load_config_file()
+    if _config is None:
+        print("Could not find configuration file. Script will exit")
+        return
+
     home = AsyncHome(loop)
-    home.set_auth_token(config.AUTH_TOKEN)
-    await home.init(config.ACCESS_POINT)
+    home.set_auth_token(_config.auth_token)
+    await home.init(_config.access_point)
     return home
 
 
