@@ -652,3 +652,14 @@ class OpticalSignalBehaviour(AutoNameEnum):
     FLASH_MIDDLE = auto()
     BILLOW_MIDDLE = auto()
     OFF = auto()
+
+
+class CliActions(AutoNameEnum):
+    SET_DIM_LEVEL = auto()
+    SET_LOCK_STATE = auto()
+    SET_SHUTTER_LEVEL = auto()
+    SET_SHUTTER_STOP = auto()
+    SET_SLATS_LEVEL = auto()
+    TOGGLE_GARAGE_DOOR = auto()
+    SET_SWITCH_STATE = auto()
+    RESET_ENERGY_COUNTER = auto()

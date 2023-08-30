@@ -386,15 +386,23 @@ class BlindChannel(FunctionalChannel):
     def stop(self):
         """stops the current shutter operation
 
-        Args:
-            channelIndex(int): the channel to control
+        Returns:
+            the result of the _restCall
+        """
+        self.set_shutter_stop()
+
+    async def async_stop(self):
+        return self.async_set_shutter_stop()
+
+    def set_shutter_stop(self):
+        """stops the current operation
         Returns:
             the result of the _restCall
         """
         data = {"channelIndex": self.index, "deviceId": self.device.id}
         return self._restCall("device/control/stop", body=json.dumps(data))
 
-    async def async_stop(self):
+    async def async_set_shutter_stop(self):
         return await self._connection.api_call(*self.stop())
 
 

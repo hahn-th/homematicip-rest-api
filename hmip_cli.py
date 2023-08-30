@@ -13,6 +13,7 @@ from homematicip.base.functionalChannels import (
     ShutterChannel,
 )
 from homematicip.base.helpers import handle_config
+from homematicip.class_maps import FUNCTIONALCHANNEL_CLI_MAP, CliActions
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.home import Home
@@ -158,6 +159,13 @@ def main():
         help="Print channels or devices, which belongs to devices or groups.",
     )
     parser.add_argument(
+        "-ac",
+        "--print-allowed-commands",
+        action="store_true",
+        dest="print_allowed_commands",
+        help="Print allowed commands for channels of a device.",
+    )
+    parser.add_argument(
         "-r",
         "--rule",
         dest="rules",
@@ -226,12 +234,19 @@ def main():
         help="set shutter to level (0..1)",
     )
     group.add_argument(
+        "--set-slats-level",
+        action="store",
+        dest="device_slats_level",
+        help="set slats to level (0..1)",
+    )
+    group.add_argument(
         "--set-shutter-stop",
         action="store_true",
         dest="device_shutter_stop",
         help="stop shutter",
         default=None,
     )
+
     group.add_argument("--set-label", dest="device_new_label", help="set a new label")
     group.add_argument(
         "--set-display",
@@ -581,96 +596,79 @@ def main():
                 command_entered = True
 
             if args.device_switch_state is not None:
-                if isinstance(device, Switch) or isinstance(device, Dimmer):
-                    for c in args.channels:
-                        res = device.set_switch_state(args.device_switch_state, c)
-                        print("Result from channel {0}: {1}".format(c, json.dumps(res)))
-                else:
-                    logger.error(
-                        "can't turn on/off device %s of type %s",
-                        device.id,
-                        device.deviceType,
-                    )
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.SET_SWITCH_STATE,
+                    "set_switch_state",
+                    args.device_switch_state,
+                )
                 command_entered = True
 
             if args.device_dim_level is not None:
-                if isinstance(device, Dimmer) or isinstance(
-                    device, TemperatureDifferenceSensor2
-                ):
-                    for c in args.channels:
-                        res = device.set_dim_level(args.device_dim_level, c)
-                        print("Result from channel {0}: {1}".format(c, json.dumps(res)))
-                else:
-                    logger.error(
-                        "can't set dim level of device %s of type %s",
-                        device.id,
-                        device.deviceType,
-                    )
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.SET_DIM_LEVEL,
+                    "set_dim_level",
+                    args.device_dim_level,
+                )
                 command_entered = True
 
             if args.device_set_lock_state is not None:
                 targetLockState = LockState.from_str(args.device_set_lock_state)
                 if not targetLockState in LockState:
                     logger.error("%s is not a lock state.", args.device_set_lock_state)
-                elif isinstance(device, DoorLockDrive):
-                    res = None
-                    pin = args.pin[0] if len(args.pin) > 0 else ""
-                    if args.channels is not None:
-                        res = device.set_lock_state(
-                            targetLockState, pin, args.channels[0]
-                        )
-                    else:
-                        res = device.set_lock_state(targetLockState, pin)
 
-                    print("Result: " + json.dumps(res))
                 else:
-                    logger.error(
-                        "can't set lock level of device %s of type %s",
-                        device.id,
-                        device.deviceType,
+                    pin = args.pin[0] if len(args.pin) > 0 else ""
+                    target_channels = _get_target_channels(args, device)
+                    _execute_action_for_device(
+                        device,
+                        args,
+                        CliActions.SET_LOCK_STATE,
+                        "set_lock_state",
+                        targetLockState,
+                        pin,
                     )
                 command_entered = True
 
             if args.toggle_garage_door is not None:
-                command_entered = True
-                if isinstance(device, WallMountedGarageDoorController):
-                    for c in args.channels:
-                        device.send_start_impulse()
-                else:
-                    logger.error(
-                        "can't toggle garage door with device %s of type %s",
-                        device.id,
-                        device.deviceType,
-                    )
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.TOGGLE_GARAGE_DOOR,
+                    "send_start_impulse",
+                )
                 command_entered = True
 
             if args.device_shutter_level is not None:
-                target_channels = _get_target_channels(args, device)
-                for fc in target_channels:
-                    if isinstance(fc, (ShutterChannel, BlindChannel)):
-                        fc.set_shutter_level(args.device_shutter_level)
-                    else:
-                        logger.error(
-                            "can't set shutter level of channel %s device %s of type %s",
-                            fc.index,
-                            device.id,
-                            device.deviceType,
-                        )
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.SET_SHUTTER_LEVEL,
+                    "set_shutter_level",
+                    args.device_shutter_level,
+                )
+                command_entered = True
 
+            if args.device_slats_level is not None:
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.SET_SLATS_LEVEL,
+                    "set_slats_level",
+                    args.device_slats_level,
+                )
                 command_entered = True
 
             if args.device_shutter_stop is not None:
-                target_channels = _get_target_channels(args, device)
-                for fc in target_channels:
-                    if isinstance(fc, (ShutterChannel, ShadingChannel)):
-                        fc.set_shutter_stop()
-                    else:
-                        logger.error(
-                            "can't set shutter level of channel %s device %s of type %s",
-                            fc.index,
-                            device.id,
-                            device.deviceType,
-                        )
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.SET_SHUTTER_STOP,
+                    "set_shutter_stop",
+                )
                 command_entered = True
 
             if args.device_display is not None:
@@ -704,15 +702,12 @@ def main():
                 command_entered = True
 
             if args.reset_energy_counter:
-                if isinstance(device, SwitchMeasuring):
-                    device.reset_energy_counter()
-                    print("reset energycounter {}".format(device.id))
-                else:
-                    logger.error(
-                        "can't reset energy counter for device %s of type %s",
-                        device.id,
-                        device.deviceType,
-                    )
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.RESET_ENERGY_COUNTER,
+                    "reset_energy_counter",
+                )
                 command_entered = True
 
             if args.print_infos:
@@ -720,7 +715,35 @@ def main():
                 print(d)
                 print("------")
                 for fc in d.functionalChannels:
-                    print("   Ch {}: {}".format(fc.index, str(fc)))
+                    print(f"   Ch {fc.index}: {str(fc)}")
+                    if (
+                        args.print_allowed_commands
+                        and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+                    ):
+                        print(
+                            f"   -> Allowed commands: {FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]}"
+                        )
+
+            if args.print_allowed_commands and d is not None:
+                command_entered = True
+                print(f"Allowed commands for selected channels device {d.id}")
+                target_channels = []
+                if args.channels:
+                    target_channels = _get_target_channels(d, args.channels)
+                else:
+                    target_channels = d.functionalChannels
+
+                for fc in target_channels:
+                    print(
+                        f"   -> Ch {fc.index}, Type {fc.functionalChannelType} Allowed commands: ",
+                        end=" ",
+                    )
+                    if fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP:
+                        print(
+                            f"{ [str(val) for val in FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]]}"
+                        )
+                    else:
+                        print("None")
 
     if args.set_zones_device_assignment:
         internal = []
@@ -873,18 +896,81 @@ def main():
         parser.print_help()
 
 
-def _get_target_channels(args, device: Device):
+def _get_target_channel_indices(device: BaseDevice, channels: list = None) -> list:
+    """Get list with adressed channels"""
     target_channels_indices = []
-    if args.channels:
-        target_channels_indices = [*args.channels]
+    if channels:
+        target_channels_indices = [*channels]
     else:
         target_channels_indices.append(1)
+    return target_channels_indices
+
+
+def _get_target_channels(device: Device, channels: list = None):
+    target_channels_indices = _get_target_channel_indices(device, channels)
 
     target_channels = [
         device.functionalChannels[int(channel_index)]
         for channel_index in target_channels_indices
     ]
     return target_channels
+
+
+def _execute_action_for_device(
+    device, cli_args, action: CliActions, function_name: str, *args
+) -> None:
+    target_channels = _get_target_channels(cli_args, device)
+    for fc in target_channels:
+        _execute_cli_action(
+            fc,
+            action,
+            function_name,
+            *args,
+        )
+    command_entered = True
+
+
+def _execute_cli_action(
+    channel: FunctionalChannel, action: CliActions, callback_name: str, *args
+) -> bool:
+    """Execute the callback, if allowed"""
+    if _channel_supports_action(channel, action):
+        logger.debug(
+            f"{str(action)} allowed for channel {channel.functionalChannelType}"
+        )
+        print(
+            f"Execute {action} for channel {channel.functionalChannelType} (Index: {channel.index})",
+            end=" ... ",
+        )
+
+        callback = getattr(channel, callback_name)
+        if not callable(callback):
+            print(
+                f"Function {callback_name} could not be executed in channeltype {type(channel)}"
+            )
+            return False
+
+        result = callback(*args)
+        if result == "":
+            result = "OK"
+        print(f"{result}")
+        return True
+    else:
+        logger.warning(
+            f"{str(action)} IS NOT allowed for channel {channel.functionalChannelType}"
+        )
+        print(
+            f"{str(action)} is not supported by channel {channel.functionalChannelType} (Index: {channel.index})"
+        )
+        return False
+
+
+def _channel_supports_action(channel: FunctionalChannel, action: CliActions) -> bool:
+    """Check, if a channel could execute the given function"""
+    return (
+        channel.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+        and action in FUNCTIONALCHANNEL_CLI_MAP[channel.functionalChannelType]
+    )
 
 
 def printEvents(eventList):
