@@ -159,6 +159,13 @@ def main():
         help="Print channels or devices, which belongs to devices or groups.",
     )
     parser.add_argument(
+        "-ac",
+        "--print-allowed-commands",
+        action="store_true",
+        dest="print_allowed_commands",
+        help="Print allowed commands for channels of a device.",
+    )
+    parser.add_argument(
         "-r",
         "--rule",
         dest="rules",
@@ -708,7 +715,35 @@ def main():
                 print(d)
                 print("------")
                 for fc in d.functionalChannels:
-                    print("   Ch {}: {}".format(fc.index, str(fc)))
+                    print(f"   Ch {fc.index}: {str(fc)}")
+                    if (
+                        args.print_allowed_commands
+                        and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+                    ):
+                        print(
+                            f"   -> Allowed commands: {FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]}"
+                        )
+
+            if args.print_allowed_commands and d is not None:
+                command_entered = True
+                print(f"Allowed commands for selected channels device {d.id}")
+                target_channels = []
+                if args.channels:
+                    target_channels = _get_target_channels(d, args.channels)
+                else:
+                    target_channels = d.functionalChannels
+
+                for fc in target_channels:
+                    print(
+                        f"   -> Ch {fc.index}, Type {fc.functionalChannelType} Allowed commands: ",
+                        end=" ",
+                    )
+                    if fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP:
+                        print(
+                            f"{ [str(val) for val in FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]]}"
+                        )
+                    else:
+                        print("None")
 
     if args.set_zones_device_assignment:
         internal = []
@@ -861,12 +896,18 @@ def main():
         parser.print_help()
 
 
-def _get_target_channels(args, device: Device):
+def _get_target_channel_indices(device: BaseDevice, channels: list = None) -> list:
+    """Get list with adressed channels"""
     target_channels_indices = []
-    if args.channels:
-        target_channels_indices = [*args.channels]
+    if channels:
+        target_channels_indices = [*channels]
     else:
         target_channels_indices.append(1)
+    return target_channels_indices
+
+
+def _get_target_channels(device: Device, channels: list = None):
+    target_channels_indices = _get_target_channel_indices(device, channels)
 
     target_channels = [
         device.functionalChannels[int(channel_index)]
