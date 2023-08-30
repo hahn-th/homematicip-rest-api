@@ -236,3 +236,35 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.WEATHER_SENSOR_PLUS_CHANNEL: WeatherSensorPlusChannel,
     FunctionalChannelType.WEATHER_SENSOR_PRO_CHANNEL: WeatherSensorProChannel,
 }
+
+
+FUNCTIONALCHANNEL_CLI_MAP = {
+    FunctionalChannelType.DIMMER_CHANNEL: [
+        CliActions.SET_DIM_LEVEL,
+    ],
+    FunctionalChannelType.MULTI_MODE_INPUT_DIMMER_CHANNEL: [CliActions.SET_DIM_LEVEL],
+    FunctionalChannelType.NOTIFICATION_LIGHT_CHANNEL: [CliActions.SET_DIM_LEVEL],
+    FunctionalChannelType.DOOR_LOCK_CHANNEL: [CliActions.SET_LOCK_STATE],
+    FunctionalChannelType.IMPULSE_OUTPUT_CHANNEL: [CliActions.TOGGLE_GARAGE_DOOR],
+    FunctionalChannelType.BLIND_CHANNEL: [
+        CliActions.SET_SHUTTER_LEVEL,
+        CliActions.SET_SLATS_LEVEL,
+        CliActions.SET_SHUTTER_STOP,
+    ],
+    FunctionalChannelType.MULTI_MODE_INPUT_BLIND_CHANNEL: [
+        CliActions.SET_SHUTTER_LEVEL,
+        CliActions.SET_SLATS_LEVEL,
+        CliActions.SET_SHUTTER_STOP,
+    ],
+    FunctionalChannelType.SHUTTER_CHANNEL: [
+        CliActions.SET_SHUTTER_LEVEL,
+        CliActions.SET_SHUTTER_STOP,
+    ],
+    FunctionalChannelType.SHADING_CHANNEL: [CliActions.SET_SHUTTER_STOP],
+    FunctionalChannelType.SWITCH_CHANNEL: [CliActions.SET_SWITCH_STATE],
+    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: [CliActions.SET_SWITCH_STATE],
+    FunctionalChannelType.MULTI_MODE_INPUT_SWITCH_CHANNEL: [
+        CliActions.SET_SWITCH_STATE
+    ],
+    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: [CliActions.RESET_ENERGY_COUNTER],
+}
