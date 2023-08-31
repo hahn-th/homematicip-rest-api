@@ -7,13 +7,9 @@ from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
 
 import homematicip
-from homematicip.base.functionalChannels import (
-    BlindChannel,
-    ShadingChannel,
-    ShutterChannel,
-)
+
 from homematicip.base.helpers import handle_config
-from homematicip.class_maps import FUNCTIONALCHANNEL_CLI_MAP, CliActions
+from homematicip.class_maps import FUNCTIONALCHANNEL_CLI_MAP
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.home import Home
