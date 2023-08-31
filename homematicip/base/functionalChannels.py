@@ -351,6 +351,9 @@ class BlindChannel(FunctionalChannel):
         Returns:
             the result of the _restCall
         """
+        if shutterLevel is None:
+            shutterLevel = self.shutterLevel
+            
         data = {
             "channelIndex": self.index,
             "deviceId": self.device.id,
