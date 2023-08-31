@@ -15,7 +15,7 @@ from homematicip.group import *
 from homematicip.home import Home
 from homematicip.rule import *
 
-logger = None
+logger = logging.getLogger(__name__)
 
 
 def create_logger(level, file_name):
@@ -893,7 +893,7 @@ def main():
 
 
 def _get_target_channel_indices(device: BaseDevice, channels: list = None) -> list:
-    """Get list with adressed channels"""
+    """Get list with adressed channel indices. Is the channels list None, than the channel 1 is used."""
     target_channels_indices = []
     if channels:
         target_channels_indices = [*channels]
@@ -915,7 +915,7 @@ def _get_target_channels(device: Device, channels: list = None):
 def _execute_action_for_device(
     device, cli_args, action: CliActions, function_name: str, *args
 ) -> None:
-    target_channels = _get_target_channels(device, *cli_args.channels)
+    target_channels = _get_target_channels(device, cli_args.channels)
     for fc in target_channels:
         _execute_cli_action(
             fc,
@@ -923,7 +923,6 @@ def _execute_action_for_device(
             function_name,
             *args,
         )
-    command_entered = True
 
 
 def _execute_cli_action(
