@@ -919,7 +919,7 @@ def _get_target_channels(device: Device, channels: list = None):
 def _execute_action_for_device(
     device, cli_args, action: CliActions, function_name: str, *args
 ) -> None:
-    target_channels = _get_target_channels(cli_args, device)
+    target_channels = _get_target_channels(device, *cli_args.channels)
     for fc in target_channels:
         _execute_cli_action(
             fc,
