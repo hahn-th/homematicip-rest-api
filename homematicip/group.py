@@ -185,10 +185,9 @@ class SwitchingGroup(SwitchGroupBase):
         return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_slats_level(self, slatsLevel, shutterlevel=None):
-        
         if shutterlevel is None:
             shutterlevel = self.shutterLevel
-            
+
         data = {
             "groupId": self.id,
             "shutterLevel": shutterlevel,
@@ -243,9 +242,7 @@ class ShutterProfile(Group):
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
-        return self._restCall(
-            "group/switching/group_shutter_level", body=json.dumps(data)
-        )
+        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_slats_level(self, slatsLevel, shutterlevel=None):
         if shutterlevel is None:
@@ -349,8 +346,8 @@ class ExtendedLinkedShutterGroup(Group):
         return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
-        if shutterlevel is None:
-            shutterlevel = self.shutterLevel
+        if shutterLevel is None:
+            shutterLevel = self.shutterLevel
 
         data = {
             "groupId": self.id,

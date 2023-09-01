@@ -345,24 +345,24 @@ def test_shutter_profile(fake_home: Home):
             " shutterLevel(0.97) slatsLevel(None) profileMode(AUTOMATIC)"
         )
 
-        g.set_shutter_level(50)
+        g.set_shutter_level(0.5)
         g.set_profile_mode(ProfileMode.MANUAL)
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
-        assert g.shutterLevel == 50
+        assert g.shutterLevel == 0.5
         assert g.profileMode == ProfileMode.MANUAL
 
         assert str(g) == (
             "SHUTTER_PROFILE Rollladen Schiebetür processing(False)"
-            " shutterLevel(50) slatsLevel(None) profileMode(MANUAL)"
+            " shutterLevel(0.5) slatsLevel(None) profileMode(MANUAL)"
         )
 
-        g.set_slats_level(1.0, 20)
+        g.set_slats_level(1.0, 0.4)
 
         fake_home.get_current_state()
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000093")
         assert g.slatsLevel == 1.0
-        assert g.shutterLevel == 20
+        assert g.shutterLevel == 0.4
         g.set_shutter_stop()
 
 
