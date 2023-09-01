@@ -364,6 +364,12 @@ def main():
         default=None,
     )
     group.add_argument(
+        "--set-group-slats-level",
+        action="store",
+        dest="group_slats_level",
+        help="set all slats in group to level (0..1)",
+    )
+    group.add_argument(
         "--set-point-temperature",
         action="store",
         dest="group_set_point_temperature",
@@ -808,6 +814,10 @@ def main():
         if args.group_shutter_stop:
             command_entered = True
             group.set_shutter_stop()
+
+        if args.group_slats_level:
+            command_entered = True
+            group.set_slats_level(args.group_slats_level)
 
         if args.group_set_point_temperature:
             command_entered = True
