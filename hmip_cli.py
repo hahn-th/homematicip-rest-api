@@ -231,6 +231,7 @@ def main():
     )
     group.add_argument(
         "--set-slats-level",
+        nargs="+",
         action="store",
         dest="device_slats_level",
         help="set slats to level (0..1)",
@@ -365,6 +366,7 @@ def main():
     )
     group.add_argument(
         "--set-group-slats-level",
+        nargs="+",
         action="store",
         dest="group_slats_level",
         help="set all slats in group to level (0..1)",
@@ -655,12 +657,19 @@ def main():
                 command_entered = True
 
             if args.device_slats_level is not None:
+                slats_level = args.device_slats_level[0]
+                shutter_level = (
+                    args.device_slats_level[1]
+                    if len(args.device_slats_level) > 1
+                    else None
+                )
                 _execute_action_for_device(
                     device,
                     args,
                     CliActions.SET_SLATS_LEVEL,
                     "set_slats_level",
-                    args.device_slats_level,
+                    slats_level,
+                    shutter_level,
                 )
                 command_entered = True
 
@@ -816,8 +825,13 @@ def main():
             group.set_shutter_stop()
 
         if args.group_slats_level:
+            slats_level = args.group_slats_level[0]
+            shutter_level = (
+                args.group_slats_level[1] if len(args.group_slats_level) > 1 else None
+            )
+
             command_entered = True
-            group.set_slats_level(args.group_slats_level)
+            group.set_slats_level(slats_level, shutter_level)
 
         if args.group_set_point_temperature:
             command_entered = True
