@@ -159,7 +159,7 @@ def main():
         "--print-allowed-commands",
         action="store_true",
         dest="print_allowed_commands",
-        help="Print allowed commands for channels of a device.",
+        help="Print allowed commands for channels of a device. Use together with a device and optional combined with arguments --print-infos or single --channel.",
     )
     parser.add_argument(
         "-r",
@@ -234,7 +234,7 @@ def main():
         nargs="+",
         action="store",
         dest="device_slats_level",
-        help="set slats to level (0..1)",
+        help="set slats to level (0..1). Optional set shutter level with a second argument like 'set-slats-level 0.5 0.8'",
     )
     group.add_argument(
         "--set-shutter-stop",
@@ -369,7 +369,7 @@ def main():
         nargs="+",
         action="store",
         dest="group_slats_level",
-        help="set all slats in group to level (0..1)",
+        help="set all slats in group to level (0..1). Optional set shutter level with a second argument like 'set-slats-level 0.5 0.8'",
     )
     group.add_argument(
         "--set-point-temperature",

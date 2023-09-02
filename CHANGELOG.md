@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.16] 2023-09-02
+
+### ADDED
+
+- CLI: Add argument --set-group-slats-level to set slatsLevel of Groups
+- CLI: Add argument --set-slats-level to set slatsLevel of devices.
+- CLI: Add argument --print-allowed-commands (-ac) to print allowed commands of device channels
+
+### FIXED
+
+- Set shutterLevel to currentValue if shutterLevel is None in function set_slats_level of FunctionalChannel BlindChannel
+
 ## [1.0.15] 2023-08-26
 
 ### ADDED
@@ -617,7 +629,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.16...master
+[1.0.16]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...1.1.16
 [1.0.15]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...1.1.15
 [1.0.14]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...1.0.14
 [1.0.13]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...1.0.13
