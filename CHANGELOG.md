@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.0.16] 2023-09-02
+## [1.0.16] 2023-10-25
 
 ### ADDED
 
 - CLI: Add argument --set-group-slats-level to set slatsLevel of Groups
 - CLI: Add argument --set-slats-level to set slatsLevel of devices.
 - CLI: Add argument --print-allowed-commands (-ac) to print allowed commands of device channels
+- Add support for ENERGY FunctionalHomes
+- Add support for IOptionalFeatureFilteredMulticastRouter
 
 ### FIXED
 
