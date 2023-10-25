@@ -358,6 +358,7 @@ class AutomationRuleType(AutoNameEnum):
 class FunctionalHomeType(AutoNameEnum):
     ACCESS_CONTROL = auto()
     INDOOR_CLIMATE = auto()
+    ENERGY = auto()
     LIGHT_AND_SHADOW = auto()
     SECURITY_AND_ALARM = auto()
     WEATHER_AND_ENVIRONMENT = auto()

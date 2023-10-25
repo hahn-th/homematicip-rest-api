@@ -353,7 +353,7 @@ class BlindChannel(FunctionalChannel):
         """
         if shutterLevel is None:
             shutterLevel = self.shutterLevel
-            
+
         data = {
             "channelIndex": self.index,
             "deviceId": self.device.id,
@@ -1265,12 +1265,14 @@ class AccessControllerChannel(DeviceBaseChannel):
         self.dutyCycleLevel = 0.0
         self.accessPointPriority = 0
         self.signalBrightness = 0
+        self.filteredMulticastRoutingEnabled = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("dutyCycleLevel", js)
         self.set_attr_from_dict("accessPointPriority", js)
         self.set_attr_from_dict("signalBrightness", js)
+        self.set_attr_from_dict("filteredMulticastRoutingEnabled", js)
 
 
 class DeviceSabotageChannel(DeviceBaseChannel):

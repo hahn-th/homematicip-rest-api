@@ -62,6 +62,10 @@ class IndoorClimateHome(FunctionalHome):
         )
 
 
+class EnergyHome(FunctionalHome):
+    pass
+
+
 class WeatherAndEnvironmentHome(FunctionalHome):
     pass
 

@@ -128,6 +128,7 @@ class Device(BaseDevice):
         "IOptionalFeatureDisplayContrast": [],
         "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
         "IOptionalFeatureControlsMountingOrientation": ["controlsMountingOrientation"],
+        "IOptionalFeatureFilteredMulticastRouter": ["filteredMulticastRoutingEnabled"],
     }
 
     def __init__(self, connection):

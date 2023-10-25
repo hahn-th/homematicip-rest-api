@@ -16,6 +16,13 @@ from homematicip_demo.helper import (
 from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
 
 
+def test_access_controller_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711A000000BAD0CAAAA", 0)
+        assert isinstance(ch, AccessControllerChannel)
+        assert ch.filteredMulticastRoutingEnabled == True
+
+
 def test_acceleration_sensor_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000031", 1)
@@ -117,17 +124,17 @@ def test_device_base_floor_heating_channel(fake_home: Home):
 
 def test_device_operation_lock_channel(fake_home: Home):
     with no_ssl_verification():
-        ch = fake_home.search_channel("3014F7110000000000000015",0)
+        ch = fake_home.search_channel("3014F7110000000000000015", 0)
         assert isinstance(ch, DeviceOperationLockChannel)
 
         ch.set_operation_lock(False)
         fake_home.get_current_state()
-        ch = fake_home.search_channel("3014F7110000000000000015",0)
+        ch = fake_home.search_channel("3014F7110000000000000015", 0)
         assert ch.operationLockActive is False
-        
+
         ch.set_operation_lock(True)
         fake_home.get_current_state()
-        ch = fake_home.search_channel("3014F7110000000000000015",0)
+        ch = fake_home.search_channel("3014F7110000000000000015", 0)
         assert ch.operationLockActive is True
 
 

@@ -811,9 +811,7 @@ def main():
             for p in group.profiles:
                 isActive = p.id == group.activeProfile.id
                 print(
-                    "Index: {} - Id: {} - Name: {} - Active: {}".format(
-                        p.index, p.id, p.name, isActive
-                    )
+                    f"Index: {p.index} - Id: {p.id} - Name: {p.name} - Active: {isActive} (Enabled: {p.enabled}, Visible: {p.visible})"
                 )
 
         if args.group_shutter_level:

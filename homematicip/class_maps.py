@@ -163,6 +163,7 @@ TYPE_RULE_MAP = {AutomationRuleType.SIMPLE: SimpleRule}
 
 TYPE_FUNCTIONALHOME_MAP = {
     FunctionalHomeType.INDOOR_CLIMATE: IndoorClimateHome,
+    FunctionalHomeType.ENERGY: EnergyHome,
     FunctionalHomeType.LIGHT_AND_SHADOW: LightAndShadowHome,
     FunctionalHomeType.SECURITY_AND_ALARM: SecurityAndAlarmHome,
     FunctionalHomeType.WEATHER_AND_ENVIRONMENT: WeatherAndEnvironmentHome,
