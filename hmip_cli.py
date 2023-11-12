@@ -806,6 +806,12 @@ def main():
             logger.error("Could not find group %s", args.group)
             return
 
+        if args.device_switch_state is not None:
+            if isinstance(group, ExtendedLinkedSwitchingGroup):
+                group.set_switch_state(args.device_switch_state)
+
+            command_entered = True
+
         if args.group_list_profiles:
             command_entered = True
             for p in group.profiles:
