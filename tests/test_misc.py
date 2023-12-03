@@ -1,8 +1,3 @@
-import json
-from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock, Mock
-from aenum import AutoNumberEnum
-
 import pytest
 
 from homematicip.base.enums import *

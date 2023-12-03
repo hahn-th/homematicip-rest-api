@@ -4,7 +4,6 @@ async_timeout==4.0.2
 websockets==10.3
 aiohttp==3.9.0
 aiohttp_wsgi==0.10.0
-aenum==3.1.11
 pytest==7.1.2
 pytest-asyncio==0.18.3
 pytest-cov==3.0.0
