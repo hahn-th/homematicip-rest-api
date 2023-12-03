@@ -664,3 +664,4 @@ class CliActions(AutoNameEnum):
     TOGGLE_GARAGE_DOOR = auto()
     SET_SWITCH_STATE = auto()
     RESET_ENERGY_COUNTER = auto()
+    SEND_DOOR_COMMAND = auto()

@@ -9,7 +9,7 @@ from hmip_cli import (
     _execute_action_for_device,
     _execute_cli_action,
 )
-from homematicip.base.enums import CliActions
+from homematicip.base.enums import CliActions, DoorState
 from homematicip.base.helpers import anonymizeConfig, handle_config
 from homematicip.home import Home
 from homematicip_demo.helper import (
@@ -124,6 +124,23 @@ def test_execute_action_for_device_slats_level(fake_home: Home):
         assert d.functionalChannels[1].slatsLevel == 0.5
         assert d.functionalChannels[2].slatsLevel == 0.5
         assert d.functionalChannels[3].slatsLevel == 0.5
+
+
+def test_execute_action_for_device_send_door_command(fake_home: Home):
+    class Args:
+        def __init__(self) -> None:
+            self.channels = None
+
+    args = Args()
+    d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
+
+    with no_ssl_verification():
+        _execute_action_for_device(
+            d, args, CliActions.SEND_DOOR_COMMAND, "send_door_command", "OPEN"
+        )
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
+        assert d.functionalChannels[1].doorState == DoorState.OPEN
 
 
 def test_channel_supports_action(fake_home: Home):

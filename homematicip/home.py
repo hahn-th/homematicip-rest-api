@@ -463,6 +463,16 @@ class Home(HomeMaticIPObject):
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return self._restCall("home/security/setZonesActivation", json.dumps(data))
 
+    def set_silent_alarm(self, internal=True, external=True):
+        """this function will set the silent alarm for interal or external
+
+        Args:
+          internal(bool): activates/deactivates the silent alarm for internal zone
+          external(bool): activates/deactivates the silent alarm for the external zone
+        """
+        data = {"zonesSilentAlarm": {"EXTERNAL": external, "INTERNAL": internal}}
+        return self._restCall("home/security/setZonesSilentAlarm", json.dumps(data))
+
     def set_location(self, city, latitude, longitude):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
         return self._restCall("home/setLocation", json.dumps(data))

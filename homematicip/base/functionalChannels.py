@@ -531,6 +531,9 @@ class DoorChannel(FunctionalChannel):
         self.ventilationPositionSupported = js["ventilationPositionSupported"]
 
     def send_door_command(self, doorCommand=DoorCommand.STOP):
+        print(
+            f"Device: {self.device.id}; Channel: {self.index}; Command: {doorCommand}"
+        )
         data = {
             "channelIndex": self.index,
             "deviceId": self.device.id,

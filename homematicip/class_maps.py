@@ -247,6 +247,7 @@ FUNCTIONALCHANNEL_CLI_MAP = {
     FunctionalChannelType.NOTIFICATION_LIGHT_CHANNEL: [CliActions.SET_DIM_LEVEL],
     FunctionalChannelType.DOOR_LOCK_CHANNEL: [CliActions.SET_LOCK_STATE],
     FunctionalChannelType.IMPULSE_OUTPUT_CHANNEL: [CliActions.TOGGLE_GARAGE_DOOR],
+    FunctionalChannelType.DOOR_CHANNEL: [CliActions.SEND_DOOR_COMMAND],
     FunctionalChannelType.BLIND_CHANNEL: [
         CliActions.SET_SHUTTER_LEVEL,
         CliActions.SET_SLATS_LEVEL,

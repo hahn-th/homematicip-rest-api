@@ -174,9 +174,17 @@ def main():
         "--toggle-garage-door",
         action="store_true",
         dest="toggle_garage_door",
-        help="HmIP WGC Toggle Garage Door",
+        help="Toggle Garage Door for devices with IMPULSE_OUTPUT_CHANNEL channel like HmIP-WGC ",
         default=None,
     )
+    group.add_argument(
+        "--send-door-command",
+        nargs="?",
+        dest="device_send_door_command",
+        help="Control door for all devices, which has a channel called Door_Channel like Hmip-MOD-HO. Allowed parameters are OPEN, CLOSE, STOP and PARTIAL_OPEN.",
+        default=None,
+    )
+
     group.add_argument(
         "--turn-on",
         action="store_true",
@@ -459,6 +467,9 @@ def main():
 
     command_entered = False
     if args.server_config:
+        print(
+            f"Running homematicip-rest-api with fake server configuration {args.server_config}"
+        )
         global server_config
         server_config = args.server_config
         home.download_configuration = fake_download_configuration
@@ -643,6 +654,16 @@ def main():
                     args,
                     CliActions.TOGGLE_GARAGE_DOOR,
                     "send_start_impulse",
+                )
+                command_entered = True
+
+            if args.device_send_door_command is not None:
+                _execute_action_for_device(
+                    device,
+                    args,
+                    CliActions.SEND_DOOR_COMMAND,
+                    "send_door_command",
+                    args.device_send_door_command,
                 )
                 command_entered = True
 
