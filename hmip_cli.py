@@ -2,9 +2,10 @@
 import logging
 import sys
 import time
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from collections import namedtuple
 from logging.handlers import TimedRotatingFileHandler
+from importlib.metadata import version
 
 import homematicip
 
@@ -45,7 +46,10 @@ def fake_download_configuration():
 
 
 def main():
-    parser = ArgumentParser(description="a cli wrapper for the homematicip API")
+    parser = ArgumentParser(
+        description=f"a cli wrapper for the homematicip API\nVersion: {homematicip.__version__}\nPython: {sys.version} ",
+        formatter_class=RawDescriptionHelpFormatter,
+    )
     parser.add_argument(
         "--config_file",
         type=str,
@@ -66,7 +70,7 @@ def main():
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s {}".format(homematicip.__version__),
+        version="%(prog)s {}\nPython: {}".format(homematicip.__version__, sys.version),
     )
 
     group = parser.add_argument_group("Display Configuration")
