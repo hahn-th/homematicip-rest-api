@@ -1,4 +1,3 @@
 include README.md LICENSE.txt
-include versioneer.py
 include homematicip/_version.py
 include homematicip_demo/json_data/*.json
