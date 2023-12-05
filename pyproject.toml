@@ -22,16 +22,19 @@ classifiers=[
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11"
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12"
 ]
 keywords = ["homematicip cloud","homematicip"]
 dynamic = [
     "version"
 ]
+license = {file = "LICENSE.txt"}
 
 [project.scripts]
-hmip_cli = "hmip_cli.py"
-hmip_generate_auth_token = "hmip_generate_auth_token.py"
+hmip_cli = "scripts:hmip_cli"
+hmip_generate_auth_token = "scripts:hmip_generate_auth_token"
+blub = "scripts:blub"
 
 [project.urls]
 Homepage = "https://github.com/hahn-th/homematicip-rest-api"
