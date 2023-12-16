@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-    "setuptools>=60",
+    "setuptools>=61",
     "setuptools-scm>=8.0"]
 
 [project]
@@ -32,9 +32,9 @@ dynamic = [
 license = {file = "LICENSE.txt"}
 
 [project.scripts]
-hmip_cli = "scripts:hmip_cli"
-hmip_generate_auth_token = "scripts:hmip_generate_auth_token"
-blub = "scripts:blub"
+hmip_cli = "homematicip:hmip_cli"
+hmip_generate_auth_token = "homematicip:hmip_generate_auth_token"
+blub = "homematicip.__main__:blub"
 
 [project.urls]
 Homepage = "https://github.com/hahn-th/homematicip-rest-api"
@@ -43,7 +43,7 @@ Issues = "https://github.com/hahn-th/homematicip-rest-api/issues"
 Changelog = "https://github.com/hahn-th/homematicip-rest-api/blob/master/CHANGELOG.md"
 
 [tool.setuptools_scm]
-version_file = "homematicip/_version.py"
+version_file = "src/homematicip/_version.py"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
