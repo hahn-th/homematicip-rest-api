@@ -486,6 +486,12 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
         return await self._connection.api_call(*self.set_operation_lock(operationLock))
 
 
+class DeviceOperationLockChannelWithSabotage(DeviceOperationLockChannel):
+    """this is the representation of the DeviceOperationLockChannelWithSabotage channel"""
+
+    pass
+
+
 class DimmerChannel(FunctionalChannel):
     """this is the representative of the DIMMER_CHANNEL channel"""
 
@@ -598,6 +604,61 @@ class DoorLockChannel(FunctionalChannel):
             the result of the _restCall
         """
         return await self._connection.api_call(*self.set_lock_state(doorLockState, pin))
+
+
+class EnergySensorInterfaceChannel(FunctionalChannel):
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.connectedEnergySensorType = None
+        self.currentGasFlow = None
+        self.currentPowerConsumption = None
+        self.energyCounterOne = 0.0
+        self.energyCounterOneType = ""
+        self.energyCounterThree = 0.0
+        self.energyCounterThreeType = ""
+        self.energyCounterTwo = 0.0
+        self.energyCounterTwoType = ""
+        self.gasVolume = None
+        self.gasVolumePerImpulse = None
+        self.impulsesPerKWH = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.connectedEnergySensorType = js["connectedEnergySensorType"]
+        self.currentGasFlow = js["currentGasFlow"]
+        self.currentPowerConsumption = js["currentPowerConsumption"]
+        self.energyCounterOne = js["energyCounterOne"]
+        self.energyCounterOneType = js["energyCounterOneType"]
+        self.energyCounterThree = js["energyCounterThree"]
+        self.energyCounterThreeType = js["energyCounterThreeType"]
+        self.energyCounterTwo = js["energyCounterTwo"]
+        self.energyCounterTwoType = js["energyCounterTwoType"]
+        self.gasVolume = js["gasVolume"]
+        self.gasVolumePerImpulse = js["gasVolumePerImpulse"]
+        self.impulsesPerKWH = js["impulsesPerKWH"]
+
+    #       "channelRole": null,
+    #       "connectedEnergySensorType": "ES_IEC",
+    #       "currentGasFlow": null,
+    #       "currentPowerConsumption": null,
+    #       "energyCounterOne": 194.0,
+    #       "energyCounterOneType": "ENERGY_COUNTER_USAGE_HIGH_TARIFF",
+    #       "energyCounterThree": 3.0,
+    #       "energyCounterThreeType": "ENERGY_COUNTER_INPUT_SINGLE_TARIFF",
+    #       "energyCounterTwo": 0.0,
+    #       "energyCounterTwoType": "ENERGY_COUNTER_USAGE_LOW_TARIFF",
+    #       "gasVolume": null,
+    #       "gasVolumePerImpulse": 0.01,
+    #       "impulsesPerKWH": 10000,
+    # "IOptionalFeatureCounterOffset": false,
+    # "IOptionalFeatureCurrentGasFlow": false,
+    # "IOptionalFeatureCurrentPowerConsumption": true,
+    # "IOptionalFeatureEnergyCounterOne": true,
+    # "IOptionalFeatureEnergyCounterThree": true,
+    # "IOptionalFeatureEnergyCounterTwo": true,
+    # "IOptionalFeatureGasVolume": false,
+    # "IOptionalFeatureGasVolumePerImpulse": false,
+    # "IOptionalFeatureImpulsesPerKWH": false
 
 
 class ImpulseOutputChannel(FunctionalChannel):

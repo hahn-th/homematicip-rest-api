@@ -889,6 +889,12 @@ async def test_door_bell_contact_interface(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_energy_sensor_interface_channel(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000ESI")
+    assert isinstance(d, AsyncEnergySensorsInterface)
+
+
+@pytest.mark.asyncio
 async def test_multibox_io(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F711ABCD0ABCD000002")
     assert isinstance(d, AsyncMultiIOBox)

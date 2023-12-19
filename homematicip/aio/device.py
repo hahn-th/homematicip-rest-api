@@ -725,3 +725,7 @@ class AsyncDoorBellButton(DoorBellButton, AsyncDevice):
 
 class AsyncDoorBellContactInterface(DoorBellContactInterface, AsyncDevice):
     pass
+
+
+class AsyncEnergySensorsInterface(EnergySensorsInterface, AsyncDevice):
+    pass

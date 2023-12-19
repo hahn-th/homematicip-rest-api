@@ -129,6 +129,9 @@ class Device(BaseDevice):
         "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
         "IOptionalFeatureControlsMountingOrientation": ["controlsMountingOrientation"],
         "IOptionalFeatureFilteredMulticastRouter": ["filteredMulticastRoutingEnabled"],
+        "IFeatureDeviceSensorError": ["sensorError"],
+        "IFeatureDeviceSensorCommunicationError": ["sensorCommunicationError"],
+        "IOptionalFeatureDeviceErrorLockJammed": ["lockJammed"]
     }
 
     def __init__(self, connection):
@@ -2402,3 +2405,10 @@ class DoorLockSensor(Device):
             self.set_attr_from_dict("doorLockTurns", c)
             self.set_attr_from_dict("lockState", c, LockState)
             self.door_lock_channel = c["index"]
+
+
+class EnergySensorsInterface(Device):
+    """HmIP-ESI"""
+
+    def __init__(self, connection):
+        super().__init__(connection)

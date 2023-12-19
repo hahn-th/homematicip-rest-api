@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.0.17] 2023-12-19
+
+### ADDED
+
+- Add support for optional feature IFeatureDeviceSensorError
+- Add support for optional feature IFeatureDeviceSensorCommunicationError
+- Add support for optional feature IOptionalFeatureDeviceErrorLockJammed
+- Add support for device HmIP-ESI
+- Add support for function channel DeviceOperationLockWithSabotage
+
 ## [1.0.16] 2023-10-25
 
 ### ADDED
