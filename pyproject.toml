@@ -31,11 +31,6 @@ dynamic = [
 ]
 license = {file = "LICENSE.txt"}
 
-# [project.scripts]
-# hmip_cli = "homematicip:hmip_cli"
-# hmip_generate_auth_token = "homematicip:hmip_generate_auth_token"
-# blub = "homematicip.__main__:blub"
-
 [project.urls]
 Homepage = "https://github.com/hahn-th/homematicip-rest-api"
 Repository = "https://github.com/hahn-th/homematicip-rest-api.git"
@@ -44,6 +39,8 @@ Changelog = "https://github.com/hahn-th/homematicip-rest-api/blob/master/CHANGEL
 
 [tool.setuptools_scm]
 version_file = "src/homematicip/_version.py"
+version_scheme = "no-guess-dev"
+local_scheme = "no-local-version"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
