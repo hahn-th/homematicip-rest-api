@@ -9,4 +9,3 @@ pytest-asyncio==0.18.3
 pytest-cov==3.0.0
 pytest_aiohttp==1.0.4
 pytest-rerunfailures==10.2
-versioneer==0.22
