@@ -1,2 +1,0 @@
-def blub():
-    print("hallo")

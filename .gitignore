@@ -113,3 +113,4 @@ venv*/
 
 #own config file
 homematic.ini
+src/homematicip/_version.py

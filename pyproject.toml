@@ -31,10 +31,10 @@ dynamic = [
 ]
 license = {file = "LICENSE.txt"}
 
-[project.scripts]
-hmip_cli = "homematicip:hmip_cli"
-hmip_generate_auth_token = "homematicip:hmip_generate_auth_token"
-blub = "homematicip.__main__:blub"
+# [project.scripts]
+# hmip_cli = "homematicip:hmip_cli"
+# hmip_generate_auth_token = "homematicip:hmip_generate_auth_token"
+# blub = "homematicip.__main__:blub"
 
 [project.urls]
 Homepage = "https://github.com/hahn-th/homematicip-rest-api"
