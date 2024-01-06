@@ -177,6 +177,35 @@ def test_door_lock_channel(fake_home: Home):
         assert ch.lockState == LockState.OPEN
 
 
+def test_energy_sensor_interface_channel(fake_home: Home):
+    ch = fake_home.search_channel("3014F7110000000000000ESI", 1)
+
+    assert isinstance(ch, EnergySensorInterfaceChannel)
+    assert ch.connectedEnergySensorType == "ES_IEC"
+    assert ch.energyCounterOne == 194.0
+    assert ch.energyCounterOneType == "ENERGY_COUNTER_USAGE_HIGH_TARIFF"
+    assert ch.energyCounterTwo == 0.0
+    assert ch.energyCounterTwoType == "ENERGY_COUNTER_USAGE_LOW_TARIFF"
+    assert ch.energyCounterThree == 3.0
+    assert ch.energyCounterThreeType == "ENERGY_COUNTER_INPUT_SINGLE_TARIFF"
+    assert ch.gasVolume == None
+    assert ch.gasVolumePerImpulse == 0.01
+    assert ch.impulsesPerKWH == 10000
+
+    ch = fake_home.search_channel("3014F711000000000000ESI2", 1)
+    assert isinstance(ch, EnergySensorInterfaceChannel)
+    assert ch.connectedEnergySensorType == "ES_IEC"
+    assert ch.energyCounterOne == 5272.2121
+    assert ch.energyCounterOneType == "ENERGY_COUNTER_USAGE_HIGH_TARIFF"
+    assert ch.energyCounterTwo == 3256.1887
+    assert ch.energyCounterTwoType == "ENERGY_COUNTER_USAGE_LOW_TARIFF"
+    assert ch.energyCounterThree == None
+    assert ch.energyCounterThreeType == "UNKNOWN"
+    assert ch.gasVolume == None
+    assert ch.gasVolumePerImpulse == 0.01
+    assert ch.impulsesPerKWH == 10000
+
+
 def test_floor_terminal_block_mechanic_channel(fake_home: Home):
     ch = fake_home.search_channel("3014F7110000000000000049", 12)
     assert isinstance(ch, FloorTerminalBlockMechanicChannel)

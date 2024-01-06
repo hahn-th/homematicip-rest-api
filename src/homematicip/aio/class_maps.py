@@ -30,6 +30,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DOOR_BELL_CONTACT_INTERFACE: AsyncDoorBellContactInterface,
     DeviceType.DOOR_LOCK_DRIVE: AsyncDoorLockDrive,
     DeviceType.DOOR_LOCK_SENSOR: AsyncDoorLockSensor,
+    DeviceType.ENERGY_SENSORS_INTERFACE: AsyncEnergySensorsInterface,
     DeviceType.FLOOR_TERMINAL_BLOCK_10: AsyncFloorTerminalBlock10,
     DeviceType.FLOOR_TERMINAL_BLOCK_12: AsyncFloorTerminalBlock12,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: AsyncFloorTerminalBlock6,
