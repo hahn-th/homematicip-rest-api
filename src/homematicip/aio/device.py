@@ -232,8 +232,7 @@ class AsyncFloorTerminalBlock12(FloorTerminalBlock12, AsyncDevice):
                     minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0
         AsyncFloorTerminalBlock12
                 Returns:
-                    the result of the _restCall
-        """
+                    the result of the _restCall"""
         await self._connection.api_call(
             *super().set_minimum_floor_heating_valve_position(
                 minimumFloorHeatingValvePosition=minimumFloorHeatingValvePosition
