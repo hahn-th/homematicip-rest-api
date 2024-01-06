@@ -131,7 +131,7 @@ class Device(BaseDevice):
         "IOptionalFeatureFilteredMulticastRouter": ["filteredMulticastRoutingEnabled"],
         "IFeatureDeviceSensorError": ["sensorError"],
         "IFeatureDeviceSensorCommunicationError": ["sensorCommunicationError"],
-        "IOptionalFeatureDeviceErrorLockJammed": ["lockJammed"]
+        "IOptionalFeatureDeviceErrorLockJammed": ["lockJammed"],
     }
 
     def __init__(self, connection):

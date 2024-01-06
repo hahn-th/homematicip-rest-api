@@ -1,14 +1,26 @@
+import importlib
 import json
 import logging
 
-from hmip_cli import (
-    _channel_supports_action,
-    getRssiBarString,
-    _get_target_channel_indices,
-    _get_target_channels,
-    _execute_action_for_device,
-    _execute_cli_action,
-)
+from os.path import join, abspath, dirname
+
+
+def load_source(modname, filename):
+    loader = importlib.machinery.SourceFileLoader(modname, filename)
+    spec = importlib.util.spec_from_file_location(modname, filename, loader=loader)
+    module = importlib.util.module_from_spec(spec)
+    # The module is always executed and not cached in sys.modules.
+    # Uncomment the following line to cache the module.
+    # sys.modules[module.__name__] = module
+    loader.exec_module(module)
+    return module
+
+
+# Load module directly to test it
+module_path = abspath(join(dirname(__file__), "../bin/hmip_cli.py"))
+hmip_cli = load_source("hmip_cli", module_path)
+
+
 from homematicip.base.enums import CliActions, DoorState
 from homematicip.base.helpers import anonymizeConfig, handle_config
 from homematicip.home import Home
@@ -19,17 +31,17 @@ from homematicip_demo.helper import (
 
 
 def test_getRssiBarString():
-    assert getRssiBarString(-50) == "[**********]"
-    assert getRssiBarString(-55) == "[*********_]"
-    assert getRssiBarString(-60) == "[********__]"
-    assert getRssiBarString(-65) == "[*******___]"
-    assert getRssiBarString(-70) == "[******____]"
-    assert getRssiBarString(-75) == "[*****_____]"
-    assert getRssiBarString(-80) == "[****______]"
-    assert getRssiBarString(-85) == "[***_______]"
-    assert getRssiBarString(-90) == "[**________]"
-    assert getRssiBarString(-95) == "[*_________]"
-    assert getRssiBarString(-100) == "[__________]"
+    assert hmip_cli.getRssiBarString(-50) == "[**********]"
+    assert hmip_cli.getRssiBarString(-55) == "[*********_]"
+    assert hmip_cli.getRssiBarString(-60) == "[********__]"
+    assert hmip_cli.getRssiBarString(-65) == "[*******___]"
+    assert hmip_cli.getRssiBarString(-70) == "[******____]"
+    assert hmip_cli.getRssiBarString(-75) == "[*****_____]"
+    assert hmip_cli.getRssiBarString(-80) == "[****______]"
+    assert hmip_cli.getRssiBarString(-85) == "[***_______]"
+    assert hmip_cli.getRssiBarString(-90) == "[**________]"
+    assert hmip_cli.getRssiBarString(-95) == "[*_________]"
+    assert hmip_cli.getRssiBarString(-100) == "[__________]"
 
 
 def test_handle_config_error():
@@ -70,19 +82,19 @@ def test_anonymizeConfig():
 def test_get_target_channel_indices(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
 
-    assert _get_target_channel_indices(d, [1]) == [1]
-    assert _get_target_channel_indices(d, None) == [1]
-    assert _get_target_channel_indices(d, [1, 2, 3]) == [1, 2, 3]
+    assert hmip_cli._get_target_channel_indices(d, [1]) == [1]
+    assert hmip_cli._get_target_channel_indices(d, None) == [1]
+    assert hmip_cli._get_target_channel_indices(d, [1, 2, 3]) == [1, 2, 3]
 
 
 def test_get_target_channels(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
 
-    result = _get_target_channels(d, None)
+    result = hmip_cli._get_target_channels(d, None)
     assert len(result) == 1
     assert result[0].index == 1
 
-    result = _get_target_channels(d, [1, 3])
+    result = hmip_cli._get_target_channels(d, [1, 3])
     assert len(result) == 2
     assert result[0].index == 1
     assert result[1].index == 3
@@ -97,7 +109,7 @@ def test_execute_action_for_device_shutter_level(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
 
     with no_ssl_verification():
-        _execute_action_for_device(
+        hmip_cli._execute_action_for_device(
             d, args, CliActions.SET_SHUTTER_LEVEL, "set_shutter_level", 0.5
         )
         fake_home.get_current_state()
@@ -116,7 +128,7 @@ def test_execute_action_for_device_slats_level(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
 
     with no_ssl_verification():
-        _execute_action_for_device(
+        hmip_cli._execute_action_for_device(
             d, args, CliActions.SET_SLATS_LEVEL, "set_slats_level", 0.5
         )
         fake_home.get_current_state()
@@ -135,7 +147,7 @@ def test_execute_action_for_device_send_door_command(fake_home: Home):
     d = fake_home.search_device_by_id("3014F0000000000000FAF9B4")
 
     with no_ssl_verification():
-        _execute_action_for_device(
+        hmip_cli._execute_action_for_device(
             d, args, CliActions.SEND_DOOR_COMMAND, "send_door_command", "OPEN"
         )
         fake_home.get_current_state()
@@ -145,9 +157,9 @@ def test_execute_action_for_device_send_door_command(fake_home: Home):
 
 def test_channel_supports_action(fake_home: Home):
     d = fake_home.search_device_by_id("3014F71100000000000DRBL4")
-    assert False == _channel_supports_action(
+    assert False == hmip_cli._channel_supports_action(
         d.functionalChannels[1], CliActions.SET_DIM_LEVEL
     )
-    assert True == _channel_supports_action(
+    assert True == hmip_cli._channel_supports_action(
         d.functionalChannels[1], CliActions.SET_SHUTTER_LEVEL
     )

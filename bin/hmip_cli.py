@@ -47,7 +47,7 @@ def fake_download_configuration():
 
 def main():
     parser = ArgumentParser(
-        description=f"a cli wrapper for the homematicip API\nVersion: {homematicip.__version__}\nPython: {sys.version} ",
+        description=f"a cli wrapper for the homematicip API\nVersion: {version('homematicip')}\nPython: {sys.version} ",
         formatter_class=RawDescriptionHelpFormatter,
     )
     parser.add_argument(
@@ -70,7 +70,7 @@ def main():
     parser.add_argument(
         "--version",
         action="version",
-        version="%(prog)s {}\nPython: {}".format(homematicip.__version__, sys.version),
+        version="%(prog)s {}\nPython: {}".format(version("homematicip"), sys.version),
     )
 
     group = parser.add_argument_group("Display Configuration")
