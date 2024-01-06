@@ -7,15 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.0.17] 2023-12-19
+## [1.1] 2024-01-06
 
 ### ADDED
 
+- Add support for python 3.12
 - Add support for optional feature IFeatureDeviceSensorError
 - Add support for optional feature IFeatureDeviceSensorCommunicationError
 - Add support for optional feature IOptionalFeatureDeviceErrorLockJammed
 - Add support for device HmIP-ESI
 - Add support for function channel DeviceOperationLockWithSabotage
+
+### CHANGED
+
+- Changed from flat project layout to src based layout. The sourcecode is not placed into ./src folder. The scripts are in folder ./bin
+- Replaced versioneer with setuptools-scm to build version infos based on git tags and the building process.
+
+### REMOVED
+
+- Dropped support for python < 3.9
 
 ## [1.0.16] 2023-10-25
 
