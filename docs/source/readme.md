@@ -1,3 +1,5 @@
 # Readme
 
-../../README.md
+```{include} ../../README.md
+
+```
