@@ -1,5 +1,5 @@
-.. Homematic IP Rest API documentation master file, created by
-   sphinx-quickstart on Sun Dec 30 19:04:17 2018.
+.. HomematicIP-Rest-API documentation master file, created by
+   sphinx-quickstart on Fri Jan 12 11:14:32 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
@@ -12,14 +12,14 @@ done via reverse engineering. Use at your own risk.
 
 .. toctree::
    :maxdepth: 2
+   :caption: Contents:
 
    gettingstarted
-   hmipoverview
    modules
+
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

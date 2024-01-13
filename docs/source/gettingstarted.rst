@@ -41,3 +41,18 @@ running the scripts or depending on your OS in different "global" folders:
    -  ~/Library/Preferences/homematicip-rest-api/
    -  /Library/Application Support/homematicip-rest-api/
 
+Using the CLI
+=============
+
+You can send commands to homematicIP using the `hmip_cli.py` script. To get an overview, use -h or --help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from --list-devices.
+
+A few examples:
+
+- `python hmip_cli.py --help` to get help
+- `python hmip_cli.py --list-devices` to get a list of your devices.
+- `python hmip_cli.py -d <id-from-device-list> --toggle-garage-door` to toogle the garage door with HmIP-WGC.
+- `python hmip_cli.py --list-events` to listen to events and changes in your homematicIP system
+- `python hmip_cli.py -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
+- `python hmip_cli.py --dump-configuration --anonymize` to dump the current config and anonymize it.
+
+You can print infos off a device including the channels or group using --print-infos argument in combinuation with -d (device) or -g (group). 
