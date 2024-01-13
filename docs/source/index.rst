@@ -14,9 +14,8 @@ done via reverse engineering. Use at your own risk.
    :maxdepth: 2
    :caption: Contents:
 
-   readme.md
+   gettingstarted
    modules
-   changelog
 
 Indices and tables
 ==================
