@@ -17,8 +17,8 @@ project = "HomematicIP-Rest-API"
 copyright = "2024, Thomas Hahn"
 author = "Thomas Hahn"
 release = version("homematicip")
-# for example take major/minor
-version = ".".join(release.split(".")[:3])
+version = release
+# version =  ".".join(release.split(".")[:3])
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
