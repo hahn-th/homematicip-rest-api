@@ -46,6 +46,16 @@ Using the CLI
 
 You can send commands to homematicIP using the `hmip_cli.py` script. To get an overview, use -h or --help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from --list-devices.
 
+Get Information about devices and groups
+----------------------------------------
+
+Commands are bound to the channel type. To get a list of all allowed actions for a device you can write `hmip_cli -d {deviceid} --print-allowed-commands` or `hmip_cli -d {deviceid} -ac`.
+
+To get infos for a device and its channels use the `--print-infos` argument in combination with -d for a device or -g for a group.
+
+Examples
+--------
+
 A few examples:
 
 - `python hmip_cli.py --help` to get help
@@ -54,5 +64,3 @@ A few examples:
 - `python hmip_cli.py --list-events` to listen to events and changes in your homematicIP system
 - `python hmip_cli.py -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
 - `python hmip_cli.py --dump-configuration --anonymize` to dump the current config and anonymize it.
-
-You can print infos off a device including the channels or group using --print-infos argument in combinuation with -d (device) or -g (group). 
