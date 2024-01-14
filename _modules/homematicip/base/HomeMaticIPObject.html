@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip.base.HomeMaticIPObject &mdash; HomematicIP-Rest-API 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=fc837d61"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+              <div class="version">
+                1.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../homematicip.html">homematicip</a></li>
+      <li class="breadcrumb-item active">homematicip.base.HomeMaticIPObject</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip.base.HomeMaticIPObject</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">homematicip.base.enums</span> <span class="kn">import</span> <span class="n">AutoNameEnum</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject">[docs]</a>
+<span class="k">class</span> <span class="nc">HomeMaticIPObject</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class represents a generic homematic ip object to make</span>
+<span class="sd">    basic requests to the access point&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="c1">#: List with remove handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_remove</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#: List with update handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1">#:the raw json data of the object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rawJSONData</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># list[str]:List of all attributes which were added via set_attr_from_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictAttributes</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="HomeMaticIPObject.on_remove">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_remove">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an event handler to the remove method. Fires when a device</span>
+<span class="sd">        is removed.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.fire_remove_event">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_remove_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">fire_remove_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trigger the method tied to _on_remove&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_remove</span><span class="p">:</span>
+            <span class="n">_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.on_update">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.on_update">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an event handler to the update method. Fires when a device</span>
+<span class="sd">        is updated.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.fire_update_event">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fire_update_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">fire_update_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trigger the method tied to _on_update&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">:</span>
+            <span class="n">_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.remove_callback">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.remove_callback">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove event handler.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_remove</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_remove</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_update</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_restCall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_restCall</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HomeMaticIPObject.from_json">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.from_json">[docs]</a>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this method will parse the homematicip object from a json object</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          js: the json object to parse</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># LOGGER.debug(&quot;from_json call HomeMaticIpObject&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rawJSONData</span> <span class="o">=</span> <span class="n">js</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.fromtimestamp">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.fromtimestamp">[docs]</a>
+    <span class="k">def</span> <span class="nf">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;internal helper function which will create a datetime object from a timestamp&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">timestamp</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.set_attr_from_dict">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.set_attr_from_dict">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_attr_from_dict</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">attr</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="nb">dict</span><span class="p">,</span>
+        <span class="nb">type</span><span class="p">:</span> <span class="n">AutoNameEnum</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">dict_attr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">addToStrOutput</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this method will add the value from dict to the given attr name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            attr(str): the attribute which value should be changed</span>
+<span class="sd">            dict(dict): the dictionary from which the value should be extracted</span>
+<span class="sd">            type(AutoNameEnum): this will call type.from_str(value), if a type gets provided</span>
+<span class="sd">            dict_attr: the name of the attribute in the dict. Set this to None(default) to use attr</span>
+<span class="sd">            addToStrOutput(str): should the attribute be returned via __str__()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dict_attr</span><span class="p">:</span>
+            <span class="n">dict_attr</span> <span class="o">=</span> <span class="n">attr</span>
+
+        <span class="k">if</span> <span class="n">dict_attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="n">dict_attr</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">addToStrOutput</span> <span class="ow">and</span> <span class="n">attr</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictAttributes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dictAttributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HomeMaticIPObject.str_from_attr_map">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.HomeMaticIPObject.HomeMaticIPObject.str_from_attr_map">[docs]</a>
+    <span class="k">def</span> <span class="nf">str_from_attr_map</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this method will return a string with all key/values which were added via the set_attr_from_dict method&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="si">}</span><span class="s2">) &quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictAttributes</span><span class="p">])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

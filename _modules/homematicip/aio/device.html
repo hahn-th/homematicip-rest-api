@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip.aio.device &mdash; HomematicIP-Rest-API 1.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=fc837d61"></script>
+        <script src="../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+              <div class="version">
+                1.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../homematicip.html">homematicip</a></li>
+      <li class="breadcrumb-item active">homematicip.aio.device</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip.aio.device</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">homematicip.base.enums</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.device</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">ERROR_CODE</span> <span class="o">=</span> <span class="s2">&quot;errorCode&quot;</span>
+
+<span class="n">_LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AsyncBaseDevice">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBaseDevice">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBaseDevice</span><span class="p">(</span><span class="n">BaseDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of a generic homematic ip device (hmip and external)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncExternalDevice">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncExternalDevice">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncExternalDevice</span><span class="p">(</span><span class="n">ExternalDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of external device (hue)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDevice">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDevice">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDevice</span><span class="p">(</span><span class="n">Device</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of a genereric homematic ip device&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncDevice.set_label">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDevice.set_label">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">label</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="AsyncDevice.authorizeUpdate">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDevice.authorizeUpdate">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">authorizeUpdate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">authorizeUpdate</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="AsyncDevice.delete">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDevice.delete">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">delete</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="AsyncDevice.set_router_module_enabled">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDevice.set_router_module_enabled">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_router_module_enabled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_router_module_enabled</span><span class="p">(</span><span class="n">enabled</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncDevice.is_update_applicable">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDevice.is_update_applicable">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">is_update_applicable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">is_update_applicable</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncSwitch">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSwitch">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncSwitch</span><span class="p">(</span><span class="n">Switch</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic async switch&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncSwitch.set_switch_state">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSwitch.set_switch_state">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_switch_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async switch set_switch_state&quot;</span><span class="p">)</span>
+        <span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_switch_state</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncSwitch.turn_on">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSwitch.turn_on">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async switch turn_on&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_switch_state</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncSwitch.turn_off">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSwitch.turn_off">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">turn_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async switch turn_off&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_switch_state</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncCarbonDioxideSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncCarbonDioxideSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncCarbonDioxideSensor</span><span class="p">(</span><span class="n">CarbonDioxideSensor</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-SCTH230&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncSwitchMeasuring">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSwitchMeasuring">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncSwitchMeasuring</span><span class="p">(</span><span class="n">SwitchMeasuring</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic async switch measuring&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncSwitchMeasuring.reset_energy_counter">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSwitchMeasuring.reset_energy_counter">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">reset_energy_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">reset_energy_counter</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncHeatingSwitch2">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncHeatingSwitch2">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncHeatingSwitch2</span><span class="p">(</span><span class="n">HeatingSwitch2</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPlugableSwitch">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPlugableSwitch">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPlugableSwitch</span><span class="p">(</span><span class="n">PlugableSwitch</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of HMIP-PS (Pluggable Switch)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPrintedCircuitBoardSwitchBattery">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPrintedCircuitBoardSwitchBattery">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPrintedCircuitBoardSwitchBattery</span><span class="p">(</span>
+    <span class="n">PrintedCircuitBoardSwitchBattery</span><span class="p">,</span> <span class="n">AsyncSwitch</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-PCBS-BAT (Printed Circuit Board Switch Battery)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPrintedCircuitBoardSwitch2">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPrintedCircuitBoardSwitch2">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPrintedCircuitBoardSwitch2</span><span class="p">(</span><span class="n">PrintedCircuitBoardSwitch2</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of HMIP-PCBS2 (Switch Circuit Board - 2x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncLightSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncLightSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncLightSensor</span><span class="p">(</span><span class="n">LightSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of HMIP-SLO (Light Sensor outdoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncSabotageDevice">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSabotageDevice">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncSabotageDevice</span><span class="p">(</span><span class="n">SabotageDevice</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation sabotage signaling devices&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncOpenCollector8Module">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncOpenCollector8Module">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncOpenCollector8Module</span><span class="p">(</span><span class="n">OpenCollector8Module</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Async implementation of HMIP-MOD-OC8 ( Open Collector Module )&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncOperationLockableDevice">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncOperationLockableDevice">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncOperationLockableDevice</span><span class="p">(</span><span class="n">OperationLockableDevice</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<div class="viewcode-block" id="AsyncOperationLockableDevice.set_operation_lock">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncOperationLockableDevice.set_operation_lock">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_operation_lock</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operationLock</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_operation_lock</span><span class="p">(</span><span class="n">operationLock</span><span class="o">=</span><span class="n">operationLock</span><span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncBrandSwitchNotificationLight">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandSwitchNotificationLight">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBrandSwitchNotificationLight</span><span class="p">(</span><span class="n">BrandSwitchNotificationLight</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-BSL (Switch Actuator for brand switches – with signal lamp)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncBrandSwitchNotificationLight.set_rgb_dim_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandSwitchNotificationLight.set_rgb_dim_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_rgb_dim_level</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">rgb</span><span class="p">:</span> <span class="n">RGBColorState</span><span class="p">,</span> <span class="n">dimLevel</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_rgb_dim_level</span><span class="p">(</span><span class="n">channelIndex</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">dimLevel</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncBrandSwitchNotificationLight.set_rgb_dim_level_with_time">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandSwitchNotificationLight.set_rgb_dim_level_with_time">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_rgb_dim_level_with_time</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">channelIndex</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">rgb</span><span class="p">:</span> <span class="n">RGBColorState</span><span class="p">,</span>
+        <span class="n">dimLevel</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">onTime</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">rampTime</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_rgb_dim_level_with_time</span><span class="p">(</span>
+                <span class="n">channelIndex</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">dimLevel</span><span class="p">,</span> <span class="n">onTime</span><span class="p">,</span> <span class="n">rampTime</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncPlugableSwitchMeasuring">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPlugableSwitchMeasuring">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPlugableSwitchMeasuring</span><span class="p">(</span><span class="n">PlugableSwitchMeasuring</span><span class="p">,</span> <span class="n">AsyncSwitchMeasuring</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-PSM (Pluggable Switch and Meter)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncBrandSwitchMeasuring">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandSwitchMeasuring">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBrandSwitchMeasuring</span><span class="p">(</span><span class="n">BrandSwitchMeasuring</span><span class="p">,</span> <span class="n">AsyncSwitchMeasuring</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-BSM (Brand Switch and Meter)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushSwitchMeasuring">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushSwitchMeasuring">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushSwitchMeasuring</span><span class="p">(</span><span class="n">FullFlushSwitchMeasuring</span><span class="p">,</span> <span class="n">AsyncSwitchMeasuring</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FSM (Full flush Switch and Meter)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncShutterContact">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncShutterContact">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncShutterContact</span><span class="p">(</span><span class="n">ShutterContact</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWDO (Door / Window Contact - optical) /</span>
+<span class="sd">    HMIP-SWDO-I (Door / Window Contact Invisible - optical)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncShutterContactOpticalPlus">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncShutterContactOpticalPlus">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncShutterContactOpticalPlus</span><span class="p">(</span><span class="n">ShutterContactOpticalPlus</span><span class="p">,</span> <span class="n">AsyncShutterContact</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-SWDO-PL ( Window / Door Contact – optical, plus )&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncShutterContactMagnetic">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncShutterContactMagnetic">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncShutterContactMagnetic</span><span class="p">(</span><span class="n">ShutterContactMagnetic</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWDM /  HMIP-SWDM-B2  (Door / Window Contact - magnetic&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncContactInterface">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncContactInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncContactInterface</span><span class="p">(</span><span class="n">ContactInterface</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SCI (Contact Interface Sensor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncRotaryHandleSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRotaryHandleSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncRotaryHandleSensor</span><span class="p">(</span><span class="n">RotaryHandleSensor</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SRH&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncTemperatureHumiditySensorOutdoor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTemperatureHumiditySensorOutdoor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncTemperatureHumiditySensorOutdoor</span><span class="p">(</span>
+    <span class="n">TemperatureHumiditySensorOutdoor</span><span class="p">,</span> <span class="n">AsyncDevice</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-STHO (Temperature and Humidity Sensor outdoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncHeatingThermostat">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncHeatingThermostat">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncHeatingThermostat</span><span class="p">(</span><span class="n">HeatingThermostat</span><span class="p">,</span> <span class="n">AsyncOperationLockableDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-eTRV (Radiator Thermostat)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncHeatingThermostatCompact">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncHeatingThermostatCompact">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncHeatingThermostatCompact</span><span class="p">(</span><span class="n">HeatingThermostatCompact</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-eTRV-C (Heating-thermostat compact without display)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncHeatingThermostatEvo">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncHeatingThermostatEvo">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncHeatingThermostatEvo</span><span class="p">(</span><span class="n">HeatingThermostatEvo</span><span class="p">,</span> <span class="n">AsyncOperationLockableDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-eTRV-E (Heating-thermostat new evo version)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncTemperatureHumiditySensorWithoutDisplay">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTemperatureHumiditySensorWithoutDisplay">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncTemperatureHumiditySensorWithoutDisplay</span><span class="p">(</span>
+    <span class="n">TemperatureHumiditySensorWithoutDisplay</span><span class="p">,</span> <span class="n">AsyncDevice</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-STH (Temperature and Humidity Sensor without display - indoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncTemperatureHumiditySensorDisplay">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTemperatureHumiditySensorDisplay">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncTemperatureHumiditySensorDisplay</span><span class="p">(</span>
+    <span class="n">TemperatureHumiditySensorDisplay</span><span class="p">,</span> <span class="n">AsyncDevice</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-STHD (Temperature and Humidity Sensor with display - indoor)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncTemperatureHumiditySensorDisplay.set_display">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTemperatureHumiditySensorDisplay.set_display">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_display</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">display</span><span class="p">:</span> <span class="n">ClimateControlDisplay</span> <span class="o">=</span> <span class="n">ClimateControlDisplay</span><span class="o">.</span><span class="n">ACTUAL</span>
+    <span class="p">):</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_display</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncWallMountedThermostatPro">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWallMountedThermostatPro">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWallMountedThermostatPro</span><span class="p">(</span>
+    <span class="n">WallMountedThermostatPro</span><span class="p">,</span>
+    <span class="n">AsyncTemperatureHumiditySensorDisplay</span><span class="p">,</span>
+    <span class="n">AsyncOperationLockableDevice</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor)</span>
+<span class="sd">    / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWallMountedThermostatBasicHumidity">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWallMountedThermostatBasicHumidity">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWallMountedThermostatBasicHumidity</span><span class="p">(</span><span class="n">AsyncWallMountedThermostatPro</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-WTH-B (Wall Thermostat – basic)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncSmokeDetector">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncSmokeDetector">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncSmokeDetector</span><span class="p">(</span><span class="n">SmokeDetector</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWSD (Smoke Alarm with Q label)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFloorTerminalBlock6">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFloorTerminalBlock6">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFloorTerminalBlock6</span><span class="p">(</span><span class="n">FloorTerminalBlock6</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FAL230-C6 (Floor Heating Actuator - 6 channels, 230 V)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFloorTerminalBlock10">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFloorTerminalBlock10">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFloorTerminalBlock10</span><span class="p">(</span><span class="n">FloorTerminalBlock10</span><span class="p">,</span> <span class="n">AsyncFloorTerminalBlock6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFloorTerminalBlock12">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFloorTerminalBlock12">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFloorTerminalBlock12</span><span class="p">(</span><span class="n">FloorTerminalBlock12</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncFloorTerminalBlock12.set_minimum_floor_heating_valve_position">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFloorTerminalBlock12.set_minimum_floor_heating_valve_position">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_minimum_floor_heating_valve_position</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">minimumFloorHeatingValvePosition</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets the minimum floot heating valve position</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0 AsyncFloorTerminalBlock12</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the result of the _restCall</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_minimum_floor_heating_valve_position</span><span class="p">(</span>
+                <span class="n">minimumFloorHeatingValvePosition</span><span class="o">=</span><span class="n">minimumFloorHeatingValvePosition</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredFloorTerminalBlock12">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredFloorTerminalBlock12">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredFloorTerminalBlock12</span><span class="p">(</span><span class="n">AsyncFloorTerminalBlock12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIPW-FALMOT-C12&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPushButton">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPushButton">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPushButton</span><span class="p">(</span><span class="n">PushButton</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-WRC2 (Wall-mount Remote Control - 2-button)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPushButton6">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPushButton6">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPushButton6</span><span class="p">(</span><span class="n">PushButton6</span><span class="p">,</span> <span class="n">AsyncPushButton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-WRC6 (Wall-mount Remote Control - 6-button)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredPushButton">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredPushButton">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredPushButton</span><span class="p">(</span><span class="n">WiredPushButton</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIPW-WRC6 and HmIPW-WRC2&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncWiredPushButton.set_optical_signal">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredPushButton.set_optical_signal">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_optical_signal</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">channelIndex</span><span class="p">,</span>
+        <span class="n">opticalSignalBehaviour</span><span class="p">:</span> <span class="n">OpticalSignalBehaviour</span><span class="p">,</span>
+        <span class="n">rgb</span><span class="p">:</span> <span class="n">RGBColorState</span><span class="p">,</span>
+        <span class="n">dimLevel</span><span class="o">=</span><span class="mf">1.01</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets the signal type for the leds</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            channelIndex(int): Channel which is affected</span>
+<span class="sd">            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour</span>
+<span class="sd">            rgb(RGBColorState): Color</span>
+<span class="sd">            dimLevel(float): usally 1.01. Use set_dim_level instead</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Result of the _restCall</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_optical_signal</span><span class="p">(</span>
+                <span class="n">channelIndex</span><span class="p">,</span> <span class="n">opticalSignalBehaviour</span><span class="p">,</span> <span class="n">rgb</span><span class="p">,</span> <span class="n">dimLevel</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWiredPushButton.set_dim_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredPushButton.set_dim_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_dim_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">,</span> <span class="n">dimLevel</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets the signal type for the leds</span>
+<span class="sd">        Args:</span>
+<span class="sd">            channelIndex(int): Channel which is affected</span>
+<span class="sd">            dimLevel(float): usally 1.01. Use set_dim_level instead</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Result of the _restCall</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_dim_level</span><span class="p">(</span><span class="n">channelIndex</span><span class="p">,</span> <span class="n">dimLevel</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWiredPushButton.set_switch_state">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredPushButton.set_switch_state">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_switch_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async set_switch_state&quot;</span><span class="p">)</span>
+        <span class="n">url</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_switch_state</span><span class="p">(</span><span class="n">on</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWiredPushButton.turn_on">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredPushButton.turn_on">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async turn_on&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_switch_state</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWiredPushButton.turn_off">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredPushButton.turn_off">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">turn_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">_LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Async turn_off&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_switch_state</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncPushButtonFlat">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPushButtonFlat">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPushButtonFlat</span><span class="p">(</span><span class="n">PushButtonFlat</span><span class="p">,</span> <span class="n">AsyncPushButton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-WRCC2 (Wall-mount Remote Control – flat)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncBrandPushButton">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandPushButton">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBrandPushButton</span><span class="p">(</span><span class="n">BrandPushButton</span><span class="p">,</span> <span class="n">AsyncPushButton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-BRC2 (Remote Control for brand switches – 2x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncKeyRemoteControl4">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncKeyRemoteControl4">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncKeyRemoteControl4</span><span class="p">(</span><span class="n">KeyRemoteControl4</span><span class="p">,</span> <span class="n">AsyncPushButton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-KRC4 (Key Ring Remote Control - 4 buttons)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncRemoteControl8">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRemoteControl8">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncRemoteControl8</span><span class="p">(</span><span class="n">RemoteControl8</span><span class="p">,</span> <span class="n">AsyncPushButton</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-RC8 (Remote Control - 8 buttons)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncRemoteControl8Module">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRemoteControl8Module">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncRemoteControl8Module</span><span class="p">(</span><span class="n">RemoteControl8Module</span><span class="p">,</span> <span class="n">AsyncRemoteControl8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-MOD-RC8 (Open Collector Module Sender - 8x)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncAlarmSirenIndoor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAlarmSirenIndoor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncAlarmSirenIndoor</span><span class="p">(</span><span class="n">AlarmSirenIndoor</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-ASIR (Alarm Siren)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncAlarmSirenOutdoor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAlarmSirenOutdoor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncAlarmSirenOutdoor</span><span class="p">(</span><span class="n">AlarmSirenOutdoor</span><span class="p">,</span> <span class="n">AsyncAlarmSirenIndoor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-ASIR-O (Alarm Siren Outdoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncMotionDetectorIndoor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncMotionDetectorIndoor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncMotionDetectorIndoor</span><span class="p">(</span><span class="n">MotionDetectorIndoor</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SMI (Motion Detector with Brightness Sensor - indoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncMotionDetectorOutdoor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncMotionDetectorOutdoor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncMotionDetectorOutdoor</span><span class="p">(</span><span class="n">MotionDetectorOutdoor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncMotionDetectorPushButton">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncMotionDetectorPushButton">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncMotionDetectorPushButton</span><span class="p">(</span><span class="n">MotionDetectorPushButton</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredMotionDetectorPushButton">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredMotionDetectorPushButton">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredMotionDetectorPushButton</span><span class="p">(</span><span class="n">WiredMotionDetectorPushButton</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIPW-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2-button)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPresenceDetectorIndoor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPresenceDetectorIndoor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPresenceDetectorIndoor</span><span class="p">(</span><span class="n">PresenceDetectorIndoor</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SPI (Presence Sensor - indoor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPassageDetector">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPassageDetector">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPassageDetector</span><span class="p">(</span><span class="n">PassageDetector</span><span class="p">,</span> <span class="n">AsyncSabotageDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SPDR (Passage Detector)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncKeyRemoteControlAlarm">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncKeyRemoteControlAlarm">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncKeyRemoteControlAlarm</span><span class="p">(</span><span class="n">KeyRemoteControlAlarm</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-KRCA (Key Ring Remote Control - alarm)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushContactInterface">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushContactInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushContactInterface</span><span class="p">(</span><span class="n">FullFlushContactInterface</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FCI1 (Contact Interface flush-mount – 1 channel)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushContactInterface6">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushContactInterface6">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushContactInterface6</span><span class="p">(</span><span class="n">FullFlushContactInterface6</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FCI6 (Contact Interface flush-mount – 6 channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushInputSwitch">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushInputSwitch">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushInputSwitch</span><span class="p">(</span><span class="n">FullFlushInputSwitch</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDinRailSwitch">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDinRailSwitch">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDinRailSwitch</span><span class="p">(</span><span class="n">DinRailSwitch</span><span class="p">,</span> <span class="n">AsyncFullFlushInputSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncShutter">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncShutter">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncShutter</span><span class="p">(</span><span class="n">Shutter</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for async shutter devices&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncShutter.set_shutter_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncShutter.set_shutter_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_shutter_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_shutter_level</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncShutter.set_shutter_stop">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncShutter.set_shutter_stop">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_shutter_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_shutter_stop</span><span class="p">(</span><span class="n">channelIndex</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncBlind">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBlind">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBlind</span><span class="p">(</span><span class="n">Blind</span><span class="p">,</span> <span class="n">AsyncShutter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for async blind devices&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncBlind.set_slats_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBlind.set_slats_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_slats_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slatsLevel</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">shutterLevel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_slats_level</span><span class="p">(</span><span class="n">slatsLevel</span><span class="p">,</span> <span class="n">shutterLevel</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushShutter">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushShutter">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushShutter</span><span class="p">(</span><span class="n">FullFlushShutter</span><span class="p">,</span> <span class="n">AsyncShutter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FROLL (Shutter Actuator - flush-mount) / HMIP-BROLL (Shutter Actuator - Brand-mount)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncBrandSwitch2">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandSwitch2">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBrandSwitch2</span><span class="p">(</span><span class="n">BrandSwitch2</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ELV-SH-BS2 (ELV Smart Home ARR-Bausatz Schaltaktor für Markenschalter – 2-fach powered by Homematic IP)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushBlind">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushBlind">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushBlind</span><span class="p">(</span><span class="n">FullFlushBlind</span><span class="p">,</span> <span class="n">AsyncBlind</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FBL (Blind Actuator - flush-mount)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncBrandBlind">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandBlind">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBrandBlind</span><span class="p">(</span><span class="n">BrandBlind</span><span class="p">,</span> <span class="n">AsyncFullFlushBlind</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-BBL (Blind Actuator for brand switches)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDinRailBlind4">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDinRailBlind4">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDinRailBlind4</span><span class="p">(</span><span class="n">DinRailBlind4</span><span class="p">,</span> <span class="n">AsyncBlind</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredDinRailBlind4">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredDinRailBlind4">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredDinRailBlind4</span><span class="p">(</span><span class="n">WiredDinRailBlind4</span><span class="p">,</span> <span class="n">AsyncBlind</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIPW-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDimmer">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDimmer">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDimmer</span><span class="p">(</span><span class="n">Dimmer</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base dimmer device class&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncDimmer.set_dim_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDimmer.set_dim_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_dim_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimLevel</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_dim_level</span><span class="p">(</span><span class="n">dimLevel</span><span class="o">=</span><span class="n">dimLevel</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncBrandDimmer">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBrandDimmer">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBrandDimmer</span><span class="p">(</span><span class="n">AsyncDimmer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-BDT Brand Dimmer&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDinRailDimmer3">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDinRailDimmer3">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDinRailDimmer3</span><span class="p">(</span><span class="n">DinRailDimmer3</span><span class="p">,</span> <span class="n">AsyncDimmer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-DRDI3 (Din Rail Dimmer 3 Inbound)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncFullFlushDimmer">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncFullFlushDimmer">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncFullFlushDimmer</span><span class="p">(</span><span class="n">AsyncDimmer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-FDT Dimming Actuator flush-mount&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPluggableDimmer">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPluggableDimmer">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPluggableDimmer</span><span class="p">(</span><span class="n">AsyncDimmer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-PDT Pluggable Dimmer&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWeatherSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWeatherSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWeatherSensor</span><span class="p">(</span><span class="n">WeatherSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWO-B&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWeatherSensorPlus">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWeatherSensorPlus">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWeatherSensorPlus</span><span class="p">(</span><span class="n">WeatherSensorPlus</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWO-PL&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWeatherSensorPro">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWeatherSensorPro">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWeatherSensorPro</span><span class="p">(</span><span class="n">WeatherSensorPro</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWO-PR&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncMultiIOBox">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncMultiIOBox">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncMultiIOBox</span><span class="p">(</span><span class="n">MultiIOBox</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-MIOB (Multi IO Box for floor heating &amp; cooling)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWaterSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWaterSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWaterSensor</span><span class="p">(</span><span class="n">WaterSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SWD&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncWaterSensor.set_acoustic_alarm_signal">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWaterSensor.set_acoustic_alarm_signal">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acoustic_alarm_signal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acousticAlarmSignal</span><span class="p">:</span> <span class="n">AcousticAlarmSignal</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acoustic_alarm_signal</span><span class="p">(</span><span class="n">acousticAlarmSignal</span><span class="o">=</span><span class="n">acousticAlarmSignal</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWaterSensor.set_acoustic_alarm_timing">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWaterSensor.set_acoustic_alarm_timing">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acoustic_alarm_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">acousticAlarmTiming</span><span class="p">:</span> <span class="n">AcousticAlarmTiming</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acoustic_alarm_timing</span><span class="p">(</span><span class="n">acousticAlarmTiming</span><span class="o">=</span><span class="n">acousticAlarmTiming</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWaterSensor.set_acoustic_water_alarm_trigger">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWaterSensor.set_acoustic_water_alarm_trigger">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acoustic_water_alarm_trigger</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">acousticWaterAlarmTrigger</span><span class="p">:</span> <span class="n">WaterAlarmTrigger</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acoustic_water_alarm_trigger</span><span class="p">(</span>
+                <span class="n">acousticWaterAlarmTrigger</span><span class="o">=</span><span class="n">acousticWaterAlarmTrigger</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWaterSensor.set_inapp_water_alarm_trigger">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWaterSensor.set_inapp_water_alarm_trigger">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_inapp_water_alarm_trigger</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">inAppWaterAlarmTrigger</span><span class="p">:</span> <span class="n">WaterAlarmTrigger</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_inapp_water_alarm_trigger</span><span class="p">(</span>
+                <span class="n">inAppWaterAlarmTrigger</span><span class="o">=</span><span class="n">inAppWaterAlarmTrigger</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncWaterSensor.set_siren_water_alarm_trigger">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWaterSensor.set_siren_water_alarm_trigger">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_siren_water_alarm_trigger</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sirenWaterAlarmTrigger</span><span class="p">:</span> <span class="n">WaterAlarmTrigger</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_siren_water_alarm_trigger</span><span class="p">(</span>
+                <span class="n">sirenWaterAlarmTrigger</span><span class="o">=</span><span class="n">sirenWaterAlarmTrigger</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncAccelerationSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncAccelerationSensor</span><span class="p">(</span><span class="n">AccelerationSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SAM&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncAccelerationSensor.set_acceleration_sensor_mode">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor.set_acceleration_sensor_mode">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_mode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">AccelerationSensorMode</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncAccelerationSensor.set_acceleration_sensor_neutral_position">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor.set_acceleration_sensor_neutral_position">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_neutral_position</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">neutralPosition</span><span class="p">:</span> <span class="n">AccelerationSensorNeutralPosition</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_neutral_position</span><span class="p">(</span>
+                <span class="n">neutralPosition</span><span class="p">,</span> <span class="n">channelIndex</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncAccelerationSensor.set_acceleration_sensor_sensitivity">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor.set_acceleration_sensor_sensitivity">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_sensitivity</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sensitivity</span><span class="p">:</span> <span class="n">AccelerationSensorSensitivity</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_sensitivity</span><span class="p">(</span><span class="n">sensitivity</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncAccelerationSensor.set_acceleration_sensor_trigger_angle">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor.set_acceleration_sensor_trigger_angle">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_trigger_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_trigger_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncAccelerationSensor.set_acceleration_sensor_event_filter_period">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor.set_acceleration_sensor_event_filter_period">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_event_filter_period</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_event_filter_period</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncAccelerationSensor.set_notification_sound_type">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncAccelerationSensor.set_notification_sound_type">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_notification_sound_type</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">soundType</span><span class="p">:</span> <span class="n">NotificationSoundType</span><span class="p">,</span> <span class="n">isHighToLow</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_notification_sound_type</span><span class="p">(</span><span class="n">soundType</span><span class="p">,</span> <span class="n">isHighToLow</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncDoorModule">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorModule">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDoorModule</span><span class="p">(</span><span class="n">DoorModule</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic Door Module class&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncDoorModule.send_door_command">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorModule.send_door_command">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">send_door_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doorCommand</span><span class="o">=</span><span class="n">DoorCommand</span><span class="o">.</span><span class="n">STOP</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">send_door_command</span><span class="p">(</span><span class="n">doorCommand</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncGarageDoorModuleTormatic">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncGarageDoorModuleTormatic">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncGarageDoorModuleTormatic</span><span class="p">(</span><span class="n">GarageDoorModuleTormatic</span><span class="p">,</span> <span class="n">AsyncDoorModule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-MOD-TM (Garage Door Module Tormatic)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncHoermannDrivesModule">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncHoermannDrivesModule">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncHoermannDrivesModule</span><span class="p">(</span><span class="n">HoermannDrivesModule</span><span class="p">,</span> <span class="n">AsyncDoorModule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-MOD-HO (Garage Door Module for Hörmann)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncPluggableMainsFailureSurveillance">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncPluggableMainsFailureSurveillance">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncPluggableMainsFailureSurveillance</span><span class="p">(</span>
+    <span class="n">PluggableMainsFailureSurveillance</span><span class="p">,</span> <span class="n">AsyncDevice</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;[HMIP-PMFS] (Plugable Power Supply Monitoring)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncRoomControlDevice">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRoomControlDevice">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncRoomControlDevice</span><span class="p">(</span><span class="n">RoomControlDevice</span><span class="p">,</span> <span class="n">AsyncWallMountedThermostatPro</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncRoomControlDeviceAnalog">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRoomControlDeviceAnalog">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncRoomControlDeviceAnalog</span><span class="p">(</span><span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ALPHA-IP-RBGa   (ALpha IP Wall Thermostat Display analog)&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actualTemperature</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPointTemperature</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temperatureOffset</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<div class="viewcode-block" id="AsyncRoomControlDeviceAnalog.from_json">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRoomControlDeviceAnalog.from_json">[docs]</a>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">get_functional_channel</span><span class="p">(</span><span class="s2">&quot;ANALOG_ROOM_CONTROL_CHANNEL&quot;</span><span class="p">,</span> <span class="n">js</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_attr_from_dict</span><span class="p">(</span><span class="s2">&quot;actualTemperature&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_attr_from_dict</span><span class="p">(</span><span class="s2">&quot;setPointTemperature&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_attr_from_dict</span><span class="p">(</span><span class="s2">&quot;temperatureOffset&quot;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredDimmer3">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredDimmer3">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredDimmer3</span><span class="p">(</span><span class="n">WiredDimmer3</span><span class="p">,</span> <span class="n">AsyncDimmer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredInput32">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredInput32">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredInput32</span><span class="p">(</span><span class="n">WiredInput32</span><span class="p">,</span> <span class="n">AsyncFullFlushContactInterface</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredInputSwitch6">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredInputSwitch6">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredInputSwitch6</span><span class="p">(</span><span class="n">WiredInputSwitch6</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIPW-FIO6&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredSwitch8">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredSwitch8">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredSwitch8</span><span class="p">(</span><span class="n">WiredSwitch8</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredSwitch4">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredSwitch4">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredSwitch4</span><span class="p">(</span><span class="n">WiredSwitch4</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIPW-DRS4 (Homematic IP Wired Switch Actuator – 4x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDinRailSwitch4">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDinRailSwitch4">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDinRailSwitch4</span><span class="p">(</span><span class="n">DinRailSwitch4</span><span class="p">,</span> <span class="n">AsyncSwitch</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-DRSI4 (Homematic IP Switch Actuator for DIN rail mount – 4x channels)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncTiltVibrationSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTiltVibrationSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncTiltVibrationSensor</span><span class="p">(</span><span class="n">TiltVibrationSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-STV (Inclination and vibration Sensor)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncTiltVibrationSensor.set_acceleration_sensor_mode">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTiltVibrationSensor.set_acceleration_sensor_mode">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_mode</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="n">AccelerationSensorMode</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncTiltVibrationSensor.set_acceleration_sensor_sensitivity">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTiltVibrationSensor.set_acceleration_sensor_sensitivity">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_sensitivity</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">sensitivity</span><span class="p">:</span> <span class="n">AccelerationSensorSensitivity</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_sensitivity</span><span class="p">(</span><span class="n">sensitivity</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncTiltVibrationSensor.set_acceleration_sensor_trigger_angle">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTiltVibrationSensor.set_acceleration_sensor_trigger_angle">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_trigger_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_trigger_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncTiltVibrationSensor.set_acceleration_sensor_event_filter_period">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTiltVibrationSensor.set_acceleration_sensor_event_filter_period">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_acceleration_sensor_event_filter_period</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_acceleration_sensor_event_filter_period</span><span class="p">(</span><span class="n">period</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncHomeControlAccessPoint">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncHomeControlAccessPoint">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncHomeControlAccessPoint</span><span class="p">(</span><span class="n">HomeControlAccessPoint</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-HAP&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWiredDinRailAccessPoint">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWiredDinRailAccessPoint">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWiredDinRailAccessPoint</span><span class="p">(</span><span class="n">WiredDinRailAccessPoint</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIPW-DRAP&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncBlindModule">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBlindModule">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncBlindModule</span><span class="p">(</span><span class="n">BlindModule</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-HDM1 (Hunter Douglas &amp; erfal window blinds)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncBlindModule.set_primary_shading_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBlindModule.set_primary_shading_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_primary_shading_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primaryShadingLevel</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_primary_shading_level</span><span class="p">(</span><span class="n">primaryShadingLevel</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncBlindModule.set_secondary_shading_level">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBlindModule.set_secondary_shading_level">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_secondary_shading_level</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">primaryShadingLevel</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">secondaryShadingLevel</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_secondary_shading_level</span><span class="p">(</span>
+                <span class="n">primaryShadingLevel</span><span class="p">,</span> <span class="n">secondaryShadingLevel</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AsyncBlindModule.stop">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncBlindModule.stop">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">stop</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncRainSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncRainSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncRainSensor</span><span class="p">(</span><span class="n">RainSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HMIP-SRD (Rain Sensor)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncTemperatureDifferenceSensor2">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncTemperatureDifferenceSensor2">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncTemperatureDifferenceSensor2</span><span class="p">(</span><span class="n">TemperatureDifferenceSensor2</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-STE2-PCB (Temperature Difference Sensors - 2x sensors)&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncWallMountedGarageDoorController">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWallMountedGarageDoorController">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncWallMountedGarageDoorController</span><span class="p">(</span>
+    <span class="n">WallMountedGarageDoorController</span><span class="p">,</span> <span class="n">AsyncDevice</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-WGC (Garage Door Controller)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncWallMountedGarageDoorController.send_start_impulse">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncWallMountedGarageDoorController.send_start_impulse">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">send_start_impulse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span><span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">send_start_impulse</span><span class="p">())</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncDoorLockDrive">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorLockDrive">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDoorLockDrive</span><span class="p">(</span><span class="n">DoorLockDrive</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-DLD (DoorLockDrive)&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AsyncDoorLockDrive.set_lock_state">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorLockDrive.set_lock_state">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">set_lock_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doorLockState</span><span class="p">:</span> <span class="n">LockState</span><span class="p">,</span> <span class="n">pin</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">channelIndex</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets the door lock state</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            doorLockState(float): the state of the door. See LockState from base/enums.py</span>
+<span class="sd">            pin(string): Pin, if specified.</span>
+<span class="sd">            channelIndex(int): the channel to control</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the result of the _restCall</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">api_call</span><span class="p">(</span>
+            <span class="o">*</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_lock_state</span><span class="p">(</span><span class="n">doorLockState</span><span class="p">,</span> <span class="n">pin</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AsyncDoorLockSensor">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorLockSensor">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDoorLockSensor</span><span class="p">(</span><span class="n">DoorLockSensor</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HmIP-DLS&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDoorBellButton">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorBellButton">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDoorBellButton</span><span class="p">(</span><span class="n">DoorBellButton</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncDoorBellContactInterface">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncDoorBellContactInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncDoorBellContactInterface</span><span class="p">(</span><span class="n">DoorBellContactInterface</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="AsyncEnergySensorsInterface">
+<a class="viewcode-back" href="../../../homematicip.aio.html#homematicip.aio.device.AsyncEnergySensorsInterface">[docs]</a>
+<span class="k">class</span> <span class="nc">AsyncEnergySensorsInterface</span><span class="p">(</span><span class="n">EnergySensorsInterface</span><span class="p">,</span> <span class="n">AsyncDevice</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
