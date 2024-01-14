@@ -21,7 +21,7 @@ jobs:
           pip install -e .
       - name: Sphinx build
         run: |
-          sphinx-build docs/source docs/build
+          sphinx-build docs/source docs/build/html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
