@@ -21,8 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### CHANGED
 
-- Changed from flat project layout to src based layout. The sourcecode is not placed into ./src folder. The scripts are in folder ./bin
+- Changed from flat project layout to src based layout. The source code is not placed into ./src folder. The scripts are located in package homematicip.cli
 - Replaced versioneer with setuptools-scm to build version infos based on git tags and the building process.
+
+### FIXED
+
+- Fixed an error with --set-lock-state in cli
 
 ### REMOVED
 

@@ -11,7 +11,6 @@ from homematicip.cli.hmip_cli import (
     getRssiBarString,
 )
 from homematicip.home import Home
-
 from homematicip_demo.helper import no_ssl_verification
 
 logger = logging.getLogger("test_hmip_cli")
@@ -56,10 +55,10 @@ def test_anonymizeConfig():
     assert js["sgtin_silvercrest"] == "3014F7110000000000000001"
     assert js["availableFirmwareVersion"] == "0.0.0"
 
-    l = js["location"]
-    assert l["city"] == "1010, Vienna, Austria"
-    assert l["latitude"] == "48.208088"
-    assert l["longitude"] == "16.358608"
+    location = js["location"]
+    assert location["city"] == "1010, Vienna, Austria"
+    assert location["latitude"] == "48.208088"
+    assert location["longitude"] == "16.358608"
 
     c = '{"id":"test"}'
     c = anonymizeConfig(c, "original", "REPLACED")
