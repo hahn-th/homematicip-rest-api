@@ -44,3 +44,8 @@ local_scheme = "no-local-version"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
+
+[project.scripts]
+hmip_cli = "homematicip.cli.hmip_cli:main"
+hmip_generate_auth_token = "homematicip.cli.hmip_generate_auth_token:main"

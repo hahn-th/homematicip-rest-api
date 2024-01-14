@@ -1,455 +1,75 @@
-#!/usr/bin/env python3
+import json
 import logging
-import os
+import signal
 import sys
 import time
+import traceback
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
-from collections import namedtuple
-from logging.handlers import TimedRotatingFileHandler
 from importlib.metadata import version
+from logging.handlers import TimedRotatingFileHandler
+from operator import attrgetter
 
 import homematicip
-
+from homematicip.base.enums import CliActions, ClimateControlDisplay, LockState
+from homematicip.base.functionalChannels import FunctionalChannel
 from homematicip.base.helpers import handle_config
 from homematicip.class_maps import FUNCTIONALCHANNEL_CLI_MAP
-from homematicip.device import *
-from homematicip.group import *
+from homematicip.device import BaseDevice, Device, TemperatureHumiditySensorDisplay
+from homematicip.group import ExtendedLinkedSwitchingGroup, HeatingGroup
 from homematicip.home import Home
-from homematicip.rule import *
-
-logger = logging.getLogger(__name__)
+from homematicip.rule import SimpleRule
 
 
-def create_logger(level, file_name):
-    logger = logging.getLogger()
-    logger.setLevel(level)
-    handler = (
-        TimedRotatingFileHandler(file_name, when="midnight", backupCount=5)
-        if file_name
-        else logging.StreamHandler()
-    )
-    handler.setFormatter(
-        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    )
-    logger.addHandler(handler)
-    return logger
+def main(args=None):
+    """Entry point for pypyr cli.
 
+    The setup_py entry_point wraps this in sys.exit already so this effectively
+    becomes sys.exit(main()).
+    The __main__ entry point similarly wraps sys.exit().
+    """
+    if args is None:
+        args = sys.argv[1:]
 
-server_config = None
-
-
-def fake_download_configuration():
-    global server_config
-    if server_config:
-        with open(server_config) as file:
-            return json.load(file)
-    return None
-
-
-def main():
-    parser = ArgumentParser(
-        description=f"a cli wrapper for the homematicip API\nVersion: {version('homematicip')}\nPython: {sys.version} ",
-        formatter_class=RawDescriptionHelpFormatter,
-    )
-    parser.add_argument(
-        "--config_file",
-        type=str,
-        help="the configuration file. If nothing is specified the script will search for it.",
-    )
-    parser.add_argument(
-        "--server-config",
-        type=str,
-        dest="server_config",
-        help="the server configuration file. e.g. output from --dump-configuration.",
-    )
-    parser.add_argument(
-        "--debug-level",
-        dest="debug_level",
-        type=int,
-        help="the debug level which should get used(Critical=50, DEBUG=10)",
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version="%(prog)s {}\nPython: {}".format(version("homematicip"), sys.version),
-    )
-
-    group = parser.add_argument_group("Display Configuration")
-    group.add_argument(
-        "--dump-configuration",
-        action="store_true",
-        dest="dump_config",
-        help="dumps the current configuration from the AP",
-    )
-    group.add_argument(
-        "--anonymize",
-        action="store_true",
-        dest="anonymize",
-        help="used together with --dump-configuration to anonymize the output",
-    )
-    group.add_argument(
-        "--list-devices",
-        action="store_true",
-        dest="list_devices",
-        help="list all devices",
-    )
-    group.add_argument(
-        "--list-groups", action="store_true", dest="list_groups", help="list all groups"
-    )
-    group.add_argument(
-        "--list-group-ids",
-        action="store_true",
-        dest="list_group_ids",
-        help="list all groups and their ids",
-    )
-    group.add_argument(
-        "--list-firmware",
-        action="store_true",
-        dest="list_firmware",
-        help="list the firmware of all devices",
-    )
-    group.add_argument(
-        "--list-rssi",
-        action="store_true",
-        dest="list_rssi",
-        help="list the reception quality of all devices",
-    )
-    group.add_argument(
-        "--list-events",
-        action="store_true",
-        dest="list_events",
-        help="prints all the events",
-    )
-    group.add_argument(
-        "--list-last-status-update",
-        action="store_true",
-        dest="list_last_status_update",
-        help="prints the last status update of all systems",
-    )
-
-    parser.add_argument(
-        "--list-security-journal",
-        action="store_true",
-        dest="list_security_journal",
-        help="display the security journal",
-    )
-    parser.add_argument(
-        "--list-rules",
-        action="store_true",
-        dest="list_rules",
-        help="display all automation rules",
-    )
-
-    parser.add_argument(
-        "-d",
-        "--device",
-        dest="device",
-        action="append",
-        help='the device you want to modify (see "Device Settings").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices',
-    )
-    parser.add_argument(
-        "-g",
-        "--group",
-        dest="group",
-        help='the group you want to modify (see "Group Settings")',
-    )
-    parser.add_argument(
-        "--print-infos",
-        action="store_true",
-        dest="print_infos",
-        help="Print channels or devices, which belongs to devices or groups.",
-    )
-    parser.add_argument(
-        "-ac",
-        "--print-allowed-commands",
-        action="store_true",
-        dest="print_allowed_commands",
-        help="Print allowed commands for channels of a device. Use together with a device and optional combined with arguments --print-infos or single --channel.",
-    )
-    parser.add_argument(
-        "-r",
-        "--rule",
-        dest="rules",
-        action="append",
-        help='the automation you want to modify (see "Automation Rule Settings").\nYou can use * to modify all automations or enter the parameter multiple times to modify more automations',
-    )
-
-    group = parser.add_argument_group("Device Settings")
-    group.add_argument(
-        "--toggle-garage-door",
-        action="store_true",
-        dest="toggle_garage_door",
-        help="Toggle Garage Door for devices with IMPULSE_OUTPUT_CHANNEL channel like HmIP-WGC ",
-        default=None,
-    )
-    group.add_argument(
-        "--send-door-command",
-        nargs="?",
-        dest="device_send_door_command",
-        help="Control door for all devices, which has a channel called Door_Channel like Hmip-MOD-HO. Allowed parameters are OPEN, CLOSE, STOP and PARTIAL_OPEN.",
-        default=None,
-    )
-
-    group.add_argument(
-        "--turn-on",
-        action="store_true",
-        dest="device_switch_state",
-        help="turn the switch on",
-        default=None,
-    )
-    group.add_argument(
-        "--turn-off",
-        action="store_false",
-        dest="device_switch_state",
-        help="turn the switch off",
-        default=None,
-    )
-
-    group.add_argument(
-        "--channel",
-        nargs="*",
-        dest="channels",
-        help="used together with --turn-on and --turn-off to specify one or more specific channels",
-        default=None,
-    )
-
-    group.add_argument(
-        "--pin",
-        nargs="*",
-        dest="pin",
-        help="special pin used for door lock drive if set in the app",
-        default="",
-    )
-
-    group.add_argument(
-        "--set-lock-state",
-        action="store",
-        dest="device_set_lock_state",
-        help="set door lock state to OPEN, LOCKED or UNLOCKED. Add --pin for special pin or --channel.",
-        default=None,
-    )
-
-    group.add_argument(
-        "--set-dim-level",
-        action="store",
-        dest="device_dim_level",
-        help="set dimmer to level (0..1)",
-        default=None,
-    )
-    group.add_argument(
-        "--set-shutter-level",
-        action="store",
-        dest="device_shutter_level",
-        help="set shutter to level (0..1)",
-    )
-    group.add_argument(
-        "--set-slats-level",
-        nargs="+",
-        action="store",
-        dest="device_slats_level",
-        help="set slats to level (0..1). Optional set shutter level with a second argument like 'set-slats-level 0.5 0.8'",
-    )
-    group.add_argument(
-        "--set-shutter-stop",
-        action="store_true",
-        dest="device_shutter_stop",
-        help="stop shutter",
-        default=None,
-    )
-
-    group.add_argument("--set-label", dest="device_new_label", help="set a new label")
-    group.add_argument(
-        "--set-display",
-        dest="device_display",
-        action="store",
-        help="set the display mode",
-        choices=["actual", "setpoint", "actual_humidity"],
-    )
-    group.add_argument(
-        "--enable-router-module",
-        action="store_true",
-        dest="device_enable_router_module",
-        help="enables the router module of the device",
-        default=None,
-    )
-    group.add_argument(
-        "--disable-router-module",
-        action="store_false",
-        dest="device_enable_router_module",
-        help="disables the router module of the device",
-        default=None,
-    )
-    group.add_argument(
-        "--reset-energy-counter",
-        action="store_true",
-        dest="reset_energy_counter",
-        help="resets the energy counter",
-    )
-
-    group = parser.add_argument_group("Home Settings")
-    group.add_argument(
-        "--set-protection-mode",
-        dest="protectionmode",
-        action="store",
-        help="set the protection mode",
-        choices=["presence", "absence", "disable"],
-    )
-    group.add_argument(
-        "--set-pin", dest="new_pin", action="store", help="set a new pin"
-    )
-    group.add_argument(
-        "--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin"
-    )
-    group.add_argument(
-        "--old-pin",
-        dest="old_pin",
-        action="store",
-        help="the current pin. used together with --set-pin or --delete-pin",
-        default=None,
-    )
-    group.add_argument(
-        "--set-zones-device-assignment",
-        dest="set_zones_device_assignment",
-        action="store_true",
-        help="sets the zones devices assignment",
-    )
-    group.add_argument(
-        "--external-devices",
-        dest="external_devices",
-        nargs="+",
-        help="sets the devices for the external zone",
-    )
-    group.add_argument(
-        "--internal-devices",
-        dest="internal_devices",
-        nargs="+",
-        help="sets the devices for the internal zone",
-    )
-    group.add_argument(
-        "--activate-absence",
-        dest="activate_absence",
-        action="store",
-        help="activates absence for provided amount of minutes",
-        default=None,
-        type=int,
-    )
-    group.add_argument(
-        "--activate-absence-permanent",
-        dest="activate_absence_permanent",
-        action="store_true",
-        help="activates absence forever",
-    )
-    group.add_argument(
-        "--deactivate-absence",
-        action="store_true",
-        dest="deactivate_absence",
-        help="deactivates absence",
-    )
-    group.add_argument(
-        "--start-inclusion",
-        action="store",
-        dest="inclusion_device_id",
-        help="start inclusion for device with given id",
-    )
-
-    group = parser.add_argument_group("Group Settings")
-    group.add_argument(
-        "--list-profiles",
-        dest="group_list_profiles",
-        action="store_true",
-        help="displays all profiles for a group",
-    )
-    group.add_argument(
-        "--activate-profile",
-        dest="group_activate_profile",
-        help="activates a profile by using its index or its name",
-    )
-    group.add_argument(
-        "--set-group-shutter-level",
-        action="store",
-        dest="group_shutter_level",
-        help="set all shutters in group to level (0..1)",
-    )
-    group.add_argument(
-        "--set-group-shutter-stop",
-        action="store_true",
-        dest="group_shutter_stop",
-        help="stop all shutters in group",
-        default=None,
-    )
-    group.add_argument(
-        "--set-group-slats-level",
-        nargs="+",
-        action="store",
-        dest="group_slats_level",
-        help="set all slats in group to level (0..1). Optional set shutter level with a second argument like 'set-slats-level 0.5 0.8'",
-    )
-    group.add_argument(
-        "--set-point-temperature",
-        action="store",
-        dest="group_set_point_temperature",
-        help='sets the temperature for the given group. The group must be of the type "HEATING"',
-        default=None,
-        type=float,
-    )
-
-    group.add_argument(
-        "--set-boost",
-        action="store_true",
-        dest="group_boost",
-        help="activates the boost mode for a HEATING group",
-        default=None,
-    )
-    group.add_argument(
-        "--set-boost-stop",
-        action="store_false",
-        dest="group_boost",
-        help="deactivates the boost mode for a HEATING group",
-        default=None,
-    )
-    group.add_argument(
-        "--set-boost-duration",
-        dest="group_boost_duration",
-        action="store",
-        help="sets the boost duration for a HEATING group in minutes",
-        default=None,
-        type=int,
-    )
-
-    group = parser.add_argument_group("Automation Rule Settings")
-    group.add_argument(
-        "--enable-rule",
-        action="store_true",
-        dest="rule_activation",
-        help="activates the automation rules",
-        default=None,
-    )
-    group.add_argument(
-        "--disable-rule",
-        action="store_false",
-        dest="rule_activation",
-        help="deactivates the automation rules",
-        default=None,
-    )
+    parser = get_parser()
+    parsed_args = get_args(parser, args)
 
     if len(sys.argv) == 1:
         parser.print_help()
         return
 
     try:
-        args = parser.parse_args()
-        handle_args(args, parser)
-    except SystemExit:
-        return
-    except:
-        print("could not parse arguments")
-        parser.print_help()
-        return
+        config = setup_config(parsed_args)
+
+        if config is None:
+            print("Could not find configuration file. Script will exit")
+            sys.exit(-1)
+
+        logger = setup_logger(config, parsed_args)
+        home = get_home(config)
+
+        if not run(config, home, logger, parsed_args):
+            logger.error("Commands could not be handled.")
+            sys.exit(-1)
+    except KeyboardInterrupt:
+        # Shell standard is 128 + signum = 130 (SIGINT = 2)
+        sys.stdout.write("\n")
+        return 128 + signal.SIGINT
+    except Exception as e:
+        # stderr and exit code 255
+        sys.stderr.write("\n")
+        sys.stderr.write(f"\033[91m{type(e).__name__}: {str(e)}\033[0;0m")
+        sys.stderr.write("\n")
+        # at this point, you're guaranteed to have args and thus log_level
+        if parsed_args.log_level:
+            if parsed_args.log_level < 10:
+                # traceback prints to stderr by default
+                traceback.print_exc()
+
+        return 255
 
 
-def handle_args(args, parser):
-    _config = None
-
+def setup_config(args) -> homematicip.HmipConfig:
+    """Initialize configuration."""
     if args.config_file:
         try:
             _config = homematicip.load_config_file(args.config_file)
@@ -459,20 +79,28 @@ def handle_args(args, parser):
     else:
         _config = homematicip.find_and_load_config_file()
 
-    if _config is None:
-        print("Could not find configuration file. Script will exit")
-        return
+    return _config
 
-    debug_level = args.debug_level if args.debug_level else _config.log_level
+
+def get_home(config: homematicip.HmipConfig) -> Home:
+    """Initialize home instance."""
+    home = Home()
+    home.set_auth_token(config.auth_token)
+    home.init(config.access_point)
+    return home
+
+
+def setup_logger(config: homematicip.HmipConfig, args) -> logging.Logger:
+    debug_level = args.debug_level if args.debug_level else config.log_level
     logging.basicConfig(level=debug_level)
 
     global logger
-    logger = create_logger(debug_level, _config.log_file)
+    logger = create_logger(debug_level, config.log_file)
+    return logger
 
-    home = Home()
-    home.set_auth_token(_config.auth_token)
-    home.init(_config.access_point)
 
+def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args):
+    """Execution of cli commands with parsed args."""
     command_entered = False
     if args.server_config:
         print(
@@ -944,8 +572,402 @@ def handle_args(args, parser):
         except KeyboardInterrupt:
             return
 
-    if not command_entered:
-        parser.print_help()
+    return command_entered
+
+
+def get_args(parser, args):
+    """Parse arguments passed in from shell."""
+    return parser.parse_args(args)
+
+
+def get_parser():
+    """Return ArgumentParser for hmip_cli."""
+    parser = ArgumentParser(
+        description=f"a cli wrapper for the homematicip API\nVersion: {version('homematicip')}\nPython: {sys.version} ",
+        formatter_class=RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "--config_file",
+        type=str,
+        help="the configuration file. If nothing is specified the script will search for it.",
+    )
+    parser.add_argument(
+        "--server-config",
+        type=str,
+        dest="server_config",
+        help="the server configuration file. e.g. output from --dump-configuration.",
+    )
+    parser.add_argument(
+        "--debug-level",
+        dest="debug_level",
+        type=int,
+        help="the debug level which should get used(Critical=50, DEBUG=10)",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s {}\nPython: {}".format(version("homematicip"), sys.version),
+    )
+
+    group = parser.add_argument_group("Display Configuration")
+    group.add_argument(
+        "--dump-configuration",
+        action="store_true",
+        dest="dump_config",
+        help="dumps the current configuration from the AP",
+    )
+    group.add_argument(
+        "--anonymize",
+        action="store_true",
+        dest="anonymize",
+        help="used together with --dump-configuration to anonymize the output",
+    )
+    group.add_argument(
+        "--list-devices",
+        action="store_true",
+        dest="list_devices",
+        help="list all devices",
+    )
+    group.add_argument(
+        "--list-groups", action="store_true", dest="list_groups", help="list all groups"
+    )
+    group.add_argument(
+        "--list-group-ids",
+        action="store_true",
+        dest="list_group_ids",
+        help="list all groups and their ids",
+    )
+    group.add_argument(
+        "--list-firmware",
+        action="store_true",
+        dest="list_firmware",
+        help="list the firmware of all devices",
+    )
+    group.add_argument(
+        "--list-rssi",
+        action="store_true",
+        dest="list_rssi",
+        help="list the reception quality of all devices",
+    )
+    group.add_argument(
+        "--list-events",
+        action="store_true",
+        dest="list_events",
+        help="prints all the events",
+    )
+    group.add_argument(
+        "--list-last-status-update",
+        action="store_true",
+        dest="list_last_status_update",
+        help="prints the last status update of all systems",
+    )
+
+    parser.add_argument(
+        "--list-security-journal",
+        action="store_true",
+        dest="list_security_journal",
+        help="display the security journal",
+    )
+    parser.add_argument(
+        "--list-rules",
+        action="store_true",
+        dest="list_rules",
+        help="display all automation rules",
+    )
+
+    parser.add_argument(
+        "-d",
+        "--device",
+        dest="device",
+        action="append",
+        help='the device you want to modify (see "Device Settings").\nYou can use * to modify all devices or enter the parameter multiple times to modify more devices',
+    )
+    parser.add_argument(
+        "-g",
+        "--group",
+        dest="group",
+        help='the group you want to modify (see "Group Settings")',
+    )
+    parser.add_argument(
+        "--print-infos",
+        action="store_true",
+        dest="print_infos",
+        help="Print channels or devices, which belongs to devices or groups.",
+    )
+    parser.add_argument(
+        "-ac",
+        "--print-allowed-commands",
+        action="store_true",
+        dest="print_allowed_commands",
+        help="Print allowed commands for channels of a device. Use together with a device and optional combined with arguments --print-infos or single --channel.",
+    )
+    parser.add_argument(
+        "-r",
+        "--rule",
+        dest="rules",
+        action="append",
+        help='the automation you want to modify (see "Automation Rule Settings").\nYou can use * to modify all automations or enter the parameter multiple times to modify more automations',
+    )
+
+    group = parser.add_argument_group("Device Settings")
+    group.add_argument(
+        "--toggle-garage-door",
+        action="store_true",
+        dest="toggle_garage_door",
+        help="Toggle Garage Door for devices with IMPULSE_OUTPUT_CHANNEL channel like HmIP-WGC ",
+        default=None,
+    )
+    group.add_argument(
+        "--send-door-command",
+        nargs="?",
+        dest="device_send_door_command",
+        help="Control door for all devices, which has a channel called Door_Channel like Hmip-MOD-HO. Allowed parameters are OPEN, CLOSE, STOP and PARTIAL_OPEN.",
+        default=None,
+    )
+
+    group.add_argument(
+        "--turn-on",
+        action="store_true",
+        dest="device_switch_state",
+        help="turn the switch on",
+        default=None,
+    )
+    group.add_argument(
+        "--turn-off",
+        action="store_false",
+        dest="device_switch_state",
+        help="turn the switch off",
+        default=None,
+    )
+
+    group.add_argument(
+        "--channel",
+        nargs="*",
+        dest="channels",
+        help="used together with --turn-on and --turn-off to specify one or more specific channels",
+        default=None,
+    )
+
+    group.add_argument(
+        "--pin",
+        nargs="*",
+        dest="pin",
+        help="special pin used for door lock drive if set in the app",
+        default="",
+    )
+
+    group.add_argument(
+        "--set-lock-state",
+        action="store",
+        dest="device_set_lock_state",
+        help="set door lock state to OPEN, LOCKED or UNLOCKED. Add --pin for special pin or --channel.",
+        default=None,
+    )
+
+    group.add_argument(
+        "--set-dim-level",
+        action="store",
+        dest="device_dim_level",
+        help="set dimmer to level (0..1)",
+        default=None,
+    )
+    group.add_argument(
+        "--set-shutter-level",
+        action="store",
+        dest="device_shutter_level",
+        help="set shutter to level (0..1)",
+    )
+    group.add_argument(
+        "--set-slats-level",
+        nargs="+",
+        action="store",
+        dest="device_slats_level",
+        help="set slats to level (0..1). Optional set shutter level with a second argument like 'set-slats-level 0.5 0.8'",
+    )
+    group.add_argument(
+        "--set-shutter-stop",
+        action="store_true",
+        dest="device_shutter_stop",
+        help="stop shutter",
+        default=None,
+    )
+
+    group.add_argument("--set-label", dest="device_new_label", help="set a new label")
+    group.add_argument(
+        "--set-display",
+        dest="device_display",
+        action="store",
+        help="set the display mode",
+        choices=["actual", "setpoint", "actual_humidity"],
+    )
+    group.add_argument(
+        "--enable-router-module",
+        action="store_true",
+        dest="device_enable_router_module",
+        help="enables the router module of the device",
+        default=None,
+    )
+    group.add_argument(
+        "--disable-router-module",
+        action="store_false",
+        dest="device_enable_router_module",
+        help="disables the router module of the device",
+        default=None,
+    )
+    group.add_argument(
+        "--reset-energy-counter",
+        action="store_true",
+        dest="reset_energy_counter",
+        help="resets the energy counter",
+    )
+
+    group = parser.add_argument_group("Home Settings")
+    group.add_argument(
+        "--set-protection-mode",
+        dest="protectionmode",
+        action="store",
+        help="set the protection mode",
+        choices=["presence", "absence", "disable"],
+    )
+    group.add_argument(
+        "--set-pin", dest="new_pin", action="store", help="set a new pin"
+    )
+    group.add_argument(
+        "--delete-pin", dest="delete_pin", action="store_true", help="deletes the pin"
+    )
+    group.add_argument(
+        "--old-pin",
+        dest="old_pin",
+        action="store",
+        help="the current pin. used together with --set-pin or --delete-pin",
+        default=None,
+    )
+    group.add_argument(
+        "--set-zones-device-assignment",
+        dest="set_zones_device_assignment",
+        action="store_true",
+        help="sets the zones devices assignment",
+    )
+    group.add_argument(
+        "--external-devices",
+        dest="external_devices",
+        nargs="+",
+        help="sets the devices for the external zone",
+    )
+    group.add_argument(
+        "--internal-devices",
+        dest="internal_devices",
+        nargs="+",
+        help="sets the devices for the internal zone",
+    )
+    group.add_argument(
+        "--activate-absence",
+        dest="activate_absence",
+        action="store",
+        help="activates absence for provided amount of minutes",
+        default=None,
+        type=int,
+    )
+    group.add_argument(
+        "--activate-absence-permanent",
+        dest="activate_absence_permanent",
+        action="store_true",
+        help="activates absence forever",
+    )
+    group.add_argument(
+        "--deactivate-absence",
+        action="store_true",
+        dest="deactivate_absence",
+        help="deactivates absence",
+    )
+    group.add_argument(
+        "--start-inclusion",
+        action="store",
+        dest="inclusion_device_id",
+        help="start inclusion for device with given id",
+    )
+
+    group = parser.add_argument_group("Group Settings")
+    group.add_argument(
+        "--list-profiles",
+        dest="group_list_profiles",
+        action="store_true",
+        help="displays all profiles for a group",
+    )
+    group.add_argument(
+        "--activate-profile",
+        dest="group_activate_profile",
+        help="activates a profile by using its index or its name",
+    )
+    group.add_argument(
+        "--set-group-shutter-level",
+        action="store",
+        dest="group_shutter_level",
+        help="set all shutters in group to level (0..1)",
+    )
+    group.add_argument(
+        "--set-group-shutter-stop",
+        action="store_true",
+        dest="group_shutter_stop",
+        help="stop all shutters in group",
+        default=None,
+    )
+    group.add_argument(
+        "--set-group-slats-level",
+        nargs="+",
+        action="store",
+        dest="group_slats_level",
+        help="set all slats in group to level (0..1). Optional set shutter level with a second argument like 'set-slats-level 0.5 0.8'",
+    )
+    group.add_argument(
+        "--set-point-temperature",
+        action="store",
+        dest="group_set_point_temperature",
+        help='sets the temperature for the given group. The group must be of the type "HEATING"',
+        default=None,
+        type=float,
+    )
+
+    group.add_argument(
+        "--set-boost",
+        action="store_true",
+        dest="group_boost",
+        help="activates the boost mode for a HEATING group",
+        default=None,
+    )
+    group.add_argument(
+        "--set-boost-stop",
+        action="store_false",
+        dest="group_boost",
+        help="deactivates the boost mode for a HEATING group",
+        default=None,
+    )
+    group.add_argument(
+        "--set-boost-duration",
+        dest="group_boost_duration",
+        action="store",
+        help="sets the boost duration for a HEATING group in minutes",
+        default=None,
+        type=int,
+    )
+
+    group = parser.add_argument_group("Automation Rule Settings")
+    group.add_argument(
+        "--enable-rule",
+        action="store_true",
+        dest="rule_activation",
+        help="activates the automation rules",
+        default=None,
+    )
+    group.add_argument(
+        "--disable-rule",
+        action="store_false",
+        dest="rule_activation",
+        help="deactivates the automation rules",
+        default=None,
+    )
+
+    return parser
 
 
 def _get_target_channel_indices(device: BaseDevice, channels: list = None) -> list:
@@ -1040,5 +1062,26 @@ def getRssiBarString(rssiValue):
     return "[{}{}]".format("*" * dots, "_" * (width - dots))
 
 
-if __name__ == "__main__":
-    main()
+def create_logger(level, file_name):
+    """Create a logger based on the level"""
+    logger = logging.getLogger()
+    logger.setLevel(level)
+    handler = (
+        TimedRotatingFileHandler(file_name, when="midnight", backupCount=5)
+        if file_name
+        else logging.StreamHandler()
+    )
+    handler.setFormatter(
+        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    )
+    logger.addHandler(handler)
+    return logger
+
+
+def fake_download_configuration():
+    """Use a json file as configuration source for the server."""
+    global server_config
+    if server_config:
+        with open(server_config) as file:
+            return json.load(file)
+    return None
