@@ -12,9 +12,14 @@ done via reverse engineering. Use at your own risk.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Introduction
 
    gettingstarted
+   
+.. toctree::
+   :maxdepth: 4
+   :caption: API Documentation
+
    modules
 
 Indices and tables

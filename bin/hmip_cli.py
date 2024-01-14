@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import logging
+import os
 import sys
 import time
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
@@ -437,6 +438,7 @@ def main():
 
     try:
         args = parser.parse_args()
+        handle_args(args, parser)
     except SystemExit:
         return
     except:
@@ -444,6 +446,8 @@ def main():
         parser.print_help()
         return
 
+
+def handle_args(args, parser):
     _config = None
 
     if args.config_file:
@@ -641,7 +645,6 @@ def main():
 
                 else:
                     pin = args.pin[0] if len(args.pin) > 0 else ""
-                    target_channels = _get_target_channels(args, device)
                     _execute_action_for_device(
                         device,
                         args,
