@@ -1,5 +1,5 @@
-from typing import Iterable
 import json
+from typing import Iterable
 
 from homematicip.base.enums import *
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
