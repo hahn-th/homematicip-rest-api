@@ -9,7 +9,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -18,20 +18,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements_docs.txt
-          pip install -r requirements_dev.txt
           pip install -e .
-      - name: Build HTML
-        run: |
-          cd docs/
-          make html
       - name: Sphinx build
         run: |
-          sphinx-build doc _build
+          sphinx-build docs/source docs/build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: _build/
+          publish_dir: docs/build/html
           force_orphan: true
