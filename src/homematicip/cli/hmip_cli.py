@@ -19,6 +19,8 @@ from homematicip.group import ExtendedLinkedSwitchingGroup, HeatingGroup
 from homematicip.home import Home
 from homematicip.rule import SimpleRule
 
+logger = logging.getLogger("hmip_cli")
+
 
 def main(args=None):
     """Entry point for pypyr cli.
@@ -44,11 +46,15 @@ def main(args=None):
             print("Could not find configuration file. Script will exit")
             sys.exit(-1)
 
-        logger = setup_logger(config, parsed_args)
+        logger = setup_logger(
+            config.log_level, parsed_args.debug_level, config.log_file
+        )
         home = get_home(config)
 
         if not run(config, home, logger, parsed_args):
-            logger.error("Commands could not be handled.")
+            print(
+                "Command not found. Use -h or --help argument for available commands."
+            )
             sys.exit(-1)
     except KeyboardInterrupt:
         # Shell standard is 128 + signum = 130 (SIGINT = 2)
@@ -90,12 +96,13 @@ def get_home(config: homematicip.HmipConfig) -> Home:
     return home
 
 
-def setup_logger(config: homematicip.HmipConfig, args) -> logging.Logger:
-    debug_level = args.debug_level if args.debug_level else config.log_level
+def setup_logger(
+    default_debug_level: int, argument_debug_level: int, log_file: str
+) -> logging.Logger:
+    debug_level = argument_debug_level if argument_debug_level else default_debug_level
     logging.basicConfig(level=debug_level)
 
-    global logger
-    logger = create_logger(debug_level, config.log_file)
+    logger = create_logger(debug_level, log_file)
     return logger
 
 
@@ -268,7 +275,7 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
 
             if args.device_set_lock_state is not None:
                 targetLockState = LockState.from_str(args.device_set_lock_state)
-                if not targetLockState in LockState:
+                if targetLockState not in LockState:
                     logger.error("%s is not a lock state.", args.device_set_lock_state)
 
                 else:
