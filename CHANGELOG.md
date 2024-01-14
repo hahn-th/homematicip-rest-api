@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.1] 2024-01-06
+## [1.1.0] 2024-01-06
 
 ### ADDED
 
@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for optional feature IOptionalFeatureDeviceErrorLockJammed
 - Add support for device HmIP-ESI
 - Add support for function channel DeviceOperationLockWithSabotage
+- Add new documentation site and workflow
 
 ### CHANGED
 
@@ -651,9 +652,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.16...master
-[1.0.16]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...1.1.16
-[1.0.15]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...1.1.15
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.0..master
+[1.1.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.16...1.1.0
+[1.0.16]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...1.0.16
+[1.0.15]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...1.0.15
 [1.0.14]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...1.0.14
 [1.0.13]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...1.0.13
 [1.0.12]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.11...1.0.12

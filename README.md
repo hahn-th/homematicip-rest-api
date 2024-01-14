@@ -12,6 +12,10 @@ Any help from the community through e.g. pull requests would be highly appreciat
 
 If you want to get in contact with me or need help with the library, you can get in touch with me via discord. There is a **[discord server](https://discord.gg/mZG2myJ)** and my discord tag is **agonist#6159**
 
+## :book: New Documentation
+
+There is a new documentation site unter https://hahn-th.github.io/homematicip-rest-api which is still under construction.
+
 ## Support me
 
 :heart: If you want to say thank you or want to support me, you can do that via PayPal.
@@ -20,12 +24,6 @@ If you want to get in contact with me or need help with the library, you can get
 ## Thanks
 
 Kudos and a big thank you to @coreGreenberet, who created this library.
-
-## Documentation
-
-**Documentation is currently not updated**
-
-Documentation can be found under https://homematicip-rest-api.readthedocs.io
 
 ## Installation
 
@@ -79,13 +77,13 @@ A few examples:
 
 - [x] ALPHA-IP-RBG (Alpha IP Wall Thermostat Display)
 - [x] ALPHA-IP-RBGa (ALpha IP Wall Thermostat Display analog)
-- [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) *powered by HmIP
-- [ ] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) *powered by HmIP
-- [ ] ELV-SH-GVI (Garden valve interface) *powered by HmIP
-- [ ] ELV-SH-IRS8 (Infared Remote control - 8x channels) *powered by HmIP
-- [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) *powered by HmIP
-- [ ] ELV-SH-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V) *powered by HmIP
-- [ ] ELV-SH-WSC (2x Servo Controls, 5v - 12V) *powered by HmIP
+- [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) \*powered by HmIP
+- [ ] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
+- [ ] ELV-SH-GVI (Garden valve interface) \*powered by HmIP
+- [ ] ELV-SH-IRS8 (Infared Remote control - 8x channels) \*powered by HmIP
+- [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) \*powered by HmIP
+- [ ] ELV-SH-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V) \*powered by HmIP
+- [ ] ELV-SH-WSC (2x Servo Controls, 5v - 12V) \*powered by HmIP
 - [x] HMIP-ASIR (Alarm Siren - indoor)
 - [x] HMIP-ASIR-B1 (Alarm Siren - indoor) _Silvercrest Edition_
 - [x] HMIP-ASIR-2 (Alarm Siren - indoor) New Version
@@ -141,7 +139,7 @@ A few examples:
 - [x] HMIP-HAP (Cloud Access Point)
 - [x] HMIP-HAP-B1 (Cloud Access Point) _Silvercrest Edition_
 - [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds
-- [ ] HMIP-HDRC (Hunter Douglas & erfal window blinds remote control) 
+- [ ] HMIP-HDRC (Hunter Douglas & erfal window blinds remote control)
 - [ ] HMIP-K-DRBLI4 (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
 - [ ] HMIP-K-DRSI1 (Actuator Inbound 230V – 1x channel) electrical DIN rail
 - [ ] HMIP-K-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
@@ -219,7 +217,7 @@ A few examples:
 - [ ] HMIP-WRCR (Wall-mount Remote Control - Rotary)
 - [ ] HMIP-WT (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 - [x] HMIP-WTH (Wall Mounted Thermostat Pro with Display)
-- [ ] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really) 
+- [ ] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really)
 - [x] HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-B (Wall Mounted Thermostat basic without adjusting wheel)
 - [ ] HMIP-WTH-B-2 (Wall Mounted Thermostat basic without adjusting wheel) New Version
