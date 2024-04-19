@@ -328,6 +328,10 @@ class AsyncRemoteControl8Module(RemoteControl8Module, AsyncRemoteControl8):
     """HMIP-MOD-RC8 (Open Collector Module Sender - 8x)"""
 
 
+class AsyncRgbwDimmer(RgbwDimmer, AsyncDevice):
+    """HmIP-RGBW device."""
+    
+
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """HMIP-ASIR (Alarm Siren)"""
 

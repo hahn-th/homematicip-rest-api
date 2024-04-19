@@ -405,3 +405,17 @@ def test_water_sensor_channel(fake_home: Home):
         assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
         assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
         assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
+
+def test_universal_light_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711000000000000RGBW", 1)
+        assert isinstance(ch, UniversalLightChannel)
+        assert ch.colorTemperature == 4100
+        assert ch.channelRole == "UNIVERSAL_LIGHT_ACTUATOR"
+        assert ch.dim2WarmActive is False
+        assert ch.dimLevel == 0.0
+        assert ch.hardwareColorTemperatureColdWhite == 6500
+        assert ch.hardwareColorTemperatureWarmWhite == 2000
+        assert ch.hue is None
+        assert ch.lightSceneId == 0
+

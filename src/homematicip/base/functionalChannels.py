@@ -1,5 +1,6 @@
+from dataclasses import dataclass
 import json
-from typing import Iterable
+from typing import Any, Iterable
 
 from homematicip.base.enums import *
 from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
@@ -7,7 +8,7 @@ from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
 
-
+@dataclass
 class FunctionalChannel(HomeMaticIPObject):
     """this is the base class for the functional channels"""
 
@@ -55,7 +56,7 @@ class FunctionalChannel(HomeMaticIPObject):
             self.index,
         )
 
-
+@dataclass
 class DeviceBaseChannel(FunctionalChannel):
     """this is the representative of the DEVICE_BASE channel"""
 
@@ -2125,3 +2126,52 @@ class OpticalSignalGroupChannel(FunctionalChannel):
             self.simpleRGBColorState,
             self.userDesiredProfileMode,
         )
+
+@dataclass
+class UniversalLightChannel(FunctionalChannel):
+    """Represents Universal Light Channel."""
+
+    channelRole: str = None
+    colorTemperature: int = None
+    controlGearFailure: str = None
+    dim2WarmActive: bool = None
+    dimLevel: float = None
+    hardwareColorTemperatureColdWhite: int = None
+    hardwareColorTemperatureWarmWhite: int = None
+    hue: bool = None
+    humanCentricLightActive: bool = None
+    lampFailure: bool = None
+    lightSceneId: int = None
+    limitFailure: Any = None
+    maximumColorTemperature: int = None
+    minimalColorTemperature: int = None
+    on: bool = None
+    onMinLevel: float = None
+    profileMode: ProfileMode = None
+    saturationLevel: float = None
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+
+        self.set_attr_from_dict("channelRole", js)
+        self.set_attr_from_dict("colorTemperature", js)
+        self.set_attr_from_dict("controlGearFailure", js)
+        self.set_attr_from_dict("dim2WarmActive", js)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("hardwareColorTemperatureColdWhite", js)
+        self.set_attr_from_dict("hardwareColorTemperatureWarmWhite", js)
+        self.set_attr_from_dict("hue", js)
+        self.set_attr_from_dict("humanCentricLightActive", js)
+        self.set_attr_from_dict("lampFailure", js)
+        self.set_attr_from_dict("lightSceneId", js)
+        self.set_attr_from_dict("limitFailure", js)
+        self.set_attr_from_dict("maximumColorTemperature", js)
+        self.set_attr_from_dict("minimalColorTemperature", js)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("onMinLevel", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("saturationLevel", js)

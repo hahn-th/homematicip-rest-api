@@ -170,6 +170,7 @@ A few examples:
 - [ ] HMIP-PSM-UK (Type G not tested, but it should work)
 - [x] HMIP-RC8 (Remote Control - 8x buttons)
 - [ ] HMIP-RCB1 (Remote Control - 1x button)
+- [x] HMIP-RGBW (RGB Led Controller - Readonly at the moment)
 - [x] HMIP-SAM (Acceleration Sensor)
 - [x] HMIP-SCI (Contact Interface Sensor)
 - [x] HMIP-SCTH230 (CO2, Temperature and Humidity Sensor 230V)

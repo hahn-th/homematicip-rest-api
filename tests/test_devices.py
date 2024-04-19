@@ -1740,3 +1740,9 @@ def test_carbon_dioxide_sensor(fake_home: Home):
         assert c.carbonDioxideVisualisationEnabled == True
         assert c.humidity == 37
         assert c.vaporAmount == 8.739326558877478
+
+def test_rgbw_dimmer(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000RGBW")
+        assert d is not None
+        assert isinstance(d, RgbwDimmer)

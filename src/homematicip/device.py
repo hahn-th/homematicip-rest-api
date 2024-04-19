@@ -1,4 +1,5 @@
 # coding=utf-8
+from dataclasses import dataclass
 import json
 import logging
 from collections import Counter
@@ -101,37 +102,43 @@ class Device(BaseDevice):
     """this class represents a generic homematic ip device"""
 
     _supportedFeatureAttributeMap = {
-        "IFeatureDeviceOverheated": ["deviceOverheated"],
-        "IFeatureDeviceOverloaded": ["deviceOverloaded"],
-        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
-        "IFeatureDeviceTemperatureOutOfRange": ["temperatureOutOfRange"],
+        "IFeatureBusConfigMismatch": ["busConfigMismatch"],
         "IFeatureDeviceCoProError": ["coProFaulty"],
         "IFeatureDeviceCoProRestart": ["coProRestartNeeded"],
         "IFeatureDeviceCoProUpdate": ["coProUpdateFailure"],
-        "IFeatureMinimumFloorHeatingValvePosition": [
-            "minimumFloorHeatingValvePosition"
-        ],
-        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": [
-            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled"
-        ],
-        "IFeatureBusConfigMismatch": ["busConfigMismatch"],
-        "IFeatureShortCircuitDataLine": ["shortCircuitDataLine"],
-        "IFeatureRssiValue": ["rssiDeviceValue"],
-        "IOptionalFeatureDutyCycle": ["dutyCycle"],
-        "IFeaturePowerShortCircuit": ["powerShortCircuit"],
-        "IOptionalFeatureLowBat": ["lowBat"],
-        "IFeatureDevicePowerFailure": ["devicePowerFailureDetected"],
-        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
-        "IFeatureMulticastRouter": ["multicastRoutingEnabled"],
         "IFeatureDeviceIdentify": [],
-        "IFeatureProfilePeriodLimit": [],
-        "IOptionalFeatureDisplayContrast": [],
-        "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
-        "IOptionalFeatureControlsMountingOrientation": ["controlsMountingOrientation"],
-        "IOptionalFeatureFilteredMulticastRouter": ["filteredMulticastRoutingEnabled"],
-        "IFeatureDeviceSensorError": ["sensorError"],
+        "IFeatureDeviceOverheated": ["deviceOverheated"],
+        "IFeatureDeviceOverloaded": ["deviceOverloaded"],
+        "IFeatureDeviceParticulateMatterSensorCommunicationError": "particulateMatterSensorCommunicationError",
+        "IFeatureDeviceParticulateMatterSensorError": "particulateMatterSensorError",
+        "IFeatureDevicePowerFailure": ["devicePowerFailureDetected"],
         "IFeatureDeviceSensorCommunicationError": ["sensorCommunicationError"],
+        "IFeatureDeviceSensorError": ["sensorError"],
+        "IFeatureDeviceTemperatureHumiditySensorCommunicationError": "temperatureHumiditySensorCommunicationError",
+        "IFeatureDeviceTemperatureHumiditySensorError": "temperatureHumiditySensorError",
+        "IFeatureDeviceTemperatureOutOfRange": ["temperatureOutOfRange"],
+        "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
+        "IFeatureMinimumFloorHeatingValvePosition": ["minimumFloorHeatingValvePosition"],
+        "IFeatureMulticastRouter": ["multicastRoutingEnabled"],
+        "IFeaturePowerShortCircuit": ["powerShortCircuit"],
+        "IFeatureProfilePeriodLimit": [],
+        "IFeaturePulseWidthModulationAtLowFloorHeatingValvePosition": ["pulseWidthModulationAtLowFloorHeatingValvePositionEnabled"],
+        "IFeatureRssiValue": ["rssiDeviceValue"],
+        "IFeatureShortCircuitDataLine": ["shortCircuitDataLine"],
+        "IOptionalFeatureColorTemperature": "colorTemperature",
+        # "IOptionalFeatureColorTemperatureDim2Warm": false,
+        # "IOptionalFeatureColorTemperatureDynamicDaylight": false,
+        "IOptionalFeatureControlsMountingOrientation": ["controlsMountingOrientation"],
         "IOptionalFeatureDeviceErrorLockJammed": ["lockJammed"],
+        "IOptionalFeatureDisplayContrast": [],
+        "IOptionalFeatureDutyCycle": ["dutyCycle"],
+        "IOptionalFeatureFilteredMulticastRouter": ["filteredMulticastRoutingEnabled"],
+        # "IOptionalFeatureHardwareColorTemperature": false,
+        # "IOptionalFeatureHueSaturationValue": false,
+        # "IOptionalFeatureLightScene": false,
+        # "IOptionalFeatureLightSceneWithShortTimes": false,
+        "IOptionalFeatureLowBat": ["lowBat"],
+        "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
     }
 
     def __init__(self, connection):
@@ -1041,6 +1048,17 @@ class RemoteControl8(PushButton):
 
 class RemoteControl8Module(RemoteControl8):
     """HMIP-MOD-RC8 (Open Collector Module Sender - 8x)"""
+
+
+class RgbwDimmer(Device):
+    """HmIP-RGBW"""
+
+    fastColorChangeSupported: bool = False
+
+    def from_json(self, js):
+        super().from_json(js)
+
+        self.set_attr_from_dict("fastColorChangeSupported", js)
 
 
 class AlarmSirenIndoor(SabotageDevice):
