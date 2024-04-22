@@ -1255,3 +1255,7 @@ class AccessControlGroup(Group):
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
+
+
+class EnergyGroup(Group):
+    pass

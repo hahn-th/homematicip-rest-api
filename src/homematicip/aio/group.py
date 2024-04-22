@@ -291,3 +291,7 @@ class AsyncAccessAuthorizationProfileGroup(AccessAuthorizationProfileGroup, Asyn
 
 class AsyncAccessControlGroup(AccessControlGroup, AsyncGroup):
     pass
+
+
+class AsyncEnergyGroup(AsyncGroup):
+    pass

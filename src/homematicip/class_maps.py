@@ -114,6 +114,7 @@ TYPE_GROUP_MAP = {
     GroupType.ACCESS_AUTHORIZATION_PROFILE: AccessAuthorizationProfileGroup,
     GroupType.ACCESS_CONTROL: AccessControlGroup,
     GroupType.ALARM_SWITCHING: AlarmSwitchingGroup,
+    GroupType.ENERGY: EnergyGroup,
     GroupType.ENVIRONMENT: EnvironmentGroup,
     GroupType.EXTENDED_LINKED_GARAGE_DOOR: ExtendedLinkedGarageDoorGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,

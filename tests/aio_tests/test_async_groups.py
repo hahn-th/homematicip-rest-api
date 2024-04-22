@@ -386,3 +386,10 @@ async def test_indoor_climate_group(no_ssl_fake_async_home: AsyncHome):
     assert g.ventilationState == None
     assert g.windowState == WindowState.CLOSED
     assert str(g) == "INDOOR_CLIMATE Stanovanje sabotage(False) ventilationLevel(0.5) ventilationState(None) windowState(CLOSED)"
+
+@pytest.mark.asyncio
+async def test_energy_group(no_ssl_fake_async_home: AsyncHome):
+    g = no_ssl_fake_async_home.search_group_by_id("00000000-0000-0000-0000-0000000000EN")
+    await no_ssl_fake_async_home.get_current_state()
+
+    assert isinstance(g, AsyncEnergyGroup)

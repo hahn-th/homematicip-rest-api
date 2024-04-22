@@ -113,6 +113,7 @@ TYPE_GROUP_MAP = {
     GroupType.ALARM_SWITCHING: AsyncAlarmSwitchingGroup,
     GroupType.ACCESS_AUTHORIZATION_PROFILE: AsyncAccessAuthorizationProfileGroup,
     GroupType.ACCESS_CONTROL: AsyncAccessControlGroup,
+    GroupType.ENERGY: AsyncEnergyGroup,
     GroupType.ENVIRONMENT: AsyncEnvironmentGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: AsyncExtendedLinkedShutterGroup,
     GroupType.EXTENDED_LINKED_SWITCHING: AsyncExtendedLinkedSwitchingGroup,

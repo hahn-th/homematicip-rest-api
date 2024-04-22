@@ -12481,6 +12481,23 @@
     }
   },
   "groups": {
+    "00000000-0000-0000-0000-0000000000EN": {
+      "channels": [
+          {
+              "channelIndex": 1,
+              "deviceId": "3014F7110000000000000019"
+          }
+      ],
+      "dutyCycle": false,
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-0000000000EN",
+      "label": "EnergyGroupHWR",
+      "lastStatusUpdate": 1713711529425,
+      "lowBat": false,
+      "metaGroupId": "00000000-0000-0000-0000-000000000023",
+      "type": "ENERGY",
+      "unreach": false
+    },
     "00000000-0000-0000-0000-000000000020": {
       "channels": [
         {

@@ -558,6 +558,12 @@ def test_indoor_climate_group(fake_home: Home):
             == "INDOOR_CLIMATE Stanovanje sabotage(False) ventilationLevel(0.5) ventilationState(None) windowState(CLOSED)"
         )
 
+def test_energy_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000EN")
+        assert g.label == "EnergyGroupHWR"
+        assert isinstance(g, EnergyGroup)
+
 
 def test_all_groups_implemented(fake_home: Home):
     for g in fake_home.groups:
