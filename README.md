@@ -102,6 +102,7 @@ A few examples:
 - [x] HMIP-DBB (Doorbell Push-Button)
 - [x] HMIP-DLD (Door Lock Drive)
 - [x] HMIP-DLS (Door Lock Sensor)
+- [x] HmIP-DRG-DALI (Dali Gateway - readonly at the moment)
 - [x] HMIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)
 - [x] HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)
 - [x] HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail

@@ -1006,3 +1006,9 @@ async def test_carbon_dioxide_sensor(no_ssl_fake_async_home: AsyncHome):
     assert c.carbonDioxideVisualisationEnabled == True
     assert c.humidity == 37
     assert c.vaporAmount == 8.739326558877478
+
+
+@pytest.mark.asyncio
+async def test_dali_Gateway(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000DALI")
+    assert isinstance(d, AsyncDaliGateway)

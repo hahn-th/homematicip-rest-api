@@ -419,3 +419,10 @@ def test_universal_light_channel(fake_home: Home):
         assert ch.hue is None
         assert ch.lightSceneId == 0
 
+
+def test_universal_light_group_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711000000000000DALI", 5)
+        assert isinstance(ch, UniversalLightChannelGroup)
+        assert len(ch.channelSelections) == 3
+        assert ch.hardwareColorTemperatureColdWhite == 6500

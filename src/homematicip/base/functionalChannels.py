@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import json
 from typing import Any, Iterable
 
@@ -8,7 +7,7 @@ from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
 
-@dataclass
+
 class FunctionalChannel(HomeMaticIPObject):
     """this is the base class for the functional channels"""
 
@@ -18,7 +17,7 @@ class FunctionalChannel(HomeMaticIPObject):
         self.groupIndex = -1
         self.label = ""
         self.groupIndex = -1
-        self.functionalChannelType = ""
+        self.functionalChannelType:str = ""
         self.groups = Iterable[Group]
         self.device = device
 
@@ -56,7 +55,7 @@ class FunctionalChannel(HomeMaticIPObject):
             self.index,
         )
 
-@dataclass
+
 class DeviceBaseChannel(FunctionalChannel):
     """this is the representative of the DEVICE_BASE channel"""
 
@@ -1901,6 +1900,7 @@ class UniversalActuatorChannel(FunctionalChannel):
             self.profileMode,
             self.relayMode,
         )
+    
 
 
 class RainDetectionChannel(FunctionalChannel):
@@ -2127,35 +2127,34 @@ class OpticalSignalGroupChannel(FunctionalChannel):
             self.userDesiredProfileMode,
         )
 
-@dataclass
+
 class UniversalLightChannel(FunctionalChannel):
     """Represents Universal Light Channel."""
 
-    channelRole: str = None
-    colorTemperature: int = None
-    controlGearFailure: str = None
-    dim2WarmActive: bool = None
-    dimLevel: float = None
-    hardwareColorTemperatureColdWhite: int = None
-    hardwareColorTemperatureWarmWhite: int = None
-    hue: bool = None
-    humanCentricLightActive: bool = None
-    lampFailure: bool = None
-    lightSceneId: int = None
-    limitFailure: Any = None
-    maximumColorTemperature: int = None
-    minimalColorTemperature: int = None
-    on: bool = None
-    onMinLevel: float = None
-    profileMode: ProfileMode = None
-    saturationLevel: float = None
-
     def __init__(self, device, connection):
         super().__init__(device, connection)
+
+        self.channelRole: str = None
+        self.colorTemperature: int = None
+        self.controlGearFailure: str = None
+        self.dim2WarmActive: bool = None
+        self.dimLevel: float = None
+        self.hardwareColorTemperatureColdWhite: int = None
+        self.hardwareColorTemperatureWarmWhite: int = None
+        self.hue: bool = None
+        self.humanCentricLightActive: bool = None
+        self.lampFailure: bool = None
+        self.lightSceneId: int = None
+        self.limitFailure: Any = None
+        self.maximumColorTemperature: int = None
+        self.minimalColorTemperature: int = None
+        self.on: bool = None
+        self.onMinLevel: float = None
+        self.profileMode: ProfileMode = None
+        self.saturationLevel: float = None
         
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-
 
         self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("colorTemperature", js)
@@ -2175,3 +2174,18 @@ class UniversalLightChannel(FunctionalChannel):
         self.set_attr_from_dict("onMinLevel", js)
         self.set_attr_from_dict("profileMode", js, ProfileMode)
         self.set_attr_from_dict("saturationLevel", js)
+
+
+class UniversalLightChannelGroup(UniversalLightChannel):
+    """Universal-Light-Channel-Group."""
+
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        
+        self.channelSelections: list = []
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("channelSelections", js)

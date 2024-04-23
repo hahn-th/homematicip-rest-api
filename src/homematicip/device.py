@@ -2430,3 +2430,8 @@ class EnergySensorsInterface(Device):
 
     def __init__(self, connection):
         super().__init__(connection)
+
+
+class DaliGateway(Device):
+    """HmIP-DRG-DALI Dali Gateway device."""
+    pass

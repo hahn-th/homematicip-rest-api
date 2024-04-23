@@ -22,6 +22,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BRAND_SWITCH_NOTIFICATION_LIGHT: AsyncBrandSwitchNotificationLight,
     DeviceType.BRAND_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
     DeviceType.CARBON_DIOXIDE_SENSOR: AsyncCarbonDioxideSensor,
+    DeviceType.DALI_GATEWAY: AsyncDaliGateway,
     DeviceType.DIN_RAIL_BLIND_4: AsyncDinRailBlind4,
     DeviceType.DIN_RAIL_DIMMER_3: AsyncDinRailDimmer3,
     DeviceType.DIN_RAIL_SWITCH: AsyncDinRailSwitch,

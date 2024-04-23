@@ -732,3 +732,7 @@ class AsyncDoorBellContactInterface(DoorBellContactInterface, AsyncDevice):
 
 class AsyncEnergySensorsInterface(EnergySensorsInterface, AsyncDevice):
     pass
+
+
+class AsyncDaliGateway(DaliGateway, AsyncDevice):
+    pass
