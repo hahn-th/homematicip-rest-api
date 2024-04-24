@@ -18,7 +18,7 @@ def test_auth_challenge_no_pin(fake_home: Home):
         assert auth.isRequestAcknowledged() is False
         assert auth.isRequestAcknowledged() is False
 
-        fake_home._connection._restCall("auth/simulateBlueButton")
+        fake_home._connection._rest_call("auth/simulateBlueButton")
 
         assert auth.isRequestAcknowledged() is True
 

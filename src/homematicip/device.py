@@ -220,25 +220,25 @@ class Device(BaseDevice):
 
     def set_label(self, label):
         data = {"deviceId": self.id, "label": label}
-        return self._restCall("device/setDeviceLabel", json.dumps(data))
+        return self._rest_call("device/setDeviceLabel", json.dumps(data))
 
     def is_update_applicable(self):
         data = {"deviceId": self.id}
-        return self._restCall("device/isUpdateApplicable", json.dumps(data))
+        return self._rest_call("device/isUpdateApplicable", json.dumps(data))
 
     def authorizeUpdate(self):
         data = {"deviceId": self.id}
-        return self._restCall("device/authorizeUpdate", json.dumps(data))
+        return self._rest_call("device/authorizeUpdate", json.dumps(data))
 
     def delete(self):
         data = {"deviceId": self.id}
-        return self._restCall("device/deleteDevice", json.dumps(data))
+        return self._rest_call("device/deleteDevice", json.dumps(data))
 
     def set_router_module_enabled(self, enabled=True):
         if not self.routerModuleSupported:
             return False
         data = {"deviceId": self.id, "channelIndex": 0, "routerModuleEnabled": enabled}
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setRouterModuleEnabled", json.dumps(data)
         )
 
@@ -320,7 +320,7 @@ class OperationLockableDevice(Device):
 
     def set_operation_lock(self, operationLock=True):
         data = {"channelIndex": 0, "deviceId": self.id, "operationLock": operationLock}
-        return self._restCall("device/configuration/setOperationLock", json.dumps(data))
+        return self._rest_call("device/configuration/setOperationLock", json.dumps(data))
 
 
 class HeatingThermostat(OperationLockableDevice):
@@ -600,7 +600,7 @@ class TemperatureHumiditySensorDisplay(Device):
         self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
         data = {"channelIndex": 1, "deviceId": self.id, "display": str(display)}
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setClimateControlDisplay", json.dumps(data)
         )
 
@@ -790,7 +790,7 @@ class FloorTerminalBlock12(Device):
             "deviceId": self.id,
             "minimumFloorHeatingValvePosition": minimumFloorHeatingValvePosition,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setMinimumFloorHeatingValvePosition",
             body=json.dumps(data),
         )
@@ -824,7 +824,7 @@ class Switch(Device):
 
     def set_switch_state(self, on=True, channelIndex=1):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
-        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+        return self._rest_call("device/control/setSwitchState", body=json.dumps(data))
 
     def turn_on(self, channelIndex=1):
         return self.set_switch_state(True, channelIndex)
@@ -887,7 +887,7 @@ class SwitchMeasuring(Switch):
 
     def reset_energy_counter(self):
         data = {"channelIndex": 1, "deviceId": self.id}
-        return self._restCall(
+        return self._rest_call(
             "device/control/resetEnergyCounter", body=json.dumps(data)
         )
 
@@ -970,7 +970,7 @@ class BrandSwitchNotificationLight(Switch):
             "simpleRGBColorState": rgb,
             "dimLevel": dimLevel,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/control/setSimpleRGBColorDimLevel", body=json.dumps(data)
         )
 
@@ -1001,7 +1001,7 @@ class BrandSwitchNotificationLight(Switch):
             "onTime": onTime,
             "rampTime": rampTime,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/control/setSimpleRGBColorDimLevelWithTime", body=json.dumps(data)
         )
 
@@ -1261,7 +1261,7 @@ class Shutter(Device):
             "deviceId": self.id,
             "shutterLevel": level,
         }
-        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self, channelIndex=1):
         """stops the current shutter operation
@@ -1272,7 +1272,7 @@ class Shutter(Device):
             the result of the _restCall
         """
         data = {"channelIndex": channelIndex, "deviceId": self.id}
-        return self._restCall("device/control/stop", body=json.dumps(data))
+        return self._rest_call("device/control/stop", body=json.dumps(data))
 
 
 class Blind(Shutter):
@@ -1297,7 +1297,7 @@ class Blind(Shutter):
             "slatsLevel": slatsLevel,
             "shutterLevel": shutterLevel,
         }
-        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+        return self._rest_call("device/control/setSlatsLevel", json.dumps(data))
 
 
 class FullFlushShutter(Shutter):
@@ -1433,7 +1433,7 @@ class WiredPushButton(PushButton):
             "opticalSignalBehaviour": opticalSignalBehaviour,
             "simpleRGBColorState": rgb,
         }
-        return self._restCall("device/control/setOpticalSignal", body=json.dumps(data))
+        return self._rest_call("device/control/setOpticalSignal", body=json.dumps(data))
 
     def set_dim_level(self, channelIndex, dimLevel):
         """sets the signal type for the leds
@@ -1446,11 +1446,11 @@ class WiredPushButton(PushButton):
 
         """
         data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
-        return self._restCall("device/control/setDimLevel", body=json.dumps(data))
+        return self._rest_call("device/control/setDimLevel", body=json.dumps(data))
 
     def set_switch_state(self, on, channelIndex):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
-        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+        return self._rest_call("device/control/setSwitchState", body=json.dumps(data))
 
     def turn_on(self, channelIndex):
         return self.set_switch_state(True, channelIndex)
@@ -1528,7 +1528,7 @@ class BlindModule(Device):
             "deviceId": self.id,
             "primaryShadingLevel": primaryShadingLevel,
         }
-        return self._restCall("device/control/setPrimaryShadingLevel", json.dumps(data))
+        return self._rest_call("device/control/setPrimaryShadingLevel", json.dumps(data))
 
     def set_secondary_shading_level(
         self, primaryShadingLevel: float, secondaryShadingLevel: float
@@ -1539,7 +1539,7 @@ class BlindModule(Device):
             "primaryShadingLevel": primaryShadingLevel,
             "secondaryShadingLevel": secondaryShadingLevel,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/control/setSecondaryShadingLevel", json.dumps(data)
         )
 
@@ -1549,7 +1549,7 @@ class BlindModule(Device):
             the result of the _restCall
         """
         data = {"channelIndex": 1, "deviceId": self.id}
-        return self._restCall("device/control/stop", body=json.dumps(data))
+        return self._rest_call("device/control/stop", body=json.dumps(data))
 
 
 class LightSensor(Device):
@@ -1612,7 +1612,7 @@ class Dimmer(Device):
 
     def set_dim_level(self, dimLevel=0.0, channelIndex=1):
         data = {"channelIndex": channelIndex, "deviceId": self.id, "dimLevel": dimLevel}
-        return self._restCall("device/control/setDimLevel", json.dumps(data))
+        return self._rest_call("device/control/setDimLevel", json.dumps(data))
 
 
 class PluggableDimmer(Dimmer):
@@ -1929,7 +1929,7 @@ class WaterSensor(Device):
             "deviceId": self.id,
             "acousticAlarmSignal": str(acousticAlarmSignal),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAcousticAlarmSignal", json.dumps(data)
         )
 
@@ -1939,7 +1939,7 @@ class WaterSensor(Device):
             "deviceId": self.id,
             "acousticAlarmTiming": str(acousticAlarmTiming),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAcousticAlarmTiming", json.dumps(data)
         )
 
@@ -1951,7 +1951,7 @@ class WaterSensor(Device):
             "deviceId": self.id,
             "acousticWaterAlarmTrigger": str(acousticWaterAlarmTrigger),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAcousticWaterAlarmTrigger", json.dumps(data)
         )
 
@@ -1961,7 +1961,7 @@ class WaterSensor(Device):
             "deviceId": self.id,
             "inAppWaterAlarmTrigger": str(inAppWaterAlarmTrigger),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setInAppWaterAlarmTrigger", json.dumps(data)
         )
 
@@ -1974,7 +1974,7 @@ class WaterSensor(Device):
             "deviceId": self.id,
             "sirenWaterAlarmTrigger": str(sirenWaterAlarmTrigger),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setSirenWaterAlarmTrigger", json.dumps(data)
         )
 
@@ -2102,7 +2102,7 @@ class AccelerationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorMode": str(mode),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorMode", json.dumps(data)
         )
 
@@ -2114,7 +2114,7 @@ class AccelerationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorNeutralPosition": str(neutralPosition),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorNeutralPosition",
             json.dumps(data),
         )
@@ -2127,7 +2127,7 @@ class AccelerationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorSensitivity": str(sensitivity),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
         )
 
@@ -2137,7 +2137,7 @@ class AccelerationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorTriggerAngle": angle,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
         )
 
@@ -2149,7 +2149,7 @@ class AccelerationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorEventFilterPeriod": period,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorEventFilterPeriod",
             json.dumps(data),
         )
@@ -2163,7 +2163,7 @@ class AccelerationSensor(Device):
             "notificationSoundType": str(soundType),
             "isHighToLow": isHighToLow,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setNotificationSoundType", json.dumps(data)
         )
 
@@ -2189,7 +2189,7 @@ class DoorModule(Device):
 
     def send_door_command(self, doorCommand=DoorCommand.STOP):
         data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
-        return self._restCall("device/control/sendDoorCommand", json.dumps(data))
+        return self._rest_call("device/control/sendDoorCommand", json.dumps(data))
 
 
 class GarageDoorModuleTormatic(DoorModule):
@@ -2234,7 +2234,7 @@ class WallMountedGarageDoorController(Device):
     def send_start_impulse(self, channelIndex=2):
         """Toggle Wall mounted Garage Door Controller."""
         data = {"channelIndex": channelIndex, "deviceId": self.id}
-        return self._restCall("device/control/startImpulse", body=json.dumps(data))
+        return self._rest_call("device/control/startImpulse", body=json.dumps(data))
 
 
 class TiltVibrationSensor(Device):
@@ -2275,7 +2275,7 @@ class TiltVibrationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorMode": str(mode),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorMode", json.dumps(data)
         )
 
@@ -2287,7 +2287,7 @@ class TiltVibrationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorSensitivity": str(sensitivity),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
         )
 
@@ -2297,7 +2297,7 @@ class TiltVibrationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorTriggerAngle": angle,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
         )
 
@@ -2309,7 +2309,7 @@ class TiltVibrationSensor(Device):
             "deviceId": self.id,
             "accelerationSensorEventFilterPeriod": period,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorEventFilterPeriod",
             json.dumps(data),
         )
@@ -2401,7 +2401,7 @@ class DoorLockDrive(OperationLockableDevice):
             "authorizationPin": pin,
             "targetLockState": doorLockState,
         }
-        return self._restCall("device/control/setLockState", json.dumps(data))
+        return self._rest_call("device/control/setLockState", json.dumps(data))
 
 
 class DoorLockSensor(Device):

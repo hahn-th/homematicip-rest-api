@@ -126,7 +126,7 @@ class SwitchChannel(FunctionalChannel):
 
     def set_switch_state(self, on=True):
         data = {"channelIndex": self.index, "deviceId": self.device.id, "on": on}
-        return self._restCall("device/control/setSwitchState", body=json.dumps(data))
+        return self._rest_call("device/control/setSwitchState", body=json.dumps(data))
 
     def turn_on(self):
         return self.set_switch_state(True)
@@ -195,7 +195,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorMode": str(mode),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorMode", json.dumps(data)
         )
 
@@ -210,7 +210,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorNeutralPosition": str(neutralPosition),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorNeutralPosition",
             json.dumps(data),
         )
@@ -230,7 +230,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorSensitivity": str(sensitivity),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
         )
 
@@ -247,7 +247,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorTriggerAngle": angle,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
         )
 
@@ -262,7 +262,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorEventFilterPeriod": period,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorEventFilterPeriod",
             json.dumps(data),
         )
@@ -281,7 +281,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             "notificationSoundType": str(soundType),
             "isHighToLow": isHighToLow,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setNotificationSoundType", json.dumps(data)
         )
 
@@ -360,7 +360,7 @@ class BlindChannel(FunctionalChannel):
             "slatsLevel": slatsLevel,
             "shutterLevel": shutterLevel,
         }
-        return self._restCall("device/control/setSlatsLevel", json.dumps(data))
+        return self._rest_call("device/control/setSlatsLevel", json.dumps(data))
 
     async def async_set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
         return await self._connection.api_call(
@@ -381,7 +381,7 @@ class BlindChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "shutterLevel": level,
         }
-        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("device/control/setShutterLevel", body=json.dumps(data))
 
     async def async_set_shutter_level(self, level=0.0):
         return await self._connection.api_call(*self.set_shutter_level(level))
@@ -403,7 +403,7 @@ class BlindChannel(FunctionalChannel):
             the result of the _restCall
         """
         data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return self._restCall("device/control/stop", body=json.dumps(data))
+        return self._rest_call("device/control/stop", body=json.dumps(data))
 
     async def async_set_shutter_stop(self):
         return await self._connection.api_call(*self.stop())
@@ -448,7 +448,7 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
             "deviceId": self.device.id,
             "minimumFloorHeatingValvePosition": minimumFloorHeatingValvePosition,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setMinimumFloorHeatingValvePosition",
             body=json.dumps(data),
         )
@@ -480,7 +480,7 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
             "deviceId": self.device.id,
             "operationLock": operationLock,
         }
-        return self._restCall("device/configuration/setOperationLock", json.dumps(data))
+        return self._rest_call("device/configuration/setOperationLock", json.dumps(data))
 
     async def async_set_operation_lock(self, operationLock=True):
         return await self._connection.api_call(*self.set_operation_lock(operationLock))
@@ -519,7 +519,7 @@ class DimmerChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "dimLevel": dimLevel,
         }
-        return self._restCall("device/control/setDimLevel", json.dumps(data))
+        return self._rest_call("device/control/setDimLevel", json.dumps(data))
 
     async def async_set_dim_level(self, dimLevel=0.0):
         return await self._connection.api_call(*self.set_dim_level(dimLevel))
@@ -551,7 +551,7 @@ class DoorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "doorCommand": doorCommand,
         }
-        return self._restCall("device/control/sendDoorCommand", json.dumps(data))
+        return self._rest_call("device/control/sendDoorCommand", json.dumps(data))
 
     async def async_send_door_command(self, doorCommand=DoorCommand.STOP):
         return await self._connection.api_call(*self.send_door_command(doorCommand))
@@ -597,7 +597,7 @@ class DoorLockChannel(FunctionalChannel):
             "authorizationPin": pin,
             "targetLockState": doorLockState,
         }
-        return self._restCall("device/control/setLockState", json.dumps(data))
+        return self._rest_call("device/control/setLockState", json.dumps(data))
 
     async def async_set_lock_state(self, doorLockState: LockState, pin=""):
         """sets the door lock state
@@ -660,7 +660,7 @@ class ImpulseOutputChannel(FunctionalChannel):
     def send_start_impulse(self):
         """Toggle Wall mounted Garage Door Controller."""
         data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return self._restCall("device/control/startImpulse", body=json.dumps(data))
+        return self._rest_call("device/control/startImpulse", body=json.dumps(data))
 
     async def async_send_start_impulse(self):
         return await self._connection.api_call(*self.send_start_impulse())
@@ -772,7 +772,7 @@ class NotificationLightChannel(DimmerChannel):
             "simpleRGBColorState": rgb,
             "dimLevel": dimLevel,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/control/setSimpleRGBColorDimLevel", body=json.dumps(data)
         )
 
@@ -805,7 +805,7 @@ class NotificationLightChannel(DimmerChannel):
             "onTime": onTime,
             "rampTime": rampTime,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/control/setSimpleRGBColorDimLevelWithTime", body=json.dumps(data)
         )
 
@@ -889,7 +889,7 @@ class ShadingChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "primaryShadingLevel": primaryShadingLevel,
         }
-        return self._restCall("device/control/setPrimaryShadingLevel", json.dumps(data))
+        return self._rest_call("device/control/setPrimaryShadingLevel", json.dumps(data))
 
     async def async_set_primary_shading_level(self, primaryShadingLevel: float):
         return await self._connection.api_call(
@@ -905,7 +905,7 @@ class ShadingChannel(FunctionalChannel):
             "primaryShadingLevel": primaryShadingLevel,
             "secondaryShadingLevel": secondaryShadingLevel,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/control/setSecondaryShadingLevel", json.dumps(data)
         )
 
@@ -924,7 +924,7 @@ class ShadingChannel(FunctionalChannel):
             the result of the _restCall
         """
         data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return self._restCall("device/control/stop", body=json.dumps(data))
+        return self._rest_call("device/control/stop", body=json.dumps(data))
 
     async def async_set_shutter_stop(self):
         return await self._connection.api_call(*self.stop())
@@ -983,7 +983,7 @@ class ShutterChannel(FunctionalChannel):
             "deviceId": self.id,
             "shutterLevel": level,
         }
-        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("device/control/setShutterLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         """stops the current shutter operation
@@ -994,7 +994,7 @@ class ShutterChannel(FunctionalChannel):
             the result of the _restCall
         """
         data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return self._restCall("device/control/stop", body=json.dumps(data))
+        return self._rest_call("device/control/stop", body=json.dumps(data))
 
     async def async_set_shutter_stop(self):
         return await self._connection.api_call(*self.set_shutter_stop())
@@ -1012,7 +1012,7 @@ class ShutterChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "shutterLevel": level,
         }
-        return self._restCall("device/control/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("device/control/setShutterLevel", body=json.dumps(data))
 
     async def async_set_shutter_level(self, level=0.0):
         return await self._connection.api_call(*self.set_shutter_level(level))
@@ -1033,7 +1033,7 @@ class SwitchMeasuringChannel(SwitchChannel):
 
     def reset_energy_counter(self):
         data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return self._restCall(
+        return self._rest_call(
             "device/control/resetEnergyCounter", body=json.dumps(data)
         )
 
@@ -1079,7 +1079,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorMode": str(mode),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorMode", json.dumps(data)
         )
 
@@ -1094,7 +1094,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorSensitivity": str(sensitivity),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorSensitivity", json.dumps(data)
         )
 
@@ -1111,7 +1111,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorTriggerAngle": angle,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorTriggerAngle", json.dumps(data)
         )
 
@@ -1126,7 +1126,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "accelerationSensorEventFilterPeriod": period,
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAccelerationSensorEventFilterPeriod",
             json.dumps(data),
         )
@@ -1166,7 +1166,7 @@ class WallMountedThermostatProChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "display": str(display),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setClimateControlDisplay", json.dumps(data)
         )
 
@@ -1216,7 +1216,7 @@ class WaterSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "acousticAlarmSignal": str(acousticAlarmSignal),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAcousticAlarmSignal", json.dumps(data)
         )
 
@@ -1233,7 +1233,7 @@ class WaterSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "acousticAlarmTiming": str(acousticAlarmTiming),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAcousticAlarmTiming", json.dumps(data)
         )
 
@@ -1252,7 +1252,7 @@ class WaterSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "acousticWaterAlarmTrigger": str(acousticWaterAlarmTrigger),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setAcousticWaterAlarmTrigger", json.dumps(data)
         )
 
@@ -1269,7 +1269,7 @@ class WaterSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "inAppWaterAlarmTrigger": str(inAppWaterAlarmTrigger),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setInAppWaterAlarmTrigger", json.dumps(data)
         )
 
@@ -1289,7 +1289,7 @@ class WaterSensorChannel(FunctionalChannel):
             "deviceId": self.device.id,
             "sirenWaterAlarmTrigger": str(sirenWaterAlarmTrigger),
         }
-        return self._restCall(
+        return self._rest_call(
             "device/configuration/setSirenWaterAlarmTrigger", json.dumps(data)
         )
 

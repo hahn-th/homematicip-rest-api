@@ -50,8 +50,8 @@ class HomeMaticIPObject:
         if handler in self._on_update:
             self._on_update.remove(handler)
 
-    def _restCall(self, path, body=None):
-        return self._connection._restCall(path, body)
+    def _rest_call(self, path, body=None):
+        return self._connection._rest_call(path, body)
 
     def from_json(self, js):
         """this method will parse the homematicip object from a json object

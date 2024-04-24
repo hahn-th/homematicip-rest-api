@@ -33,7 +33,7 @@ def home_data():
 def send_event(fake_home: Home, pushEventType: EventType, type: str, data):
     event_data = build_json_payload(pushEventType, type, data)
     with no_ssl_verification():
-        fake_home._restCall("ws/send", json.dumps(event_data))
+        fake_home._rest_call("ws/send", json.dumps(event_data))
 
 
 def build_json_payload(pushEventType: EventType, type: str, data) -> dict:
@@ -212,7 +212,7 @@ def test_websocket_error(fake_home: Home, home_data):
     fake_home.enable_events()
     with no_ssl_verification():
         fake_home._connection._restCallRequestCounter = 1
-        fake_home._restCall("ws/sleep", json.dumps({"seconds": 5}))
+        fake_home._rest_call("ws/sleep", json.dumps({"seconds": 5}))
 
     assert ws_error_called
 

@@ -66,5 +66,5 @@ def test_connection_timeout(fake_home: Home):
     with no_ssl_verification():
         fake_home._connection._restCallRequestCounter = 2
         fake_home._connection._restCallTimout = 1
-        result = fake_home._restCall("fake/timeout")
+        result = fake_home._rest_call("fake/timeout")
         assert result["errorCode"] == "TIMEOUT"

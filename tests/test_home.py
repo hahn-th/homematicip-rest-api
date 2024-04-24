@@ -182,7 +182,7 @@ def test_set_pin(fake_home: Home):
     with no_ssl_verification():
 
         def get_pin(fake_home):
-            result = fake_home._restCall("home/getPin")
+            result = fake_home._rest_call("home/getPin")
             return result["pin"]
 
         assert get_pin(fake_home) is None
@@ -357,7 +357,7 @@ def test_home_getSecurityJournal(fake_home: Home):
 
 def test_home_unknown_types(fake_home: Home):
     with no_ssl_verification():
-        fake_home._restCall(
+        fake_home._rest_call(
             "fake/loadConfig", json.dumps({"file": "unknown_types.json"})
         )
         fake_home.get_current_state(clearConfig=True)

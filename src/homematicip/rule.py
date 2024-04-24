@@ -34,7 +34,7 @@ class Rule(HomeMaticIPObject):
     def set_label(self, label):
         """ sets the label of the rule """
         data = {"ruleId": self.id, "label": label}
-        return self._restCall("rule/setRuleLabel", json.dumps(data))
+        return self._rest_call("rule/setRuleLabel", json.dumps(data))
 
     def __str__(self):
         return "{} {} active({})".format(self.ruleType, self.label, self.active)
@@ -54,7 +54,7 @@ class SimpleRule(Rule):
     def set_rule_enabled_state(self, enabled):
         """ enables/disables this rule"""
         data = {"ruleId": self.id, "enabled": enabled}
-        return self._restCall("rule/enableSimpleRule", json.dumps(data))
+        return self._rest_call("rule/enableSimpleRule", json.dumps(data))
 
     def from_json(self, js):
         super().from_json(js)
@@ -62,7 +62,7 @@ class SimpleRule(Rule):
 
     def get_simple_rule(self):
         data = {"ruleId": self.id}
-        js = self._restCall("rule/getSimpleRule", json.dumps(data))
+        js = self._rest_call("rule/getSimpleRule", json.dumps(data))
 
         for errorRuleTriggerItem in js["errorRuleTriggerItems"]:
             pass  # at the moment this was always empty

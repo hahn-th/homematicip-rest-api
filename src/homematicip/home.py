@@ -150,7 +150,7 @@ class Home(HomeMaticIPObject):
         Returns
             the downloaded configuration or an errorCode
         """
-        return self._restCall(
+        return self._rest_call(
             "home/getCurrentState", json.dumps(self._connection.clientCharacteristics)
         )
 
@@ -461,7 +461,7 @@ class Home(HomeMaticIPObject):
           >>> home.set_security_zones_activation(False,False)
         """
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
-        return self._restCall("home/security/setZonesActivation", json.dumps(data))
+        return self._rest_call("home/security/setZonesActivation", json.dumps(data))
 
     def set_silent_alarm(self, internal=True, external=True):
         """this function will set the silent alarm for interal or external
@@ -471,11 +471,11 @@ class Home(HomeMaticIPObject):
           external(bool): activates/deactivates the silent alarm for the external zone
         """
         data = {"zonesSilentAlarm": {"EXTERNAL": external, "INTERNAL": internal}}
-        return self._restCall("home/security/setZonesSilentAlarm", json.dumps(data))
+        return self._rest_call("home/security/setZonesSilentAlarm", json.dumps(data))
 
     def set_location(self, city, latitude, longitude):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
-        return self._restCall("home/setLocation", json.dumps(data))
+        return self._rest_call("home/setLocation", json.dumps(data))
 
     def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
         """activate or deactivate if smoke detectors should "ring" during an alarm
@@ -484,7 +484,7 @@ class Home(HomeMaticIPObject):
             activate(bool): True will let the smoke detectors "ring" during an alarm
         """
         data = {"intrusionAlertThroughSmokeDetectors": activate}
-        return self._restCall(
+        return self._rest_call(
             "home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data)
         )
 
@@ -495,13 +495,13 @@ class Home(HomeMaticIPObject):
             endtime(datetime): the time when the absence should automatically be disabled
         """
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
-        return self._restCall(
+        return self._rest_call(
             "home/heating/activateAbsenceWithPeriod", json.dumps(data)
         )
 
     def activate_absence_permanent(self):
         """activates the absence forever"""
-        return self._restCall("home/heating/activateAbsencePermanent")
+        return self._rest_call("home/heating/activateAbsencePermanent")
 
     def activate_absence_with_duration(self, duration: int):
         """activates the absence mode for a given time
@@ -510,13 +510,13 @@ class Home(HomeMaticIPObject):
             duration(int): the absence duration in minutes
         """
         data = {"duration": duration}
-        return self._restCall(
+        return self._rest_call(
             "home/heating/activateAbsenceWithDuration", json.dumps(data)
         )
 
     def deactivate_absence(self):
         """deactivates the absence mode immediately"""
-        return self._restCall("home/heating/deactivateAbsence")
+        return self._rest_call("home/heating/deactivateAbsence")
 
     def activate_vacation(self, endtime: datetime, temperature: float):
         """activates the vatation mode until the given time
@@ -529,11 +529,11 @@ class Home(HomeMaticIPObject):
             "endTime": endtime.strftime("%Y_%m_%d %H:%M"),
             "temperature": temperature,
         }
-        return self._restCall("home/heating/activateVacation", json.dumps(data))
+        return self._rest_call("home/heating/activateVacation", json.dumps(data))
 
     def deactivate_vacation(self):
         """deactivates the vacation mode immediately"""
-        return self._restCall("home/heating/deactivateVacation")
+        return self._rest_call("home/heating/deactivateVacation")
 
     def set_pin(self, newPin: str, oldPin: str = None) -> dict:
         """sets a new pin for the home
@@ -551,19 +551,19 @@ class Home(HomeMaticIPObject):
         data = {"pin": newPin}
         if oldPin:
             self._connection.headers["PIN"] = str(oldPin)
-        result = self._restCall("home/setPin", body=json.dumps(data))
+        result = self._rest_call("home/setPin", body=json.dumps(data))
         if oldPin:
             del self._connection.headers["PIN"]
         return result
 
     def set_zone_activation_delay(self, delay):
         data = {"zoneActivationDelay": delay}
-        return self._restCall(
+        return self._rest_call(
             "home/security/setZoneActivationDelay", body=json.dumps(data)
         )
 
     def get_security_journal(self):
-        journal = self._restCall("home/security/getSecurityJournal")
+        journal = self._rest_call("home/security/getSecurityJournal")
         if "errorCode" in journal:
             LOGGER.error(
                 "Could not get the security journal. Error: %s", journal["errorCode"]
@@ -594,7 +594,7 @@ class Home(HomeMaticIPObject):
 
     def get_OAuth_OTK(self):
         token = OAuthOTK(self._connection)
-        token.from_json(self._restCall("home/getOAuthOTK"))
+        token.from_json(self._rest_call("home/getOAuthOTK"))
         return token
 
     def set_timezone(self, timezone: str):
@@ -603,11 +603,11 @@ class Home(HomeMaticIPObject):
             timezone(str): the new timezone
         """
         data = {"timezoneId": timezone}
-        return self._restCall("home/setTimezone", body=json.dumps(data))
+        return self._rest_call("home/setTimezone", body=json.dumps(data))
 
     def set_powermeter_unit_price(self, price):
         data = {"powerMeterUnitPrice": price}
-        return self._restCall("home/setPowerMeterUnitPrice", body=json.dumps(data))
+        return self._rest_call("home/setPowerMeterUnitPrice", body=json.dumps(data))
 
     def set_zones_device_assignment(self, internal_devices, external_devices) -> dict:
         """sets the devices for the security zones
@@ -621,7 +621,7 @@ class Home(HomeMaticIPObject):
         internal = [x.id for x in internal_devices]
         external = [x.id for x in external_devices]
         data = {"zonesDeviceAssignment": {"INTERNAL": internal, "EXTERNAL": external}}
-        return self._restCall(
+        return self._rest_call(
             "home/security/setZonesDeviceAssignment", body=json.dumps(data)
         )
 
@@ -631,7 +631,7 @@ class Home(HomeMaticIPObject):
             deviceId: sgtin of device
         """
         data = {"deviceId": deviceId}
-        return self._restCall("home/startInclusionModeForDevice", body=json.dumps(data))
+        return self._rest_call("home/startInclusionModeForDevice", body=json.dumps(data))
 
     def enable_events(self, enable_trace=False, ping_interval=20):
         websocket.enableTrace(enable_trace)

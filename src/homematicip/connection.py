@@ -37,7 +37,7 @@ class Connection(BaseConnection):
             self._urlREST = "https://ps1.homematic.com:6969"
             self._urlWebSocket = "wss://ps1.homematic.com:8888"
 
-    def _restCall(self, path, body=None):
+    def _rest_call(self, path, body=None):
         result = None
         requestPath = "{}/hmip/{}".format(self._urlREST, path)
         logger.debug("_restcall path(%s) body(%s)", requestPath, body)

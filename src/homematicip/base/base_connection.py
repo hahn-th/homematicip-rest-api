@@ -104,5 +104,5 @@ class BaseConnection:
     def init(self, accesspoint_id, lookup=True, **kwargs):
         raise NotImplementedError
 
-    def _restCall(self, path, body=None):
+    def _rest_call(self, path, body=None):
         raise NotImplementedError

@@ -48,11 +48,11 @@ class Group(HomeMaticIPObject):
 
     def set_label(self, label):
         data = {"groupId": self.id, "label": label}
-        return self._restCall("group/setGroupLabel", json.dumps(data))
+        return self._rest_call("group/setGroupLabel", json.dumps(data))
 
     def delete(self):
         data = {"groupId": self.id}
-        return self._restCall("group/deleteGroup", body=json.dumps(data))
+        return self._rest_call("group/deleteGroup", body=json.dumps(data))
 
 
 class MetaGroup(Group):
@@ -146,7 +146,7 @@ class SwitchGroupBase(Group):
 
     def set_switch_state(self, on=True):
         data = {"groupId": self.id, "on": on}
-        return self._restCall("group/switching/setState", body=json.dumps(data))
+        return self._rest_call("group/switching/setState", body=json.dumps(data))
 
     def turn_on(self):
         return self.set_switch_state(True)
@@ -182,7 +182,7 @@ class SwitchingGroup(SwitchGroupBase):
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
-        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_slats_level(self, slatsLevel, shutterlevel=None):
         if shutterlevel is None:
@@ -193,11 +193,11 @@ class SwitchingGroup(SwitchGroupBase):
             "shutterLevel": shutterlevel,
             "slatsLevel": slatsLevel,
         }
-        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
+        return self._rest_call("group/switching/setSlatsLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
-        return self._restCall("group/switching/stop", body=json.dumps(data))
+        return self._rest_call("group/switching/stop", body=json.dumps(data))
 
     def __str__(self):
         return f"{super().__str__()} processing({self.processing}) shutterLevel({self.shutterLevel}) slatsLevel({self.slatsLevel})"
@@ -238,11 +238,11 @@ class ShutterProfile(Group):
 
     def set_profile_mode(self, profileMode: ProfileMode):
         data = {"groupId": self.id, "profileMode": profileMode}
-        return self._restCall("group/heating/setProfileMode", body=json.dumps(data))
+        return self._rest_call("group/heating/setProfileMode", body=json.dumps(data))
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
-        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_slats_level(self, slatsLevel, shutterlevel=None):
         if shutterlevel is None:
@@ -253,11 +253,11 @@ class ShutterProfile(Group):
             "shutterLevel": shutterlevel,
             "slatsLevel": slatsLevel,
         }
-        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
+        return self._rest_call("group/switching/setSlatsLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
-        return self._restCall("group/switching/stop", body=json.dumps(data))
+        return self._rest_call("group/switching/stop", body=json.dumps(data))
 
     def __str__(self):
         return (
@@ -273,7 +273,7 @@ class LinkedSwitchingGroup(Group):
             channel = {"channelIndex": 1, "deviceId": d.id}
             switchChannels.append(channel)
         data = {"groupId": self.id, "switchChannels": switchChannels}
-        return self._restCall(
+        return self._rest_call(
             "home/security/setLightGroupSwitches", body=json.dumps(data)
         )
 
@@ -298,7 +298,7 @@ class ExtendedLinkedSwitchingGroup(SwitchGroupBase):
 
     def set_on_time(self, onTimeSeconds):
         data = {"groupId": self.id, "onTime": onTimeSeconds}
-        return self._restCall("group/switching/linked/setOnTime", body=json.dumps(data))
+        return self._rest_call("group/switching/linked/setOnTime", body=json.dumps(data))
 
 
 class ExtendedLinkedShutterGroup(Group):
@@ -343,7 +343,7 @@ class ExtendedLinkedShutterGroup(Group):
 
     def set_shutter_level(self, level):
         data = {"groupId": self.id, "shutterLevel": level}
-        return self._restCall("group/switching/setShutterLevel", body=json.dumps(data))
+        return self._rest_call("group/switching/setShutterLevel", body=json.dumps(data))
 
     def set_slats_level(self, slatsLevel=0.0, shutterLevel=None):
         if shutterLevel is None:
@@ -354,11 +354,11 @@ class ExtendedLinkedShutterGroup(Group):
             "shutterLevel": shutterLevel,
             "slatsLevel": slatsLevel,
         }
-        return self._restCall("group/switching/setSlatsLevel", body=json.dumps(data))
+        return self._rest_call("group/switching/setSlatsLevel", body=json.dumps(data))
 
     def set_shutter_stop(self):
         data = {"groupId": self.id}
-        return self._restCall("group/switching/stop", body=json.dumps(data))
+        return self._rest_call("group/switching/stop", body=json.dumps(data))
 
 
 class ExtendedLinkedGarageDoorGroup(Group):
@@ -417,7 +417,7 @@ class AlarmSwitchingGroup(Group):
 
     def set_on_time(self, onTimeSeconds):
         data = {"groupId": self.id, "onTime": onTimeSeconds}
-        return self._restCall("group/switching/alarm/setOnTime", body=json.dumps(data))
+        return self._rest_call("group/switching/alarm/setOnTime", body=json.dumps(data))
 
     def __str__(self):
         return "{} on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
@@ -435,7 +435,7 @@ class AlarmSwitchingGroup(Group):
         self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
     ):
         data = {"groupId": self.id, "signalOptical": str(signalOptical)}
-        return self._restCall(
+        return self._rest_call(
             "group/switching/alarm/testSignalOptical", body=json.dumps(data)
         )
 
@@ -443,7 +443,7 @@ class AlarmSwitchingGroup(Group):
         self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
     ):
         data = {"groupId": self.id, "signalOptical": str(signalOptical)}
-        return self._restCall(
+        return self._rest_call(
             "group/switching/alarm/setSignalOptical", body=json.dumps(data)
         )
 
@@ -451,13 +451,13 @@ class AlarmSwitchingGroup(Group):
         self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
     ):
         data = {"groupId": self.id, "signalAcoustic": str(signalAcoustic)}
-        return self._restCall(
+        return self._rest_call(
             "group/switching/alarm/testSignalAcoustic", body=json.dumps(data)
         )
 
     def set_signal_acoustic(self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING):
         data = {"groupId": self.id, "signalAcoustic": str(signalAcoustic)}
-        return self._restCall(
+        return self._rest_call(
             "group/switching/alarm/setSignalAcoustic", body=json.dumps(data)
         )
 
@@ -613,7 +613,7 @@ class HeatingCoolingProfile(HomeMaticIPObject):
             "profileIndex": self.index,
             "profileName": self.name,
         }
-        js = self._restCall("group/heating/getProfile", body=json.dumps(data))
+        js = self._rest_call("group/heating/getProfile", body=json.dumps(data))
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.profileDays = {}
@@ -674,7 +674,7 @@ class HeatingCoolingProfile(HomeMaticIPObject):
             },
             "profileIndex": self.index,
         }
-        return self._restCall("group/heating/updateProfile", body=json.dumps(data))
+        return self._rest_call("group/heating/updateProfile", body=json.dumps(data))
 
 
 class HeatingGroup(Group):
@@ -779,25 +779,25 @@ class HeatingGroup(Group):
 
     def set_point_temperature(self, temperature):
         data = {"groupId": self.id, "setPointTemperature": temperature}
-        return self._restCall(
+        return self._rest_call(
             "group/heating/setSetPointTemperature", body=json.dumps(data)
         )
 
     def set_boost(self, enable=True):
         data = {"groupId": self.id, "boost": enable}
-        return self._restCall("group/heating/setBoost", body=json.dumps(data))
+        return self._rest_call("group/heating/setBoost", body=json.dumps(data))
 
     def set_boost_duration(self, duration: int):
         data = {"groupId": self.id, "boostDuration": duration}
-        return self._restCall("group/heating/setBoostDuration", body=json.dumps(data))
+        return self._rest_call("group/heating/setBoostDuration", body=json.dumps(data))
 
     def set_active_profile(self, index):
         data = {"groupId": self.id, "profileIndex": index}
-        return self._restCall("group/heating/setActiveProfile", body=json.dumps(data))
+        return self._rest_call("group/heating/setActiveProfile", body=json.dumps(data))
 
     def set_control_mode(self, mode=ClimateControlMode.AUTOMATIC):
         data = {"groupId": self.id, "controlMode": str(mode)}
-        return self._restCall("group/heating/setControlMode", body=json.dumps(data))
+        return self._rest_call("group/heating/setControlMode", body=json.dumps(data))
 
 
 class HeatingDehumidifierGroup(Group):
@@ -1031,7 +1031,7 @@ class TimeProfile(HomeMaticIPObject):
 
     def get_details(self):
         data = {"groupId": self.groupId}
-        js = self._restCall("group/switching/profile/getProfile", body=json.dumps(data))
+        js = self._rest_call("group/switching/profile/getProfile", body=json.dumps(data))
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.id = js["id"]
@@ -1069,7 +1069,7 @@ class SwitchingProfileGroup(Group):
         for d in self.devices:
             channels.append[{"channelIndex": 1, "deviceId": d.id}]
         data = {"groupId": self.id, "channels": channels}
-        return self._restCall(
+        return self._rest_call(
             "group/switching/profile/setGroupChannels", body=json.dumps(data)
         )
 
@@ -1082,13 +1082,13 @@ class SwitchingProfileGroup(Group):
             "channels": channels,
             "profileMode": ProfileMode.AUTOMATIC if automatic else ProfileMode.MANUAL,
         }
-        return self._restCall(
+        return self._rest_call(
             "group/switching/profile/setProfileMode", body=json.dumps(data)
         )
 
     def create(self, label):
         data = {"label": label}
-        result = self._restCall(
+        result = self._rest_call(
             "group/switching/profile/createSwitchingProfileGroup", body=json.dumps(data)
         )
         if "groupId" in result:
@@ -1232,7 +1232,7 @@ class HotWaterGroup(Group):
 
     def set_profile_mode(self, profileMode: ProfileMode):
         data = {"groupId": self.id, "profileMode": profileMode}
-        return self._restCall("group/heating/setProfileMode", body=json.dumps(data))
+        return self._rest_call("group/heating/setProfileMode", body=json.dumps(data))
 
 
 class AccessAuthorizationProfileGroup(Group):
