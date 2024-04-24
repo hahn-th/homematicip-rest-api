@@ -2,7 +2,7 @@
 import json
 from datetime import datetime
 
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
 class SecurityEvent(HomeMaticIPObject):

@@ -2,7 +2,7 @@ import json
 from typing import Any, Iterable
 
 from homematicip.base.enums import *
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)

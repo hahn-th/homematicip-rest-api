@@ -8,7 +8,7 @@ from typing import Iterable
 from homematicip.base.enums import *
 from homematicip.base.functionalChannels import FunctionalChannel
 from homematicip.base.helpers import get_functional_channel, get_functional_channels
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)

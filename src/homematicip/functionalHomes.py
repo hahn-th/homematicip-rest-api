@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 
 from homematicip.base.enums import *
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.group import Group
 
 

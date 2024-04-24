@@ -5,7 +5,7 @@ from datetime import datetime
 from operator import attrgetter
 
 from homematicip.base.enums import *
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
 class Group(HomeMaticIPObject):

@@ -1,4 +1,4 @@
-from homematicip.base.HomeMaticIPObject import HomeMaticIPObject
+from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
 class OAuthOTK(HomeMaticIPObject):
