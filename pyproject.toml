@@ -8,44 +8,30 @@ name = "homematicip"
 description = "An API for the homematicip cloud"
 readme = "README.md"
 dependencies = [
-    "requests>=2.24.0",
-    "websocket-client>=1.0.0",
-    "async_timeout>=3.0.1",
-    "websockets>=8.1",
-    "aiohttp>=3.9"
+  "pydantic",
+  "websockets",
+  "httpx",
+  "click",
+  "alive-progress"
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 authors = [
   {name = "Thomas Hahn", email = "homematicip-rest-api@outlook.com"},
 ]
 classifiers=[
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
 ]
 keywords = ["homematicip cloud","homematicip"]
-dynamic = [
-    "version"
-]
-license = {file = "LICENSE.txt"}
-
-[project.urls]
-Homepage = "https://github.com/hahn-th/homematicip-rest-api"
-Repository = "https://github.com/hahn-th/homematicip-rest-api.git"
-Issues = "https://github.com/hahn-th/homematicip-rest-api/issues"
-Changelog = "https://github.com/hahn-th/homematicip-rest-api/blob/master/CHANGELOG.md"
-
-[tool.setuptools_scm]
-version_file = "src/homematicip/_version.py"
-version_scheme = "no-guess-dev"
-local_scheme = "no-local-version"
-
-[tool.pytest.ini_options]
-asyncio_mode = "auto"
+version = "2.0.0"
 
 
 [project.scripts]
-hmip_cli = "homematicip.cli.hmip_cli:main"
-hmip_generate_auth_token = "homematicip.cli.hmip_generate_auth_token:main"
+hmip = "homematicip.cli.hmip_cli:cli"
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+addopts = "--cov=src --cov-report term-missing"
+
+[tool.coverage.run]
+source = ["src"]
