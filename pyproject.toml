@@ -30,8 +30,8 @@ version = "1.1.0"
 hmip = "homematicip.cli.hmip_cli:cli"
 
 [tool.pytest.ini_options]
-asyncio_mode = "strict"
-addopts = "--cov=src --cov-report term-missing"
+asyncio_mode = "auto"
+#addopts = "--cov=src --cov-report term-missing"
 
 [tool.coverage.run]
 source = ["src"]

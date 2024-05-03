@@ -24,7 +24,7 @@ async def test_connection_request(mocker):
     result = await auth.connection_request(access_point="1234", pin="5678")
 
     assert patched.called
-    assert patched.call_args[0][0] == "hmip/auth/connectionRequest"
+    assert patched.call_args[0][0] == "auth/connectionRequest"
     assert patched.call_args[0][1] == {"deviceId": auth.client_id, "deviceName": "homematicip-python", "sgtin": "1234"}
     assert patched.call_args[0][2] == {"content-type": "application/json", "accept": "application/json", "VERSION": "12", "PIN": "5678"}
     assert result.status == 200
@@ -40,7 +40,7 @@ async def test_is_request_acknowledged(mocker):
     result = await auth.is_request_acknowledged()
 
     assert patched.called
-    assert patched.call_args[0][0] == "hmip/auth/isRequestAcknowledged"
+    assert patched.call_args[0][0] == "auth/isRequestAcknowledged"
     assert patched.call_args[0][1] == {"deviceId": auth.client_id}
     assert patched.call_args[0][2] == {"content-type": "application/json", "accept": "application/json", "VERSION": "12"}
     assert result
@@ -56,7 +56,7 @@ async def test_request_auth_token(mocker):
     result = await auth.request_auth_token()
 
     assert patched.called
-    assert patched.call_args[0][0] == "hmip/auth/requestAuthToken"
+    assert patched.call_args[0][0] == "auth/requestAuthToken"
     assert patched.call_args[0][1] == {"deviceId": auth.client_id}
     assert patched.call_args[0][2] == {"content-type": "application/json", "accept": "application/json", "VERSION": "12"}
     assert result == "1234"
@@ -73,7 +73,7 @@ async def test_confirm_auth_token(mocker):
     result = await auth.confirm_auth_token("1234")
 
     assert patched.called
-    assert patched.call_args[0][0] == "hmip/auth/confirmAuthToken"
+    assert patched.call_args[0][0] == "auth/confirmAuthToken"
     assert patched.call_args[0][1] == {"deviceId": auth.client_id, "authToken": "1234"}
     assert patched.call_args[0][2] == {"content-type": "application/json", "accept": "application/json", "VERSION": "12"}
     assert result == auth.client_id
