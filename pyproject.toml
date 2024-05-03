@@ -23,7 +23,20 @@ classifiers=[
     "Programming Language :: Python :: 3.12"
 ]
 keywords = ["homematicip cloud","homematicip"]
-version = "1.1.0"
+dynamic = [
+    "version"
+]
+
+[project.urls]
+Homepage = "https://github.com/hahn-th/homematicip-rest-api"
+Repository = "https://github.com/hahn-th/homematicip-rest-api.git"
+Issues = "https://github.com/hahn-th/homematicip-rest-api/issues"
+Changelog = "https://github.com/hahn-th/homematicip-rest-api/blob/master/CHANGELOG.md"
+
+[tool.setuptools_scm]
+version_file = "src/homematicip/_version.py"
+version_scheme = "no-guess-dev"
+local_scheme = "no-local-version"
 
 
 [project.scripts]
