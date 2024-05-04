@@ -12,17 +12,16 @@ from alive_progress import alive_bar
 from click import ClickException
 
 from homematicip.action.functional_channel_actions import action_set_slats_level, action_set_shutter_level, \
-    action_set_switch_state
+    action_set_switch_state, action_set_dim_level, action_start_impulse
 from homematicip.action.group_actions import action_set_boost, action_set_point_temperature, action_set_boost_duration, \
     action_set_active_profile, action_set_control_mode
 from homematicip.auth import Auth
-from homematicip.cli.hmip_cli_actions import get_rssi_bar_string
+from homematicip.cli.helper import get_channel_by_index_of_first
+from homematicip.cli.helper import get_rssi_bar_string
 from homematicip.configuration.config import Config, PersistentConfig
 from homematicip.configuration.config_io import ConfigIO
 from homematicip.configuration.log_helper import get_logger_filename
-from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
-from homematicip.connection.client_token_builder import ClientTokenBuilder
-from homematicip.connection.rest_connection import ConnectionContext, RestResult, ConnectionUrlResolver
+from homematicip.connection.rest_connection import ConnectionContext, RestResult
 from homematicip.model.anoymizer import handle_config
 from homematicip.model.enums import ClimateControlMode
 from homematicip.runner import Runner
@@ -186,7 +185,7 @@ def list():
 
 @list.command()
 def devices():
-    """List all devices."""
+    """List all devices including the functional channels."""
     runner = asyncio.run(get_initialized_runner())
     model = runner.model
     print("Devices:")
@@ -232,9 +231,9 @@ def rssi():
         click.echo(
             "{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {} permanentlyReachable: {}".format(
                 d.label,
-                rssi_device_value if rssi_device_value else 0,
+                rssi_device_value or "?",
                 get_rssi_bar_string(rssi_device_value),
-                rssi_peer_value if rssi_peer_value else 0,
+                rssi_peer_value or "?",
                 get_rssi_bar_string(rssi_peer_value),
                 "Unreachable" if unreach else "",
                 d.permanentlyReachable,
@@ -277,6 +276,36 @@ def profiles(group_id):
     for pid, profile in group.profiles.items():
         click.echo(
             f"\t({profile['index']}) - {profile['name'] or "None"} - Visible: {profile['visible']} Enabled: {profile['enabled']}")
+
+
+@list.command
+def last_status_update():
+    """List the last status update for devices and groups."""
+    runner = asyncio.run(get_initialized_runner())
+    model = runner.model
+    click.echo("Devices:")
+    for device in sorted(model.devices.values(), key=lambda x: x.label):
+        click.echo(f"\t{device.id}\t{device.label:30s}\t{device.lastStatusUpdate}")
+
+    click.echo("Groups:")
+    for group in sorted(model.groups.values(), key=lambda x: x.label):
+        click.echo(f"\t{group.id}\t{group.label:30s}\t{group.lastStatusUpdate}")
+
+    return True
+
+
+@list.command
+def firmware():
+    """List current and available firmware information."""
+    runner = asyncio.run(get_initialized_runner())
+    model = runner.model
+    home = model.home
+    click.echo(
+        f"{"HmIP AccessPoint":30s} - Firmware: {home.currentAPVersion or "<unknown>":7} - Available Firmware: {home.availableAPVersion or "<unknown>":7} UpdateState: {home.updateState}")
+
+    for device in sorted(model.devices.values(), key=lambda x: x.label):
+        click.echo(
+            f"{device.label:30s} - Firmware: {device.firmwareVersion or "<unknown>":7} - Available Firmware: {device.availableFirmwareVersion or "<unknown>":7} UpdateState: {device.updateState} LiveUpdateState: {device.liveUpdateState}")
 
 
 @cli.group
@@ -502,164 +531,73 @@ def set_control_mode(id: str, control_mode: ClimateControlMode):
         f"Run set_control_mode for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
 
-# import asyncio
-# import json
-# import logging
-# import signal
-# import sys
-# import time
-# import traceback
-# from argparse import ArgumentParser, RawDescriptionHelpFormatter
-# from importlib.metadata import version
-# from logging.handlers import TimedRotatingFileHandler
-#
-# from devtools import pprint
-#
-# from homematicip.cli.cli_args_parser import get_parser, get_args
-# from homematicip.cli.hmip_cli_actions import handle_list_last_status_update, handle_list_groups, handle_list_devices, \
-#     handle_list_group_ids, handle_list_rssi
-# from homematicip.configuration.config import PersistentConfig, Config
-# from homematicip.configuration.load_config import ConfigLoader
-# from homematicip.events.event_manager import EventManager
-# from homematicip.events.event_types import ModelUpdateEvent
-# from homematicip.runner import Runner
-#
-#
-# # args auswerten
-# # runner initialisieren
-# # config setzen oder lesen
-# #  -> exception, falls nicht gefunden
-# # events registrieren
-#
-#
-# def main(args=None):
-#     """Entry point for hmip_cli.
-#
-#     The setup_py entry_point wraps this in sys.exit already so this effectively
-#     becomes sys.exit(main()).
-#     The __main__ entry point similarly wraps sys.exit().
-#     """
-#     if args is None:
-#         args = sys.argv[1:]
-#
-#     parser = get_parser()
-#     parsed_args = get_args(parser, args)
-#
-#     if len(sys.argv) == 1:
-#         parser.print_help()
-#         return
-#
-#     try:
-#         asyncio.run(run_cli(parsed_args))
-#
-#     except KeyboardInterrupt:
-#         # Shell standard is 128 + signum = 130 (SIGINT = 2)
-#         sys.stdout.write("\n")
-#         return 128 + signal.SIGINT
-#     except Exception as e:
-#         # stderr and exit code 255
-#         sys.stderr.write("\n")
-#         sys.stderr.write(f"\033[91m{type(e).__name__}: {str(e)}\033[0;0m")
-#         sys.stderr.write("\n")
-#         # at this point, you're guaranteed to have args and thus log_level
-#         if parsed_args.debug_level:
-#             if parsed_args.debug_level < 10:
-#                 # traceback prints to stderr by default
-#                 traceback.print_exc()
-#
-#         return 255
-#
-#
-# async def run_cli(parsed_args):
-#     """Run the cli with the parsed args."""
-#     config = get_config(parsed_args)
-#
-#     logger = _setup_logger(
-#         config.level, parsed_args.debug_level, config.log_file
-#     )
-#     runner = Runner(_config=config)
-#     await runner.async_initialize_runner()
-#     await run(runner, parsed_args)
-#
-#
-# def get_config(parsed_args) -> Config:
-#     if parsed_args.config_file:
-#         config = ConfigLoader.from_file(parsed_args.config_file)
-#     else:
-#         config = ConfigLoader.find_config_in_well_known_locations()
-#
-#     if config is None:
-#         print("No configuration file found. Run hmip_generate_auth_token or use -c or --config-file argument to "
-#               "specify a configuration file.")
-#         sys.exit(-1)
-#
-#     return Config.from_persistent_config(config)
-#
-#
-# def _setup_logger(
-#         default_debug_level: int, argument_debug_level: int, log_file: str
-# ) -> logging.Logger:
-#     """Initialize logger. If log_file is set, log to file, otherwise to stdout. The log level """
-#     debug_level = argument_debug_level if argument_debug_level else default_debug_level
-#     logging.basicConfig(level=debug_level)
-#
-#     logger = _create_logger(debug_level, log_file)
-#     return logger
-#
-#
-# def _create_logger(level: int, file_name: str) -> logging.Logger:
-#     """Create a logger based on the level"""
-#     logger = logging.getLogger()
-#     logger.setLevel(level)
-#     handler = (
-#         TimedRotatingFileHandler(file_name, when="midnight", backupCount=5)
-#         if file_name
-#         else logging.StreamHandler()
-#     )
-#     handler.setFormatter(
-#         logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-#     )
-#     logger.addHandler(handler)
-#     return logger
-#
-#
-# async def run(runner: Runner, args):
-#     """Execution of cli commands with parsed args."""
-#     command_entered = False
-#     if args.listen:
-#         print("Listening for events. Press Ctrl+C to stop.")
-#         register_events(runner.event_manager)
-#         await runner.async_listening_for_updates()
-#
-#     # if args.server_config:
-#     #     print(
-#     #         f"Running homematicip-rest-api with fake server configuration {args.server_config}"
-#     #     )
-#     #     global server_config
-#     #     server_config = args.server_config
-#     #     home.download_configuration = fake_download_configuration
-#
-#     if args.dump_config:
-#         pass
-#         # command_entered = True
-#         # json_state = home.download_configuration()
-#         #
-#         # output = handle_config(json_state, args.anonymize)
-#         # if output:
-#         #     print(output)
-#
-#     if args.list_devices:
-#         command_entered = handle_list_devices(runner.model)
-#
-#     if args.list_groups:
-#         command_entered = handle_list_groups(runner.model)
-#
-#     if args.list_last_status_update:
-#         command_entered = handle_list_last_status_update(runner.model)
-#
-#     if args.list_group_ids:
-#         command_entered = handle_list_group_ids(runner.model)
-#
+
+@run.command
+@click.argument("id", type=str, nargs=1)
+@click.argument("dim_level", type=click.FloatRange(0.0, 1.0), nargs=1)
+@click.argument("channel", type=int, nargs=1)
+def set_dim_level(id: str, dim_level: float, channel: int = None):
+    """Set the dim level for a device.
+
+    ID is the Id of the device. Use 'list devices' to get desired Id.\n
+    DIM_LEVEL is the target dim level. Must be between 0.0 and 1.0.\n
+    CHANNEL is the channel index of the device. If the device has only one channel (excl. BaseChannel 0) this can be omitted.
+    """
+    runner = asyncio.run(get_initialized_runner())
+    model = runner.model
+
+    if id not in model.devices:
+        click.echo(f"Device with id {id} not found.", err=True, color=True)
+        return
+
+    device = model.devices[id]
+    fc = get_channel_by_index_of_first(device, channel)
+
+    if fc is None:
+        click.echo(f"Channel with index {channel} not found.", err=True, color=True)
+        return
+    result = asyncio.run(action_set_dim_level(runner, fc, dim_level))
+    click.echo(
+        f"Run set_dim_level for device {device.label or device.id} and channel {fc.index} with result: {result.status_text} ({result.status})")
+
+
+@run.command
+def toggle_garage_door(id: str, channel: int = None):
+    """Toggle the garage door.
+
+    ID is the Id of the device. Use 'list devices' to get desired Id."""
+    runner = asyncio.run(get_initialized_runner())
+    model = runner.model
+
+    if id not in model.devices:
+        click.echo(f"Device with id {id} not found.", err=True, color=True)
+        return
+
+    device = model.devices[id]
+    fc = get_channel_by_index_of_first(device, channel)
+    result = asyncio.run(action_start_impulse(runner, fc))
+    click.echo(
+        f"Run toggle_garage_door for device {device.label or device.id} with result: {result.status_text} ({result.status})")
+
+#     #         if args.toggle_garage_door is not None:
+#     #             _execute_action_for_device(
+#     #                 device,
+#     #                 args,
+#     #                 CliActions.TOGGLE_GARAGE_DOOR,
+#     #                 "send_start_impulse",
+#     #             )
+#     #             command_entered = True
+#     #
+#     #         if args.device_send_door_command is not None:
+#     #             _execute_action_for_device(
+#     #                 device,
+#     #                 args,
+#     #                 CliActions.SEND_DOOR_COMMAND,
+#     #                 "send_door_command",
+#     #                 args.device_send_door_command,
+#     #             )
+#     #             command_entered = True
+
 #     # if args.protectionmode:
 #     #     command_entered = True
 #     #     if args.protectionmode == "presence":
@@ -682,34 +620,8 @@ def set_control_mode(id: str, control_mode: ClimateControlMode):
 #     #     for entry in journal:
 #     #         print(entry)
 #     #
-#     # if args.list_firmware:
-#     #     command_entered = True
-#     #     print(
-#     #         "{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {}".format(
-#     #             "HmIP AccessPoint",
-#     #             home.currentAPVersion if home.currentAPVersion is not None else "None",
-#     #             home.availableAPVersion
-#     #             if home.availableAPVersion is not None
-#     #             else "None",
-#     #             home.updateState,
-#     #         )
-#     #     )
-#     #     sortedDevices = sorted(home.devices, key=attrgetter("deviceType", "label"))
-#     #     for d in sortedDevices:
-#     #         print(
-#     #             "{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {} LiveUpdateState: {}".format(
-#     #                 d.label,
-#     #                 d.firmwareVersion,
-#     #                 d.availableFirmwareVersion
-#     #                 if d.availableFirmwareVersion is not None
-#     #                 else "None",
-#     #                 d.updateState,
-#     #                 d.liveUpdateState,
-#     #             )
-#     #         )
 #     #
-#     if args.list_rssi:
-#         command_entered = handle_list_rssi(runner.model)
+
 #
 #     # if args.list_rules:
 #     #     command_entered = True
@@ -746,16 +658,6 @@ def set_control_mode(id: str, control_mode: ClimateControlMode):
 #     #             )
 #     #             command_entered = True
 #     #
-#     #         if args.device_dim_level is not None:
-#     #             _execute_action_for_device(
-#     #                 device,
-#     #                 args,
-#     #                 CliActions.SET_DIM_LEVEL,
-#     #                 "set_dim_level",
-#     #                 args.device_dim_level,
-#     #             )
-#     #             command_entered = True
-#     #
 #     #         if args.device_set_lock_state is not None:
 #     #             targetLockState = LockState.from_str(args.device_set_lock_state)
 #     #             if targetLockState not in LockState:
@@ -773,24 +675,6 @@ def set_control_mode(id: str, control_mode: ClimateControlMode):
 #     #                 )
 #     #             command_entered = True
 #     #
-#     #         if args.toggle_garage_door is not None:
-#     #             _execute_action_for_device(
-#     #                 device,
-#     #                 args,
-#     #                 CliActions.TOGGLE_GARAGE_DOOR,
-#     #                 "send_start_impulse",
-#     #             )
-#     #             command_entered = True
-#     #
-#     #         if args.device_send_door_command is not None:
-#     #             _execute_action_for_device(
-#     #                 device,
-#     #                 args,
-#     #                 CliActions.SEND_DOOR_COMMAND,
-#     #                 "send_door_command",
-#     #                 args.device_send_door_command,
-#     #             )
-#     #             command_entered = True
 #     #
 #     #         if args.device_shutter_level is not None:
 #     #             _execute_action_for_device(
