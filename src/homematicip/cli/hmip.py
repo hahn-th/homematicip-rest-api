@@ -3,9 +3,10 @@ import datetime
 import json
 import logging
 import os
+import sys
 import time
 from logging.handlers import TimedRotatingFileHandler
-
+from importlib.metadata import version as metadata_version
 import click
 import httpx
 from alive_progress import alive_bar
@@ -22,6 +23,7 @@ from homematicip.configuration.config import Config, PersistentConfig
 from homematicip.configuration.config_io import ConfigIO
 from homematicip.configuration.log_helper import get_logger_filename
 from homematicip.connection.rest_connection import ConnectionContext, RestResult
+from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.model.anoymizer import handle_config
 from homematicip.model.enums import ClimateControlMode
 from homematicip.runner import Runner
@@ -69,6 +71,7 @@ def setup_basic_logging(log_level: int, logger_filename: str = None) -> None:
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
     logging.getLogger("httpx").setLevel(logging.CRITICAL)
     logging.getLogger("httpcore").setLevel(logging.CRITICAL)
+    logging.getLogger("websockets.client").setLevel(logging.CRITICAL)
 
 
 def setup_logger(
@@ -314,9 +317,43 @@ def run():
     pass
 
 
+async def _model_update_event_handler(event: ModelUpdateEvent, args) -> None:
+    click.echo(f"ModelUpdateEvent: {event}; {args}")
+
+
+# @cli.command
+# def listen():
+#     """Listen to events. If filename is specified, events are written to the file. If not, they are written to
+#     console."""
+#     runner = asyncio.run(get_initialized_runner())
+#     runner.event_manager.subscribe(ModelUpdateEvent.ITEM_CREATED, _model_update_event_handler)
+#     runner.event_manager.subscribe(ModelUpdateEvent.ITEM_UPDATED, _model_update_event_handler)
+#     runner.event_manager.subscribe(ModelUpdateEvent.ITEM_REMOVED, _model_update_event_handler)
+#
+#     loop = asyncio.new_event_loop()
+#     task = loop.create_task(runner.async_listening_for_updates())
+#
+#     try:
+#         click.echo("Waiting for events... press CTRL+C to stop listening.")
+#         loop.run_until_complete(task)
+#     except asyncio.CancelledError:
+#         pass
+#     except KeyboardInterrupt:
+#         task.cancel()
+#         loop.stop()
+#         click.echo("Stopping listener...")
+
+
+@cli.command
+def version():
+    """Print the version of the homematicip-rest-api."""
+    click.echo(f"HomematicIP-Rest-Api: {metadata_version("homematicip")}")
+    click.echo(f"Python: {sys.version}")
+
+
 @run.command()
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
 def turn_on(id: str, channel: int = None):
@@ -338,7 +375,7 @@ def turn_on(id: str, channel: int = None):
 
 @run.command()
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
 def turn_off(id: str, channel: int = None):
@@ -363,10 +400,10 @@ def turn_off(id: str, channel: int = None):
 
 @run.command()
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
-@click.option("state", type=bool, required=True, help="The target state. True or False")
+@click.option("--state", type=bool, required=True, help="The target state. True or False")
 def set_switch_state(id: str, channel: int, state: bool):
     """Set the switch state for a device. specify FunctionalChannel-Index."""
     runner = asyncio.run(get_initialized_runner())
@@ -440,7 +477,7 @@ def set_boost_stop(id: str):
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-t|--temperature", type=float, help="Target Temperature", required=True)
+@click.option("-t", "--temperature", type=float, help="Target Temperature", required=True)
 def set_point_temperature(id: str, temperature: float):
     """Set point temperature for a group."""
     runner = asyncio.run(get_initialized_runner())
@@ -461,7 +498,7 @@ def set_point_temperature(id: str, temperature: float):
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-m|--minutes", type=int, nargs=1, help="Duration of boost in Minutes", required=True)
+@click.option("-m", "--minutes", type=int, nargs=1, help="Duration of boost in Minutes", required=True)
 def set_boost_duration(id: str, minutes: int):
     """Sets the boost duration for a group in minutes"""
     runner = asyncio.run(get_initialized_runner())
@@ -478,7 +515,7 @@ def set_boost_duration(id: str, minutes: int):
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-p|--profile_index", type=str, required=True,
+@click.option("-p", "--profile_index", type=str, required=True,
               help="index of the profile. Usually this is PROFILE_x. Use 'hmip list profiles <group-id>' to get a "
                    "list of available profiles for a group.")
 def set_active_profile(id: str, profile_index: str):
@@ -514,8 +551,8 @@ def set_control_mode(id: str, mode: ClimateControlMode):
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-d|--dim_level", type=click.FloatRange(0.0, 1.0), help="Target Dim Level", required=True)
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-d", "--dim_level", type=click.FloatRange(0.0, 1.0), help="Target Dim Level", required=True)
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
 def set_dim_level(id: str, dim_level: float, channel: int = None):
@@ -545,10 +582,10 @@ def set_dim_level(id: str, dim_level: float, channel: int = None):
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
-@click.option("-s|--shutter_level", type=click.FloatRange(0.0, 1.0), required=True, help="Target shutter level.")
+@click.option("-s", "--shutter_level", type=click.FloatRange(0.0, 1.0), required=True, help="Target shutter level.")
 def set_shutter_level(id: str, shutter_level: float, channel: int):
     runner = asyncio.run(get_initialized_runner())
 
@@ -572,11 +609,11 @@ def set_shutter_level(id: str, shutter_level: float, channel: int):
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
-@click.option("-sl|--slats-level", type=click.FloatRange(0.0, 1.0), nargs=1, required=True, help="Slats Level.")
-@click.option("-sh|--shutter-level", type=click.FloatRange(0.0, 1.0), nargs=1, required=False, default=None,
+@click.option("-sl", "--slats-level", type=click.FloatRange(0.0, 1.0), nargs=1, required=True, help="Slats Level.")
+@click.option("-sh", "--shutter-level", type=click.FloatRange(0.0, 1.0), nargs=1, required=False, default=None,
               help="Shutter Level.")
 def set_slats_level(id: str, slats_level: float, shutter_level: float = None, channel: int = None):
     runner = asyncio.run(get_initialized_runner())
@@ -601,7 +638,7 @@ def set_slats_level(id: str, slats_level: float, shutter_level: float = None, ch
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
+@click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
 def toggle_garage_door(id: str, channel: int = None):

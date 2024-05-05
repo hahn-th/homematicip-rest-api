@@ -30,7 +30,7 @@ class ConfigIO:
         os_name = platform.system()
 
         if os_name == "Windows":
-            appdata = os.getenv("appdata")
+            appdata = os.getenv("localappdata")
             programdata = os.getenv("programdata")
             search_locations.append(
                 os.path.join(appdata, "homematicip-rest-api", config_filename)

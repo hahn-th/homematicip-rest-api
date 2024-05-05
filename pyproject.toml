@@ -40,7 +40,7 @@ local_scheme = "no-local-version"
 
 
 [project.scripts]
-hmip = "homematicip.cli.hmip_cli:cli"
+hmip = "homematicip.cli.hmip:cli"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

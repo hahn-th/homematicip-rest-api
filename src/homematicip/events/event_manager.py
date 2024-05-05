@@ -15,7 +15,7 @@ class EventManager:
             if callback in self._subscriptions[event_type]:
                 self._subscriptions[event_type].remove(callback)
 
-    def publish(self, event_type, event_args):
+    async def publish(self, event_type: ModelUpdateEvent, event_args):
         if event_type in self._subscriptions:
             for callback in self._subscriptions[event_type]:
-                callback(event_args)
+                await callback(event_type, event_args)

@@ -18,7 +18,7 @@ class HmipEventHandler:
         self._model = model
         self._event_manager = event_manager
 
-    def process_event(self, event_json):
+    async def process_event(self, event_json):
         for event in event_json["events"].values():
 
             LOGGER.info(f"Processing event {event['pushEventType']}")
@@ -29,42 +29,42 @@ class HmipEventHandler:
                 client_id = data['id']
                 client = Client.model_validate_json(data, strict=False)
                 self._model.clients[client_id] = client
-                self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, client)
+                await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, client)
 
             elif event_type == EventType.CLIENT_CHANGED:
                 data = event['client']
                 if data['id'] in self._model.clients:
                     client: BaseModel = self._model.clients[data['id']]
                     self._model.clients[data['id']] = client.model_copy(update={**data})
-                    self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, client)
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, client)
 
             elif event_type == EventType.CLIENT_REMOVED:
                 data = event['client']
 
                 client = self._model.clients.pop(data['id'], None)
                 if client is not None:
-                    self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, client)
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, client)
 
             elif event_type == EventType.DEVICE_ADDED:
                 data = event['device']
                 if data['id'] not in self._model.devices:
                     device = Device.model_validate_json(data, strict=False)
                     self._model.devices[data['id']] = device
-                    self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, device)
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, device)
 
             elif event_type == EventType.DEVICE_CHANGED:
                 data = event['device']
                 if data['id'] in self._model.devices:
                     device: BaseModel = self._model.devices[data['id']]
                     self._model.devices[data['id']] = device.model_copy(update={**data})
-                    self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, device)
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, device)
 
             elif event_type == EventType.DEVICE_REMOVED:
                 data = event['device']
 
                 device = self._model.devices.pop(data['id'], None)
                 if device is not None:
-                    self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, device)
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, device)
 
             elif event_type == EventType.GROUP_ADDED:
                 pass
@@ -75,14 +75,14 @@ class HmipEventHandler:
 
                 group = self._model.groups.pop(data['id'], None)
                 if group is not None:
-                    self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, group)
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, group)
 
             elif event_type == EventType.HOME_CHANGED:
                 data = event['home']
 
                 home = self._model.home.model_copy(update={**data})
                 self._model.home = home
-                self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, home)
+                await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, home)
 
             elif event_type == EventType.SECURITY_JOURNAL_CHANGED:
                 pass
