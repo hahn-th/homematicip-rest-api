@@ -161,7 +161,7 @@ def auth():
 
     logger.debug("Getting auth token and client-id")
     auth_token = asyncio.run(auth.request_auth_token())
-    client_id = asyncio.run(auth.confirm_auth_token(auth_token))
+    asyncio.run(auth.confirm_auth_token(auth_token))
 
     logger.debug("Got auth-token and client-id. Persist config.")
 
@@ -314,69 +314,13 @@ def run():
     pass
 
 
-@run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
-              help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
-                   "needed, if you want to control a group.")
-@click.argument("slats_level", type=float, nargs=1)
-@click.argument("shutter_level", type=float, nargs=1, required=False)
-def set_slats_level(id: str, channel: int, slats_level: float, shutter_level: float = None):
-    """Set the slats level for a device. specify FunctionalChannel-Index."""
-    runner = asyncio.run(get_initialized_runner())
-
-    if id not in runner.model.devices:
-        click.echo(f"Device with id {id} not found.", err=True, color=True)
-        return
-
-    device = runner.model.devices[id]
-    if str(channel) not in device.functionalChannels:
-        click.echo(f"Channel with index {channel} not found.", err=True, color=True)
-        return
-
-    result = asyncio.run(
-        action_set_slats_level(runner, device.functionalChannels[str(channel)], channel, slats_level,
-                               shutter_level))
-
-    click.echo(
-        f"Run set_slats_level for device {device.label or device.id} with result: {result.status_text} ({result.status})")
-
-
-@run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
-@click.option("-c|--channel", type=int, required=False, default=None,
-              help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
-                   "needed, if you want to control a group.")
-@click.argument("shutter_level", type=float, nargs=1)
-def set_shutter_level(id: str, channel: int, shutter_level: float):
-    runner = asyncio.run(get_initialized_runner())
-
-    if id not in runner.model.devices:
-        click.echo(f"Device with id {id} not found.", err=True, color=True)
-        return
-
-    device = runner.model.devices[id]
-    if str(channel) not in device.functionalChannels:
-        click.echo(f"Channel with index {channel} not found.", err=True, color=True)
-        return
-
-    result = asyncio.run(
-        action_set_shutter_level(runner, device.functionalChannels[str(channel)], shutter_level))
-
-    click.echo(
-        f"Run set_shutter_level for device {device.label or device.id} with result: {result.status_text} ({result.status})")
-
-
 @run.command()
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c|--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
 def turn_on(id: str, channel: int = None):
-    """Turn a device on. Specify a FunctionalChannel-Index.
-
-    ID is the ID of the device.\n
-    CHANNEL_INDEX is the index of the channel. If the device has only one channel (excl. BaseChannel 0) this can be omitted."""
+    """Turn a device on. Specify a FunctionalChannel-Index."""
     runner = asyncio.run(get_initialized_runner())
 
     if id not in runner.model.devices:
@@ -676,7 +620,6 @@ def toggle_garage_door(id: str, channel: int = None):
     result = asyncio.run(action_start_impulse(runner, fc))
     click.echo(
         f"Run toggle_garage_door for device {device.label or device.id} with result: {result.status_text} ({result.status})")
-
 
 #     #         if args.toggle_garage_door is not None:
 #     #             _execute_action_for_device(
