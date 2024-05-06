@@ -83,7 +83,7 @@ class Runner:
         hmip_event_handler = HmipEventHandler(event_manager=self.event_manager, model=self.model)
         async for message in handler.listen(context, False):
             try:
-                await hmip_event_handler.process_event(json.loads(message))
+                await hmip_event_handler.process_event_async(json.loads(message))
 
             except Exception as e:
                 LOGGER.error(f"Error while handling incoming event. Message: {message}", exc_info=e)

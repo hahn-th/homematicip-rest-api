@@ -18,7 +18,7 @@ class HmipEventHandler:
         self._model = model
         self._event_manager = event_manager
 
-    async def process_event(self, event_json):
+    async def process_event_async(self, event_json):
         for event in event_json["events"].values():
 
             LOGGER.info(f"Processing event {event['pushEventType']}")

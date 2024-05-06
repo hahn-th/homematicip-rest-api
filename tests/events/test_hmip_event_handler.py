@@ -1,4 +1,7 @@
 import json
+
+import pytest
+
 from homematicip.model import build_model_from_json
 from homematicip.events.event_manager import EventManager
 from homematicip.events.hmip_event_handler import HmipEventHandler
@@ -12,7 +15,8 @@ def test_device_added(sample_data_complete):
     assert True
 
 
-def test_device_updated(sample_data_complete):
+@pytest.mark.asyncio
+async def test_device_updated(sample_data_complete):
     event_manager = EventManager()
     model = build_model_from_json(sample_data_complete)
     device_id = "3014F7110000RAIN_SENSOR"
@@ -21,7 +25,7 @@ def test_device_updated(sample_data_complete):
     change_event = json.loads(change_event_b)
 
     hmip_event_handler = HmipEventHandler(event_manager=event_manager, model=model)
-    hmip_event_handler.process_event(change_event)
+    await hmip_event_handler.process_event_async(change_event)
 
     assert model.devices[device_id].lastStatusUpdate != device_before.lastStatusUpdate
 
