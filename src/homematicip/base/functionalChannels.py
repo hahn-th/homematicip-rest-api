@@ -740,7 +740,7 @@ class MultiModeInputSwitchChannel(SwitchChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
 
 
-class NotificationLightChannel(DimmerChannel):
+class NotificationLightChannel(DimmerChannel, SwitchChannel):
     """this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel"""
 
     def __init__(self, device, connection):
@@ -750,11 +750,52 @@ class NotificationLightChannel(DimmerChannel):
         #:RGBColorState:the color of the light
         self.simpleRGBColorState = RGBColorState.BLACK
 
+
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.on = js["on"]
         self.simpleRGBColorState = RGBColorState.from_str(js["simpleRGBColorState"])
 
+        if "opticalSignalBehaviour" in js:
+            self.opticalSignalBehaviour = OpticalSignalBehaviour.from_str(js["opticalSignalBehaviour"])
+
+
+    def set_optical_signal(
+        self,
+        opticalSignalBehaviour: OpticalSignalBehaviour,
+        rgb: RGBColorState,
+        dimLevel=1.01,
+    ):
+        """sets the signal type for the leds
+
+        Args:
+            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+            rgb(RGBColorState): Color
+            dimLevel(float): usally 1.01. Use set_dim_level instead
+
+        Returns:
+            Result of the _restCall
+
+        """
+        data = {
+            "channelIndex": self.index,
+            "deviceId": self.device.id,
+            "dimLevel": dimLevel,
+            "opticalSignalBehaviour": opticalSignalBehaviour,
+            "simpleRGBColorState": rgb,
+        }
+        return self._rest_call("device/control/setOpticalSignal", body=json.dumps(data))
+    
+    async def async_set_optical_signal(
+        self,
+        opticalSignalBehaviour: OpticalSignalBehaviour,
+        rgb: RGBColorState,
+        dimLevel=1.01,
+    ):
+        return await self._connection.api_call(
+            *self.set_optical_signal(opticalSignalBehaviour, rgb, dimLevel)
+        )
+    
     def set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
         """sets the color and dimlevel of the lamp
 

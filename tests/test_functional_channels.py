@@ -243,6 +243,34 @@ def test_notification_light_channel(fake_home: Home):
         assert ch.simpleRGBColorState == RGBColorState.BLACK
 
 
+def test_notification_light_channel_v2(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711000000000000BSL2", 3)
+        assert isinstance(ch, NotificationLightChannel)
+        assert ch.dimLevel == 0.25
+        assert ch.simpleRGBColorState == RGBColorState.GREEN
+        assert ch.opticalSignalBehaviour == OpticalSignalBehaviour.BLINKING_MIDDLE
+
+        ch.set_optical_signal(OpticalSignalBehaviour.FLASH_MIDDLE, RGBColorState.BLUE, 0.75)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711000000000000BSL2", 3)
+        assert ch.dimLevel == 0.75
+        assert ch.simpleRGBColorState == RGBColorState.BLUE
+        assert ch.opticalSignalBehaviour == OpticalSignalBehaviour.FLASH_MIDDLE
+
+
+def test_notification_light_channel_v2_switch(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711000000000000BSL2", 3)
+        assert isinstance(ch, NotificationLightChannel)
+        assert ch.on is True
+
+        ch.set_switch_state(False)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711000000000000BSL2", 3)
+        assert ch.on is False
+
+
 def test_shading_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F71100BLIND_MODULE00", 1)

@@ -182,6 +182,17 @@ async def test_notification_light_channel(no_ssl_fake_async_home: AsyncHome):
     assert ch.dimLevel == 0.5
     assert ch.simpleRGBColorState == RGBColorState.BLACK
 
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711000000000000BSL2", 3)
+    await ch.async_set_optical_signal(OpticalSignalBehaviour.FLASH_MIDDLE, RGBColorState.WHITE, 0.6)
+    await no_ssl_fake_async_home.get_current_state()
+    ch = no_ssl_fake_async_home.search_channel("3014F711000000000000BSL2", 3)
+    assert ch.opticalSignalBehaviour == OpticalSignalBehaviour.FLASH_MIDDLE
+    assert ch.dimLevel == 0.6
+    assert ch.simpleRGBColorState == RGBColorState.WHITE
+
+
+
 
 @pytest.mark.asyncio
 async def test_shading_channel(no_ssl_fake_async_home: AsyncHome):
