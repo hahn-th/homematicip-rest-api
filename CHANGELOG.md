@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.1.1] 2024-05-08
+
+### ADDED
+
+- Add support for HmIP-RGBW (readonly)
+- Add support for HmIP-DRG-DALI (readonly)
+- Add Energy Group
+- Add support for Hmip-BSL with Firmware 2.0.2
+
+### CHANGED
+
+- Bump aiohttp 3.9.0 to aiohttp 3.9.4
+- Rename function _restCall to _rest_call
+- Rename file HomeMaticIPObject.py to homematicip_object.py
+
 ## [1.1.0] 2024-01-06
 
 ### ADDED
@@ -656,7 +671,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.0..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.1..master
+[1.1.1]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.16...1.1.0
 [1.0.16]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...1.0.16
 [1.0.15]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...1.0.15
