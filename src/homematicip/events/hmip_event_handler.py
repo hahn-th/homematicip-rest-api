@@ -6,6 +6,7 @@ from homematicip.events.event_manager import ModelUpdateEvent
 from homematicip.events.event_types import EventType
 from homematicip.model.client import Client
 from homematicip.model.devices import Device
+from homematicip.model.group import Group
 from homematicip.model.model import Model
 
 LOGGER = logging.getLogger(__name__)
@@ -26,7 +27,7 @@ class HmipEventHandler:
             event_type = EventType[event['pushEventType']]
             if event_type == EventType.CLIENT_ADDED:
                 data = event['client']
-                client:Client = Client.model_validate_json(data, strict=False)
+                client: Client = Client.model_validate(data, strict=False)
                 self._model.clients[data['id']] = client
                 await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, client)
 
@@ -47,7 +48,7 @@ class HmipEventHandler:
             elif event_type == EventType.DEVICE_ADDED:
                 data = event['device']
                 if data['id'] not in self._model.devices:
-                    device:Device = Device.model_validate_json(data, strict=False)
+                    device: Device = Device.model_validate(data, strict=False)
                     self._model.devices[data['id']] = device
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, device)
 
@@ -66,7 +67,12 @@ class HmipEventHandler:
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, device)
 
             elif event_type == EventType.GROUP_ADDED:
-                pass
+                data = event['group']
+                if data['id'] not in self._model.groups:
+                    group: Group = Group.model_validate(data, strict=False)
+                    self._model.groups[data['id']] = group
+                    await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, group)
+
             elif event_type == EventType.GROUP_CHANGED:
                 data = event['group']
                 if data['id'] in self._model.groups:
