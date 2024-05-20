@@ -1,10 +1,6 @@
 from dataclasses import dataclass
-import hashlib
 import json
-import locale
 import logging
-import platform
-import re
 from typing import Optional
 
 import httpx
@@ -12,6 +8,7 @@ import websockets
 
 from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.connection.client_token_builder import ClientTokenBuilder
+from homematicip.exceptions.connection_exceptions import HmipServerCloseError, HmipThrottlingError
 
 ATTR_AUTH_TOKEN = "AUTHTOKEN"
 ATTR_CLIENT_AUTH = "CLIENTAUTH"
@@ -19,18 +16,6 @@ ATTR_CLIENT_AUTH = "CLIENTAUTH"
 THROTTLE_STATUS_CODE = 429
 
 LOGGER = logging.getLogger(__name__)
-
-
-class HmipConnectionError(Exception):
-    pass
-
-
-class HmipServerCloseError(HmipConnectionError):
-    pass
-
-
-class HmipThrottlingError(HmipConnectionError):
-    pass
 
 
 @dataclass
