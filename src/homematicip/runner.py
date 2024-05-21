@@ -1,3 +1,4 @@
+import asyncio
 from dataclasses import dataclass
 import json
 import logging
@@ -25,6 +26,7 @@ LOGGER = logging.getLogger(__name__)
 class Runner:
     model: Model = None
     event_manager: EventManager = None
+    external_loop: asyncio.AbstractEventLoop = None
 
     _connection_context: ConnectionContext = None
     _rest_connection: RestConnection = None
@@ -33,6 +35,9 @@ class Runner:
     def __post_init__(self):
         if self.event_manager is None:
             self.event_manager = EventManager()
+
+        if self.external_loop is not None:
+            asyncio.set_event_loop(self.external_loop)
 
     def _ensure_config(self):
         """Ensure that a configuration is set. If not, try to load it from well-known locations."""

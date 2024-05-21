@@ -43,6 +43,7 @@ class HmipEventHandler:
 
                 client = self._model.clients.pop(data['id'], None)
                 if client is not None:
+                    client.remove_object()
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, client)
 
             elif event_type == EventType.DEVICE_ADDED:
@@ -64,6 +65,7 @@ class HmipEventHandler:
 
                 device = self._model.devices.pop(data['id'], None)
                 if device is not None:
+                    device.remove_object()
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, device)
 
             elif event_type == EventType.GROUP_ADDED:
@@ -84,6 +86,7 @@ class HmipEventHandler:
 
                 group = self._model.groups.pop(data['id'], None)
                 if group is not None:
+                    group.remove_object()
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, group)
 
             elif event_type == EventType.HOME_CHANGED:
