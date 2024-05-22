@@ -47,3 +47,12 @@ async def test_runner_async_run_home(mocker, sample_data_complete, config, conne
     await runner.async_initialize_runner()
 
     assert runner.model is not None
+
+
+def test_runner_websocket_connected_callable():
+    runner = Runner()
+    assert runner.websocket_connected is False
+
+    runner._set_websocket_connected_state(True)
+    assert runner.websocket_connected is True
+    assert runner._websocket_connected is True

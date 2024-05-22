@@ -12,8 +12,8 @@ from homematicip.connection.rest_connection import (
     ConnectionContext,
     ConnectionUrlResolver,
     RestConnection,
-    WebSocketHandler,
 )
+from homematicip.connection.websocket_handler import WebSocketHandler
 from homematicip.events.event_manager import EventManager
 from homematicip.events.hmip_event_handler import HmipEventHandler
 from homematicip.model.model import Model
@@ -31,6 +31,7 @@ class Runner:
     _connection_context: ConnectionContext = None
     _rest_connection: RestConnection = None
     _config: Config = None
+    _websocket_connected: bool = False
 
     def __post_init__(self):
         if self.event_manager is None:
@@ -74,6 +75,9 @@ class Runner:
         """Start listening for updates from HomematicIP Cloud. This method will not return."""
         await self._async_start_listening_for_updates(self._connection_context)
 
+    async def async_stop_listening_for_updates(self):
+        self.websocket_handler.stop()
+
     async def async_get_current_state(self):
         """
         Ask HomematicIP Cloud for the current complete configuration and return resulting json object.
@@ -84,14 +88,21 @@ class Runner:
         return result.json
 
     async def _async_start_listening_for_updates(self, context: ConnectionContext):
-        handler = WebSocketHandler()
+        self.websocket_handler = WebSocketHandler()
         hmip_event_handler = HmipEventHandler(event_manager=self.event_manager, model=self.model)
-        async for message in handler.listen(context, False):
+        async for message in self.websocket_handler.listen(context, self._set_websocket_connected_state, False):
             try:
                 await hmip_event_handler.process_event_async(json.loads(message))
 
             except Exception as e:
                 LOGGER.error(f"Error while handling incoming event. Message: {message}", exc_info=e)
+
+    @property
+    def websocket_connected(self):
+        return self._websocket_connected
+
+    def _set_websocket_connected_state(self, value):
+        self._websocket_connected = value
 
     @property
     def rest_connection(self):
