@@ -1,23 +1,21 @@
 import asyncio
-from dataclasses import dataclass
 import json
 import logging
+from dataclasses import dataclass
 
-from homematicip.auth import Auth
-from homematicip.configuration.config import PersistentConfig, Config
+from homematicip.AbstractRunner import AbstractRunner
+from homematicip.configuration.config import Config
 from homematicip.configuration.config_io import ConfigIO
-from homematicip.connection.client_token_builder import ClientTokenBuilder
 from homematicip.connection.rest_connection import (
     ClientCharacteristicsBuilder,
     ConnectionContext,
-    ConnectionUrlResolver,
     RestConnection,
 )
 from homematicip.connection.websocket_handler import WebSocketHandler
 from homematicip.events.event_manager import EventManager
 from homematicip.events.hmip_event_handler import HmipEventHandler
-from homematicip.model.model import Model
 from homematicip.model import build_model_from_json
+from homematicip.model.model import Model
 
 LOGGER = logging.getLogger(__name__)
 
