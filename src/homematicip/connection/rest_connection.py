@@ -4,11 +4,10 @@ import logging
 from typing import Optional
 
 import httpx
-import websockets
 
 from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.connection.client_token_builder import ClientTokenBuilder
-from homematicip.exceptions.connection_exceptions import HmipServerCloseError, HmipThrottlingError
+from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 ATTR_AUTH_TOKEN = "AUTHTOKEN"
 ATTR_CLIENT_AUTH = "CLIENTAUTH"
@@ -62,31 +61,6 @@ class ConnectionContext:
             ctx.auth_token = auth_token
 
         return ctx
-
-
-class WebSocketHandler:
-    async def listen(self, context: ConnectionContext, reconnect_on_error: bool = True):
-        uri = context.websocket_url
-        async with websockets.connect(
-                uri,
-                extra_headers={
-                    ATTR_AUTH_TOKEN: context.auth_token,
-                    ATTR_CLIENT_AUTH: context.client_auth_token,
-                },
-        ) as websocket:
-            # Process messages received on the connection.
-            async for message in websocket:
-                try:
-                    yield message
-
-                except websockets.ConnectionClosed:
-                    LOGGER.warn(
-                        f"Got ConnectionClosed Exception. Should reconnect is set to {reconnect_on_error}"
-                    )
-                    if not reconnect_on_error:
-                        raise HmipServerCloseError()
-
-                    continue
 
 
 @dataclass
