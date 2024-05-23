@@ -35,7 +35,7 @@ async def get_initialized_runner(including_model: bool = True) -> Runner:
         config.level, config.log_file
     )
 
-    r = Runner(_config=config)
+    r = Runner(config=config)
 
     if including_model:
         await r.async_initialize_runner()
