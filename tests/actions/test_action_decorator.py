@@ -1,7 +1,7 @@
 import pytest
 
 from homematicip.action.action import Action
-from homematicip.model.model_compontens import Group, FunctionalChannel, Device
+from homematicip.model.model_components import Group, FunctionalChannel, Device
 from homematicip.model.hmip_base import HmipBaseModel
 
 

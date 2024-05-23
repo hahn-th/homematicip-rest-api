@@ -1,7 +1,7 @@
 import click
 
 from homematicip.model.model import Model
-from homematicip.model.model_compontens import FunctionalChannel, Device
+from homematicip.model.model_components import FunctionalChannel, Device
 
 
 def get_rssi_bar_string(rssi_value):

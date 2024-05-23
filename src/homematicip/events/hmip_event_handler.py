@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from homematicip.events.event_manager import EventManager
 from homematicip.events.event_manager import ModelUpdateEvent
 from homematicip.events.event_types import EventType
-from homematicip.model.model_compontens import Group, Device, Client
+from homematicip.model.model_components import Group, Device, Client
 from homematicip.model.model import Model
 
 LOGGER = logging.getLogger(__name__)

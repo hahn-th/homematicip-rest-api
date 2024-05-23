@@ -2,7 +2,7 @@ from homematicip.action.action import Action
 from homematicip.model.enums import AccelerationSensorMode, AccelerationSensorNeutralPosition, \
     AccelerationSensorSensitivity, NotificationSoundType, DoorCommand, LockState, RGBColorState, ClimateControlDisplay, \
     AcousticAlarmSignal, AcousticAlarmTiming, WaterAlarmTrigger
-from homematicip.model.model_compontens import FunctionalChannel
+from homematicip.model.model_components import FunctionalChannel
 from homematicip.runner import Runner
 
 

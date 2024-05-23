@@ -2,7 +2,7 @@ import logging
 
 from pydantic import ValidationError
 
-from homematicip.model.model_compontens import Group, Device, Client
+from homematicip.model.model_components import Group, Device, Client
 from homematicip.model.hmip_base import HmipBaseModel
 from homematicip.model.home import Home
 
