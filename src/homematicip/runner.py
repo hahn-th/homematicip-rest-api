@@ -3,7 +3,6 @@ import json
 import logging
 from dataclasses import dataclass
 
-from homematicip.AbstractRunner import AbstractRunner
 from homematicip.configuration.config import Config
 from homematicip.configuration.config_io import ConfigIO
 from homematicip.connection.rest_connection import (
@@ -14,10 +13,50 @@ from homematicip.connection.rest_connection import (
 from homematicip.connection.websocket_handler import WebSocketHandler
 from homematicip.events.event_manager import EventManager
 from homematicip.events.hmip_event_handler import HmipEventHandler
-from homematicip.model import build_model_from_json
-from homematicip.model.model import Model
+from homematicip.model.model import Model, build_model_from_json
 
 LOGGER = logging.getLogger(__name__)
+
+import abc
+import asyncio
+from typing import Any
+
+
+class AbstractRunner(abc.ABC):
+    """Abstract runner."""
+
+    @abc.abstractmethod
+    async def async_initialize_runner(self):
+        """Initialize the runner with the model and the context."""
+        pass
+
+    @abc.abstractmethod
+    async def async_initialize_runner_without_init_model(self):
+        """Initialize just the context and connection. Use async_get_current_state to get the current state."""
+        pass
+
+    @abc.abstractmethod
+    async def async_listening_for_updates(self):
+        """Start listening for updates from the homematicip access point. This method will not return."""
+        pass
+
+    @abc.abstractmethod
+    async def async_get_current_state(self):
+        """Return the current state of the homematicip access point."""
+        pass
+
+    @property
+    @abc.abstractmethod
+    def websocket_connected(self):
+        """Return if the websocket is connected."""
+        pass
+
+    @property
+    @abc.abstractmethod
+    def rest_connection(self):
+        """Return the rest connection."""
+        pass
+
 
 
 @dataclass(kw_only=True)

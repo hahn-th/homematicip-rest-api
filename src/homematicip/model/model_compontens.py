@@ -1,14 +1,35 @@
 from typing import Optional
 
-from pydantic import BaseModel
-
 from homematicip.model.enums import ConnectionType, DeviceArchetype
-from homematicip.model.functional_channels import FunctionalChannel
 from homematicip.model.hmip_base import HmipBaseModel
 
 
-class ModelDeviceBase(BaseModel):
-    pass
+class GroupChannelReference(HmipBaseModel):
+    channelIndex: int
+    deviceId: str
+
+
+class Group(HmipBaseModel):
+    id: str = None
+    homeId: str = None
+    label: Optional[str] = None
+    lastStatusUpdate: Optional[int] = None
+    type: str = None
+    unreach: Optional[bool] = None
+    metaGroupId: Optional[str] = None
+    channels: list[GroupChannelReference]
+
+
+class FunctionalChannel(HmipBaseModel):
+    """this is the base class for the functional channels"""
+
+    index: int = -1
+    groupIndex: int = -1
+    label: str = ""
+    functionalChannelType: str = ""
+    groups: list[str]
+    deviceId: str = None
+    channelRole: Optional[str] = None
 
 
 class Device(HmipBaseModel):
@@ -35,3 +56,10 @@ class Device(HmipBaseModel):
     updateState: Optional[str] = ""
 
     # base_channel: FunctionalChannel = None
+
+
+class Client(HmipBaseModel):
+    homeId: str = ""
+    id: str = ""
+    label: str = ""
+    clientType: str = ""

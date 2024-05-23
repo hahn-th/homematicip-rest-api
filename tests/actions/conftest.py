@@ -1,6 +1,6 @@
 import pytest
 
-from homematicip.model import build_model_from_json, Model
+from homematicip.model.model import Model,build_model_from_json
 
 
 @pytest.fixture

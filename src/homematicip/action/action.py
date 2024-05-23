@@ -1,4 +1,4 @@
-from homematicip.model.functional_channels import FunctionalChannel
+from homematicip.model.model_compontens import FunctionalChannel
 from homematicip.model.hmip_base import HmipBaseModel
 
 

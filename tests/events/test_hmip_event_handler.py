@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from homematicip.model import build_model_from_json
+from homematicip.model.model import build_model_from_json
 from homematicip.events.event_manager import EventManager
 from homematicip.events.hmip_event_handler import HmipEventHandler
 

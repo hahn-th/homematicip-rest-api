@@ -1,21 +1,4 @@
-import logging
-from typing import Optional
 
-from homematicip.model.hmip_base import HmipBaseModel
-
-LOGGER = logging.getLogger(__name__)
-
-
-class FunctionalChannel(HmipBaseModel):
-    """this is the base class for the functional channels"""
-
-    index: int = -1
-    groupIndex: int = -1
-    label: str = ""
-    functionalChannelType: str = ""
-    groups: list[str]
-    deviceId: str = None
-    channelRole: Optional[str] = None
 #
 #
 # @RegisterFunctionalChannel("DEVICE_BASE")

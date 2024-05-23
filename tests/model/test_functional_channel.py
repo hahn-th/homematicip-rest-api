@@ -1,6 +1,6 @@
 import json
 
-from homematicip.model.functional_channels import FunctionalChannel
+from homematicip.model.model_compontens import FunctionalChannel
 
 
 def test_operation_lock_channel(filled_model):
