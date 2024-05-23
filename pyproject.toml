@@ -8,11 +8,11 @@ name = "homematicip"
 description = "An API for the homematicip cloud"
 readme = "README.md"
 dependencies = [
-  "pydantic",
-  "websockets",
-  "httpx",
-  "click",
-  "alive-progress"
+  "pydantic==2.7.1",
+  "websockets==12.0",
+  "httpx==0.27.0",
+  "click==8.1.7",
+  "alive-progress==3.1.5"
 ]
 requires-python = ">=3.12"
 authors = [
