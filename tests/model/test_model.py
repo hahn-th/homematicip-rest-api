@@ -71,7 +71,7 @@ def test_on_update_event():
     model = HmipBaseModel()
     model.subscribe_on_update(subscriber)
 
-    model._on_update()
+    model.fire_on_update()
 
     subscriber.assert_called_once_with(model)
 
@@ -82,9 +82,30 @@ def test_on_removed_event():
     model = HmipBaseModel()
     model.subscribe_on_remove(subscriber)
 
-    model._on_remove()
+    model.fire_on_remove()
 
     subscriber.assert_called_once_with(model)
+
+def test_unsubscribe_on_update_event():
+    """Test, if the unsubscribe_on_update method works correctly."""
+    subscriber = Mock()
+    model = HmipBaseModel()
+    model.subscribe_on_update(subscriber)
+    model.unsubscribe_on_update(subscriber)
+    model.fire_on_update()
+
+    subscriber.assert_not_called()
+
+def test_unsubscribe_on_remove_event():
+    """Test, if the unsubscribe_on_remove method works correctly."""
+    subscriber = Mock()
+    model = HmipBaseModel()
+    model.subscribe_on_remove(subscriber)
+    model.unsubscribe_on_remove(subscriber)
+    model.fire_on_remove()
+
+    subscriber.assert_not_called()
+
 
 def test_hmipbasemodel_subscribers_after_update(sample_data_complete):
     device_id = "3014F7110000RAIN_SENSOR"
