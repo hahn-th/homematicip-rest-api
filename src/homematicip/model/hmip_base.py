@@ -1,13 +1,13 @@
-from typing import ClassVar
-
-from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
+try:
+    from pydantic.v1 import BaseModel, PrivateAttr  # type: ignore # noqa F401 # pragma: no cover
+except ImportError:
+    from pydantic import BaseModel, PrivateAttr  # type: ignore # pragma: no cover
 
 
 class HmipBaseModel(BaseModel):
-    model_config = ConfigDict(
-        extra='allow',
+    class Config:
+        extra='allow'
         arbitrary_types_allowed=True
-    )
 
     _on_remove_handler: list = PrivateAttr(default_factory=list)
     _on_update_handler: list = PrivateAttr(default_factory=list)
@@ -47,17 +47,16 @@ class HmipBaseModel(BaseModel):
     def update_from_dict(self, data_dict):
         """Update this model from a dictionary. This will call all subscribers of the on_update event."""
 
-        model_fields = self.model_fields
-        new_item = type(self).model_validate(data_dict, strict=False)
+        new_item = type(self)(**data_dict)
 
-        for field_name in model_fields.keys():
+        for field_name in vars(new_item):
 
-            if hasattr(new_item, field_name):
-                new_value = getattr(new_item, field_name)
-            else:
-                new_value = None
+            # if hasattr(new_item, field_name):
+            #     new_value = getattr(new_item, field_name)
+            # else:
+            #     new_value = None
 
-            setattr(self, field_name, new_value)
+            setattr(self, field_name, getattr(new_item, field_name))
 
         # raise on update event and notify all subscribers
         self.fire_on_update()

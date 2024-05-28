@@ -2,7 +2,7 @@ import json
 from unittest.mock import Mock
 
 from homematicip.model.model import build_model_from_json
-from homematicip.model.model_components import GroupChannelReference, Group
+from homematicip.model.model_components import GroupChannelReference, Group, Device
 from homematicip.model.hmip_base import HmipBaseModel
 from homematicip.model.home import Home, FunctionalHome
 
@@ -15,7 +15,7 @@ def test_update_device(sample_data_complete):
     device = base.devices[device_id]
     last_update_status_before = device.lastStatusUpdate
 
-    new_device = device.model_copy(update={**updated_json})
+    new_device = Device(**updated_json)
     base.devices[device_id] = new_device
 
     assert device.id == new_device.id

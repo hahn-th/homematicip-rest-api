@@ -1,6 +1,10 @@
 import logging
 
-from pydantic import BaseModel
+try:
+    from pydantic.v1 import BaseModel  # type: ignore # noqa F401 # pragma: no cover
+except ImportError:
+    from pydantic import BaseModel  # type: ignore # pragma: no cover
+
 from homematicip.events.event_manager import EventManager
 from homematicip.events.event_manager import ModelUpdateEvent
 from homematicip.events.event_types import EventType
@@ -25,7 +29,7 @@ class HmipEventHandler:
             event_type = EventType[event['pushEventType']]
             if event_type == EventType.CLIENT_ADDED:
                 data = event['client']
-                client: Client = Client.model_validate(data, strict=False)
+                client: Client = Client(**data)
                 self._model.clients[data['id']] = client
                 await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, client)
 
@@ -47,7 +51,7 @@ class HmipEventHandler:
             elif event_type == EventType.DEVICE_ADDED:
                 data = event['device']
                 if data['id'] not in self._model.devices:
-                    device: Device = Device.model_validate(data, strict=False)
+                    device: Device = Device(**data)
                     self._model.devices[data['id']] = device
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, device)
 
@@ -69,7 +73,7 @@ class HmipEventHandler:
             elif event_type == EventType.GROUP_ADDED:
                 data = event['group']
                 if data['id'] not in self._model.groups:
-                    group: Group = Group.model_validate(data, strict=False)
+                    group: Group = Group(**data)
                     self._model.groups[data['id']] = group
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, group)
 

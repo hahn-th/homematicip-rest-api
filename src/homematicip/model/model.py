@@ -1,6 +1,12 @@
+"""This module provides the model class.
+
+Pydantic v1 must be used because of limitations in homeassistant."""
 import logging
 
-from pydantic import ValidationError
+try:
+    from pydantic.v1 import ValidationError  # type: ignore # noqa F401 # pragma: no cover
+except ImportError:
+    from pydantic import ValidationError  # type: ignore # pragma: no cover
 
 from homematicip.model.model_components import Group, Device, Client
 from homematicip.model.hmip_base import HmipBaseModel
@@ -21,6 +27,6 @@ def build_model_from_json(data) -> Model:
     """Build a model from json data."""
     LOGGER.debug("Build model from json.")
     try:
-        return Model.model_validate(data, strict=False)
+        return Model(**data)
     except ValidationError as e:
         LOGGER.fatal("Error while building model from json.", exc_info=e)
