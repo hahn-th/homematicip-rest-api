@@ -1,7 +1,7 @@
 from homematicip.action.action import Action
 from homematicip.model.enums import AccelerationSensorMode, AccelerationSensorNeutralPosition, \
     AccelerationSensorSensitivity, NotificationSoundType, DoorCommand, LockState, RGBColorState, ClimateControlDisplay, \
-    AcousticAlarmSignal, AcousticAlarmTiming, WaterAlarmTrigger
+    AcousticAlarmSignal, AcousticAlarmTiming, WaterAlarmTrigger, OpticalSignalBehaviour
 from homematicip.model.model_components import FunctionalChannel
 from homematicip.runner import Runner
 
@@ -28,7 +28,8 @@ async def action_set_shutter_level(runner: Runner, fc: FunctionalChannel, shutte
 
 @Action.allowed_types('SWITCH_CHANNEL',
                       'MULTI_MODE_INPUT_SWITCH_CHANNEL',
-                      'SWITCH_MEASURING_CHANNEL')
+                      'SWITCH_MEASURING_CHANNEL',
+                      'OPTICAL_SIGNAL_CHANNEL')
 async def action_set_switch_state(runner: Runner, fc: FunctionalChannel, on: bool):
     data = {"channelIndex": fc.index, "deviceId": fc.deviceId, "on": on}
     return await runner.rest_connection.async_post("device/control/setSwitchState", data)
@@ -150,6 +151,37 @@ async def action_set_door_state(runner: Runner, fc: FunctionalChannel, lock_stat
         "targetLockState": str(lock_state),
     }
     return await runner.rest_connection.async_post("device/control/setLockState", data)
+
+
+@Action.allowed_types("NOTIFICATION_LIGHT_CHANNEL", "OPTICAL_SIGNAL_CHANNEL")
+async def action_set_optical_signal(
+        runner: Runner,
+        fc: FunctionalChannel,
+        optical_signal_behaviour: OpticalSignalBehaviour,
+        rgb: RGBColorState,
+        dim_level=1.01,
+):
+    """sets the signal type for the leds
+
+    Args:
+        runner(Runner): The executing runner. Contains the connection to the homematicip cloud
+        fc(FunctionalChannel): The functional channel the action should be executed on
+        optical_signal_behaviour(OpticalSignalBehaviour): LED signal behaviour
+        rgb(RGBColorState): Color
+        dim_level(float): usally 1.01. Use set_dim_level instead
+
+    Returns:
+        Result of the rest call
+
+    """
+    data = {
+        "channelIndex": fc.index,
+        "deviceId": fc.deviceId,
+        "dimLevel": dim_level,
+        "opticalSignalBehaviour": str(optical_signal_behaviour),
+        "simpleRGBColorState": str(rgb),
+    }
+    return await runner.rest_connection.async_post("device/control/setOpticalSignal", data)
 
 
 @Action.allowed_types("NOTIFICATION_LIGHT_CHANNEL")

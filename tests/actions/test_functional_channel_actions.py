@@ -8,11 +8,11 @@ from homematicip.action.functional_channel_actions import action_start_impulse, 
     action_set_rgb_dim_level, action_set_rgb_dim_level_with_time, action_set_primary_shading_level, \
     action_set_secondary_shading_level, action_reset_energy_counter, action_set_display, \
     action_set_acoustic_alarm_signal, action_set_acoustic_alarm_timing, action_set_acoustic_water_alarm_trigger, \
-    action_set_inapp_water_alarm_trigger, action_set_siren_water_alarm_trigger
+    action_set_inapp_water_alarm_trigger, action_set_siren_water_alarm_trigger, action_set_optical_signal
 from homematicip.connection.rest_connection import RestResult, RestConnection
 from homematicip.model.enums import AccelerationSensorMode, AccelerationSensorNeutralPosition, \
     AccelerationSensorSensitivity, NotificationSoundType, DoorCommand, LockState, RGBColorState, ClimateControlDisplay, \
-    AcousticAlarmSignal, AcousticAlarmTiming, WaterAlarmTrigger
+    AcousticAlarmSignal, AcousticAlarmTiming, WaterAlarmTrigger, OpticalSignalBehaviour
 from homematicip.model.model_components import FunctionalChannel
 from homematicip.runner import Runner
 
@@ -211,6 +211,23 @@ async def test_set_door_state(runner, sample_functional_channel):
 
 
 @pytest.mark.asyncio
+async def test_action_set_optical_signal(runner, sample_functional_channel):
+    sample_functional_channel.functionalChannelType = "NOTIFICATION_LIGHT_CHANNEL"
+    dim_level = 0.7
+    optical_signal_behaviour = OpticalSignalBehaviour.FLASH_MIDDLE
+    simple_rgb_color_state = RGBColorState.BLUE
+    result = await action_set_optical_signal(runner, sample_functional_channel, optical_signal_behaviour,
+                                             simple_rgb_color_state, dim_level)
+    assert runner.rest_connection.async_post.call_args[0][0] == "device/control/setOpticalSignal"
+    assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
+    assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == sample_functional_channel.index
+    assert runner.rest_connection.async_post.call_args[0][1]["opticalSignalBehaviour"] == str(optical_signal_behaviour)
+    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == str(simple_rgb_color_state)
+    assert runner.rest_connection.async_post.call_args[0][1]["dimLevel"] == dim_level
+    assert result.status == 200
+
+
+@pytest.mark.asyncio
 async def test_set_rgb_dim_level(runner, sample_functional_channel):
     sample_functional_channel.functionalChannelType = "NOTIFICATION_LIGHT_CHANNEL"
     result = await action_set_rgb_dim_level(runner, sample_functional_channel, RGBColorState.BLUE, 0.5)
@@ -336,9 +353,11 @@ async def test_action_set_inapp_water_alarm_trigger(runner, sample_functional_ch
 @pytest.mark.asyncio
 async def test_action_set_siren_water_alarm_trigger(runner, sample_functional_channel):
     sample_functional_channel.functionalChannelType = "WATER_SENSOR_CHANNEL"
-    result = await action_set_siren_water_alarm_trigger(runner, sample_functional_channel, WaterAlarmTrigger.WATER_DETECTION)
+    result = await action_set_siren_water_alarm_trigger(runner, sample_functional_channel,
+                                                        WaterAlarmTrigger.WATER_DETECTION)
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setSirenWaterAlarmTrigger"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["sirenWaterAlarmTrigger"] == str(WaterAlarmTrigger.WATER_DETECTION)
+    assert runner.rest_connection.async_post.call_args[0][1]["sirenWaterAlarmTrigger"] == str(
+        WaterAlarmTrigger.WATER_DETECTION)
     assert result.status == 200
