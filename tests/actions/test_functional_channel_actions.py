@@ -95,8 +95,7 @@ async def test_acceleration_sensor_mode(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setAccelerationSensorMode"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["accelerationSensorMode"] == str(
-        AccelerationSensorMode.FLAT_DECT)
+    assert runner.rest_connection.async_post.call_args[0][1]["accelerationSensorMode"] == AccelerationSensorMode.FLAT_DECT.value
     assert result.status == 200
 
 
@@ -109,8 +108,7 @@ async def test_acceleration_sensor_neutral_position(runner, sample_functional_ch
                0] == "device/configuration/setAccelerationSensorNeutralPosition"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["accelerationSensorNeutralPosition"] == str(
-        AccelerationSensorNeutralPosition.VERTICAL)
+    assert runner.rest_connection.async_post.call_args[0][1]["accelerationSensorNeutralPosition"] == AccelerationSensorNeutralPosition.VERTICAL.value
     assert result.status == 200
 
 
@@ -158,8 +156,7 @@ async def test_set_notification_sound_type(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setNotificationSoundType"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["notificationSoundType"] == str(
-        NotificationSoundType.SOUND_NO_SOUND)
+    assert runner.rest_connection.async_post.call_args[0][1]["notificationSoundType"] == NotificationSoundType.SOUND_NO_SOUND.value
     assert runner.rest_connection.async_post.call_args[0][1]["isHighToLow"] == True
     assert result.status == 200
 
@@ -194,7 +191,7 @@ async def test_send_door_command(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/control/sendDoorCommand"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["doorCommand"] == str(DoorCommand.OPEN)
+    assert runner.rest_connection.async_post.call_args[0][1]["doorCommand"] == DoorCommand.OPEN.value
     assert result.status == 200
 
 
@@ -206,7 +203,7 @@ async def test_set_door_state(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
     assert runner.rest_connection.async_post.call_args[0][1]["authorizationPin"] == "1234"
-    assert runner.rest_connection.async_post.call_args[0][1]["targetLockState"] == str(LockState.OPEN)
+    assert runner.rest_connection.async_post.call_args[0][1]["targetLockState"] == LockState.OPEN.value
     assert result.status == 200
 
 
@@ -221,8 +218,8 @@ async def test_action_set_optical_signal(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/control/setOpticalSignal"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == sample_functional_channel.index
-    assert runner.rest_connection.async_post.call_args[0][1]["opticalSignalBehaviour"] == str(optical_signal_behaviour)
-    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == str(simple_rgb_color_state)
+    assert runner.rest_connection.async_post.call_args[0][1]["opticalSignalBehaviour"] == optical_signal_behaviour.value
+    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == simple_rgb_color_state.value
     assert runner.rest_connection.async_post.call_args[0][1]["dimLevel"] == dim_level
     assert result.status == 200
 
@@ -235,7 +232,7 @@ async def test_set_rgb_dim_level(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
     assert runner.rest_connection.async_post.call_args[0][1]["dimLevel"] == 0.5
-    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == str(RGBColorState.BLUE)
+    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == RGBColorState.BLUE.value
     assert result.status == 200
 
 
@@ -250,7 +247,7 @@ async def test_set_rgb_dim_level_with_time(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][1]["dimLevel"] == 0.5
     assert runner.rest_connection.async_post.call_args[0][1]["onTime"] == 10.5
     assert runner.rest_connection.async_post.call_args[0][1]["rampTime"] == 20.5
-    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == str(RGBColorState.BLUE)
+    assert runner.rest_connection.async_post.call_args[0][1]["simpleRGBColorState"] == RGBColorState.BLUE.value
     assert result.status == 200
 
 
@@ -294,7 +291,7 @@ async def test_set_display(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setClimateControlDisplay"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["display"] == str(ClimateControlDisplay.ACTUAL)
+    assert runner.rest_connection.async_post.call_args[0][1]["display"] == ClimateControlDisplay.ACTUAL.value
     assert result.status == 200
 
 
@@ -306,8 +303,7 @@ async def test_set_acoustic_alarm_signal(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setAcousticAlarmSignal"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["acousticAlarmSignal"] == str(
-        AcousticAlarmSignal.DISABLE_ACOUSTIC_SIGNAL)
+    assert runner.rest_connection.async_post.call_args[0][1]["acousticAlarmSignal"] == AcousticAlarmSignal.DISABLE_ACOUSTIC_SIGNAL.value
     assert result.status == 200
 
 
@@ -319,8 +315,7 @@ async def test_set_acoustic_alarm_timing(runner, sample_functional_channel):
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setAcousticAlarmTiming"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["acousticAlarmTiming"] == str(
-        AcousticAlarmTiming.PERMANENT)
+    assert runner.rest_connection.async_post.call_args[0][1]["acousticAlarmTiming"] == AcousticAlarmTiming.PERMANENT.value
     assert result.status == 200
 
 
@@ -332,8 +327,7 @@ async def test_set_acoustic_water_alarm_trigger(runner, sample_functional_channe
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setAcousticWaterAlarmTrigger"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["acousticWaterAlarmTrigger"] == str(
-        WaterAlarmTrigger.WATER_DETECTION)
+    assert runner.rest_connection.async_post.call_args[0][1]["acousticWaterAlarmTrigger"] == WaterAlarmTrigger.WATER_DETECTION.value
     assert result.status == 200
 
 
@@ -345,8 +339,7 @@ async def test_action_set_inapp_water_alarm_trigger(runner, sample_functional_ch
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setInAppWaterAlarmTrigger"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["inAppWaterAlarmTrigger"] == str(
-        WaterAlarmTrigger.WATER_DETECTION)
+    assert runner.rest_connection.async_post.call_args[0][1]["inAppWaterAlarmTrigger"] == WaterAlarmTrigger.WATER_DETECTION.value
     assert result.status == 200
 
 
@@ -358,6 +351,5 @@ async def test_action_set_siren_water_alarm_trigger(runner, sample_functional_ch
     assert runner.rest_connection.async_post.call_args[0][0] == "device/configuration/setSirenWaterAlarmTrigger"
     assert runner.rest_connection.async_post.call_args[0][1]["deviceId"] == "00000000-0000-0000-0000-000000000001"
     assert runner.rest_connection.async_post.call_args[0][1]["channelIndex"] == 1
-    assert runner.rest_connection.async_post.call_args[0][1]["sirenWaterAlarmTrigger"] == str(
-        WaterAlarmTrigger.WATER_DETECTION)
+    assert runner.rest_connection.async_post.call_args[0][1]["sirenWaterAlarmTrigger"] == WaterAlarmTrigger.WATER_DETECTION.value
     assert result.status == 200

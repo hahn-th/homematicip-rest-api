@@ -54,7 +54,7 @@ async def set_acceleration_sensor_mode_action(rest_connection: RestConnection, f
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "accelerationSensorMode": str(mode),
+        "accelerationSensorMode": mode.value,
     }
     return await rest_connection.async_post("device/configuration/setAccelerationSensorMode", data)
 
@@ -65,7 +65,7 @@ async def set_acceleration_sensor_neutral_position(rest_connection: RestConnecti
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "accelerationSensorNeutralPosition": str(neutral_position)
+        "accelerationSensorNeutralPosition": neutral_position.value
     }
     return await rest_connection.async_post("device/configuration/setAccelerationSensorNeutralPosition", data)
 
@@ -107,7 +107,7 @@ async def set_notification_sound_type(rest_connection: RestConnection, fc: Funct
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "notificationSoundType": str(sound_type),
+        "notificationSoundType": sound_type.value,
         "isHighToLow": is_high_to_low
     }
     return await rest_connection.async_post("device/configuration/setNotificationSoundType", data)
@@ -138,7 +138,7 @@ async def action_send_door_command(rest_connection: RestConnection, fc: Function
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "doorCommand": str(door_command),
+        "doorCommand": door_command.value,
     }
     return await rest_connection.async_post("device/control/sendDoorCommand", data)
 
@@ -149,7 +149,7 @@ async def action_set_door_state(rest_connection: RestConnection, fc: FunctionalC
         "deviceId": fc.deviceId,
         "channelIndex": fc.index,
         "authorizationPin": pin,
-        "targetLockState": str(lock_state),
+        "targetLockState": lock_state.value,
     }
     return await rest_connection.async_post("device/control/setLockState", data)
 
@@ -179,8 +179,8 @@ async def action_set_optical_signal(
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
         "dimLevel": dim_level,
-        "opticalSignalBehaviour": str(optical_signal_behaviour),
-        "simpleRGBColorState": str(rgb),
+        "opticalSignalBehaviour": optical_signal_behaviour.value,
+        "simpleRGBColorState": rgb.value,
     }
     return await rest_connection.async_post("device/control/setOpticalSignal", data)
 
@@ -190,7 +190,7 @@ async def action_set_rgb_dim_level(rest_connection: RestConnection, fc: Function
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "simpleRGBColorState": str(rgb),
+        "simpleRGBColorState": rgb.value,
         "dimLevel": dim_level,
     }
     return await rest_connection.async_post("device/control/setSimpleRGBColorDimLevel", data)
@@ -208,7 +208,7 @@ async def action_set_rgb_dim_level_with_time(
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "simpleRGBColorState": str(rgb),
+        "simpleRGBColorState": rgb.value,
         "dimLevel": dim_level,
         "onTime": on_time,
         "rampTime": ramp_time,
@@ -252,7 +252,7 @@ async def action_set_display(rest_connection: RestConnection, fc: FunctionalChan
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "display": str(display),
+        "display": display.value,
     }
     return await rest_connection.async_post("device/configuration/setClimateControlDisplay", data)
 
@@ -263,7 +263,7 @@ async def action_set_acoustic_alarm_signal(rest_connection: RestConnection, fc: 
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "acousticAlarmSignal": str(acoustic_alarm_signal),
+        "acousticAlarmSignal": acoustic_alarm_signal.value,
     }
     return await rest_connection.async_post("device/configuration/setAcousticAlarmSignal", data)
 
@@ -274,7 +274,7 @@ async def action_set_acoustic_alarm_timing(rest_connection: RestConnection, fc: 
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "acousticAlarmTiming": str(acoustic_alarm_timing),
+        "acousticAlarmTiming": acoustic_alarm_timing.value,
     }
     return await rest_connection.async_post("device/configuration/setAcousticAlarmTiming", data)
 
@@ -285,7 +285,7 @@ async def action_set_acoustic_water_alarm_trigger(rest_connection: RestConnectio
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "acousticWaterAlarmTrigger": str(acoustic_water_alarm_trigger),
+        "acousticWaterAlarmTrigger": acoustic_water_alarm_trigger.value,
     }
     return await rest_connection.async_post("device/configuration/setAcousticWaterAlarmTrigger", data)
 
@@ -296,7 +296,7 @@ async def action_set_inapp_water_alarm_trigger(rest_connection: RestConnection, 
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "inAppWaterAlarmTrigger": str(inapp_water_alarm_trigger),
+        "inAppWaterAlarmTrigger": inapp_water_alarm_trigger.value,
     }
     return await rest_connection.async_post("device/configuration/setInAppWaterAlarmTrigger", data)
 
@@ -307,6 +307,6 @@ async def action_set_siren_water_alarm_trigger(rest_connection: RestConnection, 
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
-        "sirenWaterAlarmTrigger": str(siren_water_alarm_trigger),
+        "sirenWaterAlarmTrigger": siren_water_alarm_trigger.value,
     }
     return await rest_connection.async_post("device/configuration/setSirenWaterAlarmTrigger", data)
