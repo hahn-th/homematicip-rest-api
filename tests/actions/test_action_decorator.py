@@ -25,6 +25,13 @@ def test_object_no_type_field():
     with pytest.raises(ValueError):
         func1(None, Test(), True)
 
+def test_object_no_type_field_with_kwargs():
+    class Test(HmipBaseModel):
+        pass
+
+    with pytest.raises(ValueError):
+        func1(runner=None, fc=Test(), ret_val=True)
+
 def test_allowed_types_functional_channel():
     fc = FunctionalChannel(index=1, groupIndex=1, label="", groups=[], deviceId="asdf",
                            functionalChannelType="ACCELERATION_SENSOR")

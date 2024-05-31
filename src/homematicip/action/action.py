@@ -8,7 +8,13 @@ class Action:
     def allowed_types(*decorator_args):
         def decorator(func):
             def wrapper(*args, **kwargs):
-                entity = args[1]
+                if "fc" in kwargs:
+                    entity = kwargs["fc"]
+                elif len(args) > 1:
+                    entity = args[1]
+                else:
+                    raise ValueError("Can't find functional channel to check type.")
+
                 if not isinstance(entity, HmipBaseModel):
                     raise ValueError(f"First argument must be of type HmipBaseModel, but is {type(entity)}")
 
