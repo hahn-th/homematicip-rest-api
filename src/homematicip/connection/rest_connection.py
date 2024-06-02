@@ -88,7 +88,7 @@ class RestConnection:
             ATTR_CLIENT_AUTH: context.client_auth_token
         }
 
-    async def async_post(self, url: str, data: json, custom_header: dict = None) -> RestResult:
+    async def async_post(self, url: str, data: json = None, custom_header: dict = None) -> RestResult:
         """Send an async post request to cloud with json data. Returns a json result."""
         full_url = self._build_url(self._context.rest_url, url)
         async with httpx.AsyncClient() as client:

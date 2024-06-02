@@ -1,5 +1,6 @@
 import json
 
+from homematicip.model.enums import WindowState
 from homematicip.model.model_components import FunctionalChannel
 
 
@@ -13,6 +14,15 @@ def test_operation_lock_channel(filled_model):
     assert fc.routerModuleEnabled == False
     assert fc.rssiDeviceValue == -45
     assert fc.rssiPeerValue == -54
+
+
+def test_enum_field(filled_model):
+    device = filled_model.devices["3014F7110000000000005551"]
+
+    fc = device.functionalChannels["1"]
+    assert isinstance(fc, FunctionalChannel)
+
+    assert fc.windowState == WindowState.CLOSED.value
 
 
 def test_update_functional_channel(filled_model):
