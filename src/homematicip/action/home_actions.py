@@ -4,7 +4,8 @@ from datetime import datetime
 from homematicip.connection.rest_connection import RestConnection
 
 
-async def action_set_security_zones_activation(rest_connection: RestConnection, internal: bool = True, external: bool = True):
+async def action_set_security_zones_activation(rest_connection: RestConnection, internal: bool = True,
+                                               external: bool = True):
     """this function will set the alarm system to armed or disable it
 
     Examples:
@@ -23,6 +24,23 @@ async def action_set_security_zones_activation(rest_connection: RestConnection, 
     """
     data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
     return await rest_connection.async_post("home/security/setZonesActivation", data)
+
+
+def get_security_zones_activation(self) -> (bool, bool):
+    """returns the value of the security zones if they are armed or not.
+
+    :return: internal, external - True if the zone is armed
+    """
+    internal_active = False
+    external_active = False
+
+    security_zones = [zone for zone in self.groups if zone.groupType == "SECURITY_ZONE"]
+    for g in security_zones:
+        if g.label == "EXTERNAL":
+            external_active = g.active
+        elif g.label == "INTERNAL":
+            internal_active = g.active
+    return internal_active, external_active
 
 
 async def action_set_silent_alarm(rest_connection: RestConnection, internal: bool = True, external: bool = True):
@@ -115,6 +133,7 @@ async def action_deactivate_vacation(rest_connection: RestConnection):
     """deactivates the vacation mode immediately"""
     return await rest_connection.async_post("home/heating/deactivateVacation")
 
+
 #
 # async def action_set_pin(rest_connection: RestConnection, newPin: str, oldPin: str = None) -> dict:
 #     """sets a new pin for the home
@@ -184,7 +203,8 @@ async def action_set_powermeter_unit_price(rest_connection: RestConnection, pric
     return await rest_connection.async_post("home/setPowerMeterUnitPrice", data)
 
 
-async def action_set_zones_device_assignment(rest_connection: RestConnection, internal_devices, external_devices) -> dict:
+async def action_set_zones_device_assignment(rest_connection: RestConnection, internal_devices,
+                                             external_devices) -> dict:
     """sets the devices for the security zones
 
     :param rest_connection: the rest connection
@@ -194,7 +214,7 @@ async def action_set_zones_device_assignment(rest_connection: RestConnection, in
     internal = [x.id for x in internal_devices]
     external = [x.id for x in external_devices]
     data = {"zonesDeviceAssignment": {"INTERNAL": internal, "EXTERNAL": external}}
-    result=  await rest_connection.async_post(
+    result = await rest_connection.async_post(
         "home/security/setZonesDeviceAssignment", data
     )
 
