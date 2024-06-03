@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 
 from homematicip.connection.rest_connection import RestConnection
+from homematicip.model.model import Model
 
 
 async def action_set_security_zones_activation(rest_connection: RestConnection, internal: bool = True,
@@ -26,15 +27,15 @@ async def action_set_security_zones_activation(rest_connection: RestConnection, 
     return await rest_connection.async_post("home/security/setZonesActivation", data)
 
 
-def get_security_zones_activation(self) -> (bool, bool):
+def get_security_zones_activation(model: Model) -> (bool, bool):
     """returns the value of the security zones if they are armed or not.
 
     :return: internal, external - True if the zone is armed
     """
-    internal_active = False
-    external_active = False
+    internal_active: bool = False
+    external_active: bool = False
 
-    security_zones = [zone for zone in self.groups if zone.groupType == "SECURITY_ZONE"]
+    security_zones = [g for g in model.groups.values() if g.type == "SECURITY_ZONE"]
     for g in security_zones:
         if g.label == "EXTERNAL":
             external_active = g.active
