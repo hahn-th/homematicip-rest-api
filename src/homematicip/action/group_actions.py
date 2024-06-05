@@ -4,6 +4,7 @@ from homematicip.action.action import Action
 from homematicip.connection.rest_connection import RestConnection
 from homematicip.model.enums import ProfileMode, ClimateControlMode
 from homematicip.model.hmip_base import HmipBaseModel
+from homematicip.model.model_components import Group
 from homematicip.runner import Runner
 
 LOGGER = logging.getLogger(__name__)
@@ -68,6 +69,17 @@ async def action_set_control_mode(rest_connection: RestConnection, group: HmipBa
     return await rest_connection.async_post("group/heating/setControlMode", data)
 
 
+@Action.allowed_types("EXTENDED_LINKED_SWITCHING", "SWITCHING")
+async def group_action_set_switch_state(rest_connection: RestConnection, group: Group, on):
+    """Set switching state of group
+
+    :param rest_connection: RestConnection
+    :param group: The group to set the state
+    :param on: True switches on, False switches off
+    """
+    data = {"groupId": group.id, "on": on}
+    return await rest_connection.async_post("group/switching/setState", data)
+
 #
 # @Action.allowed_types("SWITCHING_PROFILE")
 # async def set_profile_mode(rest_connection: RestConnection, group: HmipBaseModel, profile_mode: ProfileMode):
@@ -83,4 +95,3 @@ async def action_set_control_mode(rest_connection: RestConnection, group: HmipBa
 #     }
 #     return await rest_connection.async_post(
 #         "group/switching/profile/setProfileMode", data)
-

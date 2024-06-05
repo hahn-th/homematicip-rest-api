@@ -1,5 +1,37 @@
-# import pytest
-# from homematicip.base.enums import ClimateControlMode
+import pytest
+
+from homematicip.action.group_actions import group_action_set_switch_state
+from homematicip.connection.rest_connection import RestConnection, RestResult
+from homematicip.model.model_components import Group
+from homematicip.runner import Runner
+
+
+@pytest.fixture
+def runner(mocker, filled_model):
+    conn = mocker.Mock(spec=RestConnection)
+    conn.async_post.return_value = RestResult(status=200)
+    runner = Runner(_rest_connection=conn, model=filled_model)
+    return runner
+
+
+@pytest.fixture
+def sample_group() -> Group:
+    return Group(id="00000000-0000-0000-0000-000000000001", type="", channels=[])
+
+
+@pytest.mark.asyncio
+async def test_wrong_group_type(runner, sample_group):
+    sample_group.type = "ASDF"
+    with pytest.raises(ValueError):
+        await group_action_set_switch_state(runner.rest_connection, sample_group, True)
+
+@pytest.mark.asyncio
+async def test_group_set_switch_state(runner, sample_group):
+    sample_group.type = "SWITCHING"
+    await group_action_set_switch_state(runner.rest_connection, sample_group, True)
+    runner.rest_connection.async_post.assert_called_once_with("group/switching/setState",
+                                                              {"groupId": sample_group.id, "on": True})
+
 #
 # from homematicip.action.group_actions import SetPointTemperatureGroupAction, SetBoostGroupAction, \
 #     SetBoostDurationGroupAction, SetActiveProfileGroupAction, SetControlModeGroupAction, \
