@@ -17,7 +17,7 @@ You will need:
 -  the SGTIN of the Access Point
 -  [optional] the PIN
 
-Now you have to run **hmip_generate_auth_token.py** and follow it's instructions.
+Now you have to run `hmip_generate_auth_token` from terminal and follow it's instructions.
 It will generate a **config.ini** in your current working directory. The scripts which are using this library are looking
 for this file to load the auth-token and SGTIN of the Access Point. You can either place it in the working directory when you are 
 running the scripts or depending on your OS in different "global" folders:
