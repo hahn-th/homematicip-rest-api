@@ -1,6 +1,5 @@
 import click
 
-from homematicip.model.model import Model
 from homematicip.model.model_components import FunctionalChannel, Device
 
 

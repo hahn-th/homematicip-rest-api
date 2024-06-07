@@ -34,4 +34,4 @@ def get_home_path() -> str:
     elif os_name == "Linux":
         return os.path.expanduser("~/.homematicip-rest-api")
     elif os_name == "Darwin":
-        return "/Library/Application Support/homematicip-rest-api"
+        return "~/Library/Preferences/homematicip-rest-api"

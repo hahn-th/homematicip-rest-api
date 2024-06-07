@@ -119,8 +119,9 @@ class RestConnection:
                 return RestResult(status=-1, exception=exc)
             except httpx.HTTPStatusError as exc:
                 LOGGER.error(
-                    f"Error response {exc.response.status_code} while requesting {exc.request.url!r}."
+                    f"Error response {exc.response.status_code} while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
                 )
+                LOGGER.error(f"Response: {repr(exc.response)}")
                 return RestResult(status=-1, exception=exc)
 
     def _build_url(self, base_url: str, path: str) -> str:
