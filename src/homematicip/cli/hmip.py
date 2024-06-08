@@ -24,8 +24,8 @@ from homematicip.cli.helper import get_channel_by_index_of_first, get_initialize
 from homematicip.cli.helper import get_rssi_bar_string
 from homematicip.cli.hmip_cli_show_targets_helper import build_commands_from_registry, CommandEntry
 from homematicip.configuration.config import PersistentConfig
+from homematicip.configuration.config_folder import get_default_app_config_folder
 from homematicip.configuration.config_io import ConfigIO
-from homematicip.configuration.log_helper import get_home_path
 from homematicip.connection.rest_connection import ConnectionContext, RestResult
 from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.model.anoymizer import handle_config
@@ -297,7 +297,7 @@ def version():
     click.echo(f"HomematicIP-Rest-Api: {metadata_version("homematicip")}")
     click.echo(f"Python: {sys.version}")
     click.echo("")
-    home_path = get_home_path()
+    home_path = get_default_app_config_folder()
     click.echo(f"Logs and config are written to:")
     click.echo(os.path.abspath(home_path))
     click.echo("")

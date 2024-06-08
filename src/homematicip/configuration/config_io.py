@@ -1,12 +1,9 @@
 import json
-import logging
 import os
-import platform
-from configparser import ConfigParser
 from dataclasses import asdict
 
 from homematicip.configuration.config import PersistentConfig
-from homematicip.configuration.log_helper import get_home_path
+from homematicip.configuration.config_folder import get_well_known_folders, get_default_app_config_folder
 
 
 class ConfigIO:
@@ -23,31 +20,9 @@ class ConfigIO:
 
     @classmethod
     def _get_well_known_locations(cls) -> list[str]:
-        """Get the well known locations for the configuration file."""
-        config_filename = "config.json"
-        search_locations = [os.path.join("./", config_filename)]
-
-        os_name = platform.system()
-
-        if os_name == "Windows":
-            appdata = os.getenv("localappdata")
-            programdata = os.getenv("programdata")
-            search_locations.append(
-                os.path.join(appdata, "homematicip-rest-api", config_filename)
-            )
-            search_locations.append(
-                os.path.join(programdata, "homematicip-rest-api", config_filename)
-            )
-        elif os_name == "Linux":
-            search_locations.append(f"~/.homematicip-rest-api/{config_filename}")
-            search_locations.append(f"/etc/homematicip-rest-api/{config_filename}")
-        elif os_name == "Darwin":  # MAC
-            # are these folders right?
-            search_locations.append(f"~/Library/Preferences/homematicip-rest-api/{config_filename}")
-            search_locations.append(
-                f"/Library/Application Support/homematicip-rest-api/{config_filename}"
-            )
-        return search_locations
+        """Return a list of well known locations where the configuration file can be found."""
+        folders = get_well_known_folders()
+        return [os.path.join(folder, "config.json") for folder in folders]
 
     @classmethod
     def from_file(cls, file_path) -> PersistentConfig:
@@ -81,7 +56,7 @@ class ConfigIO:
         #     'log_file': config.log_file
         # }
         #
-        filename = os.path.join(get_home_path(), "config.json")
+        filename = os.path.join(get_default_app_config_folder(), "config.json")
 
         with open(filename, 'w', encoding='utf-8') as file:
             json.dump(asdict(config), file)
