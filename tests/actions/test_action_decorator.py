@@ -14,9 +14,11 @@ def func1(runner, test, ret_val: bool):
 def func2(runner, test, ret_val: bool):
     return ret_val
 
+
 def test_object_not_hmip_base_model():
     with pytest.raises(ValueError):
         func1(None, "asdf", True)
+
 
 def test_object_no_type_field():
     class Test(HmipBaseModel):
@@ -25,12 +27,14 @@ def test_object_no_type_field():
     with pytest.raises(ValueError):
         func1(None, Test(), True)
 
+
 def test_object_no_type_field_with_kwargs():
     class Test(HmipBaseModel):
         pass
 
     with pytest.raises(ValueError):
         func1(runner=None, fc=Test(), ret_val=True)
+
 
 def test_allowed_types_functional_channel():
     fc = FunctionalChannel(index=1, groupIndex=1, label="", groups=[], deviceId="asdf",
@@ -80,4 +84,3 @@ def test_allowed_types_multiple():
                            functionalChannelType="LIGHT_SENSOR")
     with pytest.raises(ValueError):
         func2(None, fc, True)
-

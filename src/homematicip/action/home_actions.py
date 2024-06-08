@@ -1,6 +1,8 @@
 import json
 from datetime import datetime
 
+from homematicip.action.action import Action
+from homematicip.action.registry import ActionTarget
 from homematicip.connection.rest_connection import RestConnection
 from homematicip.model.model import Model
 
@@ -27,6 +29,7 @@ async def action_set_security_zones_activation(rest_connection: RestConnection, 
     return await rest_connection.async_post("home/security/setZonesActivation", data)
 
 
+@Action.target_type(ActionTarget.HOME)
 def get_security_zones_activation(model: Model) -> (bool, bool):
     """returns the value of the security zones if they are armed or not.
 

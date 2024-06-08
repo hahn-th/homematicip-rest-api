@@ -1,3 +1,7 @@
+import functools
+from typing import List
+
+from homematicip.action.registry import Registry
 from homematicip.model.model_components import FunctionalChannel
 from homematicip.model.hmip_base import HmipBaseModel
 
@@ -7,6 +11,9 @@ class Action:
     @staticmethod
     def allowed_types(*decorator_args):
         def decorator(func):
+            Registry.register_allowed_types(func, decorator_args)
+
+            @functools.wraps(func)
             def wrapper(*args, **kwargs):
                 if "fc" in kwargs:
                     entity = kwargs["fc"]
@@ -30,6 +37,28 @@ class Action:
                 if found_type not in decorator_args:
                     raise ValueError(f"Type must be one of {decorator_args}, but found {found_type}")
 
+                return func(*args, **kwargs)
+            return wrapper
+        return decorator
+
+    @staticmethod
+    def cli_commands(*decorator_args):
+        def decorator(func):
+            Registry.register_cli_commands(func, decorator_args)
+
+            @functools.wraps(func)
+            def wrapper(*args, **kwargs):
+                return func(*args, **kwargs)
+            return wrapper
+        return decorator
+
+    @staticmethod
+    def target_type(target):
+        def decorator(func):
+            Registry.register_target(func, target)
+
+            @functools.wraps(func)
+            def wrapper(*args, **kwargs):
                 return func(*args, **kwargs)
             return wrapper
         return decorator

@@ -5,104 +5,49 @@ import logging
 import os
 import sys
 import time
-from logging.handlers import TimedRotatingFileHandler
 from importlib.metadata import version as metadata_version
+
 import click
 import httpx
 from alive_progress import alive_bar
-from click import ClickException
 
 from homematicip.action.functional_channel_actions import action_set_slats_level, action_set_shutter_level, \
-    action_set_switch_state, action_set_dim_level, action_start_impulse
-from homematicip.action.group_actions import action_set_boost, action_set_point_temperature, action_set_boost_duration, \
-    action_set_active_profile, action_set_control_mode, action_set_shutter_level_group, action_set_slats_level_group
+    action_set_switch_state, action_set_dim_level, action_start_impulse, action_set_shutter_stop, action_set_display
+from homematicip.action.group_actions import action_set_boost, action_set_boost_duration, \
+    action_set_shutter_level_group, action_set_slats_level_group, \
+    action_set_shutter_stop_group, action_set_switch_state_group, action_set_point_temperature_group, \
+    action_set_active_profile_group, action_set_control_mode_group, action_set_on_time_group
+from homematicip.action.registry import Registry, ActionTarget
 from homematicip.auth import Auth
-from homematicip.cli.helper import get_channel_by_index_of_first
+from homematicip.cli.helper import get_channel_by_index_of_first, get_initialized_runner, setup_basic_logging, \
+    is_device, get_device_or_group, is_group, get_channel_name, get_device_name, get_group_name
 from homematicip.cli.helper import get_rssi_bar_string
-from homematicip.configuration.config import Config, PersistentConfig
+from homematicip.cli.hmip_cli_show_targets_helper import build_commands_from_registry, CommandEntry
+from homematicip.configuration.config import PersistentConfig
 from homematicip.configuration.config_io import ConfigIO
-from homematicip.configuration.log_helper import get_logger_filename
+from homematicip.configuration.log_helper import get_home_path
 from homematicip.connection.rest_connection import ConnectionContext, RestResult
 from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.model.anoymizer import handle_config
-from homematicip.model.enums import ClimateControlMode
-from homematicip.runner import Runner
-
-
-async def get_initialized_runner(including_model: bool = True) -> Runner:
-    config = get_config()
-    logger = setup_logger(
-        config.level, config.log_file
-    )
-
-    r = Runner(config=config)
-
-    if including_model:
-        await r.async_initialize_runner()
-    else:
-        await r.async_initialize_runner_without_init_model()
-
-    return r
-
-
-def get_config() -> Config:
-    """Get Config object from the configuration file. If no configuration file is found, raise an exception."""
-    config = ConfigIO.find_config_in_well_known_locations()
-
-    if config is None:
-        raise ClickException(
-            "No configuration file found. Run hmip auth to get an auth token.")
-
-    return Config.from_persistent_config(config)
-
-
-def setup_basic_logging(log_level: int, logger_filename: str = None) -> None:
-    """Setup basic logging configuration."""
-    if not logger_filename or logger_filename.strip() == '':
-        logger_filename = get_logger_filename()
-
-    should_roll_over = os.path.isfile(logger_filename)
-
-    handler = logging.handlers.RotatingFileHandler(logger_filename, mode='w', backupCount=20, delay=True)
-    if should_roll_over:
-        handler.doRollover()
-
-    logging.basicConfig(level=log_level, handlers=[handler],
-                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
-    logging.getLogger("httpx").setLevel(logging.CRITICAL)
-    logging.getLogger("httpcore").setLevel(logging.CRITICAL)
-    logging.getLogger("websockets.client").setLevel(logging.CRITICAL)
-
-
-def setup_logger(
-        log_level: int, log_file: str
-) -> logging.Logger:
-    """Initialize logger. If log_file is set, log to file, otherwise to stdout. The log level """
-    setup_basic_logging(log_level, log_file)
-
-    logger = _create_logger(log_level, log_file)
-    return logger
-
-
-def _create_logger(level: int, file_name: str) -> logging.Logger:
-    """Create a logger based on the level"""
-    logger = logging.getLogger()
-    logger.setLevel(level)
-    handler = (
-        TimedRotatingFileHandler(file_name, when="midnight", backupCount=5)
-        if file_name
-        else logging.StreamHandler()
-    )
-    handler.setFormatter(
-        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    )
-    logger.addHandler(handler)
-    return logger
+from homematicip.model.enums import ClimateControlMode, ClimateControlDisplay
+from homematicip.model.model_components import Device
 
 
 @click.group
 def cli():
     """HomematicIP-Rest-API CLI."""
+    pass
+
+
+@cli.group
+def list():
+    """List information about devices, groups, rssi, firmware, profiles."""
+    pass
+
+
+@cli.group
+def run():
+    """Run actions on devices, groups, home or functional channels."""
     pass
 
 
@@ -146,21 +91,32 @@ def auth():
             return
 
     click.echo("Please press the blue button on the access point...")
-    with alive_bar(0, monitor=False, stats=False) as bar:
 
-        last_request = datetime.datetime.now()
-        while True:
-            time.sleep(0.1)
+    last_request = datetime.datetime.now()
+    while True:
+        time.sleep(2)
 
-            if (datetime.datetime.now() - last_request).seconds > 2:
-                logger.debug("Check if request is acknowledged.")
-                ack = asyncio.run(auth.is_request_acknowledged())
-                if ack:
-                    logger.debug("Ack!")
-                    break
-                last_request = datetime.datetime.now()
+        logger.debug("Check if request is acknowledged.")
+        ack = asyncio.run(auth.is_request_acknowledged())
+        if ack:
+            logger.debug("Ack!")
+            break
 
-            bar()
+    # with alive_bar(0, monitor=False, stats=False) as bar:
+    #
+    #     last_request = datetime.datetime.now()
+    #     while True:
+    #         time.sleep(0.1)
+    #
+    #         if (datetime.datetime.now() - last_request).seconds > 2:
+    #             logger.debug("Check if request is acknowledged.")
+    #             ack = asyncio.run(auth.is_request_acknowledged())
+    #             if ack:
+    #                 logger.debug("Ack!")
+    #                 break
+    #             last_request = datetime.datetime.now()
+    #
+    #         bar()
 
     logger.debug("Getting auth token and client-id")
     auth_token = asyncio.run(auth.request_auth_token())
@@ -178,12 +134,6 @@ def auth():
     click.echo(f"Configuration has been written to file {config_path}")
     click.echo("")
     click.echo('You can use the api now with the command \'hmip\'. To get started, type \'hmip --help\'. Have fun!')
-
-
-@cli.group
-def list():
-    """List information about devices, groups, rssi, firmware, profiles."""
-    pass
 
 
 @list.command()
@@ -304,17 +254,14 @@ def firmware():
     model = runner.model
     home = model.home
     click.echo(
-        f"{"HmIP AccessPoint":30s} - Firmware: {home.currentAPVersion or "<unknown>":7} - Available Firmware: {home.availableAPVersion or "<unknown>":7} UpdateState: {home.updateState}")
+        f"{"HmIP AccessPoint":30s} - Firmware: {home.currentAPVersion or "<unknown>":7} - "
+        f"Available Firmware: {home.availableAPVersion or "<unknown>":7} UpdateState: {home.updateState}")
 
     for device in sorted(model.devices.values(), key=lambda x: x.label):
         click.echo(
-            f"{device.label:30s} - Firmware: {device.firmwareVersion or "<unknown>":7} - Available Firmware: {device.availableFirmwareVersion or "<unknown>":7} UpdateState: {device.updateState} LiveUpdateState: {device.liveUpdateState}")
-
-
-@cli.group
-def run():
-    """Run actions on devices, groups, home or functional channels."""
-    pass
+            f"{device.label:30s} - Firmware: {device.firmwareVersion or "<unknown>":7} - "
+            f"Available Firmware: {device.availableFirmwareVersion or "<unknown>":7} "
+            f"UpdateState: {device.updateState} LiveUpdateState: {device.liveUpdateState}")
 
 
 async def _model_update_event_handler(event: ModelUpdateEvent, args) -> None:
@@ -349,6 +296,11 @@ def version():
     """Print the version of the homematicip-rest-api."""
     click.echo(f"HomematicIP-Rest-Api: {metadata_version("homematicip")}")
     click.echo(f"Python: {sys.version}")
+    click.echo("")
+    home_path = get_home_path()
+    click.echo(f"Logs and config are written to:")
+    click.echo(os.path.abspath(home_path))
+    click.echo("")
 
 
 @run.command()
@@ -360,17 +312,19 @@ def turn_on(id: str, channel: int = None):
     """Turn a device on. Specify a FunctionalChannel-Index."""
     runner = asyncio.run(get_initialized_runner())
 
-    if id not in runner.model.devices:
-        click.echo(f"Device with id {id} not found.", err=True, color=True)
+    device_or_group = get_device_or_group(id, runner.model)
+    if device_or_group is None:
+        click.echo(f"Device or group with id {id} not found.", err=True, color=True)
         return
 
-    device = runner.model.devices[id]
-    fc = get_channel_by_index_of_first(device, channel)
-
-    result = asyncio.run(action_set_switch_state(runner, fc, True))
-
-    click.echo(
-        f"Run turn_on for device {device.label or device.id} with result: {result.status_text} ({result.status})")
+    if isinstance(device_or_group, Device):
+        fc = get_channel_by_index_of_first(device_or_group, channel)
+        result = asyncio.run(action_set_switch_state(runner.rest_connection, fc, True))
+        click.echo(
+            f"Run turn_on for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
+    else:
+        result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, True))
+        click.echo(f"Run turn_on for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
 
 @run.command()
@@ -385,17 +339,20 @@ def turn_off(id: str, channel: int = None):
     CHANNEL_INDEX is the index of the channel. If the device has only one channel (excl. BaseChannel 0) this can be omitted."""
     runner = asyncio.run(get_initialized_runner())
 
-    if id not in runner.model.devices:
-        click.echo(f"Device with id {id} not found.", err=True, color=True)
+    device_or_group = get_device_or_group(id, runner.model)
+    if device_or_group is None:
+        click.echo(f"Device or group with id {id} not found.", err=True, color=True)
         return
 
-    device = runner.model.devices[id]
-    fc = get_channel_by_index_of_first(device, channel)
-
-    result = asyncio.run(action_set_switch_state(runner, fc, False))
-
-    click.echo(
-        f"Run turn_off for device {device.label or device.id} with result: {result.status_text} ({result.status})")
+    if isinstance(device_or_group, Device):
+        fc = get_channel_by_index_of_first(device_or_group, channel)
+        result = asyncio.run(action_set_switch_state(runner.rest_connection, fc, False))
+        click.echo(
+            f"Run turn_off for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
+    else:
+        result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, False))
+        click.echo(
+            f"Run turn_off for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
 
 @run.command()
@@ -408,20 +365,20 @@ def set_switch_state(id: str, channel: int, state: bool):
     """Set the switch state for a device. specify FunctionalChannel-Index."""
     runner = asyncio.run(get_initialized_runner())
 
-    if id not in runner.model.devices:
-        click.echo(f"Device with id {id} not found.", err=True, color=True)
+    device_or_group = get_device_or_group(id, runner.model)
+    if device_or_group is None:
+        click.echo(f"Device or group with id {id} not found.", err=True, color=True)
         return
 
-    device = runner.model.devices[id]
-    if str(channel) not in device.functionalChannels:
-        click.echo(f"Channel with index {channel} not found.", err=True, color=True)
-        return
-
-    result = asyncio.run(
-        action_set_switch_state(runner, device.functionalChannels[str(channel)], state))
-
-    click.echo(
-        f"Run set_switch_state for device {device.label or device.id} with result: {result.status_text} ({result.status})")
+    if isinstance(device_or_group, Device):
+        fc = get_channel_by_index_of_first(device_or_group, channel)
+        result = asyncio.run(action_set_switch_state(runner.rest_connection, fc, state))
+        click.echo(
+            f"Run set_switch_state for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
+    else:
+        result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, state))
+        click.echo(
+            f"Run set_switch_state for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
 
 @run.command()
@@ -455,7 +412,7 @@ def set_boost(id: str):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_boost(runner, runner.model.groups[id], True))
+    result = asyncio.run(action_set_boost(runner.rest_connection, runner.model.groups[id], True))
     click.echo(f"Run set_boost with result: {result.status_text}")
 
 
@@ -469,7 +426,7 @@ def set_boost_stop(id: str):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_boost(runner, runner.model.groups[id], False))
+    result = asyncio.run(action_set_boost(runner.rest_connection, runner.model.groups[id], False))
     click.echo(
         f"Run set_boost for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -486,7 +443,7 @@ def set_point_temperature(id: str, temperature: float):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_point_temperature(runner, runner.model.groups[id], temperature))
+    result = asyncio.run(action_set_point_temperature_group(runner.rest_connection, runner.model.groups[id], temperature))
     if result.exception is not None:
         click.echo(f"Error while running set_point_temperature: {result.exception}", err=True, color=True)
         return
@@ -507,7 +464,7 @@ def set_boost_duration(id: str, minutes: int):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_boost_duration(runner, runner.model.groups[id], minutes))
+    result = asyncio.run(action_set_boost_duration(runner.rest_connection, runner.model.groups[id], minutes))
     click.echo(
         f"Run set_boost_duration for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -526,7 +483,7 @@ def set_active_profile(id: str, profile_index: str):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_active_profile(runner, runner.model.groups[id], profile_index))
+    result = asyncio.run(action_set_active_profile_group(runner.rest_connection, runner.model.groups[id], profile_index))
     click.echo(
         f"Run set_active_profile for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -543,11 +500,32 @@ def set_control_mode(id: str, mode: ClimateControlMode):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_control_mode(runner, runner.model.groups[id], mode))
+    result = asyncio.run(action_set_control_mode_group(runner.rest_connection, runner.model.groups[id], mode))
     click.echo(
         f"Run set_control_mode for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
 
+
+@run.command
+@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-c", "--channel", type=int, required=False, default=None,
+              help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
+                   "needed, if you want to control a group.")
+@click.option("-d", "--display", type=str, required=True, help="Target Display")
+def set_display(id: str, channel: int, display: str):
+    """Set the display for a device."""
+    runner = asyncio.run(get_initialized_runner())
+
+    if id not in runner.model.devices:
+        click.echo(f"Device with id {id} not found.", err=True, color=True)
+        return
+
+    device = runner.model.devices[id]
+    fc = get_channel_by_index_of_first(device, channel)
+    result = asyncio.run(action_set_display(runner.rest_connection, fc, ClimateControlDisplay(display)))
+    click.echo(
+        f"Run set_display for group {get_device_name(device)} with "
+        f"result: {result.status_text} ({result.status})")
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
@@ -575,7 +553,7 @@ def set_dim_level(id: str, dim_level: float, channel: int = None):
     if fc is None:
         click.echo(f"Channel with index {channel} not found.", err=True, color=True)
         return
-    result = asyncio.run(action_set_dim_level(runner, fc, dim_level))
+    result = asyncio.run(action_set_dim_level(runner.rest_connection, fc, dim_level))
     click.echo(
         f"Run set_dim_level for device {device.label or device.id} and channel {fc.index} with result: {result.status_text} ({result.status})")
 
@@ -587,21 +565,49 @@ def set_dim_level(id: str, dim_level: float, channel: int = None):
                    "needed, if you want to control a group.")
 @click.option("-s", "--shutter_level", type=click.FloatRange(0.0, 1.0), required=True, help="Target shutter level.")
 def set_shutter_level(id: str, shutter_level: float, channel: int):
+    """Set the shutter level for a device or group."""
     runner = asyncio.run(get_initialized_runner())
 
     if id in runner.model.devices:
         device = runner.model.devices[id]
         fc = get_channel_by_index_of_first(device, channel)
-        result = asyncio.run(action_set_shutter_level(runner, fc, shutter_level))
+        result = asyncio.run(action_set_shutter_level(runner.rest_connection, fc, shutter_level))
         click.echo(
             f"Run set_shutter_level for device {device.label or device.id} with result: {result.status_text} ({result.status})")
         return
 
     if id in runner.model.groups:
         group = runner.model.groups[id]
-        result = asyncio.run(action_set_shutter_level_group(runner, group, shutter_level))
+        result = asyncio.run(action_set_shutter_level_group(runner.rest_connection, group, shutter_level))
         click.echo(
             f"Run set_shutter_level for group {group.label or group.id} with result: {result.status_text} ({result.status})")
+        return
+
+    click.echo(f"Id is neither a device nor a group.", err=True, color=True)
+
+
+@run.command
+@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-c", "--channel", type=int, required=False, default=None,
+              help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
+                   "needed, if you want to control a group.")
+def set_shutter_stop(id: str, shutter_level: float, channel: int):
+    """Stop the shutter of a device or group."""
+    runner = asyncio.run(get_initialized_runner())
+
+    if id in runner.model.devices:
+        device = runner.model.devices[id]
+        fc = get_channel_by_index_of_first(device, channel)
+        result = asyncio.run(action_set_shutter_stop(runner.rest_connection, fc, shutter_level))
+        click.echo(
+            f"Run set_shutter_level for device {get_device_name(device)} with result: {result.status_text} ({result.status})")
+        return
+
+    if id in runner.model.groups:
+        group = runner.model.groups[id]
+        result = asyncio.run(action_set_shutter_stop_group(runner.rest_connection, group, shutter_level))
+        click.echo(
+            f"Run set_shutter_level for group {get_group_name(group)} with result: {result.status_text} ({result.status})")
         return
 
     click.echo(f"Id is neither a device nor a group.", err=True, color=True)
@@ -616,25 +622,42 @@ def set_shutter_level(id: str, shutter_level: float, channel: int):
 @click.option("-sh", "--shutter-level", type=click.FloatRange(0.0, 1.0), nargs=1, required=False, default=None,
               help="Shutter Level.")
 def set_slats_level(id: str, slats_level: float, shutter_level: float = None, channel: int = None):
+    """Set the slats level for a device or group."""
     runner = asyncio.run(get_initialized_runner())
 
     if id in runner.model.devices:
         device = runner.model.devices[id]
         fc = get_channel_by_index_of_first(device, channel)
-        result = asyncio.run(action_set_slats_level(runner, fc, slats_level, shutter_level))
+        result = asyncio.run(action_set_slats_level(runner.rest_connection, fc, slats_level, shutter_level))
         click.echo(
             f"Run set_slats_level for device {device.label or device.id} with result: {result.status_text} ({result.status})")
         return
 
     if id in runner.model.groups:
         group = runner.model.groups[id]
-        result = asyncio.run(action_set_slats_level_group(runner, group, slats_level, shutter_level))
+        result = asyncio.run(action_set_slats_level_group(runner.rest_connection, group, slats_level, shutter_level))
         click.echo(
             f"Run set_slats_level for group {group.label or group.id} with result: {result.status_text} ({result.status})")
         return
 
     click.echo(f"Specified Id '{id}' is neither a device nor a group.", err=True, color=True)
 
+
+@run.command
+@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-t", "--on_time", type=int, required=True, help="On time in seconds.")
+def set_on_time(id: str, on_time: int):
+    """Set the on time for a group."""
+    runner = asyncio.run(get_initialized_runner())
+
+    if id not in runner.model.groups:
+        click.echo(f"Group with id {id} not found.", err=True, color=True)
+        return
+
+    group = runner.model.groups[id]
+    result = asyncio.run(action_set_on_time_group(runner.rest_connection, group, on_time))
+    click.echo(
+        f"Run set_on_time for group {get_group_name(group)} with result: {result.status_text} ({result.status})")
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
@@ -654,9 +677,91 @@ def toggle_garage_door(id: str, channel: int = None):
 
     device = model.devices[id]
     fc = get_channel_by_index_of_first(device, channel)
-    result = asyncio.run(action_start_impulse(runner, fc))
+    result = asyncio.run(action_start_impulse(runner.rest_connection, fc))
     click.echo(
-        f"Run toggle_garage_door for device {device.label or device.id} with result: {result.status_text} ({result.status})")
+        f"Run toggle_garage_door for device {get_device_name(device)} with result: {result.status_text} ({result.status})")
+
+
+@run.command
+@click.option("--id", type=str, required=False, help="ID of the device or group, which the run command is applied to.")
+@click.option("-c", "--channel", type=int, required=False, default=None,
+              help="Index of the Channel. Specify the channel index of a device, if you want to see available commands"
+                   "just for a single channel.")
+@click.option("-fcmd", "--filter-command", type=str, required=False, help="Filter the output by command name.")
+@click.option("-ftype", "--filter-type",
+              type=str,
+              required=False, help="Filter the output by type.")
+@click.option("-ftarget", "--filter-target",
+              type=click.Choice(['FUNCTIONAL_HOME', 'GROUP', 'HOME', 'DEVICE'], case_sensitive=False), required=False,
+              help="Filter the output by target type [HOME, FUNCTIONAL_CHANNEL, GROUP, DEVICE].")
+def show_targets(id: str = None, channel: int = None,
+                 filter_command: str = None,
+                 filter_type: str = None,
+                 filter_target: str = None):
+    """List all possible commands with their targets (FunctionalChannel, Group, etc.).
+
+    If you want to see the commands for a specific device, provide the device or group id as argument. Specify a
+    channel index to see the commands only for a specific channel."""
+
+    click.echo("")
+    allowed_types_filter = None
+
+    if id:
+        # if id is specified, we want to see the commands for this device or group.
+        # Build allowed_types_filter to filter the commands by the type of the device, group or functionalchannel.
+        runner = asyncio.run(get_initialized_runner())
+        device_or_group = get_device_or_group(id, runner.model)
+        fc = None
+
+        if is_device(id, runner.model) and channel:
+            fc = get_channel_by_index_of_first(device_or_group, channel)
+
+        if fc:
+            # If a channel is specified, we only want to see the commands for this channel.
+            allowed_types_filter = [fc.functionalChannelType]
+            click.echo(
+                f"Show commands for channel '{get_channel_name(fc)}' of device '{get_device_name(device_or_group)}'")
+        elif is_group(id, runner.model):
+            # If a group is specified, we only want to see the commands for this group.
+            allowed_types_filter = [device_or_group.type]
+            click.echo(f"Show commands for group '{get_group_name(device_or_group)}'")
+        else:
+            # If a device is specified, we want to see the commands for the device and all its channels.
+            allowed_types_filter = [device_or_group.type]
+            allowed_types_filter.extend(
+                [fc.functionalChannelType for fc in device_or_group.functionalChannels.values()])
+            click.echo(f"Show commands for device '{get_group_name(device_or_group)}'")
+
+        click.echo("")
+
+    # if a device, group or channel is specified, we ignore all other filters
+    if allowed_types_filter:
+        filter_type = None
+        filter_target = None
+        filter_command = None
+
+    if filter_type:
+        # ignore the filter_type if we have a filter by device or group.
+        allowed_types_filter = [filter_type]
+
+    registry_entries = Registry.get_registered_types()
+    command_map: dict[str, CommandEntry] = build_commands_from_registry(registry_entries,
+                                                                        filter_by_allowed_types=allowed_types_filter,
+                                                                        filter_by_cli_command=filter_command,
+                                                                        filter_by_target=filter_target)
+
+    for cmd_name, cmd_entry in command_map.items():
+        click.echo(f"Command: {cmd_name}")
+        click.echo(f"============================================")
+        click.echo(f"  Targets:")
+        for target in cmd_entry.targets:
+            click.echo(f"    {target.name}")
+        click.echo(f"  Allowed Types (Type of FunctionalChannel, Home, Group, etc.)")
+        for allowed_type in cmd_entry.allowed_types:
+            if allowed_type in cmd_entry.allowed_types:
+                click.echo(f"    {allowed_type}")
+
+        click.echo("")
 
 #     #         if args.toggle_garage_door is not None:
 #     #             _execute_action_for_device(

@@ -52,7 +52,7 @@ class ConfigIO:
     @classmethod
     def from_file(cls, file_path) -> PersistentConfig:
         """Open a file and load the configuration from it."""
-        with open(file_path,"r") as f:
+        with open(file_path, "r",  encoding='utf-8') as f:
             json_config = json.load(f)
             config = PersistentConfig(**json_config)
 
@@ -83,7 +83,7 @@ class ConfigIO:
         #
         filename = os.path.join(get_home_path(), "config.json")
 
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding='utf-8') as file:
             json.dump(asdict(config), file)
 
         return filename
