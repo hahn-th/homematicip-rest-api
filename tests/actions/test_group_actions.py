@@ -1,6 +1,6 @@
 import pytest
 
-from homematicip.action.group_actions import action_set_switch_state_group
+from homematicip.action.group_actions import async_set_switch_state_group
 from homematicip.connection.rest_connection import RestConnection, RestResult
 from homematicip.model.model_components import Group
 from homematicip.runner import Runner
@@ -23,12 +23,12 @@ def sample_group() -> Group:
 async def test_wrong_group_type(runner, sample_group):
     sample_group.type = "ASDF"
     with pytest.raises(ValueError):
-        await action_set_switch_state_group(runner.rest_connection, sample_group, True)
+        await async_set_switch_state_group(runner.rest_connection, sample_group, True)
 
 @pytest.mark.asyncio
 async def test_group_set_switch_state(runner, sample_group):
     sample_group.type = "SWITCHING"
-    await action_set_switch_state_group(runner.rest_connection, sample_group, True)
+    await async_set_switch_state_group(runner.rest_connection, sample_group, True)
     runner.rest_connection.async_post.assert_called_once_with("group/switching/setState",
                                                               {"groupId": sample_group.id, "on": True})
 

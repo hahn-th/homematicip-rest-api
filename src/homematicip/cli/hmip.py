@@ -11,12 +11,12 @@ import click
 import httpx
 from alive_progress import alive_bar
 
-from homematicip.action.functional_channel_actions import action_set_slats_level, action_set_shutter_level, \
-    action_set_switch_state, action_set_dim_level, action_start_impulse, action_set_shutter_stop, action_set_display
-from homematicip.action.group_actions import action_set_boost, action_set_boost_duration, \
-    action_set_shutter_level_group, action_set_slats_level_group, \
-    action_set_shutter_stop_group, action_set_switch_state_group, action_set_point_temperature_group, \
-    action_set_active_profile_group, action_set_control_mode_group, action_set_on_time_group
+from homematicip.action.functional_channel_actions import async_set_slats_level_fc, async_set_shutter_level_fc, \
+    async_set_switch_state_fc, async_set_dim_level_fc, async_start_impulse_fc, async_set_shutter_stop_fc, async_set_display_fc
+from homematicip.action.group_actions import async_set_boost_group, async_set_boost_duration_group, \
+    async_set_shutter_level_group, async_set_slats_level_group, \
+    async_set_shutter_stop_group, async_set_switch_state_group, async_set_point_temperature_group, \
+    async_set_active_profile_group, async_set_control_mode_group, async_set_on_time_group
 from homematicip.action.registry import Registry, ActionTarget
 from homematicip.auth import Auth
 from homematicip.cli.helper import get_channel_by_index_of_first, get_initialized_runner, setup_basic_logging, \
@@ -332,11 +332,11 @@ def turn_on(id: str, channel: int = None):
 
     if isinstance(device_or_group, Device):
         fc = get_channel_by_index_of_first(device_or_group, channel)
-        result = asyncio.run(action_set_switch_state(runner.rest_connection, fc, True))
+        result = asyncio.run(async_set_switch_state_fc(runner.rest_connection, fc, True))
         click.echo(
             f"Run turn_on for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
     else:
-        result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, True))
+        result = asyncio.run(async_set_switch_state_group(runner.rest_connection, device_or_group, True))
         click.echo(
             f"Run turn_on for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
@@ -360,11 +360,11 @@ def turn_off(id: str, channel: int = None):
 
     if isinstance(device_or_group, Device):
         fc = get_channel_by_index_of_first(device_or_group, channel)
-        result = asyncio.run(action_set_switch_state(runner.rest_connection, fc, False))
+        result = asyncio.run(async_set_switch_state_fc(runner.rest_connection, fc, False))
         click.echo(
             f"Run turn_off for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
     else:
-        result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, False))
+        result = asyncio.run(async_set_switch_state_group(runner.rest_connection, device_or_group, False))
         click.echo(
             f"Run turn_off for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
@@ -386,11 +386,11 @@ def set_switch_state(id: str, channel: int, state: bool):
 
     if isinstance(device_or_group, Device):
         fc = get_channel_by_index_of_first(device_or_group, channel)
-        result = asyncio.run(action_set_switch_state(runner.rest_connection, fc, state))
+        result = asyncio.run(async_set_switch_state_fc(runner.rest_connection, fc, state))
         click.echo(
             f"Run set_switch_state for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
     else:
-        result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, state))
+        result = asyncio.run(async_set_switch_state_group(runner.rest_connection, device_or_group, state))
         click.echo(
             f"Run set_switch_state for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
@@ -426,7 +426,7 @@ def set_boost(id: str):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_boost(runner.rest_connection, runner.model.groups[id], True))
+    result = asyncio.run(async_set_boost_group(runner.rest_connection, runner.model.groups[id], True))
     click.echo(f"Run set_boost with result: {result.status_text}")
 
 
@@ -440,7 +440,7 @@ def set_boost_stop(id: str):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_boost(runner.rest_connection, runner.model.groups[id], False))
+    result = asyncio.run(async_set_boost_group(runner.rest_connection, runner.model.groups[id], False))
     click.echo(
         f"Run set_boost for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -458,7 +458,7 @@ def set_point_temperature(id: str, temperature: float):
         return
 
     result = asyncio.run(
-        action_set_point_temperature_group(runner.rest_connection, runner.model.groups[id], temperature))
+        async_set_point_temperature_group(runner.rest_connection, runner.model.groups[id], temperature))
     if result.exception is not None:
         click.echo(f"Error while running set_point_temperature: {result.exception}", err=True, color=True)
         return
@@ -479,7 +479,7 @@ def set_boost_duration(id: str, minutes: int):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_boost_duration(runner.rest_connection, runner.model.groups[id], minutes))
+    result = asyncio.run(async_set_boost_duration_group(runner.rest_connection, runner.model.groups[id], minutes))
     click.echo(
         f"Run set_boost_duration for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -499,7 +499,7 @@ def set_active_profile(id: str, profile_index: str):
         return
 
     result = asyncio.run(
-        action_set_active_profile_group(runner.rest_connection, runner.model.groups[id], profile_index))
+        async_set_active_profile_group(runner.rest_connection, runner.model.groups[id], profile_index))
     click.echo(
         f"Run set_active_profile for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -516,7 +516,7 @@ def set_control_mode(id: str, mode: ClimateControlMode):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_control_mode_group(runner.rest_connection, runner.model.groups[id], mode))
+    result = asyncio.run(async_set_control_mode_group(runner.rest_connection, runner.model.groups[id], mode))
     click.echo(
         f"Run set_control_mode for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -538,7 +538,7 @@ def set_display(id: str, channel: int, display: str):
 
     device = runner.model.devices[id]
     fc = get_channel_by_index_of_first(device, channel)
-    result = asyncio.run(action_set_display(runner.rest_connection, fc, ClimateControlDisplay(display)))
+    result = asyncio.run(async_set_display_fc(runner.rest_connection, fc, ClimateControlDisplay(display)))
     click.echo(
         f"Run set_display for group {get_device_name(device)} with "
         f"result: {result.status_text} ({result.status})")
@@ -570,7 +570,7 @@ def set_dim_level(id: str, dim_level: float, channel: int = None):
     if fc is None:
         click.echo(f"Channel with index {channel} not found.", err=True, color=True)
         return
-    result = asyncio.run(action_set_dim_level(runner.rest_connection, fc, dim_level))
+    result = asyncio.run(async_set_dim_level_fc(runner.rest_connection, fc, dim_level))
     click.echo(
         f"Run set_dim_level for device {device.label or device.id} and channel {fc.index} with result: {result.status_text} ({result.status})")
 
@@ -588,14 +588,14 @@ def set_shutter_level(id: str, shutter_level: float, channel: int):
     if id in runner.model.devices:
         device = runner.model.devices[id]
         fc = get_channel_by_index_of_first(device, channel)
-        result = asyncio.run(action_set_shutter_level(runner.rest_connection, fc, shutter_level))
+        result = asyncio.run(async_set_shutter_level_fc(runner.rest_connection, fc, shutter_level))
         click.echo(
             f"Run set_shutter_level for device {device.label or device.id} with result: {result.status_text} ({result.status})")
         return
 
     if id in runner.model.groups:
         group = runner.model.groups[id]
-        result = asyncio.run(action_set_shutter_level_group(runner.rest_connection, group, shutter_level))
+        result = asyncio.run(async_set_shutter_level_group(runner.rest_connection, group, shutter_level))
         click.echo(
             f"Run set_shutter_level for group {group.label or group.id} with result: {result.status_text} ({result.status})")
         return
@@ -615,14 +615,14 @@ def set_shutter_stop(id: str, shutter_level: float, channel: int):
     if id in runner.model.devices:
         device = runner.model.devices[id]
         fc = get_channel_by_index_of_first(device, channel)
-        result = asyncio.run(action_set_shutter_stop(runner.rest_connection, fc, shutter_level))
+        result = asyncio.run(async_set_shutter_stop_fc(runner.rest_connection, fc, shutter_level))
         click.echo(
             f"Run set_shutter_level for device {get_device_name(device)} with result: {result.status_text} ({result.status})")
         return
 
     if id in runner.model.groups:
         group = runner.model.groups[id]
-        result = asyncio.run(action_set_shutter_stop_group(runner.rest_connection, group, shutter_level))
+        result = asyncio.run(async_set_shutter_stop_group(runner.rest_connection, group, shutter_level))
         click.echo(
             f"Run set_shutter_level for group {get_group_name(group)} with result: {result.status_text} ({result.status})")
         return
@@ -645,14 +645,14 @@ def set_slats_level(id: str, slats_level: float, shutter_level: float = None, ch
     if id in runner.model.devices:
         device = runner.model.devices[id]
         fc = get_channel_by_index_of_first(device, channel)
-        result = asyncio.run(action_set_slats_level(runner.rest_connection, fc, slats_level, shutter_level))
+        result = asyncio.run(async_set_slats_level_fc(runner.rest_connection, fc, slats_level, shutter_level))
         click.echo(
             f"Run set_slats_level for device {device.label or device.id} with result: {result.status_text} ({result.status})")
         return
 
     if id in runner.model.groups:
         group = runner.model.groups[id]
-        result = asyncio.run(action_set_slats_level_group(runner.rest_connection, group, slats_level, shutter_level))
+        result = asyncio.run(async_set_slats_level_group(runner.rest_connection, group, slats_level, shutter_level))
         click.echo(
             f"Run set_slats_level for group {group.label or group.id} with result: {result.status_text} ({result.status})")
         return
@@ -672,7 +672,7 @@ def set_on_time(id: str, on_time: int):
         return
 
     group = runner.model.groups[id]
-    result = asyncio.run(action_set_on_time_group(runner.rest_connection, group, on_time))
+    result = asyncio.run(async_set_on_time_group(runner.rest_connection, group, on_time))
     click.echo(
         f"Run set_on_time for group {get_group_name(group)} with result: {result.status_text} ({result.status})")
 
@@ -695,7 +695,7 @@ def toggle_garage_door(id: str, channel: int = None):
 
     device = model.devices[id]
     fc = get_channel_by_index_of_first(device, channel)
-    result = asyncio.run(action_start_impulse(runner.rest_connection, fc))
+    result = asyncio.run(async_start_impulse_fc(runner.rest_connection, fc))
     click.echo(
         f"Run toggle_garage_door for device {get_device_name(device)} with result: {result.status_text} ({result.status})")
 

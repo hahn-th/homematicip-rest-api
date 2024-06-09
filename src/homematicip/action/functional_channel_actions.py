@@ -11,8 +11,8 @@ from homematicip.runner import Runner
 @Action.allowed_types('BLIND_CHANNEL', 'MULTI_MODE_INPUT_BLIND_CHANNEL')
 @Action.cli_commands("set_slats_level")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_set_slats_level(rest_connection: RestConnection, fc: FunctionalChannel, slats_level: float,
-                                 shutter_level: float = None):
+async def async_set_slats_level_fc(rest_connection: RestConnection, fc: FunctionalChannel, slats_level: float,
+                                   shutter_level: float = None):
     if shutter_level is None:
         shutter_level = fc.shutterLevel
     data = {
@@ -27,7 +27,7 @@ async def action_set_slats_level(rest_connection: RestConnection, fc: Functional
 @Action.allowed_types('BLIND_CHANNEL', 'MULTI_MODE_INPUT_BLIND_CHANNEL', 'SHUTTER_CHANNEL')
 @Action.cli_commands("set_shutter_level")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_set_shutter_level(rest_connection: RestConnection, fc: FunctionalChannel, shutter_level: float):
+async def async_set_shutter_level_fc(rest_connection: RestConnection, fc: FunctionalChannel, shutter_level: float):
     data = {"channelIndex": fc.index, "deviceId": fc.deviceId, "shutterLevel": shutter_level}
     return await rest_connection.async_post("device/control/setShutterLevel", data)
 
@@ -35,7 +35,7 @@ async def action_set_shutter_level(rest_connection: RestConnection, fc: Function
 @Action.allowed_types('BLIND_CHANNEL', 'MULTI_MODE_INPUT_BLIND_CHANNEL', 'SHUTTER_CHANNEL', 'SHADING_CHANNEL')
 @Action.cli_commands("set_shutter_stop")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_set_shutter_stop(rest_connection: RestConnection, fc: FunctionalChannel):
+async def async_set_shutter_stop_fc(rest_connection: RestConnection, fc: FunctionalChannel):
     data = {"channelIndex": fc.index, "deviceId": fc.deviceId}
     return await rest_connection.async_post("device/control/stop", data)
 
@@ -46,7 +46,7 @@ async def action_set_shutter_stop(rest_connection: RestConnection, fc: Functiona
                       'OPTICAL_SIGNAL_CHANNEL')
 @Action.cli_commands("set_switch_state", "turn_on", "turn_off")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_set_switch_state(rest_connection: RestConnection, fc: FunctionalChannel, on: bool):
+async def async_set_switch_state_fc(rest_connection: RestConnection, fc: FunctionalChannel, on: bool):
     data = {"channelIndex": fc.index, "deviceId": fc.deviceId, "on": on}
     return await rest_connection.async_post("device/control/setSwitchState", data)
 
@@ -54,7 +54,7 @@ async def action_set_switch_state(rest_connection: RestConnection, fc: Functiona
 @Action.allowed_types('IMPULSE_OUTPUT_CHANNEL')
 @Action.cli_commands("toggle_garage_door")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_start_impulse(rest_connection: RestConnection, fc: FunctionalChannel):
+async def async_start_impulse_fc(rest_connection: RestConnection, fc: FunctionalChannel):
     """Toggle Wall mounted Garage Door Controller."""
     data = {"channelIndex": fc.index, "deviceId": fc.deviceId}
     return await rest_connection.async_post("device/control/startImpulse", data)
@@ -63,15 +63,15 @@ async def action_start_impulse(rest_connection: RestConnection, fc: FunctionalCh
 @Action.allowed_types("DIMMER_CHANNEL", "MULTI_MODE_INPUT_DIMMER_CHANNEL", "NOTIFICATION_LIGHT_CHANNEL")
 @Action.cli_commands("set_dim_level")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_set_dim_level(rest_connection: RestConnection, fc: FunctionalChannel, dim_level: float):
+async def async_set_dim_level_fc(rest_connection: RestConnection, fc: FunctionalChannel, dim_level: float):
     data = {"channelIndex": fc.index, "deviceId": fc.deviceId, "dimLevel": dim_level}
     return await rest_connection.async_post("device/control/setDimLevel", data)
 
 
 @Action.allowed_types("ACCELERATION_SENSOR_CHANNEL", "TILT_VIBRATION_SENSOR")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def set_acceleration_sensor_mode_action(rest_connection: RestConnection, fc: FunctionalChannel,
-                                              mode: AccelerationSensorMode):
+async def async_set_acceleration_sensor_mode_action_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                       mode: AccelerationSensorMode):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -81,8 +81,8 @@ async def set_acceleration_sensor_mode_action(rest_connection: RestConnection, f
 
 
 @Action.allowed_types("ACCELERATION_SENSOR_CHANNEL", "TILT_VIBRATION_SENSOR")
-async def set_acceleration_sensor_neutral_position(rest_connection: RestConnection, fc: FunctionalChannel,
-                                                   neutral_position: AccelerationSensorNeutralPosition):
+async def async_set_acceleration_sensor_neutral_position_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                            neutral_position: AccelerationSensorNeutralPosition):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -92,8 +92,8 @@ async def set_acceleration_sensor_neutral_position(rest_connection: RestConnecti
 
 
 @Action.allowed_types("ACCELERATION_SENSOR_CHANNEL", "TILT_VIBRATION_SENSOR")
-async def set_acceleration_sensor_sensitivity(rest_connection: RestConnection, fc: FunctionalChannel,
-                                              sensitivity: AccelerationSensorSensitivity):
+async def async_set_acceleration_sensor_sensitivity_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                       sensitivity: AccelerationSensorSensitivity):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -103,7 +103,8 @@ async def set_acceleration_sensor_sensitivity(rest_connection: RestConnection, f
 
 
 @Action.allowed_types("ACCELERATION_SENSOR_CHANNEL", "TILT_VIBRATION_SENSOR")
-async def set_acceleration_sensor_trigger_angle(rest_connection: RestConnection, fc: FunctionalChannel, angle: int):
+async def async_set_acceleration_sensor_trigger_angle_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                         angle: int):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -113,8 +114,8 @@ async def set_acceleration_sensor_trigger_angle(rest_connection: RestConnection,
 
 
 @Action.allowed_types("ACCELERATION_SENSOR_CHANNEL", "TILT_VIBRATION_SENSOR")
-async def set_acceleration_sensor_event_filter_period(rest_connection: RestConnection, fc: FunctionalChannel,
-                                                      period: float):
+async def async_set_acceleration_sensor_event_filter_period_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                               period: float):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -124,9 +125,9 @@ async def set_acceleration_sensor_event_filter_period(rest_connection: RestConne
 
 
 @Action.allowed_types("ACCELERATION_SENSOR_CHANNEL")
-async def set_notification_sound_type(rest_connection: RestConnection, fc: FunctionalChannel,
-                                      sound_type: NotificationSoundType,
-                                      is_high_to_low: bool):
+async def async_set_notification_sound_type_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                               sound_type: NotificationSoundType,
+                                               is_high_to_low: bool):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -137,8 +138,8 @@ async def set_notification_sound_type(rest_connection: RestConnection, fc: Funct
 
 
 @Action.allowed_types("DEVICE_BASE_FLOOR_HEATING")
-async def set_minimum_floor_heating_valve_position(rest_connection: RestConnection, fc: FunctionalChannel,
-                                                   position: float):
+async def async_set_minimum_floor_heating_valve_position_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                            position: float):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -148,7 +149,7 @@ async def set_minimum_floor_heating_valve_position(rest_connection: RestConnecti
 
 
 @Action.allowed_types("DEVICE_OPERATIONLOCK", "DEVICE_OPERATIONLOCK_WITH_SABOTAGE")
-async def set_operation_lock(rest_connection: RestConnection, fc: FunctionalChannel, operation_lock: bool):
+async def async_set_operation_lock_fc(rest_connection: RestConnection, fc: FunctionalChannel, operation_lock: bool):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -158,7 +159,7 @@ async def set_operation_lock(rest_connection: RestConnection, fc: FunctionalChan
 
 
 @Action.allowed_types("DOOR_CHANNEL")
-async def action_send_door_command(rest_connection: RestConnection, fc: FunctionalChannel, door_command: DoorCommand):
+async def async_send_door_command_fc(rest_connection: RestConnection, fc: FunctionalChannel, door_command: DoorCommand):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -168,8 +169,8 @@ async def action_send_door_command(rest_connection: RestConnection, fc: Function
 
 
 @Action.allowed_types("DOOR_LOCK_CHANNEL")
-async def action_set_door_state(rest_connection: RestConnection, fc: FunctionalChannel, lock_state: LockState,
-                                pin: str = None):
+async def async_set_door_state_fc(rest_connection: RestConnection, fc: FunctionalChannel, lock_state: LockState,
+                                  pin: str = None):
     data = {
         "deviceId": fc.deviceId,
         "channelIndex": fc.index,
@@ -180,7 +181,7 @@ async def action_set_door_state(rest_connection: RestConnection, fc: FunctionalC
 
 
 @Action.allowed_types("NOTIFICATION_LIGHT_CHANNEL", "OPTICAL_SIGNAL_CHANNEL")
-async def action_set_optical_signal(
+async def async_set_optical_signal_fc(
         rest_connection: RestConnection,
         fc: FunctionalChannel,
         optical_signal_behaviour: OpticalSignalBehaviour,
@@ -211,8 +212,8 @@ async def action_set_optical_signal(
 
 
 @Action.allowed_types("NOTIFICATION_LIGHT_CHANNEL")
-async def action_set_rgb_dim_level(rest_connection: RestConnection, fc: FunctionalChannel, rgb: RGBColorState,
-                                   dim_level: float):
+async def async_set_rgb_dim_level_fc(rest_connection: RestConnection, fc: FunctionalChannel, rgb: RGBColorState,
+                                     dim_level: float):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -223,7 +224,7 @@ async def action_set_rgb_dim_level(rest_connection: RestConnection, fc: Function
 
 
 @Action.allowed_types("NOTIFICATION_LIGHT_CHANNEL")
-async def action_set_rgb_dim_level_with_time(
+async def async_set_rgb_dim_level_with_time_fc(
         rest_connection: RestConnection,
         fc: FunctionalChannel,
         rgb: RGBColorState,
@@ -243,8 +244,8 @@ async def action_set_rgb_dim_level_with_time(
 
 
 @Action.allowed_types("SHADING_CHANNEL")
-async def action_set_primary_shading_level(rest_connection: RestConnection, fc: FunctionalChannel,
-                                           primary_shading_level: float):
+async def async_set_primary_shading_level_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                             primary_shading_level: float):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -254,9 +255,9 @@ async def action_set_primary_shading_level(rest_connection: RestConnection, fc: 
 
 
 @Action.allowed_types("SHADING_CHANNEL")
-async def action_set_secondary_shading_level(rest_connection: RestConnection, fc: FunctionalChannel,
-                                             primary_shading_level: float,
-                                             secondary_shading_level: float):
+async def async_set_secondary_shading_level_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                               primary_shading_level: float,
+                                               secondary_shading_level: float):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -267,7 +268,7 @@ async def action_set_secondary_shading_level(rest_connection: RestConnection, fc
 
 
 @Action.allowed_types("SWITCH_MEASURING_CHANNEL")
-async def action_reset_energy_counter(rest_connection: RestConnection, fc: FunctionalChannel):
+async def async_reset_energy_counter_fc(rest_connection: RestConnection, fc: FunctionalChannel):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId
@@ -278,7 +279,7 @@ async def action_reset_energy_counter(rest_connection: RestConnection, fc: Funct
 @Action.allowed_types("WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL")
 @Action.cli_commands("set_display")
 @Action.target_type(ActionTarget.FUNCTIONAL_CHANNEL)
-async def action_set_display(rest_connection: RestConnection, fc: FunctionalChannel, display: ClimateControlDisplay):
+async def async_set_display_fc(rest_connection: RestConnection, fc: FunctionalChannel, display: ClimateControlDisplay):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -288,8 +289,8 @@ async def action_set_display(rest_connection: RestConnection, fc: FunctionalChan
 
 
 @Action.allowed_types("WATER_SENSOR_CHANNEL")
-async def action_set_acoustic_alarm_signal(rest_connection: RestConnection, fc: FunctionalChannel,
-                                           acoustic_alarm_signal: AcousticAlarmSignal):
+async def async_set_acoustic_alarm_signal_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                             acoustic_alarm_signal: AcousticAlarmSignal):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -299,8 +300,8 @@ async def action_set_acoustic_alarm_signal(rest_connection: RestConnection, fc: 
 
 
 @Action.allowed_types("WATER_SENSOR_CHANNEL")
-async def action_set_acoustic_alarm_timing(rest_connection: RestConnection, fc: FunctionalChannel,
-                                           acoustic_alarm_timing: AcousticAlarmTiming):
+async def async_set_acoustic_alarm_timing_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                             acoustic_alarm_timing: AcousticAlarmTiming):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -310,8 +311,8 @@ async def action_set_acoustic_alarm_timing(rest_connection: RestConnection, fc: 
 
 
 @Action.allowed_types("WATER_SENSOR_CHANNEL")
-async def action_set_acoustic_water_alarm_trigger(rest_connection: RestConnection, fc: FunctionalChannel,
-                                                  acoustic_water_alarm_trigger: WaterAlarmTrigger):
+async def async_set_acoustic_water_alarm_trigger_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                    acoustic_water_alarm_trigger: WaterAlarmTrigger):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -321,8 +322,8 @@ async def action_set_acoustic_water_alarm_trigger(rest_connection: RestConnectio
 
 
 @Action.allowed_types("WATER_SENSOR_CHANNEL")
-async def action_set_inapp_water_alarm_trigger(rest_connection: RestConnection, fc: FunctionalChannel,
-                                               inapp_water_alarm_trigger: WaterAlarmTrigger):
+async def async_set_inapp_water_alarm_trigger_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                 inapp_water_alarm_trigger: WaterAlarmTrigger):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
@@ -332,8 +333,8 @@ async def action_set_inapp_water_alarm_trigger(rest_connection: RestConnection, 
 
 
 @Action.allowed_types("WATER_SENSOR_CHANNEL")
-async def action_set_siren_water_alarm_trigger(rest_connection: RestConnection, fc: FunctionalChannel,
-                                               siren_water_alarm_trigger: WaterAlarmTrigger):
+async def async_set_siren_water_alarm_trigger_fc(rest_connection: RestConnection, fc: FunctionalChannel,
+                                                 siren_water_alarm_trigger: WaterAlarmTrigger):
     data = {
         "channelIndex": fc.index,
         "deviceId": fc.deviceId,
