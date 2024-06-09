@@ -30,6 +30,7 @@ from homematicip.connection.rest_connection import ConnectionContext, RestResult
 from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.model.anoymizer import handle_config
 from homematicip.model.enums import ClimateControlMode, ClimateControlDisplay
+from homematicip.model.hmip_base import HmipBaseModel
 from homematicip.model.model_components import Device
 
 
@@ -265,30 +266,42 @@ def firmware():
 
 
 async def _model_update_event_handler(event: ModelUpdateEvent, args) -> None:
-    click.echo(f"ModelUpdateEvent: {event}; {args}")
+    hmip_item = None
+    if isinstance(args, HmipBaseModel):
+        hmip_item = args
+
+    output = {"event": event.name,
+              "updated_type": type(args).__name__ if args else None,
+              "updated_id": getattr(args, "id") if args else None,
+              "updated_item": repr(hmip_item) if hmip_item else None}
+
+    formatted_output = json.dumps(output, indent=4)
+    click.echo(formatted_output)
 
 
-# @cli.command
-# def listen():
-#     """Listen to events. If filename is specified, events are written to the file. If not, they are written to
-#     console."""
-#     runner = asyncio.run(get_initialized_runner())
-#     runner.event_manager.subscribe(ModelUpdateEvent.ITEM_CREATED, _model_update_event_handler)
-#     runner.event_manager.subscribe(ModelUpdateEvent.ITEM_UPDATED, _model_update_event_handler)
-#     runner.event_manager.subscribe(ModelUpdateEvent.ITEM_REMOVED, _model_update_event_handler)
-#
-#     loop = asyncio.new_event_loop()
-#     task = loop.create_task(runner.async_listening_for_updates())
-#
-#     try:
-#         click.echo("Waiting for events... press CTRL+C to stop listening.")
-#         loop.run_until_complete(task)
-#     except asyncio.CancelledError:
-#         pass
-#     except KeyboardInterrupt:
-#         task.cancel()
-#         loop.stop()
-#         click.echo("Stopping listener...")
+@cli.command
+def listen():
+    """Listen to events. If filename is specified, events are written to the file. If not, they are written to
+    console."""
+    asyncio.run(listen_wrapped())
+
+
+async def listen_wrapped():
+    """The wrapped listen function."""
+    runner = await get_initialized_runner()
+    runner.event_manager.subscribe(ModelUpdateEvent.ITEM_CREATED, _model_update_event_handler)
+    runner.event_manager.subscribe(ModelUpdateEvent.ITEM_UPDATED, _model_update_event_handler)
+    runner.event_manager.subscribe(ModelUpdateEvent.ITEM_REMOVED, _model_update_event_handler)
+
+    task = asyncio.create_task(runner.async_listening_for_updates())
+
+    try:
+        click.echo("Waiting for events... press CTRL+C to stop listening.")
+        await task
+    except KeyboardInterrupt:
+        click.echo("Stop listener...")
+        task.cancel()
+        await task
 
 
 @cli.command
@@ -324,7 +337,8 @@ def turn_on(id: str, channel: int = None):
             f"Run turn_on for device {get_device_name(device_or_group)} with result: {result.status_text} ({result.status})")
     else:
         result = asyncio.run(action_set_switch_state_group(runner.rest_connection, device_or_group, True))
-        click.echo(f"Run turn_on for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
+        click.echo(
+            f"Run turn_on for device {get_group_name(device_or_group)} with result: {result.status_text} ({result.status})")
 
 
 @run.command()
@@ -443,7 +457,8 @@ def set_point_temperature(id: str, temperature: float):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_point_temperature_group(runner.rest_connection, runner.model.groups[id], temperature))
+    result = asyncio.run(
+        action_set_point_temperature_group(runner.rest_connection, runner.model.groups[id], temperature))
     if result.exception is not None:
         click.echo(f"Error while running set_point_temperature: {result.exception}", err=True, color=True)
         return
@@ -483,7 +498,8 @@ def set_active_profile(id: str, profile_index: str):
         click.echo(f"Group with id {id} not found.", err=True, color=True)
         return
 
-    result = asyncio.run(action_set_active_profile_group(runner.rest_connection, runner.model.groups[id], profile_index))
+    result = asyncio.run(
+        action_set_active_profile_group(runner.rest_connection, runner.model.groups[id], profile_index))
     click.echo(
         f"Run set_active_profile for group {runner.model.groups[id].label or runner.model.groups[id].id} with "
         f"result: {result.status_text} ({result.status})")
@@ -526,6 +542,7 @@ def set_display(id: str, channel: int, display: str):
     click.echo(
         f"Run set_display for group {get_device_name(device)} with "
         f"result: {result.status_text} ({result.status})")
+
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
@@ -658,6 +675,7 @@ def set_on_time(id: str, on_time: int):
     result = asyncio.run(action_set_on_time_group(runner.rest_connection, group, on_time))
     click.echo(
         f"Run set_on_time for group {get_group_name(group)} with result: {result.status_text} ({result.status})")
+
 
 @run.command
 @click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")

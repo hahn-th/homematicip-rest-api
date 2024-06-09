@@ -58,7 +58,6 @@ class AbstractRunner(abc.ABC):
         pass
 
 
-
 @dataclass(kw_only=True)
 class Runner(AbstractRunner):
     model: Model = None
@@ -110,7 +109,10 @@ class Runner(AbstractRunner):
 
     async def async_listening_for_updates(self):
         """Start listening for updates from HomematicIP Cloud. This method will not return."""
-        await self._async_start_listening_for_updates(self._connection_context)
+        try:
+            await self._async_start_listening_for_updates(self._connection_context)
+        except asyncio.CancelledError:
+            pass
 
     async def async_get_current_state(self):
         """
