@@ -1,5 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import logging
+from typing import List
 
 
 @dataclass

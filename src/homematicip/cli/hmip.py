@@ -23,6 +23,9 @@ from homematicip.cli.helper import get_channel_by_index_of_first, get_initialize
     is_device, get_device_or_group, is_group, get_channel_name, get_device_name, get_group_name
 from homematicip.cli.helper import get_rssi_bar_string
 from homematicip.cli.hmip_cli_show_targets_helper import build_commands_from_registry, CommandEntry
+from homematicip.cli.output_formatter.formatter import generate_output_functional_channel, generate_output_group, \
+    generate_output_device
+from homematicip.configuration import config_io
 from homematicip.configuration.config import PersistentConfig
 from homematicip.configuration.config_folder import get_default_app_config_folder
 from homematicip.configuration.config_io import ConfigIO
@@ -142,12 +145,17 @@ def devices():
     """List all devices including the functional channels."""
     runner = asyncio.run(get_initialized_runner())
     model = runner.model
+    format_config = ConfigIO.get_output_format_config()
     print("Devices:")
     for device in sorted(model.devices.values(), key=lambda x: x.label):
+        output = generate_output_device(device, format_config)
         click.echo(f"\t({device.id}) - {device.label} - {device.type}")
+        click.echo(f"\t{output}")
 
         for channel in device.functionalChannels.values():
+            fc_output = generate_output_functional_channel(channel, format_config)
             click.echo(f"\t\t[{channel.index}] - {channel.functionalChannelType:30} - {channel.label or "<no label>"}")
+            click.echo(f"\t\t\t{output}")
 
 
 @list.command()
@@ -155,9 +163,12 @@ def groups():
     """List all groups."""
     runner = asyncio.run(get_initialized_runner())
     model = runner.model
+    format_config = ConfigIO.get_output_format_config()
     print("Groups:")
     for group in sorted(model.groups.values(), key=lambda x: x.label):
+        output = generate_output_group(group, format_config)
         click.echo(f"\t({group.id}) - {group.label} - {group.type}")
+        click.echo(f"\t\t{output}")
 
 
 @list.command()
@@ -317,7 +328,7 @@ def version():
 
 
 @run.command()
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -342,7 +353,7 @@ def turn_on(id: str, channel: int = None):
 
 
 @run.command()
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -370,7 +381,7 @@ def turn_off(id: str, channel: int = None):
 
 
 @run.command()
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -417,7 +428,7 @@ def dump(filename, anonymized):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 def set_boost(id: str):
     """Set Boost on Group."""
     runner = asyncio.run(get_initialized_runner())
@@ -431,7 +442,7 @@ def set_boost(id: str):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 def set_boost_stop(id: str):
     """Stop Boost on Group."""
     runner = asyncio.run(get_initialized_runner())
@@ -447,7 +458,7 @@ def set_boost_stop(id: str):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-t", "--temperature", type=float, help="Target Temperature", required=True)
 def set_point_temperature(id: str, temperature: float):
     """Set point temperature for a group."""
@@ -469,7 +480,7 @@ def set_point_temperature(id: str, temperature: float):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-m", "--minutes", type=int, nargs=1, help="Duration of boost in Minutes", required=True)
 def set_boost_duration(id: str, minutes: int):
     """Sets the boost duration for a group in minutes"""
@@ -486,7 +497,7 @@ def set_boost_duration(id: str, minutes: int):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-p", "--profile_index", type=str, required=True,
               help="index of the profile. Usually this is PROFILE_x. Use 'hmip list profiles <group-id>' to get a "
                    "list of available profiles for a group.")
@@ -506,7 +517,7 @@ def set_active_profile(id: str, profile_index: str):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("--mode", type=ClimateControlMode, help="the control mode. [ECO|AUTOMATIC|MANUAL]")
 def set_control_mode(id: str, mode: ClimateControlMode):
     """Set the control mode for a group."""
@@ -523,7 +534,7 @@ def set_control_mode(id: str, mode: ClimateControlMode):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -545,7 +556,7 @@ def set_display(id: str, channel: int, display: str):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-d", "--dim_level", type=click.FloatRange(0.0, 1.0), help="Target Dim Level", required=True)
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
@@ -576,7 +587,7 @@ def set_dim_level(id: str, dim_level: float, channel: int = None):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -604,7 +615,7 @@ def set_shutter_level(id: str, shutter_level: float, channel: int):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -631,7 +642,7 @@ def set_shutter_stop(id: str, shutter_level: float, channel: int):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -661,7 +672,7 @@ def set_slats_level(id: str, slats_level: float, shutter_level: float = None, ch
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-t", "--on_time", type=int, required=True, help="On time in seconds.")
 def set_on_time(id: str, on_time: int):
     """Set the on time for a group."""
@@ -678,7 +689,7 @@ def set_on_time(id: str, on_time: int):
 
 
 @run.command
-@click.option("--id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=True, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Only necessary, if you have more than one channel on the device. Not "
                    "needed, if you want to control a group.")
@@ -701,7 +712,7 @@ def toggle_garage_door(id: str, channel: int = None):
 
 
 @run.command
-@click.option("--id", type=str, required=False, help="ID of the device or group, which the run command is applied to.")
+@click.option("-id", type=str, required=False, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
               help="Index of the Channel. Specify the channel index of a device, if you want to see available commands"
                    "just for a single channel.")

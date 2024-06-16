@@ -31,13 +31,13 @@ async def get_initialized_runner(including_model: bool = True) -> Runner:
 
 def get_config() -> Config:
     """Get Config object from the configuration file. If no configuration file is found, raise an exception."""
-    config = ConfigIO.find_config_in_well_known_locations()
+    persistent_config = ConfigIO.find_config_in_well_known_locations()
 
-    if config is None:
+    if persistent_config is None:
         raise ClickException(
             "No configuration file found. Run hmip auth to get an auth token.")
 
-    return Config.from_persistent_config(config)
+    return Config.from_persistent_config(persistent_config)
 
 
 def setup_basic_logging(log_level: int, logger_filename: str = None) -> None:
