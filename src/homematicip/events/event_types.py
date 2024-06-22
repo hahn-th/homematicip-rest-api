@@ -23,3 +23,5 @@ class ModelUpdateEvent(Enum):
     ITEM_REMOVED = auto()
     ITEM_UPDATED = auto()
     ITEM_CREATED = auto()
+    HOME_CONNECTED = auto()
+    HOME_DISCONNECTED = auto()

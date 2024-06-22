@@ -12,6 +12,7 @@ from homematicip.connection.rest_connection import (
 )
 from homematicip.connection.websocket_handler import WebSocketHandler
 from homematicip.events.event_manager import EventManager
+from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.events.hmip_event_handler import HmipEventHandler
 from homematicip.model.model import Model, build_model_from_json
 
@@ -135,10 +136,32 @@ class Runner(AbstractRunner):
 
     @property
     def websocket_connected(self):
+        """Current state of the websocket connection. An event will be published if the state changes."""
         return self._websocket_connected
 
+    @property
+    def home_is_connected(self) -> bool:
+        """Return if the home is connected."""
+        return self.model.home.connected if self.model is not None else False
+
     def _set_websocket_connected_state(self, value):
+        """Set the websocket connected state and publish the event.
+
+        :param value: The new state of the websocket connection."""
+        state_changed = self._websocket_connected != value
         self._websocket_connected = value
+
+        if state_changed:
+            self._publish_websocket_connected(value)
+
+    def _publish_websocket_connected(self, connected_value: bool):
+        """Publish the websocket connected event.
+
+        :param connected_value: The new state of the websocket connection."""
+        if connected_value:
+            self.event_manager.publish(ModelUpdateEvent.HOME_CONNECTED, connected_value)
+        else:
+            self.event_manager.publish(ModelUpdateEvent.HOME_DISCONNECTED, connected_value)
 
     @property
     def rest_connection(self):

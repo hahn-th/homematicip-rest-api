@@ -1,6 +1,7 @@
 import pytest
 from homematicip.configuration.config import PersistentConfig
 from homematicip.connection.rest_connection import RestConnection, RestResult
+from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.runner import Runner
 
 
@@ -56,3 +57,36 @@ def test_runner_websocket_connected_callable():
     runner._set_websocket_connected_state(True)
     assert runner.websocket_connected is True
     assert runner._websocket_connected is True
+
+
+def test_runner_websocket_connected_event_is_raised(mocker):
+    """Test that the HOME_CONNECTED event is raised when the websocket connection is established."""
+    mock_publish = mocker.Mock()
+    runner = Runner()
+    runner.event_manager.publish = mock_publish
+    runner._websocket_connected = False
+
+    runner._set_websocket_connected_state(True)
+    mock_publish.assert_called_with(ModelUpdateEvent.HOME_CONNECTED, True)
+
+
+def test_runner_websocket_disconnected_event_is_raised(mocker):
+    """Test that the HOME_DISCONNECTED event is raised when the websocket connection is lost."""
+    mock_publish = mocker.Mock()
+    runner = Runner()
+    runner.event_manager.publish = mock_publish
+    runner._websocket_connected = True
+
+    runner._set_websocket_connected_state(False)
+    mock_publish.assert_called_with(ModelUpdateEvent.HOME_DISCONNECTED, False)
+
+
+def test_runner_home_is_connected_property(mocker, filled_model):
+    """Test that the home_is_connected property returns the correct value."""
+    runner = Runner(model=filled_model)
+    current_connection_state = filled_model.home.connected
+
+    assert runner.home_is_connected is current_connection_state
+
+    runner.model.home.connected = not current_connection_state
+    assert runner.home_is_connected is not current_connection_state
