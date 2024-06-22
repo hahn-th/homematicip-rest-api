@@ -10,6 +10,7 @@ from homematicip.events.event_manager import ModelUpdateEvent
 from homematicip.events.event_types import EventType
 from homematicip.model.model_components import Group, Device, Client
 from homematicip.model.model import Model
+from homematicip.model.hmip_base import HmipBaseModel
 
 LOGGER = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ class HmipEventHandler:
             elif event_type == EventType.CLIENT_CHANGED:
                 data = event['client']
                 if data['id'] in self._model.clients:
-                    client: BaseModel = self._model.clients[data['id']]
+                    client: HmipBaseModel = self._model.clients[data['id']]
                     client.update_from_dict(data)
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, client)
 
@@ -58,7 +59,7 @@ class HmipEventHandler:
             elif event_type == EventType.DEVICE_CHANGED:
                 data = event['device']
                 if data['id'] in self._model.devices:
-                    device: BaseModel = self._model.devices[data['id']]
+                    device: HmipBaseModel = self._model.devices[data['id']]
                     device.update_from_dict(data)
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, device)
 
@@ -80,7 +81,7 @@ class HmipEventHandler:
             elif event_type == EventType.GROUP_CHANGED:
                 data = event['group']
                 if data['id'] in self._model.groups:
-                    group: BaseModel = self._model.groups[data['id']]
+                    group: HmipBaseModel = self._model.groups[data['id']]
                     group.update_from_dict(data)
                     await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, group)
             elif event_type == EventType.GROUP_REMOVED:
@@ -99,7 +100,3 @@ class HmipEventHandler:
 
             elif event_type == EventType.SECURITY_JOURNAL_CHANGED:
                 pass
-
-    def _get_device_from_model(self, model: Model, id: str):
-        if id in model.clients:
-            return model.clients[id]

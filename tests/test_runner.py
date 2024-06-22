@@ -1,3 +1,5 @@
+from unittest.mock import AsyncMock
+
 import pytest
 from homematicip.configuration.config import PersistentConfig
 from homematicip.connection.rest_connection import RestConnection, RestResult
@@ -90,3 +92,21 @@ def test_runner_home_is_connected_property(mocker, filled_model):
 
     runner.model.home.connected = not current_connection_state
     assert runner.home_is_connected is not current_connection_state
+
+
+@pytest.mark.asyncio
+async def test_runner_refresh_model(mocker, filled_model, sample_data_complete):
+    """Test that the refresh_model method updates the model."""
+    # arrange
+    runner = Runner(model=filled_model)
+    mocked_get_current_state = mocker.patch("homematicip.runner.Runner.async_get_current_state", new_callable=AsyncMock)
+    mocked_get_current_state.return_value = sample_data_complete
+
+    mocked_update_function = mocker.patch("homematicip.runner.update_model_from_json")
+
+    # act
+    await runner.async_refresh_model()
+
+    # assert
+    mocked_get_current_state.assert_called()
+    mocked_update_function.assert_called_with(filled_model, runner.event_manager, sample_data_complete)
