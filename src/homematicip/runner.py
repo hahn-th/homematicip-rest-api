@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from homematicip.configuration.config import Config
 from homematicip.configuration.config_io import ConfigIO
+from homematicip.connection.rate_limited_rest_connection import RateLimitedRestConnection
 from homematicip.connection.rest_connection import (
     ClientCharacteristicsBuilder,
     ConnectionContext,
@@ -94,7 +95,7 @@ class Runner(AbstractRunner):
 
     async def async_initialize_runner(self):
         self._connection_context = self._initialize_connection_context()
-        self._rest_connection = RestConnection(self._connection_context)
+        self._rest_connection = self._initialize_rest_connection()
 
         # download current configuration and build model
         current_configuration = await self.async_get_current_state()
@@ -103,7 +104,17 @@ class Runner(AbstractRunner):
     async def async_initialize_runner_without_init_model(self):
         """Initialize just the context and connection. Use async_get_current_state to get the current state."""
         self._connection_context = self._initialize_connection_context()
-        self._rest_connection = RestConnection(self._connection_context)
+        self._rest_connection = self._initialize_rest_connection()
+
+    def _initialize_rest_connection(self) -> RestConnection:
+        """Initialize the rest connection based on configuration.
+
+        :return: The rest connection instance"""
+        if self.config.disable_rate_limit:
+            return RestConnection(self._connection_context)
+
+        return RateLimitedRestConnection(self._connection_context, self.config.rate_limit_tokens,
+                                         self.config.rate_limit_fill_rate)
 
     async def async_listening_for_updates(self):
         """Start listening for updates from HomematicIP Cloud. This method will not return."""

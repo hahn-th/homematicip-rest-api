@@ -223,6 +223,14 @@ class HeatingValveType(Enum):
     NORMALLY_OPEN = "NORMALLY_OPEN"
 
 
+class AbsenceType(Enum):
+    NOT_ABSENT = "NOT_ABSENT"
+    PERIOD = "PERIOD"
+    PERMANENT = "PERMANENT"
+    VACATION = "VACATION"
+    PARTY = "PARTY"
+
+
 class ValveState(Enum):
     STATE_NOT_AVAILABLE = "STATE_NOT_AVAILABLE"
     RUN_TO_START = "RUN_TO_START"

@@ -11,6 +11,13 @@ class PersistentConfig:
     auth_token: str = None
     log_file: str = ""
 
+    # Use the normal RestConnection without limiting instead of the RateLimitedRestConnection
+    disable_rate_limit: bool = False
+    # Max number of tokens in the bucket
+    rate_limit_tokens: int = 10
+    # Fill rate of the bucket. Every x second a new token
+    rate_limit_fill_rate: int = 3
+
 
 @dataclass
 class Config(PersistentConfig):
