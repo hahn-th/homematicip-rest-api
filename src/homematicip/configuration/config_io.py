@@ -28,7 +28,7 @@ class ConfigIO:
             config_file_path = os.path.join(os.getcwd(), "data/output-format.json")
 
         if not os.path.exists(config_file_path):
-            return None
+            return OutputFormatConfig()
 
         return cls.output_format_from_file(config_file_path)
 

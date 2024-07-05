@@ -711,6 +711,32 @@ def toggle_garage_door(id: str, channel: int = None):
         f"Run toggle_garage_door for device {get_device_name(device)} with result: {result.status_text} ({result.status})")
 
 
+@cli.command
+@click.argument("count", type=int, nargs=1)
+def test(count: int):
+    """Test command."""
+    runner = asyncio.run(get_initialized_runner())
+
+    ids = [
+        '9d726201-be53-45cb-b32b-3ef61d3ec11c',
+        '1eae867f-0b2f-4c47-b7b8-987166ef33a3',
+        'a1dc1d91-55f2-42a1-925e-29850cd9c0dc',
+        '357814f6-c743-4917-a46e-b33a1ab81454',
+        '125a16cc-f666-473d-9e21-8dbac44d165a',
+        'd2655bdb-75cf-45b0-b1fa-9d45f88cc3c8',
+        '61805e71-eda6-4790-838b-db0aa0c241dd']
+
+    for i in range(count):
+        id = ids[i % len(ids)]
+        click.echo(f"#{i:00}: Run for device {get_group_name(runner.model.groups[id])}")
+        result = asyncio.run(async_set_point_temperature_group(runner.rest_connection, runner.model.groups[id], 12))
+        click.echo(f"Result: {result.status_text} ({result.status})")
+
+    #
+    # await async_set_point_temperature_group(runner.rest_connection, runner.model.groups["GROUP_1"], 22.0)
+    # runner.model.groups["GROUP_1"]
+
+
 @run.command
 @click.option("-id", type=str, required=False, help="ID of the device or group, which the run command is applied to.")
 @click.option("-c", "--channel", type=int, required=False, default=None,
