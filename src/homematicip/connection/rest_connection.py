@@ -41,7 +41,7 @@ class ConnectionContext:
     accesspoint_id: str = None
 
     @classmethod
-    def create(cls, access_point_id: str, lookup_url: str, auth_token: str = None):
+    def create(cls, access_point_id: str, lookup_url: str = "https://lookup.homematic.com:48335/getHost", auth_token: str = None):
         """
         Create a new connection context.
 
