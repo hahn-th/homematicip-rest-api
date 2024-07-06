@@ -32,14 +32,14 @@ class HmipEventHandler:
                 data = event['client']
                 client: Client = Client(**data)
                 self._model.clients[data['id']] = client
-                await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, client)
+                await self._event_manager.async_publish(ModelUpdateEvent.ITEM_CREATED, client)
 
             elif event_type == EventType.CLIENT_CHANGED:
                 data = event['client']
                 if data['id'] in self._model.clients:
                     client: HmipBaseModel = self._model.clients[data['id']]
                     client.update_from_dict(data)
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, client)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_UPDATED, client)
 
             elif event_type == EventType.CLIENT_REMOVED:
                 data = event['client']
@@ -47,21 +47,21 @@ class HmipEventHandler:
                 client = self._model.clients.pop(data['id'], None)
                 if client is not None:
                     client.remove_object()
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, client)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_REMOVED, client)
 
             elif event_type == EventType.DEVICE_ADDED:
                 data = event['device']
                 if data['id'] not in self._model.devices:
                     device: Device = Device(**data)
                     self._model.devices[data['id']] = device
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, device)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_CREATED, device)
 
             elif event_type == EventType.DEVICE_CHANGED:
                 data = event['device']
                 if data['id'] in self._model.devices:
                     device: HmipBaseModel = self._model.devices[data['id']]
                     device.update_from_dict(data)
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, device)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_UPDATED, device)
 
             elif event_type == EventType.DEVICE_REMOVED:
                 data = event['device']
@@ -69,34 +69,34 @@ class HmipEventHandler:
                 device = self._model.devices.pop(data['id'], None)
                 if device is not None:
                     device.remove_object()
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, device)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_REMOVED, device)
 
             elif event_type == EventType.GROUP_ADDED:
                 data = event['group']
                 if data['id'] not in self._model.groups:
                     group: Group = Group(**data)
                     self._model.groups[data['id']] = group
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_CREATED, group)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_CREATED, group)
 
             elif event_type == EventType.GROUP_CHANGED:
                 data = event['group']
                 if data['id'] in self._model.groups:
                     group: HmipBaseModel = self._model.groups[data['id']]
                     group.update_from_dict(data)
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, group)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_UPDATED, group)
             elif event_type == EventType.GROUP_REMOVED:
                 data = event['group']
 
                 group = self._model.groups.pop(data['id'], None)
                 if group is not None:
                     group.remove_object()
-                    await self._event_manager.publish(ModelUpdateEvent.ITEM_REMOVED, group)
+                    await self._event_manager.async_publish(ModelUpdateEvent.ITEM_REMOVED, group)
 
             elif event_type == EventType.HOME_CHANGED:
                 data = event['home']
 
                 self._model.home.update_from_dict(data)
-                await self._event_manager.publish(ModelUpdateEvent.ITEM_UPDATED, self._model.home)
+                await self._event_manager.async_publish(ModelUpdateEvent.ITEM_UPDATED, self._model.home)
 
             elif event_type == EventType.SECURITY_JOURNAL_CHANGED:
                 pass

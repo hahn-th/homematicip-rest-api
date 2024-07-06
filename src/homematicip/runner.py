@@ -16,7 +16,7 @@ from homematicip.connection.websocket_handler import WebSocketHandler
 from homematicip.events.event_manager import EventManager
 from homematicip.events.event_types import ModelUpdateEvent
 from homematicip.events.hmip_event_handler import HmipEventHandler
-from homematicip.model.model import Model, build_model_from_json, update_model_from_json
+from homematicip.model.model import Model, build_model_from_json, async_update_model_from_json
 
 LOGGER = logging.getLogger(__name__)
 
@@ -135,7 +135,7 @@ class Runner(AbstractRunner):
     async def async_refresh_model(self):
         """Refresh the model with the current state from the access point."""
         current_configuration = await self.async_get_current_state()
-        update_model_from_json(self.model, self.event_manager, current_configuration)
+        await async_update_model_from_json(self.model, self.event_manager, current_configuration)
 
     async def _async_start_listening_for_updates(self, context: ConnectionContext):
         self.websocket_handler = WebSocketHandler()
@@ -172,9 +172,9 @@ class Runner(AbstractRunner):
 
         :param connected_value: The new state of the websocket connection."""
         if connected_value:
-            self.event_manager.publish(ModelUpdateEvent.HOME_CONNECTED, connected_value)
+            self.event_manager.async_publish(ModelUpdateEvent.HOME_CONNECTED, connected_value)
         else:
-            self.event_manager.publish(ModelUpdateEvent.HOME_DISCONNECTED, connected_value)
+            self.event_manager.async_publish(ModelUpdateEvent.HOME_DISCONNECTED, connected_value)
 
     @property
     def rest_connection(self):

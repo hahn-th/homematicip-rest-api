@@ -1,3 +1,5 @@
+import logging
+
 try:
     from pydantic.v1 import BaseModel, PrivateAttr  # type: ignore # noqa F401 # pragma: no cover
 except ImportError:

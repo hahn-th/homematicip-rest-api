@@ -1,8 +1,8 @@
 import copy
 import json
-from unittest.mock import Mock
+from unittest.mock import Mock, AsyncMock
 
-from homematicip.model.model import build_model_from_json, update_model_from_json
+from homematicip.model.model import build_model_from_json, async_update_model_from_json
 from homematicip.model.model_components import GroupChannelReference, Group, Device
 from homematicip.model.hmip_base import HmipBaseModel
 from homematicip.model.home import Home, FunctionalHome
@@ -130,7 +130,7 @@ def test_hmip_base_model_subscribers_after_update(sample_data_complete):
     assert base.devices[device_id].lastStatusUpdate == device.lastStatusUpdate
 
 
-def test_update_home_from_json(sample_data_complete):
+async def test_update_home_from_json(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -139,7 +139,7 @@ def test_update_home_from_json(sample_data_complete):
 
     model_current = build_model_from_json(sample_data_complete)
     model_expected = build_model_from_json(manipulated)
-    event_manager = Mock()
+    event_manager = AsyncMock()
 
     old_state_climate = model_current.home.functionalHomes['INDOOR_CLIMATE'].active
     new_state_climate = model_expected.home.functionalHomes['INDOOR_CLIMATE'].active
@@ -147,7 +147,7 @@ def test_update_home_from_json(sample_data_complete):
     new_state_connected = model_expected.home.connected
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert len(event_manager.mock_calls) == 1
@@ -155,7 +155,7 @@ def test_update_home_from_json(sample_data_complete):
     assert old_state_connected != new_state_connected
 
 
-def test_update_model_from_json_changed_devices(sample_data_complete):
+async def test_update_model_from_json_changed_devices(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -164,7 +164,7 @@ def test_update_model_from_json_changed_devices(sample_data_complete):
 
     model_current = build_model_from_json(sample_data_complete)
     model_expected = build_model_from_json(manipulated)
-    event_manager = Mock()
+    event_manager = AsyncMock()
 
     old_state_duty = model_current.devices['3014F7110000RAIN_SENSOR'].functionalChannels["0"].dutyCycle
     new_state_duty = model_expected.devices['3014F7110000RAIN_SENSOR'].functionalChannels["0"].dutyCycle
@@ -172,7 +172,7 @@ def test_update_model_from_json_changed_devices(sample_data_complete):
     new_state_on = model_expected.devices['3014F7110DIN_RAIL_SWITCH'].functionalChannels["1"].on
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert len(event_manager.mock_calls) == 2
@@ -180,7 +180,7 @@ def test_update_model_from_json_changed_devices(sample_data_complete):
     assert old_state_on != new_state_on
 
 
-def test_update_model_from_json_with_new_device(sample_data_complete):
+async def test_update_model_from_json_with_new_device(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -188,11 +188,11 @@ def test_update_model_from_json_with_new_device(sample_data_complete):
         sample_data_complete["devices"]["3014F7110000RAIN_SENSOR"])
 
     model_current = build_model_from_json(sample_data_complete)
-    event_manager = Mock()
+    event_manager = AsyncMock()
     contains_device_before = "3014F7110000RAIN_SENSO2" in model_current.devices
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert contains_device_before is False
@@ -200,7 +200,7 @@ def test_update_model_from_json_with_new_device(sample_data_complete):
     assert len(event_manager.mock_calls) == 1
 
 
-def test_update_model_from_json_updated_group(sample_data_complete):
+async def test_update_model_from_json_updated_group(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -208,13 +208,13 @@ def test_update_model_from_json_updated_group(sample_data_complete):
 
     model_current = build_model_from_json(sample_data_complete)
     model_expected = build_model_from_json(manipulated)
-    event_manager = Mock()
+    event_manager = AsyncMock()
 
     old_label = model_current.groups['00000000-0000-0000-0000-0000000000EN'].label
     new_label = model_expected.groups['00000000-0000-0000-0000-0000000000EN'].label
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert len(event_manager.mock_calls) == 1
@@ -222,7 +222,7 @@ def test_update_model_from_json_updated_group(sample_data_complete):
     assert model_current.groups['00000000-0000-0000-0000-0000000000EN'].label == new_label
 
 
-def test_update_model_from_json_with_new_group(sample_data_complete):
+async def test_update_model_from_json_with_new_group(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -230,11 +230,11 @@ def test_update_model_from_json_with_new_group(sample_data_complete):
         sample_data_complete["groups"]["00000000-0000-0000-0000-0000000000EN"])
 
     model_current = build_model_from_json(sample_data_complete)
-    event_manager = Mock()
+    event_manager = AsyncMock()
     contains_group_before = "00000000-0000-0000-0000-0000000000EN2" in model_current.groups
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert contains_group_before is False
@@ -242,7 +242,7 @@ def test_update_model_from_json_with_new_group(sample_data_complete):
     assert len(event_manager.mock_calls) == 1
 
 
-def test_update_model_from_json_with_new_client(sample_data_complete):
+async def test_update_model_from_json_with_new_client(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -250,11 +250,11 @@ def test_update_model_from_json_with_new_client(sample_data_complete):
         sample_data_complete["clients"]["00000000-0000-0000-0000-000000000000"])
 
     model_current = build_model_from_json(sample_data_complete)
-    event_manager = Mock()
+    event_manager = AsyncMock()
     contains_client_before = "00000000-0000-0000-0000-000000000NEW" in model_current.clients
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert contains_client_before is False
@@ -262,7 +262,7 @@ def test_update_model_from_json_with_new_client(sample_data_complete):
     assert len(event_manager.mock_calls) == 1
 
 
-def test_update_model_from_json_updated_client(sample_data_complete):
+async def test_update_model_from_json_updated_client(sample_data_complete):
     """Test, if the home is updated correctly."""
     # arrange
     manipulated = copy.deepcopy(sample_data_complete)
@@ -270,13 +270,13 @@ def test_update_model_from_json_updated_client(sample_data_complete):
 
     model_current = build_model_from_json(sample_data_complete)
     model_expected = build_model_from_json(manipulated)
-    event_manager = Mock()
+    event_manager = AsyncMock()
 
     old_label = model_current.clients['00000000-0000-0000-0000-000000000000'].label
     new_label = model_expected.clients['00000000-0000-0000-0000-000000000000'].label
 
     # act
-    update_model_from_json(model_current, event_manager, manipulated)
+    await async_update_model_from_json(model_current, event_manager, manipulated)
 
     # assert
     assert len(event_manager.mock_calls) == 1

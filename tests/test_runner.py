@@ -65,7 +65,7 @@ def test_runner_websocket_connected_event_is_raised(mocker):
     """Test that the HOME_CONNECTED event is raised when the websocket connection is established."""
     mock_publish = mocker.Mock()
     runner = Runner()
-    runner.event_manager.publish = mock_publish
+    runner.event_manager.async_publish = mock_publish
     runner._websocket_connected = False
 
     runner._set_websocket_connected_state(True)
@@ -76,7 +76,7 @@ def test_runner_websocket_disconnected_event_is_raised(mocker):
     """Test that the HOME_DISCONNECTED event is raised when the websocket connection is lost."""
     mock_publish = mocker.Mock()
     runner = Runner()
-    runner.event_manager.publish = mock_publish
+    runner.event_manager.async_publish = mock_publish
     runner._websocket_connected = True
 
     runner._set_websocket_connected_state(False)
@@ -102,7 +102,7 @@ async def test_runner_refresh_model(mocker, filled_model, sample_data_complete):
     mocked_get_current_state = mocker.patch("homematicip.runner.Runner.async_get_current_state", new_callable=AsyncMock)
     mocked_get_current_state.return_value = sample_data_complete
 
-    mocked_update_function = mocker.patch("homematicip.runner.update_model_from_json")
+    mocked_update_function = mocker.patch("homematicip.runner.async_update_model_from_json")
 
     # act
     await runner.async_refresh_model()
