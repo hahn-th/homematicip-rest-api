@@ -714,8 +714,11 @@ def toggle_garage_door(id: str, channel: int = None):
 
 
 @run.command
+@click.argument("cooling", type=bool, nargs=1)
 def set_cooling(cooling: bool):
-    """Set the cooling mode for the HmIP Access Point."""
+    """Set the cooling mode for the HmIP Access Point.
+
+    COOLING is a boolean value. True for cooling mode, False for heating mode."""
     runner = asyncio.run(get_initialized_runner())
 
     result = asyncio.run(async_set_cooling_home(runner.rest_connection, cooling))
