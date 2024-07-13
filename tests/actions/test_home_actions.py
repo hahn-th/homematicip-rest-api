@@ -6,7 +6,7 @@ from homematicip.action.home_actions import action_set_security_zones_activation
     action_set_location, action_set_intrusion_alert_through_smoke_detectors, action_activate_absence_with_period, \
     action_activate_absence_permanent, action_activate_absence_with_duration, action_deactivate_absence, \
     action_activate_vacation, action_deactivate_vacation, action_set_zone_activation_delay, action_set_timezone, \
-    action_set_powermeter_unit_price, action_start_inclusion, get_security_zones_activation
+    action_set_powermeter_unit_price, action_start_inclusion, get_security_zones_activation, async_set_cooling_home
 from homematicip.connection.rest_connection import RestResult, RestConnection
 from homematicip.runner import Runner
 
@@ -128,3 +128,17 @@ async def test_action_start_inclusion(runner):
     await action_start_inclusion(runner.rest_connection, device_id)
     runner.rest_connection.async_post.assert_called_once_with("home/startInclusionModeForDevice",
                                                               {"deviceId": device_id})
+
+
+@pytest.mark.asyncio
+async def test_action_set_cooling_true(runner):
+    await async_set_cooling_home(runner.rest_connection, True)
+    runner.rest_connection.async_post.assert_called_once_with("home/heating/setCooling",
+                                                              {"cooling": True})
+
+
+@pytest.mark.asyncio
+async def test_action_set_cooling_false(runner):
+    await async_set_cooling_home(runner.rest_connection, False)
+    runner.rest_connection.async_post.assert_called_once_with("home/heating/setCooling",
+                                                              {"cooling": False})

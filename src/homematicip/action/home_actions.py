@@ -235,3 +235,13 @@ async def action_start_inclusion(rest_connection: RestConnection, deviceId):
     """
     data = {"deviceId": deviceId}
     return await rest_connection.async_post("home/startInclusionModeForDevice", data)
+
+
+async def async_set_cooling_home(rest_connection: RestConnection, cooling: bool):
+    """set the cooling mode for the home
+
+    Args:
+        cooling(bool): True if cooling should be activated
+    """
+    data = {"cooling": cooling}
+    return await rest_connection.async_post("home/heating/setCooling", data)

@@ -12,11 +12,13 @@ import httpx
 from alive_progress import alive_bar
 
 from homematicip.action.functional_channel_actions import async_set_slats_level_fc, async_set_shutter_level_fc, \
-    async_set_switch_state_fc, async_set_dim_level_fc, async_start_impulse_fc, async_set_shutter_stop_fc, async_set_display_fc
+    async_set_switch_state_fc, async_set_dim_level_fc, async_start_impulse_fc, async_set_shutter_stop_fc, \
+    async_set_display_fc
 from homematicip.action.group_actions import async_set_boost_group, async_set_boost_duration_group, \
     async_set_shutter_level_group, async_set_slats_level_group, \
     async_set_shutter_stop_group, async_set_switch_state_group, async_set_point_temperature_group, \
     async_set_active_profile_group, async_set_control_mode_group, async_set_on_time_group
+from homematicip.action.home_actions import async_set_cooling_home
 from homematicip.action.registry import Registry, ActionTarget
 from homematicip.auth import Auth
 from homematicip.cli.helper import get_channel_by_index_of_first, get_initialized_runner, setup_basic_logging, \
@@ -709,6 +711,15 @@ def toggle_garage_door(id: str, channel: int = None):
     result = asyncio.run(async_start_impulse_fc(runner.rest_connection, fc))
     click.echo(
         f"Run toggle_garage_door for device {get_device_name(device)} with result: {result.status_text} ({result.status})")
+
+
+@run.command
+def set_cooling(cooling: bool):
+    """Set the cooling mode for the HmIP Access Point."""
+    runner = asyncio.run(get_initialized_runner())
+
+    result = asyncio.run(async_set_cooling_home(runner.rest_connection, cooling))
+    click.echo(f"Run set_cooling with result: {result.status_text} ({result.status})")
 
 
 @cli.command
