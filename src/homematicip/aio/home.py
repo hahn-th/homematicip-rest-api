@@ -152,3 +152,6 @@ class AsyncHome(Home):
         return await self._connection.api_call(
             *super().set_location(city, latitude, longitude)
         )
+
+    async def set_cooling(self, cooling):
+        return await self._connection.api_call(*super().set_cooling(cooling))

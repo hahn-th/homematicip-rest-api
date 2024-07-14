@@ -477,6 +477,10 @@ class Home(HomeMaticIPObject):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
         return self._rest_call("home/setLocation", json.dumps(data))
 
+    def set_cooling(self, cooling):
+        data = {"cooling": cooling}
+        return self._rest_call("home/heating/setCooling", json.dumps(data))
+
     def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
         """activate or deactivate if smoke detectors should "ring" during an alarm
 
