@@ -25,12 +25,12 @@ class WebSocketHandler:
             async for message in websocket:
                 try:
                     if connection_state_callback is not None:
-                        connection_state_callback(True)
+                        await connection_state_callback(True)
                     yield message
 
                 except websockets.ConnectionClosed:
                     if connection_state_callback is not None:
-                        connection_state_callback(False)
+                        await connection_state_callback(False)
                     LOGGER.warn(
                         f"Got ConnectionClosed Exception. Should reconnect is set to {reconnect_on_error}"
                     )
@@ -40,4 +40,4 @@ class WebSocketHandler:
                     continue
 
         # If we reach this point, the connection is closed.
-        connection_state_callback(False)
+        await connection_state_callback(False)

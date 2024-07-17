@@ -52,34 +52,37 @@ async def test_runner_async_run_home(mocker, sample_data_complete, config, conne
     assert runner.model is not None
 
 
-def test_runner_websocket_connected_callable():
+@pytest.mark.asyncio
+async def test_runner_websocket_connected_callable():
     runner = Runner()
     assert runner.websocket_connected is False
 
-    runner._set_websocket_connected_state(True)
+    await runner._async_set_websocket_connected_state(True)
     assert runner.websocket_connected is True
     assert runner._websocket_connected is True
 
 
-def test_runner_websocket_connected_event_is_raised(mocker):
+@pytest.mark.asyncio
+async def test_runner_websocket_connected_event_is_raised(mocker):
     """Test that the HOME_CONNECTED event is raised when the websocket connection is established."""
-    mock_publish = mocker.Mock()
+    mock_publish = AsyncMock()
     runner = Runner()
     runner.event_manager.async_publish = mock_publish
     runner._websocket_connected = False
 
-    runner._set_websocket_connected_state(True)
+    await runner._async_set_websocket_connected_state(True)
     mock_publish.assert_called_with(ModelUpdateEvent.HOME_CONNECTED, True)
 
 
-def test_runner_websocket_disconnected_event_is_raised(mocker):
+@pytest.mark.asyncio
+async def test_runner_websocket_disconnected_event_is_raised(mocker):
     """Test that the HOME_DISCONNECTED event is raised when the websocket connection is lost."""
-    mock_publish = mocker.Mock()
+    mock_publish = AsyncMock()
     runner = Runner()
     runner.event_manager.async_publish = mock_publish
     runner._websocket_connected = True
 
-    runner._set_websocket_connected_state(False)
+    await runner._async_set_websocket_connected_state(False)
     mock_publish.assert_called_with(ModelUpdateEvent.HOME_DISCONNECTED, False)
 
 

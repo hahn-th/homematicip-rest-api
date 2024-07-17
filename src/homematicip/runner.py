@@ -140,7 +140,7 @@ class Runner(AbstractRunner):
     async def _async_start_listening_for_updates(self, context: ConnectionContext):
         self.websocket_handler = WebSocketHandler()
         hmip_event_handler = HmipEventHandler(event_manager=self.event_manager, model=self.model)
-        async for message in self.websocket_handler.listen(context, self._set_websocket_connected_state, False):
+        async for message in self.websocket_handler.listen(context, self._async_set_websocket_connected_state, False):
             try:
                 await hmip_event_handler.process_event_async(json.loads(message))
 
@@ -157,7 +157,7 @@ class Runner(AbstractRunner):
         """Return if the home is connected."""
         return self.model.home.connected if self.model is not None else False
 
-    def _set_websocket_connected_state(self, value):
+    async def _async_set_websocket_connected_state(self, value):
         """Set the websocket connected state and publish the event.
 
         :param value: The new state of the websocket connection."""
@@ -165,16 +165,16 @@ class Runner(AbstractRunner):
         self._websocket_connected = value
 
         if state_changed:
-            self._publish_websocket_connected(value)
+            await self._async_publish_websocket_connected(value)
 
-    def _publish_websocket_connected(self, connected_value: bool):
+    async def _async_publish_websocket_connected(self, connected_value: bool):
         """Publish the websocket connected event.
 
         :param connected_value: The new state of the websocket connection."""
         if connected_value:
-            self.event_manager.async_publish(ModelUpdateEvent.HOME_CONNECTED, connected_value)
+            await self.event_manager.async_publish(ModelUpdateEvent.HOME_CONNECTED, connected_value)
         else:
-            self.event_manager.async_publish(ModelUpdateEvent.HOME_DISCONNECTED, connected_value)
+            await self.event_manager.async_publish(ModelUpdateEvent.HOME_DISCONNECTED, connected_value)
 
     @property
     def rest_connection(self):
