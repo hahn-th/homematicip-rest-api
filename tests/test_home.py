@@ -1,18 +1,10 @@
-import json
-import time
-from datetime import datetime, timedelta, timezone
-from pathlib import Path
-from unittest.mock import MagicMock, Mock
-
-import pytest
+from datetime import timedelta
+from unittest.mock import Mock
 
 from conftest import utc_offset
-from homematicip.base.base_connection import BaseConnection
-from homematicip.base.enums import *
-from homematicip.device import AccelerationSensor, Device, BaseDevice
-from homematicip.EventHook import EventHook
+from homematicip.device import BaseDevice
 from homematicip.functionalHomes import *
-from homematicip.group import Group, MetaGroup
+from homematicip.group import Group
 from homematicip.home import Home
 from homematicip.rule import *
 from homematicip.securityEvent import *
@@ -29,6 +21,15 @@ def test_update_event(fake_home: Home):
     fake_handler.method.assert_called()
     fake_home.remove_callback(fake_handler.method)
     assert fake_handler.method not in fake_home._on_update
+
+
+def test_channel_event(fake_home: Home):
+    fake_handler = Mock()
+    fake_home.on_channel_event(fake_handler.method)
+    fake_home.fire_channel_event()
+    fake_handler.method.assert_called()
+    fake_home.remove_channel_event_handler(fake_handler.method)
+    assert fake_handler.method not in fake_home._on_channel_event
 
 
 def test_remove_event(fake_home: Home):

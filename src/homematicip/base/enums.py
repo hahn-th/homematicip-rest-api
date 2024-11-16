@@ -375,6 +375,7 @@ class EventType(AutoNameEnum):
     DEVICE_REMOVED = auto()
     DEVICE_CHANGED = auto()
     DEVICE_ADDED = auto()
+    DEVICE_CHANNEL_EVENT = auto()
     CLIENT_REMOVED = auto()
     CLIENT_CHANGED = auto()
     CLIENT_ADDED = auto()

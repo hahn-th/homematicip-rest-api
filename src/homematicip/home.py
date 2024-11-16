@@ -4,6 +4,7 @@ import sys
 import threading
 from typing import List
 
+from homematicip.base.channel_event import ChannelEvent
 import websocket
 
 from homematicip.access_point_update_state import AccessPointUpdateState
@@ -40,6 +41,8 @@ class Home(HomeMaticIPObject):
 
         # List with create handlers.
         self._on_create = []
+        # EventHandler for channel events
+        self._on_channel_event = []
 
         self.apExchangeClientId = None
         self.apExchangeState = ApExchangeState.NONE
@@ -138,11 +141,26 @@ class Home(HomeMaticIPObject):
         for _handler in self._on_create:
             _handler(*args, **kwargs)
 
+    def fire_channel_event(self, *args, **kwargs):
+        """Trigger the method tied to _on_channel_event"""
+        for _handler in self._on_channel_event:
+            _handler(*args, **kwargs)
+
     def remove_callback(self, handler):
         """Remove event handler."""
         super().remove_callback(handler)
         if handler in self._on_create:
             self._on_create.remove(handler)
+
+    def on_channel_event(self, handler):
+        """Adds an event handler to the channel event method. Fires when a channel event
+        is received."""
+        self._on_channel_event.append(handler)
+
+    def remove_channel_event_handler(self, handler):
+        """Remove event handler."""
+        if handler in self._on_channel_event:
+            self._on_channel_event.remove(handler)
 
     def download_configuration(self) -> str:
         """downloads the current configuration from the cloud
@@ -635,7 +653,9 @@ class Home(HomeMaticIPObject):
             deviceId: sgtin of device
         """
         data = {"deviceId": deviceId}
-        return self._rest_call("home/startInclusionModeForDevice", body=json.dumps(data))
+        return self._rest_call(
+            "home/startInclusionModeForDevice", body=json.dumps(data)
+        )
 
     def enable_events(self, enable_trace=False, ping_interval=20):
         websocket.enableTrace(enable_trace)
@@ -742,6 +762,9 @@ class Home(HomeMaticIPObject):
                     obj = self.search_device_by_id(event["id"])
                     obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
                     self.devices.remove(obj)
+                elif pushEventType == EventType.DEVICE_CHANNEL_EVENT:
+                    channel_event = ChannelEvent(**event)
+                    self.fire_channel_event(channel_event)
                 elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
                     obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)

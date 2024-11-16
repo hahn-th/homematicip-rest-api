@@ -579,6 +579,16 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
         except KeyboardInterrupt:
             return
 
+    if args.listen_channel_event:
+        command_entered = True
+        home.on_channel_event(lambda x: print(x))
+        home.enable_events()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            return
+
     return command_entered
 
 
@@ -972,6 +982,14 @@ def get_parser():
         dest="rule_activation",
         help="deactivates the automation rules",
         default=None,
+    )
+
+    group = parser.add_argument_group("Listen")
+    group.add_argument(
+        "--listen-channel-events",
+        action="store_true",
+        dest="listen_channel_event",
+        help="listens for channel events",
     )
 
     return parser

@@ -1,22 +1,19 @@
-import json
 import time
-from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+import time
+from pathlib import Path
+from unittest.mock import Mock
 
 import pytest
 
-from conftest import utc_offset
-from homematicip.base.base_connection import BaseConnection
-from homematicip.base.enums import *
-from homematicip.device import AccelerationSensor, Device
-from homematicip.EventHook import EventHook
+from homematicip.base.channel_event import ChannelEvent
+from homematicip.device import AccelerationSensor
 from homematicip.functionalHomes import *
-from homematicip.group import Group, MetaGroup, SecurityZoneGroup
+from homematicip.group import MetaGroup, SecurityZoneGroup
 from homematicip.home import Client, Home
-from homematicip.rule import *
 from homematicip.securityEvent import *
 from homematicip_demo.helper import (
-    fake_home_download_configuration,
     no_ssl_verification,
 )
 
@@ -45,6 +42,27 @@ def build_json_payload(pushEventType: EventType, type: str, data) -> dict:
         event_data = {"events": {"0": {"pushEventType": str(pushEventType)}}}
 
     return event_data
+
+
+def test_websocket_channel_event(fake_home: Home):
+    # preparing event data for channel event
+    payload = {
+        "events":
+            {
+                "0":
+                    {
+                        "pushEventType": "DEVICE_CHANNEL_EVENT",
+                        "deviceId": "xxx",
+                        "channelIndex": 1,
+                        "channelEventType": "DOOR_BELL_SENSOR_EVENT",
+                    }
+            }
+    }
+    fake_handler = Mock()
+    fake_home.on_channel_event(fake_handler)
+    fake_home._ws_on_message(None, json.dumps(payload))
+
+    fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "xxx", 1, "DOOR_BELL_SENSOR_EVENT"))
 
 
 def test_websocket_device(fake_home: Home, home_data):
