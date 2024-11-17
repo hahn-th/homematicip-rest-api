@@ -40,7 +40,7 @@ class FakeServer:
         self._add_route()
         self.runner = web.AppRunner(self.app)
         await self.runner.setup()
-        site = web.TCPSite(self.runner, "127.0.0.1", 8123)
+        site = web.TCPSite(self.runner, "127.0.0.1", 34567)
         await site.start()
         pass
 
@@ -133,7 +133,7 @@ async def single_message_server():
 @pytest.fixture
 async def client_connection(event_loop):
     connection = AsyncConnection(event_loop)
-    connection._urlWebSocket = "ws://localhost:8123/"
+    connection._urlWebSocket = "ws://localhost:34567/"
     connection.ping_timeout = 1
     yield connection
 

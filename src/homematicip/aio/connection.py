@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 
 import aiohttp
 import async_timeout
-import websockets
+from websockets.legacy.client import connect
 from websockets import ConnectionClosed
 
 from homematicip.base.base_connection import (
@@ -112,7 +112,7 @@ class AsyncConnection(BaseConnection):
     async def _connect_to_websocket(self):
         try:
             self.socket_connection = await asyncio.wait_for(
-                websockets.connect(
+                connect(
                     self._urlWebSocket,
                     extra_headers={
                         ATTR_AUTH_TOKEN: self._auth_token,
