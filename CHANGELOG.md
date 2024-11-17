@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.1.3] 2024-11-17
+
+### ADDED
+
+- Add support for channel-events
+
+### CHANGED
+
+- Use legacy websockets client to avoid issues during connect
+
 ## [1.1.2] 2024-07-14
 
 ### ADDED
@@ -677,7 +687,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.2..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.3..master
+[1.1.3]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.0.16...1.1.0
