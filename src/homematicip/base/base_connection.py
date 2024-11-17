@@ -28,9 +28,9 @@ class HmipThrottlingError(HmipConnectionError):
 
 
 class BaseConnection:
-    """Base connection class.
+    """Base connection_v2 class.
 
-    Threaded and Async connection class must inherit from this."""
+    Threaded and Async connection_v2 class must inherit from this."""
 
     _auth_token = ""
     _clientauth_token = ""

@@ -1,4 +1,3 @@
-from os import device_encoding
 from homematicip.aio.device import *
 from homematicip.aio.group import *
 from homematicip.aio.rule import *

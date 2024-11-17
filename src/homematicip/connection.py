@@ -1,8 +1,5 @@
-import hashlib
 import json
-import locale
 import logging
-import platform
 
 import requests
 

@@ -1,20 +1,14 @@
-import logging
-import ssl
-import sys
-import threading
-from typing import List
+from typing import List, Callable
 
-from homematicip.base.channel_event import ChannelEvent
-import websocket
-
+from homematicip.EventHook import *
 from homematicip.access_point_update_state import AccessPointUpdateState
-from homematicip.base.enums import *
-from homematicip.base.helpers import bytes2str
+from homematicip.base.channel_event import ChannelEvent
 from homematicip.class_maps import *
 from homematicip.client import Client
 from homematicip.connection import Connection
+from homematicip.connection_v2.rest_connection import ConnectionContext
+from homematicip.connection_v2.websocket_handler import WebSocketHandler
 from homematicip.device import *
-from homematicip.EventHook import *
 from homematicip.group import *
 from homematicip.location import Location
 from homematicip.oauth_otk import OAuthOTK
@@ -38,6 +32,11 @@ class Home(HomeMaticIPObject):
         if connection is None:
             connection = Connection()
         super().__init__(connection)
+
+        self._connection_context: ConnectionContext | None = None
+        self._websocket_client: WebSocketHandler | None = None
+
+        self._auth_token: str | None = None
 
         # List with create handlers.
         self._on_create = []
@@ -69,8 +68,6 @@ class Home(HomeMaticIPObject):
         #:Weather:the current weather
         self.weather = None
 
-        self.__webSocket = None
-        self.__webSocketThread = None
         self.onEvent = EventHook()
         self.onWsError = EventHook()
         #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
@@ -91,8 +88,11 @@ class Home(HomeMaticIPObject):
         #:Map: a map of all access points and their updateStates
         self.accessPointUpdateStates = {}
 
-    def init(self, access_point_id, lookup=True):
+    def init(self, access_point_id, auth_token: str | None = None, lookup=True):
         self._connection.init(access_point_id, lookup)
+        self._connection_context = ConnectionContext.create(access_point_id, auth_token=auth_token)
+
+        #self._rest_connection = RestConnection(self._connection_context)
 
     def set_auth_token(self, auth_token):
         self._connection.set_auth_token(auth_token)
@@ -657,54 +657,28 @@ class Home(HomeMaticIPObject):
             "home/startInclusionModeForDevice", body=json.dumps(data)
         )
 
-    def enable_events(self, enable_trace=False, ping_interval=20):
-        websocket.enableTrace(enable_trace)
+    async def enable_events(self, additional_message_handler: Callable = None):
+        """Connect to Websocket and listen for events"""
+        if self._websocket_client and self._websocket_client.is_connected():
+            return
 
-        self.__webSocket = websocket.WebSocketApp(
-            self._connection.urlWebSocket,
-            header=[
-                "AUTHTOKEN: {}".format(self._connection.auth_token),
-                "CLIENTAUTH: {}".format(self._connection.clientauth_token),
-            ],
-            on_message=self._ws_on_message,
-            on_error=self._ws_on_error,
-            on_close=self._ws_on_close,
-        )
+        self._websocket_client = WebSocketHandler()
+        self._websocket_client.add_on_message_handler(self._ws_on_message)
+        if additional_message_handler:
+            self._websocket_client.add_on_message_handler(additional_message_handler)
 
-        websocket_kwargs = {"ping_interval": ping_interval}
-        if hasattr(sys, "_called_from_test"):  # disable ssl during a test run
-            sslopt = {"cert_reqs": ssl.CERT_NONE}
-            websocket_kwargs = {"sslopt": sslopt, "ping_interval": 2, "ping_timeout": 1}
-
-        self.__webSocketThread = threading.Thread(
-            name="hmip-websocket",
-            target=self.__webSocket.run_forever,
-            kwargs=websocket_kwargs,
-        )
-        self.__webSocketThread.daemon = True
-        self.__webSocketThread.start()
+        await self._websocket_client.listen(self._connection_context)
 
     def disable_events(self):
-        if self.__webSocket:
-            self.__webSocket.close()
-            self.__webSocket = None
+        """Stop Websocket Connection"""
+        if self._websocket_client:
+            self._websocket_client.stop_listening()
+            self._websocket_client = None
 
-    def _ws_on_close(self, *_):
-        self.__webSocket = None
-
-    def _ws_on_error(self, _, err):
-        LOGGER.exception(err)
-        self.onWsError.fire(err)
-        if self.websocket_reconnect_on_error:
-            logger.debug("Trying to reconnect websocket")
-            self.disable_events()
-            self.enable_events()
-
-    def _ws_on_message(self, _, message):
-        # json.loads doesn't support bytes as parameter before python 3.6
-        js = json.loads(bytes2str(message))
-        # LOGGER.debug(js)
-        eventList = []
+    async def _ws_on_message(self, message):
+        LOGGER.debug(message)
+        js = json.loads(message)
+        event_list = []
         for event in js["events"].values():
             try:
                 pushEventType = EventType(event["pushEventType"])
@@ -778,7 +752,7 @@ class Home(HomeMaticIPObject):
                     pass  # data is just none so nothing to do here
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
-                eventList.append({"eventType": pushEventType, "data": obj})
+                event_list.append({"eventType": pushEventType, "data": obj})
             except ValueError as valerr:  # pragma: no cover
                 LOGGER.warning(
                     "Uknown EventType '%s' Data: %s", event["pushEventType"], event
@@ -786,4 +760,4 @@ class Home(HomeMaticIPObject):
 
             except Exception as err:  # pragma: no cover
                 LOGGER.exception(err)
-        self.onEvent.fire(eventList)
+        self.onEvent.fire(event_list)

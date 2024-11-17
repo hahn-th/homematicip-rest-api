@@ -1,4 +1,3 @@
-from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.functionalHomes import *

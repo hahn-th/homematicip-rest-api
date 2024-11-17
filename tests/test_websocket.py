@@ -44,7 +44,7 @@ def build_json_payload(pushEventType: EventType, type: str, data) -> dict:
     return event_data
 
 
-def test_websocket_channel_event(fake_home: Home):
+async def test_websocket_channel_event(fake_home: Home):
     # preparing event data for channel event
     payload = {
         "events":
@@ -60,12 +60,12 @@ def test_websocket_channel_event(fake_home: Home):
     }
     fake_handler = Mock()
     fake_home.on_channel_event(fake_handler)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "xxx", 1, "DOOR_BELL_SENSOR_EVENT"))
 
 
-def test_websocket_device(fake_home: Home, home_data):
+async def test_websocket_device(fake_home: Home, home_data):
     # preparing event data for device added
     device_base_id = "3014F7110000000000000031"
     device_added = home_data["devices"][device_base_id].copy()
@@ -75,7 +75,7 @@ def test_websocket_device(fake_home: Home, home_data):
         x["deviceId"] = device_added_id
 
     event_data = build_json_payload(EventType.DEVICE_ADDED, "device", device_added)
-    fake_home._ws_on_message(None, message=json.dumps(event_data))
+    await fake_home._ws_on_message(message=json.dumps(event_data))
 
     device_added = home_data["devices"][device_base_id].copy()
     device_added_by_change_id = "NEW_DEVICE_2"
@@ -84,14 +84,14 @@ def test_websocket_device(fake_home: Home, home_data):
         x["deviceId"] = device_added_by_change_id
 
     event_data = build_json_payload(EventType.DEVICE_CHANGED, "device", device_added)
-    fake_home._ws_on_message(None, message=json.dumps(event_data))
+    await fake_home._ws_on_message(message=json.dumps(event_data))
 
     # preparing event data for device changed
     device_changed = home_data["devices"][device_base_id].copy()
     device_changed["label"] = "CHANGED"
 
     event_data = build_json_payload(EventType.DEVICE_CHANGED, "device", device_changed)
-    fake_home._ws_on_message(None, message=json.dumps(event_data))
+    await fake_home._ws_on_message(message=json.dumps(event_data))
 
     # send_event(fake_home, EventType.DEVICE_CHANGED, "device", device_changed)
     # preparing event data for device remove
@@ -99,7 +99,7 @@ def test_websocket_device(fake_home: Home, home_data):
     assert fake_home.search_device_by_id(device_delete_id) != None
 
     event_data = build_json_payload(EventType.DEVICE_REMOVED, "id", device_delete_id)
-    fake_home._ws_on_message(None, message=json.dumps(event_data))
+    await fake_home._ws_on_message(message=json.dumps(event_data))
     # send_event(fake_home, EventType.DEVICE_REMOVED, "id", device_delete_id)
 
     time.sleep(1)
@@ -118,32 +118,32 @@ def test_websocket_device(fake_home: Home, home_data):
     assert fake_home.search_device_by_id(device_delete_id) is None
 
 
-def test_websocket_group(fake_home: Home, home_data):
+async def test_websocket_group(fake_home: Home, home_data):
     # preparing event data for group added
     group_base_id = "00000000-0000-0000-0000-000000000020"
     group_added = home_data["groups"][group_base_id].copy()
     group_added_id = "NEW_group"
     group_added["id"] = group_added_id
     payload = build_json_payload(EventType.GROUP_ADDED, "group", group_added)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     group_added = home_data["groups"][group_base_id].copy()
     group_added_by_change_id = "NEW_group_2"
     group_added["id"] = group_added_by_change_id
     payload = build_json_payload(EventType.GROUP_CHANGED, "group", group_added)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     # preparing event data for group changed
     group_changed_id = "00000000-0000-0000-0000-000000000016"
     group_changed = home_data["groups"][group_changed_id].copy()
     group_changed["label"] = "CHANGED"
     payload = build_json_payload(EventType.GROUP_CHANGED, "group", group_changed)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
     # preparing event data for group remove
     group_delete_id = "00000000-0000-0000-0000-000000000012"
     assert fake_home.search_group_by_id(group_delete_id) != None
     payload = build_json_payload(EventType.GROUP_REMOVED, "id", group_delete_id)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     time.sleep(1)
     d = fake_home.search_group_by_id(group_added_id)
@@ -161,46 +161,46 @@ def test_websocket_group(fake_home: Home, home_data):
     assert fake_home.search_group_by_id(group_delete_id) is None
 
 
-def test_websocket_security_journal_changed(fake_home: Home, home_data):
+async def test_websocket_security_journal_changed(fake_home: Home, home_data):
     payload = build_json_payload(EventType.SECURITY_JOURNAL_CHANGED, None, None)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
     time.sleep(1)
 
 
-def test_websocket_home_changed(fake_home: Home, home_data):
+async def test_websocket_home_changed(fake_home: Home, home_data):
     new_home = home_data["home"].copy()
     new_home["weather"]["humidity"] = 60
 
     assert fake_home.weather.humidity == 54
 
     payload = build_json_payload(EventType.HOME_CHANGED, "home", new_home)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     time.sleep(1)
     assert fake_home.weather.humidity == 60
 
 
-def test_websocket_client(fake_home: Home, home_data):
+async def test_websocket_client(fake_home: Home, home_data):
     # preparing event data for client added
     client_base_id = "00000000-0000-0000-0000-000000000000"
     client_added = home_data["clients"][client_base_id].copy()
     client_added_id = "NEW_CLIENT"
     client_added["id"] = client_added_id
     payload = build_json_payload(EventType.CLIENT_ADDED, "client", client_added)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     # preparing event data for client changed
     client_changed = home_data["clients"][client_base_id].copy()
     client_changed["label"] = "CHANGED"
     payload = build_json_payload(EventType.CLIENT_CHANGED, "client", client_changed)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
     # preparing event data for client remove
     client_delete_id = "AA000000-0000-0000-0000-000000000000"
     c = fake_home.search_client_by_id(client_delete_id)
     assert c != None
     assert c.label == "REMOVE_ME"
     payload = build_json_payload(EventType.CLIENT_REMOVED, "id", client_delete_id)
-    fake_home._ws_on_message(None, json.dumps(payload))
+    await fake_home._ws_on_message(json.dumps(payload))
 
     time.sleep(1)
     d = fake_home.search_client_by_id(client_added_id)
@@ -218,7 +218,7 @@ ws_error_called = False
 
 
 @pytest.mark.flaky(reruns=10, reruns_delay=4)
-def test_websocket_error(fake_home: Home, home_data):
+async def test_websocket_error(fake_home: Home, home_data):
     global ws_error_called
 
     def on_error(err):
@@ -227,7 +227,7 @@ def test_websocket_error(fake_home: Home, home_data):
 
     fake_home.onWsError += on_error
 
-    fake_home.enable_events()
+    await fake_home.enable_events()
     with no_ssl_verification():
         fake_home._connection._restCallRequestCounter = 1
         fake_home._rest_call("ws/sleep", json.dumps({"seconds": 5}))

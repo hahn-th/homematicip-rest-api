@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import signal
@@ -91,13 +92,13 @@ def setup_config(args) -> homematicip.HmipConfig:
 def get_home(config: homematicip.HmipConfig) -> Home:
     """Initialize home instance."""
     home = Home()
+    home.init(config.access_point, config.auth_token)
     home.set_auth_token(config.auth_token)
-    home.init(config.access_point)
     return home
 
 
 def setup_logger(
-    default_debug_level: int, argument_debug_level: int, log_file: str
+        default_debug_level: int, argument_debug_level: int, log_file: str
 ) -> logging.Logger:
     debug_level = argument_debug_level if argument_debug_level else default_debug_level
     logging.basicConfig(level=debug_level)
@@ -391,8 +392,8 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                 for fc in d.functionalChannels:
                     print(f"   Ch {fc.index}: {str(fc)}")
                     if (
-                        args.print_allowed_commands
-                        and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+                            args.print_allowed_commands
+                            and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
                     ):
                         print(
                             f"   -> Allowed commands: {FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]}"
@@ -414,7 +415,7 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                     )
                     if fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP:
                         print(
-                            f"{ [str(val) for val in FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]]}"
+                            f"{[str(val) for val in FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]]}"
                         )
                     else:
                         print("None")
@@ -572,7 +573,15 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
     if args.list_events:
         command_entered = True
         home.onEvent += printEvents
-        home.enable_events()
+
+        try:
+            asyncio.run(home.enable_events())
+        except KeyboardInterrupt:
+            logger.info("Client wird durch Benutzer beendet.")
+        finally:
+            home.disable_events()
+            logger.info("WebSocket-Client beendet.")
+
         try:
             while True:
                 time.sleep(1)
@@ -582,7 +591,7 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
     if args.listen_channel_event:
         command_entered = True
         home.on_channel_event(lambda x: print(x))
-        home.enable_events()
+        home.enable_events(additional_message_handler=lambda x: print(x))
         try:
             while True:
                 time.sleep(1)
@@ -590,6 +599,10 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
             return
 
     return command_entered
+
+
+def print_message(message):
+    print(message)
 
 
 def get_args(parser, args):
@@ -1016,7 +1029,7 @@ def _get_target_channels(device: Device, channels: list = None):
 
 
 def _execute_action_for_device(
-    device, cli_args, action: CliActions, function_name: str, *args
+        device, cli_args, action: CliActions, function_name: str, *args
 ) -> None:
     target_channels = _get_target_channels(device, cli_args.channels)
     for fc in target_channels:
@@ -1029,7 +1042,7 @@ def _execute_action_for_device(
 
 
 def _execute_cli_action(
-    channel: FunctionalChannel, action: CliActions, callback_name: str, *args
+        channel: FunctionalChannel, action: CliActions, callback_name: str, *args
 ) -> bool:
     """Execute the callback, if allowed"""
     if _channel_supports_action(channel, action):
@@ -1066,8 +1079,8 @@ def _execute_cli_action(
 def _channel_supports_action(channel: FunctionalChannel, action: CliActions) -> bool:
     """Check, if a channel could execute the given function"""
     return (
-        channel.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
-        and action in FUNCTIONALCHANNEL_CLI_MAP[channel.functionalChannelType]
+            channel.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+            and action in FUNCTIONALCHANNEL_CLI_MAP[channel.functionalChannelType]
     )
 
 

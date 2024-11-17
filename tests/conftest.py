@@ -1,12 +1,10 @@
 import asyncio
-import functools
+import os
 import ssl
+import sys
 import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
-
-import os
-import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 

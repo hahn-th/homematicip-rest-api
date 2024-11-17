@@ -152,9 +152,9 @@ async def do_test(future, loop, url, base_url="ws.homematic.com"):
 #             def parser(*args, **kwargs):
 #                 future.set_result(args)
 #
-#             connection = AsyncConnection(loop, session)
-#             connection._urlWebSocket = 'wss://' + base_url + url
-#             ws_loop = await connection.ws_connect(parser)
+#             connection_v2 = AsyncConnection(loop, session)
+#             connection_v2._urlWebSocket = 'wss://' + base_url + url
+#             ws_loop = await connection_v2.ws_connect(parser)
 #             try:
 #                 await ws_loop
 #             except HmipServerCloseError as err:

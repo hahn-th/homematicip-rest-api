@@ -1,6 +1,3 @@
-import logging
-
-from homematicip.base.enums import *
 from homematicip.device import *
 
 ERROR_CODE = "errorCode"

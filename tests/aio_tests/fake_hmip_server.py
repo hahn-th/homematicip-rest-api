@@ -115,7 +115,7 @@ class FakeLookupHmip(BaseFakeHmip):
 
 
 class FakeConnectionHmip(BaseFakeHmip):
-    """Test various connection issues"""
+    """Test various connection_v2 issues"""
 
     js_response = {"response": True}
 
@@ -162,7 +162,7 @@ class FakeWebsocketHmip(BaseFakeHmip):
         await ws.prepare(request)
         ws.send_bytes(b"abc")
         await asyncio.sleep(2)
-        print("websocket connection closed")
+        print("websocket connection_v2 closed")
 
         return ws
 

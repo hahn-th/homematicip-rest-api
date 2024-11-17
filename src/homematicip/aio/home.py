@@ -44,15 +44,6 @@ class AsyncHome(Home):
     async def download_configuration(self):
         return await self._connection.api_call(*super().download_configuration())
 
-    async def enable_events(self) -> asyncio.Task:
-        """Connects to the websocket. Returns a listening task."""
-        return await self._connection.ws_connect(
-            on_message=self._ws_on_message, on_error=self._ws_on_error
-        )
-
-    async def disable_events(self):
-        await self._connection.close_websocket_connection()
-
     async def get_OAuth_OTK(self):
         token = OAuthOTK(self._connection)
         token.from_json(await self._connection.api_call("home/getOAuthOTK"))

@@ -21,7 +21,7 @@ class FunctionalChannel(HomeMaticIPObject):
         self.groups = Iterable[Group]
         self.device = device
 
-        # we don't need a connection in this object (at the moment)
+        # we don't need a connection_v2 in this object (at the moment)
         self._connection = None
 
     def from_json(self, js, groups: Iterable[Group]):
