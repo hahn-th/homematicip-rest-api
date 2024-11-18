@@ -29,7 +29,7 @@ keywords = ["homematicip cloud","homematicip"]
 dynamic = [
     "version"
 ]
-license = {file = "LICENSE.txt"}
+license = {text = "GPL-3.0-or-later"}
 
 [project.urls]
 Homepage = "https://github.com/hahn-th/homematicip-rest-api"
