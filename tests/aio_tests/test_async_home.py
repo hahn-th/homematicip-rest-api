@@ -254,7 +254,7 @@ async def test_home_getOAuthOTK(no_ssl_fake_async_home: AsyncHome):
 @pytest.mark.asyncio
 async def test_clearconfig(no_ssl_fake_async_home: AsyncHome):
     d1 = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000001")
-    await no_ssl_fake_async_home.get_current_state(clearConfig=True)
+    await no_ssl_fake_async_home.get_current_state(clear_config=True)
     d2 = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000001")
 
     assert d1.id == d2.id

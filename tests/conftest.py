@@ -6,15 +6,16 @@ import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
 
+from homematicip.auth import Auth
+from homematicip.connection_v2.connection_context import ConnectionContext
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import pytest
 from aiohttp import web
 from aiohttp.test_utils import TestServer
 
-from homematicip.aio.auth import AsyncAuth
 from homematicip.aio.home import AsyncHome
-from homematicip.connection import Connection
 from homematicip.home import Home
 from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 from homematicip_demo.helper import *
@@ -36,10 +37,21 @@ def pytest_unconfigure(config):  # pragma: no cover
 @pytest.fixture
 def ssl_ctx():
     ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    #ssl_ctx = ssl.create_default_context()
     # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
     # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
-    ssl_ctx.load_cert_chain(get_full_path("server.crt"), get_full_path("server.key"))
+    ssl_ctx.load_cert_chain(get_full_path("server.pem"), get_full_path("server.key"))
     return ssl_ctx
+
+@pytest.fixture
+def ssl_ctx_client():
+    # #ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    # ssl_ctx = ssl.create_default_context()
+    # # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
+    # # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
+    # ssl_ctx.load_cert_chain( get_full_path("server.key"))
+    # return ssl_ctx
+    return str(get_full_path("client.pem"))
 
 
 def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None:
@@ -107,54 +119,48 @@ async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
 
 
 @pytest.fixture
-def fake_home(fake_cloud):
+def fake_connection_context_with_ssl(fake_cloud, ssl_ctx_client):
+    access_point_id = "3014F711A000000BAD0C0DED"
+    access_point_id = "3014F711A000000BAD0C0DED"
+    auth_token = "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
+    lookup_url = f"{fake_cloud.url}/getHost"
+
+    return ConnectionContext.create(access_point_id, lookup_url=lookup_url, auth_token=auth_token, ssl_ctx=ssl_ctx_client)
+
+@pytest.fixture
+def fake_home(fake_cloud, fake_connection_context_with_ssl):
     home = Home()
     with no_ssl_verification():
-        lookup_url = "{}/getHost".format(fake_cloud.url)
         #    home.download_configuration = fake_home_download_configuration
-        home._connection = Connection()
         home._fake_cloud = fake_cloud
-        home.set_auth_token(
-            "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
-        )
-        home._connection.init(
-            accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url
-        )
+        home.init(fake_connection_context_with_ssl)
         home.get_current_state()
     return home
 
 
 @pytest.fixture
-async def no_ssl_fake_async_home(fake_cloud, event_loop):
+async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, event_loop):
     home = AsyncHome(event_loop)
-    home._connection._websession.post = partial(
-        home._connection._websession.post, ssl=False
-    )
 
     lookup_url = "{}/getHost".format(fake_cloud.url)
     home._fake_cloud = fake_cloud
-    home.set_auth_token(
-        "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
-    )
-    await home._connection.init(
-        accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url
-    )
+    home.init(fake_connection_context_with_ssl)
     await home.get_current_state()
 
     yield home
 
     await home._connection._websession.close()
 
-
-@pytest.fixture
-async def no_ssl_fake_async_auth(event_loop):
-    auth = AsyncAuth(event_loop)
-    auth._connection._websession.post = partial(
-        auth._connection._websession.post, ssl=False
-    )
-    yield auth
-
-    await auth._connection._websession.close()
+#
+# @pytest.fixture
+# async def no_ssl_fake_async_auth(event_loop):
+#     auth = Auth()
+#     auth._connection._websession.post = partial(
+#         auth._connection._websession.post, ssl=False
+#     )
+#     yield auth
+#
+#     await auth._connection._websession.close()
 
 
 dt = datetime.now(timezone.utc).astimezone()

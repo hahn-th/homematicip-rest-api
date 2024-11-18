@@ -1,12 +1,17 @@
 import json
 
+from homematicip.connection_v2 import RATE_LIMITER_FILL_RATE, RATE_LIMITER_TOKENS
 from homematicip.connection_v2.buckets import Buckets
-from homematicip.connection_v2.rest_connection import RestConnection, ConnectionContext, RestResult
+from homematicip.connection_v2.rest_connection import RestConnection, RestResult
+from homematicip.connection_v2.connection_context import ConnectionContext
 
 
 class RateLimitedRestConnection(RestConnection):
 
-    def __init__(self, context: ConnectionContext, tokens: int = 10, fill_rate: int = 8):
+    def __init__(self,
+                 context: ConnectionContext,
+                 tokens: int = RATE_LIMITER_TOKENS,
+                 fill_rate: int = RATE_LIMITER_FILL_RATE):
         """Initialize the RateLimitedRestConnection with a token bucket algorithm.
 
         :param context: The connection_v2 context.

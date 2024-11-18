@@ -9,8 +9,10 @@ from aiohttp import web
 from aiohttp.resolver import DefaultResolver
 from aiohttp.test_utils import unused_port
 
-from homematicip.aio.connection import AsyncConnection
-from homematicip.base.base_connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
+from homematicip.connection_v2 import ATTR_CLIENT_AUTH, ATTR_AUTH_TOKEN
+from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection_v2.rest_connection import RestConnection
+from homematicip.connection_v2.websocket_handler import WebSocketHandler
 
 
 class FakeResolver:
@@ -204,29 +206,36 @@ class FakeWebsocketHmip(BaseFakeHmip):
 
 
 async def main(loop):
-    logging.basicConfig(level=logging.DEBUG)
-    fake_ws = FakeWebsocketHmip(loop=loop, base_url="ws.homematic.com")
-    connector = await fake_ws.start()
+    pass
 
-    incoming = {}
-
-    def parser(*args, **kwargs):
-        incoming["test"] = None
-
-    async with aiohttp.ClientSession(connector=connector, loop=loop) as session:
-        connection = AsyncConnection(loop, session)
-
-        connection.headers[ATTR_AUTH_TOKEN] = "auth_token"
-        connection.headers[ATTR_CLIENT_AUTH] = "client_auth"
-        connection._urlWebSocket = "wss://ws.homematic.com/"
-        try:
-            ws_loop = await connection.ws_connect(parser)
-            await ws_loop
-        except Exception as err:
-            pass
-        print(incoming)
-
-        await fake_ws.stop()
+    # TODO: Fix this
+    # logging.basicConfig(level=logging.DEBUG)
+    # fake_ws = FakeWebsocketHmip(loop=loop, base_url="ws.homematic.com")
+    # connector = await fake_ws.start()
+    #
+    # incoming = {}
+    #
+    # def parser(*args, **kwargs):
+    #     incoming["test"] = None
+    #
+    # context = ConnectionContext(auth_token="auth_token", client_auth_token="client_auth", websocket_url="wss://ws.homematic.com/")
+    # websocket = WebSocketHandler()
+    # await websocket.listen(context)
+    #
+    # async with aiohttp.ClientSession(connector=connector, loop=loop) as session:
+    #     connection = RestConnection(loop, session)
+    #
+    #     connection.headers[ATTR_AUTH_TOKEN] = "auth_token"
+    #     connection.headers[ATTR_CLIENT_AUTH] = "client_auth"
+    #     connection._urlWebSocket = "wss://ws.homematic.com/"
+    #     try:
+    #         ws_loop = await connection.ws_connect(parser)
+    #         await ws_loop
+    #     except Exception as err:
+    #         pass
+    #     print(incoming)
+    #
+    #     await fake_ws.stop()
 
 
 if __name__ == "__main__":

@@ -5,8 +5,9 @@ from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.class_maps import *
 from homematicip.client import Client
-from homematicip.connection import Connection
-from homematicip.connection_v2.rest_connection import ConnectionContext
+from homematicip.connection_v2.client_characteristics_builder import ClientCharacteristicsBuilder
+from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection_v2.rate_limited_rest_connection import RateLimitedRestConnection
 from homematicip.connection_v2.websocket_handler import WebSocketHandler
 from homematicip.device import *
 from homematicip.group import *
@@ -29,73 +30,70 @@ class Home(HomeMaticIPObject):
     _typeFunctionalHomeMap = TYPE_FUNCTIONALHOME_MAP
 
     def __init__(self, connection=None):
-        if connection is None:
-            connection = Connection()
         super().__init__(connection)
 
+        # Connection Stuff
         self._connection_context: ConnectionContext | None = None
         self._websocket_client: WebSocketHandler | None = None
+        self.websocket_reconnect_on_error = True
 
         self._auth_token: str | None = None
 
-        # List with create handlers.
+        # Events and EventHandler
         self._on_create = []
-        # EventHandler for channel events
         self._on_channel_event = []
+        self.onEvent = EventHook()
+        self.onWsError = EventHook()
 
+        # Home Attributes
         self.apExchangeClientId = None
         self.apExchangeState = ApExchangeState.NONE
         self.availableAPVersion = None
         self.carrierSense = None
-        #:bool:displays if the access point is connected to the hmip cloud or
-        # not
         self.connected = None
-        #:str:the current version of the access point
         self.currentAPVersion = None
         self.deviceUpdateStrategy = DeviceUpdateStrategy.MANUALLY
         self.dutyCycle = None
-        #:str:the SGTIN of the access point
         self.id = None
         self.lastReadyForUpdateTimestamp = None
-        #:Location:the location of the AP
         self.location = None
-        #:bool:determines if a pin is set on this access point
         self.pinAssigned = None
         self.powerMeterCurrency = None
         self.powerMeterUnitPrice = None
         self.timeZoneId = None
         self.updateState = HomeUpdateState.UP_TO_DATE
-        #:Weather:the current weather
         self.weather = None
-
-        self.onEvent = EventHook()
-        self.onWsError = EventHook()
-        #:bool:switch to enable/disable automatic reconnection of the websocket (default=True)
-        self.websocket_reconnect_on_error = True
-
-        #:List[Device]: a collection of all devices in home
-        self.devices = []
-        #:List[Client]: a collection of all clients in home
-        self.clients = []
-        #:List[Group]: a collection of all groups in the home
-        self.groups = []
-        #:List[FunctionalChannel]: a collection of all channels in the home
-        self.channels = []
-        #:List[Rule]: a collection of all rules in the home
-        self.rules = []
-        #: a collection of all functionalHomes in the home
-        self.functionalHomes = []
-        #:Map: a map of all access points and their updateStates
         self.accessPointUpdateStates = {}
 
-    def init(self, access_point_id, auth_token: str | None = None, lookup=True):
-        self._connection.init(access_point_id, lookup)
-        self._connection_context = ConnectionContext.create(access_point_id, auth_token=auth_token)
+        # collections of all devices, clients, groups, channels and rules
+        self.devices = []
+        self.clients = []
+        self.groups = []
+        self.channels = []
+        self.rules = []
+        self.functionalHomes = []
 
-        #self._rest_connection = RestConnection(self._connection_context)
+    def init(self, access_point_id, auth_token: str | None = None, lookup=True):
+        self._connection_context = ConnectionContext.create(access_point_id, auth_token=auth_token)
+        self._connection = RateLimitedRestConnection(self._connection_context)
+
+    def init(self, context: ConnectionContext):
+        self._connection_context = context
+        self._connection = RateLimitedRestConnection(self._connection_context)
 
     def set_auth_token(self, auth_token):
-        self._connection.set_auth_token(auth_token)
+        """Sets the auth token for the connection. This is only necessary, if not already set in init function"""
+        if self._connection_context:
+            self._connection_context.auth_token = auth_token
+
+        self._connection.update_connection_context(self._connection_context)
+
+    def _clear_configuration(self):
+        """Clears all objects from the home"""
+        self.devices = []
+        self.clients = []
+        self.groups = []
+        self.channels = []
 
     def from_json(self, js_home):
         super().from_json(js_home)
@@ -162,46 +160,47 @@ class Home(HomeMaticIPObject):
         if handler in self._on_channel_event:
             self._on_channel_event.remove(handler)
 
-    def download_configuration(self) -> str:
+    def download_configuration(self) -> dict:
         """downloads the current configuration from the cloud
 
         Returns
-            the downloaded configuration or an errorCode
+            the downloaded configuration as json
         """
-        return self._rest_call(
-            "home/getCurrentState", json.dumps(self._connection.clientCharacteristics)
+        if self._connection_context is None:
+            raise Exception("Home not initialized. Run init() first.")
+
+        client_characteristics = ClientCharacteristicsBuilder.get(self._connection_context.accesspoint_id)
+        result = self._rest_call(
+            "home/getCurrentState", client_characteristics
         )
 
-    def get_current_state(self, clearConfig: bool = False):
+        if not result.success:
+            raise Exception("Could not get the current configuration. Error: %s", result.status_text)
+
+        return result.json
+
+    def get_current_state(self, clear_config: bool = False):
         """downloads the current configuration and parses it into self
 
         Args:
-            clearConfig(bool): if set to true, this function will remove all old objects
+            clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
         json_state = self.download_configuration()
-        return self.update_home(json_state, clearConfig)
+        return self.update_home(json_state, clear_config)
 
-    def update_home(self, json_state, clearConfig: bool = False):
+    def update_home(self, json_state, clear_config: bool = False):
         """parse a given json configuration into self.
         This will update the whole home including devices, clients and groups.
 
         Args:
-            clearConfig(bool): if set to true, this function will remove all old objects
+            json_state(dict): the json configuration as dictionary
+            clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
-        if "errorCode" in json_state:
-            LOGGER.error(
-                "Could not get the current configuration. Error: %s",
-                json_state["errorCode"],
-            )
-            return False
 
-        if clearConfig:
-            self.devices = []
-            self.clients = []
-            self.groups = []
-            self.channels = []
+        if clear_config:
+            self._clear_configuration()
 
         self._get_devices(json_state)
         self._get_clients(json_state)
@@ -210,24 +209,19 @@ class Home(HomeMaticIPObject):
 
         js_home = json_state["home"]
 
-        return self.update_home_only(js_home, clearConfig)
+        return self.update_home_only(js_home, clear_config)
 
-    def update_home_only(self, js_home, clearConfig: bool = False):
+    def update_home_only(self, js_home, clear_config: bool = False):
         """parse a given home json configuration into self.
         This will update only the home without updating devices, clients and groups.
 
         Args:
-            clearConfig(bool): if set to true, this function will remove all old objects
+            js_home(dict): the json configuration as dictionary
+            clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
-        if "errorCode" in js_home:
-            LOGGER.error(
-                "Could not get the current configuration. Error: %s",
-                js_home["errorCode"],
-            )
-            return False
 
-        if clearConfig:
+        if clear_config:
             self.rules = []
             self.functionalHomes = []
 
@@ -467,19 +461,16 @@ class Home(HomeMaticIPObject):
 
         Examples:
           arming while being at home
-
-          >>> home.set_security_zones_activation(False,True)
+          home.set_security_zones_activation(False,True)
 
           arming without being at home
-
-          >>> home.set_security_zones_activation(True,True)
+          home.set_security_zones_activation(True,True)
 
           disarming the alarm system
-
-          >>> home.set_security_zones_activation(False,False)
+          home.set_security_zones_activation(False,False)
         """
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
-        return self._rest_call("home/security/setZonesActivation", json.dumps(data))
+        return self._rest_call("home/security/setZonesActivation", data)
 
     def set_silent_alarm(self, internal=True, external=True):
         """this function will set the silent alarm for interal or external
@@ -493,11 +484,11 @@ class Home(HomeMaticIPObject):
 
     def set_location(self, city, latitude, longitude):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
-        return self._rest_call("home/setLocation", json.dumps(data))
+        return self._rest_call("home/setLocation", data)
 
     def set_cooling(self, cooling):
         data = {"cooling": cooling}
-        return self._rest_call("home/heating/setCooling", json.dumps(data))
+        return self._rest_call("home/heating/setCooling", data)
 
     def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
         """activate or deactivate if smoke detectors should "ring" during an alarm
@@ -507,7 +498,7 @@ class Home(HomeMaticIPObject):
         """
         data = {"intrusionAlertThroughSmokeDetectors": activate}
         return self._rest_call(
-            "home/security/setIntrusionAlertThroughSmokeDetectors", json.dumps(data)
+            "home/security/setIntrusionAlertThroughSmokeDetectors", data
         )
 
     def activate_absence_with_period(self, endtime: datetime):
@@ -518,7 +509,7 @@ class Home(HomeMaticIPObject):
         """
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
         return self._rest_call(
-            "home/heating/activateAbsenceWithPeriod", json.dumps(data)
+            "home/heating/activateAbsenceWithPeriod", data
         )
 
     def activate_absence_permanent(self):
@@ -533,7 +524,7 @@ class Home(HomeMaticIPObject):
         """
         data = {"duration": duration}
         return self._rest_call(
-            "home/heating/activateAbsenceWithDuration", json.dumps(data)
+            "home/heating/activateAbsenceWithDuration", data
         )
 
     def deactivate_absence(self):
@@ -551,7 +542,7 @@ class Home(HomeMaticIPObject):
             "endTime": endtime.strftime("%Y_%m_%d %H:%M"),
             "temperature": temperature,
         }
-        return self._rest_call("home/heating/activateVacation", json.dumps(data))
+        return self._rest_call("home/heating/activateVacation", data)
 
     def deactivate_vacation(self):
         """deactivates the vacation mode immediately"""
@@ -568,41 +559,48 @@ class Home(HomeMaticIPObject):
         Returns:
             the result of the call
         """
+        custom_header = None
         if newPin is None:
             newPin = ""
-        data = {"pin": newPin}
+
         if oldPin:
-            self._connection.headers["PIN"] = str(oldPin)
-        result = self._rest_call("home/setPin", body=json.dumps(data))
-        if oldPin:
-            del self._connection.headers["PIN"]
-        return result
+            custom_header = {"PIN": str(oldPin)}
+
+        result = self._rest_call("home/setPin", body={"pin": newPin}, custom_header=custom_header)
+
+        if not result.success:
+            LOGGER.error("Could not set the pin. Error: %s", result.status_text)
+
+        return result.json
 
     def set_zone_activation_delay(self, delay):
         data = {"zoneActivationDelay": delay}
         return self._rest_call(
-            "home/security/setZoneActivationDelay", body=json.dumps(data)
+            "home/security/setZoneActivationDelay", body=data
         )
 
     def get_security_journal(self):
         journal = self._rest_call("home/security/getSecurityJournal")
-        if "errorCode" in journal:
+
+        if not journal.success:
             LOGGER.error(
-                "Could not get the security journal. Error: %s", journal["errorCode"]
+                "Could not get the security journal. Error: %s", journal.status_text
             )
             return None
         ret = []
-        for entry in journal["entries"]:
+        for entry in journal.json["entries"]:
+            journal_entry = None
             try:
-                eventType = SecurityEventType(entry["eventType"])
-                if eventType in self._typeSecurityEventMap:
-                    j = self._typeSecurityEventMap[eventType](self._connection)
+                event_type = SecurityEventType(entry["eventType"])
+                if event_type in self._typeSecurityEventMap:
+                    journal_entry = self._typeSecurityEventMap[event_type](self._connection)
             except:
-                j = SecurityEvent(self._connection)
+                journal_entry = SecurityEvent(self._connection)
                 LOGGER.warning("There is no class for %s yet", entry["eventType"])
 
-            j.from_json(entry)
-            ret.append(j)
+            if journal_entry is not None:
+                journal_entry.from_json(entry)
+                ret.append(journal_entry)
 
         return ret
 
@@ -616,7 +614,8 @@ class Home(HomeMaticIPObject):
 
     def get_OAuth_OTK(self):
         token = OAuthOTK(self._connection)
-        token.from_json(self._rest_call("home/getOAuthOTK"))
+        result = self._rest_call("home/getOAuthOTK")
+        token.from_json(result.json)
         return token
 
     def set_timezone(self, timezone: str):
@@ -625,11 +624,11 @@ class Home(HomeMaticIPObject):
             timezone(str): the new timezone
         """
         data = {"timezoneId": timezone}
-        return self._rest_call("home/setTimezone", body=json.dumps(data))
+        return self._rest_call("home/setTimezone", body=data)
 
     def set_powermeter_unit_price(self, price):
         data = {"powerMeterUnitPrice": price}
-        return self._rest_call("home/setPowerMeterUnitPrice", body=json.dumps(data))
+        return self._rest_call("home/setPowerMeterUnitPrice", body=data)
 
     def set_zones_device_assignment(self, internal_devices, external_devices) -> dict:
         """sets the devices for the security zones
@@ -644,7 +643,7 @@ class Home(HomeMaticIPObject):
         external = [x.id for x in external_devices]
         data = {"zonesDeviceAssignment": {"INTERNAL": internal, "EXTERNAL": external}}
         return self._rest_call(
-            "home/security/setZonesDeviceAssignment", body=json.dumps(data)
+            "home/security/setZonesDeviceAssignment", body=data
         )
 
     def start_inclusion(self, deviceId):
@@ -654,7 +653,7 @@ class Home(HomeMaticIPObject):
         """
         data = {"deviceId": deviceId}
         return self._rest_call(
-            "home/startInclusionModeForDevice", body=json.dumps(data)
+            "home/startInclusionModeForDevice", body=data
         )
 
     async def enable_events(self, additional_message_handler: Callable = None):

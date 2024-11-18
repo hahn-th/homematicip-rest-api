@@ -54,7 +54,7 @@ def test_home_base(fake_home: Home):
     assert fake_home.connected is True
     assert fake_home.currentAPVersion == "1.2.4"
     assert (
-        fake_home.deviceUpdateStrategy == DeviceUpdateStrategy.AUTOMATICALLY_IF_POSSIBLE
+            fake_home.deviceUpdateStrategy == DeviceUpdateStrategy.AUTOMATICALLY_IF_POSSIBLE
     )
     assert fake_home.dutyCycle == 8.0
     assert fake_home.pinAssigned is False
@@ -72,13 +72,25 @@ def test_home_location(fake_home: Home):
     assert fake_home.location.latitude == "48.208088"
     assert fake_home.location.longitude == "16.358608"
     assert (
-        fake_home.location._rawJSONData
-        == fake_home_download_configuration()["home"]["location"]
+            fake_home.location._rawJSONData
+            == fake_home_download_configuration()["home"]["location"]
     )
     assert (
-        str(fake_home.location)
-        == "city(1010  Wien, Österreich) latitude(48.208088) longitude(16.358608)"
+            str(fake_home.location)
+            == "city(1010  Wien, Österreich) latitude(48.208088) longitude(16.358608)"
     )
+
+
+def test_home_download_configuration(fake_home: Home):
+    configuration = fake_home.download_configuration()
+
+    assert isinstance(configuration, dict)
+
+
+def test_home_update_home(fake_home: Home):
+    configuration = fake_home.download_configuration()
+
+    fake_home.update_home(configuration)
 
 
 def test_home_set_location(fake_home: Home):
@@ -89,8 +101,8 @@ def test_home_set_location(fake_home: Home):
         assert fake_home.location.latitude == "52.530644"
         assert fake_home.location.longitude == "13.383068"
         assert (
-            str(fake_home.location)
-            == "city(Berlin, Germany) latitude(52.530644) longitude(13.383068)"
+                str(fake_home.location)
+                == "city(Berlin, Germany) latitude(52.530644) longitude(13.383068)"
         )
 
 
@@ -104,12 +116,12 @@ def test_home_weather(fake_home: Home):
     assert fake_home.weather.windDirection == 294
     assert fake_home.weather.windSpeed == 8.568
     assert (
-        fake_home.weather._rawJSONData
-        == fake_home_download_configuration()["home"]["weather"]
+            fake_home.weather._rawJSONData
+            == fake_home_download_configuration()["home"]["weather"]
     )
     assert (
-        str(fake_home.weather)
-        == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) vaporAmount(5.465858858389302) windSpeed(8.568) windDirection(294)"
+            str(fake_home.weather)
+            == "temperature(16.6) weatherCondition(LIGHT_CLOUDY) weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6) humidity(54) vaporAmount(5.465858858389302) windSpeed(8.568) windDirection(294)"
     )
 
 
@@ -121,10 +133,10 @@ def test_clients(fake_home: Home):
     assert client.clientType == ClientType.APP
 
     assert (
-        client._rawJSONData
-        == fake_home_download_configuration()["clients"][
-            "00000000-0000-0000-0000-000000000000"
-        ]
+            client._rawJSONData
+            == fake_home_download_configuration()["clients"][
+                "00000000-0000-0000-0000-000000000000"
+            ]
     )
     assert str(client) == "label(TEST-Client)"
 
@@ -160,9 +172,9 @@ def test_rules(fake_home: Home):
 
         rule.id = "INVALID_ID"
         result = rule.disable()
-        assert result["errorCode"] == "INVALID_RULE"
+        assert not result.success
         result = rule.set_label("NEW LABEL")
-        assert result["errorCode"] == "INVALID_RULE"
+        assert not result.success
 
 
 def test_security_zones_activation(fake_home: Home):
@@ -181,25 +193,24 @@ def test_security_zones_activation(fake_home: Home):
 
 def test_set_pin(fake_home: Home):
     with no_ssl_verification():
-
-        def get_pin(fake_home):
-            result = fake_home._rest_call("home/getPin")
-            return result["pin"]
+        def get_pin(fake_home_inner):
+            result = fake_home_inner._rest_call("home/getPin")
+            return result.json["pin"]
 
         assert get_pin(fake_home) is None
 
-        fake_home.set_pin(1234)
-        assert get_pin(fake_home) == 1234
+        fake_home.set_pin("1234")
+        assert get_pin(fake_home) == "1234"
 
-        fake_home.set_pin(
-            5555
-        )  # ignore errors. just check if the old pin is still active
-        assert get_pin(fake_home) == 1234
+        fake_home.set_pin("5555")
 
-        fake_home.set_pin(5555, 1234)
-        assert get_pin(fake_home) == 5555
+        # ignore errors. just check if the old pin is still active
+        assert get_pin(fake_home) == "1234"
 
-        fake_home.set_pin(None, 5555)
+        fake_home.set_pin("5555", "1234")
+        assert get_pin(fake_home) == "5555"
+
+        fake_home.set_pin(None, "5555")
         assert get_pin(fake_home) is None
 
 
@@ -358,21 +369,19 @@ def test_home_getSecurityJournal(fake_home: Home):
 
 def test_home_unknown_types(fake_home: Home):
     with no_ssl_verification():
-        fake_home._rest_call(
-            "fake/loadConfig", json.dumps({"file": "unknown_types.json"})
-        )
-        fake_home.get_current_state(clearConfig=True)
+        fake_home._rest_call("fake/loadConfig", {"file": "unknown_types.json"})
+        fake_home.get_current_state(clear_config=True)
         group = fake_home.groups[0]
-        assert type(group) == Group
+        assert isinstance(group,Group)
         assert group.groupType == "DUMMY_GROUP"
 
         device = fake_home.devices[0]
-        assert type(device) == BaseDevice
+        assert isinstance(device, BaseDevice)
         assert device.deviceType == "DUMMY_DEVICE"
 
-        funcHome = fake_home.functionalHomes[0]
-        assert type(funcHome) == FunctionalHome
-        assert funcHome.solution == "DUMMY_FUNCTIONAL_HOME"
+        func_home = fake_home.functionalHomes[0]
+        assert isinstance(func_home, FunctionalHome)
+        assert func_home.solution == "DUMMY_FUNCTIONAL_HOME"
 
 
 def test_home_getOAuthOTK(fake_home: Home):

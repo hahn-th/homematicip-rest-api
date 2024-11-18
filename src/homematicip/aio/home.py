@@ -1,6 +1,4 @@
-import asyncio
 import json
-import logging
 
 from homematicip.aio.class_maps import (
     TYPE_CLASS_MAP,
@@ -8,9 +6,9 @@ from homematicip.aio.class_maps import (
     TYPE_RULE_MAP,
     TYPE_SECURITY_EVENT_MAP,
 )
-from homematicip.aio.connection import AsyncConnection
 from homematicip.aio.securityEvent import AsyncSecurityEvent
 from homematicip.base.enums import *
+from homematicip.connection_v2.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.home import Home, OAuthOTK
 
 LOGGER = logging.getLogger(__name__)
@@ -25,24 +23,29 @@ class AsyncHome(Home):
     _typeRuleMap = TYPE_RULE_MAP
 
     def __init__(self, loop, websession=None):
-        super().__init__(connection=AsyncConnection(loop, websession))
+        super().__init__(None)
 
-    async def init(self, access_point_id, lookup=True):
-        await self._connection.init(access_point_id, lookup)
-
-    async def get_current_state(self, clearConfig: bool = False):
+    async def get_current_state(self, clear_config: bool = False):
         """downloads the current configuration and parses it into self
 
         Args:
-            clearConfig(bool): if set to true, this function will remove all old objects
+            clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
         LOGGER.debug("get_current_state")
         json_state = await self.download_configuration()
-        return self.update_home(json_state, clearConfig)
+        return self.update_home(json_state, clear_config)
 
     async def download_configuration(self):
-        return await self._connection.api_call(*super().download_configuration())
+        if self._connection_context is None:
+            raise Exception("Home not initialized. Run init() first.")
+
+        client_characteristics = ClientCharacteristicsBuilder.get(self._connection_context.accesspoint_id)
+        result = await self._rest_call_async(
+            "home/getCurrentState", client_characteristics
+        )
+        return result.json
+        # return await self._connection.async_post().api_call(*super().download_configuration())
 
     async def get_OAuth_OTK(self):
         token = OAuthOTK(self._connection)
@@ -78,7 +81,7 @@ class AsyncHome(Home):
         data = {"pin": newPin}
         if oldPin:
             self._connection.headers["PIN"] = str(oldPin)
-        result = await self._connection.api_call("home/setPin", body=json.dumps(data))
+        result = await self._connection.api_call("home/setPin", body=data)
         if oldPin:
             del self._connection.headers["PIN"]
         return result
@@ -86,7 +89,7 @@ class AsyncHome(Home):
     async def get_security_journal(self):
         journal = await self._connection.api_call(
             "home/security/getSecurityJournal",
-            json.dumps(self._connection.clientCharacteristics),
+            self._connection.clientCharacteristics,
         )
         if journal is None or "errorCode" in journal:
             LOGGER.error(
