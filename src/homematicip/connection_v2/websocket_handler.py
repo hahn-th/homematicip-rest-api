@@ -92,7 +92,10 @@ class WebSocketHandler:
         return self._is_connected
 
     @staticmethod
-    def _get_ssl_context():
+    def _get_ssl_context(context: ConnectionContext = None):
+        if context.ssl_ctx:
+            return context.ssl_ctx
+
         if hasattr(sys, "_called_from_test"):  # disable ssl during a test run
             return None
 
