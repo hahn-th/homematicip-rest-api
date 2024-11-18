@@ -123,3 +123,8 @@ class HomeMaticIPObject:
     def str_from_attr_map(self) -> str:
         """this method will return a string with all key/values which were added via the set_attr_from_dict method"""
         return "".join([f"{x}({self.__dict__[x]}) " for x in self._dictAttributes])[:-1]
+
+    def _run_non_async(self, method, *args, **kwargs):
+        """Run an async method in a sync way"""
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(method(*args, **kwargs))

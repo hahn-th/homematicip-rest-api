@@ -7,7 +7,7 @@ from homematicip.class_maps import *
 from homematicip.client import Client
 from homematicip.connection_v2.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.connection_v2.connection_context import ConnectionContext
-from homematicip.connection_v2.rate_limited_rest_connection import RateLimitedRestConnection
+from homematicip.connection_v2.connection_factory import ConnectionFactory
 from homematicip.connection_v2.websocket_handler import WebSocketHandler
 from homematicip.device import *
 from homematicip.group import *
@@ -73,13 +73,13 @@ class Home(HomeMaticIPObject):
         self.rules = []
         self.functionalHomes = []
 
-    def init(self, access_point_id, auth_token: str | None = None, lookup=True):
+    def init(self, access_point_id, auth_token: str | None = None, lookup=True, use_rate_limiting=True):
         self._connection_context = ConnectionContext.create(access_point_id, auth_token=auth_token)
-        self._connection = RateLimitedRestConnection(self._connection_context)
+        self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
-    def init(self, context: ConnectionContext):
+    def init(self, context: ConnectionContext, use_rate_limiting=True):
         self._connection_context = context
-        self._connection = RateLimitedRestConnection(self._connection_context)
+        self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
     def set_auth_token(self, auth_token):
         """Sets the auth token for the connection. This is only necessary, if not already set in init function"""

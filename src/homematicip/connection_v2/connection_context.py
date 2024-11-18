@@ -12,7 +12,6 @@ class ConnectionContext:
 
     websocket_url: str = "ws://localhost:8765"
     rest_url: str = None
-
     accesspoint_id: str = None
 
     enforce_ssl: bool = True

@@ -17,21 +17,19 @@ class AsyncDevice(Device):
     """Async implementation of a genereric homematic ip device"""
 
     async def set_label(self, label):
-        return await self._connection.api_call(*super().set_label(label))
+        return await self.set_label_async(label)
 
     async def authorizeUpdate(self):
-        return await self._connection.api_call(*super().authorizeUpdate())
+        return await self.authorizeUpdate_async()
 
     async def delete(self):
-        return await self._connection.api_call(*super().delete())
+        return await self.delete_async()
 
     async def set_router_module_enabled(self, enabled=True):
-        return await self._connection.api_call(
-            *super().set_router_module_enabled(enabled)
-        )
+        return await self.set_router_module_enabled_async(enabled)
 
     async def is_update_applicable(self):
-        return await self._connection.api_call(*super().is_update_applicable())
+        return await self.is_update_applicable_async()
 
 
 class AsyncSwitch(Switch, AsyncDevice):
@@ -39,16 +37,15 @@ class AsyncSwitch(Switch, AsyncDevice):
 
     async def set_switch_state(self, on=True, channelIndex=1):
         _LOGGER.debug("Async switch set_switch_state")
-        url, data = super().set_switch_state(on, channelIndex)
-        return await self._connection.api_call(url, data)
+        return await self.set_switch_state_async(on, channelIndex)
 
     async def turn_on(self, channelIndex=1):
         _LOGGER.debug("Async switch turn_on")
-        return await self.set_switch_state(True, channelIndex)
+        return await self.turn_on_async(channelIndex)
 
     async def turn_off(self, channelIndex=1):
         _LOGGER.debug("Async switch turn_off")
-        return await self.set_switch_state(False, channelIndex)
+        return await self.turn_off_async(channelIndex)
 
 
 class AsyncCarbonDioxideSensor(CarbonDioxideSensor, AsyncSwitch):
@@ -103,19 +100,19 @@ class AsyncBrandSwitchNotificationLight(BrandSwitchNotificationLight, AsyncSwitc
     """HMIP-BSL (Switch Actuator for brand switches – with signal lamp)"""
 
     async def set_rgb_dim_level(
-        self, channelIndex: int, rgb: RGBColorState, dimLevel: float
+            self, channelIndex: int, rgb: RGBColorState, dimLevel: float
     ):
         return await self._connection.api_call(
             *super().set_rgb_dim_level(channelIndex, rgb, dimLevel)
         )
 
     async def set_rgb_dim_level_with_time(
-        self,
-        channelIndex: int,
-        rgb: RGBColorState,
-        dimLevel: float,
-        onTime: float,
-        rampTime: float,
+            self,
+            channelIndex: int,
+            rgb: RGBColorState,
+            dimLevel: float,
+            onTime: float,
+            rampTime: float,
     ):
         return await self._connection.api_call(
             *super().set_rgb_dim_level_with_time(
@@ -187,7 +184,7 @@ class AsyncTemperatureHumiditySensorDisplay(
     """HMIP-STHD (Temperature and Humidity Sensor with display - indoor)"""
 
     async def set_display(
-        self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
+            self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
         await self._connection.api_call(*super().set_display(display=display))
 
@@ -221,7 +218,7 @@ class AsyncFloorTerminalBlock12(FloorTerminalBlock12, AsyncDevice):
     """HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised)"""
 
     async def set_minimum_floor_heating_valve_position(
-        self, minimumFloorHeatingValvePosition: float
+            self, minimumFloorHeatingValvePosition: float
     ):
         """sets the minimum floot heating valve position
 
@@ -253,11 +250,11 @@ class AsyncWiredPushButton(WiredPushButton, AsyncDevice):
     """HmIPW-WRC6 and HmIPW-WRC2"""
 
     async def set_optical_signal(
-        self,
-        channelIndex,
-        opticalSignalBehaviour: OpticalSignalBehaviour,
-        rgb: RGBColorState,
-        dimLevel=1.01,
+            self,
+            channelIndex,
+            opticalSignalBehaviour: OpticalSignalBehaviour,
+            rgb: RGBColorState,
+            dimLevel=1.01,
     ):
         """sets the signal type for the leds
 
@@ -327,7 +324,7 @@ class AsyncRemoteControl8Module(RemoteControl8Module, AsyncRemoteControl8):
 
 class AsyncRgbwDimmer(RgbwDimmer, AsyncDevice):
     """HmIP-RGBW device."""
-    
+
 
 class AsyncAlarmSirenIndoor(AlarmSirenIndoor, AsyncSabotageDevice):
     """HMIP-ASIR (Alarm Siren)"""
@@ -481,7 +478,7 @@ class AsyncWaterSensor(WaterSensor, AsyncDevice):
         )
 
     async def set_acoustic_water_alarm_trigger(
-        self, acousticWaterAlarmTrigger: WaterAlarmTrigger
+            self, acousticWaterAlarmTrigger: WaterAlarmTrigger
     ):
         return await self._connection.api_call(
             *super().set_acoustic_water_alarm_trigger(
@@ -490,7 +487,7 @@ class AsyncWaterSensor(WaterSensor, AsyncDevice):
         )
 
     async def set_inapp_water_alarm_trigger(
-        self, inAppWaterAlarmTrigger: WaterAlarmTrigger
+            self, inAppWaterAlarmTrigger: WaterAlarmTrigger
     ):
         return await self._connection.api_call(
             *super().set_inapp_water_alarm_trigger(
@@ -499,7 +496,7 @@ class AsyncWaterSensor(WaterSensor, AsyncDevice):
         )
 
     async def set_siren_water_alarm_trigger(
-        self, sirenWaterAlarmTrigger: WaterAlarmTrigger
+            self, sirenWaterAlarmTrigger: WaterAlarmTrigger
     ):
         return await self._connection.api_call(
             *super().set_siren_water_alarm_trigger(
@@ -512,14 +509,14 @@ class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
     """HMIP-SAM"""
 
     async def set_acceleration_sensor_mode(
-        self, mode: AccelerationSensorMode, channelIndex=1
+            self, mode: AccelerationSensorMode, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_mode(mode, channelIndex)
         )
 
     async def set_acceleration_sensor_neutral_position(
-        self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex=1
+            self, neutralPosition: AccelerationSensorNeutralPosition, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_neutral_position(
@@ -528,7 +525,7 @@ class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
         )
 
     async def set_acceleration_sensor_sensitivity(
-        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+            self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_sensitivity(sensitivity, channelIndex)
@@ -540,14 +537,14 @@ class AsyncAccelerationSensor(AccelerationSensor, AsyncDevice):
         )
 
     async def set_acceleration_sensor_event_filter_period(
-        self, period: float, channelIndex=1
+            self, period: float, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
         )
 
     async def set_notification_sound_type(
-        self, soundType: NotificationSoundType, isHighToLow: bool, channelIndex=1
+            self, soundType: NotificationSoundType, isHighToLow: bool, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_notification_sound_type(soundType, isHighToLow, channelIndex)
@@ -625,14 +622,14 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
     """HMIP-STV (Inclination and vibration Sensor)"""
 
     async def set_acceleration_sensor_mode(
-        self, mode: AccelerationSensorMode, channelIndex=1
+            self, mode: AccelerationSensorMode, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_mode(mode, channelIndex)
         )
 
     async def set_acceleration_sensor_sensitivity(
-        self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
+            self, sensitivity: AccelerationSensorSensitivity, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_sensitivity(sensitivity, channelIndex)
@@ -644,7 +641,7 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
         )
 
     async def set_acceleration_sensor_event_filter_period(
-        self, period: float, channelIndex=1
+            self, period: float, channelIndex=1
     ):
         return await self._connection.api_call(
             *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
@@ -663,21 +660,15 @@ class AsyncBlindModule(BlindModule, AsyncDevice):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
 
     async def set_primary_shading_level(self, primaryShadingLevel: float):
-        return await self._connection.api_call(
-            *super().set_primary_shading_level(primaryShadingLevel)
-        )
+        return await self.set_primary_shading_level_async(primaryShadingLevel)
 
     async def set_secondary_shading_level(
-        self, primaryShadingLevel: float, secondaryShadingLevel: float
+            self, primaryShadingLevel: float, secondaryShadingLevel: float
     ):
-        return await self._connection.api_call(
-            *super().set_secondary_shading_level(
-                primaryShadingLevel, secondaryShadingLevel
-            )
-        )
+        return await self.set_secondary_shading_level_async(primaryShadingLevel, secondaryShadingLevel)
 
     async def stop(self):
-        return await self._connection.api_call(*super().stop())
+        return await self.stop_async()
 
 
 class AsyncRainSensor(RainSensor, AsyncDevice):
@@ -710,9 +701,7 @@ class AsyncDoorLockDrive(DoorLockDrive, AsyncDevice):
         Returns:
             the result of the _restCall
         """
-        return await self._connection.api_call(
-            *super().set_lock_state(doorLockState, pin, channelIndex)
-        )
+        return await self.set_lock_state_async(doorLockState, pin, channelIndex)
 
 
 class AsyncDoorLockSensor(DoorLockSensor, AsyncDevice):

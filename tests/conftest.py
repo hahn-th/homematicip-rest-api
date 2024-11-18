@@ -6,7 +6,6 @@ import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
 
-from homematicip.auth import Auth
 from homematicip.connection_v2.connection_context import ConnectionContext
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -37,20 +36,11 @@ def pytest_unconfigure(config):  # pragma: no cover
 @pytest.fixture
 def ssl_ctx():
     ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    #ssl_ctx = ssl.create_default_context()
-    # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
-    # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
     ssl_ctx.load_cert_chain(get_full_path("server.pem"), get_full_path("server.key"))
     return ssl_ctx
 
 @pytest.fixture
 def ssl_ctx_client():
-    # #ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    # ssl_ctx = ssl.create_default_context()
-    # # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
-    # # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
-    # ssl_ctx.load_cert_chain( get_full_path("server.key"))
-    # return ssl_ctx
     return str(get_full_path("client.pem"))
 
 
@@ -121,7 +111,6 @@ async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
 @pytest.fixture
 def fake_connection_context_with_ssl(fake_cloud, ssl_ctx_client):
     access_point_id = "3014F711A000000BAD0C0DED"
-    access_point_id = "3014F711A000000BAD0C0DED"
     auth_token = "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
     lookup_url = f"{fake_cloud.url}/getHost"
 
@@ -133,7 +122,7 @@ def fake_home(fake_cloud, fake_connection_context_with_ssl):
     with no_ssl_verification():
         #    home.download_configuration = fake_home_download_configuration
         home._fake_cloud = fake_cloud
-        home.init(fake_connection_context_with_ssl)
+        home.init(fake_connection_context_with_ssl, use_rate_limiting=False)
         home.get_current_state()
     return home
 
@@ -142,14 +131,13 @@ def fake_home(fake_cloud, fake_connection_context_with_ssl):
 async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, event_loop):
     home = AsyncHome(event_loop)
 
-    lookup_url = "{}/getHost".format(fake_cloud.url)
+    lookup_url = f"{fake_cloud.url}/getHost"
     home._fake_cloud = fake_cloud
-    home.init(fake_connection_context_with_ssl)
+    home.init(fake_connection_context_with_ssl, use_rate_limiting=False)
     await home.get_current_state()
 
     yield home
 
-    await home._connection._websession.close()
 
 #
 # @pytest.fixture
