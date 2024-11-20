@@ -14,7 +14,7 @@ import pytest
 from aiohttp import web
 from aiohttp.test_utils import TestServer
 
-from homematicip.aio.home import AsyncHome
+from homematicip.async_home import AsyncHome
 from homematicip.home import Home
 from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 from homematicip_demo.helper import *

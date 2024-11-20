@@ -6,7 +6,7 @@ import os
 from pprint import pprint
 import homematicip
 
-from homematicip.aio.home import AsyncHome
+from homematicip.async_home import AsyncHome
 from homematicip.base.base_connection import HmipConnectionError
 
 

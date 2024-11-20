@@ -143,6 +143,7 @@ class Device(BaseDevice):
     def __init__(self, connection):
         super().__init__(connection)
 
+        self.liveUpdateState = None
         self.updateState = DeviceUpdateState.UP_TO_DATE
         self.availableFirmwareVersion = None
         self.firmwareVersionInteger = (
@@ -2698,6 +2699,7 @@ class DoorLockSensor(Device):
 
     def __init__(self, connection):
         super().__init__(connection)
+        self.door_lock_channel = None
         self.doorLockDirection = ""
         self.doorLockNeutralPosition = ""
         self.doorLockTurns = 0

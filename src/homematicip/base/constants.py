@@ -2,7 +2,7 @@ import logging
 
 LOGGER = logging.getLogger(__name__)
 
-LOGGER.warn(
+LOGGER.warning(
     "constants.py is deprecated. Please use the corresponding enums in enums.py"
 )
 

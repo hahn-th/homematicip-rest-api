@@ -271,9 +271,8 @@ FUNCTIONALCHANNEL_CLI_MAP = {
     ],
     FunctionalChannelType.SHADING_CHANNEL: [CliActions.SET_SHUTTER_STOP],
     FunctionalChannelType.SWITCH_CHANNEL: [CliActions.SET_SWITCH_STATE],
-    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: [CliActions.SET_SWITCH_STATE],
+    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: [CliActions.SET_SWITCH_STATE, CliActions.RESET_ENERGY_COUNTER],
     FunctionalChannelType.MULTI_MODE_INPUT_SWITCH_CHANNEL: [
         CliActions.SET_SWITCH_STATE
     ],
-    FunctionalChannelType.SWITCH_MEASURING_CHANNEL: [CliActions.RESET_ENERGY_COUNTER],
 }

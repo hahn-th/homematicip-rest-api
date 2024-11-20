@@ -4,11 +4,6 @@ import os
 import platform
 from collections import namedtuple
 
-# from ._version import get_versions
-
-# __version__ = get_versions()["version"]
-# del get_versions
-
 HmipConfig = namedtuple(
     "HmipConfig", ["auth_token", "access_point", "log_level", "log_file", "raw_config"]
 )
@@ -27,19 +22,19 @@ def load_config_file(config_file: str) -> HmipConfig:
     """Loads the config ini file.
     :raises a FileNotFoundError when the config file does not exist."""
     expanded_config_file = os.path.expanduser(config_file)
-    _config = configparser.ConfigParser()
+    config = configparser.ConfigParser()
     with open(expanded_config_file, "r") as fl:
-        _config.read_file(fl)
-        logging_filename = _config.get("LOGGING", "FileName", fallback="hmip.log")
+        config.read_file(fl)
+        logging_filename = config.get("LOGGING", "FileName", fallback="hmip.log")
         if logging_filename == "None":
             logging_filename = None
 
         _hmip_config = HmipConfig(
-            _config["AUTH"]["AuthToken"],
-            _config["AUTH"]["AccessPoint"],
-            int(_config.get("LOGGING", "Level", fallback=30)),
+            config["AUTH"]["AuthToken"],
+            config["AUTH"]["AccessPoint"],
+            int(config.get("LOGGING", "Level", fallback=30)),
             logging_filename,
-            _config._sections,
+            config._sections,
         )
         return _hmip_config
 

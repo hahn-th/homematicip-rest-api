@@ -753,7 +753,7 @@ async def test_enable_events(fake_home):
     mock_websocket_handler = AsyncMock()
     mock_additional_handler = AsyncMock()
 
-    with patch('homematicip.aio.home.WebSocketHandler', return_value=mock_websocket_handler):
+    with patch('homematicip.async_home.WebSocketHandler', return_value=mock_websocket_handler):
         await fake_home.enable_events(mock_additional_handler)
 
         assert fake_home._websocket_client is mock_websocket_handler
