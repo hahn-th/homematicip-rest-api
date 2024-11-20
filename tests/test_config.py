@@ -1,6 +1,7 @@
 import io
 import os
 import platform
+from unittest.mock import patch, mock_open
 
 import homematicip
 
@@ -24,7 +25,7 @@ def fake_getenv(var):
         return "C:\\PROGRAMDATA"
 
 
-def test_find_and_load_config_file():
+def test_find_and_load_config_file_success():
     with io.open("./config.ini", mode="w") as f:
         f.write("[AUTH]\nauthtoken = TEMP_TOKEN\naccesspoint = TEMP_AP")
     config = homematicip.find_and_load_config_file()
@@ -32,7 +33,11 @@ def test_find_and_load_config_file():
     assert config.access_point == "TEMP_AP"
     os.remove("./config.ini")
 
-    assert homematicip.find_and_load_config_file() is None
+
+def test_find_and_load_config_file_not_found():
+    with patch("builtins.open", mock_open(read_data="data")) as mock_file:
+        mock_file.side_effect = FileNotFoundError
+        assert homematicip.find_and_load_config_file() is None
 
 
 def test_get_config_file_locations_win():
@@ -41,12 +46,12 @@ def test_get_config_file_locations_win():
     locations = homematicip.get_config_file_locations()
     assert locations[0] == "./config.ini"
     assert (
-        locations[1].replace("/", "\\")
-        == "C:\\APPDATA\\homematicip-rest-api\\config.ini"
+            locations[1].replace("/", "\\")
+            == "C:\\APPDATA\\homematicip-rest-api\\config.ini"
     )
     assert (
-        locations[2].replace("/", "\\")
-        == "C:\\PROGRAMDATA\\homematicip-rest-api\\config.ini"
+            locations[2].replace("/", "\\")
+            == "C:\\PROGRAMDATA\\homematicip-rest-api\\config.ini"
     )
 
 
@@ -64,5 +69,5 @@ def test_get_config_file_locations_mac():
     assert locations[0] == "./config.ini"
     assert locations[1] == "~/Library/Preferences/homematicip-rest-api/config.ini"
     assert (
-        locations[2] == "/Library/Application Support/homematicip-rest-api/config.ini"
+            locations[2] == "/Library/Application Support/homematicip-rest-api/config.ini"
     )

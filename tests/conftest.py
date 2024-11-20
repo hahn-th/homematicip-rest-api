@@ -122,7 +122,7 @@ def fake_home(fake_cloud, fake_connection_context_with_ssl):
     with no_ssl_verification():
         #    home.download_configuration = fake_home_download_configuration
         home._fake_cloud = fake_cloud
-        home.init(fake_connection_context_with_ssl, use_rate_limiting=False)
+        home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
         home.get_current_state()
     return home
 
@@ -133,7 +133,7 @@ async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, e
 
     lookup_url = f"{fake_cloud.url}/getHost"
     home._fake_cloud = fake_cloud
-    home.init(fake_connection_context_with_ssl, use_rate_limiting=False)
+    home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
     await home.get_current_state()
 
     yield home

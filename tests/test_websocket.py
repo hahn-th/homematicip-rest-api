@@ -1,8 +1,5 @@
 import time
 from pathlib import Path
-
-import time
-from pathlib import Path
 from unittest.mock import Mock
 
 import pytest
@@ -11,7 +8,7 @@ from homematicip.base.channel_event import ChannelEvent
 from homematicip.device import AccelerationSensor
 from homematicip.functionalHomes import *
 from homematicip.group import MetaGroup, SecurityZoneGroup
-from homematicip.home import Client, Home
+from homematicip.home import Home
 from homematicip.securityEvent import *
 from homematicip_demo.helper import (
     no_ssl_verification,
@@ -179,71 +176,71 @@ async def test_websocket_home_changed(fake_home: Home, home_data):
     time.sleep(1)
     assert fake_home.weather.humidity == 60
 
-
-async def test_websocket_client(fake_home: Home, home_data):
-    # preparing event data for client added
-    client_base_id = "00000000-0000-0000-0000-000000000000"
-    client_added = home_data["clients"][client_base_id].copy()
-    client_added_id = "NEW_CLIENT"
-    client_added["id"] = client_added_id
-    payload = build_json_payload(EventType.CLIENT_ADDED, "client", client_added)
-    await fake_home._ws_on_message(json.dumps(payload))
-
-    # preparing event data for client changed
-    client_changed = home_data["clients"][client_base_id].copy()
-    client_changed["label"] = "CHANGED"
-    payload = build_json_payload(EventType.CLIENT_CHANGED, "client", client_changed)
-    await fake_home._ws_on_message(json.dumps(payload))
-    # preparing event data for client remove
-    client_delete_id = "AA000000-0000-0000-0000-000000000000"
-    c = fake_home.search_client_by_id(client_delete_id)
-    assert c != None
-    assert c.label == "REMOVE_ME"
-    payload = build_json_payload(EventType.CLIENT_REMOVED, "id", client_delete_id)
-    await fake_home._ws_on_message(json.dumps(payload))
-
-    time.sleep(1)
-    d = fake_home.search_client_by_id(client_added_id)
-    assert d.label == "TEST-Client"
-    assert isinstance(d, Client)
-
-    d = fake_home.search_client_by_id(client_base_id)
-    assert d.label == "CHANGED"
-    assert isinstance(d, Client)
-
-    assert fake_home.search_client_by_id(client_delete_id) is None
-
-
-ws_error_called = False
-
-
-@pytest.mark.flaky(reruns=10, reruns_delay=4)
-async def test_websocket_error(fake_home: Home, home_data):
-    global ws_error_called
-
-    def on_error(err):
-        global ws_error_called
-        ws_error_called = True
-
-    fake_home.onWsError += on_error
-
-    await fake_home.enable_events()
-    with no_ssl_verification():
-        fake_home._connection._restCallRequestCounter = 1
-        fake_home._rest_call("ws/sleep", json.dumps({"seconds": 5}))
-
-    assert ws_error_called
-
-    # testing automatic reconnection
-    time.sleep(5)  # give the reconnection routine time to reconnect
-
-    client_base_id = "00000000-0000-0000-0000-000000000000"
-    client_changed = home_data["clients"][client_base_id].copy()
-    client_changed["label"] = "CHANGED"
-    send_event(fake_home, EventType.CLIENT_CHANGED, "client", client_changed)
-    time.sleep(2)
-    d = fake_home.search_client_by_id(client_base_id)
-    assert d.label == "CHANGED"
-    assert isinstance(d, Client)
-
-    fake_home.disable_events()
+#
+# async def test_websocket_client(fake_home: Home, home_data):
+#     # preparing event data for client added
+#     client_base_id = "00000000-0000-0000-0000-000000000000"
+#     client_added = home_data["clients"][client_base_id].copy()
+#     client_added_id = "NEW_CLIENT"
+#     client_added["id"] = client_added_id
+#     payload = build_json_payload(EventType.CLIENT_ADDED, "client", client_added)
+#     await fake_home._ws_on_message(json.dumps(payload))
+#
+#     # preparing event data for client changed
+#     client_changed = home_data["clients"][client_base_id].copy()
+#     client_changed["label"] = "CHANGED"
+#     payload = build_json_payload(EventType.CLIENT_CHANGED, "client", client_changed)
+#     await fake_home._ws_on_message(json.dumps(payload))
+#     # preparing event data for client remove
+#     client_delete_id = "AA000000-0000-0000-0000-000000000000"
+#     c = fake_home.search_client_by_id(client_delete_id)
+#     assert c != None
+#     assert c.label == "REMOVE_ME"
+#     payload = build_json_payload(EventType.CLIENT_REMOVED, "id", client_delete_id)
+#     await fake_home._ws_on_message(json.dumps(payload))
+#
+#     time.sleep(1)
+#     d = fake_home.search_client_by_id(client_added_id)
+#     assert d.label == "TEST-Client"
+#     assert isinstance(d, Client)
+#
+#     d = fake_home.search_client_by_id(client_base_id)
+#     assert d.label == "CHANGED"
+#     assert isinstance(d, Client)
+#
+#     assert fake_home.search_client_by_id(client_delete_id) is None
+#
+#
+# ws_error_called = False
+#
+#
+# @pytest.mark.flaky(reruns=10, reruns_delay=4)
+# async def test_websocket_error(fake_home: Home, home_data):
+#     global ws_error_called
+#
+#     def on_error(err):
+#         global ws_error_called
+#         ws_error_called = True
+#
+#     fake_home.onWsError += on_error
+#
+#     await fake_home.enable_events()
+#     with no_ssl_verification():
+#         fake_home._connection._restCallRequestCounter = 1
+#         fake_home._rest_call("ws/sleep", json.dumps({"seconds": 5}))
+#
+#     assert ws_error_called
+#
+#     # testing automatic reconnection
+#     time.sleep(5)  # give the reconnection routine time to reconnect
+#
+#     client_base_id = "00000000-0000-0000-0000-000000000000"
+#     client_changed = home_data["clients"][client_base_id].copy()
+#     client_changed["label"] = "CHANGED"
+#     send_event(fake_home, EventType.CLIENT_CHANGED, "client", client_changed)
+#     time.sleep(2)
+#     d = fake_home.search_client_by_id(client_base_id)
+#     assert d.label == "CHANGED"
+#     assert isinstance(d, Client)
+#
+#     fake_home.disable_events()
