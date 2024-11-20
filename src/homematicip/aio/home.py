@@ -481,7 +481,7 @@ class AsyncHome(HomeMaticIPObject):
           external(bool): activates/deactivates the silent alarm for the external zone
         """
         data = {"zonesSilentAlarm": {"EXTERNAL": external, "INTERNAL": internal}}
-        return await self._rest_call_async("home/security/setZonesSilentAlarm", json.dumps(data))
+        return await self._rest_call_async("home/security/setZonesSilentAlarm", data)
 
     async def set_location_async(self, city, latitude, longitude):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
@@ -643,10 +643,9 @@ class AsyncHome(HomeMaticIPObject):
         internal = [x.id for x in internal_devices]
         external = [x.id for x in external_devices]
         data = {"zonesDeviceAssignment": {"INTERNAL": internal, "EXTERNAL": external}}
-        result = await self._rest_call_async(
+        return await self._rest_call_async(
             "home/security/setZonesDeviceAssignment", body=data
         )
-        return result.json
 
     async def start_inclusion_async(self, deviceId):
         """start inclusion mode for specific device
@@ -712,9 +711,11 @@ class AsyncHome(HomeMaticIPObject):
                     data = event["client"]
                     obj = self.search_client_by_id(data["id"])
                     obj.from_json(data)
+                    obj.fire_update_event(data, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.CLIENT_REMOVED:
                     obj = self.search_client_by_id(event["id"])
                     self.clients.remove(obj)
+                    obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
                 elif pushEventType == EventType.DEVICE_ADDED:
                     data = event["device"]
                     obj = self._parse_device(data)

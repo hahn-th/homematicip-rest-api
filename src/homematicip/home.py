@@ -65,7 +65,7 @@ class Home(AsyncHome):
     def start_inclusion(self, deviceId):
         return self._run_non_async(self.start_inclusion_async, deviceId)
 
-    def set_zones_device_assignment(self, internal_devices, external_devices) -> dict:
+    def set_zones_device_assignment(self, internal_devices, external_devices):
         return self._run_non_async(self.set_zones_device_assignment_async, internal_devices, external_devices)
 
     #
