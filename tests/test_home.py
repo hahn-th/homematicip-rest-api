@@ -750,7 +750,8 @@ async def test_on_message_channel_event(fake_home):
 
 @pytest.mark.asyncio
 async def test_enable_events(fake_home):
-    mock_websocket_handler = AsyncMock()
+    mock_websocket_handler = Mock()
+    mock_websocket_handler.listen = AsyncMock()
     mock_additional_handler = AsyncMock()
 
     with patch('homematicip.async_home.WebSocketHandler', return_value=mock_websocket_handler):

@@ -1,5 +1,4 @@
 requests>=2.24.0
-async_timeout>=3.0.1
 websockets>=14
-aiohttp>=3.8.1
-aiohttp_wsgi>=0.8.2
+aiohttp>=3.11.6
+httpx>=0.27.2
