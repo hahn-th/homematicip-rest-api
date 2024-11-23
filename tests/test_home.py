@@ -20,7 +20,7 @@ from homematicip_demo.helper import (
 
 def test_init():
     context = ConnectionContext(auth_token="auth_token", accesspoint_id="access_point_id")
-    with patch('homematicip.connection_v2.connection_context.ConnectionContext.create',
+    with patch('homematicip.connection_v2.connection_context.ConnectionContextBuilder.build_context',
                return_value=context) as mock_create:
         home = Home()
         home.init('access_point_id', 'auth_token')

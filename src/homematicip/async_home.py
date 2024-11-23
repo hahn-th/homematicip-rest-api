@@ -7,7 +7,7 @@ from homematicip.base.channel_event import ChannelEvent
 from homematicip.class_maps import *
 from homematicip.client import Client
 from homematicip.connection_v2.client_characteristics_builder import ClientCharacteristicsBuilder
-from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection_v2.connection_context import ConnectionContext, ConnectionContextBuilder
 from homematicip.connection_v2.connection_factory import ConnectionFactory
 from homematicip.connection_v2.websocket_handler import WebSocketHandler
 from homematicip.device import *
@@ -75,7 +75,13 @@ class AsyncHome(HomeMaticIPObject):
         self.functionalHomes = []
 
     def init(self, access_point_id, auth_token: str | None = None, lookup=True, use_rate_limiting=True):
-        self._connection_context = ConnectionContext.create(access_point_id, auth_token=auth_token)
+        """Initializes the home with the given access point id and auth token
+        :param access_point_id: the access point id
+        :param auth_token: the auth token
+        :param lookup: if set to true, the urls will be looked up
+        :param use_rate_limiting: if set to true, the connection will be rate limited
+        """
+        self._connection_context = ConnectionContextBuilder.build_context(accesspoint_id=access_point_id, auth_token=auth_token)
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
     def init_with_context(self, context: ConnectionContext, use_rate_limiting=True):

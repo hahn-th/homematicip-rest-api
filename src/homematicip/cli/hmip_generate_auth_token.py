@@ -6,6 +6,8 @@ from builtins import input
 
 import homematicip
 import homematicip.auth
+from homematicip.connection_v2.connection_context import ConnectionContextBuilder
+from homematicip.connection_v2.rest_connection import RestConnection
 from homematicip.home import Home
 
 
@@ -19,9 +21,12 @@ def main():
             continue
         break
 
+    context = ConnectionContextBuilder.build_context(access_point)
+    connection = RestConnection(context)
+
     home = Home()
     home.init(access_point)
-    auth = homematicip.auth.Auth(home)
+    auth = homematicip.auth.Auth(connection, context.client_auth_token)
 
     devicename = input(
         "Please enter the client/devicename (leave blank to use default):"

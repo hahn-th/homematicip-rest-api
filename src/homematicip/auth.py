@@ -19,14 +19,18 @@ class Auth:
     pin: str = None
     connection: RestConnection = None
 
-    def __init__(self, context: ConnectionContext):
+    def __init__(self, connection: RestConnection, client_auth_token: str):
+        """Initialize the auth object.
+        @param connection: The connection object
+        @param client_auth_token: The client auth token
+        """
         LOGGER.debug("Initialize new Auth")
-        self.connection = RestConnection(context)
+        self.connection = connection
         self.headers = {
             "content-type": "application/json",
             "accept": "application/json",
             "VERSION": "12",
-            "CLIENTAUTH": context.client_auth_token,
+            "CLIENTAUTH": client_auth_token
         }
 
     async def connection_request(self, access_point: str, device_name="homematicip-python", pin=None) -> RestResult:

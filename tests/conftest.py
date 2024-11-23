@@ -6,7 +6,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
 
-from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection_v2.connection_context import ConnectionContext, ConnectionContextBuilder
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -38,6 +38,7 @@ def ssl_ctx():
     ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     ssl_ctx.load_cert_chain(get_full_path("server.pem"), get_full_path("server.key"))
     return ssl_ctx
+
 
 @pytest.fixture
 def ssl_ctx_client():
@@ -114,7 +115,9 @@ def fake_connection_context_with_ssl(fake_cloud, ssl_ctx_client):
     auth_token = "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
     lookup_url = f"{fake_cloud.url}/getHost"
 
-    return ConnectionContext.create(access_point_id, lookup_url=lookup_url, auth_token=auth_token, ssl_ctx=ssl_ctx_client)
+    return ConnectionContextBuilder.build_context(accesspoint_id=access_point_id, lookup_url=lookup_url,
+                                                  auth_token=auth_token, ssl_ctx=ssl_ctx_client)
+
 
 @pytest.fixture
 def fake_home(fake_cloud, fake_connection_context_with_ssl):

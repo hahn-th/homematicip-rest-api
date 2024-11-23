@@ -4,6 +4,7 @@ import pytest
 
 from homematicip.auth import Auth
 from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection_v2.rest_connection import RestConnection
 
 
 @pytest.mark.asyncio
@@ -12,7 +13,9 @@ async def test_async_auth_challenge_no_pin(
 ):
     devicename = "auth_test"
 
-    auth = Auth(fake_connection_context_with_ssl)
+    connection = RestConnection(fake_connection_context_with_ssl)
+
+    auth = Auth(connection, fake_connection_context_with_ssl.client_auth_token)
 
     result = await auth.connection_request(devicename)
     assert result.status == 200
