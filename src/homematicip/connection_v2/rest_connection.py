@@ -54,14 +54,23 @@ class RestConnection:
             ATTR_CLIENT_AUTH: context.client_auth_token
         }
 
+    def get_header(self) -> dict[str, str]:
+        """If headers must be manipulated use this method to get the current headers."""
+        return self._headers
+
     async def async_post(self, url: str, data: json = None, custom_header: dict = None) -> RestResult:
-        """Send an async post request to cloud with json data. Returns a json result."""
+        """Send an async post request to cloud with json data. Returns a json result.
+        @param url: The path of the url to send the request to
+        @param data: The data to send as json
+        @param custom_header: A custom header to send. Replaces the default header
+        @return: The result as a RestResult object
+        """
         full_url = self._build_url(self._context.rest_url, url)
         async with httpx.AsyncClient(verify=self._verify) as client:
             try:
                 header = self._headers
                 if custom_header is not None:
-                    header.update(custom_header)
+                    header = custom_header
 
                 LOGGER.debug(f"Sending post request to url {full_url}. Data is: {data}")
                 r = await client.post(full_url, json=data, headers=header)

@@ -186,14 +186,14 @@ class AsyncHome(HomeMaticIPObject):
 
         return result.json
 
-    def get_current_state(self, clear_config: bool = False):
+    async def get_current_state_async(self, clear_config: bool = False):
         """downloads the current configuration and parses it into self
 
         Args:
             clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
-        json_state = self.download_configuration()
+        json_state = await self.download_configuration_async()
         return self.update_home(json_state, clear_config)
 
     def update_home(self, json_state, clear_config: bool = False):
@@ -570,10 +570,12 @@ class AsyncHome(HomeMaticIPObject):
         if newPin is None:
             newPin = ""
 
+        headers = None
         if oldPin:
-            custom_header = {"PIN": str(oldPin)}
+            headers = self._connection._headers
+            headers["PIN"] = str(oldPin)
 
-        result = await self._rest_call_async("home/setPin", body={"pin": newPin}, custom_header=custom_header)
+        result = await self._rest_call_async("home/setPin", body={"pin": newPin}, custom_header=headers)
 
         if not result.success:
             LOGGER.error("Could not set the pin. Error: %s", result.status_text)

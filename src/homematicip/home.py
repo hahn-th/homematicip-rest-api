@@ -29,6 +29,9 @@ class Home(AsyncHome):
     def download_configuration(self) -> dict:
         return self._run_non_async(self.download_configuration_async)
 
+    def get_current_state(self, clear_config: bool = False) -> dict:
+        return self._run_non_async(self.get_current_state_async, clear_config)
+
     def get_OAuth_OTK(self):
         return self._run_non_async(self.get_OAuth_OTK_async)
 
