@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import asyncio
 import configparser
 import json
 import time
@@ -11,7 +12,7 @@ from homematicip.connection_v2.rest_connection import RestConnection
 from homematicip.home import Home
 
 
-def main():
+async def run_auth(access_point: str = None, devicename: str = None, pin: str = None):
     while True:
         access_point = (
             input("Please enter the accesspoint id (SGTIN): ").replace("-", "").upper()
@@ -24,8 +25,6 @@ def main():
     context = ConnectionContextBuilder.build_context(access_point)
     connection = RestConnection(context)
 
-    home = Home()
-    home.init(access_point)
     auth = homematicip.auth.Auth(connection, context.client_auth_token)
 
     devicename = input(
@@ -38,28 +37,30 @@ def main():
         if pin != "":
             auth.pin = pin
         response = None
-        if devicename != "":
-            response = auth.connectionRequest(access_point, devicename)
+        if devicename == "":
+            response = await auth.connection_request(access_point, devicename, pin)
         else:
-            response = auth.connectionRequest(access_point)
+            response = await auth.connection_request(access_point, pin=pin)
 
-        if response.status_code == 200:  # ConnectionRequest was fine
+        if response.status == 200:  # ConnectionRequest was fine
             break
 
-        errorCode = json.loads(response.text)["errorCode"]
-        if errorCode == "INVALID_PIN":
-            print("PIN IS INVALID!")
-        else:
-            print("Error: {}\nExiting".format(errorCode))
-            return
+        #print(response)
+        #
+        # errorCode = json.loads(response.text)["errorCode"]
+        # if errorCode == "INVALID_PIN":
+        #     print("PIN IS INVALID!")
+        # else:
+        #     print("Error: {}\nExiting".format(errorCode))
+        #     return
 
     print("Please press the blue button on the access point")
-    while not auth.isRequestAcknowledged():
+    while not await auth.is_request_acknowledged():
         print("Please press the blue button on the access point")
         time.sleep(2)
 
-    auth_token = auth.requestAuthToken()
-    clientId = auth.confirmAuthToken(auth_token)
+    auth_token = await auth.request_auth_token()
+    clientId = await auth.confirm_auth_token(auth_token)
 
     print(
         "-----------------------------------------------------------------------------"
@@ -79,6 +80,10 @@ def main():
     _config.set("LOGGING", "FileName", "None")
     with open("./config.ini", "w") as configfile:
         _config.write(configfile)
+
+
+def main():
+    asyncio.run(run_auth())
 
 
 if __name__ == "__main__":
