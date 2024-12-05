@@ -33,11 +33,16 @@ class Auth:
             "CLIENTAUTH": client_auth_token
         }
 
-    async def connection_request(self, access_point: str, device_name="homematicip-python", pin=None) -> RestResult:
+    def set_pin(self, pin: str):
+        """Set the pin for the auth object.
+        @param pin: The pin"""
+        self.pin = pin
+
+    async def connection_request(self, access_point: str, device_name="homematicip-python") -> RestResult:
         LOGGER.debug(f"Requesting connection for access point {access_point}")
         headers = self.headers
-        if pin is not None:
-            headers["PIN"] = pin
+        if self.pin is not None:
+            headers["PIN"] = self.pin
 
         data = {
             "deviceId": self.client_id,

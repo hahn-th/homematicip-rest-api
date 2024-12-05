@@ -35,12 +35,12 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
         pin = input("Please enter the PIN (leave Blank if there is none): ")
 
         if pin != "":
-            auth.pin = pin
+            auth.set_pin(pin)
         response = None
         if devicename == "":
-            response = await auth.connection_request(access_point, devicename, pin)
+            response = await auth.connection_request(access_point, devicename)
         else:
-            response = await auth.connection_request(access_point, pin=pin)
+            response = await auth.connection_request(access_point)
 
         if response.status == 200:  # ConnectionRequest was fine
             break

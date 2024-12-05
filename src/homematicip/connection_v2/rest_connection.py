@@ -19,6 +19,7 @@ class RestResult:
     json: Optional[dict] = None
     exception: Optional[Exception] = None
     success: bool = False
+    text: str = ""
 
     def __post_init__(self):
         self.status_text = httpx.codes.get_reason_phrase(self.status)
@@ -97,7 +98,7 @@ class RestConnection:
                     f"Error response {exc.response.status_code} while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
                 )
                 LOGGER.error(f"Response: {repr(exc.response)}")
-                return RestResult(status=-1, exception=exc)
+                return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
     @staticmethod
     def _build_url(base_url: str, path: str) -> str:
