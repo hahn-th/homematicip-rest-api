@@ -16,8 +16,10 @@ class Auth(object):
             "accept": "application/json",
             "VERSION": "12",
             "CLIENTAUTH": home._connection.clientauth_token,
+            "ACCESSPOINT-ID": home._connection.accesspoint_id,
         }
         self.url_rest = home._connection.urlREST
+        self.accesspoint_id = home._connection.accesspoint_id
         self.pin = None
 
     def connectionRequest(
@@ -35,7 +37,7 @@ class Auth(object):
         return response
 
     def isRequestAcknowledged(self):
-        data = {"deviceId": self.uuid}
+        data = {"deviceId": self.uuid,"accessPointId":self.accesspoint_id}
         response = requests.post(
             "{}/hmip/auth/isRequestAcknowledged".format(self.url_rest),
             json=data,

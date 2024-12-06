@@ -4,6 +4,12 @@ import json
 import time
 from builtins import input
 
+from pathlib import Path
+import sys
+path_root = Path(__file__).parents[2]
+sys.path.append(str(path_root))
+print(sys.path)
+
 import homematicip
 import homematicip.auth
 from homematicip.home import Home
@@ -44,10 +50,14 @@ def main():
         errorCode = json.loads(response.text)["errorCode"]
         if errorCode == "INVALID_PIN":
             print("PIN IS INVALID!")
+        elif errorCode == "ASSIGNMENT_LOCKED":
+            print("LOCKED ! Press button on HCU to unlock.")
+            time.sleep(5)
         else:
             print("Error: {}\nExiting".format(errorCode))
             return
 
+    print("Connection Request successful!")
     print("Please press the blue button on the access point")
     while not auth.isRequestAcknowledged():
         print("Please press the blue button on the access point")
