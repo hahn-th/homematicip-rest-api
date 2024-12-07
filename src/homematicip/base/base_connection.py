@@ -88,10 +88,10 @@ class BaseConnection:
         return self._clientauth_token
 
     def set_token_and_characteristics(self, accesspoint_id):
-        accesspoint_id = re.sub(r"[^a-fA-F0-9 ]", "", accesspoint_id).upper()
-        self._clientCharacteristics["id"] = accesspoint_id
+        self.accesspoint_id = re.sub(r"[^a-fA-F0-9 ]", "", accesspoint_id).upper()
+        self._clientCharacteristics["id"] = self.accesspoint_id
         self._clientauth_token = (
-            hashlib.sha512(str(accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode("utf-8"))
+            hashlib.sha512(str(self.accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode("utf-8"))
             .hexdigest()
             .upper()
         )
