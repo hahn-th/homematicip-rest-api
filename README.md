@@ -50,12 +50,12 @@ You can send commands to homematicIP using the `hmip_cli.py` script. To get an o
 
 A few examples:
 
-- `python hmip_cli.py --help` to get help
-- `python hmip_cli.py --list-devices` to get a list of your devices.
-- `python hmip_cli.py -d <id-from-device-list> --toggle-garage-door` to toogle the garage door with HmIP-WGC.
-- `python hmip_cli.py --list-events` to listen to events and changes in your homematicIP system
-- `python hmip_cli.py -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
-- `python hmip_cli.py --dump-configuration --anonymize` to dump the current config and anonymize it.
+- `hmip_cli --help` to get help
+- `hmip_cli --list-devices` to get a list of your devices.
+- `hmip_cli -d <id-from-device-list> --toggle-garage-door` to toogle the garage door with HmIP-WGC.
+- `hmip_cli --list-events` to listen to events and changes in your homematicIP system
+- `hmip_cli -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
+- `hmip_cli --dump-configuration --anonymize` to dump the current config and anonymize it.
 
 ## Examples
 
