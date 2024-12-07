@@ -9,6 +9,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DEVICE: AsyncDevice,
     DeviceType.BASE_DEVICE: AsyncBaseDevice,
     DeviceType.EXTERNAL: AsyncExternalDevice,
+    DeviceType.ACCESS_POINT: AsyncHomeControlUnit,
     DeviceType.ACCELERATION_SENSOR: AsyncAccelerationSensor,
     DeviceType.ALARM_SIREN_INDOOR: AsyncAlarmSirenIndoor,
     DeviceType.ALARM_SIREN_OUTDOOR: AsyncAlarmSirenOutdoor,

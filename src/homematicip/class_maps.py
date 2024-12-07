@@ -11,6 +11,7 @@ TYPE_CLASS_MAP = {
     DeviceType.BASE_DEVICE: BaseDevice,
     DeviceType.EXTERNAL: ExternalDevice,
     DeviceType.ACCELERATION_SENSOR: AccelerationSensor,
+    DeviceType.ACCESS_POINT: HomeControlUnit,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
     DeviceType.ALARM_SIREN_OUTDOOR: AlarmSirenOutdoor,
     DeviceType.BLIND_MODULE: BlindModule,

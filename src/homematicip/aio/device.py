@@ -653,6 +653,8 @@ class AsyncTiltVibrationSensor(TiltVibrationSensor, AsyncDevice):
             *super().set_acceleration_sensor_event_filter_period(period, channelIndex)
         )
 
+class AsyncHomeControlUnit(HomeControlAccessPoint, AsyncDevice):
+    """HMIP-HCU"""
 
 class AsyncHomeControlAccessPoint(HomeControlAccessPoint, AsyncDevice):
     """HMIP-HAP"""

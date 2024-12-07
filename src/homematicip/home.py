@@ -665,6 +665,7 @@ class Home(HomeMaticIPObject):
             header=[
                 "AUTHTOKEN: {}".format(self._connection.auth_token),
                 "CLIENTAUTH: {}".format(self._connection.clientauth_token),
+                "ACCESSPOINT-ID: {}".format(self._connection.accesspoint_id),
             ],
             on_message=self._ws_on_message,
             on_error=self._ws_on_error,

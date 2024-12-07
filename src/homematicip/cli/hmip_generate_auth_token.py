@@ -4,12 +4,6 @@ import json
 import time
 from builtins import input
 
-from pathlib import Path
-import sys
-path_root = Path(__file__).parents[2]
-sys.path.append(str(path_root))
-print(sys.path)
-
 import homematicip
 import homematicip.auth
 from homematicip.home import Home
