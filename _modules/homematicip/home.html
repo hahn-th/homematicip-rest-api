@@ -1,0 +1,1027 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip.home &mdash; HomematicIP-Rest-API 1.1.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a48ae3df"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../homematicip.html">homematicip</a></li>
+      <li class="breadcrumb-item active">homematicip.home</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip.home</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">ssl</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">homematicip.base.channel_event</span> <span class="kn">import</span> <span class="n">ChannelEvent</span>
+<span class="kn">import</span> <span class="nn">websocket</span>
+
+<span class="kn">from</span> <span class="nn">homematicip.access_point_update_state</span> <span class="kn">import</span> <span class="n">AccessPointUpdateState</span>
+<span class="kn">from</span> <span class="nn">homematicip.base.enums</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.base.helpers</span> <span class="kn">import</span> <span class="n">bytes2str</span>
+<span class="kn">from</span> <span class="nn">homematicip.class_maps</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">homematicip.connection</span> <span class="kn">import</span> <span class="n">Connection</span>
+<span class="kn">from</span> <span class="nn">homematicip.device</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.EventHook</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.group</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.location</span> <span class="kn">import</span> <span class="n">Location</span>
+<span class="kn">from</span> <span class="nn">homematicip.oauth_otk</span> <span class="kn">import</span> <span class="n">OAuthOTK</span>
+<span class="kn">from</span> <span class="nn">homematicip.rule</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.securityEvent</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">homematicip.weather</span> <span class="kn">import</span> <span class="n">Weather</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Home">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home">[docs]</a>
+<span class="k">class</span> <span class="nc">Home</span><span class="p">(</span><span class="n">HomeMaticIPObject</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;this class represents the &#39;Home&#39; of the homematic ip&quot;&quot;&quot;</span>
+
+    <span class="n">_typeClassMap</span> <span class="o">=</span> <span class="n">TYPE_CLASS_MAP</span>
+    <span class="n">_typeGroupMap</span> <span class="o">=</span> <span class="n">TYPE_GROUP_MAP</span>
+    <span class="n">_typeSecurityEventMap</span> <span class="o">=</span> <span class="n">TYPE_SECURITY_EVENT_MAP</span>
+    <span class="n">_typeRuleMap</span> <span class="o">=</span> <span class="n">TYPE_RULE_MAP</span>
+    <span class="n">_typeFunctionalHomeMap</span> <span class="o">=</span> <span class="n">TYPE_FUNCTIONALHOME_MAP</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">connection</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">connection</span> <span class="o">=</span> <span class="n">Connection</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+
+        <span class="c1"># List with create handlers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_create</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># EventHandler for channel events</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_channel_event</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">apExchangeClientId</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apExchangeState</span> <span class="o">=</span> <span class="n">ApExchangeState</span><span class="o">.</span><span class="n">NONE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">availableAPVersion</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carrierSense</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#:bool:displays if the access point is connected to the hmip cloud or</span>
+        <span class="c1"># not</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#:str:the current version of the access point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentAPVersion</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deviceUpdateStrategy</span> <span class="o">=</span> <span class="n">DeviceUpdateStrategy</span><span class="o">.</span><span class="n">MANUALLY</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dutyCycle</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#:str:the SGTIN of the access point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastReadyForUpdateTimestamp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#:Location:the location of the AP</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#:bool:determines if a pin is set on this access point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pinAssigned</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">powerMeterCurrency</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">powerMeterUnitPrice</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeZoneId</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateState</span> <span class="o">=</span> <span class="n">HomeUpdateState</span><span class="o">.</span><span class="n">UP_TO_DATE</span>
+        <span class="c1">#:Weather:the current weather</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weather</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocketThread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onEvent</span> <span class="o">=</span> <span class="n">EventHook</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onWsError</span> <span class="o">=</span> <span class="n">EventHook</span><span class="p">()</span>
+        <span class="c1">#:bool:switch to enable/disable automatic reconnection of the websocket (default=True)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">websocket_reconnect_on_error</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1">#:List[Device]: a collection of all devices in home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#:List[Client]: a collection of all clients in home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#:List[Group]: a collection of all groups in the home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#:List[FunctionalChannel]: a collection of all channels in the home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#:List[Rule]: a collection of all rules in the home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#: a collection of all functionalHomes in the home</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">functionalHomes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#:Map: a map of all access points and their updateStates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accessPointUpdateStates</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Home.init">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.init">[docs]</a>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">access_point_id</span><span class="p">,</span> <span class="n">lookup</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">access_point_id</span><span class="p">,</span> <span class="n">lookup</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.set_auth_token">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_auth_token">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_auth_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_token</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">set_auth_token</span><span class="p">(</span><span class="n">auth_token</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.from_json">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.from_json">[docs]</a>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js_home</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js_home</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">weather</span> <span class="o">=</span> <span class="n">Weather</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weather</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">Location</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;connected&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentAPVersion</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;currentAPVersion&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">availableAPVersion</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;availableAPVersion&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeZoneId</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;timeZoneId&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pinAssigned</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;pinAssigned&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dutyCycle</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;dutyCycle&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateState</span> <span class="o">=</span> <span class="n">HomeUpdateState</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;updateState&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">powerMeterUnitPrice</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;powerMeterUnitPrice&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">powerMeterCurrency</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;powerMeterCurrency&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">deviceUpdateStrategy</span> <span class="o">=</span> <span class="n">DeviceUpdateStrategy</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span>
+            <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;deviceUpdateStrategy&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastReadyForUpdateTimestamp</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;lastReadyForUpdateTimestamp&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apExchangeClientId</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;apExchangeClientId&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apExchangeState</span> <span class="o">=</span> <span class="n">ApExchangeState</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;apExchangeState&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carrierSense</span> <span class="o">=</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;carrierSense&quot;</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">ap</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;accessPointUpdateStates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">ap_state</span> <span class="o">=</span> <span class="n">AccessPointUpdateState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="n">ap_state</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accessPointUpdateStates</span><span class="p">[</span><span class="n">ap</span><span class="p">]</span> <span class="o">=</span> <span class="n">ap_state</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_rules</span><span class="p">(</span><span class="n">js_home</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.on_create">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.on_create">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an event handler to the create method. Fires when a device</span>
+<span class="sd">        is created.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_create</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.fire_create_event">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.fire_create_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">fire_create_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trigger the method tied to _on_create&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_create</span><span class="p">:</span>
+            <span class="n">_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.fire_channel_event">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.fire_channel_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">fire_channel_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trigger the method tied to _on_channel_event&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">_handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_channel_event</span><span class="p">:</span>
+            <span class="n">_handler</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.remove_callback">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.remove_callback">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove event handler.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">remove_callback</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_create</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_create</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.on_channel_event">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.on_channel_event">[docs]</a>
+    <span class="k">def</span> <span class="nf">on_channel_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds an event handler to the channel event method. Fires when a channel event</span>
+<span class="sd">        is received.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_channel_event</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.remove_channel_event_handler">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.remove_channel_event_handler">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_channel_event_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Remove event handler.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_channel_event</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_on_channel_event</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.download_configuration">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.download_configuration">[docs]</a>
+    <span class="k">def</span> <span class="nf">download_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;downloads the current configuration from the cloud</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">            the downloaded configuration or an errorCode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/getCurrentState&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">clientCharacteristics</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.get_current_state">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.get_current_state">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clearConfig</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;downloads the current configuration and parses it into self</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clearConfig(bool): if set to true, this function will remove all old objects</span>
+<span class="sd">            from self.devices, self.client, ... to have a fresh config instead of reparsing them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">json_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download_configuration</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_home</span><span class="p">(</span><span class="n">json_state</span><span class="p">,</span> <span class="n">clearConfig</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.update_home">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.update_home">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">,</span> <span class="n">clearConfig</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;parse a given json configuration into self.</span>
+<span class="sd">        This will update the whole home including devices, clients and groups.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clearConfig(bool): if set to true, this function will remove all old objects</span>
+<span class="sd">            from self.devices, self.client, ... to have a fresh config instead of reparsing them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;errorCode&quot;</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Could not get the current configuration. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;errorCode&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">clearConfig</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_devices</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_clients</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_groups</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_functionalChannels</span><span class="p">()</span>
+
+        <span class="n">js_home</span> <span class="o">=</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;home&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_home_only</span><span class="p">(</span><span class="n">js_home</span><span class="p">,</span> <span class="n">clearConfig</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.update_home_only">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.update_home_only">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_home_only</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js_home</span><span class="p">,</span> <span class="n">clearConfig</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;parse a given home json configuration into self.</span>
+<span class="sd">        This will update only the home without updating devices, clients and groups.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clearConfig(bool): if set to true, this function will remove all old objects</span>
+<span class="sd">            from self.devices, self.client, ... to have a fresh config instead of reparsing them</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;errorCode&quot;</span> <span class="ow">in</span> <span class="n">js_home</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Could not get the current configuration. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">js_home</span><span class="p">[</span><span class="s2">&quot;errorCode&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">clearConfig</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">functionalHomes</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js_home</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_get_functionalHomes</span><span class="p">(</span><span class="n">js_home</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;devices&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;devices&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">_device</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_device_by_id</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">_device</span><span class="p">:</span>
+                    <span class="n">_device</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_device</span><span class="p">(</span><span class="n">raw</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;An exception in _get_devices (device-id </span><span class="si">{</span><span class="n">id_</span><span class="si">}</span><span class="s2">) of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_parse_device</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">deviceType</span> <span class="o">=</span> <span class="n">DeviceType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeClassMap</span><span class="p">[</span><span class="n">deviceType</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">d</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeClassMap</span><span class="p">[</span><span class="n">DeviceType</span><span class="o">.</span><span class="n">BASE_DEVICE</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;There is no class for device &#39;</span><span class="si">%s</span><span class="s2">&#39; yet&quot;</span><span class="p">,</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span> <span class="nf">_get_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;ruleMetaDatas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;ruleMetaDatas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">_rule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_rule_by_id</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_rule</span><span class="p">:</span>
+                <span class="n">_rule</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_rule</span><span class="p">(</span><span class="n">raw</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_parse_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ruleType</span> <span class="o">=</span> <span class="n">AutomationRuleType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeRuleMap</span><span class="p">[</span><span class="n">ruleType</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">Rule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="n">r</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">)</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;There is no class for rule  &#39;</span><span class="si">%s</span><span class="s2">&#39; yet&quot;</span><span class="p">,</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">r</span>
+
+    <span class="k">def</span> <span class="nf">_get_clients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;clients&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;clients&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_client_by_id</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_client</span><span class="p">:</span>
+                <span class="n">_client</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                <span class="n">c</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;META&quot;</span><span class="p">:</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">MetaGroup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">groupType</span> <span class="o">=</span> <span class="n">GroupType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">])</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeGroupMap</span><span class="p">[</span><span class="n">groupType</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeGroupMap</span><span class="p">[</span><span class="n">GroupType</span><span class="o">.</span><span class="n">GROUP</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">json_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">)</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;There is no class for group &#39;</span><span class="si">%s</span><span class="s2">&#39; yet&quot;</span><span class="p">,</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">g</span>
+
+    <span class="k">def</span> <span class="nf">_get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+        <span class="n">metaGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">raw</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;groups&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_group_by_id</span><span class="p">(</span><span class="n">id_</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_group</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_group</span><span class="p">,</span> <span class="n">MetaGroup</span><span class="p">):</span>
+                    <span class="n">_group</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">_group</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">raw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">group_type</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">group_type</span> <span class="o">==</span> <span class="s2">&quot;META&quot;</span><span class="p">:</span>
+                    <span class="n">metaGroups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_group</span><span class="p">(</span><span class="n">raw</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">mg</span> <span class="ow">in</span> <span class="n">metaGroups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_group</span><span class="p">(</span><span class="n">mg</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_get_functionalHomes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_state</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">solution</span><span class="p">,</span> <span class="n">functionalHome</span> <span class="ow">in</span> <span class="n">json_state</span><span class="p">[</span><span class="s2">&quot;functionalHomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">solutionType</span> <span class="o">=</span> <span class="n">FunctionalHomeType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">fh</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionalHomes</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">fh</span><span class="o">.</span><span class="n">solution</span> <span class="o">==</span> <span class="n">solution</span><span class="p">:</span>
+                        <span class="n">h</span> <span class="o">=</span> <span class="n">fh</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeFunctionalHomeMap</span><span class="p">[</span><span class="n">solutionType</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">functionalHomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">functionalHome</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">h</span> <span class="o">=</span> <span class="n">FunctionalHome</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                <span class="n">h</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">functionalHome</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;There is no class for functionalHome &#39;</span><span class="si">%s</span><span class="s2">&#39; yet&quot;</span><span class="p">,</span> <span class="n">solution</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">functionalHomes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_load_functionalChannels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">load_functionalChannels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Home.get_functionalHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.get_functionalHome">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_functionalHome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">functionalHomeType</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionalHome</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;gets the specified functionalHome</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            functionalHome(type): the type of the functionalHome which should be returned</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the FunctionalHome or None if it couldn&#39;t be found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functionalHomes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">functionalHomeType</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">x</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Home.search_device_by_id">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.search_device_by_id">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_device_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Device</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;searches a device by given id</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          deviceID(str): the device to search for</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">          the Device object or None if it couldn&#39;t find a device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">deviceID</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">d</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Home.search_channel">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.search_channel">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceID</span><span class="p">,</span> <span class="n">channelIndex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FunctionalChannel</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;searches a channel by given deviceID and channelIndex&quot;&quot;&quot;</span>
+        <span class="n">foundD</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">deviceID</span><span class="p">]</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">foundD</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">foundD</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">foundC</span> <span class="o">=</span> <span class="p">[</span><span class="n">ch</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">functionalChannels</span> <span class="k">if</span> <span class="n">ch</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">channelIndex</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">foundC</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">foundC</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Home.search_group_by_id">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.search_group_by_id">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_group_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">groupID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Group</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;searches a group by given id</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          groupID(str): groupID the group to search for</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">          the group object or None if it couldn&#39;t find a group</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">groupID</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">g</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Home.search_client_by_id">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.search_client_by_id">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_client_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clientID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Client</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;searches a client by given id</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          clientID(str): the client to search for</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">          the client object or None if it couldn&#39;t find a client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">clientID</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">c</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Home.search_rule_by_id">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.search_rule_by_id">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_rule_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ruleID</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Rule</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;searches a rule by given id</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          ruleID(str): the rule to search for</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">          the rule object or None if it couldn&#39;t find a rule</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">ruleID</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Home.get_security_zones_activation">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.get_security_zones_activation">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_security_zones_activation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;returns the value of the security zones if they are armed or not</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">            internal</span>
+<span class="sd">              True if the internal zone is armed</span>
+<span class="sd">            external</span>
+<span class="sd">              True if the external zone is armed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">internal_active</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">external_active</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">SecurityZoneGroup</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;EXTERNAL&quot;</span><span class="p">:</span>
+                    <span class="n">external_active</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">active</span>
+                <span class="k">elif</span> <span class="n">g</span><span class="o">.</span><span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;INTERNAL&quot;</span><span class="p">:</span>
+                    <span class="n">internal_active</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">active</span>
+        <span class="k">return</span> <span class="n">internal_active</span><span class="p">,</span> <span class="n">external_active</span></div>
+
+
+<div class="viewcode-block" id="Home.set_security_zones_activation">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_security_zones_activation">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_security_zones_activation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">external</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this function will set the alarm system to armed or disable it</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          internal(bool): activates/deactivates the internal zone</span>
+<span class="sd">          external(bool): activates/deactivates the external zone</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">          arming while being at home</span>
+
+<span class="sd">          &gt;&gt;&gt; home.set_security_zones_activation(False,True)</span>
+
+<span class="sd">          arming without being at home</span>
+
+<span class="sd">          &gt;&gt;&gt; home.set_security_zones_activation(True,True)</span>
+
+<span class="sd">          disarming the alarm system</span>
+
+<span class="sd">          &gt;&gt;&gt; home.set_security_zones_activation(False,False)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;zonesActivation&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;EXTERNAL&quot;</span><span class="p">:</span> <span class="n">external</span><span class="p">,</span> <span class="s2">&quot;INTERNAL&quot;</span><span class="p">:</span> <span class="n">internal</span><span class="p">}}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/security/setZonesActivation&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.set_silent_alarm">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_silent_alarm">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_silent_alarm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">internal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">external</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this function will set the silent alarm for interal or external</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          internal(bool): activates/deactivates the silent alarm for internal zone</span>
+<span class="sd">          external(bool): activates/deactivates the silent alarm for the external zone</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;zonesSilentAlarm&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;EXTERNAL&quot;</span><span class="p">:</span> <span class="n">external</span><span class="p">,</span> <span class="s2">&quot;INTERNAL&quot;</span><span class="p">:</span> <span class="n">internal</span><span class="p">}}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/security/setZonesSilentAlarm&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.set_location">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_location">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">latitude</span><span class="p">,</span> <span class="n">longitude</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="n">city</span><span class="p">,</span> <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">latitude</span><span class="p">,</span> <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="n">longitude</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/setLocation&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.set_cooling">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_cooling">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_cooling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cooling</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cooling&quot;</span><span class="p">:</span> <span class="n">cooling</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/heating/setCooling&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.set_intrusion_alert_through_smoke_detectors">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_intrusion_alert_through_smoke_detectors">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_intrusion_alert_through_smoke_detectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;activate or deactivate if smoke detectors should &quot;ring&quot; during an alarm</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            activate(bool): True will let the smoke detectors &quot;ring&quot; during an alarm</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;intrusionAlertThroughSmokeDetectors&quot;</span><span class="p">:</span> <span class="n">activate</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/security/setIntrusionAlertThroughSmokeDetectors&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.activate_absence_with_period">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.activate_absence_with_period">[docs]</a>
+    <span class="k">def</span> <span class="nf">activate_absence_with_period</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endtime</span><span class="p">:</span> <span class="n">datetime</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;activates the absence mode until the given time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endtime(datetime): the time when the absence should automatically be disabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">endtime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/heating/activateAbsenceWithPeriod&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.activate_absence_permanent">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.activate_absence_permanent">[docs]</a>
+    <span class="k">def</span> <span class="nf">activate_absence_permanent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;activates the absence forever&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/heating/activateAbsencePermanent&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.activate_absence_with_duration">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.activate_absence_with_duration">[docs]</a>
+    <span class="k">def</span> <span class="nf">activate_absence_with_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;activates the absence mode for a given time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            duration(int): the absence duration in minutes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="n">duration</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/heating/activateAbsenceWithDuration&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.deactivate_absence">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.deactivate_absence">[docs]</a>
+    <span class="k">def</span> <span class="nf">deactivate_absence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;deactivates the absence mode immediately&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/heating/deactivateAbsence&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.activate_vacation">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.activate_vacation">[docs]</a>
+    <span class="k">def</span> <span class="nf">activate_vacation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">endtime</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;activates the vatation mode until the given time</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            endtime(datetime): the time when the vatation mode should automatically be disabled</span>
+<span class="sd">            temperature(float): the settemperature during the vacation mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;endTime&quot;</span><span class="p">:</span> <span class="n">endtime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/heating/activateVacation&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.deactivate_vacation">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.deactivate_vacation">[docs]</a>
+    <span class="k">def</span> <span class="nf">deactivate_vacation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;deactivates the vacation mode immediately&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/heating/deactivateVacation&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.set_pin">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_pin">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_pin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newPin</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">oldPin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets a new pin for the home</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            newPin(str): the new pin</span>
+<span class="sd">            oldPin(str): optional, if there is currently a pin active it must be given here.</span>
+<span class="sd">                        Otherwise it will not be possible to set the new pin</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the result of the call</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">newPin</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">newPin</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pin&quot;</span><span class="p">:</span> <span class="n">newPin</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">oldPin</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;PIN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">oldPin</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/setPin&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">oldPin</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;PIN&quot;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="Home.set_zone_activation_delay">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_zone_activation_delay">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_zone_activation_delay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delay</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;zoneActivationDelay&quot;</span><span class="p">:</span> <span class="n">delay</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/security/setZoneActivationDelay&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.get_security_journal">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.get_security_journal">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_security_journal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">journal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/security/getSecurityJournal&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;errorCode&quot;</span> <span class="ow">in</span> <span class="n">journal</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Could not get the security journal. Error: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">journal</span><span class="p">[</span><span class="s2">&quot;errorCode&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">journal</span><span class="p">[</span><span class="s2">&quot;entries&quot;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">eventType</span> <span class="o">=</span> <span class="n">SecurityEventType</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;eventType&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">eventType</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeSecurityEventMap</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_typeSecurityEventMap</span><span class="p">[</span><span class="n">eventType</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">SecurityEvent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;There is no class for </span><span class="si">%s</span><span class="s2"> yet&quot;</span><span class="p">,</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;eventType&quot;</span><span class="p">])</span>
+
+            <span class="n">j</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="Home.delete_group">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.delete_group">[docs]</a>
+    <span class="k">def</span> <span class="nf">delete_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="p">:</span> <span class="n">Group</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;deletes the given group from the cloud</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            group(Group):the group to delete</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">group</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Home.get_OAuth_OTK">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.get_OAuth_OTK">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_OAuth_OTK</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">OAuthOTK</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+        <span class="n">token</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/getOAuthOTK&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">token</span></div>
+
+
+<div class="viewcode-block" id="Home.set_timezone">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_timezone">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_timezone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timezone</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets the timezone for the AP. e.g. &quot;Europe/Berlin&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            timezone(str): the new timezone</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;timezoneId&quot;</span><span class="p">:</span> <span class="n">timezone</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/setTimezone&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.set_powermeter_unit_price">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_powermeter_unit_price">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_powermeter_unit_price</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;powerMeterUnitPrice&quot;</span><span class="p">:</span> <span class="n">price</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span><span class="s2">&quot;home/setPowerMeterUnitPrice&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Home.set_zones_device_assignment">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.set_zones_device_assignment">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_zones_device_assignment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">internal_devices</span><span class="p">,</span> <span class="n">external_devices</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;sets the devices for the security zones</span>
+<span class="sd">        Args:</span>
+<span class="sd">            internal_devices(List[Device]): the devices which should be used for the internal zone</span>
+<span class="sd">            external_devices(List[Device]):  the devices which should be used for the external(hull) zone</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            the result of _restCall</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">internal</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">internal_devices</span><span class="p">]</span>
+        <span class="n">external</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">external_devices</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;zonesDeviceAssignment&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;INTERNAL&quot;</span><span class="p">:</span> <span class="n">internal</span><span class="p">,</span> <span class="s2">&quot;EXTERNAL&quot;</span><span class="p">:</span> <span class="n">external</span><span class="p">}}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/security/setZonesDeviceAssignment&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.start_inclusion">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.start_inclusion">[docs]</a>
+    <span class="k">def</span> <span class="nf">start_inclusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deviceId</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;start inclusion mode for specific device</span>
+<span class="sd">        Args:</span>
+<span class="sd">            deviceId: sgtin of device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;deviceId&quot;</span><span class="p">:</span> <span class="n">deviceId</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rest_call</span><span class="p">(</span>
+            <span class="s2">&quot;home/startInclusionModeForDevice&quot;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Home.enable_events">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.enable_events">[docs]</a>
+    <span class="k">def</span> <span class="nf">enable_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable_trace</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ping_interval</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">websocket</span><span class="o">.</span><span class="n">enableTrace</span><span class="p">(</span><span class="n">enable_trace</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span> <span class="o">=</span> <span class="n">websocket</span><span class="o">.</span><span class="n">WebSocketApp</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">urlWebSocket</span><span class="p">,</span>
+            <span class="n">header</span><span class="o">=</span><span class="p">[</span>
+                <span class="s2">&quot;AUTHTOKEN: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">auth_token</span><span class="p">),</span>
+                <span class="s2">&quot;CLIENTAUTH: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">clientauth_token</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">on_message</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ws_on_message</span><span class="p">,</span>
+            <span class="n">on_error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ws_on_error</span><span class="p">,</span>
+            <span class="n">on_close</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_ws_on_close</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">websocket_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ping_interval&quot;</span><span class="p">:</span> <span class="n">ping_interval</span><span class="p">}</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s2">&quot;_called_from_test&quot;</span><span class="p">):</span>  <span class="c1"># disable ssl during a test run</span>
+            <span class="n">sslopt</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cert_reqs&quot;</span><span class="p">:</span> <span class="n">ssl</span><span class="o">.</span><span class="n">CERT_NONE</span><span class="p">}</span>
+            <span class="n">websocket_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sslopt&quot;</span><span class="p">:</span> <span class="n">sslopt</span><span class="p">,</span> <span class="s2">&quot;ping_interval&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;ping_timeout&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocketThread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hmip-websocket&quot;</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span><span class="o">.</span><span class="n">run_forever</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="n">websocket_kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocketThread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocketThread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Home.disable_events">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.home.Home.disable_events">[docs]</a>
+    <span class="k">def</span> <span class="nf">disable_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_ws_on_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__webSocket</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_ws_on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">err</span><span class="p">):</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onWsError</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">websocket_reconnect_on_error</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Trying to reconnect websocket&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">disable_events</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enable_events</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_ws_on_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="c1"># json.loads doesn&#39;t support bytes as parameter before python 3.6</span>
+        <span class="n">js</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">bytes2str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="c1"># LOGGER.debug(js)</span>
+        <span class="n">eventList</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;events&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pushEventType</span> <span class="o">=</span> <span class="n">EventType</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;pushEventType&quot;</span><span class="p">])</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">pushEventType</span><span class="p">)</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">GROUP_CHANGED</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_group_by_id</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_group</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                        <span class="n">pushEventType</span> <span class="o">=</span> <span class="n">EventType</span><span class="o">.</span><span class="n">GROUP_ADDED</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">fire_create_event</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">is</span> <span class="n">MetaGroup</span><span class="p">:</span>
+                        <span class="n">obj</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">obj</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">)</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">fire_update_event</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">HOME_CHANGED</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;home&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">update_home_only</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">fire_update_event</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">CLIENT_ADDED</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">)</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">CLIENT_CHANGED</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;client&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_client_by_id</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">CLIENT_REMOVED</span><span class="p">:</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_client_by_id</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">DEVICE_ADDED</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;device&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_device</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">load_functionalChannels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fire_create_event</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">DEVICE_CHANGED</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;device&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_device_by_id</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># no DEVICE_ADDED Event?</span>
+                        <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_device</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                        <span class="n">pushEventType</span> <span class="o">=</span> <span class="n">EventType</span><span class="o">.</span><span class="n">DEVICE_ADDED</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">fire_create_event</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">obj</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">load_functionalChannels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">fire_update_event</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">DEVICE_REMOVED</span><span class="p">:</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_device_by_id</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">fire_remove_event</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">DEVICE_CHANNEL_EVENT</span><span class="p">:</span>
+                    <span class="n">channel_event</span> <span class="o">=</span> <span class="n">ChannelEvent</span><span class="p">(</span><span class="o">**</span><span class="n">event</span><span class="p">)</span>
+                    <span class="n">ch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_channel</span><span class="p">(</span><span class="n">channel_event</span><span class="o">.</span><span class="n">deviceId</span><span class="p">,</span> <span class="n">channel_event</span><span class="o">.</span><span class="n">channelIndex</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">ch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">ch</span><span class="o">.</span><span class="n">fire_channel_event</span><span class="p">(</span><span class="n">channel_event</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">GROUP_REMOVED</span><span class="p">:</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_group_by_id</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+                    <span class="n">obj</span><span class="o">.</span><span class="n">fire_remove_event</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">GROUP_ADDED</span><span class="p">:</span>
+                    <span class="n">group</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span>
+                    <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_group</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fire_create_event</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">event_type</span><span class="o">=</span><span class="n">pushEventType</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">pushEventType</span> <span class="o">==</span> <span class="n">EventType</span><span class="o">.</span><span class="n">SECURITY_JOURNAL_CHANGED</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># data is just none so nothing to do here</span>
+
+                <span class="c1"># TODO: implement INCLUSION_REQUESTED, NONE</span>
+                <span class="n">eventList</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;eventType&quot;</span><span class="p">:</span> <span class="n">pushEventType</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">obj</span><span class="p">})</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">valerr</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="s2">&quot;Uknown EventType &#39;</span><span class="si">%s</span><span class="s2">&#39; Data: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;pushEventType&quot;</span><span class="p">],</span> <span class="n">event</span>
+                <span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+                <span class="n">LOGGER</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">onEvent</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">eventList</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
