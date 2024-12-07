@@ -34,6 +34,7 @@ class BaseConnection:
 
     _auth_token = ""
     _clientauth_token = ""
+    _accesspoint_id = ""
     _urlREST = ""
     _urlWebSocket = ""
     # the homematic ip cloud tends to time out. retry the call X times.
@@ -87,16 +88,20 @@ class BaseConnection:
     def clientauth_token(self):
         return self._clientauth_token
 
+    @property
+    def accesspoint_id(self):
+        return self._accesspoint_id
+
     def set_token_and_characteristics(self, accesspoint_id):
-        self.accesspoint_id = re.sub(r"[^a-fA-F0-9 ]", "", accesspoint_id).upper()
-        self._clientCharacteristics["id"] = self.accesspoint_id
+        self._accesspoint_id = re.sub(r"[^a-fA-F0-9 ]", "", accesspoint_id).upper()
+        self._clientCharacteristics["id"] = self._accesspoint_id
         self._clientauth_token = (
-            hashlib.sha512(str(self.accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode("utf-8"))
+            hashlib.sha512(str(self._accesspoint_id + "jiLpVitHvWnIGD1yo7MA").encode("utf-8"))
             .hexdigest()
             .upper()
         )
         self.headers[ATTR_CLIENT_AUTH] = self._clientauth_token
-        self.headers["ACCESSPOINT-ID"] = self.accesspoint_id
+        self.headers["ACCESSPOINT-ID"] = self._accesspoint_id
 
     def set_auth_token(self, auth_token):
         self._auth_token = auth_token
