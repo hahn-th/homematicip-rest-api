@@ -52,17 +52,19 @@ def test_websocket_channel_event(fake_home: Home):
                 "0":
                     {
                         "pushEventType": "DEVICE_CHANNEL_EVENT",
-                        "deviceId": "xxx",
+                        "deviceId": "3014F7110000000000DSDPCB",
                         "channelIndex": 1,
                         "channelEventType": "DOOR_BELL_SENSOR_EVENT",
                     }
             }
     }
     fake_handler = Mock()
-    fake_home.on_channel_event(fake_handler)
+    ch = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
+    ch.add_on_channel_event_handler(fake_handler)
+
     fake_home._ws_on_message(None, json.dumps(payload))
 
-    fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "xxx", 1, "DOOR_BELL_SENSOR_EVENT"))
+    fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "3014F7110000000000DSDPCB", 1, "DOOR_BELL_SENSOR_EVENT"))
 
 
 def test_websocket_device(fake_home: Home, home_data):

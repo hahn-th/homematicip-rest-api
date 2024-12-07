@@ -496,6 +496,10 @@ class FunctionalChannelType(AutoNameEnum):
     WEATHER_SENSOR_PRO_CHANNEL = auto()
 
 
+class ChannelEventTypes(AutoNameEnum):
+    DOOR_BELL_SENSOR_EVENT = auto()
+
+
 class HeatingLoadType(AutoNameEnum):
     LOAD_BALANCING = auto()
     LOAD_COLLECTION = auto()
@@ -614,15 +618,6 @@ class ConnectionType(AutoNameEnum):
 class DeviceArchetype(AutoNameEnum):
     EXTERNAL = auto()
     HMIP = auto()
-
-
-class ShadingStateType(AutoNameEnum):
-    NOT_POSSIBLE = auto()
-    NOT_EXISTENT = auto()
-    POSITION_USED = auto()
-    TILT_USED = auto()
-    NOT_USED = auto()
-    MIXED = auto()
 
 
 class DriveSpeed(AutoNameEnum):

@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, Mock
 import pytest
 from conftest import utc_offset
 from homematicip.base.base_connection import BaseConnection
+from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
@@ -454,3 +455,15 @@ def test_universal_light_group_channel(fake_home: Home):
         assert isinstance(ch, UniversalLightChannelGroup)
         assert len(ch.channelSelections) == 3
         assert ch.hardwareColorTemperatureColdWhite == 6500
+
+
+def test_door_bell_channel_event(fake_home: Home):
+    with no_ssl_verification():
+        handler = Mock()
+        ch = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
+        channel_event = ChannelEvent(channelEventType="DOOR_BELL_SENSOR_EVENT", channelIndex=1, deviceId=ch.device.id)
+        ch.add_on_channel_event_handler(handler)
+
+        ch.fire_channel_event(channel_event)
+
+        handler.assert_called_once_with(channel_event)
