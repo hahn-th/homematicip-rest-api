@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [1.1.4] 2024-12-07
+## [1.1.5] 2024-12-07
 
 ### ADDED
 
 - [issue: 542] Add support for HmIP-HCU Access Point (#542)
+
+## [1.1.4] 2024-12-07
+
+### ADDED
+
+~~- [issue: 542] Add support for HmIP-HCU Access Point (#542)~~
 
 ### CHANGED
 
