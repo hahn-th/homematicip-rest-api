@@ -202,6 +202,7 @@ class DeviceType(AutoNameEnum):
     BASE_DEVICE = auto()
     EXTERNAL = auto()
     ACCELERATION_SENSOR = auto()
+    ACCESS_POINT = auto()
     ALARM_SIREN_INDOOR = auto()
     ALARM_SIREN_OUTDOOR = auto()
     BLIND_MODULE = auto()

@@ -96,6 +96,7 @@ class BaseConnection:
             .upper()
         )
         self.headers[ATTR_CLIENT_AUTH] = self._clientauth_token
+        self.headers["ACCESSPOINT-ID"] = self.accesspoint_id
 
     def set_auth_token(self, auth_token):
         self._auth_token = auth_token
