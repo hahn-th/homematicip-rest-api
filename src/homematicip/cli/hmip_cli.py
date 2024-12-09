@@ -66,8 +66,8 @@ def main(args=None):
         sys.stderr.write(f"\033[91m{type(e).__name__}: {str(e)}\033[0;0m")
         sys.stderr.write("\n")
         # at this point, you're guaranteed to have args and thus log_level
-        if parsed_args.log_level:
-            if parsed_args.log_level < 10:
+        if parsed_args.debug_level:
+            if parsed_args.debug_level < 10:
                 # traceback prints to stderr by default
                 traceback.print_exc()
 
@@ -193,6 +193,9 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
         )
         sortedDevices = sorted(home.devices, key=attrgetter("deviceType", "label"))
         for d in sortedDevices:
+            if type(d) == BaseDevice:
+                # skip unknown devices to avoid exception
+                continue
             print(
                 "{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {} LiveUpdateState: {}".format(
                     d.label,
@@ -1110,3 +1113,6 @@ def fake_download_configuration():
         with open(server_config) as file:
             return json.load(file)
     return None
+
+if __name__ == "__main__":
+    main()
