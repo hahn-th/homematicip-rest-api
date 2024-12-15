@@ -5,10 +5,10 @@ from dataclasses import dataclass
 class ChannelEvent:
     """Class to hold a channel event."""
 
-    pushEventType: str
-    deviceId: str
-    channelIndex: int
-    channelEventType: str
+    pushEventType: str = None
+    deviceId: str = None
+    channelIndex: int = None
+    channelEventType: str = None
 
     # {
     #     "pushEventType": "DEVICE_CHANNEL_EVENT",

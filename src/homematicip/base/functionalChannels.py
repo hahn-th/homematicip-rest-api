@@ -13,16 +13,26 @@ class FunctionalChannel(HomeMaticIPObject):
 
     def __init__(self, device, connection):
         super().__init__(connection)
+        self._on_channel_event_handler = []
         self.index = -1
         self.groupIndex = -1
         self.label = ""
         self.groupIndex = -1
-        self.functionalChannelType:str = ""
+        self.functionalChannelType: str = ""
         self.groups = Iterable[Group]
         self.device = device
-
-        # we don't need a connection_v2 in this object (at the moment)
+        self.channelRole: str = ""
         self._connection = None
+
+    def add_on_channel_event_handler(self, handler):
+        """Adds an event handler to the update method. Fires when a device
+        is updated."""
+        self._on_channel_event_handler.append(handler)
+
+    def fire_channel_event(self, *args, **kwargs):
+        """Trigger the methods tied to _on_channel_event"""
+        for _handler in self._on_channel_event_handler:
+            _handler(*args, **kwargs)
 
     def from_json(self, js, groups: Iterable[Group]):
         """this function will load the functional channel object
@@ -36,6 +46,7 @@ class FunctionalChannel(HomeMaticIPObject):
         self.index = js["index"]
         self.groupIndex = js["groupIndex"]
         self.label = js["label"]
+        self.set_attr_from_dict("channelRole", js)
         self.functionalChannelType = FunctionalChannelType.from_str(
             js["functionalChannelType"], js["functionalChannelType"]
         )
@@ -203,7 +214,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     def set_acceleration_sensor_neutral_position(
-        self, neutralPosition: AccelerationSensorNeutralPosition
+            self, neutralPosition: AccelerationSensorNeutralPosition
     ):
         return self._run_non_async(
             self.async_set_acceleration_sensor_neutral_position, neutralPosition
@@ -223,7 +234,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     def set_acceleration_sensor_sensitivity(
-        self, sensitivity: AccelerationSensorSensitivity
+            self, sensitivity: AccelerationSensorSensitivity
     ):
         return self._run_non_async(
             self.async_set_acceleration_sensor_sensitivity, sensitivity)
@@ -272,7 +283,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     def set_notification_sound_type(
-        self, soundType: NotificationSoundType, isHighToLow: bool
+            self, soundType: NotificationSoundType, isHighToLow: bool
     ):
         return self._run_non_async(
             self.async_set_notification_sound_type, soundType, isHighToLow
@@ -432,7 +443,7 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
         self.set_attr_from_dict("valveProtectionSwitchingInterval", js)
 
     def set_minimum_floor_heating_valve_position(
-        self, minimumFloorHeatingValvePosition: float
+            self, minimumFloorHeatingValvePosition: float
     ):
         """sets the minimum floot heating valve position
 
@@ -673,7 +684,6 @@ class MultiModeInputChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
-        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
         self.set_attr_from_dict("windowState", js, WindowState)
         self.set_attr_from_dict("doorBellSensorEventTimestamp", js)
@@ -743,7 +753,6 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         #:RGBColorState:the color of the light
         self.simpleRGBColorState = RGBColorState.BLACK
 
-
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.on = js["on"]
@@ -752,15 +761,14 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         if "opticalSignalBehaviour" in js:
             self.opticalSignalBehaviour = OpticalSignalBehaviour.from_str(js["opticalSignalBehaviour"])
 
-
     def set_optical_signal(
-        self,
-        opticalSignalBehaviour: OpticalSignalBehaviour,
-        rgb: RGBColorState,
-        dimLevel=1.01,
+            self,
+            opticalSignalBehaviour: OpticalSignalBehaviour,
+            rgb: RGBColorState,
+            dimLevel=1.01,
     ):
         return self._run_non_async(self.async_set_optical_signal, opticalSignalBehaviour, rgb, dimLevel)
-    
+
     async def async_set_optical_signal(
         self,
         opticalSignalBehaviour: OpticalSignalBehaviour,
@@ -812,11 +820,11 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         )
 
     def set_rgb_dim_level_with_time(
-        self,
-        rgb: RGBColorState,
-        dimLevel: float,
-        onTime: float,
-        rampTime: float,
+            self,
+            rgb: RGBColorState,
+            dimLevel: float,
+            onTime: float,
+            rampTime: float,
     ):
         return self._run_non_async(self.async_set_rgb_dim_level_with_time, rgb, dimLevel, onTime, rampTime)
 
@@ -925,7 +933,7 @@ class ShadingChannel(FunctionalChannel):
         return await self._rest_call_async("device/control/setPrimaryShadingLevel", data)
 
     def set_secondary_shading_level(
-        self, primaryShadingLevel: float, secondaryShadingLevel: float
+            self, primaryShadingLevel: float, secondaryShadingLevel: float
     ):
         return self._run_non_async(
             self.async_set_secondary_shading_level,
@@ -1119,7 +1127,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         )
 
     def set_acceleration_sensor_sensitivity(
-        self, sensitivity: AccelerationSensorSensitivity
+            self, sensitivity: AccelerationSensorSensitivity
     ):
         return self._run_non_async(
             self.async_set_acceleration_sensor_sensitivity, sensitivity
@@ -1191,7 +1199,7 @@ class WallMountedThermostatProChannel(FunctionalChannel):
         self.vaporAmount = js["vaporAmount"]
 
     def set_display(
-        self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
+            self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
         return self._run_non_async(self.async_set_display, display)
 
@@ -1277,7 +1285,7 @@ class WaterSensorChannel(FunctionalChannel):
         )
 
     def set_acoustic_water_alarm_trigger(
-        self, acousticWaterAlarmTrigger: WaterAlarmTrigger
+            self, acousticWaterAlarmTrigger: WaterAlarmTrigger
     ):
         return self._run_non_async(
             self.async_set_acoustic_water_alarm_trigger, acousticWaterAlarmTrigger
@@ -1895,7 +1903,6 @@ class UniversalActuatorChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
-        self.channelRole = None  # String
         self.dimLevel = 0.0
         self.on = True
         self.profileMode = None  # String "AUTOMATIC",
@@ -1906,7 +1913,6 @@ class UniversalActuatorChannel(FunctionalChannel):
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.channelRole = js["channelRole"]
         self.dimLevel = js["dimLevel"]
         self.on = js["on"]
         self.profileMode = js["profileMode"]
@@ -1926,7 +1932,6 @@ class UniversalActuatorChannel(FunctionalChannel):
             self.profileMode,
             self.relayMode,
         )
-    
 
 
 class RainDetectionChannel(FunctionalChannel):
@@ -1980,7 +1985,6 @@ class ExternalUniversalLightChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
-        self.channelRole = ""
         self.colorTemperature = 0
         self.dimLevel = 0.0
         self.hue = None
@@ -1992,7 +1996,6 @@ class ExternalUniversalLightChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
 
-        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("colorTemperature", js)
         self.set_attr_from_dict("dimLevel", js)
         self.set_attr_from_dict("hue", js)
@@ -2160,7 +2163,6 @@ class UniversalLightChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
-        self.channelRole: str = None
         self.colorTemperature: int = None
         self.controlGearFailure: str = None
         self.dim2WarmActive: bool = None
@@ -2178,11 +2180,10 @@ class UniversalLightChannel(FunctionalChannel):
         self.onMinLevel: float = None
         self.profileMode: ProfileMode = None
         self.saturationLevel: float = None
-        
+
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
 
-        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("colorTemperature", js)
         self.set_attr_from_dict("controlGearFailure", js)
         self.set_attr_from_dict("dim2WarmActive", js)
@@ -2205,10 +2206,9 @@ class UniversalLightChannel(FunctionalChannel):
 class UniversalLightChannelGroup(UniversalLightChannel):
     """Universal-Light-Channel-Group."""
 
-
     def __init__(self, device, connection):
         super().__init__(device, connection)
-        
+
         self.channelSelections: list = []
 
     def from_json(self, js, groups: Iterable[Group]):

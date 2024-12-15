@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.1.6] 2024-12-15
+
+### CHANGED
+
+- Removed support for Python lower than 3.12
+- [issue: 542] Add support for HmIP-HCU Access Point (#542)
+- Make "channelRole" available to FunctionalChannels 
+
+## [1.1.5] 2024-12-07
+
+### ADDED
+
+~~- [issue: 542] Add support for HmIP-HCU Access Point (#542)~~
+
+## [1.1.4] 2024-12-07
+
+### ADDED
+
+~~- [issue: 542] Add support for HmIP-HCU Access Point (#542)~~
+
+### CHANGED
+
+- Bump aiohttp from  3.9.4 to 3.10.2
+- Bump websockets to websockets 13.1
+- Bump requests from 2.31.0 to 2.32.0
+- Channel Events are fired by the channel itself.
+
 ## [1.1.3] 2024-11-17
 
 ### ADDED
@@ -687,7 +714,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.3..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6..master
+[1.1.6]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.5...1.1.6
+[1.1.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.4...1.1.5
+[1.1.4]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.0...1.1.1
@@ -766,6 +796,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [issue: 464]: https://github.com/hahn-th/homematicip-rest-api/issues/464
 [issue: 465]: https://github.com/hahn-th/homematicip-rest-api/issues/465
 [issue: 471]: https://github.com/hahn-th/homematicip-rest-api/issues/471
+[issue: 542]: https://github.com/hahn-th/homematicip-rest-api/issues/542
 [hmip-falmot-c12]: https://github.com/hahn-th/homematicip-rest-api/issues/281
 [hmip-whs2]: https://github.com/hahn-th/homematicip-rest-api/issues/280
 [hmip-pmfs]: https://github.com/hahn-th/homematicip-rest-api/issues/282

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import asyncio
 import configparser
 import json
 import time
@@ -45,6 +44,17 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
         if response.status == 200:  # ConnectionRequest was fine
             break
 
+        errorCode = json.loads(response.text)["errorCode"]
+        if errorCode == "INVALID_PIN":
+            print("PIN IS INVALID!")
+        elif errorCode == "ASSIGNMENT_LOCKED":
+            print("LOCKED ! Press button on HCU to unlock.")
+            time.sleep(5)
+        else:
+            print("Error: {}\nExiting".format(errorCode))
+            return
+
+    print("Connection Request successful!")
     print("Please press the blue button on the access point")
     while not await auth.is_request_acknowledged():
         print("Please press the blue button on the access point")
