@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip.base.base_connection &mdash; HomematicIP-Rest-API 0.0.post1.dev1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=42336cb0"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../homematicip.html">homematicip</a></li>
+      <li class="breadcrumb-item active">homematicip.base.base_connection</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip.base.base_connection</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="c1">#</span>
+<span class="c1"># ATTR_AUTH_TOKEN = &quot;AUTHTOKEN&quot;</span>
+<span class="c1"># ATTR_CLIENT_AUTH = &quot;CLIENTAUTH&quot;</span>
+
+
+<div class="viewcode-block" id="HmipConnectionError">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.base_connection.HmipConnectionError">[docs]</a>
+<span class="k">class</span> <span class="nc">HmipConnectionError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="HmipWrongHttpStatusError">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.base_connection.HmipWrongHttpStatusError">[docs]</a>
+<span class="k">class</span> <span class="nc">HmipWrongHttpStatusError</span><span class="p">(</span><span class="n">HmipConnectionError</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">status_code</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HmipWrongHttpStatusError(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="HmipServerCloseError">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.base_connection.HmipServerCloseError">[docs]</a>
+<span class="k">class</span> <span class="nc">HmipServerCloseError</span><span class="p">(</span><span class="n">HmipConnectionError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="HmipThrottlingError">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.base_connection.HmipThrottlingError">[docs]</a>
+<span class="k">class</span> <span class="nc">HmipThrottlingError</span><span class="p">(</span><span class="n">HmipConnectionError</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="c1">#</span>
+<span class="c1"># class BaseConnection:</span>
+<span class="c1">#     &quot;&quot;&quot;Base connection class.</span>
+<span class="c1">#</span>
+<span class="c1">#     Threaded and Async connection class must inherit from this.&quot;&quot;&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#     _auth_token = &quot;&quot;</span>
+<span class="c1">#     _clientauth_token = &quot;&quot;</span>
+<span class="c1">#     _urlREST = &quot;&quot;</span>
+<span class="c1">#     _urlWebSocket = &quot;&quot;</span>
+<span class="c1">#     # the homematic ip cloud tends to time out. retry the call X times.</span>
+<span class="c1">#     _restCallRequestCounter = 3</span>
+<span class="c1">#     _restCallTimout = 6</span>
+<span class="c1">#</span>
+<span class="c1">#     def __init__(self):</span>
+<span class="c1">#         self.headers = {</span>
+<span class="c1">#             &quot;content-type&quot;: &quot;application/json&quot;,</span>
+<span class="c1">#             &quot;accept&quot;: &quot;application/json&quot;,</span>
+<span class="c1">#             &quot;VERSION&quot;: &quot;12&quot;,</span>
+<span class="c1">#             ATTR_AUTH_TOKEN: None,</span>
+<span class="c1">#             ATTR_CLIENT_AUTH: None,</span>
+<span class="c1">#         }</span>
+<span class="c1">#         lang = &quot;en_US&quot;</span>
+<span class="c1">#         def_locale = locale.getlocale()</span>
+<span class="c1">#         if def_locale != None and def_locale[0] != None:</span>
+<span class="c1">#             lang = def_locale[0]</span>
+<span class="c1">#</span>
+<span class="c1">#         self._clientCharacteristics = {</span>
+<span class="c1">#             &quot;clientCharacteristics&quot;: {</span>
+<span class="c1">#                 &quot;apiVersion&quot;: &quot;10&quot;,</span>
+<span class="c1">#                 &quot;applicationIdentifier&quot;: &quot;homematicip-python&quot;,</span>
+<span class="c1">#                 &quot;applicationVersion&quot;: &quot;1.0&quot;,</span>
+<span class="c1">#                 &quot;deviceManufacturer&quot;: &quot;none&quot;,</span>
+<span class="c1">#                 &quot;deviceType&quot;: &quot;Computer&quot;,</span>
+<span class="c1">#                 &quot;language&quot;: lang,</span>
+<span class="c1">#                 &quot;osType&quot;: platform.system(),</span>
+<span class="c1">#                 &quot;osVersion&quot;: platform.release(),</span>
+<span class="c1">#             },</span>
+<span class="c1">#             &quot;id&quot;: None,</span>
+<span class="c1">#         }</span>
+<span class="c1">#</span>
+<span class="c1">#     @property</span>
+<span class="c1">#     def clientCharacteristics(self):</span>
+<span class="c1">#         return self._clientCharacteristics</span>
+<span class="c1">#</span>
+<span class="c1">#     @property</span>
+<span class="c1">#     def urlWebSocket(self):</span>
+<span class="c1">#         return self._urlWebSocket</span>
+<span class="c1">#</span>
+<span class="c1">#     @property</span>
+<span class="c1">#     def urlREST(self):</span>
+<span class="c1">#         return self._urlREST</span>
+<span class="c1">#</span>
+<span class="c1">#     @property</span>
+<span class="c1">#     def auth_token(self):</span>
+<span class="c1">#         return self._auth_token</span>
+<span class="c1">#</span>
+<span class="c1">#     @property</span>
+<span class="c1">#     def clientauth_token(self):</span>
+<span class="c1">#         return self._clientauth_token</span>
+<span class="c1">#</span>
+<span class="c1">#     def set_token_and_characteristics(self, accesspoint_id):</span>
+<span class="c1">#         accesspoint_id = re.sub(r&quot;[^a-fA-F0-9 ]&quot;, &quot;&quot;, accesspoint_id).upper()</span>
+<span class="c1">#         self._clientCharacteristics[&quot;id&quot;] = accesspoint_id</span>
+<span class="c1">#         self._clientauth_token = (</span>
+<span class="c1">#             hashlib.sha512(str(accesspoint_id + &quot;jiLpVitHvWnIGD1yo7MA&quot;).encode(&quot;utf-8&quot;))</span>
+<span class="c1">#             .hexdigest()</span>
+<span class="c1">#             .upper()</span>
+<span class="c1">#         )</span>
+<span class="c1">#         self.headers[ATTR_CLIENT_AUTH] = self._clientauth_token</span>
+<span class="c1">#</span>
+<span class="c1">#     def set_auth_token(self, auth_token):</span>
+<span class="c1">#         self._auth_token = auth_token</span>
+<span class="c1">#         self.headers[ATTR_AUTH_TOKEN] = auth_token</span>
+<span class="c1">#</span>
+<span class="c1">#     def init(self, accesspoint_id, lookup=True, **kwargs):</span>
+<span class="c1">#         raise NotImplementedError</span>
+<span class="c1">#</span>
+<span class="c1">#     def _rest_call(self, path, body=None):</span>
+<span class="c1">#         raise NotImplementedError</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
