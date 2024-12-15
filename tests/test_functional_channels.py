@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, timezone
 from unittest.mock import MagicMock, Mock
 import pytest
 from conftest import utc_offset
+from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
 from homematicip.device import *

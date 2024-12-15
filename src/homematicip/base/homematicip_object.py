@@ -3,7 +3,7 @@ import logging
 from datetime import datetime
 
 from homematicip.base.enums import AutoNameEnum
-from homematicip.connection_v2.rest_connection import RestConnection, RestResult
+from homematicip.connection.rest_connection import RestConnection, RestResult
 
 LOGGER = logging.getLogger(__name__)
 

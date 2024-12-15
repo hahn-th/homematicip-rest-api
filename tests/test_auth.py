@@ -3,8 +3,8 @@ import hashlib
 import pytest
 
 from homematicip.auth import Auth
-from homematicip.connection_v2.connection_context import ConnectionContext
-from homematicip.connection_v2.rest_connection import RestConnection
+from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.rest_connection import RestConnection
 
 
 @pytest.mark.asyncio

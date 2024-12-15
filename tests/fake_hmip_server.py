@@ -9,10 +9,10 @@ from aiohttp import web
 from aiohttp.resolver import DefaultResolver
 from aiohttp.test_utils import unused_port
 
-from homematicip.connection_v2 import ATTR_CLIENT_AUTH, ATTR_AUTH_TOKEN
-from homematicip.connection_v2.connection_context import ConnectionContext
-from homematicip.connection_v2.rest_connection import RestConnection
-from homematicip.connection_v2.websocket_handler import WebSocketHandler
+from homematicip.connection import ATTR_CLIENT_AUTH, ATTR_AUTH_TOKEN
+from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.rest_connection import RestConnection
+from homematicip.connection.websocket_handler import WebSocketHandler
 
 
 class FakeResolver:
@@ -117,7 +117,7 @@ class FakeLookupHmip(BaseFakeHmip):
 
 
 class FakeConnectionHmip(BaseFakeHmip):
-    """Test various connection_v2 issues"""
+    """Test various connection issues"""
 
     js_response = {"response": True}
 
@@ -164,7 +164,7 @@ class FakeWebsocketHmip(BaseFakeHmip):
         await ws.prepare(request)
         ws.send_bytes(b"abc")
         await asyncio.sleep(2)
-        print("websocket connection_v2 closed")
+        print("websocket connection closed")
 
         return ws
 

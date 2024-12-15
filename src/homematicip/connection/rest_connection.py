@@ -5,8 +5,8 @@ from typing import Optional
 
 import httpx
 
-from homematicip.connection_v2 import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE, ATTR_ACCESSPOINT_ID
-from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE, ATTR_ACCESSPOINT_ID
+from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 LOGGER = logging.getLogger(__name__)

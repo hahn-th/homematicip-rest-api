@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from homematicip.connection_v2.client_characteristics_builder import ClientCharacteristicsBuilder
-from homematicip.connection_v2.client_token_builder import ClientTokenBuilder
-from homematicip.connection_v2.connection_url_resolver import ConnectionUrlResolver
+from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
+from homematicip.connection.client_token_builder import ClientTokenBuilder
+from homematicip.connection.connection_url_resolver import ConnectionUrlResolver
 
 
 class ConnectionContextBuilder:
@@ -14,10 +14,10 @@ class ConnectionContextBuilder:
                       enforce_ssl: bool = True,
                       ssl_ctx=None):
         """
-        Create a new connection_v2 context and lookup urls
+        Create a new connection context and lookup urls
 
         :param accesspoint_id: Access point id
-        :param lookup_url: Url to lookup the connection_v2 urls
+        :param lookup_url: Url to lookup the connection urls
         :param auth_token: The Auth Token if exists. If no one is provided None will be used
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
         :param ssl_ctx: ssl context to use
@@ -57,10 +57,10 @@ class ConnectionContext:
                enforce_ssl: bool = True,
                ssl_ctx=None):
         """
-        Create a new connection_v2 context.
+        Create a new connection context.
 
         :param access_point_id: Access point id
-        :param lookup_url: Url to lookup the connection_v2 urls
+        :param lookup_url: Url to lookup the connection urls
         :param auth_token: The Auth Token if exists. If no one is provided None will be used
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
         :param ssl_ctx: ssl context to use

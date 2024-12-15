@@ -6,7 +6,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
 
-from homematicip.connection_v2.connection_context import ConnectionContext, ConnectionContextBuilder
+from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 

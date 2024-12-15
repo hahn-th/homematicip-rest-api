@@ -5,7 +5,7 @@ import pytest
 
 from conftest import utc_offset
 from homematicip.base.channel_event import ChannelEvent
-from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import Device, BaseDevice
 from homematicip.functionalHomes import *
 from homematicip.group import Group
@@ -20,7 +20,7 @@ from homematicip_demo.helper import (
 
 def test_init():
     context = ConnectionContext(auth_token="auth_token", accesspoint_id="access_point_id")
-    with patch('homematicip.connection_v2.connection_context.ConnectionContextBuilder.build_context',
+    with patch('homematicip.connection.connection_context.ConnectionContextBuilder.build_context',
                return_value=context) as mock_create:
         home = Home()
         home.init('access_point_id', 'auth_token')

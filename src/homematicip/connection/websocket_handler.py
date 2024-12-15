@@ -9,8 +9,8 @@ import certifi
 from websockets import connect
 from websockets.exceptions import ConnectionClosed
 
-from homematicip.connection_v2 import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
-from homematicip.connection_v2.connection_context import ConnectionContext
+from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
+from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipServerCloseError
 
 LOGGER = logging.getLogger(__name__)

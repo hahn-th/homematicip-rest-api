@@ -6,10 +6,10 @@ from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.class_maps import *
 from homematicip.client import Client
-from homematicip.connection_v2.client_characteristics_builder import ClientCharacteristicsBuilder
-from homematicip.connection_v2.connection_context import ConnectionContext, ConnectionContextBuilder
-from homematicip.connection_v2.connection_factory import ConnectionFactory
-from homematicip.connection_v2.websocket_handler import WebSocketHandler
+from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
+from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
+from homematicip.connection.connection_factory import ConnectionFactory
+from homematicip.connection.websocket_handler import WebSocketHandler
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.location import Location

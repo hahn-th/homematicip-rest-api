@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import asyncio
 import configparser
 import json
 import time
@@ -6,9 +7,8 @@ from builtins import input
 
 import homematicip
 import homematicip.auth
-from homematicip.connection_v2.connection_context import ConnectionContextBuilder
-from homematicip.connection_v2.rest_connection import RestConnection
-from homematicip.home import Home
+from homematicip.connection.connection_context import ConnectionContextBuilder
+from homematicip.connection.rest_connection import RestConnection
 
 
 async def run_auth(access_point: str = None, devicename: str = None, pin: str = None):

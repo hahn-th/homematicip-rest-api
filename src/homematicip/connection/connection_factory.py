@@ -1,6 +1,6 @@
-from homematicip.connection_v2.connection_context import ConnectionContext
-from homematicip.connection_v2.rate_limited_rest_connection import RateLimitedRestConnection
-from homematicip.connection_v2.rest_connection import RestConnection
+from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.rate_limited_rest_connection import RateLimitedRestConnection
+from homematicip.connection.rest_connection import RestConnection
 
 
 class ConnectionFactory:
