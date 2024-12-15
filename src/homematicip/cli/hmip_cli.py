@@ -93,7 +93,6 @@ def get_home(config: homematicip.HmipConfig) -> Home:
     """Initialize home instance."""
     home = Home()
     home.init(config.access_point, config.auth_token)
-    home.set_auth_token(config.auth_token)
     return home
 
 

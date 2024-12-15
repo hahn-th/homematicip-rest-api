@@ -5,7 +5,7 @@ from typing import Optional
 
 import httpx
 
-from homematicip.connection_v2 import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE
+from homematicip.connection_v2 import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE, ATTR_ACCESSPOINT_ID
 from homematicip.connection_v2.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
@@ -34,10 +34,17 @@ class RestConnection:
     _context: ConnectionContext = None
     _headers: dict[str, str] = None
     _verify = None
+    _log_status_exceptions = True
 
-    def __init__(self, context: ConnectionContext):
+    def __init__(self, context: ConnectionContext, log_status_exceptions: bool = True):
+        """Initialize the RestConnection object.
+
+        @param context: The connection context
+        @param log_status_exceptions: If status exceptions should be logged
+        """
         LOGGER.debug("Initialize new RestConnection")
         self.update_connection_context(context)
+        self._log_status_exceptions = log_status_exceptions
 
     def update_connection_context(self, context: ConnectionContext) -> None:
         self._context = context
@@ -52,7 +59,8 @@ class RestConnection:
             #"accept": "application/json",
             "VERSION": "12",
             ATTR_AUTH_TOKEN: context.auth_token,
-            ATTR_CLIENT_AUTH: context.client_auth_token
+            ATTR_CLIENT_AUTH: context.client_auth_token,
+            ATTR_ACCESSPOINT_ID: context.accesspoint_id
         }
 
     def get_header(self) -> dict[str, str]:
@@ -94,10 +102,11 @@ class RestConnection:
                 LOGGER.error(f"An error occurred while requesting {exc.request.url!r}.")
                 return RestResult(status=-1, exception=exc)
             except httpx.HTTPStatusError as exc:
-                LOGGER.error(
-                    f"Error response {exc.response.status_code} while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
-                )
-                LOGGER.error(f"Response: {repr(exc.response)}")
+                if self._log_status_exceptions:
+                    LOGGER.error(
+                        f"Error response {exc.response.status_code} while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
+                    )
+                    LOGGER.error(f"Response: {repr(exc.response)}")
                 return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
     @staticmethod

@@ -23,7 +23,7 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
         break
 
     context = ConnectionContextBuilder.build_context(access_point)
-    connection = RestConnection(context)
+    connection = RestConnection(context, log_status_exceptions=False)
 
     auth = homematicip.auth.Auth(connection, context.client_auth_token)
 
@@ -44,15 +44,6 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
 
         if response.status == 200:  # ConnectionRequest was fine
             break
-
-        #print(response)
-        #
-        # errorCode = json.loads(response.text)["errorCode"]
-        # if errorCode == "INVALID_PIN":
-        #     print("PIN IS INVALID!")
-        # else:
-        #     print("Error: {}\nExiting".format(errorCode))
-        #     return
 
     print("Please press the blue button on the access point")
     while not await auth.is_request_acknowledged():
