@@ -1,4 +1,4 @@
-requests>=2.24.0
+requests>=2.32.0
 websocket-client>=1.0.0
 async_timeout>=3.0.1
 websockets>=13.1
