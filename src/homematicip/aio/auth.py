@@ -53,7 +53,7 @@ class AsyncAuth(Auth):
         return json_state
 
     async def isRequestAcknowledged(self):
-        data = {"deviceId": self.uuid, "accessPointId":self._connection.accesspoint_id}
+        data = {"deviceId": self.uuid, "accessPointId": self._connection.accesspoint_id}
         try:
             await self._connection.api_call(
                 "auth/isRequestAcknowledged", json.dumps(data)
