@@ -58,7 +58,7 @@ def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None
 
 
 @pytest.fixture(scope="session")
-def event_loop(request):
+def new_event_loop(request):
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
@@ -131,8 +131,8 @@ def fake_home(fake_cloud, fake_connection_context_with_ssl):
 
 
 @pytest.fixture
-async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, event_loop):
-    home = AsyncHome(event_loop)
+async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, new_event_loop):
+    home = AsyncHome(new_event_loop)
 
     lookup_url = f"{fake_cloud.url}/getHost"
     home._fake_cloud = fake_cloud

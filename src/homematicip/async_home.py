@@ -748,7 +748,9 @@ class AsyncHome(HomeMaticIPObject):
                     self.devices.remove(obj)
                 elif pushEventType == EventType.DEVICE_CHANNEL_EVENT:
                     channel_event = ChannelEvent(**event)
-                    self.fire_channel_event(channel_event)
+                    ch = self.search_channel(channel_event.deviceId, channel_event.channelIndex)
+                    if ch is not None:
+                        ch.fire_channel_event(channel_event)
                 elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
                     obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)

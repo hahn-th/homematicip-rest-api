@@ -4,7 +4,6 @@ from unittest.mock import Mock, patch, AsyncMock
 import pytest
 
 from conftest import utc_offset
-from homematicip.base.channel_event import ChannelEvent
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import Device, BaseDevice
 from homematicip.functionalHomes import *
@@ -715,28 +714,6 @@ async def test_on_message_home_changed(fake_home):
     await fake_home._ws_on_message(json.dumps(payload))
 
     assert fake_handler.called
-
-
-@pytest.mark.asyncio
-async def test_on_message_channel_event(fake_home):
-    # preparing event data for channel event
-    payload = {
-        "events":
-            {
-                "0":
-                    {
-                        "pushEventType": "DEVICE_CHANNEL_EVENT",
-                        "deviceId": "xxx",
-                        "channelIndex": 1,
-                        "channelEventType": "DOOR_BELL_SENSOR_EVENT",
-                    }
-            }
-    }
-    fake_handler = Mock()
-    fake_home.on_channel_event(fake_handler)
-    await fake_home._ws_on_message(json.dumps(payload))
-
-    fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "xxx", 1, "DOOR_BELL_SENSOR_EVENT"))
 
 
 @pytest.mark.asyncio
