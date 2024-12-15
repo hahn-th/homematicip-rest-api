@@ -4,7 +4,6 @@ import uuid
 
 import requests
 
-import homematicip
 from homematicip.home import Home
 
 
@@ -23,7 +22,7 @@ class Auth(object):
         self.pin = None
 
     def connectionRequest(
-        self, access_point, devicename="homematicip-python"
+            self, access_point, devicename="homematicip-python"
     ) -> requests.Response:
         data = {"deviceId": self.uuid, "deviceName": devicename, "sgtin": access_point}
         headers = self.headers
@@ -37,7 +36,7 @@ class Auth(object):
         return response
 
     def isRequestAcknowledged(self):
-        data = {"deviceId": self.uuid,"accessPointId":self.accesspoint_id}
+        data = {"deviceId": self.uuid, "accessPointId": self.accesspoint_id}
         response = requests.post(
             "{}/hmip/auth/isRequestAcknowledged".format(self.url_rest),
             json=data,

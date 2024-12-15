@@ -21,8 +21,7 @@ class FunctionalChannel(HomeMaticIPObject):
         self.functionalChannelType: str = ""
         self.groups = Iterable[Group]
         self.device = device
-
-        # we don't need a connection in this object (at the moment)
+        self.channelRole: str = ""
         self._connection = None
 
     def add_on_channel_event_handler(self, handler):
@@ -47,6 +46,7 @@ class FunctionalChannel(HomeMaticIPObject):
         self.index = js["index"]
         self.groupIndex = js["groupIndex"]
         self.label = js["label"]
+        self.set_attr_from_dict("channelRole", js)
         self.functionalChannelType = FunctionalChannelType.from_str(
             js["functionalChannelType"], js["functionalChannelType"]
         )
@@ -691,7 +691,6 @@ class MultiModeInputChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("binaryBehaviorType", js, BinaryBehaviorType)
-        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
         self.set_attr_from_dict("windowState", js, WindowState)
         self.set_attr_from_dict("doorBellSensorEventTimestamp", js)
@@ -1919,7 +1918,6 @@ class UniversalActuatorChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
-        self.channelRole = None  # String
         self.dimLevel = 0.0
         self.on = True
         self.profileMode = None  # String "AUTOMATIC",
@@ -1930,7 +1928,6 @@ class UniversalActuatorChannel(FunctionalChannel):
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.channelRole = js["channelRole"]
         self.dimLevel = js["dimLevel"]
         self.on = js["on"]
         self.profileMode = js["profileMode"]
@@ -2003,7 +2000,6 @@ class ExternalUniversalLightChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
-        self.channelRole = ""
         self.colorTemperature = 0
         self.dimLevel = 0.0
         self.hue = None
@@ -2015,7 +2011,6 @@ class ExternalUniversalLightChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
 
-        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("colorTemperature", js)
         self.set_attr_from_dict("dimLevel", js)
         self.set_attr_from_dict("hue", js)
@@ -2183,7 +2178,6 @@ class UniversalLightChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
-        self.channelRole: str = None
         self.colorTemperature: int = None
         self.controlGearFailure: str = None
         self.dim2WarmActive: bool = None
@@ -2205,7 +2199,6 @@ class UniversalLightChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
 
-        self.set_attr_from_dict("channelRole", js)
         self.set_attr_from_dict("colorTemperature", js)
         self.set_attr_from_dict("controlGearFailure", js)
         self.set_attr_from_dict("dim2WarmActive", js)

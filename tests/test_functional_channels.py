@@ -467,3 +467,9 @@ def test_door_bell_channel_event(fake_home: Home):
         ch.fire_channel_event(channel_event)
 
         handler.assert_called_once_with(channel_event)
+
+
+def test_channel_role_read(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
+        assert ch.channelRole == "DOOR_BELL_INPUT"
