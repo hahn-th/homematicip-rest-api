@@ -15,7 +15,7 @@ async def test_async_auth_challenge_no_pin(
 
     connection = RestConnection(fake_connection_context_with_ssl)
 
-    auth = Auth(connection, fake_connection_context_with_ssl.client_auth_token)
+    auth = Auth(connection, fake_connection_context_with_ssl.client_auth_token, fake_connection_context_with_ssl.accesspoint_id)
 
     result = await auth.connection_request(devicename)
     assert result.status == 200

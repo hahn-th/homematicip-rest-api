@@ -16,21 +16,25 @@ class Auth:
 
     client_id: str = str(uuid.uuid4())
     header: dict = None
+    accesspoint_id: str = None
     pin: str = None
     connection: RestConnection = None
 
-    def __init__(self, connection: RestConnection, client_auth_token: str):
+    def __init__(self, connection: RestConnection, client_auth_token: str, accesspoint_id: str):
         """Initialize the auth object.
         @param connection: The connection object
         @param client_auth_token: The client auth token
+        @param accesspoint_id: The access point id
         """
         LOGGER.debug("Initialize new Auth")
+        self.accesspoint_id = accesspoint_id
         self.connection = connection
         self.headers = {
             "content-type": "application/json",
             "accept": "application/json",
             "VERSION": "12",
-            "CLIENTAUTH": client_auth_token
+            "CLIENTAUTH": client_auth_token,
+            "ACCESSPOINT-ID": self.accesspoint_id,
         }
 
     def set_pin(self, pin: str):
@@ -55,7 +59,8 @@ class Auth:
     async def is_request_acknowledged(self) -> bool:
         LOGGER.debug("Checking if request is acknowledged")
         data = {
-            "deviceId": self.client_id
+            "deviceId": self.client_id,
+            "accessPointId": self.accesspoint_id
         }
 
         result = await self.connection.async_post("auth/isRequestAcknowledged", data, self.headers)

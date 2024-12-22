@@ -24,7 +24,7 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
     context = ConnectionContextBuilder.build_context(access_point)
     connection = RestConnection(context, log_status_exceptions=False)
 
-    auth = homematicip.auth.Auth(connection, context.client_auth_token)
+    auth = homematicip.auth.Auth(connection, context.client_auth_token, access_point)
 
     devicename = input(
         "Please enter the client/devicename (leave blank to use default):"
