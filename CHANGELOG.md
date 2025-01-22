@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ADDED
 
 - Add support for HmIP-eTRV-3
+- Add support for HmIP-eTRV-F
 
 ## [1.1.6] 2024-12-15
 

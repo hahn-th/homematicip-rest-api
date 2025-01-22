@@ -640,6 +640,49 @@ async def test_heating_thermostat_three(no_ssl_fake_async_home: AsyncHome):
 
 
 @pytest.mark.asyncio
+async def test_heating_thermostat_flex(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000028")
+    assert isinstance(d, AsyncHeatingThermostatFlex)
+    assert d.label == "Heizkoerperthermostat"
+    assert d.manufacturerCode == 1
+    assert d.modelId == 527
+    assert d.modelType == "HmIP-eTRV-F"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000028"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.setPointTemperature == 18.0
+    assert d.temperatureOffset == 0.0
+    assert d.valvePosition == 0.0
+    assert d.valveActualTemperature == 20.4
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.lowBat is False
+    assert d.operationLockActive is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -76
+    assert d.rssiPeerValue == -72
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
+
+    assert str(d) == (
+        "HmIP-eTRV-F Heizkoerperthermostat lowBat(False) unreach(False) "
+        "rssiDeviceValue(-76) rssiPeerValue(-72) configPending(False) "
+        "dutyCycle(False) operationLockActive(False) valvePosition(0.0) "
+        "valveState(ADAPTION_DONE) temperatureOffset(0.0) "
+        "setPointTemperature(18.0) valveActualTemperature(20.4)"
+    )
+
+    await d.set_operation_lock(True)
+    await no_ssl_fake_async_home.get_current_state()
+    d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000028")
+    assert d.operationLockActive is True
+
+    d.id = "INVALID_ID"
+    with pytest.raises(HmipWrongHttpStatusError):
+        result = await d.set_operation_lock(True)
+
+
+@pytest.mark.asyncio
 async def test_heating_thermostat_etrv_i9f(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000ETRVI9F")
     assert isinstance(d, AsyncHeatingThermostat)
