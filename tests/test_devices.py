@@ -602,6 +602,64 @@ def test_heating_thermostat_evo(fake_home: Home):
     )
 
 
+def test_heating_thermostat_three(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000027")
+    assert isinstance(d, HeatingThermostatThree)
+    assert d.label == "Heizkoerper"
+    assert d.modelType == "HmIP-eTRV-3"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000027"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.setPointTemperature == 20.0
+    assert d.temperatureOffset == 0.0
+    assert d.valvePosition == 0.0
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.operationLockActive is False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -50
+    assert d.rssiPeerValue == -49
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
+    assert d.valveActualTemperature == 21.5
+    assert str(d) == (
+        "HmIP-eTRV-3 Heizkoerper lowBat(False) unreach(False) rssiDeviceValue(-50) "
+        "rssiPeerValue(-49) configPending(False) dutyCycle(False) mountingOrientation(RIGHT) operationLockActive(False) "
+        "valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) "
+        "setPointTemperature(20.0) valveActualTemperature(21.5)"
+    )
+
+
+def test_heating_thermostat_flex(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000028")
+    assert isinstance(d, HeatingThermostatFlex)
+    assert d.label == "Heizkoerperthermostat"
+    assert d.modelType == "HmIP-eTRV-F"
+    assert d.oem == "eQ-3"
+    assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000028"
+    assert d.updateState == DeviceUpdateState.UP_TO_DATE
+    assert d.setPointTemperature == 18.0
+    assert d.temperatureOffset == 0.0
+    assert d.valvePosition == 0.0
+    assert d.valveState == ValveState.ADAPTION_DONE
+    assert d.operationLockActive is False
+    assert d.lowBat is False
+    assert d.routerModuleEnabled is False
+    assert d.routerModuleSupported is False
+    assert d.rssiDeviceValue == -76
+    assert d.rssiPeerValue == -72
+    assert d.unreach is False
+    assert d.automaticValveAdaptionNeeded is False
+    assert d.valveActualTemperature == 20.4
+    assert str(d) == (
+        "HmIP-eTRV-F Heizkoerperthermostat lowBat(False) unreach(False) rssiDeviceValue(-76) "
+        "rssiPeerValue(-72) configPending(False) dutyCycle(False) operationLockActive(False) "
+        "valvePosition(0.0) valveState(ADAPTION_DONE) temperatureOffset(0.0) "
+        "setPointTemperature(18.0) valveActualTemperature(20.4)"
+    )
+
+
 def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000002")
     assert isinstance(d, TemperatureHumiditySensorOutdoor)

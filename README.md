@@ -123,6 +123,8 @@ A few examples:
 - [x] HMIP-eTRV-E (Heating-Thermostat Design Evo _New Generation_, white)
 - [ ] HMIP-eTRV-E-A (Heating-Thermostat Design Evo _New Generation_, anthracite)
 - [ ] HMIP-eTRV-E-S (Heating-Thermostat Design Evo _New Generation_, silver)
+- [x] HMIP-eTRV-3 (Heating-Thermostat pure, white)
+- [x] HMIP-eTRV-F (Heating-Thermostat flex, white)
 - [x] HMIP-FAL230-C6 (Floor Heating Actuator – 6x channels, 230V)
 - [x] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 - [x] HMIP-FAL24-C6 (Floor Heating Actuator – 6x channels, 24V)
