@@ -599,7 +599,7 @@ async def test_heating_thermostat_evo(no_ssl_fake_async_home: AsyncHome):
 @pytest.mark.asyncio
 async def test_heating_thermostat_three(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000027")
-    assert isinstance(d, AsyncHeatingThermostatThree)
+    assert isinstance(d, AsyncHeatingThermostat)
     assert d.label == "Heizkoerper"
     assert d.manufacturerCode == 1
     assert d.modelId == 575
@@ -642,7 +642,7 @@ async def test_heating_thermostat_three(no_ssl_fake_async_home: AsyncHome):
 @pytest.mark.asyncio
 async def test_heating_thermostat_flex(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F7110000000000000028")
-    assert isinstance(d, AsyncHeatingThermostatFlex)
+    assert isinstance(d, AsyncHeatingThermostat)
     assert d.label == "Heizkoerperthermostat"
     assert d.manufacturerCode == 1
     assert d.modelId == 527

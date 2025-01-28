@@ -1804,3 +1804,9 @@ def test_rgbw_dimmer(fake_home: Home):
         d = fake_home.search_device_by_id("3014F711000000000000RGBW")
         assert d is not None
         assert isinstance(d, RgbwDimmer)
+
+def test_wired_carbon_temperature_humidity_sensor_display(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000SCTHD")
+        assert isinstance(d, WiredCarbonTemperatureHumiditySensorDisplay)
+        assert d.label == "CO2 Sensor Wohnen"
