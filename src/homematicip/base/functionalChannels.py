@@ -1224,6 +1224,16 @@ class WallMountedThermostatProChannel(FunctionalChannel):
     ):
         return await self._connection.api_call(*self.set_display(display))
 
+class WallMountedThermostatWithCarbonChannel(WallMountedThermostatProChannel):
+    """this is the representative of the WALL_MOUNTED_THERMOSTAT_WITH_CARBON_DIOXIDE_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.carbonDioxideConcentration = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("carbonDioxideConcentration", js)
 
 class WaterSensorChannel(FunctionalChannel):
     """this is the representative of the WATER_SENSOR_CHANNEL channel"""

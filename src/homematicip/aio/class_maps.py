@@ -108,6 +108,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_SWITCH_8: AsyncWiredSwitch8,
     DeviceType.WIRED_SWITCH_4: AsyncWiredSwitch4,
     DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: AsyncWallMountedThermostatPro,
+    DeviceType.WIRED_CARBON_TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: AsyncWiredCarbonTemperatureHumiditySensorDisplay,
 }
 
 TYPE_GROUP_MAP = {

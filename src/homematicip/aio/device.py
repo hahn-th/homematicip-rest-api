@@ -203,6 +203,11 @@ class AsyncWallMountedThermostatPro(
     """HMIP-WTH, HMIP-WTH-2 (Wall Thermostat with Humidity Sensor)
     / HMIP-BWTH (Brand Wall Thermostat with Humidity Sensor)"""
 
+class AsyncWiredCarbonTemperatureHumiditySensorDisplay(
+    WiredCarbonTemperatureHumiditySensorDisplay,
+    AsyncDevice,
+):
+    """HmIPW-SCTHD (WIRED_CARBON_TEMPERATURE_HUMIDITY_SENSOR_DISPLAY)"""
 
 class AsyncWallMountedThermostatBasicHumidity(AsyncWallMountedThermostatPro):
     """HMIP-WTH-B (Wall Thermostat – basic)"""

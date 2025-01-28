@@ -645,6 +645,16 @@ class WallMountedThermostatPro(
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
 
+class WiredCarbonTemperatureHumiditySensorDisplay(Device):
+    """HMIP-STHD-C (Wired Carbon Dioxide, Temperature and Humidity Sensor with display)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+
+    def from_json(self, js):
+        super().from_json(js)
+
+
 
 class RoomControlDevice(WallMountedThermostatPro):
     """ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)"""

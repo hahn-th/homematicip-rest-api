@@ -1012,3 +1012,7 @@ async def test_carbon_dioxide_sensor(no_ssl_fake_async_home: AsyncHome):
 async def test_dali_Gateway(no_ssl_fake_async_home: AsyncHome):
     d = no_ssl_fake_async_home.search_device_by_id("3014F711000000000000DALI")
     assert isinstance(d, AsyncDaliGateway)
+
+async def test_wired_carbon_temperature_humidity_sensor_display(no_ssl_fake_async_home: AsyncHome):
+    d = no_ssl_fake_async_home.search_device_by_id("3014F71100000000000SCTHD")
+    assert isinstance(d, AsyncWiredCarbonTemperatureHumiditySensorDisplay)

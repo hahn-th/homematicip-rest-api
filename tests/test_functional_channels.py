@@ -406,6 +406,17 @@ def test_wall_mounted_thermostate_pro_channel(fake_home: Home):
         ch = fake_home.search_channel("3014F7110000000000000022", 1)
         assert ch.display == ClimateControlDisplay.ACTUAL
 
+def test_wall_mounted_thermostate_with_carbon_dioxide_sensor_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F71100000000000SCTHD", 1)
+        assert ch.actualTemperature == 22.5
+        assert ch.carbonDioxideConcentration == 540.0
+        assert ch.channelRole == "WALL_MOUNTED_THERMOSTAT"
+        assert ch.display == ClimateControlDisplay.ACTUAL
+        assert ch.humidity == 41
+        assert ch.setPointTemperature == 22.5
+        assert ch.temperatureOffset == 0.0
+        assert ch.vaporAmount == 8.169998811318226
 
 def test_water_sensor_channel(fake_home: Home):
     with no_ssl_verification():
