@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### ADDED
+
+- Add support for HmIP-eTRV-3
+
 ## [1.1.6] 2024-12-15
 
 ### CHANGED
 
 - Removed support for Python lower than 3.12
 - [issue: 542] Add support for HmIP-HCU Access Point (#542)
-- Make "channelRole" available to FunctionalChannels 
+- Make "channelRole" available to FunctionalChannels
 
 ## [1.1.5] 2024-12-07
 
