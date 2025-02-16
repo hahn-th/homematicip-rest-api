@@ -7,13 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [1.1.7] 2025-01-28
+
+### ADDED
+
+- Add support for HmIP-eTRV-3 (thx JoelKle)
+- Add support for HmIP-eTRV-F (thx JoelKle)
+- Add support for HmIPW-SCTHD
+
 ## [1.1.6] 2024-12-15
 
 ### CHANGED
 
 - Removed support for Python lower than 3.12
 - [issue: 542] Add support for HmIP-HCU Access Point (#542)
-- Make "channelRole" available to FunctionalChannels 
+- Make "channelRole" available to FunctionalChannels
 
 ## [1.1.5] 2024-12-07
 
@@ -714,7 +722,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7..master
+[1.1.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.3...1.1.4

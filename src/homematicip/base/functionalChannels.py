@@ -794,7 +794,7 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
             "simpleRGBColorState": rgb,
         }
         return await self._rest_call_async("device/control/setOpticalSignal", body=data)
-    
+
     def set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
         """sets the color and dimlevel of the lamp
 
@@ -1215,6 +1215,16 @@ class WallMountedThermostatProChannel(FunctionalChannel):
             "device/configuration/setClimateControlDisplay", data
         )
 
+class WallMountedThermostatWithCarbonChannel(WallMountedThermostatProChannel):
+    """this is the representative of the WALL_MOUNTED_THERMOSTAT_WITH_CARBON_DIOXIDE_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.carbonDioxideConcentration = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("carbonDioxideConcentration", js)
 
 class WaterSensorChannel(FunctionalChannel):
     """this is the representative of the WATER_SENSOR_CHANNEL channel"""

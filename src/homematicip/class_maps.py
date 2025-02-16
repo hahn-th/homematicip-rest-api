@@ -48,6 +48,8 @@ TYPE_CLASS_MAP = {
     DeviceType.HEATING_THERMOSTAT_COMPACT: HeatingThermostatCompact,
     DeviceType.HEATING_THERMOSTAT_COMPACT_PLUS: HeatingThermostatCompact,
     DeviceType.HEATING_THERMOSTAT_EVO: HeatingThermostatEvo,
+    DeviceType.HEATING_THERMOSTAT_THREE: HeatingThermostat,
+    DeviceType.HEATING_THERMOSTAT_FLEX: HeatingThermostat,
     DeviceType.HOME_CONTROL_ACCESS_POINT: HomeControlAccessPoint,
     DeviceType.HOERMANN_DRIVES_MODULE: HoermannDrivesModule,
     DeviceType.KEY_REMOTE_CONTROL_4: KeyRemoteControl4,
@@ -108,6 +110,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_SWITCH_8: WiredSwitch8,
     DeviceType.WIRED_SWITCH_4: WiredSwitch4,
     DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
+    DeviceType.WIRED_CARBON_TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: WiredCarbonTemperatureHumiditySensorDisplay,
 }
 
 TYPE_GROUP_MAP = {
@@ -240,6 +243,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.UNIVERSAL_LIGHT_GROUP_CHANNEL: UniversalLightChannelGroup,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL: WallMountedThermostatProChannel,
     FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL: WallMountedThermostatWithoutDisplayChannel,
+    FunctionalChannelType.WALL_MOUNTED_THERMOSTAT_WITH_CARBON_CHANNEL: WallMountedThermostatWithCarbonChannel,
     FunctionalChannelType.WATER_SENSOR_CHANNEL: WaterSensorChannel,
     FunctionalChannelType.WEATHER_SENSOR_CHANNEL: WeatherSensorChannel,
     FunctionalChannelType.WEATHER_SENSOR_PLUS_CHANNEL: WeatherSensorPlusChannel,
