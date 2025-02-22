@@ -8,6 +8,9 @@ LOGGER = logging.getLogger(__name__)
 class Home(AsyncHome):
     """this class represents the 'Home' of the homematic ip"""
 
+    def init(self, access_point_id, auth_token: str | None = None, lookup=True, use_rate_limiting=True):
+        return self._run_non_async(self.init_async, access_point_id, auth_token, lookup, use_rate_limiting)
+
     def activate_absence_permanent(self):
         return self._run_non_async(self.activate_absence_permanent_async)
 

@@ -260,26 +260,26 @@ It’s also possible to use push notifications based on a websocket connection:
 
 ```python
     # Example function to display incoming events.
-    def print_events(event_list):
-        for event in event_list:
-            print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
+def print_events(event_list):
+  for event in event_list:
+    print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
 
 
-    # Initialise the API.
-    config = homematicip.find_and_load_config_file()
-    home = Home()
-    home.set_auth_token(config.auth_token)
-    home.init(config.access_point)
+# Initialise the API.
+config = homematicip.find_and_load_config_file()
+home = Home()
+home.set_auth_token(config.auth_token)
+home.init(config.access_point)
 
-    # Add function to handle events and start the connection.
-    home.onEvent += print_events
-    home.enable_events()
+# Add function to handle events and start the connection.
+home.onEvent += print_events
+home.enable_events()
 
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Interrupt.")
+try:
+  while True:
+    time.sleep(1)
+except KeyboardInterrupt:
+  print("Interrupt.")
 ```
 
 ## Pathes for config.ini

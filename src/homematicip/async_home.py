@@ -1,4 +1,3 @@
-
 from typing import List, Callable
 
 from homematicip.EventHook import *
@@ -74,14 +73,15 @@ class AsyncHome(HomeMaticIPObject):
         self.rules = []
         self.functionalHomes = []
 
-    def init(self, access_point_id, auth_token: str | None = None, lookup=True, use_rate_limiting=True):
+    async def init_async(self, access_point_id, auth_token: str | None = None, lookup=True, use_rate_limiting=True):
         """Initializes the home with the given access point id and auth token
         :param access_point_id: the access point id
         :param auth_token: the auth token
         :param lookup: if set to true, the urls will be looked up
         :param use_rate_limiting: if set to true, the connection will be rate limited
         """
-        self._connection_context = ConnectionContextBuilder.build_context(accesspoint_id=access_point_id, auth_token=auth_token)
+        self._connection_context = await ConnectionContextBuilder.build_context_async(accesspoint_id=access_point_id,
+                                                                                      auth_token=auth_token)
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
     def init_with_context(self, context: ConnectionContext, use_rate_limiting=True):

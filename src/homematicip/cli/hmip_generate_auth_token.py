@@ -21,7 +21,7 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
             continue
         break
 
-    context = ConnectionContextBuilder.build_context(access_point)
+    context = await ConnectionContextBuilder.build_context_async(access_point)
     connection = RestConnection(context, log_status_exceptions=False)
 
     auth = homematicip.auth.Auth(connection, context.client_auth_token, access_point)
