@@ -33,7 +33,7 @@ class WebSocketHandler:
     async def listen(self, context: ConnectionContext,
                      reconnect_on_error: bool = True):
         uri = context.websocket_url
-        ssl_context = self._get_ssl_context()
+        ssl_context = self._get_ssl_context(context)
 
         self._reset_stop_event()
 
