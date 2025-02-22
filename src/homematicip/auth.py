@@ -44,7 +44,7 @@ class Auth:
 
     async def connection_request(self, access_point: str, device_name="homematicip-python") -> RestResult:
         LOGGER.debug(f"Requesting connection for access point {access_point}")
-        headers = self.headers
+        headers = self.headers.copy()
         if self.pin is not None:
             headers["PIN"] = self.pin
 
