@@ -7,8 +7,8 @@ class ConnectionFactory:
     """factory class for creating connections"""
 
     @staticmethod
-    def create_connection(context: ConnectionContext, use_rate_limited_connection: bool = True) -> RestConnection:
+    def create_connection(context: ConnectionContext, use_rate_limited_connection: bool = True, httpx_client_session = None) -> RestConnection:
         """creates a connection object with the given context"""
         if use_rate_limited_connection:
-            return RateLimitedRestConnection(context)
-        return RestConnection(context)
+            return RateLimitedRestConnection(context, httpx_client_session=httpx_client_session)
+        return RestConnection(context, httpx_client_session=httpx_client_session)

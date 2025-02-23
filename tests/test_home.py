@@ -1,6 +1,7 @@
 from datetime import timedelta
 from unittest.mock import Mock, patch, AsyncMock
 
+import httpx
 import pytest
 
 from conftest import utc_offset
@@ -27,11 +28,13 @@ def test_init():
         assert home._connection is not None
 
 
-def test_init_with_context(fake_connection_context_with_ssl):
+def test_init_with_context(mocker, fake_connection_context_with_ssl):
+    httpx_client_session = mocker.Mock(spec=httpx.AsyncClient)
     home = Home()
-    home.init_with_context(fake_connection_context_with_ssl)
+    home.init_with_context(fake_connection_context_with_ssl, httpx_client_session=httpx_client_session)
     assert home._connection_context == fake_connection_context_with_ssl
     assert home._connection is not None
+    assert home._connection._httpx_client_session is not None
 
 
 def test_update_event(fake_home: Home):

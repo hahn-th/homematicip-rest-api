@@ -84,9 +84,9 @@ class AsyncHome(HomeMaticIPObject):
                                                                                       auth_token=auth_token)
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
-    def init_with_context(self, context: ConnectionContext, use_rate_limiting=True):
+    def init_with_context(self, context: ConnectionContext, use_rate_limiting=True, httpx_client_session = None):
         self._connection_context = context
-        self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
+        self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting, httpx_client_session)
 
     def set_auth_token(self, auth_token):
         """Sets the auth token for the connection. This is only necessary, if not already set in init function"""
