@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+import httpx
+
 from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.connection.client_token_builder import ClientTokenBuilder
 from homematicip.connection.connection_url_resolver import ConnectionUrlResolver
@@ -12,6 +14,7 @@ class ConnectionContextBuilder:
                                   lookup_url: str = "https://lookup.homematic.com:48335/getHost",
                                   auth_token: str = None,
                                   enforce_ssl: bool = True,
+                                  httpx_client_session: httpx.AsyncClient = None,
                                   ssl_ctx=None):
         """
         Create a new connection context and lookup urls
@@ -31,7 +34,7 @@ class ConnectionContextBuilder:
 
         cc = ClientCharacteristicsBuilder.get(accesspoint_id)
         ctx.rest_url, ctx.websocket_url = await ConnectionUrlResolver().lookup_urls_async(cc, lookup_url, enforce_ssl,
-                                                                                          ssl_ctx)
+                                                                                          ssl_ctx, httpx_client_session)
 
         if auth_token is not None:
             ctx.auth_token = auth_token

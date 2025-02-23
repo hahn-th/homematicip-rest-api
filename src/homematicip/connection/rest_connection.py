@@ -70,12 +70,6 @@ class RestConnection:
         """If headers must be manipulated use this method to get the current headers."""
         return self._headers
 
-    def _get_client_session(self) -> httpx.AsyncClient:
-        if self._httpx_client_session is not None:
-            return self._httpx_client_session
-
-        return httpx.AsyncClient(verify=self._verify)
-
     async def async_post(self, url: str, data: json = None, custom_header: dict = None) -> RestResult:
         """Send an async post request to cloud with json data. Returns a json result.
         @param url: The path of the url to send the request to
@@ -84,14 +78,13 @@ class RestConnection:
         @return: The result as a RestResult object
         """
         full_url = self._build_url(self._context.rest_url, url)
-        client = self._get_client_session()
         try:
             header = self._headers
             if custom_header is not None:
                 header = custom_header
 
             LOGGER.debug(f"Sending post request to url {full_url}. Data is: {data}")
-            r = await client.post(full_url, json=data, headers=header)
+            r = await self._execute_request_async(full_url, data, header)
             LOGGER.debug(f"Got response {r.status_code}.")
 
             if r.status_code == THROTTLE_STATUS_CODE:
@@ -117,6 +110,21 @@ class RestConnection:
                 )
                 LOGGER.error(f"Response: {repr(exc.response)}")
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
+
+    async def _execute_request_async(self, url: str, data: json = None, header: dict = None):
+        """Execute a request async. Uses the httpx client session if available.
+        @param url: The path of the url to send the request to
+        @param data: The data to send as json
+        @param custom_header: A custom header to send. Replaces the default header
+        @return: The result as a RestResult object
+        """
+        if self._httpx_client_session is None:
+            async with httpx.AsyncClient(verify=self._verify) as client:
+                result = await client.post(url, json=data, headers=header)
+        else:
+            result = await self._httpx_client_session.post(url, json=data, headers=header)
+
+        return result
 
     @staticmethod
     def _build_url(base_url: str, path: str) -> str:

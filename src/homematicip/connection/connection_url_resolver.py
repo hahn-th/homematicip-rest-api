@@ -12,6 +12,7 @@ class ConnectionUrlResolver:
             lookup_url: str,
             enforce_ssl: bool = True,
             ssl_context: SSLContext = None,
+            httpx_client_session: httpx.AsyncClient = None,
     ) -> tuple[str, str]:
         """Lookup urls async.
 
@@ -24,16 +25,20 @@ class ConnectionUrlResolver:
         """
         verify = ConnectionUrlResolver._get_verify(enforce_ssl, ssl_context)
 
-        async with httpx.AsyncClient(verify=verify) as client:
-            result = await client.post(lookup_url, json=client_characteristics)
-            result.raise_for_status()
+        if httpx_client_session is None:
+            async with httpx.AsyncClient(verify=verify) as client:
+                result = await client.post(lookup_url, json=client_characteristics)
+        else:
+            result = await httpx_client_session.post(lookup_url, json=client_characteristics)
 
-            js = result.json()
+        result.raise_for_status()
 
-            rest_url = js["urlREST"]
-            websocket_url = js["urlWebSocket"]
+        js = result.json()
 
-            return rest_url, websocket_url
+        rest_url = js["urlREST"]
+        websocket_url = js["urlWebSocket"]
+
+        return rest_url, websocket_url
 
     @staticmethod
     def lookup_urls(
