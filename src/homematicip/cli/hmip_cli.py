@@ -1126,5 +1126,6 @@ def fake_download_configuration():
             return json.load(file)
     return None
 
+
 if __name__ == "__main__":
     main()

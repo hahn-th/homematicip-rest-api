@@ -1,3 +1,4 @@
+import json
 from datetime import timedelta
 from unittest.mock import Mock, patch, AsyncMock
 
@@ -5,6 +6,7 @@ import httpx
 import pytest
 
 from conftest import utc_offset
+from homematicip.base.channel_event import ChannelEvent
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import Device, BaseDevice
 from homematicip.functionalHomes import *
@@ -318,36 +320,36 @@ def test_indoor_climate_home(fake_home: Home):
 
 
 def test_get_functionalHome(fake_home: Home):
-    functionalHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-    assert isinstance(functionalHome, SecurityAndAlarmHome)
+    functional_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+    assert isinstance(functional_home, SecurityAndAlarmHome)
 
-    functionalHome = fake_home.get_functionalHome(IndoorClimateHome)
-    assert isinstance(functionalHome, IndoorClimateHome)
+    functional_home = fake_home.get_functionalHome(IndoorClimateHome)
+    assert isinstance(functional_home, IndoorClimateHome)
 
-    functionalHome = fake_home.get_functionalHome(WeatherAndEnvironmentHome)
-    assert isinstance(functionalHome, WeatherAndEnvironmentHome)
+    functional_home = fake_home.get_functionalHome(WeatherAndEnvironmentHome)
+    assert isinstance(functional_home, WeatherAndEnvironmentHome)
 
-    functionalHome = fake_home.get_functionalHome(AccessControlHome)
-    assert isinstance(functionalHome, AccessControlHome)
+    functional_home = fake_home.get_functionalHome(AccessControlHome)
+    assert isinstance(functional_home, AccessControlHome)
 
-    functionalHome = fake_home.get_functionalHome(Home)
-    assert functionalHome is None
+    functional_home = fake_home.get_functionalHome(Home)
+    assert functional_home is None
 
 
 def test_security_setIntrusionAlertThroughSmokeDetectors(fake_home: Home):
     with no_ssl_verification():
-        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False
+        security_alarm_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert security_alarm_home.intrusionAlertThroughSmokeDetectors is False
 
         fake_home.set_intrusion_alert_through_smoke_detectors(True)
         fake_home.get_current_state()
-        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is True
+        security_alarm_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert security_alarm_home.intrusionAlertThroughSmokeDetectors is True
 
         fake_home.set_intrusion_alert_through_smoke_detectors(False)
         fake_home.get_current_state()
-        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.intrusionAlertThroughSmokeDetectors is False
+        security_alarm_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert security_alarm_home.intrusionAlertThroughSmokeDetectors is False
 
 
 def test_heating_vacation(fake_home: Home):
@@ -358,32 +360,32 @@ def test_heating_vacation(fake_home: Home):
         fake_home.activate_vacation(tomorrow, 12)
 
         fake_home.get_current_state()
-        heatingHome = fake_home.get_functionalHome(IndoorClimateHome)
-        assert heatingHome.absenceEndTime == tomorrow
-        assert heatingHome.absenceType == AbsenceType.VACATION
+        heating_home = fake_home.get_functionalHome(IndoorClimateHome)
+        assert heating_home.absenceEndTime == tomorrow
+        assert heating_home.absenceType == AbsenceType.VACATION
 
         fake_home.deactivate_vacation()
 
         fake_home.get_current_state()
-        heatingHome = fake_home.get_functionalHome(IndoorClimateHome)
-        assert heatingHome.absenceEndTime is None
-        assert heatingHome.absenceType == AbsenceType.NOT_ABSENT
+        heating_home = fake_home.get_functionalHome(IndoorClimateHome)
+        assert heating_home.absenceEndTime is None
+        assert heating_home.absenceType == AbsenceType.NOT_ABSENT
 
 
 def test_security_setZoneActivationDelay(fake_home: Home):
     with no_ssl_verification():
-        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.zoneActivationDelay == 0.0
+        security_alarm_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert security_alarm_home.zoneActivationDelay == 0.0
 
         fake_home.set_zone_activation_delay(5.0)
         fake_home.get_current_state()
-        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.zoneActivationDelay == 5.0
+        security_alarm_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert security_alarm_home.zoneActivationDelay == 5.0
 
         fake_home.set_zone_activation_delay(0.0)
         fake_home.get_current_state()
-        securityAlarmHome = fake_home.get_functionalHome(SecurityAndAlarmHome)
-        assert securityAlarmHome.zoneActivationDelay == 0.0
+        security_alarm_home = fake_home.get_functionalHome(SecurityAndAlarmHome)
+        assert security_alarm_home.zoneActivationDelay == 0.0
 
 
 def test_home_getSecurityJournal(fake_home: Home):
@@ -717,6 +719,29 @@ async def test_on_message_home_changed(fake_home):
     await fake_home._ws_on_message(json.dumps(payload))
 
     assert fake_handler.called
+
+
+async def test_websocket_channel_event(fake_home: Home):
+    # preparing event data for channel event
+    payload = {
+        "events":
+            {
+                "0":
+                    {
+                        "pushEventType": "DEVICE_CHANNEL_EVENT",
+                        "deviceId": "3014F7110000000000DSDPCB",
+                        "channelIndex": 1,
+                        "channelEventType": "DOOR_BELL_SENSOR_EVENT",
+                    }
+            }
+    }
+    fake_handler = Mock()
+    channel = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
+    channel.add_on_channel_event_handler(fake_handler)
+    await fake_home._ws_on_message(json.dumps(payload))
+
+    fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "3014F7110000000000DSDPCB", 1, "DOOR_BELL_SENSOR_EVENT"))
+
 
 
 @pytest.mark.asyncio

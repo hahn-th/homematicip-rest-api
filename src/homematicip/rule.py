@@ -1,5 +1,3 @@
-import json
-
 from homematicip.base.homematicip_object import HomeMaticIPObject
 
 

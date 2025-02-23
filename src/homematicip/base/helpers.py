@@ -2,7 +2,6 @@ import codecs
 import json
 import logging
 import re
-from datetime import datetime
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,6 +19,7 @@ def get_functional_channels(channel_type, js):
         if channel["functionalChannelType"] == channel_type:
             result.append(channel)
     return result
+
 
 # from https://bugs.python.org/file43513/json_detect_encoding_3.patch
 def detect_encoding(b):

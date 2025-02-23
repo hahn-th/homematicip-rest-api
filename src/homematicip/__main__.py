@@ -1,6 +1,7 @@
 """Default execution entry point if running the package via python -m."""
-import homematicip.cli.hmip_cli
 import sys
+
+import homematicip.cli.hmip_cli
 
 
 def main():

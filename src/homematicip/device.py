@@ -1,5 +1,4 @@
 # coding=utf-8
-import json
 from collections import Counter
 from typing import Iterable
 
@@ -274,6 +273,7 @@ class ExternalDevice(BaseDevice):
         self.hasCustomLabel = js["hasCustomLabel"]
         self.externalService = js["externalService"]
         self.supported = js["supported"]
+
 
 class HomeControlUnit(Device):
     def __init__(self, connection):
@@ -664,6 +664,7 @@ class WallMountedThermostatPro(
             self.humidity = c["humidity"]
             self.setPointTemperature = c["setPointTemperature"]
 
+
 class WiredCarbonTemperatureHumiditySensorDisplay(Device):
     """HMIP-STHD-C (Wired Carbon Dioxide, Temperature and Humidity Sensor with display)"""
 
@@ -672,7 +673,6 @@ class WiredCarbonTemperatureHumiditySensorDisplay(Device):
 
     def from_json(self, js):
         super().from_json(js)
-
 
 
 class RoomControlDevice(WallMountedThermostatPro):

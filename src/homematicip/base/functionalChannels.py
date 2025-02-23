@@ -1,4 +1,3 @@
-import json
 from typing import Any, Iterable
 
 from homematicip.base.enums import *
@@ -221,7 +220,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_neutral_position(
-        self, neutralPosition: AccelerationSensorNeutralPosition
+            self, neutralPosition: AccelerationSensorNeutralPosition
     ):
         data = {
             "channelIndex": self.index,
@@ -240,7 +239,7 @@ class AccelerationSensorChannel(FunctionalChannel):
             self.async_set_acceleration_sensor_sensitivity, sensitivity)
 
     async def async_set_acceleration_sensor_sensitivity(
-        self, sensitivity: AccelerationSensorSensitivity
+            self, sensitivity: AccelerationSensorSensitivity
     ):
         data = {
             "channelIndex": self.index,
@@ -290,7 +289,7 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_notification_sound_type(
-        self, soundType: NotificationSoundType, isHighToLow: bool
+            self, soundType: NotificationSoundType, isHighToLow: bool
     ):
         data = {
             "channelIndex": self.index,
@@ -459,7 +458,7 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
         )
 
     async def async_set_minimum_floor_heating_valve_position(
-        self, minimumFloorHeatingValvePosition: float
+            self, minimumFloorHeatingValvePosition: float
     ):
         data = {
             "channelIndex": self.index,
@@ -770,10 +769,10 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         return self._run_non_async(self.async_set_optical_signal, opticalSignalBehaviour, rgb, dimLevel)
 
     async def async_set_optical_signal(
-        self,
-        opticalSignalBehaviour: OpticalSignalBehaviour,
-        rgb: RGBColorState,
-        dimLevel=1.01,
+            self,
+            opticalSignalBehaviour: OpticalSignalBehaviour,
+            rgb: RGBColorState,
+            dimLevel=1.01,
     ):
         """sets the signal type for the leds
 
@@ -829,11 +828,11 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         return self._run_non_async(self.async_set_rgb_dim_level_with_time, rgb, dimLevel, onTime, rampTime)
 
     async def async_set_rgb_dim_level_with_time(
-        self,
-        rgb: RGBColorState,
-        dimLevel: float,
-        onTime: float,
-        rampTime: float,
+            self,
+            rgb: RGBColorState,
+            dimLevel: float,
+            onTime: float,
+            rampTime: float,
     ):
         """sets the color and dimlevel of the lamp
 
@@ -942,7 +941,7 @@ class ShadingChannel(FunctionalChannel):
         )
 
     async def async_set_secondary_shading_level(
-        self, primaryShadingLevel: float, secondaryShadingLevel: float
+            self, primaryShadingLevel: float, secondaryShadingLevel: float
     ):
         data = {
             "channelIndex": self.index,
@@ -1023,7 +1022,6 @@ class ShutterChannel(FunctionalChannel):
             "shutterLevel": level,
         }
         return await self._rest_call_async("device/control/setShutterLevel", body=data)
-
 
     def set_shutter_stop(self):
         return self._run_non_async(self.async_set_shutter_stop)
@@ -1134,7 +1132,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_sensitivity(
-        self, sensitivity: AccelerationSensorSensitivity
+            self, sensitivity: AccelerationSensorSensitivity
     ):
         data = {
             "channelIndex": self.index,
@@ -1204,7 +1202,7 @@ class WallMountedThermostatProChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_display, display)
 
     async def async_set_display(
-        self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
+            self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
         data = {
             "channelIndex": self.index,
@@ -1214,6 +1212,7 @@ class WallMountedThermostatProChannel(FunctionalChannel):
         return await self._rest_call_async(
             "device/configuration/setClimateControlDisplay", data
         )
+
 
 class WallMountedThermostatWithCarbonChannel(WallMountedThermostatProChannel):
     """this is the representative of the WALL_MOUNTED_THERMOSTAT_WITH_CARBON_DIOXIDE_SENSOR_CHANNEL channel"""
@@ -1225,6 +1224,7 @@ class WallMountedThermostatWithCarbonChannel(WallMountedThermostatProChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("carbonDioxideConcentration", js)
+
 
 class WaterSensorChannel(FunctionalChannel):
     """this is the representative of the WATER_SENSOR_CHANNEL channel"""
@@ -1266,7 +1266,7 @@ class WaterSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acoustic_alarm_signal(
-        self, acousticAlarmSignal: AcousticAlarmSignal
+            self, acousticAlarmSignal: AcousticAlarmSignal
     ):
         data = {
             "channelIndex": self.index,
@@ -1283,7 +1283,7 @@ class WaterSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acoustic_alarm_timing(
-        self, acousticAlarmTiming: AcousticAlarmTiming
+            self, acousticAlarmTiming: AcousticAlarmTiming
     ):
         data = {
             "channelIndex": self.index,
@@ -1302,7 +1302,7 @@ class WaterSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acoustic_water_alarm_trigger(
-        self, acousticWaterAlarmTrigger: WaterAlarmTrigger
+            self, acousticWaterAlarmTrigger: WaterAlarmTrigger
     ):
         data = {
             "channelIndex": self.index,
@@ -1313,14 +1313,13 @@ class WaterSensorChannel(FunctionalChannel):
             "device/configuration/setAcousticWaterAlarmTrigger", data
         )
 
-
     def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger: WaterAlarmTrigger):
         return self._run_non_async(
             self.async_set_inapp_water_alarm_trigger, inAppWaterAlarmTrigger
         )
 
     async def async_set_inapp_water_alarm_trigger(
-        self, inAppWaterAlarmTrigger: WaterAlarmTrigger
+            self, inAppWaterAlarmTrigger: WaterAlarmTrigger
     ):
         data = {
             "channelIndex": self.index,
@@ -1335,7 +1334,7 @@ class WaterSensorChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_siren_water_alarm_trigger, sirenWaterAlarmTrigger)
 
     async def async_set_siren_water_alarm_trigger(
-        self, sirenWaterAlarmTrigger: WaterAlarmTrigger
+            self, sirenWaterAlarmTrigger: WaterAlarmTrigger
     ):
         LOGGER.warning(
             "set_siren_water_alarm_trigger is currently not available in the HMIP App. It might not be available in the cloud yet"

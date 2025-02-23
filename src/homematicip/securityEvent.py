@@ -1,5 +1,4 @@
 # coding=utf-8
-import json
 from datetime import datetime
 
 from homematicip.base.homematicip_object import HomeMaticIPObject

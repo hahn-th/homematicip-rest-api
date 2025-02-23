@@ -4,8 +4,8 @@ import httpx
 
 from homematicip.connection import RATE_LIMITER_FILL_RATE, RATE_LIMITER_TOKENS
 from homematicip.connection.buckets import Buckets
-from homematicip.connection.rest_connection import RestConnection, RestResult
 from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.rest_connection import RestConnection, RestResult
 
 
 class RateLimitedRestConnection(RestConnection):

@@ -1,6 +1,5 @@
 # coding=utf-8
 import calendar
-import json
 from datetime import datetime
 from operator import attrgetter
 
@@ -484,7 +483,7 @@ class AlarmSwitchingGroup(Group):
         )
 
     def test_signal_optical(
-        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+            self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
     ):
         return self._run_non_async(self.test_signal_optical_async, signalOptical)
 
@@ -495,7 +494,7 @@ class AlarmSwitchingGroup(Group):
         )
 
     def set_signal_optical(
-        self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
+            self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
     ):
         return self._run_non_async(self.set_signal_optical_async, signalOptical)
 
@@ -506,7 +505,7 @@ class AlarmSwitchingGroup(Group):
         )
 
     def test_signal_acoustic(
-        self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
+            self, signalAcoustic=AcousticAlarmSignal.FREQUENCY_FALLING
     ):
         return self._run_non_async(self.test_signal_acoustic_async, signalAcoustic)
 
@@ -696,7 +695,6 @@ class HeatingCoolingProfile(HomeMaticIPObject):
     def _time_to_totalminutes(self, time):
         s = time.split(":")
         return int(s[0]) * 60 + int(s[1])
-
 
     def update_profile(self):
         self._run_non_async(self.update_profile_async)

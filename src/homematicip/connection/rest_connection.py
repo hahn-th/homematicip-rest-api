@@ -1,6 +1,6 @@
-from dataclasses import dataclass
 import json
 import logging
+from dataclasses import dataclass
 from typing import Optional
 
 import httpx
@@ -37,7 +37,8 @@ class RestConnection:
     _log_status_exceptions = True
     _httpx_client_session: httpx.AsyncClient = None
 
-    def __init__(self, context: ConnectionContext, httpx_client_session: httpx.AsyncClient = None, log_status_exceptions: bool = True):
+    def __init__(self, context: ConnectionContext, httpx_client_session: httpx.AsyncClient = None,
+                 log_status_exceptions: bool = True):
         """Initialize the RestConnection object.
 
         @param context: The connection context
@@ -59,7 +60,7 @@ class RestConnection:
         """Create a json header"""
         return {
             "content-type": "application/json",
-            #"accept": "application/json",
+            # "accept": "application/json",
             "VERSION": "12",
             ATTR_AUTH_TOKEN: context.auth_token,
             ATTR_CLIENT_AUTH: context.client_auth_token,

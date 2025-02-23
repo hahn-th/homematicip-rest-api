@@ -250,7 +250,6 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.WEATHER_SENSOR_PRO_CHANNEL: WeatherSensorProChannel,
 }
 
-
 FUNCTIONALCHANNEL_CLI_MAP = {
     FunctionalChannelType.DIMMER_CHANNEL: [
         CliActions.SET_DIM_LEVEL,

@@ -1,3 +1,4 @@
+import json
 from typing import List, Callable
 
 from homematicip.EventHook import *
@@ -84,9 +85,10 @@ class AsyncHome(HomeMaticIPObject):
                                                                                       auth_token=auth_token)
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
-    def init_with_context(self, context: ConnectionContext, use_rate_limiting=True, httpx_client_session = None):
+    def init_with_context(self, context: ConnectionContext, use_rate_limiting=True, httpx_client_session=None):
         self._connection_context = context
-        self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting, httpx_client_session)
+        self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting,
+                                                               httpx_client_session)
 
     def set_auth_token(self, auth_token):
         """Sets the auth token for the connection. This is only necessary, if not already set in init function"""
@@ -336,6 +338,7 @@ class AsyncHome(HomeMaticIPObject):
             self.groups.append(self._parse_group(mg))
 
     def _get_functionalHomes(self, json_state):
+        """loads the functional homes."""
         for solution, functionalHome in json_state["functionalHomes"].items():
             try:
                 solutionType = FunctionalHomeType.from_str(solution)
@@ -357,17 +360,14 @@ class AsyncHome(HomeMaticIPObject):
                 self.functionalHomes.append(h)
 
     def _load_functionalChannels(self):
+        """loads the functional channels for all devices"""
         for d in self.devices:
             d.load_functionalChannels(self.groups, self.channels)
 
-    def get_functionalHome(self, functionalHomeType: type) -> FunctionalHome:
+    def get_functionalHome(self, functionalHomeType: type) -> FunctionalHome | None:
         """gets the specified functionalHome
-
-        Args:
-            functionalHome(type): the type of the functionalHome which should be returned
-
-        Returns:
-            the FunctionalHome or None if it couldn't be found
+        :param functionalHomeType: the type of the functionalHome which should be returned
+        :return: the FunctionalHome or None if it couldn't be found
         """
         for x in self.functionalHomes:
             if isinstance(x, functionalHomeType):
@@ -375,65 +375,56 @@ class AsyncHome(HomeMaticIPObject):
 
         return None
 
-    def search_device_by_id(self, deviceID) -> Device:
+    def search_device_by_id(self, deviceID) -> Device | None:
         """searches a device by given id
-
-        Args:
-          deviceID(str): the device to search for
-
-        Returns
-          the Device object or None if it couldn't find a device
+        :param deviceID: the device to search for
+        :return: the Device object or None if it couldn't find a device
         """
         for d in self.devices:
             if d.id == deviceID:
                 return d
         return None
 
-    def search_channel(self, deviceID, channelIndex) -> FunctionalChannel:
-        """searches a channel by given deviceID and channelIndex"""
-        foundD = [d for d in self.devices if d.id == deviceID]
-        d = foundD[0] if foundD else None
+    def search_channel(self, device_id, channel_index) -> FunctionalChannel | None:
+        """searches a channel by given deviceID and channelIndex.
+        :param device_id: the device to search for
+        :param channel_index: the channel to search for
+        :return: the FunctionalChannel object or None if it couldn't find a channel
+        """
+        found_device = [d for d in self.devices if d.id == device_id]
+        d = found_device[0] if found_device else None
         if d is not None:
-            foundC = [ch for ch in d.functionalChannels if ch.index == channelIndex]
-            return foundC[0] if foundC else None
+            found_channel = [ch for ch in d.functionalChannels if ch.index == channel_index]
+            return found_channel[0] if found_channel else None
         return None
 
-    def search_group_by_id(self, groupID) -> Group:
+    def search_group_by_id(self, groupID) -> Group | None:
         """searches a group by given id
 
-        Args:
-          groupID(str): groupID the group to search for
-
-        Returns
-          the group object or None if it couldn't find a group
+        :param groupID: the group to search for
+        :return: the group object or None if it couldn't find a group
         """
         for g in self.groups:
             if g.id == groupID:
                 return g
         return None
 
-    def search_client_by_id(self, clientID) -> Client:
+    def search_client_by_id(self, clientID) -> Client | None:
         """searches a client by given id
 
-        Args:
-          clientID(str): the client to search for
-
-        Returns
-          the client object or None if it couldn't find a client
+        :param clientID: the client to search for
+        :return: the client object or None if it couldn't find a client
         """
         for c in self.clients:
             if c.id == clientID:
                 return c
         return None
 
-    def search_rule_by_id(self, ruleID) -> Rule:
+    def search_rule_by_id(self, ruleID) -> Rule | None:
         """searches a rule by given id
 
-        Args:
-          ruleID(str): the rule to search for
-
-        Returns
-          the rule object or None if it couldn't find a rule
+        :param ruleID: the rule to search for
+        :return: the rule object or None if it couldn't find a rule
         """
         for r in self.rules:
             if r.id == ruleID:
@@ -443,11 +434,7 @@ class AsyncHome(HomeMaticIPObject):
     def get_security_zones_activation(self) -> (bool, bool):
         """returns the value of the security zones if they are armed or not
 
-        Returns
-            internal
-              True if the internal zone is armed
-            external
-              True if the external zone is armed
+        :return: internal, external
         """
         internal_active = False
         external_active = False
@@ -462,10 +449,6 @@ class AsyncHome(HomeMaticIPObject):
     async def set_security_zones_activation_async(self, internal=True, external=True):
         """this function will set the alarm system to armed or disable it
 
-        Args:
-          internal(bool): activates/deactivates the internal zone
-          external(bool): activates/deactivates the external zone
-
         Examples:
           arming while being at home
           home.set_security_zones_activation(False,True)
@@ -475,16 +458,18 @@ class AsyncHome(HomeMaticIPObject):
 
           disarming the alarm system
           home.set_security_zones_activation(False,False)
+
+        :param internal: activates/deactivates the internal zone
+        :param external: activates/deactivates the external zone
         """
         data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
         return await self._rest_call_async("home/security/setZonesActivation", data)
 
     async def set_silent_alarm_async(self, internal=True, external=True):
-        """this function will set the silent alarm for interal or external
+        """this function will set the silent alarm for internal or external
 
-        Args:
-          internal(bool): activates/deactivates the silent alarm for internal zone
-          external(bool): activates/deactivates the silent alarm for the external zone
+        :param internal: activates/deactivates the silent alarm for internal zone
+        :param external: activates/deactivates the silent alarm for the external zone
         """
         data = {"zonesSilentAlarm": {"EXTERNAL": external, "INTERNAL": internal}}
         return await self._rest_call_async("home/security/setZonesSilentAlarm", data)
@@ -500,8 +485,7 @@ class AsyncHome(HomeMaticIPObject):
     async def set_intrusion_alert_through_smoke_detectors_async(self, activate: bool = True):
         """activate or deactivate if smoke detectors should "ring" during an alarm
 
-        Args:
-            activate(bool): True will let the smoke detectors "ring" during an alarm
+        :param activate: True will let the smoke detectors "ring" during an alarm
         """
         data = {"intrusionAlertThroughSmokeDetectors": activate}
         return await self._rest_call_async(
@@ -511,8 +495,7 @@ class AsyncHome(HomeMaticIPObject):
     async def activate_absence_with_period_async(self, endtime: datetime):
         """activates the absence mode until the given time
 
-        Args:
-            endtime(datetime): the time when the absence should automatically be disabled
+        :param endtime: the time when the absence should automatically be disabled
         """
         data = {"endTime": endtime.strftime("%Y_%m_%d %H:%M")}
         return await self._rest_call_async(
@@ -526,8 +509,7 @@ class AsyncHome(HomeMaticIPObject):
     async def activate_absence_with_duration_async(self, duration: int):
         """activates the absence mode for a given time
 
-        Args:
-            duration(int): the absence duration in minutes
+        :param duration: the absence duration in minutes
         """
         data = {"duration": duration}
         return await self._rest_call_async(
@@ -539,11 +521,10 @@ class AsyncHome(HomeMaticIPObject):
         return await self._rest_call_async("home/heating/deactivateAbsence")
 
     async def activate_vacation_async(self, endtime: datetime, temperature: float):
-        """activates the vatation mode until the given time
+        """activates the vacation mode until the given time
 
-        Args:
-            endtime(datetime): the time when the vatation mode should automatically be disabled
-            temperature(float): the settemperature during the vacation mode
+        :param endtime: the time when the vacation mode should automatically be disabled
+        :param temperature: the settemperature during the vacation mode
         """
         data = {
             "endTime": endtime.strftime("%Y_%m_%d %H:%M"),
@@ -555,27 +536,23 @@ class AsyncHome(HomeMaticIPObject):
         """deactivates the vacation mode immediately"""
         return await self._rest_call_async("home/heating/deactivateVacation")
 
-    async def set_pin_async(self, newPin: str, oldPin: str = None) -> dict:
+    async def set_pin_async(self, new_pin: str, old_pin: str = None) -> dict:
         """sets a new pin for the home
 
-        Args:
-            newPin(str): the new pin
-            oldPin(str): optional, if there is currently a pin active it must be given here.
-                        Otherwise it will not be possible to set the new pin
-
-        Returns:
-            the result of the call
+        :param new_pin: the new pin
+        :param old_pin: optional, if there is currently a pin active it must be given here.
+        :return: the result of the call
         """
         custom_header = None
-        if newPin is None:
-            newPin = ""
+        if new_pin is None:
+            new_pin = ""
 
         headers = None
-        if oldPin:
+        if old_pin:
             headers = self._connection._headers
-            headers["PIN"] = str(oldPin)
+            headers["PIN"] = str(old_pin)
 
-        result = await self._rest_call_async("home/setPin", body={"pin": newPin}, custom_header=headers)
+        result = await self._rest_call_async("home/setPin", body={"pin": new_pin}, custom_header=headers)
 
         if not result.success:
             LOGGER.error("Could not set the pin. Error: %s", result.status_text)
@@ -616,8 +593,7 @@ class AsyncHome(HomeMaticIPObject):
     def delete_group(self, group: Group):
         """deletes the given group from the cloud
 
-        Args:
-            group(Group):the group to delete
+        :param group: the group to delete
         """
         return group.delete()
 
@@ -629,8 +605,8 @@ class AsyncHome(HomeMaticIPObject):
 
     async def set_timezone_async(self, timezone: str):
         """sets the timezone for the AP. e.g. "Europe/Berlin"
-        Args:
-            timezone(str): the new timezone
+
+        :param timezone: the new timezone
         """
         data = {"timezoneId": timezone}
         return await self._rest_call_async("home/setTimezone", body=data)
@@ -641,13 +617,12 @@ class AsyncHome(HomeMaticIPObject):
 
     async def set_zones_device_assignment_async(self, internal_devices, external_devices) -> dict:
         """sets the devices for the security zones
-        Args:
-            internal_devices(List[Device]): the devices which should be used for the internal zone
-            external_devices(List[Device]):  the devices which should be used for the external(hull) zone
 
-        Returns:
-            the result of _restCall
+        :param internal_devices: the devices which should be used for the internal zone
+        :param external_devices: the devices which should be used for the external(hull) zone
+        :return: the result of the call
         """
+
         internal = [x.id for x in internal_devices]
         external = [x.id for x in external_devices]
         data = {"zonesDeviceAssignment": {"INTERNAL": internal, "EXTERNAL": external}}
@@ -655,12 +630,12 @@ class AsyncHome(HomeMaticIPObject):
             "home/security/setZonesDeviceAssignment", body=data
         )
 
-    async def start_inclusion_async(self, deviceId):
+    async def start_inclusion_async(self, device_id: str):
         """start inclusion mode for specific device
-        Args:
-            deviceId: sgtin of device
+        
+        :param device_id: sgtin of device
         """
-        data = {"deviceId": deviceId}
+        data = {"deviceId": device_id}
         return await self._rest_call_async(
             "home/startInclusionModeForDevice", body=data
         )
