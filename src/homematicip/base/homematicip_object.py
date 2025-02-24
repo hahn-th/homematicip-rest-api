@@ -73,13 +73,11 @@ class HomeMaticIPObject:
         """
         return await self._connection.async_post(path, body, custom_header)
 
-    def from_json(self, js):
+    def from_json(self, js) -> None:
         """this method will parse the homematicip object from a json object
 
-        Args:
-          js: the json object to parse
+        :param js: the json object to parse
         """
-        # LOGGER.debug("from_json call HomeMaticIpObject")
         self._rawJSONData = js
         pass
 

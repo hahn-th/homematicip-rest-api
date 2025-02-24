@@ -12,9 +12,9 @@ class ConnectionContextBuilder:
     @classmethod
     async def build_context_async(cls, accesspoint_id: str,
                                   lookup_url: str = "https://lookup.homematic.com:48335/getHost",
-                                  auth_token: str = None,
+                                  auth_token: str | None = None,
                                   enforce_ssl: bool = True,
-                                  httpx_client_session: httpx.AsyncClient = None,
+                                  httpx_client_session: httpx.AsyncClient | None = None,
                                   ssl_ctx=None):
         """
         Create a new connection context and lookup urls
@@ -23,6 +23,7 @@ class ConnectionContextBuilder:
         :param lookup_url: Url to lookup the connection urls
         :param auth_token: The Auth Token if exists. If no one is provided None will be used
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
+        :param httpx_client_session: The httpx client session if you want to use a custom one
         :param ssl_ctx: ssl context to use
         :return: a new ConnectionContext
         """
@@ -44,7 +45,7 @@ class ConnectionContextBuilder:
     @classmethod
     def build_context(cls, accesspoint_id: str,
                       lookup_url: str = "https://lookup.homematic.com:48335/getHost",
-                      auth_token: str = None,
+                      auth_token: str | None = None,
                       enforce_ssl: bool = True,
                       ssl_ctx=None):
         """
@@ -74,12 +75,12 @@ class ConnectionContextBuilder:
 
 @dataclass
 class ConnectionContext:
-    auth_token: str = None
-    client_auth_token: str = None
+    auth_token: str | None = None
+    client_auth_token: str | None = None
 
     websocket_url: str = "ws://localhost:8765"
-    rest_url: str = None
-    accesspoint_id: str = None
+    rest_url: str | None = None
+    accesspoint_id: str | None = None
 
     enforce_ssl: bool = True
     ssl_ctx = None
