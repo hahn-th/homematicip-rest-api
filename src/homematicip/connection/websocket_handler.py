@@ -9,7 +9,7 @@ import certifi
 from websockets import connect
 from websockets.exceptions import ConnectionClosed
 
-from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH
+from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, ATTR_ACCESSPOINT_ID
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipServerCloseError
 
@@ -42,6 +42,7 @@ class WebSocketHandler:
                 additional_headers={
                     ATTR_AUTH_TOKEN: context.auth_token,
                     ATTR_CLIENT_AUTH: context.client_auth_token,
+                    ATTR_ACCESSPOINT_ID: context.accesspoint_id
                 },
                 ssl=ssl_context,
         ) as websocket:
