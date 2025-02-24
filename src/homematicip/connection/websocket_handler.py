@@ -53,7 +53,7 @@ class WebSocketHandler:
             #loop.add_signal_handler(signal.SIGTERM, lambda: asyncio.create_task(self._handle_sigterm(websocket)))
 
             loop.add_signal_handler(signal.SIGTERM, lambda x: asyncio.create_task(self._handle_signal(x)), websocket)
-            # loop.add_signal_handler(signal.SIGINT, lambda: self._handle_signal(websocket))
+            loop.add_signal_handler(signal.SIGINT, lambda x: asyncio.create_task(self._handle_signal(x)), websocket)
 
             # Process messages received on the connection.
             async for message in websocket:
