@@ -1,6 +1,7 @@
 import json
 import logging
 from dataclasses import dataclass
+from ssl import SSLContext
 from typing import Optional
 
 import httpx
@@ -31,13 +32,13 @@ class RestResult:
 
 @dataclass
 class RestConnection:
-    _context: ConnectionContext = None
+    _context: ConnectionContext | None = None
     _headers: dict[str, str] = None
     _verify = None
     _log_status_exceptions = True
-    _httpx_client_session: httpx.AsyncClient = None
+    _httpx_client_session: httpx.AsyncClient | None = None
 
-    def __init__(self, context: ConnectionContext, httpx_client_session: httpx.AsyncClient = None,
+    def __init__(self, context: ConnectionContext, httpx_client_session: httpx.AsyncClient | None = None,
                  log_status_exceptions: bool = True):
         """Initialize the RestConnection object.
 
@@ -51,9 +52,9 @@ class RestConnection:
         self._httpx_client_session = httpx_client_session
 
     def update_connection_context(self, context: ConnectionContext) -> None:
-        self._context = context
-        self._headers = self._get_header(context)
-        self._verify = self._get_verify(context.enforce_ssl, context.ssl_ctx)
+        self._context: ConnectionContext = context
+        self._headers: dict = self._get_header(context)
+        self._verify:  SSLContext | str | bool = self._get_verify(context.enforce_ssl, context.ssl_ctx)
 
     @staticmethod
     def _get_header(context: ConnectionContext) -> dict[str, str]:
@@ -71,7 +72,7 @@ class RestConnection:
         """If headers must be manipulated use this method to get the current headers."""
         return self._headers
 
-    async def async_post(self, url: str, data: json = None, custom_header: dict = None) -> RestResult:
+    async def async_post(self, url: str, data: dict | None = None, custom_header: dict | None = None) -> RestResult:
         """Send an async post request to cloud with json data. Returns a json result.
         @param url: The path of the url to send the request to
         @param data: The data to send as json
@@ -112,7 +113,7 @@ class RestConnection:
                 LOGGER.error(f"Response: {repr(exc.response)}")
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
-    async def _execute_request_async(self, url: str, data: json = None, header: dict = None):
+    async def _execute_request_async(self, url: str, data: dict | None = None, header: dict | None = None):
         """Execute a request async. Uses the httpx client session if available.
         @param url: The path of the url to send the request to
         @param data: The data to send as json
@@ -133,7 +134,7 @@ class RestConnection:
         return f"{base_url}/hmip/{path}"
 
     @staticmethod
-    def _get_verify(enforce_ssl: bool, ssl_context):
+    def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | str | bool:
         if ssl_context is not None:
             return ssl_context
         if enforce_ssl:

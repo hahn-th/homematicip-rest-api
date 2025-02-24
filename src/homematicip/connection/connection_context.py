@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from ssl import SSLContext
 
 import httpx
 
@@ -47,7 +48,7 @@ class ConnectionContextBuilder:
                       lookup_url: str = "https://lookup.homematic.com:48335/getHost",
                       auth_token: str | None = None,
                       enforce_ssl: bool = True,
-                      ssl_ctx=None):
+                      ssl_ctx: SSLContext | str | bool | None = None):
         """
         Create a new connection context and lookup urls
 
@@ -83,4 +84,4 @@ class ConnectionContext:
     accesspoint_id: str | None = None
 
     enforce_ssl: bool = True
-    ssl_ctx = None
+    ssl_ctx: SSLContext | str | bool | None = None

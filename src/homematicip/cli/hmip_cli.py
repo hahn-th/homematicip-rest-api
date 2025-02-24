@@ -578,17 +578,8 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
 
         try:
             asyncio.run(home.enable_events())
-        except KeyboardInterrupt:
-            logger.info("Client wird durch Benutzer beendet.")
         finally:
-            home.disable_events()
-            logger.info("WebSocket-Client beendet.")
-
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            return
+            logger.info("Client wird durch Benutzer beendet.")
 
     if args.listen_channel_event:
         command_entered = True

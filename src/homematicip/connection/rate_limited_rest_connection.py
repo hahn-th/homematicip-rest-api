@@ -1,5 +1,3 @@
-import json
-
 import httpx
 
 from homematicip.connection import RATE_LIMITER_FILL_RATE, RATE_LIMITER_TOKENS
@@ -14,7 +12,7 @@ class RateLimitedRestConnection(RestConnection):
                  context: ConnectionContext,
                  tokens: int = RATE_LIMITER_TOKENS,
                  fill_rate: int = RATE_LIMITER_FILL_RATE,
-                 httpx_client_session: httpx.AsyncClient = None):
+                 httpx_client_session: httpx.AsyncClient | None = None):
         """Initialize the RateLimitedRestConnection with a token bucket algorithm.
 
         :param context: The connection context.
@@ -25,7 +23,7 @@ class RateLimitedRestConnection(RestConnection):
         super().__init__(context, httpx_client_session=httpx_client_session)
         self._buckets = Buckets(tokens=tokens, fill_rate=fill_rate)
 
-    async def async_post(self, url: str, data: json = None, custom_header: dict = None) -> RestResult:
+    async def async_post(self, url: str, data: dict | None = None, custom_header: dict | None = None) -> RestResult:
         """Post data to the HomematicIP Cloud API."""
         await self._buckets.wait_and_take()
         return await super().async_post(url, data, custom_header)

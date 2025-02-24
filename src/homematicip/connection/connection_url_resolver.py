@@ -11,8 +11,8 @@ class ConnectionUrlResolver:
             client_characteristics: dict,
             lookup_url: str,
             enforce_ssl: bool = True,
-            ssl_context: SSLContext = None,
-            httpx_client_session: httpx.AsyncClient = None,
+            ssl_context: SSLContext | None= None,
+            httpx_client_session: httpx.AsyncClient | None = None,
     ) -> tuple[str, str]:
         """Lookup urls async.
 
@@ -20,6 +20,7 @@ class ConnectionUrlResolver:
         :param lookup_url: The lookup url
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
         :param ssl_context: The ssl context
+        :param httpx_client_session: The httpx client session if you want to use a custom one
 
         :return: The rest and websocket url as tuple
         """

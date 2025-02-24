@@ -768,9 +768,9 @@ async def test_enable_events_active(fake_home):
 
 @pytest.mark.asyncio
 async def test_disable_events(fake_home):
-    fake_client = Mock()
+    fake_client = AsyncMock()
     fake_home._websocket_client = fake_client
-    fake_home.disable_events()
+    await fake_home.disable_events_async()
 
     assert fake_home._websocket_client is None
-    assert fake_client.stop_listening.called
+    assert fake_client.stop_listening_async.called

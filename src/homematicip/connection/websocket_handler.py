@@ -3,10 +3,10 @@ import logging
 import signal
 import ssl
 import sys
-from typing import Callable
+from typing import Callable, List
 
 import certifi
-from websockets import connect
+from websockets import connect, ClientConnection
 from websockets.exceptions import ConnectionClosed
 
 from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, ATTR_ACCESSPOINT_ID
@@ -19,10 +19,10 @@ LOGGER = logging.getLogger(__name__)
 class WebSocketHandler:
 
     def __init__(self):
-        self._on_message_handler = []
-        self._stop_event = asyncio.Event()
+        self._on_message_handler: List[Callable] = []
+        self._stop_event: asyncio.Event = asyncio.Event()
         self._is_connected: bool = False
-        self._websocket = None
+        self._websocket: ClientConnection | None = None
 
     def add_on_message_handler(self, handler: Callable):
         self._on_message_handler.append(handler)
@@ -50,7 +50,10 @@ class WebSocketHandler:
             # Close the connection when receiving SIGTERM.
             self._websocket = websocket
             loop = asyncio.get_running_loop()
-            loop.add_signal_handler(signal.SIGTERM, loop.create_task, websocket.close())
+            #loop.add_signal_handler(signal.SIGTERM, lambda: asyncio.create_task(self._handle_sigterm(websocket)))
+
+            loop.add_signal_handler(signal.SIGTERM, lambda x: asyncio.create_task(self._handle_signal(x)), websocket)
+            # loop.add_signal_handler(signal.SIGINT, lambda: self._handle_signal(websocket))
 
             # Process messages received on the connection.
             async for message in websocket:
@@ -80,10 +83,15 @@ class WebSocketHandler:
         self._set_connection_state(False)
         self._websocket = None
 
-    def stop_listening(self):
+    @staticmethod
+    async def _handle_signal(websocket):
+        logging.info("Signal received, closing websocket.")
+        await websocket.close()
+
+    async def stop_listening_async(self):
         LOGGER.info("Stopping WebSocket connection.")
         if self._websocket:
-            self._websocket.close()
+            await self._websocket.close()
         self._stop_event.set()
 
     def _reset_stop_event(self):

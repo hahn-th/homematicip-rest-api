@@ -6,18 +6,18 @@ class Buckets:
     """Class to manage the rate limiting of the HomematicIP Cloud API.
     The implementation is based on the token bucket algorithm."""
 
-    def __init__(self, tokens, fill_rate):
+    def __init__(self, tokens: int, fill_rate: int):
         """Initialize the Buckets with a token bucket algorithm.
 
         :param tokens: The number of tokens in the bucket.
         :param fill_rate: The fill rate of the bucket in tokens every x seconds."""
-        self.capacity = tokens
-        self._tokens = tokens
-        self.fill_rate = fill_rate
-        self.timestamp = time.time()
-        self.lock = asyncio.Lock()
+        self.capacity: int = tokens
+        self._tokens:int  = tokens
+        self.fill_rate: int = fill_rate
+        self.timestamp: float = time.time()
+        self.lock: asyncio.Lock = asyncio.Lock()
 
-    async def take(self, tokens=1) -> bool:
+    async def take(self, tokens: int = 1) -> bool:
         """Get a single token from the bucket. Return True if successful, False otherwise.
 
         :param tokens: The number of tokens to take from the bucket. Default is 1.
@@ -29,7 +29,7 @@ class Buckets:
                 return True
         return False
 
-    async def wait_and_take(self, timeout=120, tokens=1) -> bool:
+    async def wait_and_take(self, timeout: int = 120, tokens: int = 1) -> bool:
         """Wait until a token is available and then take it. Return True if successful, False otherwise.
 
         :param timeout: The maximum time to wait for a token in seconds. Default is 120 seconds.

@@ -46,7 +46,7 @@ async def main():
     except KeyboardInterrupt:
         print("Client wird durch Benutzer beendet.")
     finally:
-        home.disable_events()
+        home.disable_events_async()
         print("WebSocket-Client beendet.")
 
 
