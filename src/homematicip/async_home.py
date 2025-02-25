@@ -536,7 +536,7 @@ class AsyncHome(HomeMaticIPObject):
         """deactivates the vacation mode immediately"""
         return await self._rest_call_async("home/heating/deactivateVacation")
 
-    async def set_pin_async(self, new_pin: str, old_pin: str = None) -> dict:
+    async def set_pin_async(self, new_pin: str | None, old_pin: str | None = None) -> dict:
         """sets a new pin for the home
 
         :param new_pin: the new pin

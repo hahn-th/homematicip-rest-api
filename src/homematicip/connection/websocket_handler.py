@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import platform
+import signal
 import ssl
 import sys
 from typing import Callable, List
@@ -50,6 +52,10 @@ class WebSocketHandler:
             LOGGER.info("Connected to WebSocket server.")
             self._websocket = websocket
 
+            if platform.system() != "Windows":
+                loop = asyncio.get_running_loop()
+                loop.add_signal_handler(signal.SIGINT, lambda x: asyncio.create_task(self._handle_signal(x)), websocket)
+
             # Process messages received on the connection.
             async for message in websocket:
                 LOGGER.debug(f"Received message: {message}")
@@ -79,11 +85,16 @@ class WebSocketHandler:
         self._set_connection_state(False)
         self._websocket = None
 
+    @staticmethod
+    async def _handle_signal(websocket):
+        logging.info("Signal received, closing websocket.")
+        await websocket.close()
+
     async def stop_listening_async(self):
         LOGGER.info("Stopping WebSocket connection.")
+        if self._websocket:
+            await self._websocket.close()
         self._stop_event.set()
-        # if self._websocket:
-        #     await self._websocket.close()
 
     def _reset_stop_event(self):
         self._stop_event.clear()
