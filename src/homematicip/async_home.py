@@ -654,6 +654,7 @@ class AsyncHome(HomeMaticIPObject):
 
     async def disable_events_async(self):
         """Stop Websocket Connection"""
+        logger.debug("Called disable_events_async")
         if self._websocket_client:
             await self._websocket_client.stop_listening_async()
             self._websocket_client = None
