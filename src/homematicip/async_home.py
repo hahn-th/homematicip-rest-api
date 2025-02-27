@@ -749,3 +749,7 @@ class AsyncHome(HomeMaticIPObject):
             except Exception as err:  # pragma: no cover
                 LOGGER.exception(err)
         self.onEvent.fire(event_list)
+
+    def websocket_is_connected(self):
+        """returns if the websocket is connected."""
+        return self._websocket_client.is_connected() if self._websocket_client else False

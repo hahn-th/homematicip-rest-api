@@ -51,6 +51,7 @@ class WebSocketHandler:
         ) as websocket:
             LOGGER.info("Connected to WebSocket server.")
             self._websocket = websocket
+            self._set_connection_state(True)
 
             if platform.system() != "Windows":
                 loop = asyncio.get_running_loop()
@@ -92,14 +93,15 @@ class WebSocketHandler:
 
     async def stop_listening_async(self):
         LOGGER.info("Stopping WebSocket connection.")
+        self._stop_event.set()
         if self._websocket:
             await self._websocket.close()
-        self._stop_event.set()
 
     def _reset_stop_event(self):
         self._stop_event.clear()
 
     def is_connected(self):
+        """Return the connection state."""
         return self._is_connected
 
     @staticmethod
