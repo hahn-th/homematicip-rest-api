@@ -7,9 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [2.0.0] 2025-03-01
+
+:warning: This is a **huge** update with massive api changes!
+
+### Added
+
+- The whole library is Async-first now. All functions are async functions now or calling async functions in the background.
+- Completely rewritten RestConnection and WebSocketConnection
+- Added RateLimitedRestConnection class to prevent throttling
+- Use package `httpx` for rest requests
+- Package `aiohttp` is still used for fake server for testing
+- Bump `websockets` to websockets>=14.2
+
+### Changed
+
+- Async functions are not at the same classes as sync functions
+- Replaced Auth with AsyncAuth. Auth is now async.
+
+### Removed
+
+- Removed all deprecated functions
+- Removed all async-dedicated devices and group 
+
 ## [1.1.7] 2025-01-28
 
-### ADDED
+### Added
 
 - Add support for HmIP-eTRV-3 (thx JoelKle)
 - Add support for HmIP-eTRV-F (thx JoelKle)
@@ -17,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.6] 2024-12-15
 
-### CHANGED
+### Changed
 
 - Removed support for Python lower than 3.12
 - [issue: 542] Add support for HmIP-HCU Access Point (#542)
@@ -25,17 +48,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.5] 2024-12-07
 
-### ADDED
+### Added
 
 ~~- [issue: 542] Add support for HmIP-HCU Access Point (#542)~~
 
 ## [1.1.4] 2024-12-07
 
-### ADDED
+### Added
 
 ~~- [issue: 542] Add support for HmIP-HCU Access Point (#542)~~
 
-### CHANGED
+### Changed
 
 - Bump aiohttp from  3.9.4 to 3.10.2
 - Bump websockets to websockets 13.1
@@ -44,30 +67,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.3] 2024-11-17
 
-### ADDED
+### Added
 
 - Add support for channel-events
 
-### CHANGED
+### Changed
 
 - Use legacy websockets client to avoid issues during connect
 
 ## [1.1.2] 2024-07-14
 
-### ADDED
+### Added
 
 - Add set_cooling to home to enable/disable cooling
 
 ## [1.1.1] 2024-05-08
 
-### ADDED
+### Added
 
 - Add support for HmIP-RGBW (readonly)
 - Add support for HmIP-DRG-DALI (readonly)
 - Add Energy Group
 - Add support for Hmip-BSL with Firmware 2.0.2
 
-### CHANGED
+### Changed
 
 - Bump aiohttp 3.9.0 to aiohttp 3.9.4
 - Rename function _restCall to _rest_call
@@ -75,7 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] 2024-01-06
 
-### ADDED
+### Added
 
 - Add support for python 3.12
 - Add support for optional feature IFeatureDeviceSensorError
@@ -85,22 +108,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for function channel DeviceOperationLockWithSabotage
 - Add new documentation site and workflow
 
-### CHANGED
+### Changed
 
 - Changed from flat project layout to src based layout. The source code is not placed into ./src folder. The scripts are located in package homematicip.cli
 - Replaced versioneer with setuptools-scm to build version infos based on git tags and the building process.
 
-### FIXED
+### Fixed
 
 - Fixed an error with --set-lock-state in cli
 
-### REMOVED
+### Removed
 
 - Dropped support for python < 3.9
 
 ## [1.0.16] 2023-10-25
 
-### ADDED
+### Added
 
 - CLI: Add argument --set-group-slats-level to set slatsLevel of Groups
 - CLI: Add argument --set-slats-level to set slatsLevel of devices.
@@ -108,13 +131,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for ENERGY FunctionalHomes
 - Add support for IOptionalFeatureFilteredMulticastRouter
 
-### FIXED
+### Fixed
 
 - Set shutterLevel to currentValue if shutterLevel is None in function set_slats_level of FunctionalChannel BlindChannel
 
 ## [1.0.15] 2023-08-26
 
-### ADDED
+### Added
 
 - :warning: Functions for interacting with the device (set-shutter-level i.E.) are added to functionalChannel classes. This is because actions are bound to channels, not the devices. This is the foundation for more changes in the future. These functions in device classes are deprecated soon.
 - Add field channelRole to MultiModeInputChannel
@@ -124,13 +147,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for IOptionalFeatureControlsMountingOrientation
 - Add support for HmIP-eTRV-CL
 
-### FIXED
+### Fixed
 
 - hmip_cli: Set basic logger level in hmip_cli based on --debug-level argument
 - hmip_cli: Use functions from functionalChannels to execute set_shutter_level
 - Fix several deprecation warnings
 
-### CHANGED
+### Changed
 
 - Bump request from 2.28.1 to 2.31.0
 - Bump aiohttp from 3.8.1 to 3.8.5
@@ -139,7 +162,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.14] 2023-03-04
 
-### ADDED
+### Added
 
 - Throw HmipThrottlingError, when REST API returns 429
 - Add device HmIPW-DRS4
@@ -161,19 +184,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.13] 2022-12-05
 
-### FIXED
+### Fixed
 
 - Fixed device HmIP-DRDI3. Changed parent class from AsyncSwitch to AsyncDimmer
 
 ## [1.0.12] 2022-11-30
 
-### ADDED
+### Added
 
 - Add Async device for HmIP-DRDI3
 
 ## [1.0.11] 2022-11-27
 
-### ADDED
+### Added
 
 - Support for Hue devices
   - Unknown devices are now represented by class BaseDevice
@@ -184,22 +207,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.10] 2022-11-26
 
-### ADDED
+### Added
 
 - CLI: Print result when using set_switch_state and set_dim_level
 - Add tests for Multi IO Box HmIP-MIOB
 
-### FIXED
+### Fixed
 
 - [issue: 471] Fix AsyncHeatingThermostatEvo
 
-### CHANGED
+### Changed
 
 - Changed contact email-address for pypi-Package
 
 ## [1.0.9] 2022-10-08
 
-### ADDED
+### Added
 
 - [issue: 450] Add support for device ELV-SH-BS2
 - [issue: 464] Add support for group INDOOR_CLIMATE
@@ -207,12 +230,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.8] 2022-10-04
 
-### FIXED
+### Fixed
 
 - [bug: 463] Add valvePosition for device HmIP-FALMOT-C12
 - Fixed --toggle-garage-door in hmip_cli.py
 
-### ADDED
+### Added
 
 - [PR: 453] Add support for device HmIP-DLS (Door Lock Sensor)
 - [PR: 451] Add support for device HmIP-DLD (Door Lock Drive)
@@ -221,34 +244,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add argument `--pin 1234` to hmip_cli.py
 - Add argument `--set-lock-state OPEN/LOCKED/UNLOCKED` to hmip_cli.py
 
-### CHANGED
+### Changed
 
 - README.md has been created which replaces README.rst
 - Github actions is used for releases and testing
 
 ## [1.0.7] 2022-07-25
 
-### ADDED
+### Added
 
 - [PR: 449] Add support for Device HmIP-WGC
 
-### FIXED
+### Fixed
 
 - Fixed some typos from Version 1.0.5
 
 ## [1.0.5] 2022-07-16
 
-### FIXED
+### Fixed
 
 - [PR: 447]: Error message when using HmIP-STE2-PCB (There is no class for functionalChannel 'TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL' yet)
 
-### CHANGED
+### Changed
 
 - [PR: 448]: HomematicIP Rest API should be tested against python versions 3.8, 3.9, 3.10
 
 ## [1.0.4] 2022-07-12
 
-### FIXED
+### Fixed
 
 - [PR: 444]: the function \_ws_on_message in homematicip/home.py expected two arguments, but just one was provided.
 
@@ -266,14 +289,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [PR: 413]: added samples
 
-### CHANGED
+### Changed
 
 - API
   - [PR: 424]: Drop loop kwarg from async_timeout.timeout
 
 ## [1.0.1] 2021-05-27
 
-### ADDED
+### Added
 
 - Devices
   - [HMIP-DRDI3] (Dimming Actuator Inbound 230V – 3x channels, 200W per channel)
@@ -283,12 +306,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] 2021-04-05
 
-### ADDED
+### Added
 
 - Devices
   - [HmIP-STE2-PCB] (Temperature Difference Sensors - 2x sensors)
 
-### FIXED
+### Fixed
 
 - API
   - [BUG: 387] Groups were missing in the functional channels of devices
@@ -297,7 +320,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.13.1] 2021-01-23
 
-### ADDED
+### Added
 
 - API
   - Rules
@@ -311,7 +334,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.13.0] 2020-12-03
 
-### ADDED
+### Added
 
 - Devices
   - [HMIP-DRSI4] (Switch Actuator for DIN rail mount – 4x channels)
@@ -320,7 +343,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.12.1] 2020-11-10
 
-### ADDED
+### Added
 
 - Devices
   - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
@@ -328,19 +351,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.12.0] 2020-11-09
 
-### ADDED
+### Added
 
 - Devices
   - [HMIP-HDM1] (Hunter Douglas & erfal window blinds)
   - [HMIP-HAP] (HomematicIP Access Point)
 
-### FIXED
+### Fixed
 
 - [BUG: 342] NameError: name 'xrange' is not defined on Python 3.8.1
 
 ## [0.11.0] 2020-08-31
 
-### ADDED
+### Added
 
 - API
   - Home
@@ -354,13 +377,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - connectionType
   - new OptionalFeatures
 
-### CHANGED
+### Changed
 
 - [BUG: 325] Requirements are now using a min version instead of a pinned version. requirements_dev.txt will still use the pinned versions to make sure that the latest version is compatible with the library.
 
 ## [0.10.19] 2020-07-08
 
-### FIXED
+### Fixed
 
 - [PR: 320] Fix FSI-16
 
@@ -377,7 +400,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.10.17] 2020-02-16
 
-### FIXED
+### Fixed
 
 - [PR: 300] Fix AsyncMotionDetectorPushButton
 
@@ -390,7 +413,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - [ALPHA-IP-RBG] (Alpha IP Wall Thermostat Display)
   - [ALPHA-IP-RBGa] (ALpha IP Wall Thermostat Display analog)
 
-### FIXED
+### Fixed
 
 - [BUG: 294]: hmip_cli.py --anonymize will wrongly anonymize other fields
 
@@ -431,7 +454,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - General
   - removed homematicip-testing package. Pip will automatically install the latest tagged release. For a "nightly" build you just have to run it with the "--pre" argument.
 
-### FIXED
+### Fixed
 
 - [BUG: 266]: Anonymize won't work on the Silvercrest models
 
@@ -512,7 +535,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - WeatherCondition.STRONG_WIND
   - vaporAmount property to WeatherSensorPro, WeatherSensorPlus, WeatherSensor, TemperatureHumiditySensorOutdoor, TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, WeatherSensorChannel and Weather
 
-### FIXED
+### Fixed
 
 - [BUG: 188] STRONG_WIND Weather condition
 
@@ -681,7 +704,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - homematicip/base/constants.py -> use homematicip/base/enums.py
 
-### FIXED
+### Fixed
 
 - [BUG: 141] AsyncSwitchingGroup.turn_off will turn the group on
 
@@ -722,7 +745,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.0..master
+[2.0.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7...2.0.0
 [1.1.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.4...1.1.5
