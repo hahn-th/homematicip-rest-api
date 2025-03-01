@@ -17,7 +17,12 @@ You will need:
 -  the SGTIN of the Access Point
 -  [optional] the PIN
 
-Now you have to run `hmip_generate_auth_token` from terminal and follow it's instructions.
+To get an auth-token you have to run the script `hmip_generate_auth_token` which is installed with the library.
+
+```sh
+hmip_generate_auth_token
+```
+
 It will generate a **config.ini** in your current working directory. The scripts which are using this library are looking
 for this file to load the auth-token and SGTIN of the Access Point. You can either place it in the working directory when you are 
 running the scripts or depending on your OS in different "global" folders:
