@@ -8,9 +8,9 @@ Any help from the community through e.g. pull requests would be highly appreciat
 
 [![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![CircleCI](https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/hahn-th/homematicip-rest-api) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip)
 
-## :ghost: Lot's of changes in version 1.2
+## :ghost: Lot's of changes in version 2.0.0
 
-In version 1.2, there are many code and API changes. Almost all async devices have been removed. The corresponding functions are now in the formerly non-async classes.
+In version 2.0.0, there are many code and API changes. Almost all async devices have been removed. The corresponding functions are now in the formerly non-async classes.
 
 ## Get Help / Discord
 
