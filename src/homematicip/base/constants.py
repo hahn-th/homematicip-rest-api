@@ -2,7 +2,7 @@ import logging
 
 LOGGER = logging.getLogger(__name__)
 
-LOGGER.warn(
+LOGGER.warning(
     "constants.py is deprecated. Please use the corresponding enums in enums.py"
 )
 
@@ -41,7 +41,6 @@ MOTION_DETECTOR_PUSH_BUTTON = "MOTION_DETECTOR_PUSH_BUTTON"
 WATER_SENSOR = "WATER_SENSOR"
 SHUTTER_CONTACT_MAGNETIC = "SHUTTER_CONTACT_MAGNETIC"
 TORMATIC_MODULE = "TORMATIC_MODULE"
-
 
 # GROUPS
 EXTENDED_LINKED_SHUTTER = "EXTENDED_LINKED_SHUTTER"

@@ -301,6 +301,10 @@ class AsyncFakeCloudServer:
 
         return web.json_response(None)
 
+    @validate_authorization
+    async def post_hmip_home_heating_setCooling(self, request: web.Request) -> web.Response:
+        return web.json_response()
+
     # endregion
 
     # region rule

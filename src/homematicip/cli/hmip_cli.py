@@ -1,3 +1,4 @@
+import asyncio
 import json
 import logging
 import signal
@@ -5,30 +6,25 @@ import sys
 import time
 import traceback
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
+from asyncio import iscoroutinefunction
 from importlib.metadata import version
 from logging.handlers import TimedRotatingFileHandler
 from operator import attrgetter
 
 import homematicip
+from homematicip.async_home import AsyncHome
 from homematicip.base.enums import CliActions, ClimateControlDisplay, LockState
 from homematicip.base.functionalChannels import FunctionalChannel
 from homematicip.base.helpers import handle_config
 from homematicip.class_maps import FUNCTIONALCHANNEL_CLI_MAP
 from homematicip.device import BaseDevice, Device, TemperatureHumiditySensorDisplay
 from homematicip.group import ExtendedLinkedSwitchingGroup, HeatingGroup
-from homematicip.home import Home
 from homematicip.rule import SimpleRule
 
 logger = logging.getLogger("hmip_cli")
 
 
-def main(args=None):
-    """Entry point for pypyr cli.
-
-    The setup_py entry_point wraps this in sys.exit already so this effectively
-    becomes sys.exit(main()).
-    The __main__ entry point similarly wraps sys.exit().
-    """
+async def main_async(args=None):
     if args is None:
         args = sys.argv[1:]
 
@@ -46,12 +42,12 @@ def main(args=None):
             print("Could not find configuration file. Script will exit")
             sys.exit(-1)
 
-        logger = setup_logger(
+        setup_logger(
             config.log_level, parsed_args.debug_level, config.log_file
         )
-        home = get_home(config)
+        home = await get_home(config)
 
-        if not run(config, home, logger, parsed_args):
+        if not await run(config, home, logger, parsed_args):
             print(
                 "Command not found. Use -h or --help argument for available commands."
             )
@@ -88,25 +84,45 @@ def setup_config(args) -> homematicip.HmipConfig:
     return _config
 
 
-def get_home(config: homematicip.HmipConfig) -> Home:
+async def get_home(config: homematicip.HmipConfig) -> AsyncHome:
     """Initialize home instance."""
-    home = Home()
-    home.set_auth_token(config.auth_token)
-    home.init(config.access_point)
+    home = AsyncHome()
+    await home.init_async(config.access_point, config.auth_token)
     return home
 
 
-def setup_logger(
-    default_debug_level: int, argument_debug_level: int, log_file: str
-) -> logging.Logger:
+def setup_logger(default_debug_level: int, argument_debug_level: int, log_file: str) -> logging.Logger:
+    global logger
+
     debug_level = argument_debug_level if argument_debug_level else default_debug_level
-    logging.basicConfig(level=debug_level)
 
-    logger = create_logger(debug_level, log_file)
-    return logger
+    # Create console handler with custom formatter
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(logging.Formatter("%(levelname)-7s - %(asctime)s - %(name)s - %(message)s"))
+
+    # Create file handler if log_file is provided
+    handlers = [console_handler]
+    if log_file:
+        file_handler = TimedRotatingFileHandler(log_file, when="midnight", backupCount=5)
+        file_handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+        handlers.append(file_handler)
+
+    # Configure basic logging with handlers
+    logging.basicConfig(level=debug_level, handlers=handlers)
+    logger = logging.getLogger("hmip_cli")
+
+    third_party_loggers = [
+        "httpx",
+        "httpcore.http11",
+        "httpcore.connection",
+        "asyncio",
+        "websockets.client"
+    ]
+    for logger_name in third_party_loggers:
+        logging.getLogger(logger_name).setLevel(logging.WARNING)
 
 
-def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args):
+async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.Logger, args):
     """Execution of cli commands with parsed args."""
     command_entered = False
     if args.server_config:
@@ -115,67 +131,67 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
         )
         global server_config
         server_config = args.server_config
-        home.download_configuration = fake_download_configuration
+        home.download_configuration_async = fake_download_configuration
 
     if args.dump_config:
         command_entered = True
-        json_state = home.download_configuration()
+        json_state = await home.download_configuration_async()
 
         output = handle_config(json_state, args.anonymize)
         if output:
             print(output)
 
-    if not home.get_current_state():
+    if not await home.get_current_state_async():
         return
 
     if args.list_devices:
         command_entered = True
-        sortedDevices = sorted(home.devices, key=attrgetter("deviceType", "label"))
-        for d in sortedDevices:
-            print("{} {}".format(d.id, str(d)))
+        sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
+        for device in sorted_devices:
+            print("{} {}".format(device.id, str(device)))
 
     if args.list_groups:
         command_entered = True
-        sortedGroups = sorted(home.groups, key=attrgetter("groupType", "label"))
-        for g in sortedGroups:
+        sorted_groups = sorted(home.groups, key=attrgetter("groupType", "label"))
+        for g in sorted_groups:
             print(g)
 
     if args.list_last_status_update:
         command_entered = True
         print("Devices:")
-        sortedDevices = sorted(home.devices, key=attrgetter("deviceType", "label"))
-        for d in sortedDevices:
-            print("\t{}\t{}\t{}".format(d.id, d.label, d.lastStatusUpdate))
+        sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
+        for device in sorted_devices:
+            print("\t{}\t{}\t{}".format(device.id, device.label, device.lastStatusUpdate))
         print("Groups:")
-        sortedGroups = sorted(home.groups, key=attrgetter("groupType", "label"))
-        for g in sortedGroups:
+        sorted_groups = sorted(home.groups, key=attrgetter("groupType", "label"))
+        for g in sorted_groups:
             print("\t{}\t{}\t{}".format(g.groupType, g.label, g.lastStatusUpdate))
 
     if args.list_group_ids:
         command_entered = True
-        sortedGroups = sorted(home.groups, key=attrgetter("groupType", "label"))
-        for g in sortedGroups:
+        sorted_groups = sorted(home.groups, key=attrgetter("groupType", "label"))
+        for g in sorted_groups:
             print("Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label))
 
     if args.protectionmode:
         command_entered = True
         if args.protectionmode == "presence":
-            home.set_security_zones_activation(False, True)
+            await home.set_security_zones_activation_async(False, True)
         elif args.protectionmode == "absence":
-            home.set_security_zones_activation(True, True)
+            await home.set_security_zones_activation_async(True, True)
         elif args.protectionmode == "disable":
-            home.set_security_zones_activation(False, False)
+            await home.set_security_zones_activation_async(False, False)
 
     if args.new_pin:
         command_entered = True
-        home.set_pin(args.new_pin, args.old_pin)
+        await home.set_pin_async(args.new_pin, args.old_pin)
     if args.delete_pin:
         command_entered = True
-        home.set_pin(None, args.old_pin)
+        await home.set_pin_async(None, args.old_pin)
 
     if args.list_security_journal:
         command_entered = True
-        journal = home.get_security_journal()
+        journal = await home.get_security_journal_async()
         for entry in journal:
             print(entry)
 
@@ -191,20 +207,20 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                 home.updateState,
             )
         )
-        sortedDevices = sorted(home.devices, key=attrgetter("deviceType", "label"))
-        for d in sortedDevices:
-            if type(d) == BaseDevice:
+        sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
+        for device in sorted_devices:
+            if type(device) == BaseDevice:
                 # skip unknown devices to avoid exception
                 continue
             print(
                 "{:45s} - Firmware: {:6} - Available Firmware: {:6} UpdateState: {} LiveUpdateState: {}".format(
-                    d.label,
-                    d.firmwareVersion,
-                    d.availableFirmwareVersion
-                    if d.availableFirmwareVersion is not None
+                    device.label,
+                    device.firmwareVersion,
+                    device.availableFirmwareVersion
+                    if device.availableFirmwareVersion is not None
                     else "None",
-                    d.updateState,
-                    d.liveUpdateState,
+                    device.updateState,
+                    device.liveUpdateState,
                 )
             )
 
@@ -218,24 +234,24 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
             )
         )
 
-        sortedDevices = sorted(home.devices, key=attrgetter("deviceType", "label"))
-        for d in sortedDevices:
+        sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
+        for device in sorted_devices:
             print(
                 "{:45s} - RSSI: {:4} {} - Peer RSSI: {:4} - {} {} permanentlyReachable: {}".format(
-                    d.label,
-                    d.rssiDeviceValue if d.rssiDeviceValue is not None else "None",
-                    getRssiBarString(d.rssiDeviceValue),
-                    d.rssiPeerValue if d.rssiPeerValue is not None else "None",
-                    getRssiBarString(d.rssiPeerValue),
-                    "Unreachable" if d.unreach else "",
-                    d.permanentlyReachable,
+                    device.label,
+                    device.rssiDeviceValue if device.rssiDeviceValue is not None else "None",
+                    get_rssi_bar_string(device.rssiDeviceValue),
+                    device.rssiPeerValue if device.rssiPeerValue is not None else "None",
+                    get_rssi_bar_string(device.rssiPeerValue),
+                    "Unreachable" if device.unreach else "",
+                    device.permanentlyReachable,
                 )
             )
     if args.list_rules:
         command_entered = True
-        sortedRules = sorted(home.rules, key=attrgetter("ruleType", "label"))
-        for d in sortedRules:
-            print("{} {}".format(d.id, str(d)))
+        sorted_rules = sorted(home.rules, key=attrgetter("ruleType", "label"))
+        for device in sorted_rules:
+            print("{} {}".format(device.id, str(device)))
 
     if args.device:
         command_entered = False
@@ -245,79 +261,79 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                 devices = home.devices
                 break
             else:
-                d = home.search_device_by_id(argdevice)
-                if d is None:
+                device = home.search_device_by_id(argdevice)
+                if device is None:
                     logger.error("Could not find device %s", argdevice)
                 else:
-                    devices.append(d)
+                    devices.append(device)
 
         for device in devices:
             if args.device_new_label:
-                device.set_label(args.device_new_label)
+                await device.set_label_async(args.device_new_label)
                 command_entered = True
 
             if args.device_switch_state is not None:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.SET_SWITCH_STATE,
-                    "set_switch_state",
+                    "async_set_switch_state",
                     args.device_switch_state,
                 )
                 command_entered = True
 
             if args.device_dim_level is not None:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.SET_DIM_LEVEL,
-                    "set_dim_level",
+                    "async_set_dim_level",
                     args.device_dim_level,
                 )
                 command_entered = True
 
             if args.device_set_lock_state is not None:
-                targetLockState = LockState.from_str(args.device_set_lock_state)
-                if targetLockState not in LockState:
+                target_lock_state = LockState.from_str(args.device_set_lock_state)
+                if target_lock_state not in LockState:
                     logger.error("%s is not a lock state.", args.device_set_lock_state)
 
                 else:
                     pin = args.pin[0] if len(args.pin) > 0 else ""
-                    _execute_action_for_device(
+                    await _execute_action_for_device(
                         device,
                         args,
                         CliActions.SET_LOCK_STATE,
-                        "set_lock_state",
-                        targetLockState,
+                        "async_set_lock_state",
+                        target_lock_state,
                         pin,
                     )
                 command_entered = True
 
             if args.toggle_garage_door is not None:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.TOGGLE_GARAGE_DOOR,
-                    "send_start_impulse",
+                    "async_send_start_impulse",
                 )
                 command_entered = True
 
             if args.device_send_door_command is not None:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.SEND_DOOR_COMMAND,
-                    "send_door_command",
+                    "async_send_door_command",
                     args.device_send_door_command,
                 )
                 command_entered = True
 
             if args.device_shutter_level is not None:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.SET_SHUTTER_LEVEL,
-                    "set_shutter_level",
+                    "async_set_shutter_level",
                     args.device_shutter_level,
                 )
                 command_entered = True
@@ -329,22 +345,22 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                     if len(args.device_slats_level) > 1
                     else None
                 )
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.SET_SLATS_LEVEL,
-                    "set_slats_level",
+                    "async_set_slats_level",
                     slats_level,
                     shutter_level,
                 )
                 command_entered = True
 
             if args.device_shutter_stop is not None:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.SET_SHUTTER_STOP,
-                    "set_shutter_stop",
+                    "async_set_shutter_stop",
                 )
                 command_entered = True
 
@@ -379,36 +395,36 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                 command_entered = True
 
             if args.reset_energy_counter:
-                _execute_action_for_device(
+                await _execute_action_for_device(
                     device,
                     args,
                     CliActions.RESET_ENERGY_COUNTER,
-                    "reset_energy_counter",
+                    "async_reset_energy_counter",
                 )
                 command_entered = True
 
             if args.print_infos:
                 command_entered = True
-                print(d)
+                print(device)
                 print("------")
-                for fc in d.functionalChannels:
+                for fc in device.functionalChannels:
                     print(f"   Ch {fc.index}: {str(fc)}")
                     if (
-                        args.print_allowed_commands
-                        and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+                            args.print_allowed_commands
+                            and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
                     ):
                         print(
                             f"   -> Allowed commands: {FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]}"
                         )
 
-            if args.print_allowed_commands and d is not None:
+            if args.print_allowed_commands and device is not None:
                 command_entered = True
-                print(f"Allowed commands for selected channels device {d.id}")
+                print(f"Allowed commands for selected channels device {device.id}")
                 target_channels = []
                 if args.channels:
-                    target_channels = _get_target_channels(d, args.channels)
+                    target_channels = _get_target_channels(device, args.channels)
                 else:
-                    target_channels = d.functionalChannels
+                    target_channels = device.functionalChannels
 
                 for fc in target_channels:
                     print(
@@ -417,7 +433,7 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                     )
                     if fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP:
                         print(
-                            f"{ [str(val) for val in FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]]}"
+                            f"{[str(val) for val in FUNCTIONALCHANNEL_CLI_MAP[fc.functionalChannelType]]}"
                         )
                     else:
                         print("None")
@@ -428,38 +444,38 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
         error = False
         command_entered = True
         for id in args.external_devices:
-            d = home.search_device_by_id(id)
-            if d is None:
+            device = home.search_device_by_id(id)
+            if device is None:
                 logger.error("Device %s is not registered on this Access Point", id)
                 error = True
             else:
-                external.append(d)
+                external.append(device)
 
         for id in args.internal_devices:
-            d = home.search_device_by_id(id)
-            if d is None:
+            device = home.search_device_by_id(id)
+            if device is None:
                 logger.error("Device %s is not registered on this Access Point", id)
                 error = True
             else:
-                internal.append(d)
+                internal.append(device)
         if not error:
-            home.set_zones_device_assignment(internal, external)
+            await home.set_zones_device_assignment_async(internal, external)
 
     if args.activate_absence:
         command_entered = True
-        home.activate_absence_with_duration(args.activate_absence)
+        await home.activate_absence_with_duration_async(args.activate_absence)
 
     if args.activate_absence_permanent:
         command_entered = True
-        home.activate_absence_permanent()
+        await home.activate_absence_permanent_async()
 
     if args.deactivate_absence:
         command_entered = True
-        home.deactivate_absence()
+        await home.deactivate_absence_async()
 
     if args.inclusion_device_id:
         command_entered = True
-        home.start_inclusion(args.inclusion_device_id)
+        await home.start_inclusion_async(args.inclusion_device_id)
 
     if args.group:
         command_entered = False
@@ -474,25 +490,25 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
 
         if args.device_switch_state is not None:
             if isinstance(group, ExtendedLinkedSwitchingGroup):
-                group.set_switch_state(args.device_switch_state)
+                await group.set_switch_state_async(args.device_switch_state)
 
             command_entered = True
 
         if args.group_list_profiles:
             command_entered = True
             for p in group.profiles:
-                isActive = p.id == group.activeProfile.id
+                is_active = p.id == group.activeProfile.id
                 print(
-                    f"Index: {p.index} - Id: {p.id} - Name: {p.name} - Active: {isActive} (Enabled: {p.enabled}, Visible: {p.visible})"
+                    f"Index: {p.index} - Id: {p.id} - Name: {p.name} - Active: {is_active} (Enabled: {p.enabled}, Visible: {p.visible})"
                 )
 
         if args.group_shutter_level:
             command_entered = True
-            group.set_shutter_level(args.group_shutter_level)
+            await group.set_shutter_level_async(args.group_shutter_level)
 
         if args.group_shutter_stop:
             command_entered = True
-            group.set_shutter_stop()
+            await group.set_shutter_stop_async()
 
         if args.group_slats_level:
             slats_level = args.group_slats_level[0]
@@ -501,12 +517,12 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
             )
 
             command_entered = True
-            group.set_slats_level(slats_level, shutter_level)
+            await group.set_slats_level_async(slats_level, shutter_level)
 
         if args.group_set_point_temperature:
             command_entered = True
             if isinstance(group, HeatingGroup):
-                group.set_point_temperature(args.group_set_point_temperature)
+                await group.set_point_temperature_async(args.group_set_point_temperature)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
 
@@ -518,21 +534,21 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
                     if p.name == args.group_activate_profile:
                         index = p.index
                         break
-                group.set_active_profile(index)
+                await group.set_active_profile_async(index)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
 
         if args.group_boost is not None:
             command_entered = True
             if isinstance(group, HeatingGroup):
-                group.set_boost(args.group_boost)
+                await group.set_boost_async(args.group_boost)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
 
         if args.group_boost_duration is not None:
             command_entered = True
             if isinstance(group, HeatingGroup):
-                group.set_boost_duration(args.group_boost_duration)
+                await group.set_boost_duration_async(args.group_boost_duration)
             else:
                 logger.error("Group %s isn't a HEATING group", g.id)
 
@@ -563,7 +579,7 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
         for rule in rules:
             if args.rule_activation is not None:
                 if isinstance(rule, SimpleRule):
-                    rule.set_rule_enabled_state(args.rule_activation)
+                    await rule.set_rule_enabled_state_async(args.rule_activation)
                     command_entered = True
                 else:
                     logger.error(
@@ -574,18 +590,24 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
 
     if args.list_events:
         command_entered = True
-        home.onEvent += printEvents
-        home.enable_events()
+        home.onEvent += print_events
+
         try:
-            while True:
-                time.sleep(1)
+            logger.info("Listening for events. Press Ctrl+c to stop.")
+            print("Listening for events. Press Ctrl+c to stop.")
+            await home.enable_events()
         except KeyboardInterrupt:
-            return
+            await home.disable_events_async()
+        finally:
+            logger.info("Stopping websocket connection.")
+            await home.disable_events_async()
+            logger.info("Stopped listening for events.")
+            print("Stopped listening for events.")
 
     if args.listen_channel_event:
         command_entered = True
         home.on_channel_event(lambda x: print(x))
-        home.enable_events()
+        await home.enable_events(additional_message_handler=lambda x: print(x))
         try:
             while True:
                 time.sleep(1)
@@ -593,6 +615,10 @@ def run(config: homematicip.HmipConfig, home: Home, logger: logging.Logger, args
             return
 
     return command_entered
+
+
+def print_message(message):
+    print(message)
 
 
 def get_args(parser, args):
@@ -1018,12 +1044,12 @@ def _get_target_channels(device: Device, channels: list = None):
     return target_channels
 
 
-def _execute_action_for_device(
-    device, cli_args, action: CliActions, function_name: str, *args
+async def _execute_action_for_device(
+        device, cli_args, action: CliActions, function_name: str, *args
 ) -> None:
     target_channels = _get_target_channels(device, cli_args.channels)
     for fc in target_channels:
-        _execute_cli_action(
+        await _execute_cli_action(
             fc,
             action,
             function_name,
@@ -1031,8 +1057,8 @@ def _execute_action_for_device(
         )
 
 
-def _execute_cli_action(
-    channel: FunctionalChannel, action: CliActions, callback_name: str, *args
+async def _execute_cli_action(
+        channel: FunctionalChannel, action: CliActions, callback_name: str, *args
 ) -> bool:
     """Execute the callback, if allowed"""
     if _channel_supports_action(channel, action):
@@ -1044,14 +1070,23 @@ def _execute_cli_action(
             end=" ... ",
         )
 
-        callback = getattr(channel, callback_name)
+        callback = getattr(channel, callback_name, None)
+        if not callback:
+            print(
+                f"Function {callback_name} could not be found in channeltype {type(channel)}"
+            )
+            return
         if not callable(callback):
             print(
                 f"Function {callback_name} could not be executed in channeltype {type(channel)}"
             )
             return False
 
-        result = callback(*args)
+        if iscoroutinefunction(callback):
+            result = await callback(*args)
+        else:
+            result = callback(*args)
+
         if result == "":
             result = "OK"
         print(f"{result}")
@@ -1069,50 +1104,37 @@ def _execute_cli_action(
 def _channel_supports_action(channel: FunctionalChannel, action: CliActions) -> bool:
     """Check, if a channel could execute the given function"""
     return (
-        channel.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
-        and action in FUNCTIONALCHANNEL_CLI_MAP[channel.functionalChannelType]
+            channel.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
+            and action in FUNCTIONALCHANNEL_CLI_MAP[channel.functionalChannelType]
     )
 
 
-def printEvents(eventList):
-    for event in eventList:
+def print_events(event_list):
+    for event in event_list:
         print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
 
 
-def getRssiBarString(rssiValue):
+def get_rssi_bar_string(rssi_value):
     # Observed values: -93..-47
     width = 10
     dots = 0
-    if rssiValue:
-        dots = int(round((100 + rssiValue) / 5))
+    if rssi_value:
+        dots = int(round((100 + rssi_value) / 5))
         dots = max(0, min(width, dots))
 
     return "[{}{}]".format("*" * dots, "_" * (width - dots))
 
-
-def create_logger(level, file_name):
-    """Create a logger based on the level"""
-    logger = logging.getLogger()
-    logger.setLevel(level)
-    handler = (
-        TimedRotatingFileHandler(file_name, when="midnight", backupCount=5)
-        if file_name
-        else logging.StreamHandler()
-    )
-    handler.setFormatter(
-        logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    )
-    logger.addHandler(handler)
-    return logger
-
-
-def fake_download_configuration():
+async def fake_download_configuration():
     """Use a json file as configuration source for the server."""
     global server_config
     if server_config:
         with open(server_config) as file:
             return json.load(file)
     return None
+
+
+def main():
+    asyncio.run(main_async())
 
 if __name__ == "__main__":
     main()

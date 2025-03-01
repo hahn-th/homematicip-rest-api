@@ -1,7 +1,9 @@
+import asyncio
 import logging
 from datetime import datetime
 
 from homematicip.base.enums import AutoNameEnum
+from homematicip.connection.rest_connection import RestConnection, RestResult
 
 LOGGER = logging.getLogger(__name__)
 
@@ -11,7 +13,7 @@ class HomeMaticIPObject:
     basic requests to the access point"""
 
     def __init__(self, connection):
-        self._connection = connection
+        self._connection: RestConnection = connection
         #: List with remove handlers.
         self._on_remove = []
         #: List with update handlers.
@@ -50,16 +52,32 @@ class HomeMaticIPObject:
         if handler in self._on_update:
             self._on_update.remove(handler)
 
-    def _rest_call(self, path, body=None):
-        return self._connection._rest_call(path, body)
-
-    def from_json(self, js):
-        """this method will parse the homematicip object from a json object
+    def _rest_call(self, path, body=None, custom_header: dict = None) -> RestResult:
+        """Run a rest call non async.
 
         Args:
-          js: the json object to parse
+            path (str): the path to call without base url
+            body (dict): the body to send
+            custom_header (dict): the custom header to send. This will be merged with the default header
         """
-        # LOGGER.debug("from_json call HomeMaticIpObject")
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(self._connection.async_post(path, body, custom_header))
+
+    async def _rest_call_async(self, path, body=None, custom_header: dict = None):
+        """Run a rest call async
+
+        Args:
+            path (str): the path to call without base url
+            body (dict): the body to send
+            custom_header (dict): the custom header to send. This will be merged with the default header
+        """
+        return await self._connection.async_post(path, body, custom_header)
+
+    def from_json(self, js) -> None:
+        """this method will parse the homematicip object from a json object
+
+        :param js: the json object to parse
+        """
         self._rawJSONData = js
         pass
 
@@ -70,12 +88,12 @@ class HomeMaticIPObject:
         return datetime.fromtimestamp(timestamp / 1000.0)
 
     def set_attr_from_dict(
-        self,
-        attr: str,
-        dict,
-        type: AutoNameEnum = None,
-        dict_attr=None,
-        addToStrOutput=True,
+            self,
+            attr: str,
+            dict,
+            type: AutoNameEnum = None,
+            dict_attr=None,
+            addToStrOutput=True,
     ):
         """this method will add the value from dict to the given attr name
 
@@ -103,3 +121,8 @@ class HomeMaticIPObject:
     def str_from_attr_map(self) -> str:
         """this method will return a string with all key/values which were added via the set_attr_from_dict method"""
         return "".join([f"{x}({self.__dict__[x]}) " for x in self._dictAttributes])[:-1]
+
+    def _run_non_async(self, method, *args, **kwargs):
+        """Run an async method in a sync way"""
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(method(*args, **kwargs))

@@ -1,5 +1,5 @@
-from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.base.enums import WeatherCondition, WeatherDayTime
+from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
 class Weather(HomeMaticIPObject):

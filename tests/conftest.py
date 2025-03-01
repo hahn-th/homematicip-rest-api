@@ -1,12 +1,12 @@
 import asyncio
-import functools
+import os
 import ssl
+import sys
 import time
 from datetime import datetime, timedelta, timezone
 from threading import Thread
 
-import os
-import sys
+from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -14,9 +14,7 @@ import pytest
 from aiohttp import web
 from aiohttp.test_utils import TestServer
 
-from homematicip.aio.auth import AsyncAuth
-from homematicip.aio.home import AsyncHome
-from homematicip.connection import Connection
+from homematicip.async_home import AsyncHome
 from homematicip.home import Home
 from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 from homematicip_demo.helper import *
@@ -38,10 +36,13 @@ def pytest_unconfigure(config):  # pragma: no cover
 @pytest.fixture
 def ssl_ctx():
     ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    # ssl_ctx.minimum_version = ssl.TLSVersion.TLSv1_2
-    # ssl_ctx.maximum_version = ssl.TLSVersion.TLSv1_3
-    ssl_ctx.load_cert_chain(get_full_path("server.crt"), get_full_path("server.key"))
+    ssl_ctx.load_cert_chain(get_full_path("server.pem"), get_full_path("server.key"))
     return ssl_ctx
+
+
+@pytest.fixture
+def ssl_ctx_client():
+    return str(get_full_path("client.pem"))
 
 
 def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None:
@@ -57,7 +58,7 @@ def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None
 
 
 @pytest.fixture(scope="session")
-def event_loop(request):
+def new_event_loop(request):
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop
     loop.close()
@@ -109,54 +110,58 @@ async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
 
 
 @pytest.fixture
-def fake_home(fake_cloud):
+def fake_connection_context_with_ssl(fake_cloud, ssl_ctx_client):
+    access_point_id = "3014F711A000000BAD0C0DED"
+    auth_token = "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
+    lookup_url = f"{fake_cloud.url}/getHost"
+
+    return ConnectionContextBuilder.build_context(accesspoint_id=access_point_id, lookup_url=lookup_url,
+                                                  auth_token=auth_token, ssl_ctx=ssl_ctx_client)
+
+
+@pytest.fixture
+def fake_home(fake_cloud, fake_connection_context_with_ssl):
     home = Home()
     with no_ssl_verification():
-        lookup_url = "{}/getHost".format(fake_cloud.url)
         #    home.download_configuration = fake_home_download_configuration
-        home._connection = Connection()
         home._fake_cloud = fake_cloud
-        home.set_auth_token(
-            "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
-        )
-        home._connection.init(
-            accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url
-        )
+        home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
         home.get_current_state()
+    return home
+
+@pytest.fixture
+async def fake_home_async(fake_cloud, fake_connection_context_with_ssl):
+    home = Home()
+    with no_ssl_verification():
+        #    home.download_configuration = fake_home_download_configuration
+        home._fake_cloud = fake_cloud
+        home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
+        await home.get_current_state_async()
     return home
 
 
 @pytest.fixture
-async def no_ssl_fake_async_home(fake_cloud, event_loop):
-    home = AsyncHome(event_loop)
-    home._connection._websession.post = partial(
-        home._connection._websession.post, ssl=False
-    )
+async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, new_event_loop):
+    home = AsyncHome(new_event_loop)
 
-    lookup_url = "{}/getHost".format(fake_cloud.url)
+    lookup_url = f"{fake_cloud.url}/getHost"
     home._fake_cloud = fake_cloud
-    home.set_auth_token(
-        "8A45BAA53BE37E3FCA58E9976EFA4C497DAFE55DB997DB9FD685236E5E63ED7DE"
-    )
-    await home._connection.init(
-        accesspoint_id="3014F711A000000BAD0C0DED", lookup_url=lookup_url
-    )
-    await home.get_current_state()
+    home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
+    await home.get_current_state_async()
 
     yield home
 
-    await home._connection._websession.close()
 
-
-@pytest.fixture
-async def no_ssl_fake_async_auth(event_loop):
-    auth = AsyncAuth(event_loop)
-    auth._connection._websession.post = partial(
-        auth._connection._websession.post, ssl=False
-    )
-    yield auth
-
-    await auth._connection._websession.close()
+#
+# @pytest.fixture
+# async def no_ssl_fake_async_auth(event_loop):
+#     auth = Auth()
+#     auth._connection._websession.post = partial(
+#         auth._connection._websession.post, ssl=False
+#     )
+#     yield auth
+#
+#     await auth._connection._websession.close()
 
 
 dt = datetime.now(timezone.utc).astimezone()

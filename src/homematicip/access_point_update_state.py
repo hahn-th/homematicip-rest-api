@@ -1,5 +1,5 @@
-from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.base.enums import DeviceUpdateState
+from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
 class AccessPointUpdateState(HomeMaticIPObject):

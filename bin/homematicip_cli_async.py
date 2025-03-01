@@ -6,7 +6,7 @@ import os
 from pprint import pprint
 import homematicip
 
-from homematicip.aio.home import AsyncHome
+from homematicip.async_home import AsyncHome
 from homematicip.base.base_connection import HmipConnectionError
 
 
@@ -31,7 +31,7 @@ async def get_home(loop):
 
     home = AsyncHome(loop)
     home.set_auth_token(_config.auth_token)
-    await home.init(_config.access_point)
+    await home.init_async(_config.access_point)
     return home
 
 

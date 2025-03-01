@@ -8,6 +8,10 @@ Any help from the community through e.g. pull requests would be highly appreciat
 
 [![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![CircleCI](https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/hahn-th/homematicip-rest-api) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip)
 
+## :ghost: Lot's of changes in version 1.2
+
+In version 1.2, there are many code and API changes. Almost all async devices have been removed. The corresponding functions are now in the formerly non-async classes.
+
 ## Get Help / Discord
 
 If you want to get in contact with me or need help with the library, you can get in touch with me via discord. There is a **[discord server](https://discord.gg/mZG2myJ)** and my discord tag is **agonist#6159**
@@ -27,26 +31,36 @@ Kudos and a big thank you to @coreGreenberet, who created this library.
 
 ## Installation
 
-Just run **pip install -U homematicip** to get the package
+To install the package, run:
+```sh
+pip install -U homematicip
+```
 
 ### "Nightly" Builds
 
 Each push on the master branch will trigger a build. That way you can test the latest version of the library with your systems.
-Just run `pip install -U homematicip --pre` to get the package.
+```sh
+pip install -U homematicip --pre
+```
 
 ## New devices and config dump
 
-If you missing a device which is not implemented yet, open an issue and append a dump of your configuration to it using https://gist.github.com. To create a dump use the CLI: `python hmip_cli.py --dump-configuration --anonymize`. See [Usage](#usage) for more instructions.
+If you missing a device which is not implemented yet, open an issue and append a dump of your configuration to it using https://gist.github.com. 
+To create a dump use the CLI:
+```sh
+hmip_cli --dump-configuration --anonymize
+```
+See [Usage](#usage) for more instructions.
 
 ## Usage
 
 ### Generate Token
 
-First run `python hmip_generate_auth_token.py` (from the command line) to get an auth token for your access point. it will generate a “config.ini” in your current directory.
+First run `hmip_generate_auth_token` (from the command line) to get an auth token for your access point. it will generate a “config.ini” in your current directory.
 
 ### Use the CLI
 
-You can send commands to homematicIP using the `hmip_cli.py` script. To get an overview, use -h or --help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from --list-devices.
+You can send commands to homematicIP using the `hmip_cli` script. To get an overview, use -h or --help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from --list-devices.
 
 A few examples:
 
@@ -56,11 +70,6 @@ A few examples:
 - `hmip_cli --list-events` to listen to events and changes in your homematicIP system
 - `hmip_cli -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
 - `hmip_cli --dump-configuration --anonymize` to dump the current config and anonymize it.
-
-## Examples
-
-- hmip_cli.py for listing devices, groups, securityJournal; setting labels, turning switches on/off
-- Sample Projects are under ./homematicip-samples
 
 ## Implemented Stuff
 
@@ -260,26 +269,26 @@ It’s also possible to use push notifications based on a websocket connection:
 
 ```python
     # Example function to display incoming events.
-    def print_events(event_list):
-        for event in event_list:
-            print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
+def print_events(event_list):
+  for event in event_list:
+    print("EventType: {} Data: {}".format(event["eventType"], event["data"]))
 
 
-    # Initialise the API.
-    config = homematicip.find_and_load_config_file()
-    home = Home()
-    home.set_auth_token(config.auth_token)
-    home.init(config.access_point)
+# Initialise the API.
+config = homematicip.find_and_load_config_file()
+home = Home()
+home.set_auth_token(config.auth_token)
+home.init(config.access_point)
 
-    # Add function to handle events and start the connection.
-    home.onEvent += print_events
-    home.enable_events()
+# Add function to handle events and start the connection.
+home.onEvent += print_events
+home.enable_events()
 
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("Interrupt.")
+try:
+  while True:
+    time.sleep(1)
+except KeyboardInterrupt:
+  print("Interrupt.")
 ```
 
 ## Pathes for config.ini

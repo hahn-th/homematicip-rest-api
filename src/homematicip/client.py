@@ -1,5 +1,5 @@
-from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.base.enums import ClientType
+from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
 class Client(HomeMaticIPObject):

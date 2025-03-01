@@ -142,19 +142,19 @@ def test_heating_group(fake_home: Home):
         assert gNotFound is None
 
         result = g.set_boost_duration(20)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_boost(True)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_active_profile(1)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_point_temperature(10.5)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_control_mode(ClimateControlMode.MANUAL)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
 
 def test_security_group(fake_home: Home):
@@ -305,19 +305,19 @@ def test_switching_group(fake_home: Home):
         assert gNotFound is None
 
         result = g.delete()
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_label("LABEL")
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.turn_off()
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_shutter_level(50)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_slats_level(1.0, 20)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
 
 def test_shutter_profile(fake_home: Home):
@@ -435,18 +435,18 @@ def test_switching_alarm_group(fake_home: Home):
 
         g.id = "00000000-0000-0000-0000-BADBADBADB22"
         result = g.set_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.set_signal_optical(OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.test_signal_acoustic(AcousticAlarmSignal.FREQUENCY_HIGHON_OFF)
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
         result = g.test_signal_optical(
             OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
         )
-        assert result["errorCode"] == "INVALID_GROUP"
+        assert not result.success
 
 
 def test_heating_failure_alert_group(fake_home: Home):

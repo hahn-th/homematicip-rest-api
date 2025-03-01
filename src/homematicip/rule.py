@@ -1,5 +1,3 @@
-import json
-
 from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
@@ -33,8 +31,12 @@ class Rule(HomeMaticIPObject):
 
     def set_label(self, label):
         """ sets the label of the rule """
+        return self._run_non_async(self.set_label_async, label)
+
+    async def set_label_async(self, label):
+        """ sets the label of the rule """
         data = {"ruleId": self.id, "label": label}
-        return self._rest_call("rule/setRuleLabel", json.dumps(data))
+        return await self._rest_call_async("rule/setRuleLabel", data)
 
     def __str__(self):
         return "{} {} active({})".format(self.ruleType, self.label, self.active)
@@ -47,30 +49,37 @@ class SimpleRule(Rule):
         """ enables the rule """
         return self.set_rule_enabled_state(True)
 
+    async def enable_async(self):
+        """ enables the rule """
+        return await self.set_rule_enabled_state(True)
+
     def disable(self):
         """ disables the rule """
         return self.set_rule_enabled_state(False)
 
+    async def disable_async(self):
+        """ disables the rule """
+        return await self.set_rule_enabled_state(False)
+
     def set_rule_enabled_state(self, enabled):
         """ enables/disables this rule"""
+        return self._run_non_async(self.set_rule_enabled_state_async, enabled)
+
+    async def set_rule_enabled_state_async(self, enabled):
+        """ enables/disables this rule"""
         data = {"ruleId": self.id, "enabled": enabled}
-        return self._rest_call("rule/enableSimpleRule", json.dumps(data))
+        return await self._rest_call_async("rule/enableSimpleRule", data)
 
     def from_json(self, js):
         super().from_json(js)
         # self.get_simple_rule()
 
     def get_simple_rule(self):
+        return self._run_non_async(self.get_simple_rule_async)
+
+    async def get_simple_rule_async(self):
         data = {"ruleId": self.id}
-        js = self._rest_call("rule/getSimpleRule", json.dumps(data))
-
+        result = await self._rest_call_async("rule/getSimpleRule", data)
+        js = result.json
         for errorRuleTriggerItem in js["errorRuleTriggerItems"]:
-            pass  # at the moment this was always empty
-
-        for errorRuleConditionItem in js["errorRuleConditionItems"]:
-            pass  # at the moment this was always empty
-
-        for errorRuleActionItem in js["errorRuleActionItems"]:
-            pass  # at the moment this was always empty
-
-        sr = js["simpleRule"]
+            pass

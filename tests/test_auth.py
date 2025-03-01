@@ -1,36 +1,34 @@
 import hashlib
-import json
 
 import pytest
 
-from conftest import no_ssl_verification
 from homematicip.auth import Auth
-from homematicip.base.enums import ClientType
-from homematicip.home import Home
+from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.rest_connection import RestConnection
 
 
-def test_auth_challenge_no_pin(fake_home: Home):
-    with no_ssl_verification():
-        auth = Auth(fake_home)
-        sgtin = "3014F711A000000BAD0C0DED"
-        devicename = "auth_test"
-        assert auth.connectionRequest(sgtin, devicename).status_code == 200
-        assert auth.isRequestAcknowledged() is False
-        assert auth.isRequestAcknowledged() is False
+@pytest.mark.asyncio
+async def test_async_auth_challenge_no_pin(
+        fake_connection_context_with_ssl
+):
+    devicename = "auth_test"
 
-        fake_home._connection._rest_call("auth/simulateBlueButton")
+    connection = RestConnection(fake_connection_context_with_ssl)
 
-        assert auth.isRequestAcknowledged() is True
+    auth = Auth(connection, fake_connection_context_with_ssl.client_auth_token, fake_connection_context_with_ssl.accesspoint_id)
 
-        token = auth.requestAuthToken()
-        assert token == hashlib.sha512(auth.uuid.encode("utf-8")).hexdigest().upper()
+    result = await auth.connection_request(devicename)
+    assert result.status == 200
 
-        resultId = auth.confirmAuthToken(token)
-        assert resultId == auth.uuid
+    assert (await auth.is_request_acknowledged()) is False
+    assert (await auth.is_request_acknowledged()) is False
 
-        fake_home.get_current_state()
+    await auth.connection.async_post("auth/simulateBlueButton")
 
-        client = fake_home.search_client_by_id(resultId)
-        assert client != None
-        assert client.label == devicename
-        assert client.clientType == ClientType.APP
+    assert await auth.is_request_acknowledged() is True
+
+    token = await auth.request_auth_token()
+    assert token == hashlib.sha512(auth.client_id.encode("utf-8")).hexdigest().upper()
+
+    result_id = await auth.confirm_auth_token(token)
+    assert result_id == auth.client_id
