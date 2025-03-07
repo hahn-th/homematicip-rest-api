@@ -56,7 +56,9 @@ See [Usage](#usage) for more instructions.
 
 ### Generate Token
 
-First run `hmip_generate_auth_token` (from the command line) to get an auth token for your access point. it will generate a “config.ini” in your current directory.
+If you are about to connect to a **HomematicIP HCU1** you have to press the button on top of the device, before running the script. From now, you have 5 Minutes to complete the registration process.
+
+After that, run `hmip_generate_auth_token` (from the command line) to get an auth token for your access point. it will generate a “config.ini” in your current directory.
 
 ### Use the CLI
 

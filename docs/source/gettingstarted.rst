@@ -17,6 +17,9 @@ You will need:
 -  the SGTIN of the Access Point
 -  [optional] the PIN
 
+
+If you are about to connect to a **HomematicIP HCU1** you have to press the button on top of the device, before running the script. From now, you have 5 Minutes to complete the registration process.
+
 To get an auth-token you have to run the script `hmip_generate_auth_token` which is installed with the library.
 
 ```sh

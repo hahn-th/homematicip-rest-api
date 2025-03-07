@@ -12,6 +12,11 @@ from homematicip.connection.rest_connection import RestConnection
 
 
 async def run_auth(access_point: str = None, devicename: str = None, pin: str = None):
+    print(
+        "If you are about to connect to a HomematicIP HCU1 you have to press the button on top of the device, before you continue.")
+    print("From now, you have 5 Minutes to complete the registration process.")
+    input("Press Enter to continue...")
+
     while True:
         access_point = (
             input("Please enter the accesspoint id (SGTIN): ").replace("-", "").upper()
