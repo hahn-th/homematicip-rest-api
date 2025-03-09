@@ -8,6 +8,20 @@ Any help from the community through e.g. pull requests would be highly appreciat
 
 [![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![CircleCI](https://circleci.com/gh/hahn-th/homematicip-rest-api.svg?style=shield)](https://circleci.com/gh/hahn-th/homematicip-rest-api) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip)
 
+## 🚀 [GoFundMe] Support the Development of the HomematicIP REST API with an HCU1! 🚀
+
+As you may know, eQ-3 has released the new HomematicIP HCU1 Access Point. Since I only own the regular access point, I am unable to analyze and test anything related to the HCU1. Additionally, new features like local mode and migration are expected in the future.
+
+I develop the “homematicip-rest-api” as an open-source project in my free time to provide a integration for HomematicIP. However, without an HCU1, I have to rely entirely on user feedback, which makes development more difficult.
+
+💡 Goal: With your help, I want to raise €300 to purchase an HCU1. This will allow me to improve the API, ensure better compatibility with Home Assistant, and provide long-term support for the project.
+
+Every contribution—no matter how small—helps! If you use this project or would like to support it, I’d greatly appreciate your help.
+
+👉 Donate now: https://gofund.me/20f2ca75
+
+Thank you for your support! 💚
+
 ## :ghost: Lot's of changes in version 2.0.0
 
 In version 2.0.0, there are many code and API changes. Almost all async devices have been removed. The corresponding functions are now in the formerly non-async classes.
