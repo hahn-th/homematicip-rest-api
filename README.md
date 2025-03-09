@@ -196,6 +196,7 @@ A few examples:
 - [ ] HMIP-PSM-IT (Type L not tested, but it should work)
 - [ ] HMIP-PSM-PE (Type E not tested, but it should work)
 - [ ] HMIP-PSM-UK (Type G not tested, but it should work)
+- [x] HMIP-PSMCO (Schalt-Mess-Kabel – außen)
 - [x] HMIP-RC8 (Remote Control - 8x buttons)
 - [ ] HMIP-RCB1 (Remote Control - 1x button)
 - [x] HMIP-RGBW (RGB Led Controller - Readonly at the moment)

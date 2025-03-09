@@ -1,19 +1,12 @@
-import json
-from datetime import datetime, timedelta, timezone
-from unittest.mock import MagicMock, Mock
-import pytest
-from conftest import utc_offset
+from unittest.mock import Mock
+
 from homematicip.base.channel_event import ChannelEvent
-from homematicip.base.enums import *
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.home import Home
 from homematicip_demo.helper import (
-    fake_home_download_configuration,
     no_ssl_verification,
 )
-
-from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
 
 
 def test_access_controller_channel(fake_home: Home):
@@ -31,12 +24,12 @@ def test_acceleration_sensor_channel(fake_home: Home):
         assert ch.accelerationSensorEventFilterPeriod == 3.0
         assert ch.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
         assert (
-            ch.accelerationSensorNeutralPosition
-            == AccelerationSensorNeutralPosition.VERTICAL
+                ch.accelerationSensorNeutralPosition
+                == AccelerationSensorNeutralPosition.VERTICAL
         )
         assert (
-            ch.accelerationSensorSensitivity
-            == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+                ch.accelerationSensorSensitivity
+                == AccelerationSensorSensitivity.SENSOR_RANGE_4G
         )
         assert ch.accelerationSensorTriggerAngle == 45
         assert ch.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_LONG
@@ -59,17 +52,17 @@ def test_acceleration_sensor_channel(fake_home: Home):
         assert ch.accelerationSensorEventFilterPeriod == 10.0
         assert ch.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
         assert (
-            ch.accelerationSensorNeutralPosition
-            == AccelerationSensorNeutralPosition.HORIZONTAL
+                ch.accelerationSensorNeutralPosition
+                == AccelerationSensorNeutralPosition.HORIZONTAL
         )
         assert (
-            ch.accelerationSensorSensitivity
-            == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+                ch.accelerationSensorSensitivity
+                == AccelerationSensorSensitivity.SENSOR_RANGE_2G
         )
         assert ch.accelerationSensorTriggerAngle == 30
         assert ch.notificationSoundTypeHighToLow == NotificationSoundType.SOUND_SHORT
         assert (
-            ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
+                ch.notificationSoundTypeLowToHigh == NotificationSoundType.SOUND_SHORT_SHORT
         )
 
 
@@ -354,6 +347,20 @@ def test_switch_measuring_channel(fake_home: Home):
         assert ch.on == True
 
 
+def test_switch_measuring_channel_all_attributes(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F71100000000000PSMCO", 1)
+        assert isinstance(ch, SwitchMeasuringChannel)
+        assert ch.currentDetectionBehavior == "CURRENTDETECTION_ACTIVE"
+        assert ch.currentPowerConsumption == -0.1
+        assert ch.energyCounter == 0.006500000000000001
+        assert ch.energyCounterTwo == 17.299599999999998
+        assert ch.energyCounterTwoType == "ENERGY_COUNTER_INPUT_SINGLE_TARIFF"
+        assert ch.energyMeterMode == "CONSUMPTION_MEASURING"
+        assert ch.powerMeasuringCategory == "OTHER"
+        assert ch.powerUpSwitchState == "PERMANENT_ON"
+
+
 def test_tilt_vibration_sensor_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110TILTVIBRATIONSENSOR", 1)
@@ -362,12 +369,12 @@ def test_tilt_vibration_sensor_channel(fake_home: Home):
         assert ch.accelerationSensorEventFilterPeriod == 0.5
         assert ch.accelerationSensorMode == AccelerationSensorMode.FLAT_DECT
         assert (
-            ch.accelerationSensorNeutralPosition
-            == AccelerationSensorNeutralPosition.VERTICAL
+                ch.accelerationSensorNeutralPosition
+                == AccelerationSensorNeutralPosition.VERTICAL
         )
         assert (
-            ch.accelerationSensorSensitivity
-            == AccelerationSensorSensitivity.SENSOR_RANGE_2G
+                ch.accelerationSensorSensitivity
+                == AccelerationSensorSensitivity.SENSOR_RANGE_2G
         )
         assert ch.accelerationSensorTriggerAngle == 45
         assert ch.accelerationSensorTriggered == True
@@ -384,8 +391,8 @@ def test_tilt_vibration_sensor_channel(fake_home: Home):
         assert ch.accelerationSensorEventFilterPeriod == 10.0
         assert ch.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
         assert (
-            ch.accelerationSensorSensitivity
-            == AccelerationSensorSensitivity.SENSOR_RANGE_4G
+                ch.accelerationSensorSensitivity
+                == AccelerationSensorSensitivity.SENSOR_RANGE_4G
         )
         assert ch.accelerationSensorTriggerAngle == 30
 
@@ -405,6 +412,7 @@ def test_wall_mounted_thermostate_pro_channel(fake_home: Home):
         ch = fake_home.search_channel("3014F7110000000000000022", 1)
         assert ch.display == ClimateControlDisplay.ACTUAL
 
+
 def test_wall_mounted_thermostate_with_carbon_dioxide_sensor_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F71100000000000SCTHD", 1)
@@ -416,6 +424,7 @@ def test_wall_mounted_thermostate_with_carbon_dioxide_sensor_channel(fake_home: 
         assert ch.setPointTemperature == 22.5
         assert ch.temperatureOffset == 0.0
         assert ch.vaporAmount == 8.169998811318226
+
 
 def test_water_sensor_channel(fake_home: Home):
     with no_ssl_verification():
@@ -439,11 +448,12 @@ def test_water_sensor_channel(fake_home: Home):
         d = fake_home.search_channel("3014F7110000000000000050", 1)
         assert ch.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
         assert (
-            ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
+                ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH
         )
         assert ch.acousticWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
         assert ch.inAppWaterAlarmTrigger == WaterAlarmTrigger.MOISTURE_DETECTION
         assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
+
 
 def test_universal_light_channel(fake_home: Home):
     with no_ssl_verification():

@@ -1061,13 +1061,25 @@ class SwitchMeasuringChannel(SwitchChannel):
 
     def __init__(self, device, connection):
         super().__init__(device, connection)
-        self.energyCounter = 0
-        self.currentPowerConsumption = 0
+        self.currentDetectionBehavior: str | None = None
+        self.currentPowerConsumption: float = 0
+        self.energyCounter: float = 0
+        self.energyCounterTwo: float = 0
+        self.energyCounterTwoType: str | None = None
+        self.energyMeterMode: str | None = None
+        self.powerMeasuringCategory: str | None = None
+        self.powerUpSwitchState: str | None = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.energyCounter = js["energyCounter"]
-        self.currentPowerConsumption = js["currentPowerConsumption"]
+        self.set_attr_from_dict("currentDetectionBehavior", js)
+        self.set_attr_from_dict("currentPowerConsumption", js)
+        self.set_attr_from_dict("energyCounter", js)
+        self.set_attr_from_dict("energyCounterTwo", js)
+        self.set_attr_from_dict("energyCounterTwoType", js)
+        self.set_attr_from_dict("energyMeterMode", js)
+        self.set_attr_from_dict("powerMeasuringCategory", js)
+        self.set_attr_from_dict("powerUpSwitchState", js)
 
     def reset_energy_counter(self):
         return self._run_non_async(self.async_reset_energy_counter)

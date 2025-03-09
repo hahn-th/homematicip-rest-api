@@ -1806,3 +1806,10 @@ def test_wired_carbon_temperature_humidity_sensor_display(fake_home: Home):
         d = fake_home.search_device_by_id("3014F71100000000000SCTHD")
         assert isinstance(d, WiredCarbonTemperatureHumiditySensorDisplay)
         assert d.label == "CO2 Sensor Wohnen"
+
+def test_switch_measuring_cable_outdoor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000000PSMCO")
+        assert isinstance(d, SwitchMeasuringCableOutdoor)
+        assert d.label == "Schalt-Mess-Kabel"
+        assert d.measuredAttributes == { "1": { "currentPowerConsumption": True }}

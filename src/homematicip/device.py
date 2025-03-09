@@ -6,6 +6,7 @@ from homematicip.base.enums import *
 from homematicip.base.functionalChannels import FunctionalChannel
 from homematicip.base.helpers import get_functional_channel, get_functional_channels
 from homematicip.base.homematicip_object import HomeMaticIPObject
+from homematicip.connection.rest_connection import RestConnection
 from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
@@ -74,24 +75,28 @@ class BaseDevice(HomeMaticIPObject):
             x.functionalChannelType for x in self.functionalChannels
         )
 
-    def _parse_functionalChannel(self, json_state, groups: Iterable[Group]):
+    def _parse_functionalChannel(self, json_state, groups: Iterable[Group]) -> FunctionalChannel:
         fc = None
-        try:
-            channelType = FunctionalChannelType.from_str(
-                json_state["functionalChannelType"]
-            )
-            fc = self._typeFunctionalChannelMap[channelType](self, self._connection)
-            fc.from_json(json_state, groups)
-        except:
-            fc = self._typeFunctionalChannelMap[
-                FunctionalChannelType.FUNCTIONAL_CHANNEL
-            ](self, self._connection)
-            fc.from_json(json_state, groups)
-            fc.device = self
+        channel_type = FunctionalChannelType.from_str(json_state["functionalChannelType"])
+        if not channel_type in self._typeFunctionalChannelMap:
             LOGGER.warning(
                 "There is no class for functionalChannel '%s' yet",
                 json_state["functionalChannelType"],
             )
+            return self._parse_default_functional_channel(json_state, groups)
+
+        try:
+            fc = self._typeFunctionalChannelMap[channel_type](self, self._connection)
+            fc.from_json(json_state, groups)
+        except Exception as e:  # pragma: no cover
+            LOGGER.warning(f"Error while parsing functionalChannel: {e}\nJS: {json_state}")
+
+        return fc
+
+    def _parse_default_functional_channel(self, json_state, groups: Iterable[Group]) -> FunctionalChannel:
+        fc = self._typeFunctionalChannelMap[FunctionalChannelType.FUNCTIONAL_CHANNEL](self, self._connection)
+        fc.from_json(json_state, groups)
+        fc.device = self
         return fc
 
 
@@ -2752,3 +2757,15 @@ class EnergySensorsInterface(Device):
 class DaliGateway(Device):
     """HmIP-DRG-DALI Dali Gateway device."""
     pass
+
+class SwitchMeasuringCableOutdoor(Device):
+    """HmIP-PSMCO Switch Measuring Cable Outdoor device."""
+
+    def __init__(self, connection: RestConnection):
+        super().__init__(connection)
+        self.measuredAttributes: dict[str, dict[str, bool]] = {}
+
+    def from_json(self, js):
+        super().from_json(js)
+
+        self.set_attr_from_dict("measuredAttributes", js)

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### Added
+
+- Add device HmIP-PMSCO
+
 ## [2.0.0] 2025-03-01
 
 :warning: This is a **huge** update with massive api changes!
