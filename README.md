@@ -240,6 +240,7 @@ A few examples:
 - [x] HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)
 - [ ] HMIP-WKP (Keypad)
 - [x] HMIP-WLAN-HAP (WLAN Access Point)
+- [x] HmIP-WLAN-HAP-B
 - [x] HMIP-WRC2 (Wall-mount Remote Control - 2x buttons)
 - [x] HMIP-WRC6 (Wall-mount Remote Control - 6x buttons)
 - [x] HMIP-WRCC2 (Wall-mount Remote Control – flat)

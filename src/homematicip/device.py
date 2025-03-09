@@ -2758,6 +2758,7 @@ class DaliGateway(Device):
     """HmIP-DRG-DALI Dali Gateway device."""
     pass
 
+
 class SwitchMeasuringCableOutdoor(Device):
     """HmIP-PSMCO Switch Measuring Cable Outdoor device."""
 

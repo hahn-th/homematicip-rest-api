@@ -305,6 +305,7 @@ class DeviceType(AutoNameEnum):
     WIRED_SWITCH_4 = auto()
     WIRED_WALL_MOUNTED_THERMOSTAT = auto()
     WIRED_CARBON_TEMPERATURE_HUMIDITY_SENSOR_DISPLAY = auto()
+    WIRELESS_ACCESS_POINT_BASIC = auto()
 
 
 class GroupType(AutoNameEnum):

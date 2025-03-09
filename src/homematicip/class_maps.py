@@ -112,6 +112,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_SWITCH_4: WiredSwitch4,
     DeviceType.WIRED_WALL_MOUNTED_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.WIRED_CARBON_TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: WiredCarbonTemperatureHumiditySensorDisplay,
+    DeviceType.WIRELESS_ACCESS_POINT_BASIC: HomeControlUnit
 }
 
 TYPE_GROUP_MAP = {
