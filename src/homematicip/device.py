@@ -2770,3 +2770,6 @@ class SwitchMeasuringCableOutdoor(Device):
         super().from_json(js)
 
         self.set_attr_from_dict("measuredAttributes", js)
+
+class MotionDetectorSwitchOutdoor(Device):
+    pass

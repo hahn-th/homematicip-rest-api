@@ -212,6 +212,7 @@ A few examples:
 - [ ] HMIP-SMO-2 (Motion Detector with Brightness Sensor - outdoor) New Version
 - [x] HMIP-SMO-A (Motion Detector with Brightness Sensor - outdoor, anthracite)
 - [ ] HMIP-SMO-A-2 (Motion Detector with Brightness Sensor - outdoor, anthracite) New Version
+- [x] HmIP-SMO230-A
 - [x] HMIP-SPDR (Passage Sensor with Direction Recognition)
 - [x] HMIP-SPI (Presence Sensor - indoor)
 - [x] HMIP-SRH (Window Rotary Handle Sensor)

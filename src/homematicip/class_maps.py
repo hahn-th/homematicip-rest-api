@@ -58,6 +58,7 @@ TYPE_CLASS_MAP = {
     DeviceType.MOTION_DETECTOR_INDOOR: MotionDetectorIndoor,
     DeviceType.MOTION_DETECTOR_OUTDOOR: MotionDetectorOutdoor,
     DeviceType.MOTION_DETECTOR_PUSH_BUTTON: MotionDetectorPushButton,
+    DeviceType.MOTION_DETECTOR_SWITCH_OUTDOOR: MotionDetectorSwitchOutdoor,
     DeviceType.MULTI_IO_BOX: MultiIOBox,
     DeviceType.OPEN_COLLECTOR_8_MODULE: OpenCollector8Module,
     DeviceType.PASSAGE_DETECTOR: PassageDetector,

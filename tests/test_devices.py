@@ -1813,3 +1813,8 @@ def test_switch_measuring_cable_outdoor(fake_home: Home):
         assert isinstance(d, SwitchMeasuringCableOutdoor)
         assert d.label == "Schalt-Mess-Kabel"
         assert d.measuredAttributes == { "1": { "currentPowerConsumption": True }}
+
+def test_motion_detector_switch_outdoor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000SMO230A")
+        assert isinstance(d, MotionDetectorSwitchOutdoor)

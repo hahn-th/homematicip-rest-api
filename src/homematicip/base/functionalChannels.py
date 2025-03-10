@@ -1600,6 +1600,8 @@ class MotionDetectionChannel(FunctionalChannel):
         self.motionBufferActive = False
         self.motionDetected = False
         self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.motionSensorZoneSensitivityMap: dict[str, int] = {}
+        self.motionSensorZones: str | None = None
         self.numberOfBrightnessMeasurements = 0
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -1636,6 +1638,8 @@ class PresenceDetectionChannel(FunctionalChannel):
         self.motionDetectionSendInterval = MotionDetectionSendInterval.from_str(
             js["motionDetectionSendInterval"]
         )
+        self.set_attr_from_dict("motionSensorZoneSensitivityMap", js)
+        self.set_attr_from_dict("motionSensorZones", js)
         self.numberOfBrightnessMeasurements = js["numberOfBrightnessMeasurements"]
 
 

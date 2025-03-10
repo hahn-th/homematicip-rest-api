@@ -250,6 +250,7 @@ class DeviceType(AutoNameEnum):
     MOTION_DETECTOR_INDOOR = auto()
     MOTION_DETECTOR_OUTDOOR = auto()
     MOTION_DETECTOR_PUSH_BUTTON = auto()
+    MOTION_DETECTOR_SWITCH_OUTDOOR = auto()
     MULTI_IO_BOX = auto()
     OPEN_COLLECTOR_8_MODULE = auto()
     PASSAGE_DETECTOR = auto()
