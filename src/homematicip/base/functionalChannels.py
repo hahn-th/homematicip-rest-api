@@ -1096,32 +1096,29 @@ class TiltVibrationSensorChannel(FunctionalChannel):
 
     def __init__(self, device, connection):
         super().__init__(device, connection)
-        #:float:
+        self.absoluteAngle = None
         self.accelerationSensorEventFilterPeriod = 100.0
-        #:AccelerationSensorMode:
         self.accelerationSensorMode = AccelerationSensorMode.ANY_MOTION
-        #:AccelerationSensorSensitivity:
-        self.accelerationSensorSensitivity = (
-            AccelerationSensorSensitivity.SENSOR_RANGE_2G
-        )
         self.accelerationSensorNeutralPosition = None
-        #:int:
+        self.accelerationSensorSecondTriggerAngle = None
+        self.accelerationSensorSensitivity = AccelerationSensorSensitivity.SENSOR_RANGE_2G
         self.accelerationSensorTriggerAngle = 0
-        #:bool:
         self.accelerationSensorTriggered = False
+        self.tiltState: str | None  = None
+        self.tiltVisualization: str | None = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
-        self.set_attr_from_dict(
-            "accelerationSensorNeutralPosition", js, AccelerationSensorNeutralPosition
-        )
+        self.set_attr_from_dict("absoluteAngle", js)
         self.set_attr_from_dict("accelerationSensorEventFilterPeriod", js)
         self.set_attr_from_dict("accelerationSensorMode", js, AccelerationSensorMode)
-        self.set_attr_from_dict(
-            "accelerationSensorSensitivity", js, AccelerationSensorSensitivity
-        )
+        self.set_attr_from_dict("accelerationSensorNeutralPosition", js, AccelerationSensorNeutralPosition)
+        self.set_attr_from_dict("accelerationSensorSecondTriggerAngle", js)
+        self.set_attr_from_dict("accelerationSensorSensitivity", js, AccelerationSensorSensitivity)
         self.set_attr_from_dict("accelerationSensorTriggerAngle", js)
         self.set_attr_from_dict("accelerationSensorTriggered", js)
+        self.set_attr_from_dict("tiltState", js)
+        self.set_attr_from_dict("tiltVisualization", js)
 
     def set_acceleration_sensor_mode(self, mode: AccelerationSensorMode):
         return self._run_non_async(self.async_set_acceleration_sensor_mode, mode)

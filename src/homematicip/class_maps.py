@@ -91,6 +91,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
     DeviceType.TEMPERATURE_SENSOR_2_EXTERNAL_DELTA: TemperatureDifferenceSensor2,
     DeviceType.TILT_VIBRATION_SENSOR: TiltVibrationSensor,
+    DeviceType.TILT_VIBRATION_SENSOR_COMPACT: TiltVibrationSensor,
     DeviceType.TORMATIC_MODULE: GarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_GARAGE_DOOR_CONTROLLER: WallMountedGarageDoorController,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,

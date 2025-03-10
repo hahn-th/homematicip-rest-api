@@ -104,6 +104,7 @@ A few examples:
 - [x] ALPHA-IP-RBGa (ALpha IP Wall Thermostat Display analog)
 - [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) \*powered by HmIP
 - [ ] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
+- [x] ELV-SH-CTV Tilt Vibration Sensor Compact
 - [ ] ELV-SH-GVI (Garden valve interface) \*powered by HmIP
 - [ ] ELV-SH-IRS8 (Infared Remote control - 8x channels) \*powered by HmIP
 - [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) \*powered by HmIP
