@@ -13766,7 +13766,7 @@
       "type": "MOTION_DETECTOR_SWITCH_OUTDOOR",
       "updateState": "UP_TO_DATE"
     },
-    "3014F7110000000000000015": {
+    "3014F7110000000000000CTV": {
       "availableFirmwareVersion": "0.0.0",
       "connectionType": "HMIP_RF",
       "deviceArchetype": "HMIP",
@@ -13786,7 +13786,7 @@
           "deviceCommunicationError": null,
           "deviceDriveError": null,
           "deviceDriveModeError": null,
-          "deviceId": "3014F7110000000000000015",
+          "deviceId": "3014F7110000000000000CTV",
           "deviceOperationMode": null,
           "deviceOverheated": false,
           "deviceOverloaded": false,
@@ -13874,7 +13874,7 @@
           "accelerationSensorTriggerAngle": 20,
           "accelerationSensorTriggered": false,
           "channelRole": "ACCELERATION_SENSOR",
-          "deviceId": "3014F7110000000000000015",
+          "deviceId": "3014F7110000000000000CTV",
           "functionalChannelType": "TILT_VIBRATION_SENSOR_CHANNEL",
           "groupIndex": 1,
           "groups": [
@@ -13897,7 +13897,7 @@
         }
       },
       "homeId": "00000000-0000-0000-0000-000000000001",
-      "id": "3014F7110000000000000015",
+      "id": "3014F7110000000000000CTV",
       "label": "Neigungssensor Tor",
       "lastStatusUpdate": 1741379260066,
       "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
@@ -13908,7 +13908,7 @@
       "modelType": "ELV-SH-CTV",
       "oem": "eQ-3",
       "permanentlyReachable": false,
-      "serializedGlobalTradeItemNumber": "3014F7110000000000000015",
+      "serializedGlobalTradeItemNumber": "3014F7110000000000000CTV",
       "type": "TILT_VIBRATION_SENSOR_COMPACT",
       "updateState": "UP_TO_DATE"
     }
