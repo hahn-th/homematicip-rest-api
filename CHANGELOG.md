@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [2.0.0] 2025-04-24
+## [2.0.1] 2025-04-24
 
 ### Added
 
@@ -755,7 +755,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.0..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1..master
+[2.0.1]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7...2.0.0
 [1.1.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.5...1.1.6
