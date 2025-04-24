@@ -1,6 +1,6 @@
 from unittest.mock import AsyncMock
 
-import httpx
+import aiohttp
 import pytest
 
 from homematicip.connection.rest_connection import RestResult, ConnectionContext, RestConnection
@@ -8,10 +8,10 @@ from homematicip.connection.rest_connection import RestResult, ConnectionContext
 
 def test_rest_result():
     result = RestResult(status=200)
-    assert result.status_text == "OK"
+    assert result.status_text == "200"
 
     result = RestResult(status=9999)
-    assert result.status_text == "No status code"
+    assert result.status_text == "9999"
 
 
 def test_conn_update_connection_context(mocker):
@@ -30,9 +30,9 @@ def test_conn_update_connection_context(mocker):
 
 @pytest.mark.asyncio
 async def test_conn_async_post(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
-    patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
+    patched = mocker.patch("homematicip.connection.rest_connection.aiohttp.ClientSession.post")
     patched.return_value = response
 
     context = ConnectionContext(rest_url="http://asdf")
@@ -48,9 +48,9 @@ async def test_conn_async_post(mocker):
 
 @pytest.mark.asyncio
 async def test_conn_async_post_throttle(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 429
-    patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
+    patched = mocker.patch("homematicip.connection.rest_connection.aiohttp.ClientSession.post")
     patched.return_value = response
 
     context = ConnectionContext(rest_url="http://asdf")
@@ -61,14 +61,14 @@ async def test_conn_async_post_throttle(mocker):
 
 @pytest.mark.asyncio
 async def test_conn_async_post_with_httpx_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
 
-    mock_client = AsyncMock(spec=httpx.AsyncClient)
+    mock_client = AsyncMock(spec=aiohttp.ClientSession)
     mock_client.post.return_value = response
 
     context = ConnectionContext(rest_url="http://asdf")
-    conn = RestConnection(context, httpx_client_session=mock_client)
+    conn = RestConnection(context, client_session=mock_client)
 
     result = await conn.async_post("url", {"a": "b"}, {"c": "d"})
 

@@ -1,6 +1,6 @@
 from unittest.mock import AsyncMock
 
-import httpx
+import aiohttp
 import pytest
 
 from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
@@ -8,18 +8,18 @@ from homematicip.connection.connection_context import ConnectionContext, Connect
 
 @pytest.mark.asyncio
 async def test_build_context_with_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
     response.json.return_value = {"urlREST": "https://example.com/rest", "urlWebSocket": "wss://example.com/ws"}
 
     lookup_url = "https://example.com/lookup"
-    mock_client = AsyncMock(spec=httpx.AsyncClient)
+    mock_client = AsyncMock(spec=aiohttp.ClientSession)
     mock_client.post.return_value = response
 
     context = await ConnectionContextBuilder.build_context_async(
         "access_point_id",
         lookup_url,
-        httpx_client_session=mock_client
+        client_session=mock_client
     )
 
     mock_client.post.assert_called_once()
@@ -29,11 +29,11 @@ async def test_build_context_with_client_session(mocker):
 
 @pytest.mark.asyncio
 async def test_build_context_without_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
     response.json.return_value = {"urlREST": "https://example.com/rest", "urlWebSocket": "wss://example.com/ws"}
 
-    patched = mocker.patch("homematicip.connection.connection_context.httpx.AsyncClient.post")
+    patched = mocker.patch("homematicip.connection.connection_context.aiohttp.ClientSession.post")
     patched.return_value = response
 
     context = await ConnectionContextBuilder.build_context_async("access_point_id", "https://example.com/lookup")

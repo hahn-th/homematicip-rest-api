@@ -1,11 +1,11 @@
-import httpx
+import aiohttp
 
 from homematicip.connection.rate_limited_rest_connection import RateLimitedRestConnection
 from homematicip.connection.rest_connection import ConnectionContext
 
 
 async def test_send_single_request(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
     patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
     patched.return_value = response
@@ -22,7 +22,7 @@ async def test_send_single_request(mocker):
 
 
 async def test_send_and_wait_requests(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
     patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
     patched.return_value = response

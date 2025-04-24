@@ -1,14 +1,12 @@
-from http.client import responses
-
+import aiohttp
 import pytest
-import httpx
 from unittest.mock import AsyncMock, patch
 from homematicip.connection.connection_url_resolver import ConnectionUrlResolver
 
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_with_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
     response.json.return_value = {"urlREST": "https://example.com/rest", "urlWebSocket": "wss://example.com/ws"}
     client_characteristics = {
@@ -25,13 +23,13 @@ async def test_lookup_urls_async_with_client_session(mocker):
         "id": "access_point_id",
     }
     lookup_url = "https://example.com/lookup"
-    mock_client = AsyncMock(spec=httpx.AsyncClient)
+    mock_client = AsyncMock(spec=aiohttp.ClientSession)
     mock_client.post.return_value = response
 
     rest_url, websocket_url = await ConnectionUrlResolver.lookup_urls_async(
         client_characteristics,
         lookup_url,
-        httpx_client_session=mock_client
+        client_session=mock_client
     )
 
     mock_client.post.assert_called_once_with(lookup_url, json=client_characteristics)
@@ -41,7 +39,7 @@ async def test_lookup_urls_async_with_client_session(mocker):
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_without_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=aiohttp.ClientResponse)
     response.status_code = 200
     response.json.return_value = {"urlREST": "https://example.com/rest", "urlWebSocket": "wss://example.com/ws"}
 

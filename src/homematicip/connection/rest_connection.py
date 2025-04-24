@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from ssl import SSLContext
 from typing import Optional
 
-import httpx
+import aiohttp
 
 from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE, ATTR_ACCESSPOINT_ID
 from homematicip.connection.connection_context import ConnectionContext
@@ -23,10 +23,7 @@ class RestResult:
     text: str = ""
 
     def __post_init__(self):
-        self.status_text = httpx.codes.get_reason_phrase(self.status)
-        if self.status_text == "":
-            self.status_text = "No status code"
-
+        self.status_text = "No status code" if self.status == -1 else str(self.status)
         self.success = 200 <= self.status < 300
 
 
@@ -36,25 +33,27 @@ class RestConnection:
     _headers: dict[str, str] = None
     _verify = None
     _log_status_exceptions = True
-    _httpx_client_session: httpx.AsyncClient | None = None
+    _client_session: aiohttp.ClientSession | None = None
+    _owns_session: bool = False
 
-    def __init__(self, context: ConnectionContext, httpx_client_session: httpx.AsyncClient | None = None,
+    def __init__(self, context: ConnectionContext, client_session: aiohttp.ClientSession | None = None,
                  log_status_exceptions: bool = True):
         """Initialize the RestConnection object.
 
         @param context: The connection context
-        @param httpx_client_session: The httpx client session if you want to use a custom one
+        @param client_session: The aiohttp client session if you want to use a custom one
         @param log_status_exceptions: If status exceptions should be logged
         """
         LOGGER.debug("Initialize new RestConnection")
         self.update_connection_context(context)
         self._log_status_exceptions = log_status_exceptions
-        self._httpx_client_session = httpx_client_session
+        self._client_session = client_session
+        self._owns_session = client_session is None
 
     def update_connection_context(self, context: ConnectionContext) -> None:
         self._context: ConnectionContext = context
         self._headers: dict = self._get_header(context)
-        self._verify:  SSLContext | str | bool = self._get_verify(context.enforce_ssl, context.ssl_ctx)
+        self._verify = self._get_verify(context.enforce_ssl, context.ssl_ctx)
 
     @staticmethod
     def _get_header(context: ConnectionContext) -> dict[str, str]:
@@ -86,47 +85,47 @@ class RestConnection:
                 header = custom_header
 
             LOGGER.debug(f"Sending post request to url {full_url}. Data is: {data}")
-            r = await self._execute_request_async(full_url, data, header)
-            LOGGER.debug(f"Got response {r.status_code}.")
+            async with await self._get_session() as session:
+                async with session.post(full_url, json=data, headers=header,
+                                        ssl=self._verify) as response:
+                    LOGGER.debug(f"Got response {response.status}.")
 
-            if r.status_code == THROTTLE_STATUS_CODE:
-                LOGGER.error("Got error 429 (Throttling active)")
-                raise HmipThrottlingError
+                    if response.status == THROTTLE_STATUS_CODE:
+                        LOGGER.error("Got error 429 (Throttling active)")
+                        raise HmipThrottlingError
 
-            r.raise_for_status()
+                    result = RestResult(status=response.status)
+                    try:
+                        result.json = await response.json()
+                    except aiohttp.ContentTypeError:
+                        result.text = await response.text()
 
-            result = RestResult(status=r.status_code)
-            try:
-                result.json = r.json()
-            except json.JSONDecodeError:
-                pass
+                    response.raise_for_status()
+                    return result
 
-            return result
-        except httpx.RequestError as exc:
-            LOGGER.error(f"An error occurred while requesting {exc.request.url!r}.")
-            return RestResult(status=-1, exception=exc)
-        except httpx.HTTPStatusError as exc:
+        # except aiohttp.ClientError as exc:
+        #     LOGGER.error(f"An error occurred while requesting {full_url!r}.")
+        #     return RestResult(status=-1, exception=exc)
+        except aiohttp.ClientResponseError as exc:
             if self._log_status_exceptions:
                 LOGGER.error(
-                    f"Error response {exc.response.status_code} while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
+                    f"Error response {exc.status} while requesting {full_url!r} with data {data if data is not None else '<no-data>'}."
                 )
-                LOGGER.error(f"Response: {repr(exc.response)}")
-            return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
+                LOGGER.error(f"Response: {repr(exc)}")
+            return RestResult(status=exc.status, exception=exc, text=str(exc))
 
-    async def _execute_request_async(self, url: str, data: dict | None = None, header: dict | None = None):
-        """Execute a request async. Uses the httpx client session if available.
-        @param url: The path of the url to send the request to
-        @param data: The data to send as json
-        @param custom_header: A custom header to send. Replaces the default header
-        @return: The result as a RestResult object
-        """
-        if self._httpx_client_session is None:
-            async with httpx.AsyncClient(verify=self._verify) as client:
-                result = await client.post(url, json=data, headers=header)
-        else:
-            result = await self._httpx_client_session.post(url, json=data, headers=header)
+    async def _get_session(self) -> aiohttp.ClientSession:
+        """Get or create a client session."""
+        if self._client_session is None:
+            self._client_session = aiohttp.ClientSession()
+            self._owns_session = True
+        return self._client_session
 
-        return result
+    async def close(self):
+        """Close the session if we own it."""
+        if self._owns_session and self._client_session is not None:
+            await self._client_session.close()
+            self._client_session = None
 
     @staticmethod
     def _build_url(base_url: str, path: str) -> str:
@@ -134,10 +133,7 @@ class RestConnection:
         return f"{base_url}/hmip/{path}"
 
     @staticmethod
-    def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | str | bool:
+    def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | bool:
         if ssl_context is not None:
             return ssl_context
-        if enforce_ssl:
-            return enforce_ssl
-
-        return True
+        return enforce_ssl

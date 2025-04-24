@@ -1,4 +1,4 @@
-import httpx
+import aiohttp
 
 from homematicip.connection import RATE_LIMITER_FILL_RATE, RATE_LIMITER_TOKENS
 from homematicip.connection.buckets import Buckets
@@ -12,7 +12,7 @@ class RateLimitedRestConnection(RestConnection):
                  context: ConnectionContext,
                  tokens: int = RATE_LIMITER_TOKENS,
                  fill_rate: int = RATE_LIMITER_FILL_RATE,
-                 httpx_client_session: httpx.AsyncClient | None = None):
+                 httpx_client_session: aiohttp.ClientSession | None = None):
         """Initialize the RateLimitedRestConnection with a token bucket algorithm.
 
         :param context: The connection context.
@@ -20,7 +20,7 @@ class RateLimitedRestConnection(RestConnection):
         :param fill_rate: The fill rate of the bucket in tokens per second. Default is 8.
         :param httpx_client_session: The httpx client session if you want to use a custom one.
         """
-        super().__init__(context, httpx_client_session=httpx_client_session)
+        super().__init__(context, client_session=httpx_client_session)
         self._buckets = Buckets(tokens=tokens, fill_rate=fill_rate)
 
     async def async_post(self, url: str, data: dict | None = None, custom_header: dict | None = None) -> RestResult:

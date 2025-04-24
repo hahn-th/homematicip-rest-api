@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from ssl import SSLContext
 
-import httpx
+import aiohttp
 
 from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.connection.client_token_builder import ClientTokenBuilder
@@ -15,7 +15,7 @@ class ConnectionContextBuilder:
                                   lookup_url: str = "https://lookup.homematic.com:48335/getHost",
                                   auth_token: str | None = None,
                                   enforce_ssl: bool = True,
-                                  httpx_client_session: httpx.AsyncClient | None = None,
+                                  client_session: aiohttp.ClientSession | None = None,
                                   ssl_ctx=None):
         """
         Create a new connection context and lookup urls
@@ -24,7 +24,7 @@ class ConnectionContextBuilder:
         :param lookup_url: Url to lookup the connection urls
         :param auth_token: The Auth Token if exists. If no one is provided None will be used
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
-        :param httpx_client_session: The httpx client session if you want to use a custom one
+        :param client_session: The httpx client session if you want to use a custom one
         :param ssl_ctx: ssl context to use
         :return: a new ConnectionContext
         """
@@ -35,8 +35,8 @@ class ConnectionContextBuilder:
         ctx.enforce_ssl = enforce_ssl
 
         cc = ClientCharacteristicsBuilder.get(accesspoint_id)
-        ctx.rest_url, ctx.websocket_url = await ConnectionUrlResolver().lookup_urls_async(cc, lookup_url, enforce_ssl,
-                                                                                          ssl_ctx, httpx_client_session)
+        ctx.rest_url, ctx.websocket_url = await ConnectionUrlResolver.lookup_urls_async(cc, lookup_url, enforce_ssl,
+                                                                                          ssl_ctx, client_session)
 
         if auth_token is not None:
             ctx.auth_token = auth_token

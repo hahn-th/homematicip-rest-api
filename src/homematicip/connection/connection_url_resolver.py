@@ -1,6 +1,6 @@
 from ssl import SSLContext
 
-import httpx
+import aiohttp
 
 
 class ConnectionUrlResolver:
@@ -12,7 +12,7 @@ class ConnectionUrlResolver:
             lookup_url: str,
             enforce_ssl: bool = True,
             ssl_context: SSLContext | None= None,
-            httpx_client_session: httpx.AsyncClient | None = None,
+            client_session: aiohttp.ClientSession | None = None,
     ) -> tuple[str, str]:
         """Lookup urls async.
 
@@ -20,17 +20,19 @@ class ConnectionUrlResolver:
         :param lookup_url: The lookup url
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
         :param ssl_context: The ssl context
-        :param httpx_client_session: The httpx client session if you want to use a custom one
+        :param client_session: The httpx client session if you want to use a custom one
 
         :return: The rest and websocket url as tuple
         """
         verify = ConnectionUrlResolver._get_verify(enforce_ssl, ssl_context)
 
-        if httpx_client_session is None:
-            async with httpx.AsyncClient(verify=verify) as client:
-                result = await client.post(lookup_url, json=client_characteristics)
+        if client_session is None:
+            async with aiohttp.ClientSession() as client:
+                async with client.post(lookup_url, ssl=verify, json=client_characteristics) as result:
+                    result = await result.json()
         else:
-            result = await httpx_client_session.post(lookup_url, json=client_characteristics)
+            async with client_session.post(lookup_url, ssl=verify, json=client_characteristics) as result:
+                result = await result.json()
 
         result.raise_for_status()
 
@@ -58,7 +60,7 @@ class ConnectionUrlResolver:
         :return: The rest and websocket url as tuple
         """
         verify = ConnectionUrlResolver._get_verify(enforce_ssl, ssl_context)
-        result = httpx.post(lookup_url, json=client_characteristics, verify=verify)
+        result = aiohttp.post(lookup_url, json=client_characteristics, verify=verify)
         result.raise_for_status()
 
         js = result.json()
