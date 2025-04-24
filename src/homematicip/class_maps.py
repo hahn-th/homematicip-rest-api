@@ -87,6 +87,7 @@ TYPE_CLASS_MAP = {
     DeviceType.SMOKE_DETECTOR: SmokeDetector,
     DeviceType.SWITCH_MEASURING_CABLE_OUTDOOR: SwitchMeasuringCableOutdoor,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
+    DeviceType.TEMPERATURE_HUMIDITY_SENSOR_COMPACT: TemperatureHumiditySensorOutdoor,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR: TemperatureHumiditySensorOutdoor,
     DeviceType.TEMPERATURE_SENSOR_2_EXTERNAL_DELTA: TemperatureDifferenceSensor2,

@@ -7,12 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [2.0.0] 2025-04-24
+
 ### Added
 
 - Add device HmIP-PMSCO
 - Add HmIP-WLAN-HAP-B
 - Add HmIP-SMO230
 - Add ELV-SH-CTV Tilt Vibration Sensor Compact
+- Add ELV-SH-CTH
 
 ## [2.0.0] 2025-03-01
 
