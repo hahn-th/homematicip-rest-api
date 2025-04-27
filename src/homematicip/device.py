@@ -955,6 +955,7 @@ class SwitchMeasuring(Switch):
         super().__init__(connection)
         self.energyCounter = 0
         self.currentPowerConsumption = 0
+        self.measuredAttributes: dict[str, dict[str, bool]] = {}
 
     def reset_energy_counter(self):
         return self._run_non_async(self.reset_energy_counter_async)
@@ -965,6 +966,9 @@ class SwitchMeasuring(Switch):
 
     def from_json(self, js):
         super().from_json(js)
+
+        self.set_attr_from_dict("measuredAttributes", js)
+
         c = get_functional_channel("SWITCH_MEASURING_CHANNEL", js)
         if c:
             self.on = c["on"]
@@ -1113,18 +1117,6 @@ class BrandSwitchNotificationLight(Switch):
         return await self._rest_call_async(
             "device/control/setSimpleRGBColorDimLevelWithTime", body=data
         )
-
-
-class PlugableSwitchMeasuring(SwitchMeasuring):
-    """HMIP-PSM (Pluggable Switch and Meter)"""
-
-
-class BrandSwitchMeasuring(SwitchMeasuring):
-    """HMIP-BSM (Brand Switch and Meter)"""
-
-
-class FullFlushSwitchMeasuring(SwitchMeasuring):
-    """HMIP-FSM, HMIP-FSM16 (Full flush Switch and Meter)"""
 
 
 class PushButton(Device):
@@ -2758,18 +2750,6 @@ class DaliGateway(Device):
     """HmIP-DRG-DALI Dali Gateway device."""
     pass
 
-
-class SwitchMeasuringCableOutdoor(Device):
-    """HmIP-PSMCO Switch Measuring Cable Outdoor device."""
-
-    def __init__(self, connection: RestConnection):
-        super().__init__(connection)
-        self.measuredAttributes: dict[str, dict[str, bool]] = {}
-
-    def from_json(self, js):
-        super().from_json(js)
-
-        self.set_attr_from_dict("measuredAttributes", js)
 
 class MotionDetectorSwitchOutdoor(Device):
     pass

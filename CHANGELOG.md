@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [2.0.2] 2025-04-27
+
+### Added
+
+### Removed
+
+- Removed class `SwitchMeasuringCableOutdoor`. The device is represented by `SwitchMeasuring` instead.
+- Removed class `PlugableSwitchMeasuring`. The device is represented by `SwitchMeasuring` instead.
+- Removed class `BrandSwitchMeasuring`. The device is represented by `SwitchMeasuring` instead.
+- Removed class `FullFlushSwitchMeasuring`. The device is represented by `SwitchMeasuring` instead.
+
 ## [2.0.1] 2025-04-24
 
 ### Added

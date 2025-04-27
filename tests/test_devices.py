@@ -342,7 +342,7 @@ def test_contact_interface_device(fake_home: Home):
 
 def test_pluggable_switch_measuring(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000009")
-    assert isinstance(d, PlugableSwitchMeasuring)
+    assert isinstance(d, SwitchMeasuring)
     assert d.label == "Brunnen"
     assert d.lastStatusUpdate == (
             datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0, utc_offset)
@@ -1810,7 +1810,7 @@ def test_wired_carbon_temperature_humidity_sensor_display(fake_home: Home):
 def test_switch_measuring_cable_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000PSMCO")
-        assert isinstance(d, SwitchMeasuringCableOutdoor)
+        assert isinstance(d, SwitchMeasuring)
         assert d.label == "Schalt-Mess-Kabel"
         assert d.measuredAttributes == { "1": { "currentPowerConsumption": True }}
 
