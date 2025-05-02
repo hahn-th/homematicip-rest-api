@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
-## [2.0.2] 2025-04-27
+## [2.0.2] 2025-05-02
 
 ### Added
+
+- Add TILT as option for AccelerationSensorMode
 
 ### Removed
 
@@ -766,7 +768,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.2..master
+[2.0.2]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7...2.0.0
 [1.1.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6...1.1.7
