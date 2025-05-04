@@ -20,6 +20,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed class `BrandSwitchMeasuring`. The device is represented by `SwitchMeasuring` instead.
 - Removed class `FullFlushSwitchMeasuring`. The device is represented by `SwitchMeasuring` instead.
 
+## [2.0.1.1] 2025-05-04
+
+### Added
+
+- Add TILT als option for AccelerationSensorMode
+
+### Fixed
+
+- Raise HmipConnectionError, if websocket connection is closed with an error
+
+### Removed
+
+- Removed unused code
+
 ## [2.0.1] 2025-04-24
 
 ### Added
@@ -768,8 +782,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.2..master
-[2.0.2]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1...2.0.2
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1..master
 [2.0.1]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7...2.0.0
 [1.1.7]: https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6...1.1.7
