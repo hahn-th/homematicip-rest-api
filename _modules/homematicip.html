@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip &mdash; HomematicIP-Rest-API 2.0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=cfda3a92"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">homematicip</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">configparser</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="n">HmipConfig</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span>
+    <span class="s2">&quot;HmipConfig&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;auth_token&quot;</span><span class="p">,</span> <span class="s2">&quot;access_point&quot;</span><span class="p">,</span> <span class="s2">&quot;log_level&quot;</span><span class="p">,</span> <span class="s2">&quot;log_file&quot;</span><span class="p">,</span> <span class="s2">&quot;raw_config&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="find_and_load_config_file">
+<a class="viewcode-back" href="../homematicip.html#homematicip.find_and_load_config_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_and_load_config_file</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">HmipConfig</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">get_config_file_locations</span><span class="p">():</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">load_config_file</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="load_config_file">
+<a class="viewcode-back" href="../homematicip.html#homematicip.load_config_file">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_config_file</span><span class="p">(</span><span class="n">config_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HmipConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Loads the config ini file.</span>
+<span class="sd">    :raises a FileNotFoundError when the config file does not exist.&quot;&quot;&quot;</span>
+    <span class="n">expanded_config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">expanded_config_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fl</span><span class="p">:</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">fl</span><span class="p">)</span>
+        <span class="n">logging_filename</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LOGGING&quot;</span><span class="p">,</span> <span class="s2">&quot;FileName&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="s2">&quot;hmip.log&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">logging_filename</span> <span class="o">==</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
+            <span class="n">logging_filename</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">_hmip_config</span> <span class="o">=</span> <span class="n">HmipConfig</span><span class="p">(</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;AUTH&quot;</span><span class="p">][</span><span class="s2">&quot;AuthToken&quot;</span><span class="p">],</span>
+            <span class="n">config</span><span class="p">[</span><span class="s2">&quot;AUTH&quot;</span><span class="p">][</span><span class="s2">&quot;AccessPoint&quot;</span><span class="p">],</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;LOGGING&quot;</span><span class="p">,</span> <span class="s2">&quot;Level&quot;</span><span class="p">,</span> <span class="n">fallback</span><span class="o">=</span><span class="mi">30</span><span class="p">)),</span>
+            <span class="n">logging_filename</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">_sections</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">_hmip_config</span></div>
+
+
+
+<div class="viewcode-block" id="get_config_file_locations">
+<a class="viewcode-back" href="../homematicip.html#homematicip.get_config_file_locations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_config_file_locations</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[]:</span>
+    <span class="n">search_locations</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;./config.ini&quot;</span><span class="p">]</span>
+
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+        <span class="n">appdata</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;appdata&quot;</span><span class="p">)</span>
+        <span class="n">programdata</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;programdata&quot;</span><span class="p">)</span>
+        <span class="n">search_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appdata</span><span class="p">,</span> <span class="s2">&quot;homematicip-rest-api</span><span class="se">\\</span><span class="s2">config.ini&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">search_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">programdata</span><span class="p">,</span> <span class="s2">&quot;homematicip-rest-api</span><span class="se">\\</span><span class="s2">config.ini&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
+        <span class="n">search_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;~/.homematicip-rest-api/config.ini&quot;</span><span class="p">)</span>
+        <span class="n">search_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;/etc/homematicip-rest-api/config.ini&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">&quot;Darwin&quot;</span><span class="p">:</span>  <span class="c1"># MAC</span>
+        <span class="c1"># are these folders right?</span>
+        <span class="n">search_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;~/Library/Preferences/homematicip-rest-api/config.ini&quot;</span><span class="p">)</span>
+        <span class="n">search_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="s2">&quot;/Library/Application Support/homematicip-rest-api/config.ini&quot;</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">search_locations</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

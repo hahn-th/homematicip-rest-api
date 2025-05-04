@@ -1,0 +1,969 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip.base.enums &mdash; HomematicIP-Rest-API 2.0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=cfda3a92"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../homematicip.html">homematicip</a></li>
+      <li class="breadcrumb-item active">homematicip.base.enums</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip.base.enums</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding=utf-8</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">auto</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AutoNameEnum">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AutoNameEnum">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AutoNameEnum</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;auto() will generate the name of the attribute as value&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_next_value_</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">last_values</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="AutoNameEnum.from_str">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AutoNameEnum.from_str">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_str</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;this function will create the enum object based on its string value</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text(str): the string value of the enum</span>
+<span class="sd">            default(AutoNameEnum): a default value if text could not be used</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            the enum object or None if the text is None or the default value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; isn&#39;t a valid option for class &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">default</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AcousticAlarmTiming">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AcousticAlarmTiming">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AcousticAlarmTiming</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">PERMANENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">THREE_MINUTES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SIX_MINUTES</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ONCE_PER_MINUTE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="WaterAlarmTrigger">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.WaterAlarmTrigger">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WaterAlarmTrigger</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NO_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOISTURE_DETECTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WATER_DETECTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WATER_MOISTURE_DETECTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AcousticAlarmSignal">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AcousticAlarmSignal">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AcousticAlarmSignal</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">DISABLE_ACOUSTIC_SIGNAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_RISING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_FALLING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_RISING_AND_FALLING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_ALTERNATING_LOW_HIGH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_ALTERNATING_LOW_MID_HIGH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_HIGHON_OFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_HIGHON_LONGOFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_LOWON_OFF_HIGHON_OFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FREQUENCY_LOWON_LONGOFF_HIGHON_LONGOFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LOW_BATTERY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DISARMED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INTERNALLY_ARMED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTERNALLY_ARMED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DELAYED_INTERNALLY_ARMED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DELAYED_EXTERNALLY_ARMED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ERROR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AlarmContactType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AlarmContactType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AlarmContactType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">PASSIVE_GLASS_BREAKAGE_DETECTOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WINDOW_DOOR_CONTACT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ClimateControlDisplay">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ClimateControlDisplay">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClimateControlDisplay</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">ACTUAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SETPOINT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACTUAL_HUMIDITY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="WindowState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.WindowState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WindowState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOSED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TILTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ValveState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ValveState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValveState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">STATE_NOT_AVAILABLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RUN_TO_START</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WAIT_FOR_ADAPTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ADAPTION_IN_PROGRESS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ADAPTION_DONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TOO_TIGHT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ADJUSTMENT_TOO_BIG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ADJUSTMENT_TOO_SMALL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ERROR_POSITION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="HeatingValveType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.HeatingValveType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HeatingValveType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NORMALLY_CLOSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NORMALLY_OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ContactType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ContactType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ContactType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NORMALLY_CLOSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NORMALLY_OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="RGBColorState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.RGBColorState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RGBColorState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TURQUOISE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PURPLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">YELLOW</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WHITE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DeviceUpdateStrategy">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DeviceUpdateStrategy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviceUpdateStrategy</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">MANUALLY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">AUTOMATICALLY_IF_POSSIBLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ApExchangeState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ApExchangeState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ApExchangeState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">REQUESTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">IN_PROGRESS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">REJECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="HomeUpdateState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.HomeUpdateState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HomeUpdateState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">UP_TO_DATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UPDATE_AVAILABLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PERFORM_UPDATE_SENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PERFORMING_UPDATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="WeatherCondition">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.WeatherCondition">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherCondition</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">CLEAR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LIGHT_CLOUDY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOUDY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOUDY_WITH_RAIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOUDY_WITH_SNOW_RAIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY_WITH_RAIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY_WITH_STRONG_RAIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY_WITH_SNOW</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY_WITH_SNOW_RAIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY_WITH_THUNDER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAVILY_CLOUDY_WITH_RAIN_AND_THUNDER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FOGGY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">STRONG_WIND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="WeatherDayTime">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.WeatherDayTime">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherDayTime</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">DAY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TWILIGHT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NIGHT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ClimateControlMode">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ClimateControlMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClimateControlMode</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">AUTOMATIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MANUAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ECO</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AbsenceType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AbsenceType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AbsenceType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NOT_ABSENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PERIOD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PERMANENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">VACATION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PARTY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="EcoDuration">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.EcoDuration">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EcoDuration</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">ONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TWO</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FOUR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SIX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PERMANENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="SecurityZoneActivationMode">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.SecurityZoneActivationMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecurityZoneActivationMode</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">ACTIVATION_WITH_DEVICE_IGNORELIST</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACTIVATION_IF_ALL_IN_VALID_STATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ClientType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ClientType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClientType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">APP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">C2C</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DeviceType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DeviceType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviceType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">DEVICE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BASE_DEVICE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTERNAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCELERATION_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_POINT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ALARM_SIREN_INDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ALARM_SIREN_OUTDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLIND_MODULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_BLIND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_DIMMER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_PUSH_BUTTON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_SHUTTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_SWITCH_2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_SWITCH_MEASURING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_SWITCH_NOTIFICATION_LIGHT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BRAND_WALL_MOUNTED_THERMOSTAT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CARBON_DIOXIDE_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DALI_GATEWAY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DIN_RAIL_BLIND_4</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DIN_RAIL_SWITCH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DIN_RAIL_SWITCH_4</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DIN_RAIL_DIMMER_3</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_BELL_BUTTON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_BELL_CONTACT_INTERFACE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_LOCK_DRIVE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_LOCK_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ENERGY_SENSORS_INTERFACE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOOR_TERMINAL_BLOCK_6</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOOR_TERMINAL_BLOCK_10</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOOR_TERMINAL_BLOCK_12</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_BLIND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_CONTACT_INTERFACE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_CONTACT_INTERFACE_6</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_DIMMER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_INPUT_SWITCH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_SHUTTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_FLUSH_SWITCH_MEASURING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_SWITCH_2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT_COMPACT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT_COMPACT_PLUS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT_EVO</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT_THREE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT_FLEX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HOME_CONTROL_ACCESS_POINT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HOERMANN_DRIVES_MODULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">KEY_REMOTE_CONTROL_4</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">KEY_REMOTE_CONTROL_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LIGHT_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOTION_DETECTOR_INDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOTION_DETECTOR_OUTDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOTION_DETECTOR_PUSH_BUTTON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOTION_DETECTOR_SWITCH_OUTDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MULTI_IO_BOX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPEN_COLLECTOR_8_MODULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PASSAGE_DETECTOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLUGGABLE_MAINS_FAILURE_SURVEILLANCE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLUGABLE_SWITCH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLUGABLE_SWITCH_MEASURING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PLUGGABLE_DIMMER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PRESENCE_DETECTOR_INDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PRINTED_CIRCUIT_BOARD_SWITCH_BATTERY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PRINTED_CIRCUIT_BOARD_SWITCH_2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PUSH_BUTTON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PUSH_BUTTON_6</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PUSH_BUTTON_FLAT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RAIN_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">REMOTE_CONTROL_8</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">REMOTE_CONTROL_8_MODULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RGBW_DIMMER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ROOM_CONTROL_DEVICE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ROOM_CONTROL_DEVICE_ANALOG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ROTARY_HANDLE_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CONTACT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CONTACT_INTERFACE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CONTACT_INVISIBLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CONTACT_MAGNETIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CONTACT_OPTICAL_PLUS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SMOKE_DETECTOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCH_MEASURING_CABLE_OUTDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TEMPERATURE_HUMIDITY_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TEMPERATURE_HUMIDITY_SENSOR_COMPACT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TEMPERATURE_HUMIDITY_SENSOR_DISPLAY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TEMPERATURE_HUMIDITY_SENSOR_OUTDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TEMPERATURE_SENSOR_2_EXTERNAL_DELTA</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TILT_VIBRATION_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TILT_VIBRATION_SENSOR_COMPACT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TORMATIC_MODULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_THERMOSTAT_PRO</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_GARAGE_DOOR_CONTROLLER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_UNIVERSAL_ACTUATOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WATER_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_SENSOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_SENSOR_PLUS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_SENSOR_PRO</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_BLIND_4</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_DIMMER_3</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_DIN_RAIL_ACCESS_POINT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_FLOOR_TERMINAL_BLOCK_12</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_INPUT_32</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_INPUT_SWITCH_6</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_MOTION_DETECTOR_PUSH_BUTTON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_PRESENCE_DETECTOR_INDOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_PUSH_BUTTON_2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_PUSH_BUTTON_6</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_SWITCH_8</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_SWITCH_4</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_WALL_MOUNTED_THERMOSTAT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRED_CARBON_TEMPERATURE_HUMIDITY_SENSOR_DISPLAY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WIRELESS_ACCESS_POINT_BASIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="GroupType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.GroupType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">GROUP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_AUTHORIZATION_PROFILE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_CONTROL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ALARM_SWITCHING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ENERGY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ENVIRONMENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTENDED_LINKED_GARAGE_DOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTENDED_LINKED_SHUTTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTENDED_LINKED_SWITCHING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_CHANGEOVER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_COOLING_DEMAND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_COOLING_DEMAND_BOILER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_COOLING_DEMAND_PUMP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_DEHUMIDIFIER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_EXTERNAL_CLOCK</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_FAILURE_ALERT_RULE_GROUP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_HUMIDITY_LIMITER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_TEMPERATURE_LIMITER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HOT_WATER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HUMIDITY_WARNING_RULE_GROUP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INBOX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INDOOR_CLIMATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LINKED_SWITCHING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LOCK_OUT_PROTECTION_RULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OVER_HEAT_PROTECTION_RULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECURITY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECURITY_BACKUP_ALARM_SWITCHING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECURITY_ZONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_PROFILE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_WIND_PROTECTION_RULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SMOKE_ALARM_DETECTION_RULE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCHING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCHING_PROFILE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="SecurityEventType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.SecurityEventType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecurityEventType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SENSOR_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_POINT_DISCONNECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_POINT_CONNECTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACTIVATION_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SILENCE_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SABOTAGE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOISTURE_DETECTION_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SMOKE_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTERNAL_TRIGGERED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OFFLINE_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WATER_DETECTION_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MAINS_FAILURE_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OFFLINE_WATER_DETECTION_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AutomationRuleType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AutomationRuleType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AutomationRuleType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SIMPLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="FunctionalHomeType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.FunctionalHomeType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionalHomeType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">ACCESS_CONTROL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INDOOR_CLIMATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ENERGY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LIGHT_AND_SHADOW</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECURITY_AND_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_AND_ENVIRONMENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="EventType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.EventType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EventType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SECURITY_JOURNAL_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GROUP_ADDED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GROUP_REMOVED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_REMOVED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_ADDED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_CHANNEL_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLIENT_REMOVED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLIENT_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLIENT_ADDED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HOME_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GROUP_CHANGED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="MotionDetectionSendInterval">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.MotionDetectionSendInterval">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MotionDetectionSendInterval</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SECONDS_30</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECONDS_60</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECONDS_120</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECONDS_240</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECONDS_480</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="SmokeDetectorAlarmType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.SmokeDetectorAlarmType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SmokeDetectorAlarmType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">IDLE_OFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PRIMARY_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INTRUSION_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SECONDARY_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="LiveUpdateState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.LiveUpdateState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LiveUpdateState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">UP_TO_DATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UPDATE_AVAILABLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UPDATE_INCOMPLETE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LIVE_UPDATE_NOT_SUPPORTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="OpticalAlarmSignal">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.OpticalAlarmSignal">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpticalAlarmSignal</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">DISABLE_OPTICAL_SIGNAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLINKING_ALTERNATELY_REPEATING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLINKING_BOTH_REPEATING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOUBLE_FLASHING_REPEATING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLASHING_BOTH_REPEATING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CONFIRMATION_SIGNAL_0</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CONFIRMATION_SIGNAL_1</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CONFIRMATION_SIGNAL_2</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="WindValueType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.WindValueType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WindValueType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">CURRENT_VALUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MIN_VALUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MAX_VALUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">AVERAGE_VALUE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="FunctionalChannelType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.FunctionalChannelType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionalChannelType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">FUNCTIONAL_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCELERATION_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_AUTHORIZATION_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_CONTROLLER_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ACCESS_CONTROLLER_WIRED_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ALARM_SIREN_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ANALOG_OUTPUT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ANALOG_ROOM_CONTROL_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLIND_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CHANGE_OVER_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CARBON_DIOXIDE_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLIMATE_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CONTACT_INTERFACE_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEHUMIDIFIER_DEMAND_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_BASE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_BASE_FLOOR_HEATING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_GLOBAL_PUMP_CONTROL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_INCORRECT_POSITIONED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_OPERATIONLOCK</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_OPERATIONLOCK_WITH_SABOTAGE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_PERMANENT_FULL_RX</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_RECHARGEABLE_WITH_SABOTAGE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DEVICE_SABOTAGE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DIMMER_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_LOCK_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">DOOR_LOCK_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTERNAL_BASE_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">EXTERNAL_UNIVERSAL_LIGHT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ENERGY_SENSORS_INTERFACE_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOOR_TERMINAL_BLOCK_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GENERIC_INPUT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEAT_DEMAND_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_THERMOSTAT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">IMPULSE_OUTPUT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INTERNAL_SWITCH_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LIGHT_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MAINS_FAILURE_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MOTION_DETECTION_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MULTI_MODE_INPUT_BLIND_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MULTI_MODE_INPUT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MULTI_MODE_INPUT_DIMMER_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MULTI_MODE_INPUT_SWITCH_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NOTIFICATION_LIGHT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPTICAL_SIGNAL_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPTICAL_SIGNAL_GROUP_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PASSAGE_DETECTOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PRESENCE_DETECTION_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RAIN_DETECTION_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">ROTARY_HANDLE_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHADING_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SHUTTER_CONTACT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SINGLE_KEY_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SMOKE_DETECTOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCH_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCH_MEASURING_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TILT_VIBRATION_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UNIVERSAL_ACTUATOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UNIVERSAL_LIGHT_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UNIVERSAL_LIGHT_GROUP_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WALL_MOUNTED_THERMOSTAT_WITH_CARBON_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WATER_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_SENSOR_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_SENSOR_PLUS_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">WEATHER_SENSOR_PRO_CHANNEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ChannelEventTypes">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ChannelEventTypes">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ChannelEventTypes</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">DOOR_BELL_SENSOR_EVENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="HeatingLoadType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.HeatingLoadType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HeatingLoadType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">LOAD_BALANCING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LOAD_COLLECTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DeviceUpdateState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DeviceUpdateState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviceUpdateState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">UP_TO_DATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TRANSFERING_UPDATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UPDATE_AVAILABLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UPDATE_AUTHORIZED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BACKGROUND_UPDATE_NOT_SUPPORTED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="PassageDirection">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.PassageDirection">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PassageDirection</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">LEFT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RIGHT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="MultiModeInputMode">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.MultiModeInputMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MultiModeInputMode</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">KEY_BEHAVIOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SWITCH_BEHAVIOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BINARY_BEHAVIOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="BinaryBehaviorType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.BinaryBehaviorType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BinaryBehaviorType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NORMALLY_CLOSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NORMALLY_OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="HeatingFailureValidationType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.HeatingFailureValidationType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HeatingFailureValidationType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NO_HEATING_FAILURE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_FAILURE_WARNING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HEATING_FAILURE_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="HumidityValidationType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.HumidityValidationType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">HumidityValidationType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">LESSER_LOWER_THRESHOLD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GREATER_UPPER_THRESHOLD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">GREATER_LOWER_LESSER_UPPER_THRESHOLD</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AccelerationSensorMode">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AccelerationSensorMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccelerationSensorMode</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">ANY_MOTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLAT_DECT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TILT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AccelerationSensorNeutralPosition">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AccelerationSensorNeutralPosition">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccelerationSensorNeutralPosition</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">HORIZONTAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">VERTICAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AccelerationSensorSensitivity">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AccelerationSensorSensitivity">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccelerationSensorSensitivity</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SENSOR_RANGE_16G</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SENSOR_RANGE_8G</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SENSOR_RANGE_4G</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SENSOR_RANGE_2G</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SENSOR_RANGE_2G_PLUS_SENS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SENSOR_RANGE_2G_2PLUS_SENSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="NotificationSoundType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.NotificationSoundType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NotificationSoundType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SOUND_NO_SOUND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SOUND_SHORT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SOUND_SHORT_SHORT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SOUND_LONG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DoorState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DoorState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DoorState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">CLOSED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">VENTILATION_POSITION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">POSITION_UNKNOWN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DoorCommand">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DoorCommand">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DoorCommand</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">STOP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOSE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">PARTIAL_OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ShadingStateType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ShadingStateType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShadingStateType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NOT_POSSIBLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NOT_EXISTENT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">POSITION_USED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TILT_USED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NOT_USED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MIXED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="GroupVisibility">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.GroupVisibility">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupVisibility</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">INVISIBLE_GROUP_AND_CONTROL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">INVISIBLE_CONTROL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">VISIBLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ProfileMode">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ProfileMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProfileMode</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">AUTOMATIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">MANUAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="AlarmSignalType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.AlarmSignalType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AlarmSignalType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">NO_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SILENT_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FULL_ALARM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ConnectionType">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ConnectionType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConnectionType</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">EXTERNAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HMIP_RF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HMIP_WIRED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HMIP_LAN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HMIP_WLAN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DeviceArchetype">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DeviceArchetype">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DeviceArchetype</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">EXTERNAL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">HMIP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="DriveSpeed">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.DriveSpeed">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DriveSpeed</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">CREEP_SPEED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SLOW_SPEED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NOMINAL_SPEED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPTIONAL_SPEED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="ShadingPackagePosition">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.ShadingPackagePosition">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShadingPackagePosition</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">LEFT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RIGHT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CENTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SPLIT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TOP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BOTTOM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TDBU</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NOT_USED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="LockState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.LockState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LockState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">OPEN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">UNLOCKED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">LOCKED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="MotorState">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.MotorState">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MotorState</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">STOPPED</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">CLOSING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OPENING</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="OpticalSignalBehaviour">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.OpticalSignalBehaviour">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OpticalSignalBehaviour</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">ON</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BLINKING_MIDDLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">FLASH_MIDDLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">BILLOW_MIDDLE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">OFF</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="CliActions">
+<a class="viewcode-back" href="../../../homematicip.base.html#homematicip.base.enums.CliActions">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CliActions</span><span class="p">(</span><span class="n">AutoNameEnum</span><span class="p">):</span>
+    <span class="n">SET_DIM_LEVEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SET_LOCK_STATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SET_SHUTTER_LEVEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SET_SHUTTER_STOP</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SET_SLATS_LEVEL</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">TOGGLE_GARAGE_DOOR</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SET_SWITCH_STATE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">RESET_ENERGY_COUNTER</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+    <span class="n">SEND_DOOR_COMMAND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
