@@ -554,6 +554,7 @@ class HumidityValidationType(AutoNameEnum):
 class AccelerationSensorMode(AutoNameEnum):
     ANY_MOTION = auto()
     FLAT_DECT = auto()
+    TILT = auto()
 
 
 class AccelerationSensorNeutralPosition(AutoNameEnum):
