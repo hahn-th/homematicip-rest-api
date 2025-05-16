@@ -1,5 +1,5 @@
 import json
-from typing import List, Callable
+from typing import Callable
 
 from homematicip.EventHook import *
 from homematicip.access_point_update_state import AccessPointUpdateState
@@ -9,7 +9,7 @@ from homematicip.client import Client
 from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
 from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
 from homematicip.connection.connection_factory import ConnectionFactory
-from homematicip.connection.websocket_handler import WebSocketHandler
+from homematicip.connection.websocket_handler import WebsocketHandler
 from homematicip.device import *
 from homematicip.group import *
 from homematicip.location import Location
@@ -35,7 +35,7 @@ class AsyncHome(HomeMaticIPObject):
 
         # Connection Stuff
         self._connection_context: ConnectionContext | None = None
-        self._websocket_client: WebSocketHandler | None = None
+        self._websocket_client: WebsocketHandler | None = None
         self.websocket_reconnect_on_error = True
 
         self._auth_token: str | None = None
@@ -642,24 +642,24 @@ class AsyncHome(HomeMaticIPObject):
 
     async def enable_events(self, additional_message_handler: Callable = None):
         """Connect to Websocket and listen for events"""
-        if self._websocket_client and self._websocket_client.is_connected():
+        if self._websocket_client and self._websocket_client.is_connected:
             return
 
-        self._websocket_client = WebSocketHandler()
+        self._websocket_client = WebsocketHandler()
         self._websocket_client.add_on_message_handler(self._ws_on_message)
         if additional_message_handler:
             self._websocket_client.add_on_message_handler(additional_message_handler)
 
-        await self._websocket_client.listen(self._connection_context)
+        await self._websocket_client.start(self._connection_context)
 
     async def disable_events_async(self):
         """Stop Websocket Connection"""
         logger.debug("Called disable_events_async")
         if self._websocket_client:
-            await self._websocket_client.stop_listening_async()
+            await self._websocket_client.stop()
             self._websocket_client = None
 
-    async def _ws_on_message(self, message):
+    async def _ws_on_message(self, message) -> None:
         LOGGER.debug(message)
         js = json.loads(message)
         event_list = []
@@ -752,4 +752,4 @@ class AsyncHome(HomeMaticIPObject):
 
     def websocket_is_connected(self):
         """returns if the websocket is connected."""
-        return self._websocket_client.is_connected() if self._websocket_client else False
+        return self._websocket_client.is_connected if self._websocket_client else False

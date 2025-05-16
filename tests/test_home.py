@@ -747,14 +747,14 @@ async def test_websocket_channel_event(fake_home: Home):
 @pytest.mark.asyncio
 async def test_enable_events(fake_home):
     mock_websocket_handler = Mock()
-    mock_websocket_handler.listen = AsyncMock()
+    mock_websocket_handler.start = AsyncMock()
     mock_additional_handler = AsyncMock()
 
-    with patch('homematicip.async_home.WebSocketHandler', return_value=mock_websocket_handler):
+    with patch('homematicip.async_home.WebsocketHandler', return_value=mock_websocket_handler):
         await fake_home.enable_events(mock_additional_handler)
 
         assert fake_home._websocket_client is mock_websocket_handler
-        assert mock_websocket_handler.listen.called
+        assert mock_websocket_handler.start.called
         assert len(mock_websocket_handler.add_on_message_handler.mock_calls) == 2
 
 
@@ -763,7 +763,7 @@ async def test_enable_events_active(fake_home):
     fake_home._websocket_client = Mock()
     await fake_home.enable_events()
 
-    assert not fake_home._websocket_client.listen.called
+    assert not fake_home._websocket_client.start.called
 
 
 @pytest.mark.asyncio
@@ -773,4 +773,4 @@ async def test_disable_events(fake_home):
     await fake_home.disable_events_async()
 
     assert fake_home._websocket_client is None
-    assert fake_client.stop_listening_async.called
+    assert fake_client.stop.called

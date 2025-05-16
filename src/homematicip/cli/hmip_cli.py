@@ -596,6 +596,8 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             logger.info("Listening for events. Press Ctrl+c to stop.")
             print("Listening for events. Press Ctrl+c to stop.")
             await home.enable_events()
+            while True:
+                await asyncio.sleep(1)
         except KeyboardInterrupt:
             await home.disable_events_async()
         finally:
