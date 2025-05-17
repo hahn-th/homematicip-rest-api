@@ -70,7 +70,7 @@ class WebsocketHandler:
                     timeout=aiohttp.ClientTimeout(total=30)
                 )
                 LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
-                await self._call_handlers(self._on_connected_handler, context)
+                await self._call_handlers(self._on_connected_handler)
                 backoff = 1
                 await self._listen()
             except Exception as e:
