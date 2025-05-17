@@ -226,7 +226,7 @@ A few examples:
 - [ ] HMIP-USBSM (USB Switching Measurement Actuator)
 - [x] HMIP-WGC (Garage Door Button)
 - [x] HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)
-- [ ] HMIP-WKP (Keypad)
+- [x] HMIP-WKP (Keypad)
 - [x] HMIP-WLAN-HAP (WLAN Access Point)
 - [x] HmIP-WLAN-HAP-B
 - [x] HMIP-WRC2 (Wall-mount Remote Control - 2x buttons)

@@ -6,7 +6,6 @@ from homematicip.base.enums import *
 from homematicip.base.functionalChannels import FunctionalChannel
 from homematicip.base.helpers import get_functional_channel, get_functional_channels
 from homematicip.base.homematicip_object import HomeMaticIPObject
-from homematicip.connection.rest_connection import RestConnection
 from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
@@ -2752,4 +2751,8 @@ class DaliGateway(Device):
 
 
 class MotionDetectorSwitchOutdoor(Device):
+    pass
+
+
+class WallMountedKeyPad(Device):
     pass

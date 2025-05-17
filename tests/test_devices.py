@@ -1801,20 +1801,29 @@ def test_rgbw_dimmer(fake_home: Home):
         assert d is not None
         assert isinstance(d, RgbwDimmer)
 
+
 def test_wired_carbon_temperature_humidity_sensor_display(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000SCTHD")
         assert isinstance(d, WiredCarbonTemperatureHumiditySensorDisplay)
         assert d.label == "CO2 Sensor Wohnen"
 
+
 def test_switch_measuring_cable_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000PSMCO")
         assert isinstance(d, SwitchMeasuring)
         assert d.label == "Schalt-Mess-Kabel"
-        assert d.measuredAttributes == { "1": { "currentPowerConsumption": True }}
+        assert d.measuredAttributes == {"1": {"currentPowerConsumption": True}}
+
 
 def test_motion_detector_switch_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000SMO230A")
         assert isinstance(d, MotionDetectorSwitchOutdoor)
+
+
+def test_wall_mounted_keypad(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000WKP")
+        assert isinstance(d, WallMountedKeyPad)

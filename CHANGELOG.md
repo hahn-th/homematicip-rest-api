@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add group type AUTO_RELOCK_PROFILE
 - Add group type LOCK_PROFILE
 - Add device type PLUGIN
+- Add device HmIP-WPK
+- Add channel CODE_PROTECTED_PRIMARY_ACTION_CHANNEL
+- Add channel CODE_PROTECTED_SECONDARY_ACTION_CHANNEL
 
 ### Changed
 

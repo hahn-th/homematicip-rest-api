@@ -14039,6 +14039,390 @@
       "serializedGlobalTradeItemNumber": "3014F71100000000000SVCTH",
       "type": "TEMPERATURE_HUMIDITY_SENSOR_COMPACT",
       "updateState": "UP_TO_DATE"
+    },
+    "3014F7110000000000000WKP": {
+      "availableFirmwareVersion": "1.0.12",
+      "connectionType": "HMIP_RF",
+      "deviceArchetype": "HMIP",
+      "firmwareVersion": "1.0.12",
+      "firmwareVersionInteger": 65548,
+      "functionalChannels": {
+        "0": {
+          "blockedSabotage": false,
+          "blockedWrongCodePermanently": false,
+          "blockedWrongCodeTemporarily": false,
+          "blockingPermanentAttempts": 5,
+          "blockingTemporaryAttempts": 2,
+          "busConfigMismatch": null,
+          "coProFaulty": false,
+          "coProRestartNeeded": false,
+          "coProUpdateFailure": false,
+          "configPending": false,
+          "controlsMountingOrientation": null,
+          "daliBusState": null,
+          "defaultLinkedGroup": [],
+          "deviceAliveSignalEnabled": null,
+          "deviceCommunicationError": null,
+          "deviceDriveError": null,
+          "deviceDriveModeError": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "deviceOperationMode": null,
+          "deviceOverheated": false,
+          "deviceOverloaded": false,
+          "devicePowerFailureDetected": false,
+          "deviceUndervoltage": false,
+          "displayContrast": null,
+          "displayMode": null,
+          "displayMountingOrientation": null,
+          "dutyCycle": false,
+          "functionalChannelType": "DEVICE_BLOCKING",
+          "groupIndex": 0,
+          "groups": [
+            "00000000-0000-0000-0000-000000000024"
+          ],
+          "index": 0,
+          "invertedDisplayColors": null,
+          "label": "",
+          "lockJammed": null,
+          "lowBat": false,
+          "mountingOrientation": null,
+          "multicastRoutingEnabled": false,
+          "operationDays": null,
+          "particulateMatterSensorCommunicationError": null,
+          "particulateMatterSensorError": null,
+          "powerShortCircuit": null,
+          "profilePeriodLimitReached": null,
+          "routerModuleEnabled": false,
+          "routerModuleSupported": false,
+          "rssiDeviceValue": -67,
+          "rssiPeerValue": null,
+          "sabotage": false,
+          "sensorCommunicationError": null,
+          "sensorError": null,
+          "shortCircuitDataLine": null,
+          "supportedOptionalFeatures": {
+            "IFeatureBusConfigMismatch": false,
+            "IFeatureDeviceCoProError": false,
+            "IFeatureDeviceCoProRestart": false,
+            "IFeatureDeviceCoProUpdate": false,
+            "IFeatureDeviceCommunicationError": false,
+            "IFeatureDeviceDaliBusError": false,
+            "IFeatureDeviceDriveError": false,
+            "IFeatureDeviceDriveModeError": false,
+            "IFeatureDeviceIdentify": false,
+            "IFeatureDeviceOverheated": false,
+            "IFeatureDeviceOverloaded": false,
+            "IFeatureDeviceParticulateMatterSensorCommunicationError": false,
+            "IFeatureDeviceParticulateMatterSensorError": false,
+            "IFeatureDevicePowerFailure": false,
+            "IFeatureDeviceSensorCommunicationError": false,
+            "IFeatureDeviceSensorError": false,
+            "IFeatureDeviceTemperatureHumiditySensorCommunicationError": false,
+            "IFeatureDeviceTemperatureHumiditySensorError": false,
+            "IFeatureDeviceTemperatureOutOfRange": false,
+            "IFeatureDeviceUndervoltage": false,
+            "IFeatureMulticastRouter": false,
+            "IFeaturePowerShortCircuit": false,
+            "IFeatureProfilePeriodLimit": true,
+            "IFeatureRssiValue": true,
+            "IFeatureShortCircuitDataLine": false,
+            "IOptionalFeatureDefaultLinkedGroup": false,
+            "IOptionalFeatureDeviceAliveSignalEnabled": false,
+            "IOptionalFeatureDeviceErrorLockJammed": false,
+            "IOptionalFeatureDeviceOperationMode": false,
+            "IOptionalFeatureDisplayContrast": false,
+            "IOptionalFeatureDisplayMode": false,
+            "IOptionalFeatureDutyCycle": true,
+            "IOptionalFeatureInvertedDisplayColors": false,
+            "IOptionalFeatureLowBat": true,
+            "IOptionalFeatureMountingOrientation": false,
+            "IOptionalFeatureOperationDays": false
+          },
+          "temperatureHumiditySensorCommunicationError": null,
+          "temperatureHumiditySensorError": null,
+          "temperatureOutOfRange": false,
+          "unreach": false
+        },
+        "1": {
+          "actionCodeConfigured": true,
+          "actionParameter": "SECURITY_INTERNAL_PROTECTION_MODE",
+          "authorized": true,
+          "channelRole": "CODE_INPUT_FOR_GROUP_AND_ALARM_ZONE",
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 1,
+          "groups": [
+            "00000000-0000-0000-0000-000000000107",
+            "00000000-0000-0000-0000-000000000108",
+            "00000000-0000-0000-0000-000000000106"
+          ],
+          "index": 1,
+          "label": "Lucas",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": true,
+            "IFeatureGarageGroupSensorChannel": true,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "10": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 5,
+          "groups": [],
+          "index": 10,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "11": {
+          "actionCodeConfigured": false,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 6,
+          "groups": [],
+          "index": 11,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "12": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 6,
+          "groups": [],
+          "index": 12,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "13": {
+          "actionCodeConfigured": false,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 7,
+          "groups": [],
+          "index": 13,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "14": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 7,
+          "groups": [],
+          "index": 14,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "15": {
+          "actionCodeConfigured": false,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 8,
+          "groups": [],
+          "index": 15,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "16": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 8,
+          "groups": [],
+          "index": 16,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "2": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 1,
+          "groups": [
+            "00000000-0000-0000-0000-000000000107",
+            "00000000-0000-0000-0000-000000000108",
+            "00000000-0000-0000-0000-000000000106"
+          ],
+          "index": 2,
+          "label": "Lucas",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": true,
+            "IFeatureGarageGroupSensorChannel": true,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "3": {
+          "actionCodeConfigured": true,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 2,
+          "groups": [],
+          "index": 3,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "4": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 2,
+          "groups": [],
+          "index": 4,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "5": {
+          "actionCodeConfigured": false,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 3,
+          "groups": [],
+          "index": 5,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "6": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 3,
+          "groups": [],
+          "index": 6,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "7": {
+          "actionCodeConfigured": false,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 4,
+          "groups": [],
+          "index": 7,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "8": {
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_SECONDARY_ACTION_CHANNEL",
+          "groupIndex": 4,
+          "groups": [],
+          "index": 8,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        },
+        "9": {
+          "actionCodeConfigured": false,
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "authorized": true,
+          "channelRole": null,
+          "deviceId": "3014F7110000000000000WKP",
+          "functionalChannelType": "CODE_PROTECTED_PRIMARY_ACTION_CHANNEL",
+          "groupIndex": 5,
+          "groups": [],
+          "index": 9,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationSensorChannel": false,
+            "IFeatureGarageGroupSensorChannel": false,
+            "IFeatureLightGroupSensorChannel": false,
+            "IFeatureShadingGroupSensorChannel": false
+          }
+        }
+      },
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "3014F7110000000000000WKP",
+      "label": "Keypad",
+      "lastStatusUpdate": 1747462549695,
+      "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+      "manuallyUpdateForced": true,
+      "manufacturerCode": 1,
+      "measuredAttributes": {},
+      "modelId": 441,
+      "modelType": "HmIP-WKP",
+      "oem": "eQ-3",
+      "permanentlyReachable": false,
+      "serializedGlobalTradeItemNumber": "3014F7110000000000000WKP",
+      "type": "WALL_MOUNTED_KEY_PAD",
+      "updateState": "UP_TO_DATE"
     }
   },
   "groups": {

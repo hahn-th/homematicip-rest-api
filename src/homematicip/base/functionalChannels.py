@@ -2237,3 +2237,25 @@ class UniversalLightChannelGroup(UniversalLightChannel):
         super().from_json(js, groups)
 
         self.set_attr_from_dict("channelSelections", js)
+
+
+class CodeProtectedPrimaryActionChannel(FunctionalChannel):
+    """this is the representative of the CODE_PROTECTED_PRIMARY_ACTION_CHANNEL channel (HmIP-WKP)"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+        self.actionCodeConfigured: bool | None = None
+        self.actionParameter: str | None = None
+        self.authorized: bool | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("actionCodeConfigured", js)
+        self.set_attr_from_dict("actionParameter", js)
+        self.set_attr_from_dict("authorized", js)
+
+class CodeProtectedSecondaryActionChannel(FunctionalChannel):
+    """this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)"""
+    pass

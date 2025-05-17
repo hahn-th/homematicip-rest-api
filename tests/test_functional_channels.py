@@ -493,3 +493,18 @@ def test_channel_role_read(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
         assert ch.channelRole == "DOOR_BELL_INPUT"
+
+def test_code_protected_primary_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000WKP", 7)
+
+        assert isinstance(ch, CodeProtectedPrimaryActionChannel)
+        assert ch.actionCodeConfigured is False
+        assert ch.actionParameter == "NOT_CUSTOMISABLE"
+        assert ch.authorized is True
+
+def test_code_protected_secondary_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000WKP", 8)
+
+        assert isinstance(ch, CodeProtectedSecondaryActionChannel)
