@@ -455,6 +455,7 @@ class FunctionalChannelType(AutoNameEnum):
     DEHUMIDIFIER_DEMAND_CHANNEL = auto()
     DEVICE_BASE = auto()
     DEVICE_BASE_FLOOR_HEATING = auto()
+    DEVICE_BLOCKING = auto()
     DEVICE_GLOBAL_PUMP_CONTROL = auto()
     DEVICE_INCORRECT_POSITIONED = auto()
     DEVICE_OPERATIONLOCK = auto()

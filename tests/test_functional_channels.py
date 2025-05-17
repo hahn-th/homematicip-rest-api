@@ -508,3 +508,8 @@ def test_code_protected_secondary_channel(fake_home: Home):
         ch = fake_home.search_channel("3014F7110000000000000WKP", 8)
 
         assert isinstance(ch, CodeProtectedSecondaryActionChannel)
+
+def test_device_blocking_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000WKP", 0)
+        assert isinstance(ch, DeviceBlockingChannel)

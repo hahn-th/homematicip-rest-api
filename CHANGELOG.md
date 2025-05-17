@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add device HmIP-WPK
 - Add channel CODE_PROTECTED_PRIMARY_ACTION_CHANNEL
 - Add channel CODE_PROTECTED_SECONDARY_ACTION_CHANNEL
+- Add channel DEVICE_BLOCKING
 
 ### Changed
 

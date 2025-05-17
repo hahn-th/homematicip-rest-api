@@ -114,6 +114,62 @@ class DeviceBaseChannel(FunctionalChannel):
             if sof["IFeatureDeviceUndervoltage"]:
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
+class DeviceBlockingChannel(FunctionalChannel):
+    """this is the representative of the DEVICE_BLOCKING channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.controlsMountingOrientation = None
+        self.daliBusState = None
+        self.defaultLinkedGroup = []
+        self.deviceAliveSignalEnabled = None
+        self.deviceCommunicationError = None
+        self.deviceDriveError = None
+        self.deviceDriveModeError = None
+        self.deviceOperationMode = None
+        self.devicePowerFailureDetected = None
+        self.displayContrast = None
+        self.displayMode = None
+        self.displayMountingOrientation = None
+        self.invertedDisplayColors = None
+        self.lockJammed = None
+        self.mountingOrientation = None
+        self.multicastRoutingEnabled = False
+        self.operationDays = None
+        self.particulateMatterSensorCommunicationError = None
+        self.particulateMatterSensorError = None
+        self.powerShortCircuit = None
+        self.profilePeriodLimitReached = None
+        self.sabotage = False
+        self.sensorCommunicationError = None
+        self.sensorError = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.controlsMountingOrientation = js.get("controlsMountingOrientation")
+        self.daliBusState = js.get("daliBusState")
+        self.defaultLinkedGroup = js.get("defaultLinkedGroup", [])
+        self.deviceAliveSignalEnabled = js.get("deviceAliveSignalEnabled")
+        self.deviceCommunicationError = js.get("deviceCommunicationError")
+        self.deviceDriveError = js.get("deviceDriveError")
+        self.deviceDriveModeError = js.get("deviceDriveModeError")
+        self.deviceOperationMode = js.get("deviceOperationMode")
+        self.devicePowerFailureDetected = js.get("devicePowerFailureDetected")
+        self.displayContrast = js.get("displayContrast")
+        self.displayMode = js.get("displayMode")
+        self.displayMountingOrientation = js.get("displayMountingOrientation")
+        self.invertedDisplayColors = js.get("invertedDisplayColors")
+        self.lockJammed = js.get("lockJammed")
+        self.mountingOrientation = js.get("mountingOrientation")
+        self.multicastRoutingEnabled = js.get("multicastRoutingEnabled", False)
+        self.operationDays = js.get("operationDays")
+        self.particulateMatterSensorCommunicationError = js.get("particulateMatterSensorCommunicationError")
+        self.particulateMatterSensorError = js.get("particulateMatterSensorError")
+        self.powerShortCircuit = js.get("powerShortCircuit")
+        self.profilePeriodLimitReached = js.get("profilePeriodLimitReached")
+        self.sabotage = js.get("sabotage", False)
+        self.sensorCommunicationError = js.get("sensorCommunicationError")
+        self.sensorError = js.get("sensorError")
 
 class SwitchChannel(FunctionalChannel):
     """this is the representative of the SWITCH_CHANNEL channel"""

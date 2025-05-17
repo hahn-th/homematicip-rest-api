@@ -204,6 +204,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DEHUMIDIFIER_DEMAND_CHANNEL: DehumidifierDemandChannel,
     FunctionalChannelType.DEVICE_BASE_FLOOR_HEATING: DeviceBaseFloorHeatingChannel,
     FunctionalChannelType.DEVICE_BASE: DeviceBaseChannel,
+    FunctionalChannelType.DEVICE_BLOCKING: DeviceBlockingChannel,
     FunctionalChannelType.DEVICE_GLOBAL_PUMP_CONTROL: DeviceGlobalPumpControlChannel,
     FunctionalChannelType.DEVICE_INCORRECT_POSITIONED: DeviceIncorrectPositionedChannel,
     FunctionalChannelType.DEVICE_OPERATIONLOCK: DeviceOperationLockChannel,
