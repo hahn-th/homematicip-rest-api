@@ -120,6 +120,7 @@ TYPE_CLASS_MAP = {
 
 TYPE_GROUP_MAP = {
     GroupType.GROUP: Group,
+    GroupType.AUTO_RELOCK_PROFILE: Group,
     GroupType.ACCESS_AUTHORIZATION_PROFILE: AccessAuthorizationProfileGroup,
     GroupType.ACCESS_CONTROL: AccessControlGroup,
     GroupType.ALARM_SWITCHING: AlarmSwitchingGroup,
@@ -143,6 +144,7 @@ TYPE_GROUP_MAP = {
     GroupType.INBOX: InboxGroup,
     GroupType.INDOOR_CLIMATE: IndoorClimateGroup,
     GroupType.LINKED_SWITCHING: LinkedSwitchingGroup,
+    GroupType.LOCK_PROFILE: Group,
     GroupType.LOCK_OUT_PROTECTION_RULE: LockOutProtectionRule,
     GroupType.OVER_HEAT_PROTECTION_RULE: OverHeatProtectionRule,
     GroupType.SECURITY_BACKUP_ALARM_SWITCHING: AlarmSwitchingGroup,
