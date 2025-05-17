@@ -12,6 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add client type SMART_WATCH
+- Add group type AUTO_RELOCK_PROFILE
+- Add group type LOCK_PROFILE
+- Add device type PLUGIN
+
+### Changed
+
+- Replaced websockets lib with aiohttp for websocket connection
 
 ## [2.0.2] 2025-05-02
 
