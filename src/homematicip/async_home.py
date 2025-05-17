@@ -753,3 +753,14 @@ class AsyncHome(HomeMaticIPObject):
     def websocket_is_connected(self):
         """returns if the websocket is connected."""
         return self._websocket_client.is_connected if self._websocket_client else False
+
+    def set_on_connected_handler(self, handler: Callable):
+        """Sets a callback that is called when the WebSocket connection is established."""
+        if self._websocket_client:
+            self._websocket_client.add_on_connected_handler(handler)
+
+    def set_on_disconnected_handler(self, handler: Callable):
+        """Sets a callback that is called when the WebSocket connection is closed."""
+        if self._websocket_client:
+            self._websocket_client.add_on_disconnected_handler(handler)
+

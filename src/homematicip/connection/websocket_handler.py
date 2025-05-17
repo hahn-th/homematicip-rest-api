@@ -12,14 +12,11 @@ LOGGER = logging.getLogger(__name__)
 
 class WebsocketHandler:
     """
-    This class manages a WebSocket connection to Homematic IP and provides methods for starting, stopping, and processing messages.
-    It supports automatic reconnect, adding message handlers, and checking the connection status.
+    Manages a WebSocket connection to Homematic IP and provides methods for starting, stopping, and processing messages.
+    Supports automatic reconnect, adding handlers, and status queries.
     """
 
     def __init__(self):
-        """
-        Initialize the WebsocketHandler with default values and empty handler lists.
-        """
         self.url = None
         self._session = None
         self._ws = None
@@ -27,22 +24,36 @@ class WebsocketHandler:
         self._reconnect_task = None
         self._task_lock = asyncio.Lock()
         self._on_message_handlers: List[Callable] = []
+        self._on_connected_handler: List[Callable] = []
+        self._on_disconnected_handler: List[Callable] = []
+
+    def add_on_connected_handler(self, handler: Callable):
+        """Adds a handler that is called when the connection is established."""
+        self._on_connected_handler.append(handler)
+
+    def add_on_disconnected_handler(self, handler: Callable):
+        """Adds a handler that is called when the connection is closed."""
+        self._on_disconnected_handler.append(handler)
 
     def add_on_message_handler(self, handler: Callable):
-        """
-        Add a handler that will be called for incoming messages.
-        The handler must be a function or coroutine accepting one argument (the message).
-        """
+        """Adds a handler for incoming messages."""
         self._on_message_handlers.append(handler)
 
-    async def _connect(self, context: ConnectionContext):
-        """
-        Establish the WebSocket connection and automatically try to reconnect on connection loss.
-        Uses connection data from the provided ConnectionContext.
-        """
-        backoff = 1
-        max_backoff = 900
+    async def _call_handlers(self, handlers, *args):
+        """Helper function to call handlers (sync and async)."""
+        for handler in handlers:
+            try:
+                if asyncio.iscoroutinefunction(handler):
+                    await handler(*args)
+                else:
+                    handler(*args)
+            except Exception as e:
+                handler_name = getattr(handler, "__name__", repr(handler))
+                LOGGER.error(f"Error in handler '{handler_name}': {e}", exc_info=True)
 
+    async def _connect(self, context: ConnectionContext):
+        backoff = 1
+        max_backoff = 1800
         while not self._stop_event.is_set():
             try:
                 LOGGER.info(f"Connect to {context.websocket_url}")
@@ -54,86 +65,62 @@ class WebsocketHandler:
                         ATTR_CLIENT_AUTH: context.client_auth_token,
                         ATTR_ACCESSPOINT_ID: context.accesspoint_id
                     },
-                    ssl=context.ssl_ctx if hasattr(context, 'ssl_ctx') else True,
+                    ssl=getattr(context, 'ssl_ctx', True),
                     heartbeat=30,
-                    timeout=aiohttp.ClientTimeout(total=60)
+                    timeout=aiohttp.ClientTimeout(total=30)
                 )
-
                 LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
+                await self._call_handlers(self._on_connected_handler, context)
                 backoff = 1
-
                 await self._listen()
-
             except Exception as e:
-                LOGGER.error(f"[Error] Websocket lost connection: {e}. Retry in {backoff:.1f}s.")
+                LOGGER.warning(f"Websocket lost connection: {e}. Retry in {backoff:.1f}s.")
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, max_backoff)
-
             finally:
                 await self._cleanup()
 
     async def _listen(self):
-        """
-        Listen for incoming messages and call all registered handlers asynchronously.
-        Terminates on WebSocket errors.
-        """
         async for msg in self._ws:
-            if msg.type == aiohttp.WSMsgType.TEXT or msg.type == aiohttp.WSMsgType.BINARY:
+            if msg.type in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
                 LOGGER.debug(f"Received message {msg.data}")
-                for handler in self._on_message_handlers:
-                    try:
-                        await handler(msg.data)
-                    except Exception as e:
-                        LOGGER.error(f"Error while handling message: {e}")
+                await self._call_handlers(self._on_message_handlers, msg.data)
             elif msg.type == aiohttp.WSMsgType.ERROR:
                 LOGGER.error(f"Error in websocket: {msg}")
                 break
 
     async def _cleanup(self):
-        """
-        Close WebSocket and session, set internal references to None.
-        """
         if self._ws:
-            await self._ws.close()
+            if not self._ws.closed:
+                await self._ws.close()
             self._ws = None
         if self._session:
-            await self._session.close()
+            if not self._session.closed:
+                await self._session.close()
             self._session = None
 
     async def start(self, context: ConnectionContext):
-        """
-        Start the connection in the background if not already connected.
-        """
         async with self._task_lock:
             LOGGER.info("Start websocket client...")
             if self._reconnect_task and not self._reconnect_task.done():
                 LOGGER.info("Already connected.")
                 return
-
             self._stop_event.clear()
             self._reconnect_task = asyncio.create_task(self._connect(context))
             self._reconnect_task.add_done_callback(self._handle_task_result)
             LOGGER.info("Connect task started.")
 
     async def stop(self):
-        """
-        Stop the WebSocket connection and wait for the background task to finish.
-        """
         LOGGER.info("Stop websocket client...")
         self._stop_event.set()
-
         async with self._task_lock:
             if self._reconnect_task:
                 await self._reconnect_task
                 self._reconnect_task = None
-
         await self._cleanup()
         LOGGER.info("[Stop] WebSocket client stopped.")
 
     def _handle_task_result(self, task: asyncio.Task):
-        """
-        Callback for error handling of the background task. Logs errors or cancellations.
-        """
         try:
             task.result()
         except asyncio.CancelledError:
@@ -142,7 +129,5 @@ class WebsocketHandler:
             LOGGER.error(f"[Task] Error in reconnect task: {e}")
 
     def is_connected(self):
-        """
-        Returns True if the WebSocket connection is active and not closed.
-        """
+        """Returns True if the WebSocket connection is active."""
         return self._ws is not None and not self._ws.closed
