@@ -629,6 +629,7 @@ class ConnectionType(AutoNameEnum):
 class DeviceArchetype(AutoNameEnum):
     EXTERNAL = auto()
     HMIP = auto()
+    PLUGIN = auto()
 
 
 class DriveSpeed(AutoNameEnum):
