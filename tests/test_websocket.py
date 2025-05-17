@@ -39,7 +39,7 @@ async def test_handle_task_result_logs_cancelled(caplog):
     task.result.side_effect = asyncio.CancelledError()
     with caplog.at_level('INFO'):
         client._handle_task_result(task)
-    assert any('abgebrochen' in m for m in caplog.text.splitlines())
+    assert any('cancelled' in m for m in caplog.text.splitlines())
 
 @pytest.mark.asyncio
 async def test_handle_task_result_logs_exception(caplog):
@@ -48,7 +48,7 @@ async def test_handle_task_result_logs_exception(caplog):
     task.result.side_effect = Exception('fail')
     with caplog.at_level('ERROR'):
         client._handle_task_result(task)
-    assert any('Fehler im Reconnect-Task' in m for m in caplog.text.splitlines())
+    assert any('Error in reconnect' in m for m in caplog.text.splitlines())
 
 @pytest.mark.asyncio
 async def test_cleanup_closes_ws_and_session(monkeypatch):
