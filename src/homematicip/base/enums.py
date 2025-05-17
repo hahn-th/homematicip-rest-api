@@ -195,6 +195,7 @@ class SecurityZoneActivationMode(AutoNameEnum):
 class ClientType(AutoNameEnum):
     APP = auto()
     C2C = auto()
+    SMART_WATCH = auto()
 
 
 class DeviceType(AutoNameEnum):

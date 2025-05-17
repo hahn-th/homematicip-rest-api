@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [2.0.3] 2025-05-17
+
+### Added
+
+- Add client type SMART_WATCH
+
 ## [2.0.2] 2025-05-02
 
 ### Added
