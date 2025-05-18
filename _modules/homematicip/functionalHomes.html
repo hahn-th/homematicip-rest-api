@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>homematicip.functionalHomes &mdash; HomematicIP-Rest-API 2.0.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=664ffad9"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../homematicip.html">homematicip</a></li>
+      <li class="breadcrumb-item active">homematicip.functionalHomes</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for homematicip.functionalHomes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">homematicip.base.enums</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">homematicip.base.homematicip_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">HomeMaticIPObject</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">homematicip.group</span><span class="w"> </span><span class="kn">import</span> <span class="n">Group</span>
+
+
+<div class="viewcode-block" id="FunctionalHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.FunctionalHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">FunctionalHome</span><span class="p">(</span><span class="n">HomeMaticIPObject</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">functionalGroups</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="FunctionalHome.from_json">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.FunctionalHome.from_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;solution&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;active&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">functionalGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span><span class="n">js</span><span class="p">[</span><span class="s2">&quot;functionalGroups&quot;</span><span class="p">],</span> <span class="n">groups</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FunctionalHome.assignGroups">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.FunctionalHome.assignGroups">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assignGroups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gids</span><span class="p">,</span> <span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">gid</span> <span class="ow">in</span> <span class="n">gids</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">gid</span><span class="p">:</span>
+                    <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="IndoorClimateHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.IndoorClimateHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IndoorClimateHome</span><span class="p">(</span><span class="n">FunctionalHome</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">absenceEndTime</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">absenceType</span> <span class="o">=</span> <span class="n">AbsenceType</span><span class="o">.</span><span class="n">NOT_ABSENT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coolingEnabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecoDuration</span> <span class="o">=</span> <span class="n">EcoDuration</span><span class="o">.</span><span class="n">PERMANENT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecoTemperature</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimumStartStopEnabled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">floorHeatingSpecificGroups</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="IndoorClimateHome.from_json">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.IndoorClimateHome.from_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;absenceEndTime&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">absenceEndTime</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Why can&#39;t EQ-3 use the timestamp here like everywhere else -.-</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">absenceEndTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                <span class="n">js</span><span class="p">[</span><span class="s2">&quot;absenceEndTime&quot;</span><span class="p">],</span> <span class="s2">&quot;%Y_%m_</span><span class="si">%d</span><span class="s2"> %H:%M&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">absenceType</span> <span class="o">=</span> <span class="n">AbsenceType</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">js</span><span class="p">[</span><span class="s2">&quot;absenceType&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coolingEnabled</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;coolingEnabled&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecoDuration</span> <span class="o">=</span> <span class="n">EcoDuration</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span><span class="n">js</span><span class="p">[</span><span class="s2">&quot;ecoDuration&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecoTemperature</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;ecoTemperature&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimumStartStopEnabled</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;optimumStartStopEnabled&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">floorHeatingSpecificGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;floorHeatingSpecificGroups&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">groups</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EnergyHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.EnergyHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnergyHome</span><span class="p">(</span><span class="n">FunctionalHome</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="WeatherAndEnvironmentHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.WeatherAndEnvironmentHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WeatherAndEnvironmentHome</span><span class="p">(</span><span class="n">FunctionalHome</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+
+<div class="viewcode-block" id="LightAndShadowHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.LightAndShadowHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">LightAndShadowHome</span><span class="p">(</span><span class="n">FunctionalHome</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedShutterGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedSwitchingGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutterProfileGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">switchingProfileGroups</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="LightAndShadowHome.from_json">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.LightAndShadowHome.from_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedShutterGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;extendedLinkedShutterGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedSwitchingGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;extendedLinkedSwitchingGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shutterProfileGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;shutterProfileGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">switchingProfileGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;switchingProfileGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SecurityAndAlarmHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.SecurityAndAlarmHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SecurityAndAlarmHome</span><span class="p">(</span><span class="n">FunctionalHome</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activationInProgress</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarmActive</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarmEventDeviceId</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarmEventTimestamp</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intrusionAlertThroughSmokeDetectors</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zoneActivationDelay</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">securityZoneActivationMode</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">SecurityZoneActivationMode</span><span class="o">.</span><span class="n">ACTIVATION_WITH_DEVICE_IGNORELIST</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">securitySwitchingGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">securityZones</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="SecurityAndAlarmHome.from_json">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.SecurityAndAlarmHome.from_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activationInProgress</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;activationInProgress&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarmActive</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;alarmActive&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;alarmEventDeviceChannel&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alarmEventDeviceId</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;alarmEventDeviceChannel&quot;</span><span class="p">][</span><span class="s2">&quot;deviceId&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarmEventTimestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">js</span><span class="p">[</span><span class="s2">&quot;alarmEventTimestamp&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intrusionAlertThroughSmokeDetectors</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span>
+            <span class="s2">&quot;intrusionAlertThroughSmokeDetectors&quot;</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zoneActivationDelay</span> <span class="o">=</span> <span class="n">js</span><span class="p">[</span><span class="s2">&quot;zoneActivationDelay&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">securityZoneActivationMode</span> <span class="o">=</span> <span class="n">SecurityZoneActivationMode</span><span class="o">.</span><span class="n">from_str</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;securityZoneActivationMode&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">securitySwitchingGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;securitySwitchingGroups&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">securityZones</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span><span class="n">js</span><span class="p">[</span><span class="s2">&quot;securityZones&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">groups</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="AccessControlHome">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.AccessControlHome">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AccessControlHome</span><span class="p">(</span><span class="n">FunctionalHome</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accessAuthorizationProfileGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lockProfileGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoRelockProfileGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedGarageDoorGroups</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedNotificationGroups</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="AccessControlHome.from_json">
+<a class="viewcode-back" href="../../homematicip.html#homematicip.functionalHomes.AccessControlHome.from_json">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Group</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">js</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accessAuthorizationProfileGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;accessAuthorizationProfileGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lockProfileGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span><span class="n">js</span><span class="p">[</span><span class="s2">&quot;lockProfileGroups&quot;</span><span class="p">],</span> <span class="n">groups</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">autoRelockProfileGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;autoRelockProfileGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedGarageDoorGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;extendedLinkedGarageDoorGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extendedLinkedNotificationGroups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assignGroups</span><span class="p">(</span>
+            <span class="n">js</span><span class="p">[</span><span class="s2">&quot;extendedLinkedNotificationGroups&quot;</span><span class="p">],</span> <span class="n">groups</span>
+        <span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
