@@ -732,6 +732,7 @@ async def test_websocket_channel_event(fake_home: Home):
                         "deviceId": "3014F7110000000000DSDPCB",
                         "channelIndex": 1,
                         "channelEventType": "DOOR_BELL_SENSOR_EVENT",
+                        "functionalChannelIndex": 1,
                     }
             }
     }
@@ -740,7 +741,9 @@ async def test_websocket_channel_event(fake_home: Home):
     channel.add_on_channel_event_handler(fake_handler)
     await fake_home._ws_on_message(json.dumps(payload))
 
-    fake_handler.assert_called_once_with(ChannelEvent("DEVICE_CHANNEL_EVENT", "3014F7110000000000DSDPCB", 1, "DOOR_BELL_SENSOR_EVENT"))
+    channel_event = ChannelEvent()
+    channel_event.from_json(payload["events"]["0"])
+    fake_handler.assert_called_once_with(channel_event)
 
 
 

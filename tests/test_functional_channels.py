@@ -481,7 +481,16 @@ def test_door_bell_channel_event(fake_home: Home):
     with no_ssl_verification():
         handler = Mock()
         ch = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
-        channel_event = ChannelEvent(channelEventType="DOOR_BELL_SENSOR_EVENT", channelIndex=1, deviceId=ch.device.id)
+        channel_event = ChannelEvent()
+        channel_event.from_json(
+            {
+                "pushEventType": "DEVICE_CHANNEL_EVENT",
+                "deviceId": "3014F7110000000000DSDPCB",
+                "channelIndex": 1,
+                "channelEventType": "DOOR_BELL_SENSOR_EVENT",
+                "functionalChannelIndex": 1,
+            }
+        )
         ch.add_on_channel_event_handler(handler)
 
         ch.fire_channel_event(channel_event)
