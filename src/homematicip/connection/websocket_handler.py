@@ -17,6 +17,7 @@ class WebsocketHandler:
     """
 
     def __init__(self):
+        self.INITIAL_BACKOFF = 8
         self.url = None
         self._session = None
         self._ws = None
@@ -52,7 +53,7 @@ class WebsocketHandler:
                 LOGGER.error(f"Error in handler '{handler_name}': {e}", exc_info=True)
 
     async def _connect(self, context: ConnectionContext):
-        backoff = 1
+        backoff = self.INITIAL_BACKOFF
         max_backoff = 1800
         while not self._stop_event.is_set():
             try:
@@ -71,9 +72,10 @@ class WebsocketHandler:
                 )
                 LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
                 await self._call_handlers(self._on_connected_handler)
-                backoff = 1
+                backoff = self.INITIAL_BACKOFF
                 await self._listen()
             except Exception as e:
+                await self._call_handlers(self._on_disconnected_handler)
                 LOGGER.warning(f"Websocket lost connection: {e}. Retry in {backoff:.1f}s.")
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, max_backoff)
@@ -98,6 +100,8 @@ class WebsocketHandler:
             if not self._session.closed:
                 await self._session.close()
             self._session = None
+
+        await self._call_handlers(self._on_disconnected_handler)
 
     async def start(self, context: ConnectionContext):
         async with self._task_lock:
