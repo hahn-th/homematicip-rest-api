@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+## [2.0.5] 2025-06-12
+
+### Fixed
+
+- Make websocket connection more robust against errors
+
 ## [2.0.4] 2025-05-30
 
 ### Fixed
@@ -805,7 +811,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.4..master
+[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.5..master
+[2.0.5]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1...2.0.2
