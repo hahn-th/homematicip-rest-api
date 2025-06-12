@@ -81,8 +81,13 @@ class WebsocketHandler:
                 await self._listen()
             except Exception as e:
                 reason = f"Websocket lost connection: {e}. Retry in {backoff}s."
-                await self._call_handlers(self._on_reconnect_handler, reason)
                 LOGGER.warning(reason)
+
+                try:
+                    await self._call_handlers(self._on_reconnect_handler, reason)
+                except Exception as handler_error:
+                    LOGGER.error(f"Error in reconnect handler: {handler_error}", exc_info=True)
+
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, max_backoff)
             finally:
