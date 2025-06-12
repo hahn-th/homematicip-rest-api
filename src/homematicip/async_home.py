@@ -195,6 +195,7 @@ class AsyncHome(HomeMaticIPObject):
             clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
+        logger.debug("Run get_current_state_async")
         json_state = await self.download_configuration_async()
         return self.update_home(json_state, clear_config)
 
@@ -765,3 +766,8 @@ class AsyncHome(HomeMaticIPObject):
         if self._websocket_client:
             self._websocket_client.add_on_disconnected_handler(handler)
 
+    def set_on_reconnect_handler(self, handler: Callable):
+        """Sets a callback that is called when the WebSocket connection is trying to reconnect
+        after a disconnect."""
+        if self._websocket_client:
+            self._websocket_client.add_on_reconnect_handler(handler)

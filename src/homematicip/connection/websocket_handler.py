@@ -17,6 +17,7 @@ class WebsocketHandler:
     """
 
     def __init__(self):
+        self.INITIAL_BACKOFF = 8
         self.url = None
         self._session = None
         self._ws = None
@@ -26,6 +27,7 @@ class WebsocketHandler:
         self._on_message_handlers: List[Callable] = []
         self._on_connected_handler: List[Callable] = []
         self._on_disconnected_handler: List[Callable] = []
+        self._on_reconnect_handler: List[Callable] = []
 
     def add_on_connected_handler(self, handler: Callable):
         """Adds a handler that is called when the connection is established."""
@@ -34,6 +36,10 @@ class WebsocketHandler:
     def add_on_disconnected_handler(self, handler: Callable):
         """Adds a handler that is called when the connection is closed."""
         self._on_disconnected_handler.append(handler)
+
+    def add_on_reconnect_handler(self, handler: Callable):
+        """Adds a handler that is called when the connection is re-established."""
+        self._on_reconnect_handler.append(handler)
 
     def add_on_message_handler(self, handler: Callable):
         """Adds a handler for incoming messages."""
@@ -52,7 +58,7 @@ class WebsocketHandler:
                 LOGGER.error(f"Error in handler '{handler_name}': {e}", exc_info=True)
 
     async def _connect(self, context: ConnectionContext):
-        backoff = 1
+        backoff = self.INITIAL_BACKOFF
         max_backoff = 1800
         while not self._stop_event.is_set():
             try:
@@ -71,10 +77,17 @@ class WebsocketHandler:
                 )
                 LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
                 await self._call_handlers(self._on_connected_handler)
-                backoff = 1
+                backoff = self.INITIAL_BACKOFF
                 await self._listen()
             except Exception as e:
-                LOGGER.warning(f"Websocket lost connection: {e}. Retry in {backoff:.1f}s.")
+                reason = f"Websocket lost connection: {e}. Retry in {backoff}s."
+                LOGGER.warning(reason)
+
+                try:
+                    await self._call_handlers(self._on_reconnect_handler, reason)
+                except Exception as handler_error:
+                    LOGGER.error(f"Error in reconnect handler: {handler_error}", exc_info=True)
+
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, max_backoff)
             finally:
@@ -98,6 +111,8 @@ class WebsocketHandler:
             if not self._session.closed:
                 await self._session.close()
             self._session = None
+
+        await self._call_handlers(self._on_disconnected_handler)
 
     async def start(self, context: ConnectionContext):
         async with self._task_lock:
