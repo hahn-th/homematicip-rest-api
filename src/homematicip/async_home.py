@@ -766,3 +766,8 @@ class AsyncHome(HomeMaticIPObject):
         if self._websocket_client:
             self._websocket_client.add_on_disconnected_handler(handler)
 
+    def set_on_reconnect_handler(self, handler: Callable):
+        """Sets a callback that is called when the WebSocket connection is trying to reconnect
+        after a disconnect."""
+        if self._websocket_client:
+            self._websocket_client.add_on_reconnect_handler(handler)

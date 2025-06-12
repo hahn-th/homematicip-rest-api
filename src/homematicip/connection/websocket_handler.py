@@ -27,6 +27,7 @@ class WebsocketHandler:
         self._on_message_handlers: List[Callable] = []
         self._on_connected_handler: List[Callable] = []
         self._on_disconnected_handler: List[Callable] = []
+        self._on_reconnect_handler: List[Callable] = []
 
     def add_on_connected_handler(self, handler: Callable):
         """Adds a handler that is called when the connection is established."""
@@ -35,6 +36,10 @@ class WebsocketHandler:
     def add_on_disconnected_handler(self, handler: Callable):
         """Adds a handler that is called when the connection is closed."""
         self._on_disconnected_handler.append(handler)
+
+    def add_on_reconnect_handler(self, handler: Callable):
+        """Adds a handler that is called when the connection is re-established."""
+        self._on_reconnect_handler.append(handler)
 
     def add_on_message_handler(self, handler: Callable):
         """Adds a handler for incoming messages."""
@@ -75,7 +80,7 @@ class WebsocketHandler:
                 backoff = self.INITIAL_BACKOFF
                 await self._listen()
             except Exception as e:
-                await self._call_handlers(self._on_disconnected_handler)
+                await self._call_handlers(self._on_reconnect_handler)
                 LOGGER.warning(f"Websocket lost connection: {e}. Retry in {backoff:.1f}s.")
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, max_backoff)
