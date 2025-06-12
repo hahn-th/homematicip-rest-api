@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED]
 
+### Added
+
+- Add support for ELV-SH-WSM (Watering Actuator) (#583)
+
 ## [2.0.4] 2025-05-30
 
 ### Fixed

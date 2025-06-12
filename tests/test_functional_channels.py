@@ -522,3 +522,9 @@ def test_device_blocking_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000WKP", 0)
         assert isinstance(ch, DeviceBlockingChannel)
+
+
+def test_watering_actuator_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F71100000000000SHWSM", 1)
+        assert isinstance(ch, WateringActuatorChannel)

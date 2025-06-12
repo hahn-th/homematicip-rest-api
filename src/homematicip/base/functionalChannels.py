@@ -2315,3 +2315,24 @@ class CodeProtectedPrimaryActionChannel(FunctionalChannel):
 class CodeProtectedSecondaryActionChannel(FunctionalChannel):
     """this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)"""
     pass
+
+
+class WateringActuatorChannel(FunctionalChannel):
+    """this is the representative of the WATERING_ACTUATOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+        self.waterFlow: float | None = None
+        self.waterVolume: float | None = None
+        self.waterVolumeSinceOpen: float | None = None
+        self.wateringActive: bool | None = None
+        self.wateringOnTime: float | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.waterFlow = js.get("waterFlow")
+        self.waterVolume = js.get("waterVolume")
+        self.waterVolumeSinceOpen = js.get("waterVolumeSinceOpen")
+        self.wateringActive = js.get("wateringActive")
+        self.wateringOnTime = js.get("wateringOnTime")

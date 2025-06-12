@@ -2756,3 +2756,7 @@ class MotionDetectorSwitchOutdoor(Device):
 
 class WallMountedKeyPad(Device):
     pass
+
+
+class WateringActuator(Device):
+    pass
