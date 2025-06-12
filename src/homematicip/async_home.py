@@ -195,7 +195,7 @@ class AsyncHome(HomeMaticIPObject):
             clear_config(bool): if set to true, this function will remove all old objects
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
-        logger.info("get_current_state_async")
+        logger.debug("Run get_current_state_async")
         json_state = await self.download_configuration_async()
         return self.update_home(json_state, clear_config)
 
