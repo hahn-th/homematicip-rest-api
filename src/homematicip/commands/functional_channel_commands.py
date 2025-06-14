@@ -589,8 +589,8 @@ async def start_impulse_async(rest_connection: RestConnection, device_id: str, c
     return await rest_connection.async_post("device/control/startImpulse", data)
 
 
-async def set_acceleration_sensor_mode_action_async(rest_connection: RestConnection, device_id: str, channel_index: int,
-                                                    mode: str):
+async def set_acceleration_sensor_mode_async(rest_connection: RestConnection, device_id: str, channel_index: int,
+                                             mode: str):
     """
     Set the mode for the acceleration sensor.
 
@@ -740,7 +740,8 @@ async def set_notification_sound_type_async(rest_connection: RestConnection, dev
     return await rest_connection.async_post("device/configuration/setNotificationSoundType", data)
 
 
-async def set_minimum_floor_heating_valve_position_async(rest_connection: RestConnection, device_id: str,
+async def set_minimum_floor_heating_valve_position_async(rest_connection: RestConnection,
+                                                         device_id: str,
                                                          channel_index: int,
                                                          position: float):
     """
