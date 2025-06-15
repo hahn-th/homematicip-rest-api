@@ -1,0 +1,295 @@
+{
+  "definition": {
+    "interval": 10
+  },
+  "commands": [
+    {
+      "function": "reset_energy_counter_async",
+      "active": false,
+      "params": {}
+    },
+    {
+      "function": "reset_passage_counter_async",
+      "active": false,
+      "params": {}
+    },
+    {
+      "function": "reset_water_volume_async",
+      "active": false,
+      "params": {}
+    },
+    {
+      "function": "send_door_command_async",
+      "active": false,
+      "params": {
+        "door_command": "OPEN"
+      }
+    },
+    {
+      "function": "set_acceleration_sensor_event_filter_period_async",
+      "active": false,
+      "params": {
+        "period": 2.0
+      }
+    },
+    {
+      "function": "set_acceleration_sensor_mode_async",
+      "active": false,
+      "params": {
+        "mode": "STANDARD"
+      }
+    },
+    {
+      "function": "set_acceleration_sensor_neutral_position_async",
+      "active": false,
+      "params": {
+        "neutral_position": "HORIZONTAL"
+      }
+    },
+    {
+      "function": "set_acceleration_sensor_sensitivity_async",
+      "active": false,
+      "params": {
+        "sensitivity": "HIGH"
+      }
+    },
+    {
+      "function": "set_acceleration_sensor_trigger_angle_async",
+      "active": false,
+      "params": {
+        "angle": 15
+      }
+    },
+    {
+      "function": "set_acoustic_alarm_signal_async",
+      "active": false,
+      "params": {
+        "acoustic_alarm_signal": "SIREN"
+      }
+    },
+    {
+      "function": "set_acoustic_alarm_timing_async",
+      "active": false,
+      "params": {
+        "acoustic_alarm_timing": "IMMEDIATE"
+      }
+    },
+    {
+      "function": "set_acoustic_water_alarm_trigger_async",
+      "active": false,
+      "params": {
+        "acoustic_water_alarm_trigger": "TRIGGERED"
+      }
+    },
+    {
+      "function": "set_color_temperature_dim_level_async",
+      "params": {
+        "dim_level": 1.0,
+        "color_temperature": 3000
+      }
+    },
+    {
+      "function": "set_color_temperature_dim_level_with_time_async",
+      "params": {
+        "color_temperature": 3000,
+        "dim_level": 0.8,
+        "on_time": 10,
+        "ramp_time": 2
+      }
+    },
+    {
+      "function": "set_dim_level_async",
+      "params": {
+        "dim_level": 0.5
+      }
+    },
+    {
+      "function": "set_dim_level_with_time_async",
+      "params": {
+        "dim_level": 0.6,
+        "on_time": 5,
+        "ramp_time": 1
+      }
+    },
+    {
+      "function": "set_display_async",
+      "params": {
+        "display": "TEMPERATURE"
+      }
+    },
+    {
+      "function": "set_favorite_shading_position",
+      "params": {}
+    },
+    {
+      "function": "set_hue_saturation_dim_level_async",
+      "params": {
+        "dim_level": 0.75,
+        "hue": 125,
+        "saturation_level": 0.5
+      }
+    },
+    {
+      "function": "set_hue_saturation_dim_level_with_time_async",
+      "params": {
+        "hue": 200,
+        "saturation_level": 0.7,
+        "dim_level": 0.9,
+        "on_time": 8,
+        "ramp_time": 2
+      }
+    },
+    {
+      "function": "set_inapp_water_alarm_trigger_async",
+      "active": false,
+      "params": {
+        "inapp_water_alarm_trigger": "TRIGGERED"
+      }
+    },
+    {
+      "function": "set_lock_state_async",
+      "active": false,
+      "params": {
+        "lock_state": "UNLOCKED",
+        "pin": "1234"
+      }
+    },
+    {
+      "function": "set_minimum_floor_heating_valve_position_async",
+      "active": false,
+      "params": {
+        "position": 0.2
+      }
+    },
+    {
+      "function": "set_motion_detection_active_async",
+      "params": {
+        "motion_detection_active": true
+      }
+    },
+    {
+      "function": "set_notification_sound_type_async",
+      "params": {
+        "sound_type": "BEEP",
+        "is_high_to_low": true
+      }
+    },
+    {
+      "function": "set_operation_lock_async",
+      "active": false,
+      "params": {
+        "operation_lock": true
+      }
+    },
+    {
+      "function": "set_optical_signal_async",
+      "params": {
+        "optical_signal_behaviour": "BLINK",
+        "rgb": "GREEN",
+        "dim_level": 1.0
+      }
+    },
+    {
+      "function": "set_optical_signal_with_time_async",
+      "params": {
+        "optical_signal_behaviour": "BLINK",
+        "simple_rgb_color_state": "BLUE",
+        "on_time": 5,
+        "ramp_time": 1,
+        "dim_level": 1.0
+      }
+    },
+    {
+      "function": "set_primary_shading_level_async",
+      "active": false,
+      "params": {
+        "primary_shading_level": 0.5
+      }
+    },
+    {
+      "function": "set_secondary_shading_level_async",
+      "active": false,
+      "params": {
+        "primary_shading_level": 0.5,
+        "secondary_shading_level": 0.3
+      }
+    },
+    {
+      "function": "set_shutter_level_async",
+      "active": false,
+      "params": {
+        "shutter_level": 0.7
+      }
+    },
+    {
+      "function": "set_shutter_stop_async",
+      "active": false,
+      "params": {}
+    },
+    {
+      "function": "set_simple_rgb_color_dim_level_async",
+      "active": false,
+      "params": {
+        "simple_rgb_color_state": "RED",
+        "dim_level": 1.0
+      }
+    },
+    {
+      "function": "set_simple_rgb_color_dim_level_with_time_async",
+      "active": false,
+      "params": {
+        "simple_rgb_color_state": "YELLOW",
+        "dim_level": 0.8,
+        "on_time": 6,
+        "ramp_time": 2
+      }
+    },
+    {
+      "function": "set_slats_level_async",
+      "active": false,
+      "params": {
+        "slats_level": 0.5,
+        "shutter_level": 0.7
+      }
+    },
+    {
+      "function": "set_siren_water_alarm_trigger_async",
+      "active": false,
+      "params": {
+        "siren_water_alarm_trigger": "TRIGGERED"
+      }
+    },
+    {
+      "function": "set_switch_state_async",
+      "params": {
+        "on": true
+      }
+    },
+    {
+      "function": "set_watering_switch_state_async",
+      "active": false,
+      "params": {
+        "watering_active": true
+      }
+    },
+    {
+      "function": "set_watering_switch_state_with_time_async",
+      "active": false,
+      "params": {
+        "watering_active": true,
+        "watering_time": 60
+      }
+    },
+    {
+      "function": "start_impulse_async",
+      "params": {}
+    },
+    {
+      "function": "start_light_scene_async",
+      "params": {
+        "scene_id": 1,
+        "dim_level": 0.8
+      }
+    }
+  ]
+}

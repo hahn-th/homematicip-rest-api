@@ -45,3 +45,4 @@ asyncio_default_fixture_loop_scope = "session"
 [project.scripts]
 hmip_cli = "homematicip.cli.hmip_cli:main"
 hmip_generate_auth_token = "homematicip.cli.hmip_generate_auth_token:main"
+hmip_batch = "homematicip.cli.hmip_batch:main"
