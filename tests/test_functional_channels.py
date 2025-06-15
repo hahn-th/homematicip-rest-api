@@ -455,7 +455,7 @@ def test_water_sensor_channel(fake_home: Home):
         assert ch.sirenWaterAlarmTrigger == WaterAlarmTrigger.NO_ALARM
 
 
-def test_universal_light_channel(fake_home: Home):
+async def test_universal_light_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F711000000000000RGBW", 1)
         assert isinstance(ch, UniversalLightChannel)
@@ -467,6 +467,9 @@ def test_universal_light_channel(fake_home: Home):
         assert ch.hardwareColorTemperatureWarmWhite == 2000
         assert ch.hue is None
         assert ch.lightSceneId == 0
+
+        await ch.start_light_scene_async(2, 0.8)
+
 
 
 def test_universal_light_group_channel(fake_home: Home):
