@@ -72,3 +72,34 @@ A few examples:
 - `hmip_cli --list-events` to listen to events and changes in your homematicIP system
 - `hmip_cli -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
 - `hmip_cli --dump-configuration --anonymize` to dump the current config and anonymize it.
+
+Batch Testing of applicable commands
+====================================
+
+HomematicIP devices can have different channels and each channel can have different commands. To test which commands are applicable for a device, you can use the `hmip_batch` script.
+
+This script will try to execute commands for a device and print the result. It will also print the commands which are not applicable for the device.
+
+The script takes the device ID and the channel index as arguments. Required is the json-batch file which contains the commands.
+
+With the "active" flag you can enable or disable commands.
+
+```
+    {
+      "function": "set_shutter_level_async",
+      "active": false,
+      "params": {
+        "shutter_level": 0.7
+      }
+    },
+```
+
+To run the batch test, use the following command:
+```sh
+hmip_batch -d <device-id> -i <channel-index> <path-to-json-batch-file>
+```
+
+
+Please pay close attention to the parameters used for each command. Incorrect or inappropriate parameters may lead to unexpected behavior or even malfunction of your HomematicIP devices. Executing commands is at your own risk. Always double-check the documentation and ensure you understand the effects of each command before using it in your environment.
+
+

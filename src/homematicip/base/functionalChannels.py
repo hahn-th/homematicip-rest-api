@@ -2,6 +2,7 @@ from typing import Any, Iterable
 
 from homematicip.base.enums import *
 from homematicip.base.homematicip_object import HomeMaticIPObject
+from homematicip.commands import functional_channel_commands
 from homematicip.group import Group
 
 LOGGER = logging.getLogger(__name__)
@@ -114,6 +115,7 @@ class DeviceBaseChannel(FunctionalChannel):
             if sof["IFeatureDeviceUndervoltage"]:
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
+
 class DeviceBlockingChannel(FunctionalChannel):
     """this is the representative of the DEVICE_BLOCKING channel"""
 
@@ -171,6 +173,7 @@ class DeviceBlockingChannel(FunctionalChannel):
         self.sensorCommunicationError = js.get("sensorCommunicationError")
         self.sensorError = js.get("sensorError")
 
+
 class SwitchChannel(FunctionalChannel):
     """this is the representative of the SWITCH_CHANNEL channel"""
 
@@ -200,8 +203,9 @@ class SwitchChannel(FunctionalChannel):
         return self.set_switch_state(False)
 
     async def async_set_switch_state(self, on=True):
-        data = {"channelIndex": self.index, "deviceId": self.device.id, "on": on}
-        return await self._rest_call_async("device/control/setSwitchState", body=data)
+        return await functional_channel_commands.set_switch_state_async(
+            self._connection, self.device.id, self.index, on
+        )
 
     async def async_turn_on(self):
         return await self.async_set_switch_state(True)
@@ -259,13 +263,8 @@ class AccelerationSensorChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_acceleration_sensor_mode, mode)
 
     async def async_set_acceleration_sensor_mode(self, mode):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorMode": str(mode),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorMode", data
+        return await functional_channel_commands.set_acceleration_sensor_mode_async(
+            self._connection, self.device.id, self.index, mode
         )
 
     def set_acceleration_sensor_neutral_position(
@@ -278,14 +277,8 @@ class AccelerationSensorChannel(FunctionalChannel):
     async def async_set_acceleration_sensor_neutral_position(
             self, neutralPosition: AccelerationSensorNeutralPosition
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorNeutralPosition": str(neutralPosition),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorNeutralPosition",
-            data,
+        return await functional_channel_commands.set_acceleration_sensor_neutral_position_async(
+            self._connection, self.device.id, self.index, neutralPosition
         )
 
     def set_acceleration_sensor_sensitivity(
@@ -297,13 +290,8 @@ class AccelerationSensorChannel(FunctionalChannel):
     async def async_set_acceleration_sensor_sensitivity(
             self, sensitivity: AccelerationSensorSensitivity
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorSensitivity": str(sensitivity),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorSensitivity", data
+        return await functional_channel_commands.set_acceleration_sensor_sensitivity_async(
+            self._connection, self.device.id, self.index, sensitivity
         )
 
     def set_acceleration_sensor_trigger_angle(self, angle: int):
@@ -312,13 +300,8 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_trigger_angle(self, angle: int):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorTriggerAngle": angle,
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorTriggerAngle", data
+        return await functional_channel_commands.set_acceleration_sensor_trigger_angle_async(
+            self._connection, self.device.id, self.index, angle
         )
 
     def set_acceleration_sensor_event_filter_period(self, period: float):
@@ -327,14 +310,8 @@ class AccelerationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_event_filter_period(self, period: float):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorEventFilterPeriod": period,
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorEventFilterPeriod",
-            data,
+        return await functional_channel_commands.set_acceleration_sensor_event_filter_period_async(
+            self._connection, self.device.id, self.index, period
         )
 
     def set_notification_sound_type(
@@ -424,13 +401,9 @@ class BlindChannel(FunctionalChannel):
         if shutterLevel is None:
             shutterLevel = self.shutterLevel
 
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "slatsLevel": slatsLevel,
-            "shutterLevel": shutterLevel,
-        }
-        return await self._rest_call_async("device/control/setSlatsLevel", data)
+        return await functional_channel_commands.set_slats_level_async(
+            self._connection, self.device.id, self.index, slatsLevel, shutterLevel
+        )
 
     def set_shutter_level(self, level=0.0):
         """sets the shutter level
@@ -444,12 +417,9 @@ class BlindChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_shutter_level, level)
 
     async def async_set_shutter_level(self, level=0.0):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "shutterLevel": level,
-        }
-        return await self._rest_call_async("device/control/setShutterLevel", body=data)
+        return await functional_channel_commands.set_shutter_level_async(
+            self._connection, self.device.id, self.index, level
+        )
 
     def stop(self):
         """stops the current shutter operation
@@ -470,8 +440,9 @@ class BlindChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_shutter_stop)
 
     async def async_set_shutter_stop(self):
-        data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return await self._rest_call_async("device/control/stop", body=data)
+        return await functional_channel_commands.set_shutter_stop_async(
+            self._connection, self.device.id, self.index
+        )
 
 
 class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
@@ -516,14 +487,8 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
     async def async_set_minimum_floor_heating_valve_position(
             self, minimumFloorHeatingValvePosition: float
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "minimumFloorHeatingValvePosition": minimumFloorHeatingValvePosition,
-        }
-        return await self._rest_call_async(
-            "device/configuration/setMinimumFloorHeatingValvePosition",
-            body=data,
+        return await functional_channel_commands.set_minimum_floor_heating_valve_position_async(
+            self._connection, self.device.id, self.index, minimumFloorHeatingValvePosition
         )
 
 
@@ -542,12 +507,9 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
         return self._run_non_async(self.async_set_operation_lock, operationLock)
 
     async def async_set_operation_lock(self, operationLock=True):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "operationLock": operationLock,
-        }
-        return await self._rest_call_async("device/configuration/setOperationLock", data)
+        return await functional_channel_commands.set_operation_lock_async(
+            self._connection, self.device.id, self.index, operationLock
+        )
 
 
 class DeviceOperationLockChannelWithSabotage(DeviceOperationLockChannel):
@@ -574,12 +536,9 @@ class DimmerChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_dim_level, dimLevel)
 
     async def async_set_dim_level(self, dimLevel=0.0):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "dimLevel": dimLevel,
-        }
-        return await self._rest_call_async("device/control/setDimLevel", data)
+        return await functional_channel_commands.set_dim_level_async(
+            self._connection, self.device.id, self.index, dimLevel
+        )
 
 
 class DoorChannel(FunctionalChannel):
@@ -603,15 +562,9 @@ class DoorChannel(FunctionalChannel):
         return self._run_non_async(self.async_send_door_command, doorCommand)
 
     async def async_send_door_command(self, doorCommand=DoorCommand.STOP):
-        print(
-            f"Device: {self.device.id}; Channel: {self.index}; Command: {doorCommand}"
+        return await functional_channel_commands.send_door_command_async(
+            self._connection, self.device.id, self.index, doorCommand
         )
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "doorCommand": doorCommand,
-        }
-        return await self._rest_call_async("device/control/sendDoorCommand", data)
 
 
 class DoorLockChannel(FunctionalChannel):
@@ -662,13 +615,9 @@ class DoorLockChannel(FunctionalChannel):
         Returns:
             the result of the _restCall
         """
-        data = {
-            "deviceId": self.device.id,
-            "channelIndex": self.index,
-            "authorizationPin": pin,
-            "targetLockState": doorLockState,
-        }
-        return await self._rest_call_async("device/control/setLockState", data)
+        return await functional_channel_commands.set_lock_state_async(
+            self._connection, self.device.id, self.index, doorLockState, pin
+        )
 
 
 class EnergySensorInterfaceChannel(FunctionalChannel):
@@ -721,8 +670,9 @@ class ImpulseOutputChannel(FunctionalChannel):
         return self._run_non_async(self.async_send_start_impulse)
 
     async def async_send_start_impulse(self):
-        data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return await self._rest_call_async("device/control/startImpulse", body=data)
+        return await functional_channel_commands.start_impulse_async(
+            self._connection, self.device.id, self.index
+        )
 
 
 class MultiModeInputChannel(FunctionalChannel):
@@ -820,7 +770,7 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
             self,
             opticalSignalBehaviour: OpticalSignalBehaviour,
             rgb: RGBColorState,
-            dimLevel=1.01,
+            dimLevel: float | None = None,
     ):
         return self._run_non_async(self.async_set_optical_signal, opticalSignalBehaviour, rgb, dimLevel)
 
@@ -828,7 +778,7 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
             self,
             opticalSignalBehaviour: OpticalSignalBehaviour,
             rgb: RGBColorState,
-            dimLevel=1.01,
+            dimLevel=None,
     ):
         """sets the signal type for the leds
 
@@ -839,18 +789,15 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
 
         Returns:
             Result of the _restCall
-
         """
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "dimLevel": dimLevel,
-            "opticalSignalBehaviour": opticalSignalBehaviour,
-            "simpleRGBColorState": rgb,
-        }
-        return await self._rest_call_async("device/control/setOpticalSignal", body=data)
+        if dimLevel is None:
+            dimLevel = self.dimLevel
 
-    def set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
+        return await functional_channel_commands.set_optical_signal_async(
+            self._connection, self.device.id, self.index, str(opticalSignalBehaviour), str(rgb), dimLevel
+        )
+
+    def set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float | None = None):
         """sets the color and dimlevel of the lamp
 
         Args:
@@ -863,15 +810,9 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         """
         return self._run_non_async(self.async_set_rgb_dim_level, rgb, dimLevel)
 
-    async def async_set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "simpleRGBColorState": rgb,
-            "dimLevel": dimLevel,
-        }
-        return await self._rest_call_async(
-            "device/control/setSimpleRGBColorDimLevel", body=data
+    async def async_set_rgb_dim_level(self, rgb: RGBColorState, dimLevel: float | None = None):
+        return await functional_channel_commands.set_simple_rgb_color_dim_level_async(
+            self._connection, self.device.id, self.index, rgb, dimLevel
         )
 
     def set_rgb_dim_level_with_time(
@@ -901,16 +842,8 @@ class NotificationLightChannel(DimmerChannel, SwitchChannel):
         Returns:
             the result of the _restCall
         """
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "simpleRGBColorState": rgb,
-            "dimLevel": dimLevel,
-            "onTime": onTime,
-            "rampTime": rampTime,
-        }
-        return await self._rest_call_async(
-            "device/control/setSimpleRGBColorDimLevelWithTime", body=data
+        return await functional_channel_commands.set_simple_rgb_color_dim_level_with_time_async(
+            self._connection, self.device.id, self.index, rgb, dimLevel, onTime, rampTime
         )
 
 
@@ -980,12 +913,9 @@ class ShadingChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_primary_shading_level, primaryShadingLevel)
 
     async def async_set_primary_shading_level(self, primaryShadingLevel: float):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "primaryShadingLevel": primaryShadingLevel,
-        }
-        return await self._rest_call_async("device/control/setPrimaryShadingLevel", data)
+        return await functional_channel_commands.set_primary_shading_level_async(
+            self._connection, self.device.id, self.index, primaryShadingLevel
+        )
 
     def set_secondary_shading_level(
             self, primaryShadingLevel: float, secondaryShadingLevel: float
@@ -999,14 +929,8 @@ class ShadingChannel(FunctionalChannel):
     async def async_set_secondary_shading_level(
             self, primaryShadingLevel: float, secondaryShadingLevel: float
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "primaryShadingLevel": primaryShadingLevel,
-            "secondaryShadingLevel": secondaryShadingLevel,
-        }
-        return await self._rest_call_async(
-            "device/control/setSecondaryShadingLevel", data
+        return await functional_channel_commands.set_secondary_shading_level_async(
+            self._connection, self.device.id, self.index, primaryShadingLevel, secondaryShadingLevel
         )
 
     def set_shutter_stop(self):
@@ -1017,8 +941,9 @@ class ShadingChannel(FunctionalChannel):
         Returns:
             the result of the _restCall
         """
-        data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return await self._rest_call_async("device/control/stop", body=data)
+        return await functional_channel_commands.set_shutter_stop_async(
+            self._connection, self.device.id, self.index
+        )
 
 
 class ShutterChannel(FunctionalChannel):
@@ -1060,24 +985,6 @@ class ShutterChannel(FunctionalChannel):
         self.supportingSelfCalibration = js["supportingSelfCalibration"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
-    def set_shutter_level(self, level=0.0, channelIndex=1):
-        return self._run_non_async(self.async_set_shutter_level, level, channelIndex)
-
-    async def async_set_shutter_level(self, level=0.0, channelIndex=1):
-        """sets the shutter level
-
-        Args:
-            level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
-            channelIndex(int): the channel to control
-        Returns:
-            the result of the _restCall
-        """
-        data = {
-            "channelIndex": channelIndex,
-            "deviceId": self.id,
-            "shutterLevel": level,
-        }
-        return await self._rest_call_async("device/control/setShutterLevel", body=data)
 
     def set_shutter_stop(self):
         return self._run_non_async(self.async_set_shutter_stop)
@@ -1090,8 +997,9 @@ class ShutterChannel(FunctionalChannel):
         Returns:
             the result of the _restCall
         """
-        data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return await self._rest_call_async("device/control/stop", body=data)
+        return await functional_channel_commands.set_shutter_stop_async(
+            self._connection, self.device.id, self.index
+        )
 
     def set_shutter_level(self, level=0.0):
         return self._run_non_async(self.async_set_shutter_level, level)
@@ -1104,12 +1012,9 @@ class ShutterChannel(FunctionalChannel):
         Returns:
             the result of the _restCall
         """
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "shutterLevel": level,
-        }
-        return await self._rest_call_async("device/control/setShutterLevel", body=data)
+        return await functional_channel_commands.set_shutter_level_async(
+            self._connection, self.device.id, self.index, level
+        )
 
 
 class SwitchMeasuringChannel(SwitchChannel):
@@ -1141,10 +1046,8 @@ class SwitchMeasuringChannel(SwitchChannel):
         return self._run_non_async(self.async_reset_energy_counter)
 
     async def async_reset_energy_counter(self):
-        data = {"channelIndex": self.index, "deviceId": self.device.id}
-        return await self._rest_call_async(
-            "device/control/resetEnergyCounter", body=data
-        )
+        return await functional_channel_commands.reset_energy_counter_async(self._connection, self.device.id,
+                                                                            self.index)
 
 
 class TiltVibrationSensorChannel(FunctionalChannel):
@@ -1160,7 +1063,7 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         self.accelerationSensorSensitivity = AccelerationSensorSensitivity.SENSOR_RANGE_2G
         self.accelerationSensorTriggerAngle = 0
         self.accelerationSensorTriggered = False
-        self.tiltState: str | None  = None
+        self.tiltState: str | None = None
         self.tiltVisualization: str | None = None
 
     def from_json(self, js, groups: Iterable[Group]):
@@ -1180,14 +1083,9 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         return self._run_non_async(self.async_set_acceleration_sensor_mode, mode)
 
     async def async_set_acceleration_sensor_mode(self, mode: AccelerationSensorMode):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorMode": str(mode),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorMode", data
-        )
+        return await functional_channel_commands.set_acceleration_sensor_mode_async(self._connection,
+                                                                                    self.device.id, self.index,
+                                                                                    str(mode))
 
     def set_acceleration_sensor_sensitivity(
             self, sensitivity: AccelerationSensorSensitivity
@@ -1214,13 +1112,8 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_trigger_angle(self, angle: int):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorTriggerAngle": angle,
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorTriggerAngle", data
+        return await functional_channel_commands.set_acceleration_sensor_trigger_angle_async(
+            self._connection, self.device.id, self.index, angle
         )
 
     def set_acceleration_sensor_event_filter_period(self, period: float):
@@ -1229,14 +1122,8 @@ class TiltVibrationSensorChannel(FunctionalChannel):
         )
 
     async def async_set_acceleration_sensor_event_filter_period(self, period: float):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "accelerationSensorEventFilterPeriod": period,
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAccelerationSensorEventFilterPeriod",
-            data,
+        return await functional_channel_commands.set_acceleration_sensor_event_filter_period_async(
+            self._connection, self.device.id, self.index, period
         )
 
 
@@ -1269,13 +1156,8 @@ class WallMountedThermostatProChannel(FunctionalChannel):
     async def async_set_display(
             self, display: ClimateControlDisplay = ClimateControlDisplay.ACTUAL
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "display": str(display),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setClimateControlDisplay", data
+        return await functional_channel_commands.set_display_async(
+            self._connection, self.device.id, self.index, display
         )
 
 
@@ -1333,13 +1215,8 @@ class WaterSensorChannel(FunctionalChannel):
     async def async_set_acoustic_alarm_signal(
             self, acousticAlarmSignal: AcousticAlarmSignal
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "acousticAlarmSignal": str(acousticAlarmSignal),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAcousticAlarmSignal", data
+        return await functional_channel_commands.set_acoustic_alarm_signal_async(
+            self._connection, self.device.id, self.index, str(acousticAlarmSignal)
         )
 
     def set_acoustic_alarm_timing(self, acousticAlarmTiming: AcousticAlarmTiming):
@@ -1350,13 +1227,8 @@ class WaterSensorChannel(FunctionalChannel):
     async def async_set_acoustic_alarm_timing(
             self, acousticAlarmTiming: AcousticAlarmTiming
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "acousticAlarmTiming": str(acousticAlarmTiming),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAcousticAlarmTiming", data
+        return await functional_channel_commands.set_acoustic_alarm_timing_async(
+            self._connection, self.device.id, self.index, str(acousticAlarmTiming)
         )
 
     def set_acoustic_water_alarm_trigger(
@@ -1369,13 +1241,8 @@ class WaterSensorChannel(FunctionalChannel):
     async def async_set_acoustic_water_alarm_trigger(
             self, acousticWaterAlarmTrigger: WaterAlarmTrigger
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "acousticWaterAlarmTrigger": str(acousticWaterAlarmTrigger),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setAcousticWaterAlarmTrigger", data
+        return await functional_channel_commands.set_acoustic_water_alarm_trigger_async(
+            self._connection, self.device.id, self.index, str(acousticWaterAlarmTrigger)
         )
 
     def set_inapp_water_alarm_trigger(self, inAppWaterAlarmTrigger: WaterAlarmTrigger):
@@ -1386,13 +1253,8 @@ class WaterSensorChannel(FunctionalChannel):
     async def async_set_inapp_water_alarm_trigger(
             self, inAppWaterAlarmTrigger: WaterAlarmTrigger
     ):
-        data = {
-            "channelIndex": self.index,
-            "deviceId": self.device.id,
-            "inAppWaterAlarmTrigger": str(inAppWaterAlarmTrigger),
-        }
-        return await self._rest_call_async(
-            "device/configuration/setInAppWaterAlarmTrigger", data
+        return await functional_channel_commands.set_inapp_water_alarm_trigger_async(
+            self._connection, self.device.id, self.index, str(inAppWaterAlarmTrigger)
         )
 
     def set_siren_water_alarm_trigger(self, sirenWaterAlarmTrigger: WaterAlarmTrigger):
@@ -2311,6 +2173,7 @@ class CodeProtectedPrimaryActionChannel(FunctionalChannel):
         self.set_attr_from_dict("actionCodeConfigured", js)
         self.set_attr_from_dict("actionParameter", js)
         self.set_attr_from_dict("authorized", js)
+
 
 class CodeProtectedSecondaryActionChannel(FunctionalChannel):
     """this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)"""
