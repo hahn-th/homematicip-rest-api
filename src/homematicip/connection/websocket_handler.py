@@ -96,7 +96,6 @@ class WebsocketHandler:
     async def _listen(self):
         async for msg in self._ws:
             if msg.type in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
-                LOGGER.debug(f"Received message {msg.data}")
                 await self._call_handlers(self._on_message_handlers, msg.data)
             elif msg.type == aiohttp.WSMsgType.ERROR:
                 LOGGER.error(f"Error in websocket: {msg}")

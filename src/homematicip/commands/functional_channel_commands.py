@@ -233,7 +233,7 @@ async def set_hue_saturation_dim_level_with_time_async(rest_connection: RestConn
     :type device_id: str
     :param channel_index: The channel index.
     :type channel_index: int
-    :param hue: The desired hue (0-360).
+    :param hue: The desired hue (0 to 359).
     :type hue: int
     :param saturation_level: The desired saturation level (0.0 to 1.0).
     :type saturation_level: float
