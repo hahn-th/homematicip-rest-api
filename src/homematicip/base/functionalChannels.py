@@ -2162,16 +2162,16 @@ class UniversalLightChannel(FunctionalChannel):
         self.set_attr_from_dict("rampTime", js)
         self.set_attr_from_dict("saturationLevel", js)
 
-    async def set_dim_level_async(self, dimLevel: float):
+    async def set_dim_level_async(self, dim_level: float):
         """Set the dim level of the light channel."""
         return await functional_channel_commands.set_dim_level_async(
-            self._connection, self.device.id, self.index, dimLevel
+            self._connection, self.device.id, self.index, dim_level
         )
 
-    async def set_dim_level_with_time_async(self, dimLevel: float, on_time: int, ramp_time: int):
+    async def set_dim_level_with_time_async(self, dim_level: float, on_time: int, ramp_time: int):
         """Set the dim level of the light channel with a specified time."""
         return await functional_channel_commands.set_dim_level_with_time_async(
-            self._connection, self.device.id, self.index, dimLevel, on_time, ramp_time
+            self._connection, self.device.id, self.index, dim_level, on_time, ramp_time
         )
 
     async def set_hue_saturation_dim_level_async(self, hue: int, saturation_level: float, dim_level: float):
