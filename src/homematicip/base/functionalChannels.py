@@ -1919,7 +1919,7 @@ class ExternalBaseChannel(FunctionalChannel):
         super().from_json(js, groups)
 
 
-class ExternalUniversalLightChannel(FunctionalChannel):
+class ExternalUniversalLightChannel(FunctionalChannel, DimmerChannel):
     """this represents the EXTERNAL_UNIVERSAL_LIGHT_CHANNEL function-channel for external devices"""
 
     def __init__(self, device, connection):
@@ -2097,14 +2097,16 @@ class OpticalSignalGroupChannel(FunctionalChannel):
         )
 
 
-class UniversalLightChannel(FunctionalChannel):
+class UniversalLightChannel(FunctionalChannel, DimmerChannel):
     """Represents Universal Light Channel."""
 
     def __init__(self, device, connection):
         super().__init__(device, connection)
 
+        self.channelActive: bool = True
         self.colorTemperature: int = None
         self.controlGearFailure: str = None
+        self.connectedDeviceUnreach: bool = None
         self.dim2WarmActive: bool = None
         self.dimLevel: float = None
         self.hardwareColorTemperatureColdWhite: int = None
@@ -2118,14 +2120,18 @@ class UniversalLightChannel(FunctionalChannel):
         self.minimalColorTemperature: int = None
         self.on: bool = None
         self.onMinLevel: float = None
+        self.powerUpSwitchState: str = None
         self.profileMode: ProfileMode = None
+        self.rampTime: int = None
         self.saturationLevel: float = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
 
+        self.set_attr_from_dict("channelActive", js)
         self.set_attr_from_dict("colorTemperature", js)
         self.set_attr_from_dict("controlGearFailure", js)
+        self.set_attr_from_dict("connectedDeviceUnreach", js)
         self.set_attr_from_dict("dim2WarmActive", js)
         self.set_attr_from_dict("dimLevel", js)
         self.set_attr_from_dict("hardwareColorTemperatureColdWhite", js)
@@ -2139,9 +2145,35 @@ class UniversalLightChannel(FunctionalChannel):
         self.set_attr_from_dict("minimalColorTemperature", js)
         self.set_attr_from_dict("on", js)
         self.set_attr_from_dict("onMinLevel", js)
+        self.set_attr_from_dict("powerUpSwitchState", js)
         self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("rampTime", js)
         self.set_attr_from_dict("saturationLevel", js)
 
+
+    async def set_hue_saturation_dim_level_async(self, hue: int, saturation_level: float, dim_level: float):
+        return await functional_channel_commands.set_hue_saturation_dim_level_async(
+            self.connection, self.device.id, self.index, hue, saturation_level, dim_level
+        )
+
+    async def set_hue_saturation_dim_level_with_time_async(self, hue: int, saturation_level: float, dim_level: float,
+                                                       on_time: float, ramp_time: float):
+        return await functional_channel_commands.set_hue_saturation_dim_level_with_time_async(
+            self.connection, self.device.id, self.index, hue, saturation_level, dim_level, on_time, ramp_time
+        )
+
+    async def set_switch_state_async(self, on: bool):
+        return await functional_channel_commands.set_switch_state_async(
+            self.connection, self.device.id, self.index, on
+        )
+
+    async def start_light_scene_async(self, light_scene_id: int, dim_level: float = None):
+        """Start a light scene."""
+        if dim_level is None:
+            dim_level = self.dimLevel
+        return await functional_channel_commands.start_light_scene_async(
+            self.connection, self.device.id, self.index, light_scene_id, dim_level
+        )
 
 class UniversalLightChannelGroup(UniversalLightChannel):
     """Universal-Light-Channel-Group."""
