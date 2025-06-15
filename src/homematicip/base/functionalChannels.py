@@ -1919,7 +1919,7 @@ class ExternalBaseChannel(FunctionalChannel):
         super().from_json(js, groups)
 
 
-class ExternalUniversalLightChannel(FunctionalChannel, DimmerChannel):
+class ExternalUniversalLightChannel(FunctionalChannel):
     """this represents the EXTERNAL_UNIVERSAL_LIGHT_CHANNEL function-channel for external devices"""
 
     def __init__(self, device, connection):
@@ -1943,6 +1943,18 @@ class ExternalUniversalLightChannel(FunctionalChannel, DimmerChannel):
         self.set_attr_from_dict("minimalColorTemperature", js)
         self.set_attr_from_dict("on", js)
         self.set_attr_from_dict("saturationLevel", js)
+
+    async def set_dim_level_async(self, dim_level: float):
+        """Set the dim level of the light channel."""
+        return await functional_channel_commands.set_dim_level_async(
+            self._connection, self.device.id, self.index, dim_level
+        )
+
+    async def set_dim_level_with_time_async(self, dimLevel: float, on_time: int, ramp_time: int):
+        """Set the dim level of the light channel with a specified time."""
+        return await functional_channel_commands.set_dim_level_with_time_async(
+            self._connection, self.device.id, self.index, dimLevel, on_time, ramp_time
+        )
 
 
 class OpticalSignalChannel(FunctionalChannel):
@@ -2097,7 +2109,7 @@ class OpticalSignalGroupChannel(FunctionalChannel):
         )
 
 
-class UniversalLightChannel(FunctionalChannel, DimmerChannel):
+class UniversalLightChannel(FunctionalChannel):
     """Represents Universal Light Channel."""
 
     def __init__(self, device, connection):
@@ -2150,21 +2162,32 @@ class UniversalLightChannel(FunctionalChannel, DimmerChannel):
         self.set_attr_from_dict("rampTime", js)
         self.set_attr_from_dict("saturationLevel", js)
 
+    async def set_dim_level_async(self, dimLevel: float):
+        """Set the dim level of the light channel."""
+        return await functional_channel_commands.set_dim_level_async(
+            self._connection, self.device.id, self.index, dimLevel
+        )
+
+    async def set_dim_level_with_time_async(self, dimLevel: float, on_time: int, ramp_time: int):
+        """Set the dim level of the light channel with a specified time."""
+        return await functional_channel_commands.set_dim_level_with_time_async(
+            self._connection, self.device.id, self.index, dimLevel, on_time, ramp_time
+        )
 
     async def set_hue_saturation_dim_level_async(self, hue: int, saturation_level: float, dim_level: float):
         return await functional_channel_commands.set_hue_saturation_dim_level_async(
-            self.connection, self.device.id, self.index, hue, saturation_level, dim_level
+            self._connection, self.device.id, self.index, hue, saturation_level, dim_level
         )
 
     async def set_hue_saturation_dim_level_with_time_async(self, hue: int, saturation_level: float, dim_level: float,
                                                        on_time: float, ramp_time: float):
         return await functional_channel_commands.set_hue_saturation_dim_level_with_time_async(
-            self.connection, self.device.id, self.index, hue, saturation_level, dim_level, on_time, ramp_time
+            self._connection, self.device.id, self.index, hue, saturation_level, dim_level, on_time, ramp_time
         )
 
     async def set_switch_state_async(self, on: bool):
         return await functional_channel_commands.set_switch_state_async(
-            self.connection, self.device.id, self.index, on
+            self._connection, self.device.id, self.index, on
         )
 
     async def start_light_scene_async(self, light_scene_id: int, dim_level: float = None):
@@ -2172,7 +2195,7 @@ class UniversalLightChannel(FunctionalChannel, DimmerChannel):
         if dim_level is None:
             dim_level = self.dimLevel
         return await functional_channel_commands.start_light_scene_async(
-            self.connection, self.device.id, self.index, light_scene_id, dim_level
+            self._connection, self.device.id, self.index, light_scene_id, dim_level
         )
 
 class UniversalLightChannelGroup(UniversalLightChannel):
