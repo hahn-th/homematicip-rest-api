@@ -76,9 +76,6 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
 
     first_run = True
     for command in commands:
-        if not first_run:
-            await asyncio.sleep(interval)
-        first_run = False
 
         function_name = command.get("function")
         params = command.get("params", {})
@@ -94,6 +91,10 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         if not isinstance(params, dict):
             logger.error(f"Parameters for function '{function_name}' must be a dictionary.")
             continue
+
+        if not first_run:
+            await asyncio.sleep(interval)
+        first_run = False
 
         params["device_id"] = args.device
         params["channel_index"] = args.channel
