@@ -20,7 +20,7 @@ class WebsocketHandler:
         self.INITIAL_BACKOFF = 8
         self.url = None
         self._session = None
-        self._ws = None
+        self._ws: aiohttp.client.ClientSession = None
         self._stop_event = asyncio.Event()
         self._reconnect_task = None
         self._task_lock = asyncio.Lock()
@@ -128,9 +128,14 @@ class WebsocketHandler:
         LOGGER.info("Stop websocket client...")
         self._stop_event.set()
         async with self._task_lock:
-            if self._reconnect_task:
-                await self._reconnect_task
-                self._reconnect_task = None
+            try:
+                await self._ws.close()
+            except Exception as e:
+                pass
+            finally:
+                if self._reconnect_task:
+                    await self._reconnect_task
+                    self._reconnect_task = None
         await self._cleanup()
         LOGGER.info("[Stop] WebSocket client stopped.")
 
