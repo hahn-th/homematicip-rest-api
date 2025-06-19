@@ -61,6 +61,7 @@ class WebsocketHandler:
         backoff = self.INITIAL_BACKOFF
         max_backoff = 1800
         while not self._stop_event.is_set():
+            LOGGER.info("while not self._stop_event.is_set()")
             try:
                 LOGGER.info(f"Connect to {context.websocket_url}")
                 self._session = aiohttp.ClientSession()
@@ -128,9 +129,12 @@ class WebsocketHandler:
         LOGGER.info("Stop websocket client...")
         self._stop_event.set()
         async with self._task_lock:
+            LOGGER.info("Waiting for reconnect task to finish...")
             if self._reconnect_task:
                 await self._reconnect_task
                 self._reconnect_task = None
+                LOGGER.info("Reconnect task finished.")
+        LOGGER.info("Cleaning up resources...")
         await self._cleanup()
         LOGGER.info("[Stop] WebSocket client stopped.")
 

@@ -97,16 +97,16 @@ Following steps are required:
 With the "active" flag you can enable or disable commands.
 
 ```
-    {
-      "function": "set_shutter_level_async",
-      "active": false,
-      "params": {
-        "shutter_level": 0.7
-      }
-    },
+{
+  "function": "set_shutter_level_async",
+  "active": false,
+  "params": {
+    "shutter_level": 0.7
+  }
+},
 ```
 
 To run the batch test, use the following command:
-```sh
+```
 hmip_batch -d <device-id> -i <channel-index> <path-to-json-batch-file>
 ```
