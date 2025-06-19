@@ -12,8 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add module for FunctionalChannel-Commands
-- FunctionalChannels are using the new module for commands
 - Add hmip_batch commandline tool to execute commands in batch
+- Add functions to UNIVERSAL_LIGHT_CHANNEL to control HmIP-RGBW and HmIP-LSC
+
+### Changed
+
+- FunctionalChannels are using the new module for commands
+- Improve shutting down of websocket connection
 
 ## [2.0.5] 2025-06-12
 
