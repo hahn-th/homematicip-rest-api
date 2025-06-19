@@ -129,6 +129,10 @@ class WebsocketHandler:
         LOGGER.info("Stop websocket client...")
         self._stop_event.set()
         async with self._task_lock:
+            if self._ws and not self._ws.closed:
+                LOGGER.info("Closing WebSocket connection...")
+                await self._ws.close()
+                self._ws = None
             LOGGER.info("Waiting for reconnect task to finish...")
             if self._reconnect_task:
                 await self._reconnect_task
