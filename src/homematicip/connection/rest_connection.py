@@ -108,9 +108,8 @@ class RestConnection:
         except httpx.HTTPStatusError as exc:
             if self._log_status_exceptions:
                 LOGGER.error(
-                    f"Error response {exc.response.status_code} while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
+                    f"Error response {exc.response.status_code} ({exc.response.text}) while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
                 )
-                LOGGER.error(f"Response: {repr(exc.response)}")
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
     async def _execute_request_async(self, url: str, data: dict | None = None, header: dict | None = None):

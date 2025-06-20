@@ -5,7 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED]
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.6..master)
+
+## [2.0.6](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.5..2.0.6) 2025-06-19
+
+### Added
+
+- Add module for FunctionalChannel-Commands
+- Add hmip_batch commandline tool to execute commands in batch
+- Add functions to UNIVERSAL_LIGHT_CHANNEL to control HmIP-RGBW and HmIP-LSC
+
+### Changed
+
+- FunctionalChannels are using the new module for commands
+- Improve shutting down of websocket connection
+
+## [2.0.5] 2025-06-12
+
+### Fixed
+
+- Make websocket connection more robust against errors
 
 ### Added
 
@@ -809,7 +828,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API
   -- Support for the new HMIP Cloud Update
 
-[unreleased]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.4..master
+[2.0.5]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.4...2.0.5
 [2.0.4]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1...2.0.2
