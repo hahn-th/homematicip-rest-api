@@ -1,0 +1,1 @@
+::: homematicip.class_maps

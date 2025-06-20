@@ -1,0 +1,41 @@
+site_name: HomematicIP Cloud Rest API Wrapper
+site_description: "Automatic documentation from sources, for MkDocs."
+site_url: "https://hahn-th.github.io/homematicip-rest-api/"
+repo_url: "https://github.com/hahn-th/homematicip-rest-api"
+repo_name: "hahn-th/homematicip-rest-api"
+
+nav:
+  - Home:
+      - Home: index.md
+      - Getting Started: getting-started.md
+  - Reference:
+      - API Introduction: reference/api-introduction.md
+      - Python API:
+        - AsyncHome: reference/python-api/async_home.md
+        - Auth: reference/python-api/auth.md
+        - Class Maps: reference/python-api/class_maps.md
+        - Client: reference/python-api/client.md
+        - Devices: reference/python-api/devices.md
+
+theme:
+  name: "material"
+  features:
+    - navigation.expand
+    - navigation.footer
+    - navigation.instant.preview
+    - navigation.path
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+
+plugins:
+  - search
+  - mkdocstrings:
+      enable_inventory: true
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: sphinx
+            show_source: false
