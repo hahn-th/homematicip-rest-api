@@ -11,6 +11,8 @@ from homematicip.connection.connection_context import ConnectionContext, Connect
 from homematicip.connection.connection_factory import ConnectionFactory
 from homematicip.connection.websocket_handler import WebsocketHandler
 from homematicip.device import *
+from homematicip.exceptions.connection_exceptions import HmipConnectionError
+from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.group import *
 from homematicip.location import Location
 from homematicip.oauth_otk import OAuthOTK
@@ -174,9 +176,13 @@ class AsyncHome(HomeMaticIPObject):
 
         Returns
             the downloaded configuration as json
+
+        Raises:
+            HomeNotInitializedError: if the home is not initialized
+            Exception: if the download fails
         """
         if self._connection_context is None:
-            raise Exception("Home not initialized. Run init() first.")
+            raise HomeNotInitializedError()
 
         client_characteristics = ClientCharacteristicsBuilder.get(self._connection_context.accesspoint_id)
         result = await self._rest_call_async(
@@ -184,7 +190,7 @@ class AsyncHome(HomeMaticIPObject):
         )
 
         if not result.success:
-            raise Exception("Could not get the current configuration. Error: %s", result.status_text)
+            raise HmipConnectionError("Could not get the current configuration. Error: %s".format(result.status_text))
 
         return result.json
 
