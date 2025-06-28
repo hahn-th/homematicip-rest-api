@@ -1,1 +1,3 @@
+# `auth`
+
 ::: homematicip.auth

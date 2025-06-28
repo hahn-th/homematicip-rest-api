@@ -1,41 +1,51 @@
 site_name: HomematicIP Cloud Rest API Wrapper
-site_description: "Automatic documentation from sources, for MkDocs."
-site_url: "https://hahn-th.github.io/homematicip-rest-api/"
-repo_url: "https://github.com/hahn-th/homematicip-rest-api"
-repo_name: "hahn-th/homematicip-rest-api"
-
+site_description: Automatic documentation from sources, for MkDocs.
+site_url: https://hahn-th.github.io/homematicip-rest-api/
+repo_url: https://github.com/hahn-th/homematicip-rest-api
+repo_name: hahn-th/homematicip-rest-api
 nav:
-  - Home:
-      - Home: index.md
-      - Getting Started: getting-started.md
-  - Reference:
-      - API Introduction: reference/api-introduction.md
-      - Python API:
-        - AsyncHome: reference/python-api/async_home.md
-        - Auth: reference/python-api/auth.md
-        - Class Maps: reference/python-api/class_maps.md
-        - Client: reference/python-api/client.md
-        - Devices: reference/python-api/devices.md
-
+- Getting Started: getting-started.md
+- Index: index.md
+- reference:
+  - Api Introduction: reference/api-introduction.md
+  - python-api:
+    - Eventhook: reference/python-api/EventHook.md
+    - Homematicipobject: reference/python-api/HomeMaticIPObject.md
+    - ' Version': reference/python-api/_version.md
+    - Access Point Update State: reference/python-api/access_point_update_state.md
+    - Async Home: reference/python-api/async_home.md
+    - Auth: reference/python-api/auth.md
+    - Class Maps: reference/python-api/class_maps.md
+    - Client: reference/python-api/client.md
+    - Device: reference/python-api/device.md
+    - Functionalhomes: reference/python-api/functionalHomes.md
+    - Group: reference/python-api/group.md
+    - Home: reference/python-api/home.md
+    - Index: reference/python-api/index.md
+    - Location: reference/python-api/location.md
+    - Oauth Otk: reference/python-api/oauth_otk.md
+    - Rule: reference/python-api/rule.md
+    - Securityevent: reference/python-api/securityEvent.md
+    - Weather: reference/python-api/weather.md
+  - Reference: reference/reference.md
 theme:
-  name: "material"
+  name: material
   features:
-    - navigation.expand
-    - navigation.footer
-    - navigation.instant.preview
-    - navigation.path
-    - navigation.sections
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.top
-
+  - navigation.expand
+  - navigation.footer
+  - navigation.instant.preview
+  - navigation.path
+  - navigation.sections
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.top
 plugins:
-  - search
-  - mkdocstrings:
-      enable_inventory: true
-      default_handler: python
-      handlers:
-        python:
-          options:
-            docstring_style: sphinx
-            show_source: false
+- search
+- mkdocstrings:
+    enable_inventory: true
+    default_handler: python
+    handlers:
+      python:
+        options:
+          docstring_style: sphinx
+          show_source: false

@@ -1,0 +1,3 @@
+# `rule`
+
+::: homematicip.rule

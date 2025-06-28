@@ -1,0 +1,3 @@
+# `securityEvent`
+
+::: homematicip.securityEvent

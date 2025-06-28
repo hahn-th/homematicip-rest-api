@@ -1,0 +1,3 @@
+# `EventHook`
+
+::: homematicip.EventHook
