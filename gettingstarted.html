@@ -1,0 +1,226 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; HomematicIP-Rest-API 2.0.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=9a3ee07e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Introduction" href="api_introduction.html" />
+    <link rel="prev" title="Welcome to Homematic IP Rest API’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            HomematicIP-Rest-API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting started</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-auth-token">Getting the AUTH-TOKEN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-cli">Using the CLI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-information-about-devices-and-groups">Get Information about devices and groups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#batch-testing-of-applicable-commands">Batch Testing of applicable commands</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_introduction.html">API Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">homematicip</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">HomematicIP-Rest-API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gettingstarted.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>Just run <strong>pip3 install -U homematicip</strong> in the command line to get the package.
+This will install (and update) the library and all required packages</p>
+</section>
+<section id="getting-the-auth-token">
+<h2>Getting the AUTH-TOKEN<a class="headerlink" href="#getting-the-auth-token" title="Link to this heading"></a></h2>
+<p>Before you can start using the library you will need an auth-token. Otherwise the HMIP Cloud will not trust you.</p>
+<p>You will need:</p>
+<ul class="simple">
+<li><p>Access to an active Access Point (it must glow blue)</p></li>
+<li><p>the SGTIN of the Access Point</p></li>
+<li><p>[optional] the PIN</p></li>
+</ul>
+<p>If you are about to connect to a <strong>HomematicIP HCU1</strong> you have to press the button on top of the device, before running the script. From now, you have 5 Minutes to complete the registration process.</p>
+<p>To get an auth-token you have to run the script <cite>hmip_generate_auth_token</cite> which is installed with the library.</p>
+<p><code class="docutils literal notranslate"><span class="pre">`sh</span>
+<span class="pre">hmip_generate_auth_token</span>
+<span class="pre">`</span></code></p>
+<p>It will generate a <strong>config.ini</strong> in your current working directory. The scripts which are using this library are looking
+for this file to load the auth-token and SGTIN of the Access Point. You can either place it in the working directory when you are
+running the scripts or depending on your OS in different “global” folders:</p>
+<ul class="simple">
+<li><p>General</p>
+<ul>
+<li><p>current working directory</p></li>
+</ul>
+</li>
+<li><p>Windows</p>
+<ul>
+<li><p>%APPDATA%\homematicip-rest-api</p></li>
+<li><p>%PROGRAMDATA%\homematicip-rest-api</p></li>
+</ul>
+</li>
+<li><p>Linux</p>
+<ul>
+<li><p>~/.homematicip-rest-api/</p></li>
+<li><p>/etc/homematicip-rest-api/</p></li>
+</ul>
+</li>
+<li><p>MAC OS</p>
+<ul>
+<li><p>~/Library/Preferences/homematicip-rest-api/</p></li>
+<li><p>/Library/Application Support/homematicip-rest-api/</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="using-the-cli">
+<h2>Using the CLI<a class="headerlink" href="#using-the-cli" title="Link to this heading"></a></h2>
+<p>You can send commands to homematicIP using the <cite>hmip_cli</cite> script. To get an overview, use -h or –help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from –list-devices.</p>
+<section id="get-information-about-devices-and-groups">
+<h3>Get Information about devices and groups<a class="headerlink" href="#get-information-about-devices-and-groups" title="Link to this heading"></a></h3>
+<p>Commands are bound to the channel type. To get a list of all allowed actions for a device you can write <cite>hmip_cli -d {deviceid} –print-allowed-commands</cite> or <cite>hmip_cli -d {deviceid} -ac</cite>.</p>
+<p>To get infos for a device and its channels use the <cite>–print-infos</cite> argument in combination with -d for a device or -g for a group.</p>
+</section>
+<section id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h3>
+<p>A few examples:</p>
+<ul class="simple">
+<li><p><cite>hmip_cli –help</cite> to get help</p></li>
+<li><p><cite>hmip_cli –list-devices</cite> to get a list of your devices.</p></li>
+<li><p><cite>hmip_cli -d &lt;id-from-device-list&gt; –toggle-garage-door</cite> to toogle the garage door with HmIP-WGC.</p></li>
+<li><p><cite>hmip_cli –list-events</cite> to listen to events and changes in your homematicIP system</p></li>
+<li><p><cite>hmip_cli -d &lt;id&gt; –set-lock-state LOCKED –pin 1234</cite> to lock a door with HmIP-DLD</p></li>
+<li><p><cite>hmip_cli –dump-configuration –anonymize</cite> to dump the current config and anonymize it.</p></li>
+</ul>
+</section>
+</section>
+<section id="batch-testing-of-applicable-commands">
+<h2>Batch Testing of applicable commands<a class="headerlink" href="#batch-testing-of-applicable-commands" title="Link to this heading"></a></h2>
+<p>HomematicIP devices can have different channels and each channel can have different commands. To test which commands are applicable for a channel, you can use the <cite>hmip_batch</cite> script.</p>
+<p>This script will try to execute commands for a device and print the result. It will also print the commands which are not applicable for the device.</p>
+<p>The script takes the device ID and the channel index as arguments. Required is the json-batch file which contains the commands.</p>
+<p>&gt; Please pay close attention to the parameters used for each command. Incorrect or inappropriate parameters may lead to unexpected behavior or even malfunction of your HomematicIP devices. Executing commands is at your own risk. Always double-check the documentation and ensure you understand the effects of each command before using it in your environment.</p>
+<p>Following steps are required:
+- Install this library with pip <cite>pip install -U homematicip</cite>
+- Get an access token as described above
+- Get your device ID and channel index from the device list using <cite>hmip_cli –list-devices</cite> or <cite>hmip_cli –dump-configuration</cite>
+- Download JSON Batch File from <a class="reference external" href="https://github.com/hahn-th/homematicip-rest-api/blob/master/homematicip_demo/hmip_batch.json">https://github.com/hahn-th/homematicip-rest-api/blob/master/homematicip_demo/hmip_batch.json</a>
+- Edit the JSON Batch File to choose which commands you want to test. You can enable or disable commands by setting the “active” flag to true or false.</p>
+<p>With the “active” flag you can enable or disable commands.</p>
+<dl>
+<dt><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a></dt><dd><dl>
+<dt>{</dt><dd><p>“function”: “set_shutter_level_async”,
+“active”: false,
+“params”: {</p>
+<blockquote>
+<div><p>“shutter_level”: 0.7</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>},</p>
+</dd>
+</dl>
+<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<p>To run the batch test, use the following command:
+<code class="docutils literal notranslate"><span class="pre">`sh</span>
+<span class="pre">hmip_batch</span> <span class="pre">-d</span> <span class="pre">&lt;device-id&gt;</span> <span class="pre">-i</span> <span class="pre">&lt;channel-index&gt;</span> <span class="pre">&lt;path-to-json-batch-file&gt;</span>
+<span class="pre">`</span></code></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Homematic IP Rest API’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_introduction.html" class="btn btn-neutral float-right" title="API Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Thomas Hahn.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
