@@ -148,6 +148,7 @@ TYPE_GROUP_MAP = {
     GroupType.LINKED_SWITCHING: LinkedSwitchingGroup,
     GroupType.LOCK_PROFILE: Group,
     GroupType.LOCK_OUT_PROTECTION_RULE: LockOutProtectionRule,
+    GroupType.OPEN_DOOR_NOTIFICATION_RULE_GROUP: Group,
     GroupType.OVER_HEAT_PROTECTION_RULE: OverHeatProtectionRule,
     GroupType.SECURITY_BACKUP_ALARM_SWITCHING: AlarmSwitchingGroup,
     GroupType.SECURITY_ZONE: SecurityZoneGroup,

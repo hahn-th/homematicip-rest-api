@@ -342,6 +342,7 @@ class GroupType(AutoNameEnum):
     LINKED_SWITCHING = auto()
     LOCK_OUT_PROTECTION_RULE = auto()
     LOCK_PROFILE = auto()
+    OPEN_DOOR_NOTIFICATION_RULE_GROUP = auto()
     OVER_HEAT_PROTECTION_RULE = auto()
     SECURITY = auto()
     SECURITY_BACKUP_ALARM_SWITCHING = auto()
