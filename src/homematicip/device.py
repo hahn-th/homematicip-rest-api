@@ -141,6 +141,7 @@ class Device(BaseDevice):
         # "IOptionalFeatureLightSceneWithShortTimes": false,
         "IOptionalFeatureLowBat": ["lowBat"],
         "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
+        "IOptionalFeatureOperationDays": ["operationDays"],
     }
 
     def __init__(self, connection):
