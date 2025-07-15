@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for HmIPW-DRI16
 
+### Changed
+
+- Fix bug in auth CLI
+
 ## [2.0.7](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.6..2.0.7) 2025-06-29
 
 ### Changed
