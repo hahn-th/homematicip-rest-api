@@ -106,6 +106,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WIRED_DIMMER_3: WiredDimmer3,
     DeviceType.WIRED_DIN_RAIL_ACCESS_POINT: WiredDinRailAccessPoint,
     DeviceType.WIRED_FLOOR_TERMINAL_BLOCK_12: WiredFloorTerminalBlock12,
+    DeviceType.WIRED_INPUT_16: WiredInput32,
     DeviceType.WIRED_INPUT_32: WiredInput32,
     DeviceType.WIRED_INPUT_SWITCH_6: WiredInputSwitch6,
     DeviceType.WIRED_MOTION_DETECTOR_PUSH_BUTTON: WiredMotionDetectorPushButton,

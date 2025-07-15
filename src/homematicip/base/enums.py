@@ -300,6 +300,7 @@ class DeviceType(AutoNameEnum):
     WIRED_DIMMER_3 = auto()
     WIRED_DIN_RAIL_ACCESS_POINT = auto()
     WIRED_FLOOR_TERMINAL_BLOCK_12 = auto()
+    WIRED_INPUT_16 = auto()
     WIRED_INPUT_32 = auto()
     WIRED_INPUT_SWITCH_6 = auto()
     WIRED_MOTION_DETECTOR_PUSH_BUTTON = auto()
