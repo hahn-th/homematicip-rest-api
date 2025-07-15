@@ -5,7 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.6..master)
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.1.0..master)
+
+### Added
+
+- Add IOptionalFeatureOperationDays with attribute operationDays
+
+## [2.1.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.7..2.1.0) 2025-07-15
+
+### Added
+
+- Add support for HmIPW-DRI16
+- Add generic group for OPEN_DOOR_NOTIFICATION_RULE_GROUP
+
+### Changed
+
+- Fix bug in auth CLI
+
+## [2.0.7](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.6..2.0.7) 2025-06-29
+
+### Changed
+
+- Raise HmipConnectionError, if REST-Request in get_state has an error 
+- Raise HomeNotInitializedError, if get_state is called before the Home is initialized
 
 ## [2.0.6](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.5..2.0.6) 2025-06-19
 
