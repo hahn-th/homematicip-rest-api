@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add support for HmIPW-DRI16
+- Add generic group for OPEN_DOOR_NOTIFICATION_RULE_GROUP
 
 ### Changed
 
