@@ -1,3 +1,0 @@
-# `location`
-
-::: homematicip.location

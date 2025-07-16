@@ -1,3 +1,0 @@
-# `securityEvent`
-
-::: homematicip.securityEvent

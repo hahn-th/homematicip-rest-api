@@ -1,3 +1,0 @@
-# `weather`
-
-::: homematicip.weather

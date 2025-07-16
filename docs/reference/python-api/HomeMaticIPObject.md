@@ -1,3 +1,0 @@
-# `HomeMaticIPObject`
-
-::: homematicip.HomeMaticIPObject

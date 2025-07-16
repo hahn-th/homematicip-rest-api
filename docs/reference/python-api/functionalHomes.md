@@ -1,3 +1,0 @@
-# `functionalHomes`
-
-::: homematicip.functionalHomes

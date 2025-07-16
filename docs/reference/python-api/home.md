@@ -1,3 +1,0 @@
-# `home`
-
-::: homematicip.home

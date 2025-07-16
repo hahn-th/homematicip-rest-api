@@ -1,3 +1,0 @@
-# `client`
-
-::: homematicip.client

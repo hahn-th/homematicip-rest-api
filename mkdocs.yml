@@ -3,33 +3,18 @@ site_description: Automatic documentation from sources, for MkDocs.
 site_url: https://hahn-th.github.io/homematicip-rest-api/
 repo_url: https://github.com/hahn-th/homematicip-rest-api
 repo_name: hahn-th/homematicip-rest-api
+
 nav:
-- Getting Started: getting-started.md
-- Index: index.md
-- reference:
-  - Api Introduction: reference/api-introduction.md
-  - python-api:
-    - Eventhook: reference/python-api/EventHook.md
-    - Homematicipobject: reference/python-api/HomeMaticIPObject.md
-    - ' Version': reference/python-api/_version.md
-    - Access Point Update State: reference/python-api/access_point_update_state.md
-    - Async Home: reference/python-api/async_home.md
-    - Auth: reference/python-api/auth.md
-    - Class Maps: reference/python-api/class_maps.md
-    - Client: reference/python-api/client.md
-    - Device: reference/python-api/device.md
-    - Functionalhomes: reference/python-api/functionalHomes.md
-    - Group: reference/python-api/group.md
-    - Home: reference/python-api/home.md
-    - Index: reference/python-api/index.md
-    - Location: reference/python-api/location.md
-    - Oauth Otk: reference/python-api/oauth_otk.md
-    - Rule: reference/python-api/rule.md
-    - Securityevent: reference/python-api/securityEvent.md
-    - Weather: reference/python-api/weather.md
-  - Reference: reference/reference.md
+- Home:
+  - Getting Started: getting-started.md
+  - Batch testing: batch-testing.md
+- API Reference:
+  - Introduction: api-introduction.md
+
 theme:
   name: material
+  palette:
+    primary: light-blue
   features:
   - navigation.expand
   - navigation.footer
@@ -46,6 +31,34 @@ plugins:
     default_handler: python
     handlers:
       python:
+        import:
+          - https://docs.python.org/3/objects.inv
         options:
+          docstring_section_style: table # or "table"
           docstring_style: sphinx
+          #filters: ["!^_"]
+          heading_level: 1
+          merge_init_into_class: false
+          parameter_headings: true
+          separate_signature: true
+          show_root_heading: true
+          show_signature_annotations: true
+          show_signature: false
+          show_symbol_type_heading: true
+          show_symbol_type_toc: true
+          show_submodules: false
+          summary: false
           show_source: false
+          load_external_modules: false
+          members_order: alphabetical
+- api-autonav:
+    modules: ['src/homematicip']
+    nav_section_title: "API Reference"
+    api_root_uri: "reference"
+#    nav_item_prefix: "<code class='doc-symbol doc-symbol-nav doc-symbol-module'></code>"
+    nav_item_prefix: ""
+    #exclude_private: false
+    on_implicit_namespace_package: "warn"
+    exclude:
+      - "homematicip._version"
+      - "homematicip.__main__"
