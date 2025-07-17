@@ -1,11 +1,12 @@
 site_name: HomematicIP Cloud Rest API Wrapper
-site_description: Automatic documentation from sources, for MkDocs.
+site_description: A Python wrapper for the homematicIP REST API.
 site_url: https://hahn-th.github.io/homematicip-rest-api/
 repo_url: https://github.com/hahn-th/homematicip-rest-api
 repo_name: hahn-th/homematicip-rest-api
 
 nav:
 - Home:
+  - Overview: index.md
   - Getting Started: getting-started.md
   - Batch testing: batch-testing.md
 - API Reference:
@@ -34,7 +35,7 @@ plugins:
         import:
           - https://docs.python.org/3/objects.inv
         options:
-          docstring_section_style: table # or "table"
+          docstring_section_style: table
           docstring_style: sphinx
           #filters: ["!^_"]
           heading_level: 1

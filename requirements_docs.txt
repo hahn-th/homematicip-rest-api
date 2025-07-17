@@ -1,3 +1,4 @@
-sphinx
-myst-parser
-sphinx_rtd_theme
+mkdocs>=1.6.1
+mkdocstrings[python]>=0.18
+mkdocs-material>=9.4.0
+mkdocs-api-autonav>=0.3.0
