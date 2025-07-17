@@ -78,6 +78,7 @@ class RestConnection:
         @param data: The data to send as json
         @param custom_header: A custom header to send. Replaces the default header
         @return: The result as a RestResult object
+        @raises HmipThrottlingError: If the cloud returns a 429 status code (throttling active)
         """
         full_url = self._build_url(self._context.rest_url, url)
         try:
