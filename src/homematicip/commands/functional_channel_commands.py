@@ -942,13 +942,9 @@ async def set_inapp_water_alarm_trigger_async(rest_connection: RestConnection, d
     Set the in-app water alarm trigger.
 
     :param rest_connection: The REST connection instance.
-    :type rest_connection: RestConnection
     :param device_id: The device ID.
-    :type device_id: str
     :param channel_index: The channel index.
-    :type channel_index: int
     :param inapp_water_alarm_trigger: The in-app water alarm trigger as string. Possible values are defined in the WaterAlarmTrigger enum.
-    :type inapp_water_alarm_trigger: str
     :return: The response from the cloud.
     :rtype: dict
     """
@@ -966,13 +962,9 @@ async def set_siren_water_alarm_trigger_async(rest_connection: RestConnection, d
     Set the siren water alarm trigger.
 
     :param rest_connection: The REST connection instance.
-    :type rest_connection: RestConnection
     :param device_id: The device ID.
-    :type device_id: str
     :param channel_index: The channel index.
-    :type channel_index: int
     :param siren_water_alarm_trigger: The siren water alarm trigger as string. Possible values are defined in the WaterAlarmTrigger enum.
-    :type siren_water_alarm_trigger: str
     :return: The response from the cloud.
     :rtype: dict
     """
@@ -990,15 +982,10 @@ async def start_light_scene_async(rest_connection: RestConnection, device_id: st
     Start a light scene for a functional channel.
 
     :param rest_connection: The REST connection instance.
-    :type rest_connection: RestConnection
     :param device_id: The device ID.
-    :type device_id: str
     :param channel_index: The channel index.
-    :type channel_index: int
     :param scene_id: The ID of the light scene.
-    :type scene_id: int
     :param dim_level: The desired dim level (0.0 to 1.0).
-    :type dim_level: float
     :return: The response from the cloud.
     :rtype: dict
     """
