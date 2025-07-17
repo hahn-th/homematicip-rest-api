@@ -1,4 +1,4 @@
-from unittest.mock import Mock
+from unittest.mock import Mock, patch, AsyncMock
 
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.functionalChannels import *
@@ -525,3 +525,19 @@ def test_device_blocking_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000WKP", 0)
         assert isinstance(ch, DeviceBlockingChannel)
+
+
+async def test_watering_actuator_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F71100000000000SHWSM", 1)
+        assert isinstance(ch, WateringActuatorChannel)
+
+        connection_mock = AsyncMock()
+        ch._connection = connection_mock
+
+        await ch.reset_water_volume_async()
+        await ch.set_watering_switch_state_async(True)
+        await ch.set_watering_switch_state_with_time_async(True, 100)
+        await ch.toggle_watering_state_async()
+
+        assert len(connection_mock.mock_calls) == 4

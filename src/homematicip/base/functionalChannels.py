@@ -2233,3 +2233,52 @@ class CodeProtectedPrimaryActionChannel(FunctionalChannel):
 class CodeProtectedSecondaryActionChannel(FunctionalChannel):
     """this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)"""
     pass
+
+
+class WateringActuatorChannel(FunctionalChannel):
+    """this is the representative of the WATERING_ACTUATOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+        self.waterFlow: float | None = None
+        self.waterVolume: float | None = None
+        self.waterVolumeSinceOpen: float | None = None
+        self.wateringActive: bool | None = None
+        self.wateringOnTime: float | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.waterFlow = js.get("waterFlow")
+        self.waterVolume = js.get("waterVolume")
+        self.waterVolumeSinceOpen = js.get("waterVolumeSinceOpen")
+        self.wateringActive = js.get("wateringActive")
+        self.wateringOnTime = js.get("wateringOnTime")
+
+    async def reset_water_volume_async(self):
+        """Resets the water volume counter of the specified device."""
+        return await functional_channel_commands.reset_water_volume_async(
+            self._connection, self.device.id, self.index
+        )
+
+    async def set_watering_switch_state_async(self, on: bool):
+        """Sets the watering switch state of the specified device."""
+        return await functional_channel_commands.set_watering_switch_state_async(
+            self._connection, self.device.id, self.index, on
+        )
+
+    async def set_watering_switch_state_with_time_async(self, on: bool, seconds: int):
+        """Sets the watering switch state of the specified device with a specified time.
+
+        :param on: True to turn on, False to turn off.
+        :param seconds: The watering time in seconds.
+        """
+        return await functional_channel_commands.set_watering_switch_state_with_time_async(
+            self._connection, self.device.id, self.index, on, seconds
+        )
+
+    async def toggle_watering_state_async(self):
+        """Toggles the watering state of the specified device."""
+        return await functional_channel_commands.toggle_watering_state_async(
+            self._connection, self.device.id, self.index
+        )

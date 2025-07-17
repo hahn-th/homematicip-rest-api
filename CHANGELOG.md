@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add IOptionalFeatureOperationDays with attribute operationDays
+- Add support for ELV-SH-WSM (Watering Actuator) (#583)
 
 ## [2.1.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.0.7..2.1.0) 2025-07-15
 
@@ -47,6 +48,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Make websocket connection more robust against errors
+
+### Added
+
+- Add support for ELV-SH-WSM (Watering Actuator) (#583)
 
 ## [2.0.4] 2025-05-30
 
