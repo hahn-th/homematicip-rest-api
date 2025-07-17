@@ -30,6 +30,13 @@ async def reset_passage_counter_async(rest_connection: RestConnection, device_id
 
 
 async def reset_water_volume_async(rest_connection: RestConnection, device_id: str, channel_index: int):
+    """
+    Resets the water volume counter of the specified device.
+
+    :param rest_connection: The REST connection instance.
+    :param device_id: The device ID.
+    :param channel_index: The channel index.
+    """
     data = {
         "channelIndex": channel_index,
         "deviceId": device_id
@@ -796,13 +803,9 @@ async def set_watering_switch_state_async(rest_connection: RestConnection, devic
     Set the watering switch state for a functional channel.
 
     :param rest_connection: The REST connection instance.
-    :type rest_connection: RestConnection
     :param device_id: The device ID.
-    :type device_id: str
     :param channel_index: The channel index.
-    :type channel_index: int
     :param watering_active: The desired watering state (True for active, False for inactive).
-    :type watering_active: bool
     :return: The response from the cloud.
     :rtype: dict
     """
@@ -820,15 +823,10 @@ async def set_watering_switch_state_with_time_async(rest_connection: RestConnect
     Set the watering switch state for a functional channel with a specific watering time.
 
     :param rest_connection: The REST connection instance.
-    :type rest_connection: RestConnection
     :param device_id: The device ID.
-    :type device_id: str
     :param channel_index: The channel index.
-    :type channel_index: int
     :param watering_active: The desired watering state (True for active, False for inactive).
-    :type watering_active: bool
     :param watering_time: The watering time in seconds.
-    :type watering_time: float
     :return: The response from the cloud.
     :rtype: dict
     """
@@ -846,13 +844,9 @@ async def set_display_async(rest_connection: RestConnection, device_id: str, cha
     Set the climate control display.
 
     :param rest_connection: The REST connection instance.
-    :type rest_connection: RestConnection
     :param device_id: The device ID.
-    :type device_id: str
     :param channel_index: The channel index.
-    :type channel_index: int
     :param display: The display as string. Possible values are defined in the ClimateControlDisplay enum.
-    :type display: str
     :return: The response from the cloud.
     :rtype: dict
     """
@@ -996,3 +990,19 @@ async def start_light_scene_async(rest_connection: RestConnection, device_id: st
         "dimLevel": dim_level
     }
     return await rest_connection.async_post("device/control/startLightScene", data)
+
+async def toggle_watering_state_async(rest_connection: RestConnection, device_id: str, channel_index: int):
+    """
+    Toggle the watering state for a functional channel.
+
+    :param rest_connection: The REST connection instance.
+    :param device_id: The device ID.
+    :param channel_index: The channel index.
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {
+        "channelIndex": channel_index,
+        "deviceId": device_id
+    }
+    return await rest_connection.async_post("device/control/toggleWateringState", data)
