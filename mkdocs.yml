@@ -9,6 +9,7 @@ nav:
   - Overview: index.md
   - Getting Started: getting-started.md
   - Batch testing: batch-testing.md
+  - Changelog: changelog.md
 - API Reference:
   - Introduction: api-introduction.md
 
