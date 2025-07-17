@@ -33,7 +33,7 @@ plugins:
     default_handler: python
     handlers:
       python:
-        import:
+        inventories:
           - https://docs.python.org/3/objects.inv
         options:
           docstring_section_style: table
@@ -60,7 +60,7 @@ plugins:
 #    nav_item_prefix: "<code class='doc-symbol doc-symbol-nav doc-symbol-module'></code>"
     nav_item_prefix: ""
     #exclude_private: false
-    on_implicit_namespace_package: "warn"
+    on_implicit_namespace_package: "skip"
     exclude:
       - "homematicip._version"
       - "homematicip.__main__"
