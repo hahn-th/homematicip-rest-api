@@ -142,6 +142,9 @@ class Device(BaseDevice):
         "IOptionalFeatureLowBat": ["lowBat"],
         "IOptionalFeatureMountingOrientation": ["mountingOrientation"],
         "IOptionalFeatureOperationDays": ["operationDays"],
+        "IOptionalFeatureDeviceFrostProtectionError": ["frostProtectionError"],
+        "IOptionalFeatureDeviceValveError": ["valveFlowError"],
+        "IOptionalFeatureDeviceWaterError": ["valveWaterError"],
     }
 
     def __init__(self, connection):
