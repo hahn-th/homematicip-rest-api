@@ -563,7 +563,7 @@ class DoorChannel(FunctionalChannel):
 
     async def async_send_door_command(self, doorCommand=DoorCommand.STOP):
         return await functional_channel_commands.send_door_command_async(
-            self._connection, self.device.id, self.index, doorCommand
+            self._connection, self.device.id, self.index, str(doorCommand)
         )
 
 

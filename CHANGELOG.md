@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.2.0..master)
 
+### Fixed
+
+- Fix params for sendDoorCommand
+
 ## [2.2.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.1.0..2.2.0) 2025-07-18
 
 ### Added

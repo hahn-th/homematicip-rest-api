@@ -2459,10 +2459,12 @@ class DoorModule(Device):
             self.set_attr_from_dict("ventilationPositionSupported", c)
 
     def send_door_command(self, doorCommand=DoorCommand.STOP):
+        logging.warning("function is deprecated, use send_door_command_async instead")
         return self._run_non_async(lambda: self.send_door_command_async(doorCommand))
 
     async def send_door_command_async(self, doorCommand=DoorCommand.STOP):
-        data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": doorCommand}
+        logging.warning("function is deprecated, use send_door_command_async instead")
+        data = {"channelIndex": 1, "deviceId": self.id, "doorCommand": str(doorCommand)}
         return await self._rest_call_async("device/control/sendDoorCommand", data)
 
 
