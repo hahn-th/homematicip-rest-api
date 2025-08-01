@@ -985,7 +985,6 @@ class ShutterChannel(FunctionalChannel):
         self.supportingSelfCalibration = js["supportingSelfCalibration"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
-
     def set_shutter_stop(self):
         return self._run_non_async(self.async_set_shutter_stop)
 
@@ -2180,7 +2179,7 @@ class UniversalLightChannel(FunctionalChannel):
         )
 
     async def set_hue_saturation_dim_level_with_time_async(self, hue: int, saturation_level: float, dim_level: float,
-                                                       on_time: float, ramp_time: float):
+                                                           on_time: float, ramp_time: float):
         return await functional_channel_commands.set_hue_saturation_dim_level_with_time_async(
             self._connection, self.device.id, self.index, hue, saturation_level, dim_level, on_time, ramp_time
         )
@@ -2197,6 +2196,7 @@ class UniversalLightChannel(FunctionalChannel):
         return await functional_channel_commands.start_light_scene_async(
             self._connection, self.device.id, self.index, light_scene_id, dim_level
         )
+
 
 class UniversalLightChannelGroup(UniversalLightChannel):
     """Universal-Light-Channel-Group."""
@@ -2282,3 +2282,35 @@ class WateringActuatorChannel(FunctionalChannel):
         return await functional_channel_commands.toggle_watering_state_async(
             self._connection, self.device.id, self.index
         )
+
+
+class SoilMoistureSensorInterfaceChannel(FunctionalChannel):
+    """This is the representative of the SOIL_MOISTURE_SENSOR_INTERFACE_CHANNEL channel."""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.measuringInterval: int | None = None
+        self.soilMoisture: int | None = None
+        self.soilMoistureMaximumReference: int | None = None
+        self.soilMoistureMinimumReference: int | None = None
+        self.soilMoistureNeutralMaximum: int | None = None
+        self.soilMoistureNeutralMinimum: int | None = None
+        self.soilMoistureRawValue: int | None = None
+        self.soilTemperature: float | None = None
+        self.soilTemperatureNeutralMaximum: float | None = None
+        self.soilTemperatureNeutralMinimum: float | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+
+        super().from_json(js, groups)
+        self.measuringInterval = js.get("measuringInterval", self.measuringInterval)
+        self.soilMoisture = js.get("soilMoisture", self.soilMoisture)
+        self.soilMoistureMaximumReference = js.get("soilMoistureMaximumReference", self.soilMoistureMaximumReference)
+        self.soilMoistureMinimumReference = js.get("soilMoistureMinimumReference", self.soilMoistureMinimumReference)
+        self.soilMoistureNeutralMaximum = js.get("soilMoistureNeutralMaximum", self.soilMoistureNeutralMaximum)
+        self.soilMoistureNeutralMinimum = js.get("soilMoistureNeutralMinimum", self.soilMoistureNeutralMinimum)
+        self.soilMoistureRawValue = js.get("soilMoistureRawValue", self.soilMoistureRawValue)
+        self.soilTemperature = js.get("soilTemperature", self.soilTemperature)
+        self.soilTemperatureNeutralMaximum = js.get("soilTemperatureNeutralMaximum", self.soilTemperatureNeutralMaximum)
+        self.soilTemperatureNeutralMinimum = js.get("soilTemperatureNeutralMinimum", self.soilTemperatureNeutralMinimum)

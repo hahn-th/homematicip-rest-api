@@ -541,3 +541,20 @@ async def test_watering_actuator_channel(fake_home: Home):
         await ch.toggle_watering_state_async()
 
         assert len(connection_mock.mock_calls) == 4
+
+
+def test_soil_moisture_sensor_interface_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000ELVSHSMSI", 1)
+        assert isinstance(ch, SoilMoistureSensorInterfaceChannel)
+
+        assert ch.measuringInterval == 10
+        assert ch.soilMoisture == 56
+        assert ch.soilMoistureMaximumReference == 3000
+        assert ch.soilMoistureMinimumReference == 3900
+        assert ch.soilMoistureNeutralMaximum == 80
+        assert ch.soilMoistureNeutralMinimum == 20
+        assert ch.soilMoistureRawValue == 3439
+        assert ch.soilTemperature == 21.5
+        assert ch.soilTemperatureNeutralMaximum == 28.0
+        assert ch.soilTemperatureNeutralMinimum == 5.0

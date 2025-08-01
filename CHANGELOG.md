@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.2.0..master)
 
+### Added 
+
+- Add device SoilMoistureSensorInterface to support ELV-SH-SMSI
+- Add channel SoilMoistureSensorInterfaceChannel to support ELV-SH-SMSI
+
 ### Fixed
 
 - Fix params for sendDoorCommand

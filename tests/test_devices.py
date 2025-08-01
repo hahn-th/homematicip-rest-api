@@ -1828,7 +1828,14 @@ def test_wall_mounted_keypad(fake_home: Home):
         d = fake_home.search_device_by_id("3014F7110000000000000WKP")
         assert isinstance(d, WallMountedKeyPad)
 
+
 def test_watering_actuator(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000SHWSM")
         assert isinstance(d, WateringActuator)
+
+
+def test_soil_moisture_sensor_interface(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000ELVSHSMSI")
+        assert isinstance(d, SoilMoistureSensorInterface)

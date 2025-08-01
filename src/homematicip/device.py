@@ -951,6 +951,10 @@ class BrandSwitch2(Switch):
     """ELV-SH-BS2 (ELV Smart Home ARR-Bausatz Schaltaktor für Markenschalter – 2-fach powered by Homematic IP)"""
 
 
+class SoilMoistureSensorInterface(Device):
+    """ELV-SH-SMSI (Soil Moisture Sensor Interface)"""
+
+
 class SwitchMeasuring(Switch):
     """Generic class for Switch and Meter"""
 
