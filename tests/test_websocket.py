@@ -30,11 +30,8 @@ async def test_is_connected_false_initial():
 @pytest.mark.asyncio
 async def test_is_connected_true(monkeypatch):
     client = WebsocketHandler()
-    ws_mock = MagicMock()
-    ws_mock.closed = False
-    client._ws = ws_mock
+    client._websocket_connected.set()
     assert client.is_connected()
-
 
 @pytest.mark.asyncio
 async def test_handle_task_result_logs_cancelled(caplog):
@@ -58,18 +55,15 @@ async def test_handle_task_result_logs_exception(caplog):
 
 @pytest.mark.asyncio
 async def test_cleanup_closes_ws_and_session(monkeypatch):
+    callback_mock = AsyncMock()
     client = WebsocketHandler()
-    ws_mock = AsyncMock()
-    session_mock = AsyncMock()
-    ws_mock.closed = False
-    session_mock.closed = False
-    client._ws = ws_mock
-    client._session = session_mock
+    client._websocket_connected.set()
+    client.add_on_disconnected_handler(callback_mock)
+
     await client._cleanup()
-    ws_mock.close.assert_awaited()
-    session_mock.close.assert_awaited()
-    assert client._ws is None
-    assert client._session is None
+
+    assert not client._websocket_connected.is_set()
+    callback_mock.assert_awaited_once()
 
 
 @pytest.mark.asyncio
@@ -94,8 +88,7 @@ async def test_listen_calls_handlers(monkeypatch):
         DummyMsg('test2', type_=aiohttp.WSMsgType.BINARY),
         DummyMsg('err', type_=aiohttp.WSMsgType.ERROR)
     ]
-    client._ws = ws_mock
     with patch('logging.Logger.debug'), patch('logging.Logger.error'):
-        await client._listen()
+        await client._listen(ws_mock)
     handler.assert_any_await('test')
     handler.assert_any_await('test2')

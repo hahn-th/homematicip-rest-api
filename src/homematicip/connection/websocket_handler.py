@@ -3,6 +3,7 @@ import logging
 from typing import Callable, List
 
 import aiohttp
+from aiohttp import WSMessage
 
 from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, ATTR_ACCESSPOINT_ID
 from homematicip.connection.connection_context import ConnectionContext
@@ -19,9 +20,8 @@ class WebsocketHandler:
     def __init__(self):
         self.INITIAL_BACKOFF = 8
         self.url = None
-        self._session = None
-        self._ws: aiohttp.client.ClientSession = None
         self._stop_event = asyncio.Event()
+        self._websocket_connected = asyncio.Event()
         self._reconnect_task = None
         self._task_lock = asyncio.Lock()
         self._on_message_handlers: List[Callable] = []
@@ -59,27 +59,30 @@ class WebsocketHandler:
 
     async def _connect(self, context: ConnectionContext):
         backoff = self.INITIAL_BACKOFF
-        max_backoff = 1800
+        max_backoff = 900
         while not self._stop_event.is_set():
             try:
                 LOGGER.info(f"Connect to {context.websocket_url}")
-                self._session = aiohttp.ClientSession()
-                self._ws = await self._session.ws_connect(
-                    context.websocket_url,
-                    headers={
-                        ATTR_AUTH_TOKEN: context.auth_token,
-                        ATTR_CLIENT_AUTH: context.client_auth_token,
-                        ATTR_ACCESSPOINT_ID: context.accesspoint_id
-                    },
-                    ssl=getattr(context, 'ssl_ctx', True),
-                    heartbeat=30,
-                    timeout=aiohttp.ClientTimeout(total=30)
-                )
-                LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
-                await self._call_handlers(self._on_connected_handler)
-                backoff = self.INITIAL_BACKOFF
-                await self._listen()
+
+                async with aiohttp.ClientSession() as session:
+                    async with session.ws_connect(
+                        context.websocket_url,
+                        headers={
+                            ATTR_AUTH_TOKEN: context.auth_token,
+                            ATTR_CLIENT_AUTH: context.client_auth_token,
+                            ATTR_ACCESSPOINT_ID: context.accesspoint_id
+                        },
+                        heartbeat=30,
+                        ssl=getattr(context, 'ssl_ctx', True),
+                    ) as ws:
+                        backoff = self.INITIAL_BACKOFF
+                        LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
+                        self._websocket_connected.set()
+                        await self._call_handlers(self._on_connected_handler)
+                        await self._listen(ws)
+
             except Exception as e:
+                self._websocket_connected.clear()
                 reason = f"Websocket lost connection: {e}. Retry in {backoff}s."
                 LOGGER.warning(reason)
 
@@ -93,24 +96,23 @@ class WebsocketHandler:
             finally:
                 await self._cleanup()
 
-    async def _listen(self):
-        async for msg in self._ws:
+
+    async def _listen(self, ws):
+        async for msg in ws:
             if msg.type in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
-                await self._call_handlers(self._on_message_handlers, msg.data)
+                await self._handle_ws_message(msg)
             elif msg.type == aiohttp.WSMsgType.ERROR:
                 LOGGER.error(f"Error in websocket: {msg}")
                 break
 
-    async def _cleanup(self):
-        if self._ws:
-            if not self._ws.closed:
-                await self._ws.close()
-            self._ws = None
-        if self._session:
-            if not self._session.closed:
-                await self._session.close()
-            self._session = None
+    async def _handle_ws_message(self, message: WSMessage):
+        try:
+            await self._call_handlers(self._on_message_handlers, message.data)
+        except Exception as e:
+            LOGGER.error(f"Error handling message: {e}", exc_info=True)
 
+    async def _cleanup(self):
+        self._websocket_connected.clear()
         await self._call_handlers(self._on_disconnected_handler)
 
     async def start(self, context: ConnectionContext):
@@ -128,14 +130,14 @@ class WebsocketHandler:
         LOGGER.info("Stop websocket client...")
         self._stop_event.set()
         async with self._task_lock:
-            try:
-                await self._ws.close()
-            except Exception as e:
-                pass
-            finally:
-                if self._reconnect_task:
+            if self._reconnect_task and not self._reconnect_task.done():
+                self._reconnect_task.cancel()
+                try:
                     await self._reconnect_task
-                    self._reconnect_task = None
+                except asyncio.CancelledError:
+                    pass
+
+                self._reconnect_task = None
         await self._cleanup()
         LOGGER.info("[Stop] WebSocket client stopped.")
 
@@ -149,4 +151,4 @@ class WebsocketHandler:
 
     def is_connected(self):
         """Returns True if the WebSocket connection is active."""
-        return self._ws is not None and not self._ws.closed
+        return self._websocket_connected.is_set()
