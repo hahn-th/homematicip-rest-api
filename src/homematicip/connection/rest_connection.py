@@ -82,11 +82,15 @@ class RestConnection:
         """
         full_url = self._build_url(self._context.rest_url, url)
         try:
+            data_logging = data.copy() if data is not None else {}
+            if "id" in data_logging:
+                data_logging["id"] = "REDACTED"
+
             header = self._headers
             if custom_header is not None:
                 header = custom_header
 
-            LOGGER.debug(f"Sending post request to url {full_url}. Data is: {data}")
+            LOGGER.debug(f"Sending post request to url {full_url}. Data is: {data_logging}")
             r = await self._execute_request_async(full_url, data, header)
             LOGGER.debug(f"Got response {r.status_code}.")
 
@@ -109,7 +113,7 @@ class RestConnection:
         except httpx.HTTPStatusError as exc:
             if self._log_status_exceptions:
                 LOGGER.error(
-                    f"Error response {exc.response.status_code} ({exc.response.text}) while requesting {exc.request.url!r} with data {data if data is not None else "<no-data>"}."
+                    f"Error response {exc.response.status_code} ({exc.response.text}) while requesting {exc.request.url!r} with data {data_logging if data_logging is not None else "<no-data>"}."
                 )
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
