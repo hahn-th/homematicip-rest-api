@@ -907,8 +907,34 @@ class Switch(Device):
         return await self.set_switch_state_async(False, channelIndex)
 
 
-class CarbonDioxideSensor(Switch):
+class CarbonDioxideSensor(Device):
     """HmIP-SCTH230"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.actualTemperature = 0
+        self.humidity = 0
+        self.vaporAmount = 0.0
+        self.carbonDioxideVisualisationEnabled = True
+        self.carbonDioxideConcentration = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel(
+            "CARBON_DIOXIDE_SENSOR_CHANNEL", js
+        )
+        if c:
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
+            self.vaporAmount = c["vaporAmount"]
+            self.carbonDioxideVisualisationEnabled = c["carbonDioxideVisualisationEnabled"]
+            self.carbonDioxideConcentration = c["carbonDioxideConcentration"]
+
+    def __str__(self):
+        return "{} actualTemperature({}) humidity({}) vaporAmount({}) carbonDioxideVisualisationEnabled({}) carbonDioxideConcentration({})".format(
+            super().__str__(), self.actualTemperature, self.humidity, self.vaporAmount,
+            self.carbonDioxideVisualisationEnabled, self.carbonDioxideConcentration
+        )
 
 
 class PlugableSwitch(Switch):
