@@ -145,6 +145,7 @@ class Device(BaseDevice):
         "IOptionalFeatureDeviceFrostProtectionError": ["frostProtectionError"],
         "IOptionalFeatureDeviceValveError": ["valveFlowError"],
         "IOptionalFeatureDeviceWaterError": ["valveWaterError"],
+        "IOptionalFeatureDeviceOperationMode": ["deviceOperationMode"]
     }
 
     def __init__(self, connection):

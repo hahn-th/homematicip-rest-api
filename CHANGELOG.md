@@ -11,10 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add device SoilMoistureSensorInterface to support ELV-SH-SMSI
 - Add channel SoilMoistureSensorInterfaceChannel to support ELV-SH-SMSI
+- Add IOptionalFeatureDeviceOperationMode
 
 ### Fixed
 
 - Fix params for sendDoorCommand
+- Improve Websocket Handling
 
 ## [2.2.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.1.0..2.2.0) 2025-07-18
 
