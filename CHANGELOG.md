@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add channel SoilMoistureSensorInterfaceChannel to support ELV-SH-SMSI
 - Add IOptionalFeatureDeviceOperationMode
 
+### Changed
+
+- Bump to aiohttp==3.12.15
+
 ### Fixed
 
 - Fix params for sendDoorCommand
