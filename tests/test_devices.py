@@ -1375,6 +1375,22 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
             "pumpProtectionSwitchingInterval(14)"
         )
+
+        d = FloorTerminalBlock8(fake_home._connection)
+        d = fake_home.search_device_by_id("3014F7110000000000000040")
+        assert d.minimumFloorHeatingValvePosition == 0.0
+        d.set_minimum_floor_heating_valve_position(0.2)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F7110000000000000040")
+        assert d.minimumFloorHeatingValvePosition == 0.2
+        assert str(d) == (
+            "Floor heating controller - 8 channels, motorised lowBat(None) unreach(False) "
+            "rssiDeviceValue(-73) rssiPeerValue(-61) configPending(False) dutyCycle(False) "
+            "minimumFloorHeatingValvePosition(0.2) "
+            "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
+            "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+        )
+
         d = FloorTerminalBlock12(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000000049")
         assert d.minimumFloorHeatingValvePosition == 0.0

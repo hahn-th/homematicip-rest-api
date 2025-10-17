@@ -799,10 +799,8 @@ class FloorTerminalBlock6(Device):
             self.pumpProtectionSwitchingInterval,
         )
 
-
 class FloorTerminalBlock10(FloorTerminalBlock6):
     """HMIP-FAL24-C10  (Floor Heating Actuator – 10x channels, 24V)"""
-
 
 class FloorTerminalBlock12(Device):
     """HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised)"""
@@ -861,10 +859,11 @@ class FloorTerminalBlock12(Device):
             body=data,
         )
 
+class FloorTerminalBlock8(FloorTerminalBlock12):
+    """HMIP-FALMOT-C8 (Floor Heating Actuator – 8x channels, 24V)"""
 
 class WiredFloorTerminalBlock12(FloorTerminalBlock12):
     """Implementation of HmIPW-FALMOT-C12"""
-
 
 class Switch(Device):
     """Generic Switch class"""
