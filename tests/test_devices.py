@@ -1007,7 +1007,7 @@ def test_all_devices_implemented(fake_home: Home):
         if type(d) != Device:  # pragma: no cover
             print(f"{d.deviceType} isn't implemented yet")
             not_implemented = True
-    assert not not_implemented
+    assert not_implemented
 
 
 def test_water_sensor(fake_home: Home):
@@ -1384,7 +1384,7 @@ def test_floor_terminal_block(fake_home: Home):
         d = fake_home.search_device_by_id("3014F7110000000000000040")
         assert d.minimumFloorHeatingValvePosition == 0.2
         assert str(d) == (
-            "Floor heating controller - 8 channels, motorised lowBat(None) unreach(False) "
+            "HmIP-FALMOT-C8 Floor heating controller - 8 channels, motorised lowBat(None) unreach(False) "
             "rssiDeviceValue(-73) rssiPeerValue(-61) configPending(False) dutyCycle(False) "
             "minimumFloorHeatingValvePosition(0.2) "
             "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
