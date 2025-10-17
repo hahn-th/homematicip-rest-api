@@ -1007,7 +1007,7 @@ def test_all_devices_implemented(fake_home: Home):
         if type(d) != Device:  # pragma: no cover
             print(f"{d.deviceType} isn't implemented yet")
             not_implemented = True
-    assert not_implemented
+    assert not not_implemented
 
 
 def test_water_sensor(fake_home: Home):
