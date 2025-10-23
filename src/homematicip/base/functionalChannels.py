@@ -98,21 +98,21 @@ class DeviceBaseChannel(FunctionalChannel):
         self.rssiPeerValue = js["rssiPeerValue"]
         self.dutyCycle = js["dutyCycle"]
         self.configPending = js["configPending"]
-        sof = js["supportedOptionalFeatures"]
+        sof = js.get("supportedOptionalFeatures", {})
         if sof:
-            if sof["IFeatureDeviceCoProError"]:
+            if sof.get("IFeatureDeviceCoProError", False):
                 self.coProFaulty = js["coProFaulty"]
-            if sof["IFeatureDeviceCoProRestart"]:
+            if sof.get("IFeatureDeviceCoProRestart", False):
                 self.coProRestartNeeded = js["coProRestartNeeded"]
-            if sof["IFeatureDeviceCoProUpdate"]:
+            if sof.get("IFeatureDeviceCoProUpdate", False):
                 self.coProUpdateFailure = js["coProUpdateFailure"]
-            if sof["IFeatureDeviceOverheated"]:
+            if sof.get("IFeatureDeviceOverheated", False):
                 self.deviceOverheated = js["deviceOverheated"]
-            if sof["IFeatureDeviceOverloaded"]:
+            if sof.get("IFeatureDeviceOverloaded", False):
                 self.deviceOverloaded = js["deviceOverloaded"]
-            if sof["IFeatureDeviceTemperatureOutOfRange"]:
+            if sof.get("IFeatureDeviceTemperatureOutOfRange", False):
                 self.temperatureOutOfRange = js["temperatureOutOfRange"]
-            if sof["IFeatureDeviceUndervoltage"]:
+            if sof.get("IFeatureDeviceUndervoltage", False):
                 self.deviceUndervoltage = js["deviceUndervoltage"]
 
 
