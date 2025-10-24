@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.3.0..master)
 
+## [2.3.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.3.0..2.3.1) 2025-10-24
+
+### Fixed
+
+- Fix issue when parsing optional feature flags (#608)
+
 ## [2.3.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.2.0..2.3.0) 2025-08-26
 
 ### Added 
