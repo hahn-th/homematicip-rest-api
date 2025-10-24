@@ -1,6 +1,6 @@
 if __name__ == "__main__":
     import pytest
-    from homematicip import __version__
+    from homematicip import _version
 
-    print("HMIP Version ", __version__)
+    print("HMIP Version ", _version)
     pytest.main(["tests", "-vv"])
