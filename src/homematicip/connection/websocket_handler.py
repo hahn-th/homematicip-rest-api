@@ -98,11 +98,27 @@ class WebsocketHandler:
 
 
     async def _listen(self, ws):
-        async for msg in ws:
+        idle_timeout = 60  # 60 seconds
+
+        while not self._stop_event.is_set():
+            try:
+                # Wait for the next message with an idle timeout
+                msg = await asyncio.wait_for(ws.receive(), timeout=idle_timeout)
+            except asyncio.TimeoutError:
+                LOGGER.warning(f"No message received for {idle_timeout} seconds; reconnecting...")
+                # Close socket to leave the context and let the outer loop reconnect
+                await ws.close(
+                    code=aiohttp.WSCloseCode.GOING_AWAY, message=b"Idle timeout"
+                )
+                break
+
             if msg.type in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
                 await self._handle_ws_message(msg)
+            elif msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSED):
+                LOGGER.info("WebSocket closed by server.")
+                break
             elif msg.type == aiohttp.WSMsgType.ERROR:
-                LOGGER.error(f"Error in websocket: {msg}")
+                LOGGER.error("Error in websocket: %s", msg)
                 break
 
     async def _handle_ws_message(self, message: WSMessage):

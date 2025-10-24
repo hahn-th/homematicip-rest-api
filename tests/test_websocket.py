@@ -77,18 +77,75 @@ async def test_start_and_stop(monkeypatch):
     assert client._reconnect_task is None
 
 
+def _coro_result(result):
+    async def _coro():
+        return result
+    return _coro()
+
+
 @pytest.mark.asyncio
 async def test_listen_calls_handlers(monkeypatch):
     client = WebsocketHandler()
     handler = AsyncMock()
     client.add_on_message_handler(handler)
     ws_mock = MagicMock()
-    ws_mock.__aiter__.return_value = [
-        DummyMsg('test', type_=aiohttp.WSMsgType.TEXT),
-        DummyMsg('test2', type_=aiohttp.WSMsgType.BINARY),
-        DummyMsg('err', type_=aiohttp.WSMsgType.ERROR)
-    ]
-    with patch('logging.Logger.debug'), patch('logging.Logger.error'):
+
+    ws_mock.receive = MagicMock(side_effect=[
+        _coro_result(DummyMsg('test', type_=aiohttp.WSMsgType.TEXT)),
+        _coro_result(DummyMsg('test2', type_=aiohttp.WSMsgType.BINARY)),
+        _coro_result(DummyMsg('err', type_=aiohttp.WSMsgType.ERROR)),
+    ])
+
+    with patch('logging.Logger.error'):
         await client._listen(ws_mock)
+
     handler.assert_any_await('test')
     handler.assert_any_await('test2')
+
+
+@pytest.mark.asyncio
+async def test_listen_stops_on_close_without_calling_handlers():
+    client = WebsocketHandler()
+    handler = AsyncMock()
+    client.add_on_message_handler(handler)
+
+    ws_mock = MagicMock()
+    ws_mock.receive = MagicMock(side_effect=[
+        _coro_result(DummyMsg(None, type_=aiohttp.WSMsgType.CLOSE)),
+        _coro_result(DummyMsg('after', type_=aiohttp.WSMsgType.TEXT)),
+    ])
+
+    await client._listen(ws_mock)
+
+    handler.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_listen_logs_error_on_error_message(caplog):
+    client = WebsocketHandler()
+    ws_mock = MagicMock()
+    ws_mock.receive = MagicMock(side_effect=[
+        _coro_result(DummyMsg('bad', type_=aiohttp.WSMsgType.ERROR)),
+    ])
+
+    with caplog.at_level('ERROR'):
+        await client._listen(ws_mock)
+
+    assert 'Error in websocket' in caplog.text
+
+
+@pytest.mark.asyncio
+async def test_listen_idle_timeout_triggers_close_and_warning(monkeypatch, caplog):
+    client = WebsocketHandler()
+
+    ws_mock = MagicMock()
+    ws_mock.close = AsyncMock()
+
+    # Force asyncio.wait_for to raise TimeoutError immediately
+    monkeypatch.setattr(asyncio, 'wait_for', AsyncMock(side_effect=asyncio.TimeoutError()))
+
+    with caplog.at_level('WARNING'):
+        await client._listen(ws_mock)
+
+    ws_mock.close.assert_awaited_once()
+    assert 'No message received' in caplog.text
