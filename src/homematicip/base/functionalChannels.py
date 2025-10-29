@@ -1,4 +1,5 @@
 from typing import Any, Iterable
+from collections import defaultdict
 
 from homematicip.base.enums import *
 from homematicip.base.homematicip_object import HomeMaticIPObject
@@ -98,22 +99,22 @@ class DeviceBaseChannel(FunctionalChannel):
         self.rssiPeerValue = js["rssiPeerValue"]
         self.dutyCycle = js["dutyCycle"]
         self.configPending = js["configPending"]
-        sof = js["supportedOptionalFeatures"]
-        if sof:
-            if sof["IFeatureDeviceCoProError"]:
-                self.coProFaulty = js["coProFaulty"]
-            if sof["IFeatureDeviceCoProRestart"]:
-                self.coProRestartNeeded = js["coProRestartNeeded"]
-            if sof["IFeatureDeviceCoProUpdate"]:
-                self.coProUpdateFailure = js["coProUpdateFailure"]
-            if sof["IFeatureDeviceOverheated"]:
-                self.deviceOverheated = js["deviceOverheated"]
-            if sof["IFeatureDeviceOverloaded"]:
-                self.deviceOverloaded = js["deviceOverloaded"]
-            if sof["IFeatureDeviceTemperatureOutOfRange"]:
-                self.temperatureOutOfRange = js["temperatureOutOfRange"]
-            if sof["IFeatureDeviceUndervoltage"]:
-                self.deviceUndervoltage = js["deviceUndervoltage"]
+        # Optional feature flags can be missing in newer payloads; default to False
+        sof = defaultdict(lambda: False, js.get("supportedOptionalFeatures") or {})
+        if sof.get("IFeatureDeviceCoProError", False):
+            self.coProFaulty = js.get("coProFaulty")
+        if sof.get("IFeatureDeviceCoProRestart", False):
+            self.coProRestartNeeded = js.get("coProRestartNeeded")
+        if sof.get("IFeatureDeviceCoProUpdate", False):
+            self.coProUpdateFailure = js.get("coProUpdateFailure")
+        if sof.get("IFeatureDeviceOverheated", False):
+            self.deviceOverheated = js.get("deviceOverheated")
+        if sof.get("IFeatureDeviceOverloaded", False):
+            self.deviceOverloaded = js.get("deviceOverloaded")
+        if sof.get("IFeatureDeviceTemperatureOutOfRange", False):
+            self.temperatureOutOfRange = js.get("temperatureOutOfRange")
+        if sof.get("IFeatureDeviceUndervoltage", False):
+            self.deviceUndervoltage = js.get("deviceUndervoltage")
 
 
 class DeviceBlockingChannel(FunctionalChannel):
