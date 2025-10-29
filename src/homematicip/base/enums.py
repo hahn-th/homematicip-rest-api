@@ -227,6 +227,7 @@ class DeviceType(AutoNameEnum):
     DOOR_LOCK_SENSOR = auto()
     ENERGY_SENSORS_INTERFACE = auto()
     FLOOR_TERMINAL_BLOCK_6 = auto()
+    FLOOR_TERMINAL_BLOCK_8 = auto()
     FLOOR_TERMINAL_BLOCK_10 = auto()
     FLOOR_TERMINAL_BLOCK_12 = auto()
     FULL_FLUSH_BLIND = auto()
