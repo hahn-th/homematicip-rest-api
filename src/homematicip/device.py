@@ -859,9 +859,6 @@ class FloorTerminalBlock12(Device):
             body=data,
         )
 
-class FloorTerminalBlock8(FloorTerminalBlock12):
-    """HMIP-FALMOT-C8 (Floor Heating Actuator – 8x channels, 24V)"""
-
 class WiredFloorTerminalBlock12(FloorTerminalBlock12):
     """Implementation of HmIPW-FALMOT-C12"""
 

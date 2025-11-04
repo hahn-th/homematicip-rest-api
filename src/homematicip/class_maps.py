@@ -36,7 +36,7 @@ TYPE_CLASS_MAP = {
     DeviceType.FLOOR_TERMINAL_BLOCK_10: FloorTerminalBlock10,
     DeviceType.FLOOR_TERMINAL_BLOCK_12: FloorTerminalBlock12,
     DeviceType.FLOOR_TERMINAL_BLOCK_6: FloorTerminalBlock6,
-    DeviceType.FLOOR_TERMINAL_BLOCK_8: FloorTerminalBlock8,
+    DeviceType.FLOOR_TERMINAL_BLOCK_8: FloorTerminalBlock12,
     DeviceType.FULL_FLUSH_BLIND: FullFlushBlind,
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE: FullFlushContactInterface,
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE_6: FullFlushContactInterface6,
