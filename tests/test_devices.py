@@ -1375,7 +1375,6 @@ def test_floor_terminal_block(fake_home: Home):
             "pumpFollowUpTime(2) pumpLeadTime(2) pumpProtectionDuration(1) "
             "pumpProtectionSwitchingInterval(14)"
         )
-
         d = FloorTerminalBlock12(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000000049")
         assert d.minimumFloorHeatingValvePosition == 0.0
