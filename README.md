@@ -237,7 +237,7 @@ A few examples:
 - [ ] HMIP-WRCR (Wall-mount Remote Control - Rotary)
 - [ ] HMIP-WT (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 - [x] HMIP-WTH (Wall Mounted Thermostat Pro with Display)
-- [ ] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really)
+- [x] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really)
 - [x] HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-B (Wall Mounted Thermostat basic without adjusting wheel)
 - [ ] HMIP-WTH-B-2 (Wall Mounted Thermostat basic without adjusting wheel) New Version
