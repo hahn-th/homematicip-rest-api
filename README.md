@@ -141,6 +141,7 @@ A few examples:
 - [x] HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)
 - [x] HMIP-FAL24-C6 (Floor Heating Actuator – 6x channels, 24V)
 - [x] HMIP-FAL24-C10 (Floor Heating Actuator – 10x channels, 24V)
+- [x] HMIP-FALMOT-C8 (Floor Heating Actuator – 8x channels, motorised)
 - [x] HMIP-FALMOT-C12 (Floor Heating Actuator – 12x channels, motorised)
 - [x] HMIP-FBL (Blind Actuator - flush-mount)
 - [x] HMIP-FCI1 (Contact Interface flush-mount – 1x channel)
