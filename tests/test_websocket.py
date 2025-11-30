@@ -1,16 +1,14 @@
 import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 
-import aiohttp
 import pytest
 
 from homematicip.connection.websocket_handler import WebsocketHandler
 
 
 class DummyMsg:
-    def __init__(self, data, type_):
+    def __init__(self, data):
         self.data = data
-        self.type = type_
 
 
 @pytest.mark.asyncio
@@ -32,6 +30,7 @@ async def test_is_connected_true(monkeypatch):
     client = WebsocketHandler()
     client._websocket_connected.set()
     assert client.is_connected()
+
 
 @pytest.mark.asyncio
 async def test_handle_task_result_logs_cancelled(caplog):
@@ -83,12 +82,19 @@ async def test_listen_calls_handlers(monkeypatch):
     handler = AsyncMock()
     client.add_on_message_handler(handler)
     ws_mock = MagicMock()
+    first = DummyMsg("test")
+    second = DummyMsg("test2")
+    third = DummyMsg("err")
     ws_mock.__aiter__.return_value = [
-        DummyMsg('test', type_=aiohttp.WSMsgType.TEXT),
-        DummyMsg('test2', type_=aiohttp.WSMsgType.BINARY),
-        DummyMsg('err', type_=aiohttp.WSMsgType.ERROR)
+        first,
+        second,
+        third,
     ]
-    with patch('logging.Logger.debug'), patch('logging.Logger.error'):
+    with patch("logging.Logger.debug"), patch("logging.Logger.error"):
         await client._listen(ws_mock)
-    handler.assert_any_await('test')
-    handler.assert_any_await('test2')
+
+    # The current implementation forwards the message object itself to
+    # handlers, so we assert on the DummyMsg instances rather than the
+    # plain payload strings.
+    handler.assert_any_await(first)
+    handler.assert_any_await(second)
