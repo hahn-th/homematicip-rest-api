@@ -196,12 +196,14 @@ class ClientType(AutoNameEnum):
     APP = auto()
     C2C = auto()
     SMART_WATCH = auto()
+    PLUGIN = auto()
 
 
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
     BASE_DEVICE = auto()
     EXTERNAL = auto()
+    PLUGIN_EXTERNAL = auto()
     ACCELERATION_SENSOR = auto()
     ACCESS_POINT = auto()
     ALARM_SIREN_INDOOR = auto()
@@ -290,6 +292,7 @@ class DeviceType(AutoNameEnum):
     TILT_VIBRATION_SENSOR_COMPACT = auto()
     TORMATIC_MODULE = auto()
     WALL_MOUNTED_KEY_PAD = auto()
+    WALL_MOUNTED_GLASS_THERMOSTAT = auto()
     WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY = auto()
     WALL_MOUNTED_THERMOSTAT_PRO = auto()
     WALL_MOUNTED_GARAGE_DOOR_CONTROLLER = auto()
@@ -355,6 +358,7 @@ class GroupType(AutoNameEnum):
     SMOKE_ALARM_DETECTION_RULE = auto()
     SWITCHING = auto()
     SWITCHING_PROFILE = auto()
+    DEMAND_CONTROLLED_VENTILATION_GROUP = auto()
 
 
 class SecurityEventType(AutoNameEnum):
@@ -450,6 +454,7 @@ class FunctionalChannelType(AutoNameEnum):
     ALARM_SIREN_CHANNEL = auto()
     ANALOG_OUTPUT_CHANNEL = auto()
     ANALOG_ROOM_CONTROL_CHANNEL = auto()
+    BACKLIGHT_CHANNEL = auto()
     BLIND_CHANNEL = auto()
     CHANGE_OVER_CHANNEL = auto()
     CARBON_DIOXIDE_SENSOR_CHANNEL = auto()
@@ -473,6 +478,7 @@ class FunctionalChannelType(AutoNameEnum):
     DOOR_LOCK_CHANNEL = auto()
     DOOR_LOCK_SENSOR_CHANNEL = auto()
     EXTERNAL_BASE_CHANNEL = auto()
+    EXTERNAL_SWITCH_CHANNEL = auto()
     EXTERNAL_UNIVERSAL_LIGHT_CHANNEL = auto()
     ENERGY_SENSORS_INTERFACE_CHANNEL = auto()
     FLOOR_TERMINAL_BLOCK_CHANNEL = auto()
@@ -483,6 +489,7 @@ class FunctionalChannelType(AutoNameEnum):
     HEATING_THERMOSTAT_CHANNEL = auto()
     IMPULSE_OUTPUT_CHANNEL = auto()
     INTERNAL_SWITCH_CHANNEL = auto()
+    INPUT_QUICK_ACTION_DISPLAY_CHANNEL = auto()
     LIGHT_SENSOR_CHANNEL = auto()
     MAINS_FAILURE_CHANNEL = auto()
     MOTION_DETECTION_CHANNEL = auto()
@@ -634,6 +641,7 @@ class AlarmSignalType(AutoNameEnum):
 
 class ConnectionType(AutoNameEnum):
     EXTERNAL = auto()
+    PLUGIN_EXTERNAL = auto()
     HMIP_RF = auto()
     HMIP_WIRED = auto()
     HMIP_LAN = auto()
@@ -642,6 +650,7 @@ class ConnectionType(AutoNameEnum):
 
 class DeviceArchetype(AutoNameEnum):
     EXTERNAL = auto()
+    PLUGIN_EXTERNAL = auto()
     HMIP = auto()
     PLUGIN = auto()
 

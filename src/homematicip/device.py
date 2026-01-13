@@ -108,6 +108,7 @@ class Device(BaseDevice):
         "IFeatureDeviceCoProRestart": ["coProRestartNeeded"],
         "IFeatureDeviceCoProUpdate": ["coProUpdateFailure"],
         "IFeatureDeviceIdentify": [],
+        "IFeatureDeviceMountingModuleError": ["mountingModuleError"],
         "IFeatureDeviceOverheated": ["deviceOverheated"],
         "IFeatureDeviceOverloaded": ["deviceOverloaded"],
         "IFeatureDeviceParticulateMatterSensorCommunicationError": "particulateMatterSensorCommunicationError",
@@ -145,7 +146,9 @@ class Device(BaseDevice):
         "IOptionalFeatureDeviceFrostProtectionError": ["frostProtectionError"],
         "IOptionalFeatureDeviceValveError": ["valveFlowError"],
         "IOptionalFeatureDeviceWaterError": ["valveWaterError"],
-        "IOptionalFeatureDeviceOperationMode": ["deviceOperationMode"]
+        "IOptionalFeatureDeviceOperationMode": ["deviceOperationMode"],
+        "IOptionalFeatureDeviceAliveSignalEnabled": ["deviceAliveSignalEnabled"],
+        "IOptionalFeatureDeviceSwitchChannelMode": ["switchChannelMode"]
     }
 
     def __init__(self, connection):
@@ -182,8 +185,11 @@ class Device(BaseDevice):
         self.busConfigMismatch = False
         self.shortCircuitDataLine = False
         self.powerShortCircuit = False
+        self.mountingModuleError = None
+        self.switchChannelMode = None
         self.deviceUndervoltage = False
         self.devicePowerFailureDetected = False
+        self.deviceAliveSignalEnabled = None
         self.deviceIdentifySupported = (
             False  # just placeholder at the moment the feature doesn't set any values
         )

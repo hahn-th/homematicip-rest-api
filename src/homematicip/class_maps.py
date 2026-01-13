@@ -9,6 +9,7 @@ TYPE_CLASS_MAP = {
     DeviceType.DEVICE: Device,
     DeviceType.BASE_DEVICE: BaseDevice,
     DeviceType.EXTERNAL: ExternalDevice,
+    DeviceType.PLUGIN_EXTERNAL: ExternalDevice,
     DeviceType.ACCELERATION_SENSOR: AccelerationSensor,
     DeviceType.ACCESS_POINT: HomeControlUnit,
     DeviceType.ALARM_SIREN_INDOOR: AlarmSirenIndoor,
@@ -97,6 +98,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TILT_VIBRATION_SENSOR_COMPACT: TiltVibrationSensor,
     DeviceType.TORMATIC_MODULE: GarageDoorModuleTormatic,
     DeviceType.WALL_MOUNTED_KEY_PAD: WallMountedKeyPad,
+    DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.WALL_MOUNTED_GARAGE_DOOR_CONTROLLER: WallMountedGarageDoorController,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
     DeviceType.WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY: WallMountedThermostatBasicHumidity,
@@ -160,6 +162,7 @@ TYPE_GROUP_MAP = {
     GroupType.SHUTTER_WIND_PROTECTION_RULE: ShutterWindProtectionRule,
     GroupType.SMOKE_ALARM_DETECTION_RULE: SmokeAlarmDetectionRule,
     GroupType.SWITCHING_PROFILE: SwitchingProfileGroup,
+    GroupType.DEMAND_CONTROLLED_VENTILATION_GROUP: Group,
     GroupType.SWITCHING: SwitchingGroup,
 }
 
@@ -199,6 +202,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.ALARM_SIREN_CHANNEL: AlarmSirenChannel,
     FunctionalChannelType.ANALOG_OUTPUT_CHANNEL: AnalogOutputChannel,
     FunctionalChannelType.ANALOG_ROOM_CONTROL_CHANNEL: AnalogRoomControlChannel,
+    FunctionalChannelType.BACKLIGHT_CHANNEL: DimmerChannel,
     FunctionalChannelType.BLIND_CHANNEL: BlindChannel,
     FunctionalChannelType.CARBON_DIOXIDE_SENSOR_CHANNEL: CarbonDioxideSensorChannel,
     FunctionalChannelType.CHANGE_OVER_CHANNEL: ChangeOverChannel,
@@ -222,6 +226,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.DOOR_LOCK_CHANNEL: DoorLockChannel,
     FunctionalChannelType.DOOR_LOCK_SENSOR_CHANNEL: DoorLockSensorChannel,
     FunctionalChannelType.EXTERNAL_BASE_CHANNEL: ExternalBaseChannel,
+    FunctionalChannelType.EXTERNAL_SWITCH_CHANNEL: ExternalSwitchChannel,
     FunctionalChannelType.EXTERNAL_UNIVERSAL_LIGHT_CHANNEL: ExternalUniversalLightChannel,
     FunctionalChannelType.ENERGY_SENSORS_INTERFACE_CHANNEL: EnergySensorInterfaceChannel,
     FunctionalChannelType.FLOOR_TERMINAL_BLOCK_CHANNEL: FloorTeminalBlockChannel,
@@ -232,6 +237,7 @@ TYPE_FUNCTIONALCHANNEL_MAP = {
     FunctionalChannelType.HEATING_THERMOSTAT_CHANNEL: HeatingThermostatChannel,
     FunctionalChannelType.IMPULSE_OUTPUT_CHANNEL: ImpulseOutputChannel,
     FunctionalChannelType.INTERNAL_SWITCH_CHANNEL: InternalSwitchChannel,
+    FunctionalChannelType.INPUT_QUICK_ACTION_DISPLAY_CHANNEL: FunctionalChannel,
     FunctionalChannelType.LIGHT_SENSOR_CHANNEL: LightSensorChannel,
     FunctionalChannelType.MAINS_FAILURE_CHANNEL: MainsFailureChannel,
     FunctionalChannelType.MOTION_DETECTION_CHANNEL: MotionDetectionChannel,
@@ -272,6 +278,9 @@ FUNCTIONALCHANNEL_CLI_MAP = {
     FunctionalChannelType.DIMMER_CHANNEL: [
         CliActions.SET_DIM_LEVEL,
     ],
+    FunctionalChannelType.BACKLIGHT_CHANNEL: [
+        CliActions.SET_DIM_LEVEL,
+    ],
     FunctionalChannelType.MULTI_MODE_INPUT_DIMMER_CHANNEL: [CliActions.SET_DIM_LEVEL],
     FunctionalChannelType.NOTIFICATION_LIGHT_CHANNEL: [CliActions.SET_DIM_LEVEL],
     FunctionalChannelType.DOOR_LOCK_CHANNEL: [CliActions.SET_LOCK_STATE],
@@ -293,6 +302,7 @@ FUNCTIONALCHANNEL_CLI_MAP = {
     ],
     FunctionalChannelType.SHADING_CHANNEL: [CliActions.SET_SHUTTER_STOP],
     FunctionalChannelType.SWITCH_CHANNEL: [CliActions.SET_SWITCH_STATE],
+    FunctionalChannelType.EXTERNAL_SWITCH_CHANNEL: [CliActions.SET_SWITCH_STATE],
     FunctionalChannelType.SWITCH_MEASURING_CHANNEL: [CliActions.SET_SWITCH_STATE, CliActions.RESET_ENERGY_COUNTER],
     FunctionalChannelType.MULTI_MODE_INPUT_SWITCH_CHANNEL: [
         CliActions.SET_SWITCH_STATE

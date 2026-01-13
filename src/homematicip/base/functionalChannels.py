@@ -215,6 +215,17 @@ class SwitchChannel(FunctionalChannel):
         return await self.async_set_switch_state(False)
 
 
+class ExternalSwitchChannel(SwitchChannel):
+    """this is the representative of the EXTERNAL_SWITCH_CHANNEL channel"""
+
+    def from_json(self, js, groups: Iterable[Group]):
+        FunctionalChannel.from_json(self, js, groups)
+        self.on = js.get("on", False)
+        self.powerUpSwitchState = js.get("powerUpSwitchState", "")
+        self.profileMode = js.get("profileMode")
+        self.userDesiredProfileMode = js.get("userDesiredProfileMode")
+
+
 class AccelerationSensorChannel(FunctionalChannel):
     """this is the representative of the ACCELERATION_SENSOR_CHANNEL channel"""
 
