@@ -15475,8 +15475,231 @@
       "serializedGlobalTradeItemNumber": "3014F7110000000ELVSHSMSI",
       "type": "SOIL_MOISTURE_SENSOR_INTERFACE",
       "updateState": "UP_TO_DATE"
+    },
+    "3014F71100000000000000WGT": {
+      "availableFirmwareVersion": "1.0.14",
+      "connectionType": "HMIP_RF",
+      "deviceArchetype": "HMIP",
+      "firmwareVersion": "1.0.14",
+      "firmwareVersionInteger": 65550,
+      "functionalChannels": {
+        "0": {
+          "altitude": null,
+          "busConfigMismatch": null,
+          "coProFaulty": false,
+          "coProRestartNeeded": false,
+          "coProUpdateFailure": false,
+          "configPending": false,
+          "controlsMountingOrientation": null,
+          "daliBusState": null,
+          "dataDecodingFailedError": null,
+          "defaultLinkedGroup": [],
+          "deviceAliveSignalEnabled": null,
+          "deviceCanBusError": null,
+          "deviceCommunicationError": null,
+          "deviceDriveError": null,
+          "deviceDriveModeError": null,
+          "deviceId": "3014F71100000000000000WGT",
+          "deviceOperationMode": null,
+          "deviceOverheated": false,
+          "deviceOverloaded": false,
+          "devicePowerFailureDetected": false,
+          "deviceUndervoltage": false,
+          "displayContrast": null,
+          "displayMode": null,
+          "displayMountingOrientation": null,
+          "dutyCycle": false,
+          "fanControlMode": null,
+          "frostProtectionError": null,
+          "frostProtectionErrorAcknowledged": null,
+          "functionalChannelType": "DEVICE_OPERATIONLOCK",
+          "groupIndex": 0,
+          "groups": [
+            "00000000-0000-0000-0000-000000000011"
+          ],
+          "index": 0,
+          "inputLayoutMode": null,
+          "invertedDisplayColors": null,
+          "label": "",
+          "lockJammed": null,
+          "lowBat": null,
+          "mountingModuleError": null,
+          "mountingOrientation": null,
+          "multicastRoutingEnabled": false,
+          "noDataFromLinkyError": null,
+          "notRechargeableBattery": null,
+          "operationDays": null,
+          "operationLockActive": false,
+          "particulateMatterSensorCommunicationError": null,
+          "particulateMatterSensorError": null,
+          "powerShortCircuit": null,
+          "profilePeriodLimitReached": null,
+          "routerModuleEnabled": false,
+          "routerModuleSupported": false,
+          "rssiDeviceValue": -70,
+          "rssiPeerValue": -67,
+          "sensorCommunicationError": null,
+          "sensorError": null,
+          "shortCircuitDataLine": null,
+          "supportedOptionalFeatures": {
+            "IFeatureDeviceIdentify": true,
+            "IFeatureDeviceMountingModuleError": true,
+            "IFeatureDeviceOverloaded": true,
+            "IFeatureProfilePeriodLimit": true,
+            "IFeatureRssiValue": true,
+            "IOptionalFeatureDeviceSwitchChannelMode": true,
+            "IOptionalFeatureDutyCycle": true
+          },
+          "switchChannelMode": "FLOOR_HEATING",
+          "temperatureHumiditySensorCommunicationError": null,
+          "temperatureHumiditySensorError": null,
+          "temperatureOutOfRange": false,
+          "ticVersionError": null,
+          "unreach": false,
+          "valveFlowError": null,
+          "valveWaterError": null
+        },
+        "1": {
+          "channelRole": "KEY_OR_SWITCH_FOR_GROUP",
+          "deviceId": "3014F71100000000000000WGT",
+          "functionalChannelType": "INPUT_QUICK_ACTION_DISPLAY_CHANNEL",
+          "groupIndex": 1,
+          "groups": [],
+          "index": 1,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureLightGroupSensorChannel": true,
+            "IFeatureShadingGroupSensorChannel": true
+          }
+        },
+        "2": {
+          "channelRole": "DIMMING_ACTUATOR",
+          "deviceId": "3014F71100000000000000WGT",
+          "dimLevel": 1.0,
+          "functionalChannelType": "BACKLIGHT_CHANNEL",
+          "groupIndex": 2,
+          "groups": [],
+          "index": 2,
+          "label": "Beleuchtung Thermostat EG Wohnzimmer",
+          "on": true,
+          "powerUpDimLevel": 0.75,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IFeatureLightProfileActuatorChannel": true
+          },
+          "switchVisualization": "LIGHT",
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "3": {
+          "actualTemperature": 19.2,
+          "channelRole": "WALL_MOUNTED_THERMOSTAT",
+          "deviceId": "3014F71100000000000000WGT",
+          "display": "ACTUAL",
+          "functionalChannelType": "WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL",
+          "groupIndex": 3,
+          "groups": [
+            "00000000-0000-0000-0000-000000000012"
+          ],
+          "humidity": 47,
+          "index": 3,
+          "label": "Thermostat EG Wohnzimmer ",
+          "setPointTemperature": 22.0,
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureClimateControlDisplayHumidityOnlySupported": true,
+            "IOptionalFeatureThermostatCoolingSupported": true
+          },
+          "temperatureOffset": 0.0,
+          "vaporAmount": 7.732132100840245
+        },
+        "4": {
+          "climateControlType": "PWM_CONTROL",
+          "deviceId": "3014F71100000000000000WGT",
+          "frostProtectionTemperature": 8.0,
+          "functionalChannelType": "INTERNAL_SWITCH_CHANNEL",
+          "groupIndex": 3,
+          "groups": [],
+          "heatingValveType": "NORMALLY_CLOSE",
+          "index": 4,
+          "internalSwitchOutputEnabled": true,
+          "label": "Thermostat EG Wohnzimmer ",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureClimateControlType": true,
+            "IOptionalFeatureFloorHeatingSpecificGroupSupported": true
+          },
+          "valvePosition": 1.0,
+          "valveProtectionDuration": 5,
+          "valveProtectionSwitchingInterval": 14
+        },
+        "5": {
+          "channelRole": null,
+          "deviceId": "3014F71100000000000000WGT",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 0,
+          "groups": [],
+          "index": 5,
+          "internalLinkConfiguration": null,
+          "label": "",
+          "on": true,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "switchVisualization": null,
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "6": {
+          "deviceId": "3014F71100000000000000WGT",
+          "functionalChannelType": "HEAT_DEMAND_CHANNEL",
+          "groupIndex": 0,
+          "groups": [],
+          "index": 6,
+          "label": ""
+        },
+        "7": {
+          "deviceId": "3014F71100000000000000WGT",
+          "functionalChannelType": "DEHUMIDIFIER_DEMAND_CHANNEL",
+          "groupIndex": 0,
+          "groups": [],
+          "index": 7,
+          "label": ""
+        },
+        "8": {
+          "deviceId": "3014F71100000000000000WGT",
+          "functionalChannelType": "CHANGE_OVER_CHANNEL",
+          "groupIndex": 0,
+          "groups": [],
+          "index": 8,
+          "label": ""
+        }
+      },
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "3014F71100000000000000WGT",
+      "label": "Thermostat EG Wohnzimmer ",
+      "lastStatusUpdate": 1768212833591,
+      "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+      "manuallyUpdateForced": false,
+      "manufacturerCode": 1,
+      "measuredAttributes": {
+        "3": {
+          "actualTemperature": true,
+          "humidity": true,
+          "setPointTemperature": true
+        },
+        "4": {
+          "valvePosition": true
+        }
+      },
+      "modelId": 556,
+      "modelType": "HmIP-WGT",
+      "oem": "eQ-3",
+      "permanentlyReachable": true,
+      "serializedGlobalTradeItemNumber": "3014F71100000000000000WGT",
+      "type": "WALL_MOUNTED_GLASS_THERMOSTAT",
+      "updateState": "UP_TO_DATE"
     }
-  },
+},
   "groups": {
     "00000000-0000-0000-0000-0000000000EN": {
       "channels": [

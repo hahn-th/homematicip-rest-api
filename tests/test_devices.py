@@ -481,6 +481,18 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
     assert d.id == "3014F7110000000000000WTH"
 
 
+def test_wall_mounted_glass_thermostat(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F71100000000000000WGT")
+    assert isinstance(d, WallMountedThermostatPro)
+    assert d.deviceType == DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT
+    assert d.modelType == "HmIP-WGT"
+    assert d.label.strip() == "Thermostat EG Wohnzimmer"
+    assert d.actualTemperature == 19.2
+    assert d.setPointTemperature == 22.0
+    assert d.humidity == 47
+    assert d.display == ClimateControlDisplay.ACTUAL
+
+
 def test_heating_thermostat(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000015")
     assert isinstance(d, HeatingThermostat)

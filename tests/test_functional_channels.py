@@ -1,6 +1,7 @@
 from unittest.mock import Mock, patch, AsyncMock
 
 from homematicip.base.channel_event import ChannelEvent
+from homematicip.base.enums import FunctionalChannelType
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.home import Home
@@ -141,6 +142,20 @@ def test_dimmer_channel(fake_home: Home):
         fake_home.get_current_state()
         ch = fake_home.search_channel("3014F711AAAA000000000005", 1)
         assert ch.dimLevel == 0.8
+
+
+def test_backlight_channel(fake_home: Home):
+    ch = fake_home.search_channel("3014F71100000000000000WGT", 2)
+    assert isinstance(ch, DimmerChannel)
+    assert ch.dimLevel == 1.0
+    assert ch.profileMode == "AUTOMATIC"
+    assert ch.userDesiredProfileMode == "AUTOMATIC"
+
+
+def test_input_quick_action_display_channel(fake_home: Home):
+    ch = fake_home.search_channel("3014F71100000000000000WGT", 1)
+    assert isinstance(ch, FunctionalChannel)
+    assert ch.functionalChannelType == FunctionalChannelType.INPUT_QUICK_ACTION_DISPLAY_CHANNEL
 
 
 def test_door_channel(fake_home: Home):
