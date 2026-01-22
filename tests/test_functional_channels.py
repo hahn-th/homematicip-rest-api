@@ -573,3 +573,20 @@ def test_soil_moisture_sensor_interface_channel(fake_home: Home):
         assert ch.soilTemperature == 21.5
         assert ch.soilTemperatureNeutralMaximum == 28.0
         assert ch.soilTemperatureNeutralMinimum == 5.0
+
+
+def test_notification_mp3_sound_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711COMBINATION_SIGNALLING", 1)
+        assert isinstance(ch, NotificationMp3SoundChannel)
+
+        assert ch.dimLevel == 0.0
+        assert ch.mp3ErrorState == "NO_ERROR"
+        assert ch.noSoundLowBat == False
+        assert ch.on == False
+        assert ch.playingFileActive == False
+        assert ch.profileMode == "AUTOMATIC"
+        assert ch.simpleRGBColorState == "BLACK"
+        assert ch.soundFile == "INTERNAL_SOUNDFILE"
+        assert "SECURITY_ALARM" in ch.lightSoundNotificationSettings
+        assert ch.lightSoundNotificationSettings["SECURITY_ALARM"]["volumeLevel"] == 0.9

@@ -1851,3 +1851,23 @@ def test_soil_moisture_sensor_interface(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000ELVSHSMSI")
         assert isinstance(d, SoilMoistureSensorInterface)
+
+
+def test_combination_signalling_device(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711COMBINATION_SIGNALLING")
+        assert isinstance(d, CombinationSignallingDevice)
+        assert d.label == "Kombisignalmelder"
+        assert d.modelType == "HmIP-MP3P"
+        assert d.dimLevel == 0.0
+        assert d.mp3ErrorState == "NO_ERROR"
+        assert d.noSoundLowBat == False
+        assert d.on == False
+        assert d.playingFileActive == False
+        assert d.profileMode == "AUTOMATIC"
+        assert d.simpleRGBColorState == "BLACK"
+        assert d.soundFile == "INTERNAL_SOUNDFILE"
+        assert "SECURITY_ALARM" in d.lightSoundNotificationSettings
+        assert "SMOKE_ALARM" in d.lightSoundNotificationSettings
+        assert d.lightSoundNotificationSettings["SECURITY_ALARM"]["simpleRGBColor"] == "RED"
+        assert d.lightSoundNotificationSettings["SECURITY_ALARM"]["volumeLevel"] == 0.9

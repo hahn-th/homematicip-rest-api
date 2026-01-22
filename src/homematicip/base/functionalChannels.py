@@ -2326,3 +2326,40 @@ class SoilMoistureSensorInterfaceChannel(FunctionalChannel):
         self.soilTemperature = js.get("soilTemperature", self.soilTemperature)
         self.soilTemperatureNeutralMaximum = js.get("soilTemperatureNeutralMaximum", self.soilTemperatureNeutralMaximum)
         self.soilTemperatureNeutralMinimum = js.get("soilTemperatureNeutralMinimum", self.soilTemperatureNeutralMinimum)
+
+
+class NotificationMp3SoundChannel(FunctionalChannel):
+    """This is the representative of the NOTIFICATION_MP3_SOUND_CHANNEL channel.
+
+    This channel is used by combination signalling devices like the HmIP-MP3P
+    which can play MP3 sounds and show optical signals for various alarm conditions.
+    """
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.dimLevel: float = 0.0
+        self.lightSoundNotificationSettings: dict = {}
+        self.mp3ErrorState: str = "NO_ERROR"
+        self.noSoundLowBat: bool = False
+        self.on: bool = False
+        self.opticalSignalBehaviour: str | None = None
+        self.playingFileActive: bool = False
+        self.profileMode: str = "AUTOMATIC"
+        self.simpleRGBColorState: str = "BLACK"
+        self.soundFile: str | None = None
+        self.volumeLevel: float | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+        super().from_json(js, groups)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("lightSoundNotificationSettings", js)
+        self.set_attr_from_dict("mp3ErrorState", js)
+        self.set_attr_from_dict("noSoundLowBat", js)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("opticalSignalBehaviour", js)
+        self.set_attr_from_dict("playingFileActive", js)
+        self.set_attr_from_dict("profileMode", js)
+        self.set_attr_from_dict("simpleRGBColorState", js)
+        self.set_attr_from_dict("soundFile", js)
+        self.set_attr_from_dict("volumeLevel", js)
