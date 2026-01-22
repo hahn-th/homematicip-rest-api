@@ -816,6 +816,7 @@ class FloorTerminalBlock12(Device):
     def __init__(self, connection):
         super().__init__(connection)
         self.frostProtectionTemperature = 0.0
+        self.heatingEmergencyValue = 0.0
         self.valveProtectionDuration = 0
         self.valveProtectionSwitchingInterval = 20
         self.coolingEmergencyValue = 0
@@ -830,6 +831,9 @@ class FloorTerminalBlock12(Device):
         if c:
             self.set_attr_from_dict("coolingEmergencyValue", c)
             self.set_attr_from_dict("frostProtectionTemperature", c)
+            self.set_attr_from_dict("heatingEmergencyValue", c)
+            self.set_attr_from_dict("minimumFloorHeatingValvePosition", c)
+            self.set_attr_from_dict("pulseWidthModulationAtLowFloorHeatingValvePositionEnabled", c)
             self.set_attr_from_dict("valveProtectionDuration", c)
             self.set_attr_from_dict("valveProtectionSwitchingInterval", c)
 
