@@ -590,3 +590,19 @@ def test_notification_mp3_sound_channel(fake_home: Home):
         assert ch.soundFile == "INTERNAL_SOUNDFILE"
         assert "SECURITY_ALARM" in ch.lightSoundNotificationSettings
         assert ch.lightSoundNotificationSettings["SECURITY_ALARM"]["volumeLevel"] == 0.9
+
+
+async def test_notification_mp3_sound_channel_control(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711COMBINATION_SIGNALLING", 1)
+        assert isinstance(ch, NotificationMp3SoundChannel)
+
+        connection_mock = AsyncMock()
+        ch._connection = connection_mock
+
+        await ch.set_rgb_dim_level_async("RED", 0.5)
+        await ch.set_sound_file_volume_level_async("SOUNDFILE_001", 0.8)
+        await ch.stop_sound_async()
+        await ch.turn_off_async()
+
+        assert len(connection_mock.mock_calls) == 4
