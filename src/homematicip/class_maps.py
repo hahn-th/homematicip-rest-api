@@ -90,6 +90,7 @@ TYPE_CLASS_MAP = {
     DeviceType.SHUTTER_CONTACT_OPTICAL_PLUS: ShutterContactOpticalPlus,
     DeviceType.SMOKE_DETECTOR: SmokeDetector,
     DeviceType.SOIL_MOISTURE_SENSOR_INTERFACE: SoilMoistureSensorInterface,
+    DeviceType.STATUS_BOARD_8: StatusBoard8,
     DeviceType.SWITCH_MEASURING_CABLE_OUTDOOR: SwitchMeasuring,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_COMPACT: TemperatureHumiditySensorOutdoor,
