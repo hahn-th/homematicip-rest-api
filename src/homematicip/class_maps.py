@@ -78,6 +78,7 @@ TYPE_CLASS_MAP = {
     DeviceType.REMOTE_CONTROL_8: RemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: RemoteControl8Module,
     DeviceType.RGBW_DIMMER: RgbwDimmer,
+    DeviceType.LIGHT_STRIP_DIMMER: RgbwDimmer,
     DeviceType.ROOM_CONTROL_DEVICE: RoomControlDevice,
     DeviceType.ROOM_CONTROL_DEVICE_ANALOG: RoomControlDeviceAnalog,
     DeviceType.ROTARY_HANDLE_SENSOR: RotaryHandleSensor,
