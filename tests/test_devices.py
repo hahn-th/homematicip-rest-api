@@ -1407,7 +1407,8 @@ def test_floor_terminal_block(fake_home: Home):
             "rssiDeviceValue(-55) rssiPeerValue(None) configPending(False) dutyCycle(False) "
             "minimumFloorHeatingValvePosition(0.2) "
             "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(True) coolingEmergencyValue(0.0) "
-            "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+            "frostProtectionTemperature(8.0) heatingEmergencyValue(0.25) "
+            "valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
         )
 
         d = FloorTerminalBlock12(fake_home._connection)
@@ -1422,7 +1423,8 @@ def test_floor_terminal_block(fake_home: Home):
             "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
             "minimumFloorHeatingValvePosition(0.2) "
             "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
-            "frostProtectionTemperature(5.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+            "frostProtectionTemperature(5.0) heatingEmergencyValue(0.25) "
+            "valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
         )
 
         c = d.functionalChannels[1]
@@ -1430,6 +1432,12 @@ def test_floor_terminal_block(fake_home: Home):
         assert c.valveState == ValveState.ADAPTION_DONE
         assert c.valvePosition == 0.5
         assert c.label == "Kanal 1"
+        assert c.dewPointAlarmActive is False
+        assert c.emergencyOperationActive is False
+        assert c.externalClockActive is False
+        assert c.frostProtectionActive is False
+        assert c.humidityLimiterAlarm is False
+        assert c.humidityLimiterPreAlarm is False
 
         d = WiredFloorTerminalBlock12(fake_home._connection)
         d = fake_home.search_device_by_id("3014F7110000000000000053")
@@ -1443,7 +1451,8 @@ def test_floor_terminal_block(fake_home: Home):
             "rssiDeviceValue(None) rssiPeerValue(None) configPending(False) dutyCycle(None) "
             "minimumFloorHeatingValvePosition(0.2) "
             "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled(False) coolingEmergencyValue(0.0) "
-            "frostProtectionTemperature(8.0) valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
+            "frostProtectionTemperature(8.0) heatingEmergencyValue(0.0) "
+            "valveProtectionDuration(5) valveProtectionSwitchingInterval(14)"
         )
 
 

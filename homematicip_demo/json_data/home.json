@@ -2875,11 +2875,17 @@
         },
         "1": {
           "deviceId": "3014F7110000000000FALMOT",
+          "dewPointAlarmActive": false,
+          "emergencyOperationActive": false,
+          "externalClockActive": false,
+          "frostProtectionActive": false,
           "functionalChannelType": "FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL",
           "groupIndex": 1,
           "groups": [
             "00000000-0000-0000-0000-000000000016"
           ],
+          "humidityLimiterAlarm": false,
+          "humidityLimiterPreAlarm": false,
           "index": 1,
           "label": "Kanal 1",
           "valvePosition": 0.5,

@@ -466,6 +466,7 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
         self.frostProtectionTemperature = 0.0
         self.heatingEmergencyValue = 0.0
         self.minimumFloorHeatingValvePosition = 0.0
+        self.pulseWidthModulationAtLowFloorHeatingValvePositionEnabled = False
         self.temperatureOutOfRange = False
         self.valveProtectionDuration = 0
         self.valveProtectionSwitchingInterval = 20
@@ -476,6 +477,7 @@ class DeviceBaseFloorHeatingChannel(DeviceBaseChannel):
         self.set_attr_from_dict("frostProtectionTemperature", js)
         self.set_attr_from_dict("heatingEmergencyValue", js)
         self.set_attr_from_dict("minimumFloorHeatingValvePosition", js)
+        self.set_attr_from_dict("pulseWidthModulationAtLowFloorHeatingValvePositionEnabled", js)
         self.set_attr_from_dict("temperatureOutOfRange", js)
         self.set_attr_from_dict("valveProtectionDuration", js)
         self.set_attr_from_dict("valveProtectionSwitchingInterval", js)
@@ -1838,12 +1840,24 @@ class FloorTerminalBlockMechanicChannel(FunctionalChannel):
         #:ValveState:the current valve state
         self.valveState = ValveState.ADAPTION_DONE
         self.valvePosition = 0.0
+        self.dewPointAlarmActive = False
+        self.emergencyOperationActive = False
+        self.externalClockActive = False
+        self.frostProtectionActive = False
+        self.humidityLimiterAlarm = False
+        self.humidityLimiterPreAlarm = False
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.set_attr_from_dict("valveState", js, ValveState)
         if "valvePosition" in js:
             self.set_attr_from_dict("valvePosition", js)
+        self.set_attr_from_dict("dewPointAlarmActive", js)
+        self.set_attr_from_dict("emergencyOperationActive", js)
+        self.set_attr_from_dict("externalClockActive", js)
+        self.set_attr_from_dict("frostProtectionActive", js)
+        self.set_attr_from_dict("humidityLimiterAlarm", js)
+        self.set_attr_from_dict("humidityLimiterPreAlarm", js)
 
 
 class ChangeOverChannel(FunctionalChannel):
