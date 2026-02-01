@@ -401,7 +401,7 @@ def test_smoke_detector(fake_home: Home):
     )
     assert d.manufacturerCode == 1
     assert d.modelId == 296
-    assert d.modelType == "HmIP-SWSD"
+    assert d.modelType == "HmIP-SWSD-2"
     assert d.oem == "eQ-3"
     assert d.serializedGlobalTradeItemNumber == "3014F7110000000000000020"
     assert d.updateState == DeviceUpdateState.UP_TO_DATE
@@ -412,6 +412,14 @@ def test_smoke_detector(fake_home: Home):
     assert d.rssiPeerValue is None
     assert d.unreach is False
     assert d.smokeDetectorAlarmType == SmokeDetectorAlarmType.IDLE_OFF
+    assert d.chamberDegraded is False
+    assert d.dirtLevel == 0.0
+    assert d.smokeDetectorGroupAssignment == ["NO_GROUP"]
+    assert d.smokeEventRepeatingActive is False
+    assert d.lastSmokeAlarmTimestamp is None
+    assert d.lastSmokeTestTimestamp is None
+    assert d.smokeAlarmCounter is None
+    assert d.smokeTestCounter is None
     assert d.availableFirmwareVersion == "0.0.0"
     assert d.firmwareVersion == "1.0.11"
     a, b, c = [int(i) for i in d.firmwareVersion.split(".")]
@@ -419,7 +427,7 @@ def test_smoke_detector(fake_home: Home):
     assert d.configPending is False
     assert (
             str(d)
-            == "HmIP-SWSD Rauchwarnmelder3 lowBat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False) smokeDetectorAlarmType(IDLE_OFF)"
+            == "HmIP-SWSD-2 Rauchwarnmelder3 lowBat(False) unreach(False) rssiDeviceValue(-54) rssiPeerValue(None) configPending(False) dutyCycle(False) smokeDetectorAlarmType(IDLE_OFF) chamberDegraded(False) dirtLevel(0.0) smokeDetectorGroupAssignment(['NO_GROUP']) smokeEventRepeatingActive(False) lastSmokeAlarmTimestamp(None) lastSmokeTestTimestamp(None) smokeAlarmCounter(None) smokeTestCounter(None)"
     )
     assert (
             d._rawJSONData

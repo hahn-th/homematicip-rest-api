@@ -1480,12 +1480,28 @@ class SmokeDetectorChannel(FunctionalChannel):
     def __init__(self, device, connection):
         super().__init__(device, connection)
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
+        self.chamberDegraded: bool = False
+        self.dirtLevel: float = 0.0
+        self.smokeDetectorGroupAssignment: list = []
+        self.smokeEventRepeatingActive: bool = False
+        self.lastSmokeAlarmTimestamp: int | None = None
+        self.lastSmokeTestTimestamp: int | None = None
+        self.smokeAlarmCounter: int | None = None
+        self.smokeTestCounter: int | None = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(
             js["smokeDetectorAlarmType"]
         )
+        self.set_attr_from_dict("chamberDegraded", js)
+        self.set_attr_from_dict("dirtLevel", js)
+        self.set_attr_from_dict("smokeDetectorGroupAssignment", js)
+        self.set_attr_from_dict("smokeEventRepeatingActive", js)
+        self.set_attr_from_dict("lastSmokeAlarmTimestamp", js)
+        self.set_attr_from_dict("lastSmokeTestTimestamp", js)
+        self.set_attr_from_dict("smokeAlarmCounter", js)
+        self.set_attr_from_dict("smokeTestCounter", js)
 
 
 class DeviceGlobalPumpControlChannel(DeviceBaseChannel):

@@ -720,24 +720,33 @@ class WallMountedThermostatBasicHumidity(WallMountedThermostatPro):
 
 
 class SmokeDetector(Device):
-    """HMIP-SWSD (Smoke Alarm with Q label)"""
+    """HMIP-SWSD, HmIP-SWSD-2 (Smoke Alarm with Q label)"""
 
     def __init__(self, connection):
         super().__init__(connection)
         self.smokeDetectorAlarmType = SmokeDetectorAlarmType.IDLE_OFF
+        self.chamberDegraded = False
+        self.dirtLevel = 0.0
+        self.smokeDetectorGroupAssignment = []
+        self.smokeEventRepeatingActive = False
+        self.lastSmokeAlarmTimestamp = None
+        self.lastSmokeTestTimestamp = None
+        self.smokeAlarmCounter = None
+        self.smokeTestCounter = None
 
     def from_json(self, js):
         super().from_json(js)
         c = get_functional_channel("SMOKE_DETECTOR_CHANNEL", js)
         if c:
-            self.smokeDetectorAlarmType = SmokeDetectorAlarmType.from_str(
-                c["smokeDetectorAlarmType"]
-            )
-
-    def __str__(self):
-        return "{} smokeDetectorAlarmType({})".format(
-            super().__str__(), self.smokeDetectorAlarmType
-        )
+            self.set_attr_from_dict("smokeDetectorAlarmType", c, type=SmokeDetectorAlarmType)
+            self.set_attr_from_dict("chamberDegraded", c)
+            self.set_attr_from_dict("dirtLevel", c)
+            self.set_attr_from_dict("smokeDetectorGroupAssignment", c)
+            self.set_attr_from_dict("smokeEventRepeatingActive", c)
+            self.set_attr_from_dict("lastSmokeAlarmTimestamp", c)
+            self.set_attr_from_dict("lastSmokeTestTimestamp", c)
+            self.set_attr_from_dict("smokeAlarmCounter", c)
+            self.set_attr_from_dict("smokeTestCounter", c)
 
 
 class FloorTerminalBlock6(Device):

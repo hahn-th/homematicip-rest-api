@@ -7059,7 +7059,23 @@
           ],
           "index": 1,
           "label": "",
-          "smokeDetectorAlarmType": "IDLE_OFF"
+          "smokeDetectorAlarmType": "IDLE_OFF",
+          "channelRole": "SMOKE_ALARM",
+          "chamberDegraded": false,
+          "dirtLevel": 0.0,
+          "smokeDetectorGroupAssignment": [
+            "NO_GROUP"
+          ],
+          "smokeEventRepeatingActive": false,
+          "lastSmokeAlarmTimestamp": null,
+          "lastSmokeTestTimestamp": null,
+          "smokeAlarmCounter": null,
+          "smokeTestCounter": null,
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureDirtLevel": true,
+            "IOptionalFeatureSmokeDetectorGroupAssignment": true,
+            "IOptionalFeatureSmokeDetectorStatistic": true
+          }
         }
       },
       "homeId": "00000000-0000-0000-0000-000000000001",
@@ -7069,7 +7085,7 @@
       "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
       "manufacturerCode": 1,
       "modelId": 296,
-      "modelType": "HmIP-SWSD",
+      "modelType": "HmIP-SWSD-2",
       "oem": "eQ-3",
       "permanentlyReachable": true,
       "serializedGlobalTradeItemNumber": "3014F7110000000000000020",
