@@ -1822,6 +1822,16 @@ def test_rgbw_dimmer(fake_home: Home):
         assert isinstance(d, RgbwDimmer)
 
 
+def test_light_strip_dimmer(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000LSC")
+        assert d is not None
+        assert isinstance(d, RgbwDimmer)
+        assert d.label == "Light Strip Controller"
+        assert d.modelType == "HmIP-LSC"
+        assert d.fastColorChangeSupported is True
+
+
 def test_wired_carbon_temperature_humidity_sensor_display(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000SCTHD")
