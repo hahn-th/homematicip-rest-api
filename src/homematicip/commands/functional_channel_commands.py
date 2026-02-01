@@ -1006,3 +1006,37 @@ async def toggle_watering_state_async(rest_connection: RestConnection, device_id
         "deviceId": device_id
     }
     return await rest_connection.async_post("device/control/toggleWateringState", data)
+
+
+async def set_sound_file_volume_level_async(
+        rest_connection: RestConnection,
+        device_id: str,
+        channel_index: int,
+        sound_file: str,
+        volume_level: float
+):
+    """
+    Set the sound file and volume level for a MP3 notification channel (HmIP-MP3P).
+
+    :param rest_connection: The REST connection instance.
+    :type rest_connection: RestConnection
+    :param device_id: The device ID.
+    :type device_id: str
+    :param channel_index: The channel index.
+    :type channel_index: int
+    :param sound_file: The sound file to play. Possible values: INTERNAL_SOUNDFILE,
+                       SOUNDFILE_001 through SOUNDFILE_252, RANDOM_SOUNDFILE,
+                       DISABLE_ACOUSTIC_SIGNAL.
+    :type sound_file: str
+    :param volume_level: The desired volume level (0.0 to 1.0).
+    :type volume_level: float
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {
+        "channelIndex": channel_index,
+        "deviceId": device_id,
+        "soundFile": sound_file,
+        "volumeLevel": volume_level
+    }
+    return await rest_connection.async_post("device/control/setSoundFileVolumeLevel", data)

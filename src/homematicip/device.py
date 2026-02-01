@@ -1202,6 +1202,50 @@ class AlarmSirenOutdoor(AlarmSirenIndoor):
             self.set_attr_from_dict("badBatteryHealth", c)
 
 
+class CombinationSignallingDevice(Device):
+    """HmIP-MP3P (Combination Signalling Device)
+
+    A device that can play MP3 sounds and show optical signals
+    for various alarm and notification conditions.
+    """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self._baseChannel = "DEVICE_PERMANENT_FULL_RX"
+        self.permanentFullRx = False
+        # NOTIFICATION_MP3_SOUND_CHANNEL properties
+        self.dimLevel = 0.0
+        self.lightSoundNotificationSettings = {}
+        self.mp3ErrorState = "NO_ERROR"
+        self.noSoundLowBat = False
+        self.on = False
+        self.opticalSignalBehaviour = None
+        self.playingFileActive = False
+        self.profileMode = "AUTOMATIC"
+        self.simpleRGBColorState = "BLACK"
+        self.soundFile = None
+        self.volumeLevel = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DEVICE_PERMANENT_FULL_RX", js)
+        if c:
+            self.set_attr_from_dict("permanentFullRx", c)
+        c = get_functional_channel("NOTIFICATION_MP3_SOUND_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("dimLevel", c)
+            self.set_attr_from_dict("lightSoundNotificationSettings", c)
+            self.set_attr_from_dict("mp3ErrorState", c)
+            self.set_attr_from_dict("noSoundLowBat", c)
+            self.set_attr_from_dict("on", c)
+            self.set_attr_from_dict("opticalSignalBehaviour", c)
+            self.set_attr_from_dict("playingFileActive", c)
+            self.set_attr_from_dict("profileMode", c)
+            self.set_attr_from_dict("simpleRGBColorState", c)
+            self.set_attr_from_dict("soundFile", c)
+            self.set_attr_from_dict("volumeLevel", c)
+
+
 class MotionDetectorIndoor(SabotageDevice):
     """HMIP-SMI (Motion Detector with Brightness Sensor - indoor)"""
 

@@ -2326,3 +2326,87 @@ class SoilMoistureSensorInterfaceChannel(FunctionalChannel):
         self.soilTemperature = js.get("soilTemperature", self.soilTemperature)
         self.soilTemperatureNeutralMaximum = js.get("soilTemperatureNeutralMaximum", self.soilTemperatureNeutralMaximum)
         self.soilTemperatureNeutralMinimum = js.get("soilTemperatureNeutralMinimum", self.soilTemperatureNeutralMinimum)
+
+
+class NotificationMp3SoundChannel(FunctionalChannel):
+    """This is the representative of the NOTIFICATION_MP3_SOUND_CHANNEL channel.
+
+    This channel is used by combination signalling devices like the HmIP-MP3P
+    which can play MP3 sounds and show optical signals for various alarm conditions.
+    """
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.dimLevel: float = 0.0
+        self.lightSoundNotificationSettings: dict = {}
+        self.mp3ErrorState: str = "NO_ERROR"
+        self.noSoundLowBat: bool = False
+        self.on: bool = False
+        self.opticalSignalBehaviour: str | None = None
+        self.playingFileActive: bool = False
+        self.profileMode: str = "AUTOMATIC"
+        self.simpleRGBColorState: str = "BLACK"
+        self.soundFile: str | None = None
+        self.volumeLevel: float | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+        super().from_json(js, groups)
+        self.set_attr_from_dict("dimLevel", js)
+        self.set_attr_from_dict("lightSoundNotificationSettings", js)
+        self.set_attr_from_dict("mp3ErrorState", js)
+        self.set_attr_from_dict("noSoundLowBat", js)
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("opticalSignalBehaviour", js)
+        self.set_attr_from_dict("playingFileActive", js)
+        self.set_attr_from_dict("profileMode", js)
+        self.set_attr_from_dict("simpleRGBColorState", js)
+        self.set_attr_from_dict("soundFile", js)
+        self.set_attr_from_dict("volumeLevel", js)
+
+    async def set_rgb_dim_level_async(
+        self,
+        rgb_color_state: str,
+        dim_level: float = 1.0
+    ):
+        """Set LED color and brightness.
+
+        Args:
+            rgb_color_state: The RGB color state from RGBColorState enum:
+                BLACK, BLUE, GREEN, TURQUOISE, RED, PURPLE, YELLOW, WHITE
+            dim_level: The dim/brightness level (0.0 to 1.0). Default 1.0.
+        """
+        return await functional_channel_commands.set_simple_rgb_color_dim_level_async(
+            self._connection, self.device.id, self.index,
+            rgb_color_state, dim_level
+        )
+
+    async def set_sound_file_volume_level_async(
+        self,
+        sound_file: str,
+        volume_level: float = 1.0
+    ):
+        """Play specified sound file at given volume.
+
+        Args:
+            sound_file: The sound file to play. Possible values:
+                INTERNAL_SOUNDFILE - Built-in system sound
+                SOUNDFILE_001 through SOUNDFILE_252 - User sounds on SD card
+                RANDOM_SOUNDFILE - Random selection
+                DISABLE_ACOUSTIC_SIGNAL - Stop/no sound
+            volume_level: The volume level (0.0 to 1.0). Default 1.0.
+        """
+        return await functional_channel_commands.set_sound_file_volume_level_async(
+            self._connection, self.device.id, self.index,
+            sound_file, volume_level
+        )
+
+    async def stop_sound_async(self):
+        """Stop current sound playback by setting volume to 0."""
+        return await self.set_sound_file_volume_level_async(
+            "INTERNAL_SOUNDFILE", 0.0
+        )
+
+    async def turn_off_async(self):
+        """Turn off both LED and sound."""
+        return await self.set_rgb_dim_level_async("BLACK", 0.0)
