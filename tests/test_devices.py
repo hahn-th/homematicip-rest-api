@@ -191,6 +191,24 @@ def test_full_flush_contact_interface6(fake_home: Home):
     )
 
 
+def test_wired_input_16(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000DRI16")
+    assert isinstance(d, WiredInput32)  # DRI16 uses same class as DRI32
+
+    # Test first channel (configured as window sensor, closed)
+    assert d.functionalChannels[1].binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert d.functionalChannels[1].windowState == WindowState.CLOSED
+    assert d.functionalChannels[1].multiModeInputMode == MultiModeInputMode.BINARY_BEHAVIOR
+
+    # Test channel 10 (configured as window sensor, open)
+    assert d.functionalChannels[10].binaryBehaviorType == BinaryBehaviorType.NORMALLY_CLOSE
+    assert d.functionalChannels[10].windowState == WindowState.OPEN
+    assert d.functionalChannels[10].multiModeInputMode == MultiModeInputMode.BINARY_BEHAVIOR
+
+    # Verify all 16 input channels exist (indices 1-16, plus channel 0)
+    assert len(d.functionalChannels) == 17
+
+
 def test_full_flush_input_switch(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000HmIPFSI16")
     assert isinstance(d, FullFlushInputSwitch)

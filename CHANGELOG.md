@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add support for ELV-SH-SB8 Status Board
+- Add support for ELV-SH-PSMCI (Switch Measuring Cable Indoor)
+- Add test coverage for HmIPW-DRI16 (Wired Input 16)
 
 ## [2.5.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.4.0..2.5.0) 2026-01-13
 
