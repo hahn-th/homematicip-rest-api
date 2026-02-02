@@ -15932,6 +15932,359 @@
       "serializedGlobalTradeItemNumber": "3014F711COMBINATION_SIGNALLING",
       "type": "COMBINATION_SIGNALLING_DEVICE",
       "updateState": "UP_TO_DATE"
+    },
+    "3014F71100000000ELVSHSB8": {
+      "availableFirmwareVersion": "0.0.0",
+      "connectionType": "HMIP_RF",
+      "deviceArchetype": "HMIP",
+      "firmwareVersion": "1.8.12",
+      "firmwareVersionInteger": 67596,
+      "functionalChannels": {
+        "0": {
+          "altitude": null,
+          "busConfigMismatch": null,
+          "coProFaulty": false,
+          "coProRestartNeeded": false,
+          "coProUpdateFailure": false,
+          "configPending": false,
+          "controlsMountingOrientation": null,
+          "daliBusState": null,
+          "dataDecodingFailedError": null,
+          "defaultLinkedGroup": [],
+          "deviceAliveSignalEnabled": null,
+          "deviceCommunicationError": null,
+          "deviceDriveError": null,
+          "deviceDriveModeError": null,
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "deviceOperationMode": null,
+          "deviceOverheated": false,
+          "deviceOverloaded": false,
+          "devicePowerFailureDetected": false,
+          "deviceUndervoltage": false,
+          "displayContrast": null,
+          "displayMode": null,
+          "displayMountingOrientation": null,
+          "dutyCycle": false,
+          "frostProtectionError": null,
+          "frostProtectionErrorAcknowledged": null,
+          "functionalChannelType": "DEVICE_BASE",
+          "groupIndex": 0,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 0,
+          "inputLayoutMode": null,
+          "invertedDisplayColors": null,
+          "label": "",
+          "lockJammed": null,
+          "lowBat": null,
+          "mountingModuleError": null,
+          "mountingOrientation": null,
+          "multicastRoutingEnabled": false,
+          "noDataFromLinkyError": null,
+          "operationDays": null,
+          "particulateMatterSensorCommunicationError": null,
+          "particulateMatterSensorError": null,
+          "powerShortCircuit": null,
+          "profilePeriodLimitReached": null,
+          "routerModuleEnabled": false,
+          "routerModuleSupported": false,
+          "rssiDeviceValue": -62,
+          "rssiPeerValue": -60,
+          "sensorCommunicationError": null,
+          "sensorError": null,
+          "shortCircuitDataLine": null,
+          "supportedOptionalFeatures": {
+            "IFeatureBusConfigMismatch": false,
+            "IFeatureDataDecodingFailedError": false,
+            "IFeatureDeviceCoProError": false,
+            "IFeatureDeviceCoProRestart": false,
+            "IFeatureDeviceCoProUpdate": false,
+            "IFeatureDeviceCommunicationError": false,
+            "IFeatureDeviceDaliBusError": false,
+            "IFeatureDeviceDriveError": false,
+            "IFeatureDeviceDriveModeError": false,
+            "IFeatureDeviceIdentify": false,
+            "IFeatureDeviceMountingModuleError": false,
+            "IFeatureDeviceOverheated": true,
+            "IFeatureDeviceOverloaded": false,
+            "IFeatureDeviceParticulateMatterSensorCommunicationError": false,
+            "IFeatureDeviceParticulateMatterSensorError": false,
+            "IFeatureDevicePowerFailure": false,
+            "IFeatureDeviceSensorCommunicationError": false,
+            "IFeatureDeviceSensorError": false,
+            "IFeatureDeviceTempSensorError": false,
+            "IFeatureDeviceTemperatureHumiditySensorCommunicationError": false,
+            "IFeatureDeviceTemperatureHumiditySensorError": false,
+            "IFeatureDeviceTemperatureOutOfRange": false,
+            "IFeatureDeviceUndervoltage": false,
+            "IFeatureMulticastRouter": false,
+            "IFeatureNoDataFromLinkyError": false,
+            "IFeaturePowerShortCircuit": false,
+            "IFeatureProfilePeriodLimit": true,
+            "IFeatureRssiValue": true,
+            "IFeatureShortCircuitDataLine": false,
+            "IFeatureTicVersionError": false,
+            "IOptionalFeatureAltitude": false,
+            "IOptionalFeatureDefaultLinkedGroup": false,
+            "IOptionalFeatureDeviceAliveSignalEnabled": false,
+            "IOptionalFeatureDeviceErrorLockJammed": false,
+            "IOptionalFeatureDeviceFrostProtectionError": false,
+            "IOptionalFeatureDeviceInputLayoutMode": false,
+            "IOptionalFeatureDeviceOperationMode": false,
+            "IOptionalFeatureDeviceSwitchChannelMode": false,
+            "IOptionalFeatureDeviceValveError": false,
+            "IOptionalFeatureDeviceWaterError": false,
+            "IOptionalFeatureDisplayContrast": false,
+            "IOptionalFeatureDisplayMode": false,
+            "IOptionalFeatureDutyCycle": true,
+            "IOptionalFeatureInvertedDisplayColors": false,
+            "IOptionalFeatureLowBat": false,
+            "IOptionalFeatureMountingOrientation": false,
+            "IOptionalFeatureOperationDays": false
+          },
+          "switchChannelMode": null,
+          "temperatureHumiditySensorCommunicationError": null,
+          "temperatureHumiditySensorError": null,
+          "temperatureOutOfRange": false,
+          "temperatureSensorError": null,
+          "ticVersionError": null,
+          "unreach": false,
+          "valveFlowError": null,
+          "valveWaterError": null
+        },
+        "1": {
+          "channelRole": "SWITCH_ACTUATOR",
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 1,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 1,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "LED (1) - Strompreis unter 0,18 \u20ac",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": false,
+            "IFeatureGarageGroupActuatorChannel": false,
+            "IFeatureLightGroupActuatorChannel": true,
+            "IFeatureLightProfileActuatorChannel": true,
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "2": {
+          "channelRole": "SWITCH_ACTUATOR",
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 2,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 2,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "LED (2) - Strompreis unter 0,25 \u20ac",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": false,
+            "IFeatureGarageGroupActuatorChannel": false,
+            "IFeatureLightGroupActuatorChannel": true,
+            "IFeatureLightProfileActuatorChannel": true,
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "3": {
+          "channelRole": "SWITCH_ACTUATOR",
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 3,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 3,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "LED (3) - Strompreis unter 0,30 \u20ac",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": false,
+            "IFeatureGarageGroupActuatorChannel": false,
+            "IFeatureLightGroupActuatorChannel": true,
+            "IFeatureLightProfileActuatorChannel": true,
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "4": {
+          "channelRole": "SWITCH_ACTUATOR",
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 4,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 4,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "LED (4) - Strompreis \u00fcber 0,30 \u20ac",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": false,
+            "IFeatureGarageGroupActuatorChannel": false,
+            "IFeatureLightGroupActuatorChannel": true,
+            "IFeatureLightProfileActuatorChannel": true,
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "5": {
+          "channelRole": null,
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 5,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 5,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "6": {
+          "channelRole": null,
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 6,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 6,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "7": {
+          "channelRole": null,
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 7,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 7,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "8": {
+          "channelRole": null,
+          "deviceId": "3014F71100000000ELVSHSB8",
+          "functionalChannelType": "SWITCH_CHANNEL",
+          "groupIndex": 8,
+          "groups": [
+            "00000000-0000-0000-0000-000000000027"
+          ],
+          "index": 8,
+          "internalLinkConfiguration": {
+            "firstInputAction": "TOGGLE",
+            "internalLinkConfigurationType": "SINGLE_INPUT_SWITCH",
+            "longPressOnTimeEnabled": false,
+            "onTime": 111600.0
+          },
+          "label": "",
+          "on": false,
+          "powerUpSwitchState": "PERMANENT_OFF",
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureInternalLinkConfiguration": true,
+            "IOptionalFeaturePowerUpSwitchState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        }
+      },
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "3014F71100000000ELVSHSB8",
+      "label": "Status Board 8",
+      "lastStatusUpdate": 1759667237562,
+      "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+      "manuallyUpdateForced": false,
+      "manufacturerCode": 9,
+      "measuredAttributes": {},
+      "modelId": 574,
+      "modelType": "ELV-SH-SB8",
+      "oem": "eQ-3",
+      "permanentlyReachable": true,
+      "serializedGlobalTradeItemNumber": "3014F7110000000000000013",
+      "type": "STATUS_BOARD_8",
+      "updateState": "UP_TO_DATE"
     }
   },
   "groups": {

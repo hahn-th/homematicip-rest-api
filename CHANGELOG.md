@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.5.0..master)
 
+### Added
+
+- Add support for ELV-SH-SB8 Status Board
+
 ## [2.5.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.4.0..2.5.0) 2026-01-13
 
 ### Added
