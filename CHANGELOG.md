@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add support for HmIP-USBSM (USB Switch Measuring)
 - Add support for ELV-SH-PSMCI (Switch Measuring Cable Indoor)
 - Add test coverage for HmIPW-DRI16 (Wired Input 16)
 

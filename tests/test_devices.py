@@ -1874,6 +1874,14 @@ def test_switch_measuring_cable_outdoor(fake_home: Home):
         assert d.measuredAttributes == {"1": {"currentPowerConsumption": True}}
 
 
+def test_usb_switch_measuring(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000USBSM")
+        assert isinstance(d, SwitchMeasuring)
+        assert d.label == "USB Switch Measuring"
+        assert d.modelType == "HmIP-USBSM"
+
+
 def test_motion_detector_switch_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000SMO230A")

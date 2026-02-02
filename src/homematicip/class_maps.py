@@ -100,6 +100,7 @@ TYPE_CLASS_MAP = {
     DeviceType.TILT_VIBRATION_SENSOR: TiltVibrationSensor,
     DeviceType.TILT_VIBRATION_SENSOR_COMPACT: TiltVibrationSensor,
     DeviceType.TORMATIC_MODULE: GarageDoorModuleTormatic,
+    DeviceType.USB_SWITCH_MEASURING: SwitchMeasuring,
     DeviceType.WALL_MOUNTED_KEY_PAD: WallMountedKeyPad,
     DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.WALL_MOUNTED_GARAGE_DOOR_CONTROLLER: WallMountedGarageDoorController,
