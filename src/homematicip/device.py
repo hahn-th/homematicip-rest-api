@@ -947,6 +947,10 @@ class OpenCollector8Module(Switch):
     """HMIP-MOD-OC8 ( Open Collector Module )"""
 
 
+class StatusBoard8(Switch):
+    """ELV-SH-SB8 (Status Board with 8 LEDs)"""
+
+
 class HeatingSwitch2(Switch):
     """HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)"""
 
