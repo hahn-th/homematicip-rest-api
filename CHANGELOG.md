@@ -9,8 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add support for HmIP-MP3P (Combination Signalling Device)
+- Add extended smoke detector properties for HmIP-SWSD-2
+- Add support for HmIP-LSC (Light Strip Controller)
 - Add support for ELV-SH-PSMCI (Switch Measuring Cable Indoor)
 - Add test coverage for HmIPW-DRI16 (Wired Input 16)
+
+### Changed
+
+- Add missing fields to floor terminal block channels (HmIP-FALMOT)
 
 ## [2.5.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.4.0..2.5.0) 2026-01-13
 
