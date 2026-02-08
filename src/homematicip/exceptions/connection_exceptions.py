@@ -15,3 +15,8 @@ class HmipServerCloseError(HmipConnectionError):
 
 class HmipThrottlingError(HmipConnectionError):
     pass
+
+
+class HmipAuthenticationError(HmipConnectionError):
+    """Exception raised when the HomematicIP cloud returns an authentication error (HTTP 403)."""
+    pass

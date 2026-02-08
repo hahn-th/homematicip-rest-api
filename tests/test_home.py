@@ -7,6 +7,7 @@ import pytest
 
 from conftest import utc_offset
 from homematicip.base.channel_event import ChannelEvent
+from homematicip.exceptions.connection_exceptions import HmipAuthenticationError, HmipConnectionError
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import Device, BaseDevice
 from homematicip.functionalHomes import *
@@ -116,9 +117,24 @@ async def test_home_download_configuration_without_context():
 async def test_home_download_configuration_result_failed(fake_home: Home):
     mock_response = AsyncMock()
     mock_response.success = False
+    mock_response.status = 500
+    mock_response.status_text = "Internal Server Error"
 
     with patch.object(fake_home, '_rest_call_async', return_value=mock_response):
-        with pytest.raises(Exception):
+        with pytest.raises(HmipConnectionError):
+            await fake_home.download_configuration_async()
+
+
+@pytest.mark.asyncio
+async def test_home_download_configuration_auth_error(fake_home: Home):
+    mock_response = AsyncMock()
+    mock_response.success = False
+    mock_response.status = 403
+    mock_response.status_text = "Forbidden"
+    mock_response.text = '{"errorCode":"INVALID_AUTHORIZATION"}'
+
+    with patch.object(fake_home, '_rest_call_async', return_value=mock_response):
+        with pytest.raises(HmipAuthenticationError):
             await fake_home.download_configuration_async()
 
 

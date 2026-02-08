@@ -11,7 +11,7 @@ from homematicip.connection.connection_context import ConnectionContext, Connect
 from homematicip.connection.connection_factory import ConnectionFactory
 from homematicip.connection.websocket_handler import WebsocketHandler
 from homematicip.device import *
-from homematicip.exceptions.connection_exceptions import HmipConnectionError
+from homematicip.exceptions.connection_exceptions import HmipAuthenticationError, HmipConnectionError
 from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.group import *
 from homematicip.location import Location
@@ -190,7 +190,13 @@ class AsyncHome(HomeMaticIPObject):
         )
 
         if not result.success:
-            raise HmipConnectionError("Could not get the current configuration. Error: %s".format(result.status_text))
+            if result.status == 403:
+                raise HmipAuthenticationError(
+                    f"Could not get the current configuration. Error: {result.status} {result.status_text} ({result.text})"
+                )
+            raise HmipConnectionError(
+                f"Could not get the current configuration. Error: {result.status} {result.status_text}"
+            )
 
         return result.json
 
