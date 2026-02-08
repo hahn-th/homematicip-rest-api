@@ -1874,6 +1874,14 @@ def test_switch_measuring_cable_outdoor(fake_home: Home):
         assert d.measuredAttributes == {"1": {"currentPowerConsumption": True}}
 
 
+def test_usb_switch_measuring(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000USBSM")
+        assert isinstance(d, SwitchMeasuring)
+        assert d.label == "USB Switch Measuring"
+        assert d.modelType == "HmIP-USBSM"
+
+
 def test_motion_detector_switch_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000SMO230A")
@@ -1916,3 +1924,28 @@ def test_combination_signalling_device(fake_home: Home):
         assert "SMOKE_ALARM" in d.lightSoundNotificationSettings
         assert d.lightSoundNotificationSettings["SECURITY_ALARM"]["simpleRGBColor"] == "RED"
         assert d.lightSoundNotificationSettings["SECURITY_ALARM"]["volumeLevel"] == 0.9
+
+
+def test_status_board_8(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F71100000000ELVSHSB8")
+        assert isinstance(d, StatusBoard8)
+        assert d.label == "Status Board 8"
+        assert d.modelType == "ELV-SH-SB8"
+
+        # Test first LED channel
+        c = d.functionalChannels[1]
+        assert isinstance(c, SwitchChannel)
+        assert c.index == 1
+        assert c.on is False
+        assert c.profileMode == "AUTOMATIC"
+
+        # Test last LED channel
+        c = d.functionalChannels[8]
+        assert isinstance(c, SwitchChannel)
+        assert c.index == 8
+        assert c.on is False
+        assert c.profileMode == "AUTOMATIC"
+
+        # Verify all 8 LED channels exist (channels 1-8)
+        assert len(d.functionalChannels) == 9  # 8 LEDs + 1 base channel
