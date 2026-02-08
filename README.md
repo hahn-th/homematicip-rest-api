@@ -87,12 +87,14 @@ A few examples:
 ## Homematic IP Devices:
 
 - [x] ALPHA-IP-RBG (Alpha IP Wall Thermostat Display)
-- [x] ALPHA-IP-RBGa (ALpha IP Wall Thermostat Display analog)
+- [x] ALPHA-IP-RBGa (Alpha IP Wall Thermostat Display analog)
 - [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) \*powered by HmIP
-- [ ] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
+- [x] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
 - [x] ELV-SH-CTV Tilt Vibration Sensor Compact
+- [x] ELV-SH-PSMCI (Switch Measuring Cable Indoor) \*powered by HmIP
+- [x] ELV-SH-SB8 (Status Board) \*powered by HmIP
 - [ ] ELV-SH-GVI (Garden valve interface) \*powered by HmIP
-- [ ] ELV-SH-IRS8 (Infared Remote control - 8x channels) \*powered by HmIP
+- [ ] ELV-SH-IRS8 (Infrared Remote control - 8x channels) \*powered by HmIP
 - [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) \*powered by HmIP
 - [ ] ELV-SH-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V) \*powered by HmIP
 - [ ] ELV-SH-WSC (2x Servo Controls, 5v - 12V) \*powered by HmIP
@@ -119,10 +121,10 @@ A few examples:
 - [x] HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)
 - [x] HMIP-DRDI3 (Dimming Actuator Inbound 230V – 3x channels, 200W per channel) electrical DIN rail
 - [x] HMIP-DRSI4 (Switch Actuator for DIN rail mount – 4x channels)
-- [x] HMIP-DSD-PCB (Door Signal Dector PCB)
+- [x] HMIP-DSD-PCB (Door Signal Detector PCB)
 - [x] HMIP-eTRV (Heating-Thermostat with Display)
 - [x] HMIP-eTRV-2 (Heating-Thermostat with Display) New Version
-- [ ] HMIP-eTRV-2 I9F (Heating-Thermostat with Display) New Version
+- [x] HMIP-eTRV-2 I9F (Heating-Thermostat with Display) New Version
 - [ ] HMIP-eTRV-2-UK (UK Version not tested, but it should work)
 - [x] HMIP-eTRV-B (Heating-Thermostat basic with Display)
 - [ ] HMIP-eTRV-B-2 (Heating-Thermostat basic with Display) New Version
@@ -131,7 +133,7 @@ A few examples:
 - [x] HMIP-eTRV-B1 (Heating-Thermostat basic with Display) _Silvercrest Edition_
 - [x] HMIP-eTRV-C (Heating-Thermostat compact without display)
 - [x] HMIP-eTRV-C-2 (Heating-Thermostat compact without display) New Version
-- [ ] HmIP-eTRV-CL (Heating-thermostat compact with dispay)
+- [x] HmIP-eTRV-CL (Heating-thermostat compact with display)
 - [x] HMIP-eTRV-E (Heating-Thermostat Design Evo _New Generation_, white)
 - [ ] HMIP-eTRV-E-A (Heating-Thermostat Design Evo _New Generation_, anthracite)
 - [ ] HMIP-eTRV-E-S (Heating-Thermostat Design Evo _New Generation_, silver)
@@ -154,7 +156,7 @@ A few examples:
 - [ ] HMIP-FWI (Wiegand Interface)
 - [x] HMIP-HAP (Cloud Access Point)
 - [x] HMIP-HAP-B1 (Cloud Access Point) _Silvercrest Edition_
-- [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds
+- [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds)
 - [ ] HMIP-HDRC (Hunter Douglas & erfal window blinds remote control)
 - [ ] HMIP-K-DRBLI4 (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
 - [ ] HMIP-K-DRSI1 (Actuator Inbound 230V – 1x channel) electrical DIN rail
@@ -162,13 +164,14 @@ A few examples:
 - [ ] HMIP-K-DRSI4 (Switch Actuator – 4x channels, 16A per channel) electrical DIN rail
 - [x] HMIP-KRCA (Key Ring Remote Control & Alarm)
 - [x] HMIP-KRC4 (Key Ring Remote Control - 4x buttons)
-- [ ] HMIP-MIO16-PCB (Multi Analog/Digitial Interface - Switch Circuit Board)
+- [x] HMIP-LSC (Light Strip Controller)
+- [ ] HMIP-MIO16-PCB (Multi Analog/Digital Interface - Switch Circuit Board)
 - [x] HMIP-MIOB (Multi IO Box for floor heating & cooling)
 - [x] HMIP-MOD-HO (Garage Door Module for Hörmann)
 - [x] HMIP-MOD-OC8 (Open Collector Module Receiver - 8x)
 - [x] HMIP-MOD-RC8 (Open Collector Module Sender - 8x)
 - [x] HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)
-- [ ] HMIP-MP3P (Combination Signalling Device MP3)
+- [x] HMIP-MP3P (Combination Signalling Device MP3)
 - [ ] HMIP-P-DRG-DALI (DALI Lights Gateway)
 - [x] HMIP-PCBS (Switch Circuit Board - 1x channel)
 - [x] HMIP-PCBS2 (Switch Circuit Board - 2x channels)
@@ -224,8 +227,10 @@ A few examples:
 - [x] HMIP-SWO-PL (Weather Sensor – Plus)
 - [x] HMIP-SWO-PR (Weather Sensor – Pro)
 - [x] HMIP-SWSD (Smoke Detector)
-- [ ] HMIP-USBSM (USB Switching Measurement Actuator)
+- [x] HMIP-SWSD-2 (Smoke Detector with Siren)
+- [x] HMIP-USBSM (USB Switching Measurement Actuator)
 - [x] HMIP-WGC (Garage Door Button)
+- [x] HMIP-WGT (Wall Thermostat with Glass Display)
 - [x] HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)
 - [x] HMIP-WKP (Keypad)
 - [x] HMIP-WLAN-HAP (WLAN Access Point)
@@ -250,7 +255,7 @@ A few examples:
 - [x] HMIPW-DRBL4 (Homematic IP Wired Blinds Actuator – 4x channels)
 - [x] HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)
 - [x] HMIPW-DRS4 (Homematic IP Wired Switch Actuator – 4x channels)
-- [ ] HMIPW-DRI16 (Homematic IP Wired Inbound module – 16x channels)
+- [x] HMIPW-DRI16 (Homematic IP Wired Inbound module – 16x channels)
 - [x] HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)
 - [x] HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)
 - [ ] HMIPW-FAL24-C6 (Homematic IP Wired Floor Heating Actuator – 6x channels, 24V)
@@ -261,14 +266,14 @@ A few examples:
 - [x] HMIPW-FIO6 (Homematic IP Wired IO Module flush-mount – 6x channels)
 - [x] HMIPW-SCTHD (Homematic IP Wired CO2, Temperature and Humidity Sensor with Display)
 - [x] HMIPW-SMI55 (Homematic IP Wired Motion Detector with Brightness Sensor and Remote Control - 2x buttons)
-- [ ] HMIPW-SPI (Homematic IP Wired Presence Sensor - indoor)
+- [x] HMIPW-SPI (Homematic IP Wired Presence Sensor - indoor)
 - [ ] HMIPW-STH (Homematic IP Wired Temperature and Humidity Sensor without display - indoor)
 - [ ] HMIPW-STHD (Homematic IP Wired Temperature and Humidity Sensor with display - indoor)
 - [ ] HMIPW-WGD (Homematic IP Wired Wall-mount Glas Display - black edition)
 - [ ] HMIPW-WGD-PL (Homematic IP Wired Wall-mount Glas Display Play - black edition)
 - [x] HMIPW-WRC2 (Homematic IP Wired Wall-mount Remote Control - 2x channels)
 - [x] HMIPW-WRC6 (Homematic IP Wired Wall-mount Remote Control - 6x channels)
-- [ ] HMIPW-WTH (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
+- [x] HMIPW-WTH (Homematic IP Wired Wall Mounted Thermostat Pro with Display)
 
 ## Events
 
