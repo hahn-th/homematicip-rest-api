@@ -141,8 +141,12 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         if output:
             print(output)
 
-    if not await home.get_current_state_async():
-        return
+        # Reuse the already downloaded config instead of fetching again
+        if not home.update_home(json_state):
+            return
+    else:
+        if not await home.get_current_state_async():
+            return
 
     if args.list_devices:
         command_entered = True
