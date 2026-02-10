@@ -51,7 +51,6 @@ plugins:
           show_submodules: false
           summary: false
           show_source: false
-          load_external_modules: false
           members_order: alphabetical
 - api-autonav:
     modules: ['src/homematicip']
