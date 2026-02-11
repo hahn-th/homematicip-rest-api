@@ -1,0 +1,7982 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python wrapper for the homematicIP REST API.">
+      
+      
+      
+        <link rel="canonical" href="https://hahn-th.github.io/homematicip-rest-api/changelog/">
+      
+      
+        <link rel="prev" href="../batch-testing/">
+      
+      
+        <link rel="next" href="../api-introduction/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Changelog - HomematicIP Cloud Rest API Wrapper</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#changelog" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="HomematicIP Cloud Rest API Wrapper" class="md-header__button md-logo" aria-label="HomematicIP Cloud Rest API Wrapper" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HomematicIP Cloud Rest API Wrapper
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Changelog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hahn-th/homematicip-rest-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hahn-th/homematicip-rest-api
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../api-introduction/" class="md-tabs__link">
+          
+  
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="HomematicIP Cloud Rest API Wrapper" class="md-nav__button md-logo" aria-label="HomematicIP Cloud Rest API Wrapper" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    HomematicIP Cloud Rest API Wrapper
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hahn-th/homematicip-rest-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hahn-th/homematicip-rest-api
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Home
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../batch-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNRELEASED
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#260" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.0
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#250-2026-01-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.0 2026-01-13
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.0 2026-01-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240-2025-11-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.0 2025-11-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4.0 2025-11-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#231-2025-10-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 2025-10-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.1 2025-10-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#230-2025-08-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.0 2025-08-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.0 2025-08-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#220-2025-07-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.0 2025-07-18
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.0 2025-07-18">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#210-2025-07-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.0 2025-07-15
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.0 2025-07-15">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#207-2025-06-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.7 2025-06-29
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.7 2025-06-29">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#206-2025-06-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.6 2025-06-19
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.6 2025-06-19">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#205-2025-06-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.5 2025-06-12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.5 2025-06-12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#204-2025-05-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.4 2025-05-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.4 2025-05-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#203-2025-05-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.3 2025-05-17
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.3 2025-05-17">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#202-2025-05-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.2 2025-05-02
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.2 2025-05-02">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2011-2025-05-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [2.0.1.1] 2025-05-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[2.0.1.1] 2025-05-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201-2025-04-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.1 2025-04-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.1 2025-04-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#200-2025-03-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.0 2025-03-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.0 2025-03-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#117-2025-01-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.7 2025-01-28
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.7 2025-01-28">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-2024-12-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.6 2024-12-15
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.6 2024-12-15">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-2024-12-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.5 2024-12-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.5 2024-12-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-2024-12-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.4 2024-12-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.4 2024-12-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-2024-11-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.3 2024-11-17
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.3 2024-11-17">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-2024-07-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 2024-07-14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.2 2024-07-14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-2024-05-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 2024-05-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.1 2024-05-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-2024-01-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0 2024-01-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.0 2024-01-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1016-2023-10-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.16 2023-10-25
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.16 2023-10-25">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1015-2023-08-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.15 2023-08-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.15 2023-08-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1014-2023-03-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.14 2023-03-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.14 2023-03-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1013-2022-12-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.13 2022-12-05
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.13 2022-12-05">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1012-2022-11-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.12 2022-11-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.12 2022-11-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1011-2022-11-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.11 2022-11-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.11 2022-11-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1010-2022-11-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.10 2022-11-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.10 2022-11-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-2022-10-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.9 2022-10-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.9 2022-10-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-2022-10-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.8 2022-10-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.8 2022-10-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-2022-07-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.7 2022-07-25
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.7 2022-07-25">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-2022-07-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.5 2022-07-16
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.5 2022-07-16">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-2022-07-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.4 2022-07-12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.4 2022-07-12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-2022-07-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.3 2022-07-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.3 2022-07-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-2022-02-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.2 2022-02-03
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.2 2022-02-03">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#101-2021-05-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.1 2021-05-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.1 2021-05-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100-2021-04-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0 2021-04-05
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 2021-04-05">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0131-2021-01-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.13.1 2021-01-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13.1 2021-01-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0130-2020-12-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.13.0 2020-12-03
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13.0 2020-12-03">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0121-2020-11-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.12.1 2020-11-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.1 2020-11-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0120-2020-11-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.12.0 2020-11-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.0 2020-11-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0110-2020-08-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.11.0 2020-08-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.11.0 2020-08-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01019-2020-07-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.19 2020-07-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.19 2020-07-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01018-2020-06-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.18 2020-06-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.18 2020-06-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01017-2020-02-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.17 2020-02-16
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.17 2020-02-16">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01016-2020-02-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.16 2020-02-16
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.16 2020-02-16">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01015-2019-12-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.15 2019-12-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.15 2019-12-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01014-2019-12-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.14 - 2019-12-22
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.14 - 2019-12-22">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01013-2019-10-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.13 - 2019-10-19
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.13 - 2019-10-19">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01012-2019-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.12 - 2019-09-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.12 - 2019-09-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01011-2019-09-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.11 - 2019-09-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.11 - 2019-09-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01010-2019-08-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.10 - 2019-08-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.10 - 2019-08-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0109-2019-07-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.9 - 2019-07-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.9 - 2019-07-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0108-2019-05-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.8 - 2019-05-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.8 - 2019-05-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0107-2019-04-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.7 - 2019-04-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.7 - 2019-04-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0106-2019-03-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.6 - 2019-03-02
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.6 - 2019-03-02">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0105-2019-01-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.5 - 2019-01-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.5 - 2019-01-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0104-2019-01-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.4 - 2019-01-20
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.4 - 2019-01-20">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0103-2019-01-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.3 - 2019-01-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.3 - 2019-01-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_50" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0102-2019-01-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.2 - 2019-01-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.2 - 2019-01-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0101-2018-12-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.1 - 2018-12-28
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.1 - 2018-12-28">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0100-2018-12-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.0 - 2018-12-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.0 - 2018-12-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecated_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecated
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#098-2018-07-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.8 - 2018-07-14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.8 - 2018-07-14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#097-2018-07-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.7 - 2018-07-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.7 - 2018-07-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#096-2018-06-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.6 - 2018-06-12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.6 - 2018-06-12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#095-2018-06-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.5 - 2018-06-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.5 - 2018-06-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#094-2018-05-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.4 - 2018-05-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.4 - 2018-05-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    homematicip
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    homematicip
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    homematicip
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/EventHook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EventHook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/access_point_update_state/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    access_point_update_state
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/async_home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    async_home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    auth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_6" id="__nav_2_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    base
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/channel_event/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    channel_event
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/constants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    constants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/enums/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    enums
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/functionalChannels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    functionalChannels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/helpers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    helpers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/base/homematicip_object/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    homematicip_object
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/class_maps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    class_maps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/client/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_9" id="__nav_2_2_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    commands
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    commands
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/commands/functional_channel_commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    functional_channel_commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_10" id="__nav_2_2_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    connection
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    connection
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    connection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/buckets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    buckets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/client_characteristics_builder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    client_characteristics_builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/client_token_builder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    client_token_builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/connection_context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    connection_context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/connection_factory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    connection_factory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/connection_url_resolver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    connection_url_resolver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/rate_limited_rest_connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rate_limited_rest_connection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/rest_connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rest_connection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/connection/websocket_handler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    websocket_handler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    device
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_12" id="__nav_2_2_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    exceptions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    exceptions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/exceptions/connection_exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    connection_exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/exceptions/home_exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    home_exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/functionalHomes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    functionalHomes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/group/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    group
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/oauth_otk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    oauth_otk
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/rule/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rule
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/securityEvent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    securityEvent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/homematicip/weather/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    weather
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UNRELEASED
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#260" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6.0
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#250-2026-01-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5.0 2026-01-13
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5.0 2026-01-13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#240-2025-11-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4.0 2025-11-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4.0 2025-11-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#231-2025-10-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 2025-10-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.1 2025-10-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#230-2025-08-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.0 2025-08-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3.0 2025-08-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#220-2025-07-18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2.0 2025-07-18
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2.0 2025-07-18">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#210-2025-07-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.0 2025-07-15
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1.0 2025-07-15">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#207-2025-06-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.7 2025-06-29
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.7 2025-06-29">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#206-2025-06-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.6 2025-06-19
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.6 2025-06-19">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#205-2025-06-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.5 2025-06-12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.5 2025-06-12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#204-2025-05-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.4 2025-05-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.4 2025-05-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#203-2025-05-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.3 2025-05-17
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.3 2025-05-17">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#202-2025-05-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.2 2025-05-02
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.2 2025-05-02">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2011-2025-05-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [2.0.1.1] 2025-05-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[2.0.1.1] 2025-05-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201-2025-04-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.1 2025-04-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.1 2025-04-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#200-2025-03-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.0.0 2025-03-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.0.0 2025-03-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#117-2025-01-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.7 2025-01-28
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.7 2025-01-28">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-2024-12-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.6 2024-12-15
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.6 2024-12-15">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-2024-12-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.5 2024-12-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.5 2024-12-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-2024-12-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.4 2024-12-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.4 2024-12-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-2024-11-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.3 2024-11-17
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.3 2024-11-17">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-2024-07-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 2024-07-14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.2 2024-07-14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-2024-05-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 2024-05-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.1 2024-05-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-2024-01-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0 2024-01-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1.0 2024-01-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1016-2023-10-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.16 2023-10-25
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.16 2023-10-25">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1015-2023-08-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.15 2023-08-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.15 2023-08-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1014-2023-03-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.14 2023-03-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.14 2023-03-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1013-2022-12-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.13 2022-12-05
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.13 2022-12-05">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1012-2022-11-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.12 2022-11-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.12 2022-11-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1011-2022-11-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.11 2022-11-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.11 2022-11-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1010-2022-11-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.10 2022-11-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.10 2022-11-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-2022-10-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.9 2022-10-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.9 2022-10-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-2022-10-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.8 2022-10-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.8 2022-10-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-2022-07-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.7 2022-07-25
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.7 2022-07-25">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-2022-07-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.5 2022-07-16
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.5 2022-07-16">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-2022-07-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.4 2022-07-12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.4 2022-07-12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-2022-07-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.3 2022-07-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.3 2022-07-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-2022-02-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.2 2022-02-03
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.2 2022-02-03">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#101-2021-05-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.1 2021-05-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.1 2021-05-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100-2021-04-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0 2021-04-05
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 2021-04-05">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0131-2021-01-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.13.1 2021-01-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13.1 2021-01-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0130-2020-12-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.13.0 2020-12-03
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13.0 2020-12-03">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0121-2020-11-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.12.1 2020-11-10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.1 2020-11-10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0120-2020-11-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.12.0 2020-11-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.0 2020-11-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0110-2020-08-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.11.0 2020-08-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.11.0 2020-08-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01019-2020-07-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.19 2020-07-08
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.19 2020-07-08">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01018-2020-06-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.18 2020-06-07
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.18 2020-06-07">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01017-2020-02-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.17 2020-02-16
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.17 2020-02-16">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01016-2020-02-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.16 2020-02-16
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.16 2020-02-16">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_38" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01015-2019-12-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.15 2019-12-30
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.15 2019-12-30">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_39" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01014-2019-12-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.14 - 2019-12-22
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.14 - 2019-12-22">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01013-2019-10-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.13 - 2019-10-19
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.13 - 2019-10-19">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01012-2019-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.12 - 2019-09-27
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.12 - 2019-09-27">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01011-2019-09-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.11 - 2019-09-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.11 - 2019-09-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#01010-2019-08-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.10 - 2019-08-01
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.10 - 2019-08-01">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_43" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0109-2019-07-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.9 - 2019-07-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.9 - 2019-07-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0108-2019-05-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.8 - 2019-05-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.8 - 2019-05-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0107-2019-04-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.7 - 2019-04-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.7 - 2019-04-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_46" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0106-2019-03-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.6 - 2019-03-02
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.6 - 2019-03-02">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_47" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0105-2019-01-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.5 - 2019-01-26
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.5 - 2019-01-26">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_48" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0104-2019-01-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.4 - 2019-01-20
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.4 - 2019-01-20">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_49" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0103-2019-01-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.3 - 2019-01-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.3 - 2019-01-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_50" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0102-2019-01-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.2 - 2019-01-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.2 - 2019-01-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0101-2018-12-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.1 - 2018-12-28
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.1 - 2018-12-28">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0100-2018-12-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.10.0 - 2018-12-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.0 - 2018-12-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deprecated_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deprecated
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#098-2018-07-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.8 - 2018-07-14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.8 - 2018-07-14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#097-2018-07-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.7 - 2018-07-06
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.7 - 2018-07-06">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#096-2018-06-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.6 - 2018-06-12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.6 - 2018-06-12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#095-2018-06-09" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.5 - 2018-06-09
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.5 - 2018-06-09">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_56" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#094-2018-05-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.9.4 - 2018-05-23
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.4 - 2018-05-23">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="changelog">Changelog</h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
+and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2 id="unreleased"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.6.0..master">UNRELEASED</a></h2>
+<h2 id="260"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.5.0..2.6.0">2.6.0</a></h2>
+<h3 id="added">Added</h3>
+<ul>
+<li>Add support for HmIP-MP3P (Combination Signalling Device)</li>
+<li>Add extended smoke detector properties for HmIP-SWSD-2</li>
+<li>Add support for HmIP-LSC (Light Strip Controller)</li>
+<li>Add support for HmIP-USBSM (USB Switch Measuring)</li>
+<li>Add support for ELV-SH-SB8 Status Board</li>
+<li>Add support for ELV-SH-PSMCI (Switch Measuring Cable Indoor)</li>
+<li>Add test coverage for HmIPW-DRI16 (Wired Input 16)</li>
+<li>Add HmipAuthenticationError for HTTP 403 responses</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Add missing fields to floor terminal block channels (HmIP-FALMOT)</li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li>Fix duplicate getCurrentState API call in hmip_cli</li>
+</ul>
+<h2 id="250-2026-01-13"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.4.0..2.5.0">2.5.0</a> 2026-01-13</h2>
+<h3 id="added_1">Added</h3>
+<ul>
+<li>Add support for HmIP-WGT (thanks to @lackas !)</li>
+</ul>
+<h2 id="240-2025-11-10"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.3.1..2.4.0">2.4.0</a> 2025-11-10</h2>
+<h3 id="added_2">Added</h3>
+<ul>
+<li>Add support for HMIP-FALMOT-C8 (#605)</li>
+<li>Add HMIP-WTH-1 to implemented devices</li>
+</ul>
+<h2 id="231-2025-10-24"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.3.0..2.3.1">2.3.1</a> 2025-10-24</h2>
+<h3 id="fixed_1">Fixed</h3>
+<ul>
+<li>Fix issue when parsing optional feature flags (#608)</li>
+</ul>
+<h2 id="230-2025-08-26"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.2.0..2.3.0">2.3.0</a> 2025-08-26</h2>
+<h3 id="added_3">Added</h3>
+<ul>
+<li>Add device SoilMoistureSensorInterface to support ELV-SH-SMSI</li>
+<li>Add channel SoilMoistureSensorInterfaceChannel to support ELV-SH-SMSI</li>
+<li>Add IOptionalFeatureDeviceOperationMode</li>
+</ul>
+<h3 id="changed_1">Changed</h3>
+<ul>
+<li>Bump to aiohttp==3.12.15</li>
+</ul>
+<h3 id="fixed_2">Fixed</h3>
+<ul>
+<li>Fix params for sendDoorCommand</li>
+<li>Improve Websocket Handling</li>
+</ul>
+<h2 id="220-2025-07-18"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.1.0..2.2.0">2.2.0</a> 2025-07-18</h2>
+<h3 id="added_4">Added</h3>
+<ul>
+<li>Add IOptionalFeatureOperationDays with attribute operationDays</li>
+<li>Add IOptionalFeatureDeviceFrostProtectionError</li>
+<li>Add IOptionalFeatureDeviceValveError</li>
+<li>Add IOptionalFeatureDeviceWaterError</li>
+<li>Add support for ELV-SH-WSM (Watering Actuator) (#583)</li>
+</ul>
+<h2 id="210-2025-07-15"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.7..2.1.0">2.1.0</a> 2025-07-15</h2>
+<h3 id="added_5">Added</h3>
+<ul>
+<li>Add support for HmIPW-DRI16</li>
+<li>Add generic group for OPEN_DOOR_NOTIFICATION_RULE_GROUP</li>
+</ul>
+<h3 id="changed_2">Changed</h3>
+<ul>
+<li>Fix bug in auth CLI</li>
+</ul>
+<h2 id="207-2025-06-29"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.6..2.0.7">2.0.7</a> 2025-06-29</h2>
+<h3 id="changed_3">Changed</h3>
+<ul>
+<li>Raise HmipConnectionError, if REST-Request in get_state has an error </li>
+<li>Raise HomeNotInitializedError, if get_state is called before the Home is initialized</li>
+</ul>
+<h2 id="206-2025-06-19"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.5..2.0.6">2.0.6</a> 2025-06-19</h2>
+<h3 id="added_6">Added</h3>
+<ul>
+<li>Add module for FunctionalChannel-Commands</li>
+<li>Add hmip_batch commandline tool to execute commands in batch</li>
+<li>Add functions to UNIVERSAL_LIGHT_CHANNEL to control HmIP-RGBW and HmIP-LSC</li>
+</ul>
+<h3 id="changed_4">Changed</h3>
+<ul>
+<li>FunctionalChannels are using the new module for commands</li>
+<li>Improve shutting down of websocket connection</li>
+</ul>
+<h2 id="205-2025-06-12"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.4...2.0.5">2.0.5</a> 2025-06-12</h2>
+<h3 id="fixed_3">Fixed</h3>
+<ul>
+<li>Make websocket connection more robust against errors</li>
+</ul>
+<h3 id="added_7">Added</h3>
+<ul>
+<li>Add support for ELV-SH-WSM (Watering Actuator) (#583)</li>
+</ul>
+<h2 id="204-2025-05-30"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.3...2.0.4">2.0.4</a> 2025-05-30</h2>
+<h3 id="fixed_4">Fixed</h3>
+<ul>
+<li>Add attribute "functionalChannelIndex" to ChannelEvent class</li>
+</ul>
+<h2 id="203-2025-05-17"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.2...2.0.3">2.0.3</a> 2025-05-17</h2>
+<h3 id="added_8">Added</h3>
+<ul>
+<li>Add client type SMART_WATCH</li>
+<li>Add group type AUTO_RELOCK_PROFILE</li>
+<li>Add group type LOCK_PROFILE</li>
+<li>Add device type PLUGIN</li>
+<li>Add device HmIP-WPK</li>
+<li>Add channel CODE_PROTECTED_PRIMARY_ACTION_CHANNEL</li>
+<li>Add channel CODE_PROTECTED_SECONDARY_ACTION_CHANNEL</li>
+<li>Add channel DEVICE_BLOCKING</li>
+</ul>
+<h3 id="changed_5">Changed</h3>
+<ul>
+<li>Replaced websockets lib with aiohttp for websocket connection</li>
+</ul>
+<h2 id="202-2025-05-02"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.1...2.0.2">2.0.2</a> 2025-05-02</h2>
+<h3 id="added_9">Added</h3>
+<ul>
+<li>Add TILT as option for AccelerationSensorMode</li>
+</ul>
+<h3 id="removed">Removed</h3>
+<ul>
+<li>Removed class <code>SwitchMeasuringCableOutdoor</code>. The device is represented by <code>SwitchMeasuring</code> instead.</li>
+<li>Removed class <code>PlugableSwitchMeasuring</code>. The device is represented by <code>SwitchMeasuring</code> instead.</li>
+<li>Removed class <code>BrandSwitchMeasuring</code>. The device is represented by <code>SwitchMeasuring</code> instead.</li>
+<li>Removed class <code>FullFlushSwitchMeasuring</code>. The device is represented by <code>SwitchMeasuring</code> instead.</li>
+</ul>
+<h2 id="2011-2025-05-04">[2.0.1.1] 2025-05-04</h2>
+<h3 id="added_10">Added</h3>
+<ul>
+<li>Add TILT als option for AccelerationSensorMode</li>
+</ul>
+<h3 id="fixed_5">Fixed</h3>
+<ul>
+<li>Raise HmipConnectionError, if websocket connection is closed with an error</li>
+</ul>
+<h3 id="removed_1">Removed</h3>
+<ul>
+<li>Removed unused code</li>
+</ul>
+<h2 id="201-2025-04-24"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/2.0.0...2.0.1">2.0.1</a> 2025-04-24</h2>
+<h3 id="added_11">Added</h3>
+<ul>
+<li>Add device HmIP-PMSCO</li>
+<li>Add HmIP-WLAN-HAP-B</li>
+<li>Add HmIP-SMO230</li>
+<li>Add ELV-SH-CTV Tilt Vibration Sensor Compact</li>
+<li>Add ELV-SH-CTH</li>
+</ul>
+<h2 id="200-2025-03-01"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.7...2.0.0">2.0.0</a> 2025-03-01</h2>
+<p>:warning: This is a <strong>huge</strong> update with massive api changes!</p>
+<h3 id="added_12">Added</h3>
+<ul>
+<li>The whole library is Async-first now. All functions are async functions now or calling async functions in the background.</li>
+<li>Completely rewritten RestConnection and WebSocketConnection</li>
+<li>Added RateLimitedRestConnection class to prevent throttling</li>
+<li>Use package <code>httpx</code> for rest requests</li>
+<li>Package <code>aiohttp</code> is still used for fake server for testing</li>
+<li>Bump <code>websockets</code> to websockets&gt;=14.2</li>
+</ul>
+<h3 id="changed_6">Changed</h3>
+<ul>
+<li>Async functions are not at the same classes as sync functions</li>
+<li>Replaced Auth with AsyncAuth. Auth is now async.</li>
+</ul>
+<h3 id="removed_2">Removed</h3>
+<ul>
+<li>Removed all deprecated functions</li>
+<li>Removed all async-dedicated devices and group </li>
+</ul>
+<h2 id="117-2025-01-28"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.6...1.1.7">1.1.7</a> 2025-01-28</h2>
+<h3 id="added_13">Added</h3>
+<ul>
+<li>Add support for HmIP-eTRV-3 (thx JoelKle)</li>
+<li>Add support for HmIP-eTRV-F (thx JoelKle)</li>
+<li>Add support for HmIPW-SCTHD</li>
+</ul>
+<h2 id="116-2024-12-15"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.5...1.1.6">1.1.6</a> 2024-12-15</h2>
+<h3 id="changed_7">Changed</h3>
+<ul>
+<li>Removed support for Python lower than 3.12</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/542">issue: 542</a> Add support for HmIP-HCU Access Point (#542)</li>
+<li>Make "channelRole" available to FunctionalChannels</li>
+</ul>
+<h2 id="115-2024-12-07"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.4...1.1.5">1.1.5</a> 2024-12-07</h2>
+<h3 id="added_14">Added</h3>
+<p>~~- <a href="https://github.com/hahn-th/homematicip-rest-api/issues/542">issue: 542</a> Add support for HmIP-HCU Access Point (#542)~~</p>
+<h2 id="114-2024-12-07"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.3...1.1.4">1.1.4</a> 2024-12-07</h2>
+<h3 id="added_15">Added</h3>
+<p>~~- <a href="https://github.com/hahn-th/homematicip-rest-api/issues/542">issue: 542</a> Add support for HmIP-HCU Access Point (#542)~~</p>
+<h3 id="changed_8">Changed</h3>
+<ul>
+<li>Bump aiohttp from  3.9.4 to 3.10.2</li>
+<li>Bump websockets to websockets 13.1</li>
+<li>Bump requests from 2.31.0 to 2.32.0</li>
+<li>Channel Events are fired by the channel itself.</li>
+</ul>
+<h2 id="113-2024-11-17"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.2...1.1.3">1.1.3</a> 2024-11-17</h2>
+<h3 id="added_16">Added</h3>
+<ul>
+<li>Add support for channel-events</li>
+</ul>
+<h3 id="changed_9">Changed</h3>
+<ul>
+<li>Use legacy websockets client to avoid issues during connect</li>
+</ul>
+<h2 id="112-2024-07-14"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.1...1.1.2">1.1.2</a> 2024-07-14</h2>
+<h3 id="added_17">Added</h3>
+<ul>
+<li>Add set_cooling to home to enable/disable cooling</li>
+</ul>
+<h2 id="111-2024-05-08"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.1.0...1.1.1">1.1.1</a> 2024-05-08</h2>
+<h3 id="added_18">Added</h3>
+<ul>
+<li>Add support for HmIP-RGBW (readonly)</li>
+<li>Add support for HmIP-DRG-DALI (readonly)</li>
+<li>Add Energy Group</li>
+<li>Add support for Hmip-BSL with Firmware 2.0.2</li>
+</ul>
+<h3 id="changed_10">Changed</h3>
+<ul>
+<li>Bump aiohttp 3.9.0 to aiohttp 3.9.4</li>
+<li>Rename function _restCall to _rest_call</li>
+<li>Rename file HomeMaticIPObject.py to homematicip_object.py</li>
+</ul>
+<h2 id="110-2024-01-06"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.16...1.1.0">1.1.0</a> 2024-01-06</h2>
+<h3 id="added_19">Added</h3>
+<ul>
+<li>Add support for python 3.12</li>
+<li>Add support for optional feature IFeatureDeviceSensorError</li>
+<li>Add support for optional feature IFeatureDeviceSensorCommunicationError</li>
+<li>Add support for optional feature IOptionalFeatureDeviceErrorLockJammed</li>
+<li>Add support for device HmIP-ESI</li>
+<li>Add support for function channel DeviceOperationLockWithSabotage</li>
+<li>Add new documentation site and workflow</li>
+</ul>
+<h3 id="changed_11">Changed</h3>
+<ul>
+<li>Changed from flat project layout to src based layout. The source code is not placed into ./src folder. The scripts are located in package homematicip.cli</li>
+<li>Replaced versioneer with setuptools-scm to build version infos based on git tags and the building process.</li>
+</ul>
+<h3 id="fixed_6">Fixed</h3>
+<ul>
+<li>Fixed an error with --set-lock-state in cli</li>
+</ul>
+<h3 id="removed_3">Removed</h3>
+<ul>
+<li>Dropped support for python &lt; 3.9</li>
+</ul>
+<h2 id="1016-2023-10-25"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.15...1.0.16">1.0.16</a> 2023-10-25</h2>
+<h3 id="added_20">Added</h3>
+<ul>
+<li>CLI: Add argument --set-group-slats-level to set slatsLevel of Groups</li>
+<li>CLI: Add argument --set-slats-level to set slatsLevel of devices.</li>
+<li>CLI: Add argument --print-allowed-commands (-ac) to print allowed commands of device channels</li>
+<li>Add support for ENERGY FunctionalHomes</li>
+<li>Add support for IOptionalFeatureFilteredMulticastRouter</li>
+</ul>
+<h3 id="fixed_7">Fixed</h3>
+<ul>
+<li>Set shutterLevel to currentValue if shutterLevel is None in function set_slats_level of FunctionalChannel BlindChannel</li>
+</ul>
+<h2 id="1015-2023-08-26"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.14...1.0.15">1.0.15</a> 2023-08-26</h2>
+<h3 id="added_21">Added</h3>
+<ul>
+<li>:warning: Functions for interacting with the device (set-shutter-level i.E.) are added to functionalChannel classes. This is because actions are bound to channels, not the devices. This is the foundation for more changes in the future. These functions in device classes are deprecated soon.</li>
+<li>Add field channelRole to MultiModeInputChannel</li>
+<li>Default Channel for device HmIP-DLD is set to 1</li>
+<li>HmIP-DLD is a OperationLockableDevice</li>
+<li>Add support for IOptionalFeatureMountingOrientation</li>
+<li>Add support for IOptionalFeatureControlsMountingOrientation</li>
+<li>Add support for HmIP-eTRV-CL</li>
+</ul>
+<h3 id="fixed_8">Fixed</h3>
+<ul>
+<li>hmip_cli: Set basic logger level in hmip_cli based on --debug-level argument</li>
+<li>hmip_cli: Use functions from functionalChannels to execute set_shutter_level</li>
+<li>Fix several deprecation warnings</li>
+</ul>
+<h3 id="changed_12">Changed</h3>
+<ul>
+<li>Bump request from 2.28.1 to 2.31.0</li>
+<li>Bump aiohttp from 3.8.1 to 3.8.5</li>
+<li>Drop support for Python 3.8</li>
+<li>Support for Python 3.11 is added</li>
+</ul>
+<h2 id="1014-2023-03-04"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.13...1.0.14">1.0.14</a> 2023-03-04</h2>
+<h3 id="added_22">Added</h3>
+<ul>
+<li>Throw HmipThrottlingError, when REST API returns 429</li>
+<li>Add device HmIPW-DRS4</li>
+<li>Add output for InteralSwitchChannel</li>
+<li>Add HmIPW-FALMOT-12</li>
+<li>Add HmIPW-WTH</li>
+<li>Add HmIPW-FIO6</li>
+<li>Add HmIPW-DRBL4</li>
+<li>Add HmIPW-WRC6</li>
+<li>Add HmIPW-WRC2</li>
+<li>Add OpticalSignalChannel</li>
+<li>Add OpticalSignalGroupChannel</li>
+<li>Add HmIPW-SMI55</li>
+<li>Add HmIPW-SPI</li>
+<li>Add HmIPW-DRAP</li>
+<li>Add HmIP-DSD-PCB</li>
+<li>Add HmIP-DBB</li>
+<li>Add HmIP-SCTH230</li>
+</ul>
+<h2 id="1013-2022-12-05"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.12...1.0.13">1.0.13</a> 2022-12-05</h2>
+<h3 id="fixed_9">Fixed</h3>
+<ul>
+<li>Fixed device HmIP-DRDI3. Changed parent class from AsyncSwitch to AsyncDimmer</li>
+</ul>
+<h2 id="1012-2022-11-30"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.11...1.0.12">1.0.12</a> 2022-11-30</h2>
+<h3 id="added_23">Added</h3>
+<ul>
+<li>Add Async device for HmIP-DRDI3</li>
+</ul>
+<h2 id="1011-2022-11-27"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.10...1.0.11">1.0.11</a> 2022-11-27</h2>
+<h3 id="added_24">Added</h3>
+<ul>
+<li>Support for Hue devices</li>
+<li>Unknown devices are now represented by class BaseDevice</li>
+<li>Add device type ExternalDevice (which represents external devices (Hue))</li>
+<li>Add deviceArchetype (which differentiates between HMIP and EXTERNAL devices)</li>
+<li>Add ExternalBaseChannel</li>
+<li>Add ExternalUniversalLightChannel</li>
+</ul>
+<h2 id="1010-2022-11-26"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.9...1.0.10">1.0.10</a> 2022-11-26</h2>
+<h3 id="added_25">Added</h3>
+<ul>
+<li>CLI: Print result when using set_switch_state and set_dim_level</li>
+<li>Add tests for Multi IO Box HmIP-MIOB</li>
+</ul>
+<h3 id="fixed_10">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/471">issue: 471</a> Fix AsyncHeatingThermostatEvo</li>
+</ul>
+<h3 id="changed_13">Changed</h3>
+<ul>
+<li>Changed contact email-address for pypi-Package</li>
+</ul>
+<h2 id="109-2022-10-08"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.8...1.0.9">1.0.9</a> 2022-10-08</h2>
+<h3 id="added_26">Added</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/450">issue: 450</a> Add support for device ELV-SH-BS2</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/464">issue: 464</a> Add support for group INDOOR_CLIMATE</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/465">issue: 465</a> Add argument --print-infos to CLI to print channels of a device or devices of a group</li>
+</ul>
+<h2 id="108-2022-10-04"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.7...1.0.8">1.0.8</a> 2022-10-04</h2>
+<h3 id="fixed_11">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/463">bug: 463</a> Add valvePosition for device HmIP-FALMOT-C12</li>
+<li>Fixed --toggle-garage-door in hmip_cli.py</li>
+</ul>
+<h3 id="added_27">Added</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/453">PR: 453</a> Add support for device HmIP-DLS (Door Lock Sensor)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/451">PR: 451</a> Add support for device HmIP-DLD (Door Lock Drive)</li>
+<li>Add Group AccessAuthorizationProfileGroup</li>
+<li>Add Group AccessControlGroup</li>
+<li>Add argument <code>--pin 1234</code> to hmip_cli.py</li>
+<li>Add argument <code>--set-lock-state OPEN/LOCKED/UNLOCKED</code> to hmip_cli.py</li>
+</ul>
+<h3 id="changed_14">Changed</h3>
+<ul>
+<li>README.md has been created which replaces README.rst</li>
+<li>Github actions is used for releases and testing</li>
+</ul>
+<h2 id="107-2022-07-25"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.5...1.0.7">1.0.7</a> 2022-07-25</h2>
+<h3 id="added_28">Added</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/449">PR: 449</a> Add support for Device HmIP-WGC</li>
+</ul>
+<h3 id="fixed_12">Fixed</h3>
+<ul>
+<li>Fixed some typos from Version 1.0.5</li>
+</ul>
+<h2 id="105-2022-07-16"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.4...1.0.5">1.0.5</a> 2022-07-16</h2>
+<h3 id="fixed_13">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/447">PR: 447</a>: Error message when using HmIP-STE2-PCB (There is no class for functionalChannel 'TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL' yet)</li>
+</ul>
+<h3 id="changed_15">Changed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/448">PR: 448</a>: HomematicIP Rest API should be tested against python versions 3.8, 3.9, 3.10</li>
+</ul>
+<h2 id="104-2022-07-12"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.3...1.0.4">1.0.4</a> 2022-07-12</h2>
+<h3 id="fixed_14">Fixed</h3>
+<ul>
+<li>[PR: 444]: the function _ws_on_message in homematicip/home.py expected two arguments, but just one was provided.</li>
+</ul>
+<h2 id="103-2022-07-06"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.2...1.0.3">1.0.3</a> 2022-07-06</h2>
+<h3 id="general">General</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/444">PR: 440</a>: Do not pass loop for Py3.10 compat</li>
+</ul>
+<h2 id="102-2022-02-03"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.1...1.0.2">1.0.2</a> 2022-02-03</h2>
+<h3 id="added_29">Added</h3>
+<h3 id="general_1">General</h3>
+<ul>
+<li>[PR: 413]: added samples</li>
+</ul>
+<h3 id="changed_16">Changed</h3>
+<ul>
+<li>API</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/424">PR: 424</a>: Drop loop kwarg from async_timeout.timeout</li>
+</ul>
+<h2 id="101-2021-05-27"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/1.0.0...1.0.1">1.0.1</a> 2021-05-27</h2>
+<h3 id="added_30">Added</h3>
+<ul>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/405">HMIP-DRDI3</a> (Dimming Actuator Inbound 230V – 3x channels, 200W per channel)</li>
+<li>API</li>
+<li>Groups<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/413">PR: 410</a> Add support for channel parsing in SECURITY_ZONES and SECURITY_AND_ALARM</li>
+</ul>
+</li>
+</ul>
+<h2 id="100-2021-04-05"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.13.1...1.0.0">1.0.0</a> 2021-04-05</h2>
+<h3 id="added_31">Added</h3>
+<ul>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/386">HmIP-STE2-PCB</a> (Temperature Difference Sensors - 2x sensors)</li>
+</ul>
+<h3 id="fixed_15">Fixed</h3>
+<ul>
+<li>API</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/387">BUG: 387</a> Groups were missing in the functional channels of devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/398">BUG: 398</a> 'ACCESS_CONTROL' isn't a valid option for class 'FunctionalHomeType'</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/391">BUG: 391</a> There is no class for device 'PUSH_BUTTON_FLAT' yet</li>
+</ul>
+<h2 id="0131-2021-01-23"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.13.0...0.13.1">0.13.1</a> 2021-01-23</h2>
+<h3 id="added_32">Added</h3>
+<ul>
+<li>API</li>
+<li>Rules<ul>
+<li>Add async classes and methods for rules</li>
+</ul>
+</li>
+<li>Home<ul>
+<li>Added <a href="https://github.com/hahn-th/homematicip-rest-api/issues/357">activate_absence_permanent</a> method</li>
+</ul>
+</li>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/373">HMIP-DRSI1</a> (Switch Actuator for DIN rail mount – 1x channel)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/375">HMIP-SRD</a> (Rain Sensor)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/373">HMIP-WRCC2</a> (Wall-mount Remote Control – flat)</li>
+</ul>
+<h2 id="0130-2020-12-03"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.12.1...0.13.0">0.13.0</a> 2020-12-03</h2>
+<h3 id="added_33">Added</h3>
+<ul>
+<li>Devices</li>
+<li>[HMIP-DRSI4] (Switch Actuator for DIN rail mount – 4x channels)</li>
+<li>[HMIP-DRBLI4] (Blind Actuator for DIN rail mount – 4 channels)</li>
+<li>[HMIP-FCI6] (Contact Interface flush-mount – 6x channels)</li>
+</ul>
+<h2 id="0121-2020-11-10"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.12.0...0.12.1">0.12.1</a> 2020-11-10</h2>
+<h3 id="added_34">Added</h3>
+<ul>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/332">HMIP-HDM1</a> (Hunter Douglas &amp; erfal window blinds)</li>
+<li>stop method</li>
+</ul>
+<h2 id="0120-2020-11-09"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.11.0...0.12.0">0.12.0</a> 2020-11-09</h2>
+<h3 id="added_35">Added</h3>
+<ul>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/332">HMIP-HDM1</a> (Hunter Douglas &amp; erfal window blinds)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/335">HMIP-HAP</a> (HomematicIP Access Point)</li>
+</ul>
+<h3 id="fixed_16">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/342">BUG: 342</a> NameError: name 'xrange' is not defined on Python 3.8.1</li>
+</ul>
+<h2 id="0110-2020-08-31"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.19...0.11.0">0.11.0</a> 2020-08-31</h2>
+<h3 id="added_36">Added</h3>
+<ul>
+<li>API</li>
+<li>Home<ul>
+<li>accessPointUpdateStates</li>
+</ul>
+</li>
+<li>Devices</li>
+<li>HMIPW-DRD3 (Homematic IP Wired Dimming Actuator – 3x channels)</li>
+<li>HMIPW-DRS8 (Homematic IP Wired Switch Actuator – 8x channels)</li>
+<li>HMIPW-DRI32 (Homematic IP Wired Inbound module – 32x channels)</li>
+<li>HMIP-STV (Inclination and vibration Sensor)</li>
+<li>Fields</li>
+<li>connectionType</li>
+<li>new OptionalFeatures</li>
+</ul>
+<h3 id="changed_17">Changed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/325">BUG: 325</a> Requirements are now using a min version instead of a pinned version. requirements_dev.txt will still use the pinned versions to make sure that the latest version is compatible with the library.</li>
+</ul>
+<h2 id="01019-2020-07-08"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.18...0.10.19">0.10.19</a> 2020-07-08</h2>
+<h3 id="fixed_17">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/320">PR: 320</a> Fix FSI-16</li>
+</ul>
+<h2 id="01018-2020-06-07"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.17...0.10.18">0.10.18</a> 2020-06-07</h2>
+<h3 id="added_37">Added</h3>
+<ul>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/304">HMIP-MOD-HO</a> (Module for Hörmann drives)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/310">HMIP-FSI16</a> (Switch Actuator with Push-button Input 230V, 16A)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/315">HMIP-SWDO-PL</a> (Shutter Contact Plus)</li>
+<li>CLI</li>
+<li>--channel parameter for turning on/off different channels and not just the first one</li>
+</ul>
+<h2 id="01017-2020-02-16"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.16...0.10.17">0.10.17</a> 2020-02-16</h2>
+<h3 id="fixed_18">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/pull/300">PR: 300</a> Fix AsyncMotionDetectorPushButton</li>
+</ul>
+<h2 id="01016-2020-02-16"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.15...0.10.16">0.10.16</a> 2020-02-16</h2>
+<h3 id="added_38">Added</h3>
+<ul>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/286">HMIP-WTH-B</a> (Wall Thermostat Basic)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/290">ALPHA-IP-RBG</a> (Alpha IP Wall Thermostat Display)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/290">ALPHA-IP-RBGa</a> (ALpha IP Wall Thermostat Display analog)</li>
+</ul>
+<h3 id="fixed_19">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/294">BUG: 294</a>: hmip_cli.py --anonymize will wrongly anonymize other fields</li>
+</ul>
+<h2 id="01015-2019-12-30"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.14...0.10.15">0.10.15</a> 2019-12-30</h2>
+<h3 id="added_39">Added</h3>
+<ul>
+<li>API</li>
+<li>Groups<ul>
+<li>Created new Async/SwitchBaseGroup class for groups which are using on, dimLevel, lowbat and dutycycle</li>
+<li>ShutterProfile</li>
+</ul>
+</li>
+<li>Devices</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/281">HMIP-FALMOT-C12</a> (Floor Heating Actuator – 12x channels, motorised)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/280">HMIP-WHS2</a> (Switch Actuator for heating systems – 2x channels)</li>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/282">HMIP-PMFS</a> (Pluggable Power Supply Monitoring)</li>
+</ul>
+<h2 id="01014-2019-12-22"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.13...0.10.14">0.10.14</a> - 2019-12-22</h2>
+<h3 id="added_40">Added</h3>
+<ul>
+<li>API</li>
+<li>FunctionalChannels:<ul>
+<li>DOOR_CHANNEL</li>
+<li>DEVICE_RECHARGEABLE_WITH_SABOTAGE</li>
+</ul>
+</li>
+<li>ExtendedLinkedShutterGroup.set_slats_level<ul>
+<li>added missing attributes</li>
+</ul>
+</li>
+<li>
+<p>Devices</p>
+</li>
+<li>
+<p>HMIP-MOD-TM (Garage Door Module for Novoferm and Tormatic door operators)</p>
+</li>
+<li>
+<p>HMIP-ASIR-O (Alarm Siren - outdoor)</p>
+</li>
+<li>
+<p>Groups</p>
+</li>
+<li>HOT_WATER</li>
+<li>Python 3.8 support</li>
+</ul>
+<h3 id="changed_18">Changed</h3>
+<ul>
+<li>General</li>
+<li>removed homematicip-testing package. Pip will automatically install the latest tagged release. For a "nightly" build you just have to run it with the "--pre" argument.</li>
+</ul>
+<h3 id="fixed_20">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/266">BUG: 266</a>: Anonymize won't work on the Silvercrest models</li>
+</ul>
+<h2 id="01013-2019-10-19"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.12...0.10.13">0.10.13</a> - 2019-10-19</h2>
+<h3 id="changed_19">Changed</h3>
+<ul>
+<li>API</li>
+<li>converted FakeCloudServer to an async implementation</li>
+<li>the Home websocket can now automatically reopen a lost connection (default)</li>
+</ul>
+<h2 id="01012-2019-09-27"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.11...0.10.12">0.10.12</a> - 2019-09-27</h2>
+<h3 id="added_41">Added</h3>
+<ul>
+<li>API</li>
+<li>Added event handlers for adding/updating/removing devices and groups</li>
+<li>fixed cloud bug: DEVICE/GROUP_ADDED will now be generated instead of DEVICE/GROUP_CHANGED on an added device</li>
+</ul>
+<h2 id="01011-2019-09-23"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.10...0.10.11">0.10.11</a> - 2019-09-23</h2>
+<h3 id="added_42">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-MOD-RC8 (Open Collector Module Sender - 8x)</li>
+<li>HMIP-SAM (Acceleration Sensor)</li>
+</ul>
+<h3 id="deprecated">Deprecated</h3>
+<ul>
+<li>API</li>
+<li>moved homematicip.HomematicIPBaseObject to homematicip.base.HomematicIPBaseObject package</li>
+</ul>
+<h2 id="01010-2019-08-01"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.9...0.10.10">0.10.10</a> - 2019-08-01</h2>
+<h3 id="added_43">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-SCI (Contact Interface Sensor)</li>
+<li>API</li>
+<li>add supported optional features</li>
+</ul>
+<h3 id="fixes">Fixes</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/223">BUG: 223</a> activateVacation does not work</li>
+</ul>
+<h2 id="0109-2019-07-06"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.8...0.10.9">0.10.9</a> - 2019-07-06</h2>
+<h3 id="added_44">Added</h3>
+<ul>
+<li>API</li>
+<li>homematicip_demo package for testing against a test server</li>
+<li>a warning on parsing an enum value from string which isn't currently existing in the API</li>
+</ul>
+<h3 id="fixes_1">Fixes</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/220">BUG: 220</a> Support controlMode ECO</li>
+</ul>
+<h2 id="0108-2019-05-23"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.7...0.10.8">0.10.8</a> - 2019-05-23</h2>
+<h3 id="added_45">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-PCBS2 (Switch Circuit Board - 2x channels)</li>
+<li>HMIP-BBL (Blind Actuator for brand switches)</li>
+<li>HMIP-FAL230-C10 (Floor Heating Actuator – 10x channels, 230V)</li>
+<li>HMIP-FAL24-C6 (Floor Heating Actuator – 6x channels, 24V)</li>
+<li>HMIP-FAL24-C10 (Floor Heating Actuator – 10x channels, 24V)</li>
+<li>Async implementation of HMIP-PCBS-BAT (Printed Circuit Board Switch Battery)</li>
+</ul>
+<h2 id="0107-2019-04-09"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.6...0.10.7">0.10.7</a> - 2019-04-09</h2>
+<h3 id="added_46">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-MIOB (Multi IO Box for floor heating &amp; cooling)</li>
+<li>API</li>
+<li>FunctionalChannels: ANALOG_OUTPUT_CHANNEL, GENERIC_INPUT_CHANNEL</li>
+<li>WeatherCondition.STRONG_WIND</li>
+<li>vaporAmount property to WeatherSensorPro, WeatherSensorPlus, WeatherSensor, TemperatureHumiditySensorOutdoor, TemperatureHumiditySensorWithoutDisplay, TemperatureHumiditySensorDisplay, WeatherSensorChannel and Weather</li>
+</ul>
+<h3 id="fixed_21">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/188">BUG: 188</a> STRONG_WIND Weather condition</li>
+</ul>
+<h2 id="0106-2019-03-02"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.5...0.10.6">0.10.6</a> - 2019-03-02</h2>
+<h3 id="added_47">Added</h3>
+<ul>
+<li>
+<p>Devices</p>
+</li>
+<li>
+<p>HMIP-FBL (Blind Actuator - flush-mount)</p>
+</li>
+<li>HMIP-BRC2 (Remote Control for brand switches – 2 channels)</li>
+<li>
+<p>HMIP-eTRV-C (Heating-thermostat compact without display)</p>
+</li>
+<li>
+<p>API</p>
+</li>
+<li>AutoNameEnum.from<em>str does now take a default parameter</em></li>
+<li>HeatingThermostat.<strong>valveActualTemperature</strong> = we are now able to read the measured temperature on the VALVE!</li>
+<li>Async/HeatingFailureAlertRuleGroup</li>
+</ul>
+<h2 id="0105-2019-01-26"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.4...0.10.5">0.10.5</a> - 2019-01-26</h2>
+<h3 id="added_48">Added</h3>
+<ul>
+<li>started with documentation</li>
+<li>Devices</li>
+<li>HMIP-BSL (Switch Actuator for brand switches – with signal lamp)</li>
+<li>HMIP-KRC4 (Key Ring Remote Control - 4 buttons)</li>
+<li>HMIP-SLO (Light Sensor outdoor)</li>
+<li>API</li>
+<li>Groups<ul>
+<li>Async/AlarmSwitchingGroup</li>
+<li>added test/set_signal_acoustic methods</li>
+<li>HeatingGroup</li>
+<li>added heatingFailureSupported, valveSilentModeEnabled, valveSilentModeSupported properties</li>
+<li>Async/HeatingFailureAlertRuleGroup</li>
+</ul>
+</li>
+</ul>
+<h2 id="0104-2019-01-20"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.3...0.10.4">0.10.4</a> - 2019-01-20</h2>
+<h3 id="added_49">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-SPDR</li>
+<li>HMIP-FCI1</li>
+<li>API</li>
+<li>DeviceUpdateState enum</li>
+<li>functionalChannel<ul>
+<li>DevicePermanentFullRxChannel</li>
+<li>PassageDetectorChannel</li>
+<li>InternalSwitchChannel</li>
+<li>MultiModeInputChannel</li>
+</ul>
+</li>
+<li>Device<ul>
+<li>MotionDetectorPushButton</li>
+<li>added permanentFullRx property</li>
+</ul>
+</li>
+<li>Enums<ul>
+<li>MultiModeInputMode</li>
+<li>BinaryBehaviorType</li>
+</ul>
+</li>
+<li>Group<ul>
+<li>HeatingGroup</li>
+<li>added set_control_mode method</li>
+</ul>
+</li>
+<li>CLI</li>
+<li>added --server-config parameter. Instead of downloading the configuration from the cloud it will load a file.</li>
+</ul>
+<h3 id="changes">Changes</h3>
+<ul>
+<li>API</li>
+<li>moved functionalChannels to homematicip.base</li>
+</ul>
+<h2 id="0103-2019-01-06"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.2...0.10.3">0.10.3</a> - 2019-01-06</h2>
+<h3 id="added_50">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-SWO-PL</li>
+</ul>
+<h2 id="0102-2019-01-06"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.1...0.10.2">0.10.2</a> - 2019-01-06</h2>
+<h3 id="added_51">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-SMO-A</li>
+</ul>
+<h3 id="changes_1">Changes</h3>
+<ul>
+<li>API</li>
+<li>Small Bugfix in the aio library</li>
+</ul>
+<h2 id="0101-2018-12-28"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.10.0...0.10.1">0.10.1</a> - 2018-12-28</h2>
+<h3 id="added_52">Added</h3>
+<ul>
+<li>API</li>
+<li>FunctionalChannels<ul>
+<li>AlarmSirenChannel</li>
+<li>FloorTerminalBlockChannel</li>
+<li>FloorTerminalBlockLocalPumpChannel</li>
+<li>HeatDemandChannel</li>
+<li>DehumidifierDemandChannel</li>
+</ul>
+</li>
+<li>Enums<ul>
+<li>HeatingLoadType</li>
+</ul>
+</li>
+<li>Devices<ul>
+<li>HMIP-FAL230-C6</li>
+<li>added missing properties</li>
+</ul>
+</li>
+</ul>
+<h3 id="changes_2">Changes</h3>
+<ul>
+<li>Stability improvements</li>
+</ul>
+<h2 id="0100-2018-12-23"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.9.8...0.10.0">0.10.0</a> - 2018-12-23</h2>
+<h3 id="added_53">Added</h3>
+<ul>
+<li>
+<p>Devices</p>
+</li>
+<li>
+<p>HMIP-FDT</p>
+</li>
+<li>HMIP-MOD-OC8</li>
+<li>HMIP-RC8</li>
+<li>HMIP-SWDM</li>
+<li>HMIP-SWDM-2</li>
+<li>
+<p>HMIP-WRC6</p>
+</li>
+<li>
+<p>hmip_cli.py</p>
+</li>
+<li>
+<p>Parameter added: --set-dim-level</p>
+</li>
+<li>Parameter added: --reset-energy-counter</li>
+<li>
+<p>Parameter added: --set-boost-duration</p>
+</li>
+<li>
+<p>API</p>
+</li>
+<li>FunctionalChannels</li>
+<li>[Async]Home<ul>
+<li>get_OAuth_OTK</li>
+</ul>
+</li>
+<li>AsyncHome<ul>
+<li>delete_group</li>
+<li>get_security_journal</li>
+<li>set_powermeter_unit_price</li>
+<li>set_timezone</li>
+<li>set_pin</li>
+<li>set_zone_activation_delay</li>
+</ul>
+</li>
+<li>Home<ul>
+<li>added clearConfig Parameter to get a "fresh" configuration</li>
+</ul>
+</li>
+<li>[Async]Switch<ul>
+<li>Added channelIndex Parameter to set_switch_state, turn_on, turn_off</li>
+</ul>
+</li>
+<li>[Async]PlugableSwitchMeasuring<ul>
+<li>Added reset_energy_counter</li>
+</ul>
+</li>
+<li>[Async]Group<ul>
+<li>added delete method</li>
+</ul>
+</li>
+<li>AsyncGroup<ul>
+<li>set_label</li>
+</ul>
+</li>
+<li>AsyncHeatingGroup<ul>
+<li>set_boost_duration</li>
+</ul>
+</li>
+<li>[Async]SecurityEvents<ul>
+<li>SensorEvent</li>
+<li>SabotageEvent</li>
+<li>MoistureDetectionEvent</li>
+<li>SmokeAlarmEvent</li>
+<li>ExternalTriggeredEvent</li>
+<li>OfflineAlarmEvent</li>
+<li>WaterDetectionEvent</li>
+<li>MainsFailureEvent</li>
+<li>OfflineWaterDetectionEvent</li>
+</ul>
+</li>
+</ul>
+<h3 id="removed_4">Removed</h3>
+<ul>
+<li>hmip_cli.py</li>
+<li>converting config.py to config.ini</li>
+</ul>
+<h3 id="deprecated_1">Deprecated</h3>
+<ul>
+<li>homematicip/base/constants.py -&gt; use homematicip/base/enums.py</li>
+</ul>
+<h3 id="fixed_22">Fixed</h3>
+<ul>
+<li><a href="https://github.com/hahn-th/homematicip-rest-api/issues/141">BUG: 141</a> AsyncSwitchingGroup.turn_off will turn the group on</li>
+</ul>
+<h2 id="098-2018-07-14"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.9.7...0.9.8">0.9.8</a> - 2018-07-14</h2>
+<h3 id="added_54">Added</h3>
+<ul>
+<li>API</li>
+<li>enum backward compatibility for python 3.5</li>
+<li>FunctionalHomes</li>
+</ul>
+<h2 id="097-2018-07-06"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.9.6...0.9.7">0.9.7</a> - 2018-07-06</h2>
+<h3 id="added_55">Added</h3>
+<ul>
+<li>Devices</li>
+<li>HMIP-SWD</li>
+<li>HMIP-SMI55</li>
+</ul>
+<h2 id="096-2018-06-12"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.9.5...0.9.6">0.9.6</a> - 2018-06-12</h2>
+<h3 id="changed_20">Changed</h3>
+<ul>
+<li>API
+  -- async packaged got renamed to aio</li>
+</ul>
+<h2 id="095-2018-06-09"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.9.4...0.9.5">0.9.5</a> - 2018-06-09</h2>
+<h3 id="added_56">Added</h3>
+<ul>
+<li>API
+  -- async auth module</li>
+</ul>
+<h2 id="094-2018-05-23"><a href="https://github.com/hahn-th/homematicip-rest-api/compare/0.9.3.3...0.9.4">0.9.4</a> - 2018-05-23</h2>
+<h3 id="changed_21">Changed</h3>
+<ul>
+<li>API
+  -- Support for the new HMIP Cloud Update</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../batch-testing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Batch testing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Batch testing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../api-introduction/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.footer", "navigation.instant.preview", "navigation.path", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
