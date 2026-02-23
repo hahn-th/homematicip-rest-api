@@ -1172,6 +1172,64 @@ def test_push_button_6(fake_home: Home):
     assert d.label == "Wandtaster - 6-fach"
 
 
+def test_push_button_6_led_switch(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000WRC6230")
+        assert isinstance(d, PushButton6LedSwitch)
+        assert d.modelId == 588
+        assert d.modelType == "HmIP-WRC6-230"
+        assert d.label == "Wandtaster - 6-fach LED"
+
+        # Check SINGLE_KEY_CHANNEL (button 1)
+        c = d.functionalChannels[1]
+        assert isinstance(c, SingleKeyChannel)
+        assert c.index == 1
+
+        # Check MULTI_MODE_INPUT_CHANNEL (channel 7)
+        c = d.functionalChannels[7]
+        assert isinstance(c, MultiModeInputChannel)
+        assert c.index == 7
+        assert c.multiModeInputMode == MultiModeInputMode.SWITCH_BEHAVIOR
+
+        # Check SWITCH_CHANNEL (channel 8)
+        c = d.functionalChannels[8]
+        assert isinstance(c, SwitchChannel)
+        assert c.index == 8
+        assert c.on == False
+
+        # Check OPTICAL_SIGNAL_CHANNEL (channel 9)
+        c = d.functionalChannels[9]
+        assert isinstance(c, OpticalSignalChannel)
+        assert c.index == 9
+        assert c.dimLevel == 0.0
+        assert c.on == False
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.ON
+        assert c.simpleRGBColorState == RGBColorState.WHITE
+
+        # Check OPTICAL_SIGNAL_GROUP_CHANNEL (channel 15)
+        c = d.functionalChannels[15]
+        assert isinstance(c, OpticalSignalGroupChannel)
+        assert c.index == 15
+
+        # Test optical signal control
+        d.set_optical_signal(
+            9, OpticalSignalBehaviour.BILLOW_MIDDLE, RGBColorState.BLUE
+        )
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F711000000000WRC6230")
+        c = d.functionalChannels[9]
+        assert c.dimLevel == 1.01
+        assert c.opticalSignalBehaviour == OpticalSignalBehaviour.BILLOW_MIDDLE
+        assert c.simpleRGBColorState == "BLUE"
+
+        # Test dim level control
+        d.set_dim_level(9, 0.5)
+        fake_home.get_current_state()
+        d = fake_home.search_device_by_id("3014F711000000000WRC6230")
+        c = d.functionalChannels[9]
+        assert c.dimLevel == 0.5
+
+
 def test_push_button_flat(fake_home: Home):
     d = PushButtonFlat(fake_home._connection)
     d = fake_home.search_device_by_id("3014F711PUSH_BUTTON_FLAT")

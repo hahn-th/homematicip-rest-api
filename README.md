@@ -237,6 +237,7 @@ A few examples:
 - [x] HmIP-WLAN-HAP-B
 - [x] HMIP-WRC2 (Wall-mount Remote Control - 2x buttons)
 - [x] HMIP-WRC6 (Wall-mount Remote Control - 6x buttons)
+- [x] HmIP-WRC6-230 (Wall-mount Remote Control - 6x buttons, 230V, with LED)
 - [x] HMIP-WRCC2 (Wall-mount Remote Control – flat)
 - [ ] HMIP-WRCD (Wall-mount Remote Control - E-Paper-Status display)
 - [ ] HMIP-WRCR (Wall-mount Remote Control - Rotary)

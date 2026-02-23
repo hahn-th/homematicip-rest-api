@@ -340,6 +340,48 @@ class ExtendedLinkedSwitchingGroup(SwitchGroupBase):
         return await self._rest_call_async("group/switching/linked/setOnTime", body=data)
 
 
+class ExtendedLinkedNotificationGroup(SwitchGroupBase):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.onTime = None
+        self.onLevel = None
+        self.sensorSpecificParameters = None
+        self.opticalSignalBehaviour = None
+        self.simpleRGBColorState = None
+        self.onOpticalSignalBehaviour = None
+        self.onSimpleRGBColor = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("onTime", js)
+        self.set_attr_from_dict("onLevel", js)
+        self.set_attr_from_dict("sensorSpecificParameters", js)
+        self.set_attr_from_dict("opticalSignalBehaviour", js, OpticalSignalBehaviour)
+        self.simpleRGBColorState = RGBColorState.from_str(
+            js.get("simpleRGBColorState", "BLACK")
+        )
+        self.set_attr_from_dict("onOpticalSignalBehaviour", js, OpticalSignalBehaviour)
+        self.onSimpleRGBColor = RGBColorState.from_str(
+            js.get("onSimpleRGBColor", "BLACK")
+        )
+
+    def __str__(self):
+        return "{} onTime({}) onLevel({}) opticalSignalBehaviour({}) simpleRGBColorState({})".format(
+            super().__str__(),
+            self.onTime,
+            self.onLevel,
+            self.opticalSignalBehaviour,
+            self.simpleRGBColorState,
+        )
+
+    def set_on_time(self, onTimeSeconds):
+        return self._run_non_async(self.set_on_time_async, onTimeSeconds)
+
+    async def set_on_time_async(self, onTimeSeconds):
+        data = {"groupId": self.id, "onTime": onTimeSeconds}
+        return await self._rest_call_async("group/switching/linked/setOnTime", body=data)
+
+
 class ExtendedLinkedShutterGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
