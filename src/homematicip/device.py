@@ -2832,8 +2832,63 @@ class DaliGateway(Device):
     pass
 
 
-class MotionDetectorSwitchOutdoor(Device):
-    pass
+class MotionDetectorSwitchOutdoor(SabotageDevice):
+    """HmIP-SMO230 (Motion Detector with Brightness Sensor and Switch - outdoor)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.currentIllumination = None
+        self.motionDetected = None
+        self.illumination = None
+        self.motionBufferActive = False
+        self.motionDetectionSendInterval = MotionDetectionSendInterval.SECONDS_30
+        self.numberOfBrightnessMeasurements = 0
+        self.on = None
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("MOTION_DETECTION_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("motionDetected", c)
+            self.set_attr_from_dict("illumination", c)
+            self.set_attr_from_dict("motionBufferActive", c)
+            self.set_attr_from_dict("motionDetectionSendInterval", c)
+            self.set_attr_from_dict("numberOfBrightnessMeasurements", c)
+            self.set_attr_from_dict("currentIllumination", c)
+        c = get_functional_channel("SWITCH_CHANNEL", js)
+        if c:
+            self.on = c["on"]
+            self.profileMode = c["profileMode"]
+            self.userDesiredProfileMode = c["userDesiredProfileMode"]
+
+    def __str__(self):
+        return "{} motionDetected({}) illumination({}) on({})".format(
+            super().__str__(),
+            self.motionDetected,
+            self.illumination,
+            self.on,
+        )
+
+    def set_switch_state(self, on=True, channelIndex=2):
+        return self._run_non_async(self.set_switch_state_async, on, channelIndex)
+
+    async def set_switch_state_async(self, on=True, channelIndex=2):
+        data = {"channelIndex": channelIndex, "deviceId": self.id, "on": on}
+        return await self._rest_call_async("device/control/setSwitchState", body=data)
+
+    def turn_on(self, channelIndex=2):
+        return self._run_non_async(self.turn_on_async, channelIndex)
+
+    async def turn_on_async(self, channelIndex=2):
+        return await self.set_switch_state_async(True, channelIndex)
+
+    def turn_off(self, channelIndex=2):
+        return self._run_non_async(self.turn_off_async, channelIndex)
+
+    async def turn_off_async(self, channelIndex=2):
+        return await self.set_switch_state_async(False, channelIndex)
 
 
 class WallMountedKeyPad(Device):

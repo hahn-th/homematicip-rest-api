@@ -1961,6 +1961,20 @@ def test_motion_detector_switch_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000SMO230A")
         assert isinstance(d, MotionDetectorSwitchOutdoor)
+        assert d.sabotage is False
+        assert d.motionDetected is False
+        assert d.illumination == 3158.0
+        assert d.currentIllumination is None
+        assert d.motionBufferActive is True
+        assert d.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_30
+        assert d.numberOfBrightnessMeasurements == 3
+        assert d.on is False
+        assert d.profileMode == "AUTOMATIC"
+        assert d.userDesiredProfileMode == "AUTOMATIC"
+        assert "motionDetected(False)" in str(d)
+        assert "illumination(3158.0)" in str(d)
+        assert "on(False)" in str(d)
+        assert "sabotage(False)" in str(d)
 
 
 def test_wall_mounted_keypad(fake_home: Home):
