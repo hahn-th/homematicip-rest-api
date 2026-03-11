@@ -1797,6 +1797,14 @@ def test_temperatur_sensor_2_delta_2(fake_home: Home):
     )
 
 
+def test_temperatur_sensor_2_delta_platin(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000ELVPTI2")
+    assert isinstance(d, TemperatureDifferenceSensor2)
+    assert d.temperatureExternalDelta == -1.5
+    assert d.temperatureExternalOne == 29.6
+    assert d.temperatureExternalTwo == 31.1
+
+
 def test_wall_mounted_garage_door_controller(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000WGC")
