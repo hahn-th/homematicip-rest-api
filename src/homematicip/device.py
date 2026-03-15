@@ -1718,6 +1718,10 @@ class WiredPushButton(PushButton):
         return await self.set_switch_state_async(False, channelIndex)
 
 
+class PushButton6LedSwitch(WiredPushButton):
+    """HmIP-WRC6-230 (Wall-mount Remote Control - 6-button, 230V, with LED)"""
+
+
 class BlindModule(Device):
     """HMIP-HDM1 (Hunter Douglas & erfal window blinds)"""
 

@@ -203,6 +203,22 @@ def test_extended_linked_garage_door(fake_home: Home):
     )
 
 
+def test_extended_linked_notification(fake_home: Home):
+    g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000ELN")
+    assert isinstance(g, ExtendedLinkedNotificationGroup)
+
+    assert g.on == False
+    assert g.dimLevel == 0.0
+    assert g.dutyCycle == False
+    assert g.onTime == 300.0
+    assert g.onLevel == 1.0
+    assert g.opticalSignalBehaviour == OpticalSignalBehaviour.ON
+    assert g.simpleRGBColorState == RGBColorState.YELLOW
+    assert g.onOpticalSignalBehaviour == OpticalSignalBehaviour.ON
+    assert g.onSimpleRGBColor == RGBColorState.WHITE
+    assert g.label == "LED Notification"
+
+
 def test_security_zone(fake_home: Home):
     g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000005")
     assert isinstance(g, SecurityZoneGroup)  # asserts groupType also
