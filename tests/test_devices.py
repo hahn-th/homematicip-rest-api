@@ -1882,6 +1882,15 @@ def test_usb_switch_measuring(fake_home: Home):
         assert d.modelType == "HmIP-USBSM"
 
 
+def test_switch_power_supply(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000ELVSPS25")
+        assert isinstance(d, Switch)
+        assert d.on is False
+        assert d.profileMode == "AUTOMATIC"
+        assert d.userDesiredProfileMode == "AUTOMATIC"
+
+
 def test_motion_detector_switch_outdoor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F711000000000SMO230A")
