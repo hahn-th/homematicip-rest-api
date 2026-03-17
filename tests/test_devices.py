@@ -1976,6 +1976,24 @@ def test_motion_detector_switch_outdoor(fake_home: Home):
         assert "on(False)" in str(d)
         assert "sabotage(False)" in str(d)
 
+        motion_channel = d.get_functional_channel(FunctionalChannelType.MOTION_DETECTION_CHANNEL)
+        switch_channel = d.get_functional_channel(FunctionalChannelType.SWITCH_CHANNEL)
+        sabotage_channel = d.get_functional_channel(FunctionalChannelType.DEVICE_SABOTAGE)
+
+        assert isinstance(motion_channel, MotionDetectionChannel)
+        assert isinstance(switch_channel, SwitchChannel)
+        assert isinstance(sabotage_channel, DeviceSabotageChannel)
+
+        assert motion_channel.motionDetected is False
+        assert motion_channel.illumination == 3158.0
+        assert motion_channel.motionBufferActive is True
+        assert motion_channel.motionDetectionSendInterval == MotionDetectionSendInterval.SECONDS_30
+        assert motion_channel.numberOfBrightnessMeasurements == 3
+        assert switch_channel.on is False
+        assert switch_channel.profileMode == "AUTOMATIC"
+        assert switch_channel.userDesiredProfileMode == "AUTOMATIC"
+        assert sabotage_channel.sabotage is False
+
 
 def test_wall_mounted_keypad(fake_home: Home):
     with no_ssl_verification():
