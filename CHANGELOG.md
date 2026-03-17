@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for ELV-SH-SPS25 (Switchable Power Supply)
 - Add support for ELV-SH-PTI2 (Temperature Difference Sensor 2 - Platin)
+- Add support for HmIP-SMO230 (Motion Detector with Brightness Sensor and Switch - outdoor)
 
 ## [2.6.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.5.0..2.6.0)
 

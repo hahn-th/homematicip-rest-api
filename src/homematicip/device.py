@@ -98,6 +98,22 @@ class BaseDevice(HomeMaticIPObject):
         fc.device = self
         return fc
 
+    def get_functional_channel(
+            self, channel_type: FunctionalChannelType | str, index: int | None = None
+    ) -> FunctionalChannel | None:
+        """Return the loaded functional channel matching the given type and optional index."""
+        if isinstance(channel_type, str):
+            channel_type = FunctionalChannelType.from_str(channel_type, channel_type)
+
+        for channel in self.functionalChannels:
+            if channel.functionalChannelType != channel_type:
+                continue
+            if index is not None and channel.index != index:
+                continue
+            return channel
+
+        return None
+
 
 class Device(BaseDevice):
     """this class represents a generic homematic ip device"""
@@ -2832,8 +2848,94 @@ class DaliGateway(Device):
     pass
 
 
-class MotionDetectorSwitchOutdoor(Device):
-    pass
+class MotionDetectorSwitchOutdoor(SabotageDevice):
+    """HmIP-SMO230 (Motion Detector with Brightness Sensor and Switch - outdoor)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+
+    def _get_motion_detection_channel(self):
+        return self.get_functional_channel(FunctionalChannelType.MOTION_DETECTION_CHANNEL)
+
+    def _get_switch_channel(self):
+        return self.get_functional_channel(FunctionalChannelType.SWITCH_CHANNEL)
+
+    @property
+    def currentIllumination(self):
+        channel = self._get_motion_detection_channel()
+        return channel.currentIllumination if channel else None
+
+    @property
+    def motionDetected(self):
+        channel = self._get_motion_detection_channel()
+        return channel.motionDetected if channel else None
+
+    @property
+    def illumination(self):
+        channel = self._get_motion_detection_channel()
+        return channel.illumination if channel else None
+
+    @property
+    def motionBufferActive(self):
+        channel = self._get_motion_detection_channel()
+        return channel.motionBufferActive if channel else False
+
+    @property
+    def motionDetectionSendInterval(self):
+        channel = self._get_motion_detection_channel()
+        return channel.motionDetectionSendInterval if channel else MotionDetectionSendInterval.SECONDS_30
+
+    @property
+    def numberOfBrightnessMeasurements(self):
+        channel = self._get_motion_detection_channel()
+        return channel.numberOfBrightnessMeasurements if channel else 0
+
+    @property
+    def on(self):
+        channel = self._get_switch_channel()
+        return channel.on if channel else None
+
+    @property
+    def profileMode(self):
+        channel = self._get_switch_channel()
+        return channel.profileMode if channel else None
+
+    @property
+    def userDesiredProfileMode(self):
+        channel = self._get_switch_channel()
+        return channel.userDesiredProfileMode if channel else None
+
+    def __str__(self):
+        return "{} motionDetected({}) illumination({}) on({})".format(
+            super().__str__(),
+            self.motionDetected,
+            self.illumination,
+            self.on,
+        )
+
+    def set_switch_state(self, on=True):
+        channel = self._get_switch_channel()
+        if channel is None:
+            raise AttributeError("SWITCH_CHANNEL not loaded for device")
+        return channel.set_switch_state(on)
+
+    async def set_switch_state_async(self, on=True):
+        channel = self._get_switch_channel()
+        if channel is None:
+            raise AttributeError("SWITCH_CHANNEL not loaded for device")
+        return await channel.async_set_switch_state(on)
+
+    def turn_on(self):
+        return self.set_switch_state(True)
+
+    async def turn_on_async(self):
+        return await self.set_switch_state_async(True)
+
+    def turn_off(self):
+        return self.set_switch_state(False)
+
+    async def turn_off_async(self):
+        return await self.set_switch_state_async(False)
 
 
 class WallMountedKeyPad(Device):
