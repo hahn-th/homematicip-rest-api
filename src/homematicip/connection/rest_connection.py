@@ -2,7 +2,7 @@ import json
 import logging
 from dataclasses import dataclass
 from ssl import SSLContext
-from typing import Optional
+from typing import Any, Optional
 
 import httpx
 
@@ -11,6 +11,21 @@ from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 LOGGER = logging.getLogger(__name__)
+
+SENSITIVE_LOG_KEYS = {
+    "accessPointId",
+    "ACCESSPOINT-ID",
+    "authToken",
+    "AUTHTOKEN",
+    "clientAuthToken",
+    "CLIENTAUTH",
+    "clientId",
+    "deviceId",
+    "id",
+    "pin",
+    "PIN",
+    "sgtin",
+}
 
 
 @dataclass
@@ -72,6 +87,23 @@ class RestConnection:
         """If headers must be manipulated use this method to get the current headers."""
         return self._headers
 
+    @staticmethod
+    def _redact_sensitive_data(value: Any) -> Any:
+        if isinstance(value, dict):
+            return {
+                key: (
+                    "REDACTED"
+                    if key in SENSITIVE_LOG_KEYS
+                    else RestConnection._redact_sensitive_data(item)
+                )
+                for key, item in value.items()
+            }
+
+        if isinstance(value, list):
+            return [RestConnection._redact_sensitive_data(item) for item in value]
+
+        return value
+
     async def async_post(self, url: str, data: dict | None = None, custom_header: dict | None = None) -> RestResult:
         """Send an async post request to cloud with json data. Returns a json result.
         @param url: The path of the url to send the request to
@@ -82,17 +114,15 @@ class RestConnection:
         """
         full_url = self._build_url(self._context.rest_url, url)
         try:
-            data_logging = data.copy() if data is not None else {}
-            if "id" in data_logging:
-                data_logging["id"] = "REDACTED"
+            data_logging = self._redact_sensitive_data(data or {})
 
             header = self._headers
             if custom_header is not None:
                 header = custom_header
 
-            LOGGER.debug(f"Sending post request to url {full_url}. Data is: {data_logging}")
+            LOGGER.debug("Sending post request to url %s. Data is: %s", full_url, data_logging)
             r = await self._execute_request_async(full_url, data, header)
-            LOGGER.debug(f"Got response {r.status_code}.")
+            LOGGER.debug("Got response %s.", r.status_code)
 
             if r.status_code == THROTTLE_STATUS_CODE:
                 LOGGER.error("Got error 429 (Throttling active)")
@@ -108,12 +138,15 @@ class RestConnection:
 
             return result
         except httpx.RequestError as exc:
-            LOGGER.error(f"An error occurred while requesting {exc.request.url!r}.")
+            LOGGER.error("An error occurred while requesting %r.", exc.request.url)
             return RestResult(status=-1, exception=exc)
         except httpx.HTTPStatusError as exc:
             if self._log_status_exceptions:
                 LOGGER.error(
-                    f"Error response {exc.response.status_code} ({exc.response.text}) while requesting {exc.request.url!r} with data {data_logging if data_logging is not None else "<no-data>"}."
+                    "Error response %s while requesting %r with data %s.",
+                    exc.response.status_code,
+                    exc.request.url,
+                    data_logging if data_logging is not None else "<no-data>",
                 )
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
