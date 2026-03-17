@@ -76,3 +76,33 @@ async def test_conn_async_post_with_httpx_client_session(mocker):
     assert mock_client.post.call_args[0][0] == "http://asdf/hmip/url"
     assert mock_client.post.call_args[1] == {"json": {"a": "b"}, "headers": {"c": "d"}}
     assert result.status == 200
+
+
+def test_redact_sensitive_data_nested():
+    redacted = RestConnection._redact_sensitive_data(
+        {
+            "id": "device-id",
+            "deviceId": "device-id",
+            "authToken": "secret-token",
+            "sgtin": "access-point-id",
+            "nested": {
+                "clientId": "client-id",
+                "PIN": "1234",
+                "safe": "value",
+            },
+            "items": [
+                {"ACCESSPOINT-ID": "access-point-id"},
+                {"value": "still-visible"},
+            ],
+        }
+    )
+
+    assert redacted["id"] == "REDACTED"
+    assert redacted["deviceId"] == "REDACTED"
+    assert redacted["authToken"] == "REDACTED"
+    assert redacted["sgtin"] == "REDACTED"
+    assert redacted["nested"]["clientId"] == "REDACTED"
+    assert redacted["nested"]["PIN"] == "REDACTED"
+    assert redacted["nested"]["safe"] == "value"
+    assert redacted["items"][0]["ACCESSPOINT-ID"] == "REDACTED"
+    assert redacted["items"][1]["value"] == "still-visible"

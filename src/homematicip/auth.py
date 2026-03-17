@@ -42,7 +42,7 @@ class Auth:
         self.pin = pin
 
     async def connection_request(self, access_point: str, device_name="homematicip-python") -> RestResult:
-        LOGGER.debug(f"Requesting connection for access point {access_point}")
+        LOGGER.debug("Requesting connection for access point [REDACTED]")
         headers = self.headers.copy()
         if self.pin is not None:
             headers["PIN"] = self.pin
@@ -64,7 +64,7 @@ class Auth:
 
         result = await self.connection.async_post("auth/isRequestAcknowledged", data, self.headers)
 
-        LOGGER.debug(f"Request acknowledged result: {result}")
+        LOGGER.debug("Request acknowledged check finished with status %s", result.status)
         return result.status == 200
 
     async def request_auth_token(self) -> str:
@@ -73,7 +73,7 @@ class Auth:
         LOGGER.debug("Requesting auth token")
         data = {"deviceId": self.client_id}
         result = await self.connection.async_post("auth/requestAuthToken", data, self.headers)
-        LOGGER.debug(f"Request auth token result: {result}")
+        LOGGER.debug("Auth token request finished with status %s", result.status)
 
         return result.json["authToken"]
 
@@ -85,7 +85,7 @@ class Auth:
         LOGGER.debug("Confirming auth token")
         data = {"deviceId": self.client_id, "authToken": auth_token}
         result = await self.connection.async_post("auth/confirmAuthToken", data, self.headers)
-        LOGGER.debug(f"Confirm auth token result: {result}")
+        LOGGER.debug("Auth token confirmation finished with status %s", result.status)
 
         return result.json["clientId"]
 
