@@ -2851,6 +2851,9 @@ class DaliGateway(Device):
 class MotionDetectorSwitchOutdoor(SabotageDevice):
     """HmIP-SMO230 (Motion Detector with Brightness Sensor and Switch - outdoor)"""
 
+    def __init__(self, connection):
+        super().__init__(connection)
+
     def _get_motion_detection_channel(self):
         return self.get_functional_channel(FunctionalChannelType.MOTION_DETECTION_CHANNEL)
 
