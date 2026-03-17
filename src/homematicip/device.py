@@ -2593,6 +2593,76 @@ class WallMountedGarageDoorController(Device):
         return await self._rest_call_async("device/control/startImpulse", body=data)
 
 
+class FullFlushLockController(Device):
+    """HmIP-FLC Universal lock controller."""
+
+    def _get_channel_by_role(
+            self, channel_type: FunctionalChannelType | str, channel_role: str
+    ) -> FunctionalChannel | None:
+        for channel in self.functionalChannels:
+            if isinstance(channel_type, str):
+                expected_type = FunctionalChannelType.from_str(channel_type, channel_type)
+            else:
+                expected_type = channel_type
+            if channel.functionalChannelType != expected_type:
+                continue
+            if channel.channelRole != channel_role:
+                continue
+            return channel
+        return None
+
+    @property
+    def lockState(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.MULTI_MODE_LOCK_INPUT_CHANNEL, "DOOR_LOCK_SENSOR"
+        )
+        return channel.lockState if channel else None
+
+    @property
+    def glassBroken(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.MULTI_MODE_LOCK_INPUT_CHANNEL, "DOOR_LOCK_SENSOR"
+        )
+        return channel.glassBroken if channel else None
+
+    @property
+    def doorLockActive(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_LOCK_ACTUATOR"
+        )
+        return channel.doorLockActive if channel else None
+
+    @property
+    def impulseDuration(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        return channel.impulseDuration if channel else None
+
+    @property
+    def processing(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        return channel.processing if channel else None
+
+    def send_start_impulse(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        if channel is None:
+            raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_OPENER_ACTUATOR not loaded for device")
+        return channel.send_start_impulse()
+
+    async def send_start_impulse_async(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        if channel is None:
+            raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_OPENER_ACTUATOR not loaded for device")
+        return await channel.async_send_start_impulse()
+
+
 class TiltVibrationSensor(Device):
     """HMIP-STV (Inclination and vibration Sensor)"""
 
