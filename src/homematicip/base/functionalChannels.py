@@ -634,6 +634,38 @@ class DoorLockChannel(FunctionalChannel):
         )
 
 
+class DoorSwitchChannel(FunctionalChannel):
+    """this is the representative of the DOOR_SWITCH_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.impulseDuration = 0
+        self.processing = False
+        self.doorLockActive = False
+        self.internalLinkConfiguration = None
+        self.multiModeInputMode = None
+        self.profileMode = None
+        self.userDesiredProfileMode = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("impulseDuration", js)
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("doorLockActive", js)
+        self.set_attr_from_dict("internalLinkConfiguration", js)
+        self.set_attr_from_dict("multiModeInputMode", js, MultiModeInputMode)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("userDesiredProfileMode", js, ProfileMode)
+
+    def send_start_impulse(self):
+        return self._run_non_async(self.async_send_start_impulse)
+
+    async def async_send_start_impulse(self):
+        return await functional_channel_commands.start_impulse_async(
+            self._connection, self.device.id, self.index
+        )
+
+
 class EnergySensorInterfaceChannel(FunctionalChannel):
     """EnergySensorInterfaceChannel"""
 
@@ -718,6 +750,24 @@ class MultiModeInputChannel(FunctionalChannel):
             self.doorBellSensorEventTimestamp,
             self.corrosionPreventionActive,
         )
+
+
+class MultiModeLockInputChannel(MultiModeInputChannel):
+    """this is the representative of the MULTI_MODE_LOCK_INPUT_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.actionParameter = None
+        self.eventDelay = 0
+        self.glassBroken = False
+        self.lockState = LockState.UNLOCKED
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("actionParameter", js)
+        self.set_attr_from_dict("eventDelay", js)
+        self.set_attr_from_dict("glassBroken", js)
+        self.set_attr_from_dict("lockState", js, LockState)
 
 
 class MultiModeInputDimmerChannel(DimmerChannel):

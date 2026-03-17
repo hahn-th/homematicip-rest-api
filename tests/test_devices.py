@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
+from unittest.mock import AsyncMock, Mock, patch
 
 from conftest import utc_offset
+from homematicip.base.enums import DeviceType, FunctionalChannelType, LockState, MultiModeInputMode
 from homematicip.base.functionalChannels import *
-from homematicip.class_maps import TYPE_FUNCTIONALCHANNEL_MAP
+from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_FUNCTIONALCHANNEL_MAP
 from homematicip.device import *
 from homematicip.home import Home
 from homematicip_demo.helper import (
@@ -11,10 +13,190 @@ from homematicip_demo.helper import (
 )
 
 
+def _full_flush_lock_controller_json():
+    return {
+        "availableFirmwareVersion": "0.0.0",
+        "connectionType": "HMIP_RF",
+        "deviceArchetype": "HMIP",
+        "firmwareVersion": "1.0.10",
+        "firmwareVersionInteger": 65546,
+        "functionalChannels": {
+            "0": {
+                "configPending": False,
+                "deviceId": "3014F7110000000000000026",
+                "dutyCycle": False,
+                "functionalChannelType": "DEVICE_BASE",
+                "groupIndex": 0,
+                "groups": [],
+                "index": 0,
+                "label": "",
+                "lowBat": None,
+                "routerModuleEnabled": False,
+                "routerModuleSupported": False,
+                "rssiDeviceValue": -82,
+                "rssiPeerValue": -97,
+                "supportedOptionalFeatures": {
+                    "IFeatureRssiValue": True,
+                    "IOptionalFeatureDutyCycle": True,
+                    "IOptionalFeatureLowBat": False,
+                },
+                "unreach": False,
+            },
+            "1": {
+                "actionParameter": "NOT_CUSTOMISABLE",
+                "binaryBehaviorType": "NORMALLY_OPEN",
+                "channelRole": "DOOR_LOCK_SENSOR",
+                "corrosionPreventionActive": False,
+                "deviceId": "3014F7110000000000000026",
+                "doorBellSensorEventTimestamp": None,
+                "eventDelay": 0,
+                "functionalChannelType": "MULTI_MODE_LOCK_INPUT_CHANNEL",
+                "glassBroken": True,
+                "groupIndex": 1,
+                "groups": [],
+                "index": 1,
+                "label": "",
+                "lockState": "LOCKED",
+                "multiModeInputMode": "BINARY_BEHAVIOR",
+                "supportedOptionalFeatures": {},
+                "windowState": "OPEN",
+            },
+            "3": {
+                "channelRole": "DOOR_LOCK_ACTUATOR",
+                "deviceId": "3014F7110000000000000026",
+                "doorLockActive": False,
+                "functionalChannelType": "DOOR_SWITCH_CHANNEL",
+                "groupIndex": 3,
+                "groups": [],
+                "impulseDuration": 111600.0,
+                "index": 3,
+                "internalLinkConfiguration": {
+                    "firstInputAction": "TOGGLE",
+                    "internalLinkConfigurationType": "SINGLE_INPUT_DOOR_SWITCH",
+                },
+                "label": "",
+                "multiModeInputMode": "KEY_BEHAVIOR",
+                "processing": False,
+                "profileMode": "AUTOMATIC",
+                "supportedOptionalFeatures": {},
+                "userDesiredProfileMode": "AUTOMATIC",
+            },
+            "4": {
+                "channelRole": "DOOR_OPENER_ACTUATOR",
+                "deviceId": "3014F7110000000000000026",
+                "doorLockActive": False,
+                "functionalChannelType": "DOOR_SWITCH_CHANNEL",
+                "groupIndex": 4,
+                "groups": [],
+                "impulseDuration": 0.9,
+                "index": 4,
+                "internalLinkConfiguration": {
+                    "firstInputAction": "LOCK_OPEN",
+                    "internalLinkConfigurationType": "SINGLE_INPUT_DOOR_SWITCH",
+                },
+                "label": "",
+                "multiModeInputMode": "SWITCH_BEHAVIOR",
+                "processing": False,
+                "profileMode": "AUTOMATIC",
+                "supportedOptionalFeatures": {},
+                "userDesiredProfileMode": "AUTOMATIC",
+            },
+            "5": {
+                "authorized": True,
+                "channelRole": "DOOR_LOCK_ACTUATOR",
+                "deviceId": "3014F7110000000000000026",
+                "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+                "groupIndex": 3,
+                "groups": [],
+                "index": 5,
+                "label": "",
+                "supportedOptionalFeatures": {},
+            },
+        },
+        "homeId": "00000000-0000-0000-0000-000000000001",
+        "id": "3014F7110000000000000026",
+        "label": "Universal Motorschloss Controller",
+        "lastStatusUpdate": 1760619002144,
+        "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+        "manufacturerCode": 1,
+        "modelId": 546,
+        "modelType": "HmIP-FLC",
+        "oem": "eQ-3",
+        "permanentlyReachable": True,
+        "serializedGlobalTradeItemNumber": "3014F7110000000000000026",
+        "type": "FULL_FLUSH_LOCK_CONTROLLER",
+        "updateState": "UP_TO_DATE",
+    }
+
+
+def _build_full_flush_lock_controller():
+    json_data = _full_flush_lock_controller_json()
+    device = TYPE_CLASS_MAP[DeviceType.from_str(json_data["type"])](Mock())
+    device.from_json(json_data)
+    device.load_functionalChannels([], [])
+    return device
+
+
 def test_getTypeFunctionalChannelMap(fake_home: Home):
     for channelType in TYPE_FUNCTIONALCHANNEL_MAP.keys():
         fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType](None, None)
         assert fc != None
+
+
+def test_full_flush_lock_controller_channel_first_support():
+    d = _build_full_flush_lock_controller()
+
+    assert isinstance(d, FullFlushLockController)
+    assert d.lockState == LockState.LOCKED
+    assert d.glassBroken is True
+    assert d.doorLockActive is False
+    assert d.impulseDuration == 0.9
+    assert d.processing is False
+
+    lock_sensor_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.MULTI_MODE_LOCK_INPUT_CHANNEL and ch.index == 1
+    )
+    door_lock_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.DOOR_SWITCH_CHANNEL and ch.index == 3
+    )
+    door_opener_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.DOOR_SWITCH_CHANNEL and ch.index == 4
+    )
+    authorization_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.ACCESS_AUTHORIZATION_CHANNEL and ch.index == 5
+    )
+
+    assert isinstance(lock_sensor_channel, MultiModeLockInputChannel)
+    assert lock_sensor_channel.channelRole == "DOOR_LOCK_SENSOR"
+    assert lock_sensor_channel.lockState == LockState.LOCKED
+    assert lock_sensor_channel.glassBroken is True
+
+    assert isinstance(door_lock_channel, DoorSwitchChannel)
+    assert door_lock_channel.channelRole == "DOOR_LOCK_ACTUATOR"
+    assert door_lock_channel.multiModeInputMode == MultiModeInputMode.KEY_BEHAVIOR
+
+    assert isinstance(door_opener_channel, DoorSwitchChannel)
+    assert door_opener_channel.channelRole == "DOOR_OPENER_ACTUATOR"
+    assert door_opener_channel.multiModeInputMode == MultiModeInputMode.SWITCH_BEHAVIOR
+
+    assert isinstance(authorization_channel, AccessAuthorizationChannel)
+    assert authorization_channel.authorized is True
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.start_impulse_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        d.send_start_impulse()
+
+    patched.assert_awaited_once_with(d._connection, d.id, 4)
 
 
 def test_room_control_device(fake_home: Home):
