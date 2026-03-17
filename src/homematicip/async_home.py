@@ -655,7 +655,7 @@ class AsyncHome(HomeMaticIPObject):
 
     async def enable_events(self, additional_message_handler: Callable = None):
         """Connect to Websocket and listen for events"""
-        if self._websocket_client and self._websocket_client.is_connected:
+        if self._websocket_client and self._websocket_client.is_connected():
             return
 
         self._websocket_client = WebsocketHandler()
@@ -766,7 +766,7 @@ class AsyncHome(HomeMaticIPObject):
 
     def websocket_is_connected(self):
         """returns if the websocket is connected."""
-        return self._websocket_client.is_connected if self._websocket_client else False
+        return self._websocket_client.is_connected() if self._websocket_client else False
 
     def set_on_connected_handler(self, handler: Callable):
         """Sets a callback that is called when the WebSocket connection is established."""

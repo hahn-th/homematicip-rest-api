@@ -780,9 +780,26 @@ async def test_enable_events(fake_home):
 @pytest.mark.asyncio
 async def test_enable_events_active(fake_home):
     fake_home._websocket_client = Mock()
+    fake_home._websocket_client.is_connected.return_value = True
     await fake_home.enable_events()
 
     assert not fake_home._websocket_client.start.called
+
+
+@pytest.mark.asyncio
+async def test_enable_events_reconnects_when_client_exists_but_is_disconnected(fake_home):
+    stale_websocket_handler = Mock()
+    stale_websocket_handler.is_connected.return_value = False
+    fake_home._websocket_client = stale_websocket_handler
+
+    new_websocket_handler = Mock()
+    new_websocket_handler.start = AsyncMock()
+
+    with patch('homematicip.async_home.WebsocketHandler', return_value=new_websocket_handler):
+        await fake_home.enable_events()
+
+    assert fake_home._websocket_client is new_websocket_handler
+    new_websocket_handler.start.assert_awaited_once()
 
 
 @pytest.mark.asyncio
@@ -793,3 +810,12 @@ async def test_disable_events(fake_home):
 
     assert fake_home._websocket_client is None
     assert fake_client.stop.called
+
+
+def test_websocket_is_connected_returns_bool(fake_home):
+    assert fake_home.websocket_is_connected() is False
+
+    fake_home._websocket_client = Mock()
+    fake_home._websocket_client.is_connected.return_value = True
+
+    assert fake_home.websocket_is_connected() is True
