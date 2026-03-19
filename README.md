@@ -92,7 +92,9 @@ A few examples:
 - [x] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
 - [x] ELV-SH-CTV Tilt Vibration Sensor Compact
 - [x] ELV-SH-PSMCI (Switch Measuring Cable Indoor) \*powered by HmIP
+- [x] ELV-SH-PTI2 (Temperature Difference Sensor 2 - Platin) \*powered by HmIP
 - [x] ELV-SH-SB8 (Status Board) \*powered by HmIP
+- [x] ELV-SH-SPS25 (Switchable Power Supply) \*powered by HmIP
 - [ ] ELV-SH-GVI (Garden valve interface) \*powered by HmIP
 - [ ] ELV-SH-IRS8 (Infrared Remote control - 8x channels) \*powered by HmIP
 - [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) \*powered by HmIP
@@ -148,6 +150,7 @@ A few examples:
 - [x] HMIP-FBL (Blind Actuator - flush-mount)
 - [x] HMIP-FCI1 (Contact Interface flush-mount – 1x channel)
 - [x] HMIP-FCI6 (Contact Interface flush-mount – 6x channels)
+- [x] HMIP-FLC (Full Flush Lock Controller)
 - [x] HMIP-FDT (Dimming Actuator - flush-mount)
 - [x] HMIP-FROLL (Shutter Actuator - flush-mount)
 - [x] HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)

@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add support for HmIP-FLC (Full Flush Lock Controller)
+- Add support for HmIP-SMO230 (Motion Detector with Brightness Sensor and Switch - outdoor)
+- Add support for HmIP-WRC6-230 (Wall-mount Remote Control - 6x buttons, 230V, with LED)
 - Add support for ELV-SH-SPS25 (Switchable Power Supply)
 - Add support for ELV-SH-PTI2 (Temperature Difference Sensor 2 - Platin)
-- Add support for HmIP-SMO230 (Motion Detector with Brightness Sensor and Switch - outdoor)
+
+### Fixed
+
+- Fix websocket connection state checks for standalone usage
+- Harden auth logging to avoid exceptions on missing fields
 
 ## [2.6.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.5.0..2.6.0)
 
