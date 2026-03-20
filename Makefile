@@ -12,11 +12,11 @@ test:
 
 docs:
 	cp CHANGELOG.md ./docs/changelog.md
-	mkdocs build
+	zensical build
 
 serve:
 	cp CHANGELOG.md ./docs/changelog.md
-	mkdocs serve
+	zensical serve
 
 publish:
 	cp CHANGELOG.md ./docs/changelog.md
