@@ -2238,3 +2238,34 @@ def test_status_board_8(fake_home: Home):
 
         # Verify all 8 LED channels exist (channels 1-8)
         assert len(d.functionalChannels) == 9  # 8 LEDs + 1 base channel
+
+
+def test_particulate_matter_sensor(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000SFD")
+        assert isinstance(d, ParticulateMatterSensor)
+        assert d.label == "Fine Dust Sensor"
+        assert d.modelType == "HmIP-SFD"
+
+        assert d.actualTemperature == 19.5
+        assert d.humidity == 35
+        assert d.particulateMassConcentrationTen == 15.8
+        assert d.particulateMassConcentrationTwoPointFive == 7.4
+        assert d.particulateMassConcentrationOne == 3.2
+
+        c = d.functionalChannels[1]
+        assert isinstance(c, ParticulateMatterSensorChannel)
+        assert c.actualTemperature == 19.5
+        assert c.humidity == 35
+        assert c.airQualityIndexTen == 12.3
+        assert c.airQualityIndexTwoPointFive == 8.7
+        assert c.particulateMassConcentrationOne == 3.2
+        assert c.particulateMassConcentrationOneAverage == 3.5
+        assert c.particulateMassConcentrationTen == 15.8
+        assert c.particulateMassConcentrationTenAverage == 16.1
+        assert c.particulateMassConcentrationTwoPointFive == 7.4
+        assert c.particulateMassConcentrationTwoPointFiveAverage == 7.9
+        assert c.particulateNumberConcentrationOne == 520.0
+        assert c.particulateNumberConcentrationTen == 680.0
+        assert c.particulateNumberConcentrationTwoPointFive == 610.0
+        assert c.particulateTypicalSize == 0.45

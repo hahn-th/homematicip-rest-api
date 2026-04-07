@@ -2107,6 +2107,44 @@ class CarbonDioxideSensorChannel(FunctionalChannel):
         self.set_attr_from_dict("vaporAmount", js)
 
 
+class ParticulateMatterSensorChannel(FunctionalChannel):
+    """Representation of the PARTICULATE_MATTER_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.actualTemperature = None
+        self.humidity = None
+        self.airQualityIndexTen = None
+        self.airQualityIndexTwoPointFive = None
+        self.particulateMassConcentrationOne = None
+        self.particulateMassConcentrationOneAverage = None
+        self.particulateMassConcentrationTen = None
+        self.particulateMassConcentrationTenAverage = None
+        self.particulateMassConcentrationTwoPointFive = None
+        self.particulateMassConcentrationTwoPointFiveAverage = None
+        self.particulateNumberConcentrationOne = None
+        self.particulateNumberConcentrationTen = None
+        self.particulateNumberConcentrationTwoPointFive = None
+        self.particulateTypicalSize = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("actualTemperature", js)
+        self.set_attr_from_dict("humidity", js)
+        self.set_attr_from_dict("airQualityIndexTen", js)
+        self.set_attr_from_dict("airQualityIndexTwoPointFive", js)
+        self.set_attr_from_dict("particulateMassConcentrationOne", js)
+        self.set_attr_from_dict("particulateMassConcentrationOneAverage", js)
+        self.set_attr_from_dict("particulateMassConcentrationTen", js)
+        self.set_attr_from_dict("particulateMassConcentrationTenAverage", js)
+        self.set_attr_from_dict("particulateMassConcentrationTwoPointFive", js)
+        self.set_attr_from_dict("particulateMassConcentrationTwoPointFiveAverage", js)
+        self.set_attr_from_dict("particulateNumberConcentrationOne", js)
+        self.set_attr_from_dict("particulateNumberConcentrationTen", js)
+        self.set_attr_from_dict("particulateNumberConcentrationTwoPointFive", js)
+        self.set_attr_from_dict("particulateTypicalSize", js)
+
+
 class AccessControllerWiredChannel(DeviceBaseChannel):
     """this is the representative of the ACCESS_CONTROLLER_WIRED_CHANNEL channel"""
 
