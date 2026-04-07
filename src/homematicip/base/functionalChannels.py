@@ -175,6 +175,56 @@ class DeviceBlockingChannel(FunctionalChannel):
         self.sensorError = js.get("sensorError")
 
 
+class DeviceBlockingWithTeachableCodeChannel(DeviceBlockingChannel):
+    """this is the representative of the DEVICE_BLOCKING_WITH_TEACHABLE_CODE channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.blockedSabotage = None
+        self.blockedWrongCodePermanently = None
+        self.blockedWrongCodeTemporarily = None
+        self.blockingPermanentAttempts = 0
+        self.blockingTemporaryAttempts = 0
+        self.code01Used = None
+        self.code02Used = None
+        self.code03Used = None
+        self.code04Used = None
+        self.code05Used = None
+        self.code06Used = None
+        self.code07Used = None
+        self.code08Used = None
+        self.code09Used = None
+        self.code10Used = None
+        self.code11Used = None
+        self.code12Used = None
+        self.code13Used = None
+        self.code14Used = None
+        self.code15Used = None
+        self.code16Used = None
+        self.code17Used = None
+        self.code18Used = None
+        self.code19Used = None
+        self.code20Used = None
+        self.codeLabels = []
+        self.contactType = None
+        self.doorBellLabel = None
+        self.doorBellSensorEventTimestamp = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("blockedSabotage", js)
+        self.set_attr_from_dict("blockedWrongCodePermanently", js)
+        self.set_attr_from_dict("blockedWrongCodeTemporarily", js)
+        self.set_attr_from_dict("blockingPermanentAttempts", js)
+        self.set_attr_from_dict("blockingTemporaryAttempts", js)
+        for i in range(1, 21):
+            self.set_attr_from_dict(f"code{i:02d}Used", js)
+        self.set_attr_from_dict("codeLabels", js)
+        self.set_attr_from_dict("contactType", js)
+        self.set_attr_from_dict("doorBellLabel", js)
+        self.set_attr_from_dict("doorBellSensorEventTimestamp", js)
+
+
 class SwitchChannel(FunctionalChannel):
     """this is the representative of the SWITCH_CHANNEL channel"""
 
@@ -2325,6 +2375,24 @@ class CodeProtectedPrimaryActionChannel(FunctionalChannel):
 class CodeProtectedSecondaryActionChannel(FunctionalChannel):
     """this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)"""
     pass
+
+
+class CodeProtectedSingleActionChannel(FunctionalChannel):
+    """this is the representative of the CODE_PROTECTED_SINGLE_ACTION_CHANNEL channel (HmIP-FWI)"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+        self.actionParameter: str | None = None
+        self.authorized: bool | None = None
+        self.codeSelections: list = []
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+
+        self.set_attr_from_dict("actionParameter", js)
+        self.set_attr_from_dict("authorized", js)
+        self.set_attr_from_dict("codeSelections", js)
 
 
 class WateringActuatorChannel(FunctionalChannel):

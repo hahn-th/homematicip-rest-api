@@ -2238,3 +2238,52 @@ def test_status_board_8(fake_home: Home):
 
         # Verify all 8 LED channels exist (channels 1-8)
         assert len(d.functionalChannels) == 9  # 8 LEDs + 1 base channel
+
+
+def test_full_flush_wiegand_interface(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000FWI")
+    assert isinstance(d, FullFlushWiegandInterface)
+    assert d.label == "Wiegand Interface"
+    assert d.modelType == "HmIP-FWI"
+
+    # Device-level convenience properties from channel 0
+    assert d.doorBellLabel == "Klingelkontakt"
+    assert d.sabotage is False
+    assert d.blockedSabotage is False
+    assert d.blockedWrongCodePermanently is False
+    assert d.blockedWrongCodeTemporarily is False
+
+    # Channel 0: DEVICE_BLOCKING_WITH_TEACHABLE_CODE
+    c0 = d.functionalChannels[0]
+    assert isinstance(c0, DeviceBlockingWithTeachableCodeChannel)
+    assert c0.contactType == "NORMALLY_OPEN"
+    assert c0.doorBellLabel == "Klingelkontakt"
+    assert c0.doorBellSensorEventTimestamp == 1700000000000
+    assert c0.blockedSabotage is False
+    assert c0.blockedWrongCodePermanently is False
+    assert c0.blockedWrongCodeTemporarily is False
+    assert c0.blockingPermanentAttempts == 0
+    assert c0.blockingTemporaryAttempts == 5
+    assert c0.sabotage is False
+    assert c0.code01Used is True
+    assert c0.code02Used is False
+    assert c0.code20Used is False
+    assert len(c0.codeLabels) == 20
+    assert c0.codeLabels[0] == "Hauptcode"
+    assert c0.codeLabels[1] is None
+
+    # Channels 1-8: CODE_PROTECTED_SINGLE_ACTION_CHANNEL
+    for i in range(1, 9):
+        c = d.functionalChannels[i]
+        assert isinstance(c, CodeProtectedSingleActionChannel)
+        assert c.actionParameter == "NOT_CUSTOMISABLE"
+        assert c.authorized is None
+        assert c.codeSelections == []
+
+    # Channel 9: SWITCH_CHANNEL
+    c9 = d.functionalChannels[9]
+    assert isinstance(c9, SwitchChannel)
+    assert c9.on is False
+
+    # Total channels: 1 base + 8 action + 1 switch
+    assert len(d.functionalChannels) == 10
