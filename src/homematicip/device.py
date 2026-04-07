@@ -2853,6 +2853,30 @@ class MotionDetectorSwitchOutdoor(SabotageDevice):
         return await self.set_switch_state_async(False)
 
 
+class FullFlushWiegandInterface(Device):
+    """HmIP-FWI (Wiegand Interface)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.doorBellLabel = None
+        self.sabotage = None
+        self.blockedSabotage = None
+        self.blockedWrongCodePermanently = None
+        self.blockedWrongCodeTemporarily = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel(
+            "DEVICE_BLOCKING_WITH_TEACHABLE_CODE", js
+        )
+        if c:
+            self.set_attr_from_dict("doorBellLabel", c)
+            self.set_attr_from_dict("sabotage", c)
+            self.set_attr_from_dict("blockedSabotage", c)
+            self.set_attr_from_dict("blockedWrongCodePermanently", c)
+            self.set_attr_from_dict("blockedWrongCodeTemporarily", c)
+
+
 class WallMountedKeyPad(Device):
     pass
 

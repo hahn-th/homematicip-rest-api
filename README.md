@@ -156,7 +156,7 @@ A few examples:
 - [x] HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)
 - [x] HMIP-FSM (Switch Actuator and Meter 5A – flush-mount)
 - [x] HMIP-FSM16 (Switch Actuator and Meter 16A – flush-mount)
-- [ ] HMIP-FWI (Wiegand Interface)
+- [x] HMIP-FWI (Wiegand Interface)
 - [x] HMIP-HAP (Cloud Access Point)
 - [x] HMIP-HAP-B1 (Cloud Access Point) _Silvercrest Edition_
 - [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds)
