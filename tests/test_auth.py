@@ -6,7 +6,6 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 
 from homematicip.auth import Auth
-from homematicip.connection.connection_context import ConnectionContext
 from homematicip.connection.rest_connection import RestConnection
 
 

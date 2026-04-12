@@ -1,8 +1,9 @@
-from http.client import responses
 
-import pytest
+from unittest.mock import AsyncMock
+
 import httpx
-from unittest.mock import AsyncMock, patch
+import pytest
+
 from homematicip.connection.connection_url_resolver import ConnectionUrlResolver
 
 

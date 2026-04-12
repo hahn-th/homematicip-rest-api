@@ -408,7 +408,6 @@ class HeatingThermostat(OperationLockableDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
@@ -448,7 +447,6 @@ class HeatingThermostatCompact(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
@@ -488,7 +486,6 @@ class HeatingThermostatEvo(OperationLockableDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]

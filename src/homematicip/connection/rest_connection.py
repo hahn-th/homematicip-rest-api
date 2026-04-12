@@ -6,7 +6,12 @@ from typing import Any, Optional
 
 import httpx
 
-from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE, ATTR_ACCESSPOINT_ID
+from homematicip.connection import (
+    ATTR_ACCESSPOINT_ID,
+    ATTR_AUTH_TOKEN,
+    ATTR_CLIENT_AUTH,
+    THROTTLE_STATUS_CODE,
+)
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 

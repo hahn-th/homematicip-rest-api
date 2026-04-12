@@ -1,6 +1,8 @@
 import httpx
 
-from homematicip.connection.rate_limited_rest_connection import RateLimitedRestConnection
+from homematicip.connection.rate_limited_rest_connection import (
+    RateLimitedRestConnection,
+)
 from homematicip.connection.rest_connection import ConnectionContext
 
 

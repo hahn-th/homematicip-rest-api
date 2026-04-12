@@ -3,7 +3,9 @@ from unittest.mock import AsyncMock
 import httpx
 import pytest
 
-from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
+from homematicip.connection.connection_context import (
+    ConnectionContextBuilder,
+)
 
 
 @pytest.mark.asyncio

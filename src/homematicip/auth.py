@@ -4,7 +4,7 @@ import logging
 import uuid
 from dataclasses import dataclass
 
-from homematicip.connection.rest_connection import RestResult, RestConnection
+from homematicip.connection.rest_connection import RestConnection, RestResult
 
 LOGGER = logging.getLogger(__name__)
 

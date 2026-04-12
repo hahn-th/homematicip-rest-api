@@ -3,7 +3,11 @@ from unittest.mock import AsyncMock
 import httpx
 import pytest
 
-from homematicip.connection.rest_connection import RestResult, ConnectionContext, RestConnection
+from homematicip.connection.rest_connection import (
+    ConnectionContext,
+    RestConnection,
+    RestResult,
+)
 
 
 def test_rest_result():

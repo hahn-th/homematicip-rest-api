@@ -5,7 +5,11 @@ from typing import Callable, List
 import aiohttp
 from aiohttp import WSMessage
 
-from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, ATTR_ACCESSPOINT_ID
+from homematicip.connection import (
+    ATTR_ACCESSPOINT_ID,
+    ATTR_AUTH_TOKEN,
+    ATTR_CLIENT_AUTH,
+)
 from homematicip.connection.connection_context import ConnectionContext
 
 LOGGER = logging.getLogger(__name__)

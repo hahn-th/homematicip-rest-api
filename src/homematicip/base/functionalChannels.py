@@ -1,5 +1,5 @@
-from typing import Any, Iterable
 from collections import defaultdict
+from typing import Any, Iterable
 
 from homematicip.base.enums import *
 from homematicip.base.homematicip_object import HomeMaticIPObject
