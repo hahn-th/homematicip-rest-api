@@ -2133,7 +2133,7 @@ def test_usb_switch_measuring(fake_home: Home):
 def test_switch_power_supply(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000ELVSPS25")
-        assert isinstance(d, Switch)
+        assert isinstance(d, PlugableSwitch)
         assert d.on is False
         assert d.profileMode == "AUTOMATIC"
         assert d.userDesiredProfileMode == "AUTOMATIC"
