@@ -3,7 +3,7 @@ import os
 import ssl
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from threading import Thread
 
 from homematicip.connection.connection_context import (
@@ -165,7 +165,7 @@ async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, n
 #     await auth._connection._websession.close()
 
 
-dt = datetime.now(timezone.utc).astimezone()
+dt = datetime.now(UTC).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
 # the timestamp of the tests were written during DST so utc_offset is one hour less outside of DST
 # -> adding one hour extra

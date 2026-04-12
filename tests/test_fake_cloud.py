@@ -9,7 +9,7 @@ from conftest import no_ssl_verification
 
 def test_getHost(fake_cloud):
     with no_ssl_verification():
-        response = requests.post("{}/getHost".format(fake_cloud.url))
+        response = requests.post(f"{fake_cloud.url}/getHost")
         js = json.loads(response.text)
         assert js["urlREST"] == fake_cloud.url
         assert js["apiVersion"] == "12"
@@ -29,7 +29,7 @@ async def test_calling_invalid_func():
 
 def test_invlid_authorization(fake_cloud):
     with no_ssl_verification():
-        response = requests.post("{}/hmip/home/getCurrentState".format(fake_cloud.url))
+        response = requests.post(f"{fake_cloud.url}/hmip/home/getCurrentState")
         js = json.loads(response.text)
         assert js["errorCode"] == "INVALID_AUTHORIZATION"
         assert response.status_code == 403
@@ -37,7 +37,7 @@ def test_invlid_authorization(fake_cloud):
 
 def test_invalid_url(fake_cloud):
     with no_ssl_verification():
-        response = requests.post("{}/hmip/invalid/path".format(fake_cloud.url))
+        response = requests.post(f"{fake_cloud.url}/hmip/invalid/path")
         js = json.loads(response.text)
         assert js["errorCode"] == "Can't find method post_hmip_invalid_path"
         assert response.status_code == 404

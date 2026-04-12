@@ -1,4 +1,3 @@
-# coding=utf-8
 from datetime import datetime
 
 from homematicip.base.homematicip_object import HomeMaticIPObject
@@ -45,9 +44,7 @@ class SecurityZoneEvent(SecurityEvent):
         self.internal_zone = js["securityZoneValues"]["INTERNAL"]
 
     def __str__(self):
-        return "{} external_zone({}) internal_zone({}) ".format(
-            super().__str__(), self.external_zone, self.internal_zone
-        )
+        return f"{super().__str__()} external_zone({self.external_zone}) internal_zone({self.internal_zone}) "
 
 
 class SensorEvent(SecurityEvent):

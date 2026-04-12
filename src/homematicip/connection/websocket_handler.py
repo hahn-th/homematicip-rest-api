@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from typing import Callable, List
+from collections.abc import Callable
 
 import aiohttp
 from aiohttp import WSMessage
@@ -28,10 +28,10 @@ class WebsocketHandler:
         self._websocket_connected = asyncio.Event()
         self._reconnect_task = None
         self._task_lock = asyncio.Lock()
-        self._on_message_handlers: List[Callable] = []
-        self._on_connected_handler: List[Callable] = []
-        self._on_disconnected_handler: List[Callable] = []
-        self._on_reconnect_handler: List[Callable] = []
+        self._on_message_handlers: list[Callable] = []
+        self._on_connected_handler: list[Callable] = []
+        self._on_disconnected_handler: list[Callable] = []
+        self._on_reconnect_handler: list[Callable] = []
 
     def add_on_connected_handler(self, handler: Callable):
         """Adds a handler that is called when the connection is established."""

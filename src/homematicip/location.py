@@ -20,6 +20,4 @@ class Location(HomeMaticIPObject):
         self.longitude = js["longitude"]
 
     def __str__(self):
-        return "city({}) latitude({}) longitude({})".format(
-            self.city, self.latitude, self.longitude
-        )
+        return f"city({self.city}) latitude({self.latitude}) longitude({self.longitude})"

@@ -1,4 +1,3 @@
-# coding=utf-8
 import configparser
 import os
 import platform
@@ -23,7 +22,7 @@ def load_config_file(config_file: str) -> HmipConfig:
     :raises a FileNotFoundError when the config file does not exist."""
     expanded_config_file = os.path.expanduser(config_file)
     config = configparser.ConfigParser()
-    with open(expanded_config_file, "r") as fl:
+    with open(expanded_config_file) as fl:
         config.read_file(fl)
         logging_filename = config.get("LOGGING", "FileName", fallback="hmip.log")
         if logging_filename == "None":

@@ -43,7 +43,7 @@ class Buckets:
                 return True
 
             if time.time() - start_time > timeout:
-                raise asyncio.TimeoutError("Timeout while waiting for token.")
+                raise TimeoutError("Timeout while waiting for token.")
 
             await asyncio.sleep(1)  # Wait for a second before checking again
 

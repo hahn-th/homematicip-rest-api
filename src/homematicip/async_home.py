@@ -1,5 +1,5 @@
 import json
-from typing import Callable
+from collections.abc import Callable
 
 from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent

@@ -39,7 +39,7 @@ class Rule(HomeMaticIPObject):
         return await self._rest_call_async("rule/setRuleLabel", data)
 
     def __str__(self):
-        return "{} {} active({})".format(self.ruleType, self.label, self.active)
+        return f"{self.ruleType} {self.label} active({self.active})"
 
 
 class SimpleRule(Rule):

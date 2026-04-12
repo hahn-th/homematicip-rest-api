@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List
 
 from homematicip.base.enums import *
 from homematicip.base.homematicip_object import HomeMaticIPObject
@@ -10,11 +9,11 @@ class FunctionalHome(HomeMaticIPObject):
     def __init__(self, connection):
         super().__init__(connection)
 
-        self.functionalGroups = List[Group]
+        self.functionalGroups = list[Group]
         self.solution = ""
         self.active = False
 
-    def from_json(self, js, groups: List[Group]):
+    def from_json(self, js, groups: list[Group]):
         super().from_json(js)
 
         self.solution = js["solution"]
@@ -22,7 +21,7 @@ class FunctionalHome(HomeMaticIPObject):
 
         self.functionalGroups = self.assignGroups(js["functionalGroups"], groups)
 
-    def assignGroups(self, gids, groups: List[Group]):
+    def assignGroups(self, gids, groups: list[Group]):
         ret = []
         for gid in gids:
             for g in groups:
@@ -42,7 +41,7 @@ class IndoorClimateHome(FunctionalHome):
         self.optimumStartStopEnabled = False
         self.floorHeatingSpecificGroups = []
 
-    def from_json(self, js, groups: List[Group]):
+    def from_json(self, js, groups: list[Group]):
         super().from_json(js, groups)
         if js["absenceEndTime"] is None:
             self.absenceEndTime = None
@@ -78,7 +77,7 @@ class LightAndShadowHome(FunctionalHome):
         self.shutterProfileGroups = []
         self.switchingProfileGroups = []
 
-    def from_json(self, js, groups: List[Group]):
+    def from_json(self, js, groups: list[Group]):
         super().from_json(js, groups)
 
         self.extendedLinkedShutterGroups = self.assignGroups(
@@ -111,7 +110,7 @@ class SecurityAndAlarmHome(FunctionalHome):
         self.securitySwitchingGroups = []
         self.securityZones = []
 
-    def from_json(self, js, groups: List[Group]):
+    def from_json(self, js, groups: list[Group]):
         super().from_json(js, groups)
         self.activationInProgress = js["activationInProgress"]
         self.alarmActive = js["alarmActive"]
@@ -141,7 +140,7 @@ class AccessControlHome(FunctionalHome):
         self.extendedLinkedGarageDoorGroups = []
         self.extendedLinkedNotificationGroups = []
 
-    def from_json(self, js, groups: List[Group]):
+    def from_json(self, js, groups: list[Group]):
         super().from_json(js, groups)
         self.accessAuthorizationProfileGroups = self.assignGroups(
             js["accessAuthorizationProfileGroups"], groups

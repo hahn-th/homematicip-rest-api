@@ -57,9 +57,7 @@ def bytes2str(b):
     if isinstance(b, str):
         return b
     raise TypeError(
-        "the object must be str, bytes or bytearray, not {!r}".format(
-            b.__class__.__name__
-        )
+        f"the object must be str, bytes or bytearray, not {b.__class__.__name__!r}"
     )
 
 

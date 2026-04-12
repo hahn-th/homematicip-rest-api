@@ -76,7 +76,7 @@ def setup_config(args) -> homematicip.HmipConfig:
         try:
             _config = homematicip.load_config_file(args.config_file)
         except FileNotFoundError:
-            print("##### CONFIG FILE NOT FOUND: {} #####".format(args.config_file))
+            print(f"##### CONFIG FILE NOT FOUND: {args.config_file} #####")
             return
     else:
         _config = homematicip.find_and_load_config_file()
@@ -152,7 +152,7 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         command_entered = True
         sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
         for device in sorted_devices:
-            print("{} {}".format(device.id, str(device)))
+            print(f"{device.id} {str(device)}")
 
     if args.list_groups:
         command_entered = True
@@ -165,17 +165,17 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         print("Devices:")
         sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
         for device in sorted_devices:
-            print("\t{}\t{}\t{}".format(device.id, device.label, device.lastStatusUpdate))
+            print(f"\t{device.id}\t{device.label}\t{device.lastStatusUpdate}")
         print("Groups:")
         sorted_groups = sorted(home.groups, key=attrgetter("groupType", "label"))
         for g in sorted_groups:
-            print("\t{}\t{}\t{}".format(g.groupType, g.label, g.lastStatusUpdate))
+            print(f"\t{g.groupType}\t{g.label}\t{g.lastStatusUpdate}")
 
     if args.list_group_ids:
         command_entered = True
         sorted_groups = sorted(home.groups, key=attrgetter("groupType", "label"))
         for g in sorted_groups:
-            print("Id: {} - Type: {} - Label: {}".format(g.id, g.groupType, g.label))
+            print(f"Id: {g.id} - Type: {g.groupType} - Label: {g.label}")
 
     if args.protectionmode:
         command_entered = True
@@ -255,7 +255,7 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         command_entered = True
         sorted_rules = sorted(home.rules, key=attrgetter("ruleType", "label"))
         for device in sorted_rules:
-            print("{} {}".format(device.id, str(device)))
+            print(f"{device.id} {str(device)}")
 
     if args.device:
         command_entered = False
@@ -561,10 +561,10 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             print(group)
             print("------")
             if group.metaGroup:
-                print("   Metagroup: {}".format(str(group.metaGroup)))
+                print(f"   Metagroup: {str(group.metaGroup)}")
                 print("------")
             for fc in group.devices:
-                print("   Assigned device: {}".format(str(fc)))
+                print(f"   Assigned device: {str(fc)}")
 
     if args.rules:
         command_entered = False

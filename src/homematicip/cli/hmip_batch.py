@@ -128,7 +128,7 @@ async def run_command_async(function_name: str, params: dict, connection: RestCo
 
 
 def get_batch_job_definition(batch_file: str):
-    with open(batch_file, "r") as f:
+    with open(batch_file) as f:
         batch_data = json.load(f)
 
     return batch_data

@@ -2,7 +2,7 @@ import json
 import logging
 from dataclasses import dataclass
 from ssl import SSLContext
-from typing import Any, Optional
+from typing import Any
 
 import httpx
 
@@ -37,8 +37,8 @@ SENSITIVE_LOG_KEYS = {
 class RestResult:
     status: int = -1
     status_text: str = ""
-    json: Optional[dict] = None
-    exception: Optional[Exception] = None
+    json: dict | None = None
+    exception: Exception | None = None
     success: bool = False
     text: str = ""
 

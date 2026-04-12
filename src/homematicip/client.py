@@ -30,4 +30,4 @@ class Client(HomeMaticIPObject):
             self.c2cServiceIdentifier = js["c2cServiceIdentifier"]
 
     def __str__(self):
-        return "label({})".format(self.label)
+        return f"label({self.label})"

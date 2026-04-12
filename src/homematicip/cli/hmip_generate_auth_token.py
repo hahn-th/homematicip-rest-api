@@ -3,7 +3,6 @@ import asyncio
 import configparser
 import json
 import time
-from builtins import input
 
 import homematicip
 import homematicip.auth
@@ -56,7 +55,7 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
             print("LOCKED ! Press button on HCU to unlock.")
             time.sleep(5)
         else:
-            print("Error: {}\nExiting".format(errorCode))
+            print(f"Error: {errorCode}\nExiting")
             return
 
     print("Connection Request successful!")
@@ -73,9 +72,7 @@ async def run_auth(access_point: str = None, devicename: str = None, pin: str = 
     )
     print("Token successfully registered!")
     print(
-        "AUTH_TOKEN:\t{}\nACCESS_POINT:\t{}\nClient ID:\t{}\nsaving configuration to ./config.ini".format(
-            auth_token, access_point, clientId
-        )
+        f"AUTH_TOKEN:\t{auth_token}\nACCESS_POINT:\t{access_point}\nClient ID:\t{clientId}\nsaving configuration to ./config.ini"
     )
 
     _config = configparser.ConfigParser()

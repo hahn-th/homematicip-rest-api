@@ -46,6 +46,7 @@ src = ["src", "tests"]
 select = [
     "F",    # pyflakes
     "I",    # isort
+    "UP",   # pyupgrade
 ]
 ignore = [
     "F403",  # star imports (to be addressed separately)

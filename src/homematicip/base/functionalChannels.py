@@ -1,5 +1,6 @@
 from collections import defaultdict
-from typing import Any, Iterable
+from collections.abc import Iterable
+from typing import Any
 
 from homematicip.base.enums import *
 from homematicip.base.homematicip_object import HomeMaticIPObject
@@ -741,15 +742,7 @@ class MultiModeInputChannel(FunctionalChannel):
         self.set_attr_from_dict("corrosionPreventionActive", js)
 
     def __str__(self):
-        return "{} binaryBehaviorType({}) channelRole({}) multiModeInputMode({}) windowState({}) doorBellSensorEventTimestamp({}) corrosionPreventionActive({})".format(
-            super().__str__(),
-            self.binaryBehaviorType,
-            self.channelRole,
-            self.multiModeInputMode,
-            self.windowState,
-            self.doorBellSensorEventTimestamp,
-            self.corrosionPreventionActive,
-        )
+        return f"{super().__str__()} binaryBehaviorType({self.binaryBehaviorType}) channelRole({self.channelRole}) multiModeInputMode({self.multiModeInputMode}) windowState({self.windowState}) doorBellSensorEventTimestamp({self.doorBellSensorEventTimestamp}) corrosionPreventionActive({self.corrosionPreventionActive})"
 
 
 class MultiModeLockInputChannel(MultiModeInputChannel):
@@ -1820,14 +1813,7 @@ class InternalSwitchChannel(FunctionalChannel):
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
 
     def __str__(self):
-        return "{} frostProtectionTemperature({}) heatingValveType({}) internalSwitchOutputEnabled({}) valveProtectionDuration({}) valveProtectionSwitchingInterval({})".format(
-            super().__str__(),
-            self.frostProtectionTemperature,
-            self.heatingValveType,
-            self.internalSwitchOutputEnabled,
-            self.valveProtectionDuration,
-            self.valveProtectionSwitchingInterval,
-        )
+        return f"{super().__str__()} frostProtectionTemperature({self.frostProtectionTemperature}) heatingValveType({self.heatingValveType}) internalSwitchOutputEnabled({self.internalSwitchOutputEnabled}) valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval})"
 
 
 class LightSensorChannel(FunctionalChannel):
@@ -1953,16 +1939,7 @@ class UniversalActuatorChannel(FunctionalChannel):
         self.ventilationState = js["ventilationState"]
 
     def __str__(self):
-        return "{} channelRole({}) dimLevel({}) ventilationLevel({}) ventilationState({}) on({}) profileMode({}) relayMode({})".format(
-            super().__str__(),
-            self.channelRole,
-            self.dimLevel,
-            self.ventilationLevel,
-            self.ventilationState,
-            self.on,
-            self.profileMode,
-            self.relayMode,
-        )
+        return f"{super().__str__()} channelRole({self.channelRole}) dimLevel({self.dimLevel}) ventilationLevel({self.ventilationLevel}) ventilationState({self.ventilationState}) on({self.on}) profileMode({self.profileMode}) relayMode({self.relayMode})"
 
 
 class RainDetectionChannel(FunctionalChannel):
@@ -2075,16 +2052,7 @@ class OpticalSignalChannel(FunctionalChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js)
 
     def __str__(self):
-        return "{} dimLevel({}) on({}) opticalSignalBehaviour({}) powerUpSwitchState({}) profileMode({}) simpleRGBColorState({}) userDesiredProfileMode({})".format(
-            super().__str__(),
-            self.dimLevel,
-            self.on,
-            self.opticalSignalBehaviour,
-            self.powerUpSwitchState,
-            self.profileMode,
-            self.simpleRGBColorState,
-            self.userDesiredProfileMode,
-        )
+        return f"{super().__str__()} dimLevel({self.dimLevel}) on({self.on}) opticalSignalBehaviour({self.opticalSignalBehaviour}) powerUpSwitchState({self.powerUpSwitchState}) profileMode({self.profileMode}) simpleRGBColorState({self.simpleRGBColorState}) userDesiredProfileMode({self.userDesiredProfileMode})"
 
 
 class CarbonDioxideSensorChannel(FunctionalChannel):
@@ -2188,16 +2156,7 @@ class OpticalSignalGroupChannel(FunctionalChannel):
         self.set_attr_from_dict("userDesiredProfileMode", js)
 
     def __str__(self):
-        return "{} dimLevel({}) on({}) opticalSignalBehaviour({}) powerUpSwitchState({}) profileMode({}) simpleRGBColorState({}) userDesiredProfileMode({})".format(
-            super().__str__(),
-            self.dimLevel,
-            self.on,
-            self.opticalSignalBehaviour,
-            self.powerUpSwitchState,
-            self.profileMode,
-            self.simpleRGBColorState,
-            self.userDesiredProfileMode,
-        )
+        return f"{super().__str__()} dimLevel({self.dimLevel}) on({self.on}) opticalSignalBehaviour({self.opticalSignalBehaviour}) powerUpSwitchState({self.powerUpSwitchState}) profileMode({self.profileMode}) simpleRGBColorState({self.simpleRGBColorState}) userDesiredProfileMode({self.userDesiredProfileMode})"
 
 
 class UniversalLightChannel(FunctionalChannel):
