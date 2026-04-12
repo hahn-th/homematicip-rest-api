@@ -26,7 +26,7 @@ class Rule(HomeMaticIPObject):
         self.ruleType = js["type"]
 
         self.devices = []
-        for errorCategory in js["ruleErrorCategories"]:
+        for _errorCategory in js["ruleErrorCategories"]:
             pass  # at the moment this was always empty
 
     def set_label(self, label):
@@ -81,5 +81,5 @@ class SimpleRule(Rule):
         data = {"ruleId": self.id}
         result = await self._rest_call_async("rule/getSimpleRule", data)
         js = result.json
-        for errorRuleTriggerItem in js["errorRuleTriggerItems"]:
+        for _errorRuleTriggerItem in js["errorRuleTriggerItems"]:
             pass

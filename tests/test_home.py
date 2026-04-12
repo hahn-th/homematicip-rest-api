@@ -17,6 +17,7 @@ from homematicip.exceptions.connection_exceptions import (
     HmipAuthenticationError,
     HmipConnectionError,
 )
+from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.functionalHomes import *
 from homematicip.group import Group
 from homematicip.home import Home
@@ -112,7 +113,7 @@ async def test_home_download_configuration_without_context():
     home = Home()
 
     assert home._connection_context is None
-    with pytest.raises(Exception):
+    with pytest.raises(HomeNotInitializedError):
         await home.download_configuration_async()
 
 

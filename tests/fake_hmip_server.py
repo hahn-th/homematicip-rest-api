@@ -50,7 +50,7 @@ class FakeServer:
     async def websocket_handler(self, request):
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
-        async for msg in self.ws:
+        async for _msg in self.ws:
             await asyncio.sleep(2)
 
         return self.ws
