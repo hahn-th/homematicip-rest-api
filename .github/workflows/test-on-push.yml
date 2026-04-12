@@ -6,6 +6,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Run ruff
+        run: ruff check src/ tests/
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -18,9 +31,9 @@ jobs:
           timezoneLinux: "Europe/Berlin"
           timezoneMacos: "Europe/Berlin"
           timezoneWindows: "Europe/Berlin"
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -31,4 +44,4 @@ jobs:
       - name: Run tests and collect coverage
         run: pytest --cov=./ tests --asyncio-mode=legacy
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
