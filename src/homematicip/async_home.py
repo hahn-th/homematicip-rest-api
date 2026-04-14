@@ -1,17 +1,25 @@
 import json
-from typing import Callable
+from collections.abc import Callable
 
-from homematicip.EventHook import *
 from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.class_maps import *
 from homematicip.client import Client
-from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
-from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
+from homematicip.connection.client_characteristics_builder import (
+    ClientCharacteristicsBuilder,
+)
+from homematicip.connection.connection_context import (
+    ConnectionContext,
+    ConnectionContextBuilder,
+)
 from homematicip.connection.connection_factory import ConnectionFactory
 from homematicip.connection.websocket_handler import WebsocketHandler
 from homematicip.device import *
-from homematicip.exceptions.connection_exceptions import HmipAuthenticationError, HmipConnectionError
+from homematicip.EventHook import *
+from homematicip.exceptions.connection_exceptions import (
+    HmipAuthenticationError,
+    HmipConnectionError,
+)
 from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.group import *
 from homematicip.location import Location
@@ -556,7 +564,6 @@ class AsyncHome(HomeMaticIPObject):
         :param old_pin: optional, if there is currently a pin active it must be given here.
         :return: the result of the call
         """
-        custom_header = None
         if new_pin is None:
             new_pin = ""
 
@@ -755,7 +762,7 @@ class AsyncHome(HomeMaticIPObject):
 
                 # TODO: implement INCLUSION_REQUESTED, NONE
                 event_list.append({"eventType": pushEventType, "data": obj})
-            except ValueError as e:  # pragma: no cover
+            except ValueError:  # pragma: no cover
                 LOGGER.warning(
                     "Unknown EventType '%s' Data: %s", event["pushEventType"], event
                 )

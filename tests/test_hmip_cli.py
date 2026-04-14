@@ -2,6 +2,7 @@ import json
 import logging
 
 import pytest
+from homematicip_demo.helper import no_ssl_verification
 
 from homematicip.async_home import AsyncHome
 from homematicip.base.enums import CliActions, DoorState
@@ -14,7 +15,6 @@ from homematicip.cli.hmip_cli import (
     get_rssi_bar_string,
 )
 from homematicip.home import Home
-from homematicip_demo.helper import no_ssl_verification
 
 logger = logging.getLogger("test_hmip_cli")
 

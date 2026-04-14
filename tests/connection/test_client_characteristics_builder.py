@@ -1,4 +1,6 @@
-from homematicip.connection.client_characteristics_builder import (ClientCharacteristicsBuilder)
+from homematicip.connection.client_characteristics_builder import (
+    ClientCharacteristicsBuilder,
+)
 
 
 def test_client_characteristics_builder():

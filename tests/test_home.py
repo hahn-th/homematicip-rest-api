@@ -1,30 +1,34 @@
 import json
 from datetime import timedelta
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import AsyncMock, Mock, patch
 
 import httpx
 import pytest
-
-from conftest import utc_offset
-from homematicip.base.channel_event import ChannelEvent
-from homematicip.exceptions.connection_exceptions import HmipAuthenticationError, HmipConnectionError
-from homematicip.connection.connection_context import ConnectionContext
-from homematicip.device import Device, BaseDevice
-from homematicip.functionalHomes import *
-from homematicip.group import Group
-from homematicip.home import Home
-from homematicip.rule import *
-from homematicip.securityEvent import *
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
 )
 
+from conftest import utc_offset
+from homematicip.base.channel_event import ChannelEvent
+from homematicip.connection.connection_context import ConnectionContext
+from homematicip.device import BaseDevice, Device
+from homematicip.exceptions.connection_exceptions import (
+    HmipAuthenticationError,
+    HmipConnectionError,
+)
+from homematicip.exceptions.home_exceptions import HomeNotInitializedError
+from homematicip.functionalHomes import *
+from homematicip.group import Group
+from homematicip.home import Home
+from homematicip.rule import *
+from homematicip.securityEvent import *
+
 
 def test_init():
     context = ConnectionContext(auth_token="auth_token", accesspoint_id="access_point_id")
     with patch('homematicip.connection.connection_context.ConnectionContextBuilder.build_context_async',
-               return_value=context) as mock_create:
+               return_value=context):
         home = Home()
         home.init('access_point_id', 'auth_token')
         assert home._connection_context is context
@@ -109,7 +113,7 @@ async def test_home_download_configuration_without_context():
     home = Home()
 
     assert home._connection_context is None
-    with pytest.raises(Exception):
+    with pytest.raises(HomeNotInitializedError):
         await home.download_configuration_async()
 
 

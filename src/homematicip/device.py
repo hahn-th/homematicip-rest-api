@@ -1,6 +1,5 @@
-# coding=utf-8
 from collections import Counter
-from typing import Iterable
+from collections.abc import Iterable
 
 from homematicip.base.enums import *
 from homematicip.base.functionalChannels import FunctionalChannel
@@ -408,7 +407,6 @@ class HeatingThermostat(OperationLockableDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
@@ -418,14 +416,7 @@ class HeatingThermostat(OperationLockableDevice):
             self.valveActualTemperature = c["valveActualTemperature"]
 
     def __str__(self):
-        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({}) valveActualTemperature({})".format(
-            super().__str__(),
-            self.valvePosition,
-            self.valveState,
-            self.temperatureOffset,
-            self.setPointTemperature,
-            self.valveActualTemperature,
-        )
+        return f"{super().__str__()} valvePosition({self.valvePosition}) valveState({self.valveState}) temperatureOffset({self.temperatureOffset}) setPointTemperature({self.setPointTemperature}) valveActualTemperature({self.valveActualTemperature})"
 
 
 class HeatingThermostatCompact(SabotageDevice):
@@ -448,7 +439,6 @@ class HeatingThermostatCompact(SabotageDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
@@ -458,14 +448,7 @@ class HeatingThermostatCompact(SabotageDevice):
             self.valveActualTemperature = c["valveActualTemperature"]
 
     def __str__(self):
-        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({}) valveActualTemperature({})".format(
-            super().__str__(),
-            self.valvePosition,
-            self.valveState,
-            self.temperatureOffset,
-            self.setPointTemperature,
-            self.valveActualTemperature,
-        )
+        return f"{super().__str__()} valvePosition({self.valvePosition}) valveState({self.valveState}) temperatureOffset({self.temperatureOffset}) setPointTemperature({self.setPointTemperature}) valveActualTemperature({self.valveActualTemperature})"
 
 
 class HeatingThermostatEvo(OperationLockableDevice):
@@ -488,7 +471,6 @@ class HeatingThermostatEvo(OperationLockableDevice):
 
     def from_json(self, js):
         super().from_json(js)
-        automaticValveAdaptionNeeded = js["automaticValveAdaptionNeeded"]
         c = get_functional_channel("HEATING_THERMOSTAT_CHANNEL", js)
         if c:
             self.temperatureOffset = c["temperatureOffset"]
@@ -498,14 +480,7 @@ class HeatingThermostatEvo(OperationLockableDevice):
             self.valveActualTemperature = c["valveActualTemperature"]
 
     def __str__(self):
-        return "{} valvePosition({}) valveState({}) temperatureOffset({}) setPointTemperature({}) valveActualTemperature({})".format(
-            super().__str__(),
-            self.valvePosition,
-            self.valveState,
-            self.temperatureOffset,
-            self.setPointTemperature,
-            self.valveActualTemperature,
-        )
+        return f"{super().__str__()} valvePosition({self.valvePosition}) valveState({self.valveState}) temperatureOffset({self.temperatureOffset}) setPointTemperature({self.setPointTemperature}) valveActualTemperature({self.valveActualTemperature})"
 
 
 class ShutterContact(SabotageDevice):
@@ -524,7 +499,7 @@ class ShutterContact(SabotageDevice):
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
-        return "{} windowState({})".format(super().__str__(), self.windowState)
+        return f"{super().__str__()} windowState({self.windowState})"
 
 
 class ShutterContactMagnetic(Device):
@@ -543,7 +518,7 @@ class ShutterContactMagnetic(Device):
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
-        return "{} windowState({})".format(super().__str__(), self.windowState)
+        return f"{super().__str__()} windowState({self.windowState})"
 
 
 class ShutterContactOpticalPlus(ShutterContact):
@@ -566,7 +541,7 @@ class ContactInterface(SabotageDevice):
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
-        return "{} windowState({})".format(super().__str__(), self.windowState)
+        return f"{super().__str__()} windowState({self.windowState})"
 
 
 class RotaryHandleSensor(SabotageDevice):
@@ -585,7 +560,7 @@ class RotaryHandleSensor(SabotageDevice):
             self.eventDelay = c["eventDelay"]
 
     def __str__(self):
-        return "{} windowState({})".format(super().__str__(), self.windowState)
+        return f"{super().__str__()} windowState({self.windowState})"
 
 
 class TemperatureHumiditySensorOutdoor(Device):
@@ -606,9 +581,7 @@ class TemperatureHumiditySensorOutdoor(Device):
             self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
-        return "{} actualTemperature({}) humidity({}) vaporAmount({})".format(
-            super().__str__(), self.actualTemperature, self.humidity, self.vaporAmount
-        )
+        return f"{super().__str__()} actualTemperature({self.actualTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount})"
 
 
 class TemperatureHumiditySensorWithoutDisplay(Device):
@@ -633,9 +606,7 @@ class TemperatureHumiditySensorWithoutDisplay(Device):
             self.vaporAmount = c["vaporAmount"]
 
     def __str__(self):
-        return "{} actualTemperature({}) humidity({}) vaporAmount({})".format(
-            super().__str__(), self.actualTemperature, self.humidity, self.vaporAmount
-        )
+        return f"{super().__str__()} actualTemperature({self.actualTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount})"
 
 
 class TemperatureHumiditySensorDisplay(Device):
@@ -671,13 +642,7 @@ class TemperatureHumiditySensorDisplay(Device):
         )
 
     def __str__(self):
-        return "{} actualTemperature({}) humidity({}) vaporAmount({}) setPointTemperature({})".format(
-            super().__str__(),
-            self.actualTemperature,
-            self.humidity,
-            self.vaporAmount,
-            self.setPointTemperature,
-        )
+        return f"{super().__str__()} actualTemperature({self.actualTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount}) setPointTemperature({self.setPointTemperature})"
 
 
 class WallMountedThermostatPro(
@@ -811,23 +776,9 @@ class FloorTerminalBlock6(Device):
 
     def __str__(self):
         return (
-            "{} globalPumpControl({}) heatingValveType({}) heatingLoadType({}) coolingEmergencyValue({}) frostProtectionTemperature({}) heatingEmergencyValue({}) "
-            "valveProtectionDuration({}) valveProtectionSwitchingInterval({}) pumpFollowUpTime({}) pumpLeadTime({}) pumpProtectionDuration({}) "
-            "pumpProtectionSwitchingInterval({})"
-        ).format(
-            super().__str__(),
-            self.globalPumpControl,
-            self.heatingValveType,
-            self.heatingLoadType,
-            self.coolingEmergencyValue,
-            self.frostProtectionTemperature,
-            self.heatingEmergencyValue,
-            self.valveProtectionDuration,
-            self.valveProtectionSwitchingInterval,
-            self.pumpFollowUpTime,
-            self.pumpLeadTime,
-            self.pumpProtectionDuration,
-            self.pumpProtectionSwitchingInterval,
+            f"{super().__str__()} globalPumpControl({self.globalPumpControl}) heatingValveType({self.heatingValveType}) heatingLoadType({self.heatingLoadType}) coolingEmergencyValue({self.coolingEmergencyValue}) frostProtectionTemperature({self.frostProtectionTemperature}) heatingEmergencyValue({self.heatingEmergencyValue}) "
+            f"valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval}) pumpFollowUpTime({self.pumpFollowUpTime}) pumpLeadTime({self.pumpLeadTime}) pumpProtectionDuration({self.pumpProtectionDuration}) "
+            f"pumpProtectionSwitchingInterval({self.pumpProtectionSwitchingInterval})"
         )
 
 
@@ -919,9 +870,7 @@ class Switch(Device):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} on({}) profileMode({}) userDesiredProfileMode({})".format(
-            super().__str__(), self.on, self.profileMode, self.userDesiredProfileMode
-        )
+        return f"{super().__str__()} on({self.on}) profileMode({self.profileMode}) userDesiredProfileMode({self.userDesiredProfileMode})"
 
     def set_switch_state(self, on=True, channelIndex=1):
         return self._run_non_async(self.set_switch_state_async, on, channelIndex)
@@ -1025,9 +974,7 @@ class SwitchMeasuring(Switch):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} energyCounter({}) currentPowerConsumption({}W)".format(
-            super().__str__(), self.energyCounter, self.currentPowerConsumption
-        )
+        return f"{super().__str__()} energyCounter({self.energyCounter}) currentPowerConsumption({self.currentPowerConsumption}W)"
 
 
 class MultiIOBox(Switch):
@@ -1044,9 +991,7 @@ class MultiIOBox(Switch):
             self.analogOutputLevel = c["analogOutputLevel"]
 
     def __str__(self):
-        return "{} analogOutputLevel({})".format(
-            super().__str__(), self.analogOutputLevel
-        )
+        return f"{super().__str__()} analogOutputLevel({self.analogOutputLevel})"
 
 
 class DoorBellContactInterface(Device):
@@ -1067,13 +1012,7 @@ class BrandSwitchNotificationLight(Switch):
         top = self.functionalChannels[self.topLightChannelIndex]
         bottom = self.functionalChannels[self.bottomLightChannelIndex]
         return (
-            "{} topDimLevel({}) topColor({}) bottomDimLevel({}) bottomColor({})".format(
-                super().__str__(),
-                top.dimLevel,
-                top.simpleRGBColorState,
-                bottom.dimLevel,
-                bottom.simpleRGBColorState,
-            )
+            f"{super().__str__()} topDimLevel({top.dimLevel}) topColor({top.simpleRGBColorState}) bottomDimLevel({bottom.dimLevel}) bottomColor({bottom.simpleRGBColorState})"
         )
 
     def set_rgb_dim_level(self, channelIndex: int, rgb: RGBColorState, dimLevel: float):
@@ -1305,14 +1244,7 @@ class MotionDetectorIndoor(SabotageDevice):
             self.currentIllumination = c["currentIllumination"]
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(
-            super().__str__(),
-            self.motionDetected,
-            self.illumination,
-            self.motionBufferActive,
-            self.motionDetectionSendInterval,
-            self.numberOfBrightnessMeasurements,
-        )
+        return f"{super().__str__()} motionDetected({self.motionDetected}) illumination({self.illumination}) motionBufferActive({self.motionBufferActive}) motionDetectionSendInterval({self.motionDetectionSendInterval}) numberOfBrightnessMeasurements({self.numberOfBrightnessMeasurements})"
 
 
 class MotionDetectorOutdoor(Device):
@@ -1384,14 +1316,7 @@ class PresenceDetectorIndoor(SabotageDevice):
             self.numberOfBrightnessMeasurements = c["numberOfBrightnessMeasurements"]
 
     def __str__(self):
-        return "{} presenceDetected({}) illumination({}) motionBufferActive({}) motionDetectionSendInterval({}) numberOfBrightnessMeasurements({})".format(
-            super().__str__(),
-            self.presenceDetected,
-            self.illumination,
-            self.motionBufferActive,
-            self.motionDetectionSendInterval,
-            self.numberOfBrightnessMeasurements,
-        )
+        return f"{super().__str__()} presenceDetected({self.presenceDetected}) illumination({self.illumination}) motionBufferActive({self.motionBufferActive}) motionDetectionSendInterval({self.motionDetectionSendInterval}) numberOfBrightnessMeasurements({self.numberOfBrightnessMeasurements})"
 
 
 class PassageDetector(SabotageDevice):
@@ -1420,16 +1345,7 @@ class PassageDetector(SabotageDevice):
             self.rightCounter = c["rightCounter"]
 
     def __str__(self):
-        return "{} leftCounter({}) leftRightCounterDelta({}) passageBlindtime({}) passageDirection({}) passageSensorSensitivity({}) passageTimeout({}) rightCounter({})".format(
-            super().__str__(),
-            self.leftCounter,
-            self.leftRightCounterDelta,
-            self.passageBlindtime,
-            self.passageDirection,
-            self.passageSensorSensitivity,
-            self.passageTimeout,
-            self.rightCounter,
-        )
+        return f"{super().__str__()} leftCounter({self.leftCounter}) leftRightCounterDelta({self.leftRightCounterDelta}) passageBlindtime({self.passageBlindtime}) passageDirection({self.passageDirection}) passageSensorSensitivity({self.passageSensorSensitivity}) passageTimeout({self.passageTimeout}) rightCounter({self.rightCounter})"
 
 
 class KeyRemoteControlAlarm(Device):
@@ -1569,12 +1485,7 @@ class FullFlushShutter(Shutter):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} shutterLevel({}) topToBottom({}) bottomToTop({})".format(
-            super().__str__(),
-            self.shutterLevel,
-            self.topToBottomReferenceTime,
-            self.bottomToTopReferenceTime,
-        )
+        return f"{super().__str__()} shutterLevel({self.shutterLevel}) topToBottom({self.topToBottomReferenceTime}) bottomToTop({self.bottomToTopReferenceTime})"
 
 
 class FullFlushBlind(FullFlushShutter, Blind):
@@ -1614,9 +1525,7 @@ class FullFlushBlind(FullFlushShutter, Blind):
             self.blindModeActive = c["blindModeActive"]
 
     def __str__(self):
-        return "{} slatsLevel({}) blindModeActive({})".format(
-            super().__str__(), self.slatsLevel, self.blindModeActive
-        )
+        return f"{super().__str__()} slatsLevel({self.slatsLevel}) blindModeActive({self.blindModeActive})"
 
 
 class BrandBlind(FullFlushBlind):
@@ -1871,13 +1780,7 @@ class LightSensor(Device):
             self.lowestIllumination = c["lowestIllumination"]
 
     def __str__(self):
-        return "{} averageIllumination({}) currentIllumination({}) highestIllumination({}) lowestIllumination({})".format(
-            super().__str__(),
-            self.averageIllumination,
-            self.currentIllumination,
-            self.highestIllumination,
-            self.lowestIllumination,
-        )
+        return f"{super().__str__()} averageIllumination({self.averageIllumination}) currentIllumination({self.currentIllumination}) highestIllumination({self.highestIllumination}) lowestIllumination({self.lowestIllumination})"
 
 
 class Dimmer(Device):
@@ -1898,12 +1801,7 @@ class Dimmer(Device):
             self.userDesiredProfileMode = c["userDesiredProfileMode"]
 
     def __str__(self):
-        return "{} dimLevel({}) profileMode({}) userDesiredProfileMode({})".format(
-            super().__str__(),
-            self.dimLevel,
-            self.profileMode,
-            self.userDesiredProfileMode,
-        )
+        return f"{super().__str__()} dimLevel({self.dimLevel}) profileMode({self.profileMode}) userDesiredProfileMode({self.userDesiredProfileMode})"
 
     def set_dim_level(self, dimLevel=0.0, channelIndex=1):
         return self._run_non_async(lambda: self.set_dim_level_async(dimLevel, channelIndex))
@@ -1948,9 +1846,7 @@ class DinRailDimmer3(Dimmer):
             self.c3dimLevel = channels[2]["dimLevel"]
 
     def __str__(self):
-        return "{} c1DimLevel({}) c2DimLevel({}) c3DimLevel({})".format(
-            super().__str__(), self.c1dimLevel, self.c2dimLevel, self.c3dimLevel
-        )
+        return f"{super().__str__()} c1DimLevel({self.c1dimLevel}) c2DimLevel({self.c2dimLevel}) c3DimLevel({self.c3dimLevel})"
 
 
 class WeatherSensor(Device):
@@ -1991,24 +1887,10 @@ class WeatherSensor(Device):
 
     def __str__(self):
         return (
-            "{} actualTemperature({}) humidity({}) vaporAmount({}) illumination({}) illuminationThresholdSunshine({}) storm({}) sunshine({}) "
-            "todaySunshineDuration({}) totalSunshineDuration({}) "
-            "windSpeed({}) windValueType({}) "
-            "yesterdaySunshineDuration({})"
-        ).format(
-            super().__str__(),
-            self.actualTemperature,
-            self.humidity,
-            self.vaporAmount,
-            self.illumination,
-            self.illuminationThresholdSunshine,
-            self.storm,
-            self.sunshine,
-            self.todaySunshineDuration,
-            self.totalSunshineDuration,
-            self.windSpeed,
-            self.windValueType,
-            self.yesterdaySunshineDuration,
+            f"{super().__str__()} actualTemperature({self.actualTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount}) illumination({self.illumination}) illuminationThresholdSunshine({self.illuminationThresholdSunshine}) storm({self.storm}) sunshine({self.sunshine}) "
+            f"todaySunshineDuration({self.todaySunshineDuration}) totalSunshineDuration({self.totalSunshineDuration}) "
+            f"windSpeed({self.windSpeed}) windValueType({self.windValueType}) "
+            f"yesterdaySunshineDuration({self.yesterdaySunshineDuration})"
         )
 
 
@@ -2058,27 +1940,9 @@ class WeatherSensorPlus(Device):
 
     def __str__(self):
         return (
-            "{} actualTemperature({}) humidity({}) vaporAmount({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
-            "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
-            "windSpeed({}) windValueType({}) yesterdayRainCounter({}) yesterdaySunshineDuration({})"
-        ).format(
-            super().__str__(),
-            self.actualTemperature,
-            self.humidity,
-            self.vaporAmount,
-            self.illumination,
-            self.illuminationThresholdSunshine,
-            self.raining,
-            self.storm,
-            self.sunshine,
-            self.todayRainCounter,
-            self.todaySunshineDuration,
-            self.totalRainCounter,
-            self.totalSunshineDuration,
-            self.windSpeed,
-            self.windValueType,
-            self.yesterdayRainCounter,
-            self.yesterdaySunshineDuration,
+            f"{super().__str__()} actualTemperature({self.actualTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount}) illumination({self.illumination}) illuminationThresholdSunshine({self.illuminationThresholdSunshine}) raining({self.raining}) storm({self.storm}) sunshine({self.sunshine}) "
+            f"todayRainCounter({self.todayRainCounter}) todaySunshineDuration({self.todaySunshineDuration}) totalRainCounter({self.totalRainCounter}) totalSunshineDuration({self.totalSunshineDuration}) "
+            f"windSpeed({self.windSpeed}) windValueType({self.windValueType}) yesterdayRainCounter({self.yesterdayRainCounter}) yesterdaySunshineDuration({self.yesterdaySunshineDuration})"
         )
 
 
@@ -2134,31 +1998,10 @@ class WeatherSensorPro(Device):
 
     def __str__(self):
         return (
-            "{} actualTemperature({}) humidity({}) vaporAmount({}) illumination({}) illuminationThresholdSunshine({}) raining({}) storm({}) sunshine({}) "
-            "todayRainCounter({}) todaySunshineDuration({}) totalRainCounter({}) totalSunshineDuration({}) "
-            "weathervaneAlignmentNeeded({}) windDirection({}) windDirectionVariation({}) windSpeed({}) windValueType({}) "
-            "yesterdayRainCounter({}) yesterdaySunshineDuration({})"
-        ).format(
-            super().__str__(),
-            self.actualTemperature,
-            self.humidity,
-            self.vaporAmount,
-            self.illumination,
-            self.illuminationThresholdSunshine,
-            self.raining,
-            self.storm,
-            self.sunshine,
-            self.todayRainCounter,
-            self.todaySunshineDuration,
-            self.totalRainCounter,
-            self.totalSunshineDuration,
-            self.weathervaneAlignmentNeeded,
-            self.windDirection,
-            self.windDirectionVariation,
-            self.windSpeed,
-            self.windValueType,
-            self.yesterdayRainCounter,
-            self.yesterdaySunshineDuration,
+            f"{super().__str__()} actualTemperature({self.actualTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount}) illumination({self.illumination}) illuminationThresholdSunshine({self.illuminationThresholdSunshine}) raining({self.raining}) storm({self.storm}) sunshine({self.sunshine}) "
+            f"todayRainCounter({self.todayRainCounter}) todaySunshineDuration({self.todaySunshineDuration}) totalRainCounter({self.totalRainCounter}) totalSunshineDuration({self.totalSunshineDuration}) "
+            f"weathervaneAlignmentNeeded({self.weathervaneAlignmentNeeded}) windDirection({self.windDirection}) windDirectionVariation({self.windDirectionVariation}) windSpeed({self.windSpeed}) windValueType({self.windValueType}) "
+            f"yesterdayRainCounter({self.yesterdayRainCounter}) yesterdaySunshineDuration({self.yesterdaySunshineDuration})"
         )
 
     # Any set/calibration functions?
@@ -2207,18 +2050,8 @@ class WaterSensor(Device):
 
     def __str__(self):
         return (
-            "{} incorrectPositioned({}) acousticAlarmSignal({}) acousticAlarmTiming({}) acousticWaterAlarmTrigger({})"
-            " inAppWaterAlarmTrigger({}) moistureDetected({}) sirenWaterAlarmTrigger({}) waterlevelDetected({})"
-        ).format(
-            super().__str__(),
-            self.incorrectPositioned,
-            self.acousticAlarmSignal,
-            self.acousticAlarmTiming,
-            self.acousticWaterAlarmTrigger,
-            self.inAppWaterAlarmTrigger,
-            self.moistureDetected,
-            self.sirenWaterAlarmTrigger,
-            self.waterlevelDetected,
+            f"{super().__str__()} incorrectPositioned({self.incorrectPositioned}) acousticAlarmSignal({self.acousticAlarmSignal}) acousticAlarmTiming({self.acousticAlarmTiming}) acousticWaterAlarmTrigger({self.acousticWaterAlarmTrigger})"
+            f" inAppWaterAlarmTrigger({self.inAppWaterAlarmTrigger}) moistureDetected({self.moistureDetected}) sirenWaterAlarmTrigger({self.sirenWaterAlarmTrigger}) waterlevelDetected({self.waterlevelDetected})"
         )
 
     def set_acoustic_alarm_signal(self, acousticAlarmSignal: AcousticAlarmSignal):
@@ -2325,12 +2158,7 @@ class FullFlushContactInterface(Device):
 
     def __str__(self):
         return (
-            "{} binaryBehaviorType({}) multiModeInputMode({}) windowState({})".format(
-                super().__str__(),
-                self.binaryBehaviorType,
-                self.multiModeInputMode,
-                self.windowState,
-            )
+            f"{super().__str__()} binaryBehaviorType({self.binaryBehaviorType}) multiModeInputMode({self.multiModeInputMode}) windowState({self.windowState})"
         )
 
 
@@ -2976,12 +2804,7 @@ class MotionDetectorSwitchOutdoor(SabotageDevice):
         return channel.userDesiredProfileMode if channel else None
 
     def __str__(self):
-        return "{} motionDetected({}) illumination({}) on({})".format(
-            super().__str__(),
-            self.motionDetected,
-            self.illumination,
-            self.on,
-        )
+        return f"{super().__str__()} motionDetected({self.motionDetected}) illumination({self.illumination}) on({self.on})"
 
     def set_switch_state(self, on=True):
         channel = self._get_switch_channel()

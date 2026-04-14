@@ -1,5 +1,4 @@
 import asyncio
-import logging
 import pathlib
 import socket
 import ssl
@@ -8,11 +7,6 @@ import aiohttp
 from aiohttp import web
 from aiohttp.resolver import DefaultResolver
 from aiohttp.test_utils import unused_port
-
-from homematicip.connection import ATTR_CLIENT_AUTH, ATTR_AUTH_TOKEN
-from homematicip.connection.connection_context import ConnectionContext
-from homematicip.connection.rest_connection import RestConnection
-from homematicip.connection.websocket_handler import WebSocketHandler
 
 
 class FakeResolver:
@@ -56,7 +50,7 @@ class FakeServer:
     async def websocket_handler(self, request):
         self.ws = web.WebSocketResponse()
         await self.ws.prepare(request)
-        async for msg in self.ws:
+        async for _msg in self.ws:
             await asyncio.sleep(2)
 
         return self.ws

@@ -1,13 +1,14 @@
-from unittest.mock import Mock, patch, AsyncMock
+from unittest.mock import AsyncMock, Mock
+
+from homematicip_demo.helper import (
+    no_ssl_verification,
+)
 
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.enums import FunctionalChannelType
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.home import Home
-from homematicip_demo.helper import (
-    no_ssl_verification,
-)
 
 
 def test_access_controller_channel(fake_home: Home):
@@ -178,7 +179,7 @@ def test_door_lock_channel(fake_home: Home):
         assert ch.lockState == LockState.LOCKED
         assert ch.motorState == MotorState.STOPPED
 
-        result = ch.set_lock_state(LockState.OPEN)
+        ch.set_lock_state(LockState.OPEN)
 
         fake_home.get_current_state()
         ch = fake_home.search_channel("3014F7110000000000000DLD", 1)
@@ -460,7 +461,7 @@ def test_water_sensor_channel(fake_home: Home):
         ch.set_siren_water_alarm_trigger(WaterAlarmTrigger.NO_ALARM)
 
         fake_home.get_current_state()
-        d = fake_home.search_channel("3014F7110000000000000050", 1)
+        fake_home.search_channel("3014F7110000000000000050", 1)
         assert ch.acousticAlarmTiming == AcousticAlarmTiming.SIX_MINUTES
         assert (
                 ch.acousticAlarmSignal == AcousticAlarmSignal.FREQUENCY_ALTERNATING_LOW_HIGH

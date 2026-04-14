@@ -39,14 +39,4 @@ class Weather(HomeMaticIPObject):
         self.vaporAmount = js["vaporAmount"]
 
     def __str__(self):
-        return "temperature({}) weatherCondition({}) weatherDayTime({}) minTemperature({}) maxTemperature({}) humidity({}) vaporAmount({}) windSpeed({}) windDirection({})".format(
-            self.temperature,
-            self.weatherCondition,
-            self.weatherDayTime,
-            self.minTemperature,
-            self.maxTemperature,
-            self.humidity,
-            self.vaporAmount,
-            self.windSpeed,
-            self.windDirection,
-        )
+        return f"temperature({self.temperature}) weatherCondition({self.weatherCondition}) weatherDayTime({self.weatherDayTime}) minTemperature({self.minTemperature}) maxTemperature({self.maxTemperature}) humidity({self.humidity}) vaporAmount({self.vaporAmount}) windSpeed({self.windSpeed}) windDirection({self.windDirection})"

@@ -1,6 +1,4 @@
-# coding=utf-8
 import logging
-
 from enum import Enum, auto
 
 logger = logging.getLogger(__name__)

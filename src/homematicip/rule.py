@@ -26,7 +26,7 @@ class Rule(HomeMaticIPObject):
         self.ruleType = js["type"]
 
         self.devices = []
-        for errorCategory in js["ruleErrorCategories"]:
+        for _errorCategory in js["ruleErrorCategories"]:
             pass  # at the moment this was always empty
 
     def set_label(self, label):
@@ -39,7 +39,7 @@ class Rule(HomeMaticIPObject):
         return await self._rest_call_async("rule/setRuleLabel", data)
 
     def __str__(self):
-        return "{} {} active({})".format(self.ruleType, self.label, self.active)
+        return f"{self.ruleType} {self.label} active({self.active})"
 
 
 class SimpleRule(Rule):
@@ -81,5 +81,5 @@ class SimpleRule(Rule):
         data = {"ruleId": self.id}
         result = await self._rest_call_async("rule/getSimpleRule", data)
         js = result.json
-        for errorRuleTriggerItem in js["errorRuleTriggerItems"]:
+        for _errorRuleTriggerItem in js["errorRuleTriggerItems"]:
             pass

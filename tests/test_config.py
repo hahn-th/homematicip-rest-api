@@ -1,7 +1,6 @@
-import io
 import os
 import platform
-from unittest.mock import patch, mock_open
+from unittest.mock import mock_open, patch
 
 import homematicip
 
@@ -26,7 +25,7 @@ def fake_getenv(var):
 
 
 def test_find_and_load_config_file_success():
-    with io.open("./config.ini", mode="w") as f:
+    with open("./config.ini", mode="w") as f:
         f.write("[AUTH]\nauthtoken = TEMP_TOKEN\naccesspoint = TEMP_AP")
     config = homematicip.find_and_load_config_file()
     assert config.auth_token == "TEMP_TOKEN"

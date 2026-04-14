@@ -1,5 +1,7 @@
 from homematicip.connection.connection_context import ConnectionContext
-from homematicip.connection.rate_limited_rest_connection import RateLimitedRestConnection
+from homematicip.connection.rate_limited_rest_connection import (
+    RateLimitedRestConnection,
+)
 from homematicip.connection.rest_connection import RestConnection
 
 

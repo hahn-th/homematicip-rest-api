@@ -3,21 +3,23 @@ import os
 import ssl
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from threading import Thread
 
-from homematicip.connection.connection_context import ConnectionContext, ConnectionContextBuilder
+from homematicip.connection.connection_context import (
+    ConnectionContextBuilder,
+)
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import pytest
 from aiohttp import web
 from aiohttp.test_utils import TestServer
+from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
+from homematicip_demo.helper import *
 
 from homematicip.async_home import AsyncHome
 from homematicip.home import Home
-from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
-from homematicip_demo.helper import *
 
 
 # content of conftest.py
@@ -144,7 +146,6 @@ async def fake_home_async(fake_cloud, fake_connection_context_with_ssl):
 async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, new_event_loop):
     home = AsyncHome(new_event_loop)
 
-    lookup_url = f"{fake_cloud.url}/getHost"
     home._fake_cloud = fake_cloud
     home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
     await home.get_current_state_async()
@@ -164,7 +165,7 @@ async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, n
 #     await auth._connection._websession.close()
 
 
-dt = datetime.now(timezone.utc).astimezone()
+dt = datetime.now(UTC).astimezone()
 utc_offset = dt.utcoffset() // timedelta(seconds=1)
 # the timestamp of the tests were written during DST so utc_offset is one hour less outside of DST
 # -> adding one hour extra

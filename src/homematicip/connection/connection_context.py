@@ -3,7 +3,9 @@ from ssl import SSLContext
 
 import httpx
 
-from homematicip.connection.client_characteristics_builder import ClientCharacteristicsBuilder
+from homematicip.connection.client_characteristics_builder import (
+    ClientCharacteristicsBuilder,
+)
 from homematicip.connection.client_token_builder import ClientTokenBuilder
 from homematicip.connection.connection_url_resolver import ConnectionUrlResolver
 

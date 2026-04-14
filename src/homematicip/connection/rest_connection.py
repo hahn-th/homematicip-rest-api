@@ -2,11 +2,16 @@ import json
 import logging
 from dataclasses import dataclass
 from ssl import SSLContext
-from typing import Any, Optional
+from typing import Any
 
 import httpx
 
-from homematicip.connection import ATTR_AUTH_TOKEN, ATTR_CLIENT_AUTH, THROTTLE_STATUS_CODE, ATTR_ACCESSPOINT_ID
+from homematicip.connection import (
+    ATTR_ACCESSPOINT_ID,
+    ATTR_AUTH_TOKEN,
+    ATTR_CLIENT_AUTH,
+    THROTTLE_STATUS_CODE,
+)
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
@@ -32,8 +37,8 @@ SENSITIVE_LOG_KEYS = {
 class RestResult:
     status: int = -1
     status_text: str = ""
-    json: Optional[dict] = None
-    exception: Optional[Exception] = None
+    json: dict | None = None
+    exception: Exception | None = None
     success: bool = False
     text: str = ""
 

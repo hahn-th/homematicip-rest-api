@@ -3,14 +3,13 @@ import json
 import logging
 import signal
 import sys
-import traceback
-from argparse import RawDescriptionHelpFormatter, ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from importlib.metadata import version
 
 import homematicip
+import homematicip.commands.functional_channel_commands
 from homematicip.async_home import AsyncHome
 from homematicip.cli.hmip_cli import setup_logger
-import homematicip.commands.functional_channel_commands
 from homematicip.connection.rest_connection import RestConnection, RestResult
 
 logger = logging.getLogger("hmip_cmd")
@@ -66,7 +65,6 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         logger.error("No batch definition found.")
         return False
 
-    definition = batch_definition.get("definition")
     interval = batch_definition.get("interval", 8)
 
     commands = batch_definition.get("commands")
@@ -130,7 +128,7 @@ async def run_command_async(function_name: str, params: dict, connection: RestCo
 
 
 def get_batch_job_definition(batch_file: str):
-    with open(batch_file, "r") as f:
+    with open(batch_file) as f:
         batch_data = json.load(f)
 
     return batch_data

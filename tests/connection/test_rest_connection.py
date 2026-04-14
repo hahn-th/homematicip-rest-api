@@ -3,7 +3,12 @@ from unittest.mock import AsyncMock
 import httpx
 import pytest
 
-from homematicip.connection.rest_connection import RestResult, ConnectionContext, RestConnection
+from homematicip.connection.rest_connection import (
+    ConnectionContext,
+    RestConnection,
+    RestResult,
+)
+from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 
 def test_rest_result():
@@ -56,7 +61,7 @@ async def test_conn_async_post_throttle(mocker):
     context = ConnectionContext(rest_url="http://asdf")
     conn = RestConnection(context)
 
-    with pytest.raises(Exception):
+    with pytest.raises(HmipThrottlingError):
         await conn.async_post("url", {"a": "b"}, {"c": "d"})
 
 @pytest.mark.asyncio

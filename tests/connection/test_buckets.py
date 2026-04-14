@@ -23,7 +23,7 @@ async def test_get_bucket_with_timeout():
     """Testing the get bucket method with timeout."""
     bucket = Buckets(1, 100)
 
-    got_1st_token = await bucket.take()
+    await bucket.take()
     with pytest.raises(asyncio.TimeoutError):
         await bucket.wait_and_take(timeout=1)
 

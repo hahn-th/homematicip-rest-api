@@ -2,7 +2,6 @@ import pytest
 
 from homematicip.base.enums import *
 from homematicip.base.helpers import bytes2str, detect_encoding
-from homematicip.base.homematicip_object import HomeMaticIPObject
 from homematicip.EventHook import EventHook
 
 

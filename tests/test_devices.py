@@ -1,16 +1,22 @@
 from datetime import datetime, timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
-from conftest import utc_offset
-from homematicip.base.enums import DeviceType, FunctionalChannelType, LockState, MultiModeInputMode
-from homematicip.base.functionalChannels import *
-from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_FUNCTIONALCHANNEL_MAP
-from homematicip.device import *
-from homematicip.home import Home
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
 )
+
+from conftest import utc_offset
+from homematicip.base.enums import (
+    DeviceType,
+    FunctionalChannelType,
+    LockState,
+    MultiModeInputMode,
+)
+from homematicip.base.functionalChannels import *
+from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_FUNCTIONALCHANNEL_MAP
+from homematicip.device import *
+from homematicip.home import Home
 
 
 def _full_flush_lock_controller_json():
@@ -1994,7 +2000,7 @@ def test_wall_mounted_garage_door_controller(fake_home: Home):
         assert d.impulseDuration == 0.10000000149011612
         assert d.processing == False
 
-        result = d.send_start_impulse()
+        d.send_start_impulse()
 
         assert str(d) == (
             "HmIP-WGC Garagentortaster lowBat(False) unreach(False) "
@@ -2011,7 +2017,7 @@ def test_door_lock_drive(fake_home: Home):
         assert d.motorState == MotorState.STOPPED
         assert d.door_lock_channel == 1
 
-        result = d.set_lock_state(LockState.OPEN)
+        d.set_lock_state(LockState.OPEN)
 
 
 def test_door_lock_drive2(fake_home: Home):
@@ -2022,7 +2028,7 @@ def test_door_lock_drive2(fake_home: Home):
         assert d.motorState == MotorState.STOPPED
         assert d.door_lock_channel == 1
 
-        result = d.set_lock_state(LockState.OPEN)
+        d.set_lock_state(LockState.OPEN)
 
 
 def test_door_lock_drive3(fake_home: Home):
@@ -2033,7 +2039,7 @@ def test_door_lock_drive3(fake_home: Home):
         assert d.motorState == MotorState.STOPPED
         assert d.door_lock_channel == 1
 
-        result = d.set_lock_state(LockState.OPEN)
+        d.set_lock_state(LockState.OPEN)
 
 
 def test_door_lock_sensor(fake_home: Home):

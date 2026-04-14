@@ -1,4 +1,3 @@
-# coding=utf-8
 import calendar
 from datetime import datetime
 from operator import attrgetter
@@ -43,7 +42,7 @@ class Group(HomeMaticIPObject):
                     self.devices.append(d)
 
     def __str__(self):
-        return "{} {}".format(self.groupType, self.label)
+        return f"{self.groupType} {self.label}"
 
     def set_label(self, label):
         return self._run_non_async(self.set_label_async, label)
@@ -119,19 +118,7 @@ class SecurityGroup(Group):
         self.waterlevelDetected = js["waterlevelDetected"]
 
     def __str__(self):
-        return "{} windowState({}) motionDetected({}) presenceDetected({}) sabotage({}) smokeDetectorAlarmType({}) dutyCycle({}) lowBat({}) powerMainsFailure({}) moistureDetected({}) waterlevelDetected({})".format(
-            super().__str__(),
-            self.windowState,
-            self.motionDetected,
-            self.presenceDetected,
-            self.sabotage,
-            self.smokeDetectorAlarmType,
-            self.dutyCycle,
-            self.lowBat,
-            self.powerMainsFailure,
-            self.moistureDetected,
-            self.waterlevelDetected,
-        )
+        return f"{super().__str__()} windowState({self.windowState}) motionDetected({self.motionDetected}) presenceDetected({self.presenceDetected}) sabotage({self.sabotage}) smokeDetectorAlarmType({self.smokeDetectorAlarmType}) dutyCycle({self.dutyCycle}) lowBat({self.lowBat}) powerMainsFailure({self.powerMainsFailure}) moistureDetected({self.moistureDetected}) waterlevelDetected({self.waterlevelDetected})"
 
 
 class SwitchGroupBase(Group):
@@ -328,9 +315,7 @@ class ExtendedLinkedSwitchingGroup(SwitchGroupBase):
         self.sensorSpecificParameters = js["sensorSpecificParameters"]
 
     def __str__(self):
-        return "{} onTime({}) onLevel({})".format(
-            super().__str__(), self.onTime, self.onLevel
-        )
+        return f"{super().__str__()} onTime({self.onTime}) onLevel({self.onLevel})"
 
     def set_on_time(self, onTimeSeconds):
         return self._run_non_async(self.set_on_time_async, onTimeSeconds)
@@ -366,13 +351,7 @@ class ExtendedLinkedNotificationGroup(SwitchGroupBase):
         )
 
     def __str__(self):
-        return "{} onTime({}) onLevel({}) opticalSignalBehaviour({}) simpleRGBColorState({})".format(
-            super().__str__(),
-            self.onTime,
-            self.onLevel,
-            self.opticalSignalBehaviour,
-            self.simpleRGBColorState,
-        )
+        return f"{super().__str__()} onTime({self.onTime}) onLevel({self.onLevel}) opticalSignalBehaviour({self.opticalSignalBehaviour}) simpleRGBColorState({self.simpleRGBColorState})"
 
     def set_on_time(self, onTimeSeconds):
         return self._run_non_async(self.set_on_time_async, onTimeSeconds)
@@ -418,9 +397,7 @@ class ExtendedLinkedShutterGroup(Group):
         self.set_attr_from_dict("secondaryShadingStateType", js, ShadingStateType)
 
     def __str__(self):
-        return "{} shutterLevel({}) slatsLevel({})".format(
-            super().__str__(), self.shutterLevel, self.slatsLevel
-        )
+        return f"{super().__str__()} shutterLevel({self.shutterLevel}) slatsLevel({self.slatsLevel})"
 
     def set_shutter_level(self, level):
         return self._run_non_async(self.set_shutter_level_async, level)
@@ -473,13 +450,7 @@ class ExtendedLinkedGarageDoorGroup(Group):
         self.set_attr_from_dict("ventilationPositionSupported", js)
 
     def __str__(self):
-        return "{} doorState({}) dutyCycle({}) lowBat({}) ventilationPositionSupported({})".format(
-            super().__str__(),
-            self.doorState,
-            self.dutyCycle,
-            self.lowBat,
-            self.ventilationPositionSupported,
-        )
+        return f"{super().__str__()} doorState({self.doorState}) dutyCycle({self.dutyCycle}) lowBat({self.lowBat}) ventilationPositionSupported({self.ventilationPositionSupported})"
 
 
 class AlarmSwitchingGroup(Group):
@@ -513,16 +484,7 @@ class AlarmSwitchingGroup(Group):
         return await self._rest_call_async("group/switching/alarm/setOnTime", body=data)
 
     def __str__(self):
-        return "{} on({}) dimLevel({}) onTime({}) signalAcoustic({}) signalOptical({}) smokeDetectorAlarmType({}) acousticFeedbackEnabled({})".format(
-            super().__str__(),
-            self.on,
-            self.dimLevel,
-            self.onTime,
-            self.signalAcoustic,
-            self.signalOptical,
-            self.smokeDetectorAlarmType,
-            self.acousticFeedbackEnabled,
-        )
+        return f"{super().__str__()} on({self.on}) dimLevel({self.dimLevel}) onTime({self.onTime}) signalAcoustic({self.signalAcoustic}) signalOptical({self.signalOptical}) smokeDetectorAlarmType({self.smokeDetectorAlarmType}) acousticFeedbackEnabled({self.acousticFeedbackEnabled})"
 
     def test_signal_optical(
             self, signalOptical=OpticalAlarmSignal.BLINKING_ALTERNATELY_REPEATING
@@ -589,7 +551,7 @@ class HeatingChangeoverGroup(Group):
         self.on = js["on"]
 
     def __str__(self):
-        return "{} on({})".format(super().__str__(), self.on)
+        return f"{super().__str__()} on({self.on})"
 
 
 class InboxGroup(Group):
@@ -612,13 +574,7 @@ class IndoorClimateGroup(Group):
         self.windowState = js["windowState"]
 
     def __str__(self):
-        return "{} sabotage({}) ventilationLevel({}) ventilationState({}) windowState({})".format(
-            super().__str__(),
-            self.sabotage,
-            self.ventilationLevel,
-            self.ventilationState,
-            self.windowState,
-        )
+        return f"{super().__str__()} sabotage({self.sabotage}) ventilationLevel({self.ventilationLevel}) ventilationState({self.ventilationState}) windowState({self.windowState})"
 
 
 class SecurityZoneGroup(Group):
@@ -649,16 +605,7 @@ class SecurityZoneGroup(Group):
                 )
 
     def __str__(self):
-        return "{} active({}) silent({}) windowState({}) motionDetected({}) sabotage({}) presenceDetected({}) ignorableDevices(#{})".format(
-            super().__str__(),
-            self.active,
-            self.silent,
-            self.windowState,
-            self.motionDetected,
-            self.sabotage,
-            self.presenceDetected,
-            len(self.ignorableDevices),
-        )
+        return f"{super().__str__()} active({self.active}) silent({self.silent}) windowState({self.windowState}) motionDetected({self.motionDetected}) sabotage({self.sabotage}) presenceDetected({self.presenceDetected}) ignorableDevices(#{len(self.ignorableDevices)})"
 
 
 class HeatingCoolingPeriod(HomeMaticIPObject):
@@ -868,19 +815,7 @@ class HeatingGroup(Group):
         self.profiles = sorted(profiles, key=attrgetter("index"))
 
     def __str__(self):
-        return "{} windowOpenTemperature({}) setPointTemperature({}) windowState({}) motionDetected({}) sabotage({}) cooling({}) partyMode({}) controlMode({}) actualTemperature({}) valvePosition({})".format(
-            super().__str__(),
-            self.windowOpenTemperature,
-            self.setPointTemperature,
-            self.windowState,
-            self.maxTemperature,
-            self.minTemperature,
-            self.cooling,
-            self.partyMode,
-            self.controlMode,
-            self.actualTemperature,
-            self.valvePosition,
-        )
+        return f"{super().__str__()} windowOpenTemperature({self.windowOpenTemperature}) setPointTemperature({self.setPointTemperature}) windowState({self.windowState}) motionDetected({self.maxTemperature}) sabotage({self.minTemperature}) cooling({self.cooling}) partyMode({self.partyMode}) controlMode({self.controlMode}) actualTemperature({self.actualTemperature}) valvePosition({self.valvePosition})"
 
     def set_point_temperature(self, temperature):
         return self._run_non_async(self.set_point_temperature_async, temperature)
@@ -930,7 +865,7 @@ class HeatingDehumidifierGroup(Group):
         self.on = js["on"]
 
     def __str__(self):
-        return "{} on({})".format(super().__str__(), self.on)
+        return f"{super().__str__()} on({self.on})"
 
 
 class HeatingCoolingDemandGroup(Group):
@@ -945,9 +880,7 @@ class HeatingCoolingDemandGroup(Group):
         self.dimLevel = js["dimLevel"]
 
     def __str__(self):
-        return "{} on({}) dimLevel({}) ".format(
-            super().__str__(), self.on, self.dimLevel
-        )
+        return f"{super().__str__()} on({self.on}) dimLevel({self.dimLevel}) "
 
 
 class HeatingFailureAlertRuleGroup(Group):
@@ -978,15 +911,8 @@ class HeatingFailureAlertRuleGroup(Group):
 
     def __str__(self):
         return (
-            "{} enabled({}) heatingFailureValidationResult({}) "
-            "checkInterval({}) validationTimeout({}) lastExecutionTimestamp({})"
-        ).format(
-            super().__str__(),
-            self.enabled,
-            self.heatingFailureValidationResult,
-            self.checkInterval,
-            self.validationTimeout,
-            self.lastExecutionTimestamp,
+            f"{super().__str__()} enabled({self.enabled}) heatingFailureValidationResult({self.heatingFailureValidationResult}) "
+            f"checkInterval({self.checkInterval}) validationTimeout({self.validationTimeout}) lastExecutionTimestamp({self.lastExecutionTimestamp})"
         )
 
 
@@ -1037,20 +963,10 @@ class HumidityWarningRuleGroup(Group):
 
     def __str__(self):
         return (
-            "{} enabled({}) humidityValidationResult({}) "
-            "humidityLowerThreshold({}) humidityUpperThreshold({}) "
-            "triggered({}) lastExecutionTimestamp({}) "
-            "lastStatusUpdate({}) ventilationRecommended({})"
-        ).format(
-            super().__str__(),
-            self.enabled,
-            self.humidityValidationResult,
-            self.humidityLowerThreshold,
-            self.humidityUpperThreshold,
-            self.triggered,
-            self.lastExecutionTimestamp,
-            self.lastStatusUpdate,
-            self.ventilationRecommended,
+            f"{super().__str__()} enabled({self.enabled}) humidityValidationResult({self.humidityValidationResult}) "
+            f"humidityLowerThreshold({self.humidityLowerThreshold}) humidityUpperThreshold({self.humidityUpperThreshold}) "
+            f"triggered({self.triggered}) lastExecutionTimestamp({self.lastExecutionTimestamp}) "
+            f"lastStatusUpdate({self.lastStatusUpdate}) ventilationRecommended({self.ventilationRecommended})"
         )
 
 
@@ -1073,9 +989,7 @@ class HeatingCoolingDemandBoilerGroup(Group):
         self.boilerFollowUpTime = js["boilerFollowUpTime"]
 
     def __str__(self):
-        return "{} on({}) boilerFollowUpTime({}) boilerLeadTime({})".format(
-            super().__str__(), self.on, self.boilerFollowUpTime, self.boilerLeadTime
-        )
+        return f"{super().__str__()} on({self.on}) boilerFollowUpTime({self.boilerFollowUpTime}) boilerLeadTime({self.boilerLeadTime})"
 
 
 class HeatingCoolingDemandPumpGroup(Group):
@@ -1097,15 +1011,8 @@ class HeatingCoolingDemandPumpGroup(Group):
 
     def __str__(self):
         return (
-            "{} on({}) pumpProtectionDuration({}) pumpProtectionSwitchingInterval({}) pumpFollowUpTime({}) "
-            "pumpLeadTime({})".format(
-                super().__str__(),
-                self.on,
-                self.pumpProtectionDuration,
-                self.pumpProtectionSwitchingInterval,
-                self.pumpFollowUpTime,
-                self.pumpLeadTime,
-            )
+            f"{super().__str__()} on({self.on}) pumpProtectionDuration({self.pumpProtectionDuration}) pumpProtectionSwitchingInterval({self.pumpProtectionSwitchingInterval}) pumpFollowUpTime({self.pumpFollowUpTime}) "
+            f"pumpLeadTime({self.pumpLeadTime})"
         )
 
 
@@ -1177,9 +1084,7 @@ class SwitchingProfileGroup(Group):
         self.set_attr_from_dict("profileMode", js, ProfileMode)
 
     def __str__(self):
-        return "{} on({}) dimLevel({}) profileMode({})".format(
-            super().__str__(), self.on, self.dimLevel, self.profileMode
-        )
+        return f"{super().__str__()} on({self.on}) dimLevel({self.dimLevel}) profileMode({self.profileMode})"
 
     def set_group_channels(self):
         return self._run_non_async(self.set_group_channels_async)
@@ -1250,13 +1155,7 @@ class OverHeatProtectionRule(Group):
         self.endSunset = js["endSunset"]
 
     def __str__(self):
-        return "{} tempLower({}) tempUpper({}) targetShutterLevel({}) targetSlatsLevel({})".format(
-            super().__str__(),
-            self.temperatureLowerThreshold,
-            self.temperatureUpperThreshold,
-            self.targetShutterLevel,
-            self.targetSlatsLevel,
-        )
+        return f"{super().__str__()} tempLower({self.temperatureLowerThreshold}) tempUpper({self.temperatureUpperThreshold}) targetShutterLevel({self.targetShutterLevel}) targetSlatsLevel({self.targetSlatsLevel})"
 
 
 class SmokeAlarmDetectionRule(Group):
@@ -1269,9 +1168,7 @@ class SmokeAlarmDetectionRule(Group):
         self.smokeDetectorAlarmType = js["smokeDetectorAlarmType"]
 
     def __str__(self):
-        return "{} smokeDetectorAlarmType({})".format(
-            super().__str__(), self.smokeDetectorAlarmType
-        )
+        return f"{super().__str__()} smokeDetectorAlarmType({self.smokeDetectorAlarmType})"
 
 
 class ShutterWindProtectionRule(Group):
@@ -1286,9 +1183,7 @@ class ShutterWindProtectionRule(Group):
         self.targetShutterLevel = js["targetShutterLevel"]
 
     def __str__(self):
-        return "{} windSpeedThreshold({}) targetShutterLevel({})".format(
-            super().__str__(), self.windSpeedThreshold, self.targetShutterLevel
-        )
+        return f"{super().__str__()} windSpeedThreshold({self.windSpeedThreshold}) targetShutterLevel({self.targetShutterLevel})"
 
 
 class LockOutProtectionRule(Group):
@@ -1303,9 +1198,7 @@ class LockOutProtectionRule(Group):
         self.windowState = js["windowState"]
 
     def __str__(self):
-        return "{} triggered({}) windowState({})".format(
-            super().__str__(), self.triggered, self.windowState
-        )
+        return f"{super().__str__()} triggered({self.triggered}) windowState({self.windowState})"
 
 
 class EnvironmentGroup(Group):
@@ -1326,14 +1219,7 @@ class EnvironmentGroup(Group):
         self.humidity = js["humidity"]
 
     def __str__(self):
-        return "{} actualTemperature({}) illumination({}) raining({}) windSpeed({}) humidity({})".format(
-            super().__str__(),
-            self.actualTemperature,
-            self.illumination,
-            self.raining,
-            self.windSpeed,
-            self.humidity,
-        )
+        return f"{super().__str__()} actualTemperature({self.actualTemperature}) illumination({self.illumination}) raining({self.raining}) windSpeed({self.windSpeed}) humidity({self.humidity})"
 
 
 class HotWaterGroup(Group):

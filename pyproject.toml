@@ -38,6 +38,22 @@ version_file = "src/homematicip/_version.py"
 version_scheme = "no-guess-dev"
 local_scheme = "no-local-version"
 
+[tool.ruff]
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+]
+ignore = [
+    "F403",  # star imports (to be addressed separately)
+    "F405",  # names from star imports (consequence of F403)
+    "F811",  # redefinition of unused name (false positives from star imports)
+]
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "session"
