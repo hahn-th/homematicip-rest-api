@@ -20,7 +20,7 @@ serve:
 
 publish:
 	cp CHANGELOG.md ./docs/changelog.md
-	mkdocs gh-deploy --force
+	zensical gh-deploy --force
 
 clean:
 	rm -rf site
