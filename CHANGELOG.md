@@ -5,12 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.7.0..master)
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.8.0..master)
+
+## [2.8.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.7.0..2.8.0)
 
 ### Added
 
 - Add support for HmIP-SFD (Fine Dust Sensor)
-- Add support for HmIP-FWI (Wiegand Interface)
+- Add support for HmIP-FWI (Full Flush Wiegand Interface)
+- Add ruff linter with CI enforcement (pyflakes, isort, pyupgrade, bugbear)
+
+### Fixed
+
+- Fix ELV-SH-SPS25 missing switch entity in HA (map to PlugableSwitch instead of base Switch)
 
 ## [2.7.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.6.0..2.7.0)
 
