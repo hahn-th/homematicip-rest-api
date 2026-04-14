@@ -97,7 +97,7 @@ TYPE_CLASS_MAP = {
     DeviceType.STATUS_BOARD_8: StatusBoard8,
     DeviceType.SWITCH_MEASURING_CABLE_INDOOR: SwitchMeasuring,
     DeviceType.SWITCH_MEASURING_CABLE_OUTDOOR: SwitchMeasuring,
-    DeviceType.SWITCH_POWER_SUPPLY: Switch,
+    DeviceType.SWITCH_POWER_SUPPLY: PlugableSwitch,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR: TemperatureHumiditySensorWithoutDisplay,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_COMPACT: TemperatureHumiditySensorOutdoor,
     DeviceType.TEMPERATURE_HUMIDITY_SENSOR_DISPLAY: TemperatureHumiditySensorDisplay,
