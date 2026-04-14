@@ -261,7 +261,7 @@ class AsyncHome(HomeMaticIPObject):
         return True
 
     def _get_devices(self, json_state):
-        self.devices = [x for x in self.devices if x.id in json_state["devices"].keys()]
+        self.devices = [x for x in self.devices if x.id in json_state["devices"]]
         for id_, raw in json_state["devices"].items():
             try:
                 _device = self.search_device_by_id(id_)
@@ -273,7 +273,7 @@ class AsyncHome(HomeMaticIPObject):
                 LOGGER.error(
                     f"An exception in _get_devices (device-id {id_}) of type {type(err).__name__} occurred: {err}"
                 )
-                return None
+                return
 
     def _parse_device(self, json_state):
         try:
@@ -289,7 +289,7 @@ class AsyncHome(HomeMaticIPObject):
 
     def _get_rules(self, json_state):
         self.rules = [
-            x for x in self.rules if x.id in json_state["ruleMetaDatas"].keys()
+            x for x in self.rules if x.id in json_state["ruleMetaDatas"]
         ]
         for id_, raw in json_state["ruleMetaDatas"].items():
             _rule = self.search_rule_by_id(id_)
@@ -311,7 +311,7 @@ class AsyncHome(HomeMaticIPObject):
             return r
 
     def _get_clients(self, json_state):
-        self.clients = [x for x in self.clients if x.id in json_state["clients"].keys()]
+        self.clients = [x for x in self.clients if x.id in json_state["clients"]]
         for id_, raw in json_state["clients"].items():
             _client = self.search_client_by_id(id_)
             if _client:
@@ -340,7 +340,7 @@ class AsyncHome(HomeMaticIPObject):
         return g
 
     def _get_groups(self, json_state):
-        self.groups = [x for x in self.groups if x.id in json_state["groups"].keys()]
+        self.groups = [x for x in self.groups if x.id in json_state["groups"]]
         metaGroups = []
         for id_, raw in json_state["groups"].items():
             _group = self.search_group_by_id(id_)

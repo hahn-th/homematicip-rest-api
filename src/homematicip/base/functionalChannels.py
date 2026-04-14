@@ -239,9 +239,7 @@ class SwitchChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.on = js["on"]
-        self.powerUpSwitchState = (
-            js["powerUpSwitchState"] if "powerUpSwitchState" in js else ""
-        )
+        self.powerUpSwitchState = js.get("powerUpSwitchState", "")
         self.profileMode = js["profileMode"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
 
@@ -579,7 +577,6 @@ class DeviceOperationLockChannel(DeviceBaseChannel):
 
 class DeviceOperationLockChannelWithSabotage(DeviceOperationLockChannel):
     """this is the representation of the DeviceOperationLockChannelWithSabotage channel"""
-    pass
 
 
 class DimmerChannel(FunctionalChannel):
@@ -2371,7 +2368,6 @@ class CodeProtectedPrimaryActionChannel(FunctionalChannel):
 
 class CodeProtectedSecondaryActionChannel(FunctionalChannel):
     """this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)"""
-    pass
 
 
 class CodeProtectedSingleActionChannel(FunctionalChannel):

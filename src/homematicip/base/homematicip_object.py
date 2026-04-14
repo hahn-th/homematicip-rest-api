@@ -79,7 +79,6 @@ class HomeMaticIPObject:
         :param js: the json object to parse
         """
         self._rawJSONData = js
-        pass
 
     def fromtimestamp(self, timestamp):
         """internal helper function which will create a datetime object from a timestamp"""
@@ -108,7 +107,7 @@ class HomeMaticIPObject:
             dict_attr = attr
 
         if dict_attr not in dict:
-            return None
+            return
 
         value = dict[dict_attr]
         if type:

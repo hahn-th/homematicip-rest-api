@@ -667,7 +667,7 @@ class HeatingCoolingProfile(HomeMaticIPObject):
         self.type = js["type"]
         self.profileDays = {}
 
-        for i in range(0, 7):
+        for i in range(7):
             day = HeatingCoolingProfileDay(self._connection)
             day.from_json(js["profileDays"][calendar.day_name[i].upper()])
             self.profileDays[i] = day
@@ -690,7 +690,7 @@ class HeatingCoolingProfile(HomeMaticIPObject):
 
     async def update_profile_async(self):
         days = {}
-        for i in range(0, 7):
+        for i in range(7):
             periods = []
             day = self.profileDays[i]
             for p in day.periods:

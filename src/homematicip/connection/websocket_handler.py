@@ -1,4 +1,6 @@
 import asyncio
+import contextlib
+import inspect
 import logging
 from collections.abc import Callable
 
@@ -53,7 +55,7 @@ class WebsocketHandler:
         """Helper function to call handlers (sync and async)."""
         for handler in handlers:
             try:
-                if asyncio.iscoroutinefunction(handler):
+                if inspect.iscoroutinefunction(handler):
                     await handler(*args)
                 else:
                     handler(*args)
@@ -68,8 +70,9 @@ class WebsocketHandler:
             try:
                 LOGGER.info(f"Connect to {context.websocket_url}")
 
-                async with aiohttp.ClientSession() as session:
-                    async with session.ws_connect(
+                async with (
+                    aiohttp.ClientSession() as session,
+                    session.ws_connect(
                         context.websocket_url,
                         headers={
                             ATTR_AUTH_TOKEN: context.auth_token,
@@ -78,7 +81,8 @@ class WebsocketHandler:
                         },
                         heartbeat=30,
                         ssl=getattr(context, 'ssl_ctx', True),
-                    ) as ws:
+                    ) as ws,
+                ):
                         backoff = self.INITIAL_BACKOFF
                         LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
                         self._websocket_connected.set()
@@ -136,10 +140,8 @@ class WebsocketHandler:
         async with self._task_lock:
             if self._reconnect_task and not self._reconnect_task.done():
                 self._reconnect_task.cancel()
-                try:
+                with contextlib.suppress(asyncio.CancelledError):
                     await self._reconnect_task
-                except asyncio.CancelledError:
-                    pass
 
                 self._reconnect_task = None
         await self._cleanup()

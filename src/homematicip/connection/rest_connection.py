@@ -1,3 +1,4 @@
+import contextlib
 import json
 import logging
 from dataclasses import dataclass
@@ -136,10 +137,8 @@ class RestConnection:
             r.raise_for_status()
 
             result = RestResult(status=r.status_code)
-            try:
+            with contextlib.suppress(json.JSONDecodeError):
                 result.json = r.json()
-            except json.JSONDecodeError:
-                pass
 
             return result
         except httpx.RequestError as exc:
