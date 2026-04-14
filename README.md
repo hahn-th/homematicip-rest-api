@@ -197,7 +197,7 @@ A few examples:
 - [x] HMIP-SAM (Acceleration Sensor)
 - [x] HMIP-SCI (Contact Interface Sensor)
 - [x] HMIP-SCTH230 (CO2, Temperature and Humidity Sensor 230V)
-- [ ] HMIP-SFD (Fine Dust Sensor)
+- [x] HMIP-SFD (Fine Dust Sensor)
 - [x] HMIP-SLO (Light Sensor - outdoor)
 - [x] HMIP-SMI (Motion Detector with Brightness Sensor - indoor)
 - [x] HMIP-SMI55 (Motion Detector with Brightness Sensor and Remote Control - 2x buttons)

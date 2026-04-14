@@ -2650,6 +2650,28 @@ class TemperatureDifferenceSensor2(Device):
             self.set_attr_from_dict("temperatureExternalTwo", c)
 
 
+class ParticulateMatterSensor(Device):
+    """HmIP-SFD (Fine Dust Sensor)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.actualTemperature = None
+        self.humidity = None
+        self.particulateMassConcentrationTen = None
+        self.particulateMassConcentrationTwoPointFive = None
+        self.particulateMassConcentrationOne = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("PARTICULATE_MATTER_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("actualTemperature", c)
+            self.set_attr_from_dict("humidity", c)
+            self.set_attr_from_dict("particulateMassConcentrationTen", c)
+            self.set_attr_from_dict("particulateMassConcentrationTwoPointFive", c)
+            self.set_attr_from_dict("particulateMassConcentrationOne", c)
+
+
 class DoorLockDrive(OperationLockableDevice):
     """HmIP-DLD"""
 
