@@ -1,17 +1,14 @@
 import logging
-from enum import Enum, auto
+from enum import StrEnum, auto
 
 logger = logging.getLogger(__name__)
 
 
-class AutoNameEnum(str, Enum):
+class AutoNameEnum(StrEnum):
     """auto() will generate the name of the attribute as value"""
 
     def _generate_next_value_(name, start, count, last_values):
         return name
-
-    def __str__(self):
-        return self.value
 
     @classmethod
     def from_str(cls, text: str, default=None):
