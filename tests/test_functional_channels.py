@@ -186,6 +186,51 @@ def test_door_lock_channel(fake_home: Home):
         assert ch.lockState == LockState.OPEN
 
 
+def test_door_lock_pro_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000DLP", 1)
+        assert isinstance(ch, DoorLockProChannel)
+        # Inherited fields from DoorLockChannel
+        assert ch.autoRelockDelay == 300.0
+        assert ch.doorHandleType == "LEVER_HANDLE"
+        assert ch.doorLockDirection == "RIGHT"
+        assert ch.doorLockNeutralPosition == "VERTICAL"
+        assert ch.doorLockTurns == 2
+        assert ch.lockState == LockState.UNLOCKED
+        assert ch.motorState == MotorState.STOPPED
+        # DLP-specific fields
+        assert ch.autoRelockEnabled is False
+        assert ch.doorOpeningDirection == "INWARDS"
+        assert ch.doorLockEndStopOffsetLocked == "ANGLE_RANGE_ONE"
+        assert ch.doorLockEndStopOffsetOpen == "ANGLE_RANGE_TWO"
+        assert ch.doorLockInputActionLongPress == "TOGGLE"
+        assert ch.doorLockInputActionShortPress == "TOGGLE"
+        assert ch.lockSilenceMode == "OFF"
+        assert ch.lockStateChangeReason == "MOTOR"
+        assert ch.sabotageAcceleration is False
+        assert ch.sabotageBattery is False
+        assert ch.sabotageMagneticField is False
+        assert ch.sabotageVertical is False
+
+        ch.set_lock_state(LockState.OPEN)
+
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000DLP", 1)
+        assert ch.lockState == LockState.OPEN
+
+
+def test_door_lock_sensor_base_channel(fake_home: Home):
+    ch = fake_home.search_channel("3014F7110000000000000DLP", 10)
+    assert isinstance(ch, DoorLockSensorBaseChannel)
+    assert ch.lockState == LockState.UNLOCKED
+
+
+def test_magnetic_door_sensor_channel(fake_home: Home):
+    ch = fake_home.search_channel("3014F7110000000000000DLP", 11)
+    assert isinstance(ch, MagneticDoorSensorChannel)
+    assert ch.eventDelay == 0
+
+
 def test_energy_sensor_interface_channel(fake_home: Home):
     ch = fake_home.search_channel("3014F7110000000000000ESI", 1)
 

@@ -682,6 +682,64 @@ class DoorLockChannel(FunctionalChannel):
         )
 
 
+class DoorLockProChannel(DoorLockChannel):
+    """This represents the DOOR_LOCK_PRO_CHANNEL channel (HmIP-DLP)"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.autoRelockEnabled = False
+        self.doorLockEndStopOffsetLocked = ""
+        self.doorLockEndStopOffsetOpen = ""
+        self.doorLockInputActionLongPress = ""
+        self.doorLockInputActionShortPress = ""
+        self.doorOpeningDirection = ""
+        self.lockSilenceMode = ""
+        self.lockStateChangeReason = ""
+        self.sabotageAcceleration = False
+        self.sabotageBattery = False
+        self.sabotageMagneticField = False
+        self.sabotageVertical = False
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.autoRelockEnabled = js.get("autoRelockEnabled", False)
+        self.doorLockEndStopOffsetLocked = js.get("doorLockEndStopOffsetLocked", "")
+        self.doorLockEndStopOffsetOpen = js.get("doorLockEndStopOffsetOpen", "")
+        self.doorLockInputActionLongPress = js.get("doorLockInputActionLongPress", "")
+        self.doorLockInputActionShortPress = js.get("doorLockInputActionShortPress", "")
+        self.doorOpeningDirection = js.get("doorOpeningDirection", "")
+        self.lockSilenceMode = js.get("lockSilenceMode", "")
+        self.lockStateChangeReason = js.get("lockStateChangeReason", "")
+        self.sabotageAcceleration = js.get("sabotageAcceleration", False)
+        self.sabotageBattery = js.get("sabotageBattery", False)
+        self.sabotageMagneticField = js.get("sabotageMagneticField", False)
+        self.sabotageVertical = js.get("sabotageVertical", False)
+
+
+class DoorLockSensorBaseChannel(FunctionalChannel):
+    """This represents the DOOR_LOCK_SENSOR_BASE_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.lockState = LockState.UNLOCKED
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.lockState = LockState.from_str(js.get("lockState", "UNLOCKED"))
+
+
+class MagneticDoorSensorChannel(FunctionalChannel):
+    """This represents the MAGNETIC_DOOR_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.eventDelay = 0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.eventDelay = js.get("eventDelay", 0)
+
+
 class DoorSwitchChannel(FunctionalChannel):
     """this is the representative of the DOOR_SWITCH_CHANNEL channel"""
 

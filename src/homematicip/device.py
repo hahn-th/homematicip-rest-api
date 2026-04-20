@@ -2732,6 +2732,36 @@ class DoorLockDrive(OperationLockableDevice):
         return await self._rest_call_async("device/control/setLockState", data)
 
 
+class DoorLockDrivePro(DoorLockDrive):
+    """HmIP-DLP"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.autoRelockEnabled = False
+        self.doorOpeningDirection = ""
+        self.lockSilenceMode = ""
+        self.lockStateChangeReason = ""
+
+    def from_json(self, js):
+        # Skip DoorLockDrive.from_json (looks for DOOR_LOCK_CHANNEL)
+        # and call its parent directly
+        OperationLockableDevice.from_json(self, js)
+        c = get_functional_channel("DOOR_LOCK_PRO_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("autoRelockDelay", c)
+            self.set_attr_from_dict("doorHandleType", c)
+            self.set_attr_from_dict("doorLockDirection", c)
+            self.set_attr_from_dict("doorLockNeutralPosition", c)
+            self.set_attr_from_dict("doorLockTurns", c)
+            self.set_attr_from_dict("lockState", c, LockState)
+            self.set_attr_from_dict("motorState", c, MotorState)
+            self.door_lock_channel = c["index"]
+            self.set_attr_from_dict("autoRelockEnabled", c)
+            self.set_attr_from_dict("doorOpeningDirection", c)
+            self.set_attr_from_dict("lockSilenceMode", c)
+            self.set_attr_from_dict("lockStateChangeReason", c)
+
+
 class DoorLockSensor(Device):
     """HmIP-DLS"""
 
