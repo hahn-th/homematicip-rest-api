@@ -99,14 +99,19 @@ async def fake_cloud(aiohttp_server, ssl_ctx, session_stop_threads):
         app.router.add_route("GET", "/{tail:.*}", aio_server)
         app.router.add_route("POST", "/{tail:.*}", aio_server)
 
-        test_server = TestServer(app)
-        asyncio.run_coroutine_threadsafe(
-            test_server.start_server(loop=session_stop_threads, ssl=ssl_ctx),
-            session_stop_threads,
-        ).result()
-        aio_server.url = str(test_server._root)
-        test_server.url = aio_server.url
-        test_server.aio_server = aio_server
+        server = TestServer(app)
+        try:
+            asyncio.run_coroutine_threadsafe(
+                server.start_server(loop=session_stop_threads, ssl=ssl_ctx),
+                session_stop_threads,
+            ).result()
+        except Exception:
+            test_server = None
+            raise
+        aio_server.url = str(server._root)
+        server.url = aio_server.url
+        server.aio_server = aio_server
+        test_server = server
     test_server.aio_server.reset()
     return test_server
 

@@ -768,9 +768,12 @@ async def test_websocket_channel_event(fake_home: Home):
 
 
 @pytest.mark.asyncio
-async def test_enable_events(fake_home):
+async def test_enable_events():
+    fake_home = Home()
+    fake_home._connection_context = Mock(spec=ConnectionContext)
     mock_websocket_handler = Mock()
     mock_websocket_handler.start = AsyncMock()
+    mock_websocket_handler.is_running.return_value = False
     mock_additional_handler = AsyncMock()
 
     with patch('homematicip.async_home.WebsocketHandler', return_value=mock_websocket_handler):
@@ -782,32 +785,39 @@ async def test_enable_events(fake_home):
 
 
 @pytest.mark.asyncio
-async def test_enable_events_active(fake_home):
+async def test_enable_events_active():
+    fake_home = Home()
     fake_home._websocket_client = Mock()
-    fake_home._websocket_client.is_connected.return_value = True
+    fake_home._websocket_client.is_running.return_value = True
     await fake_home.enable_events()
 
     assert not fake_home._websocket_client.start.called
 
 
 @pytest.mark.asyncio
-async def test_enable_events_reconnects_when_client_exists_but_is_disconnected(fake_home):
+async def test_enable_events_reconnects_when_client_exists_but_is_disconnected():
+    fake_home = Home()
+    fake_home._connection_context = Mock(spec=ConnectionContext)
     stale_websocket_handler = Mock()
-    stale_websocket_handler.is_connected.return_value = False
+    stale_websocket_handler.is_running.return_value = False
+    stale_websocket_handler.stop = AsyncMock()
     fake_home._websocket_client = stale_websocket_handler
 
     new_websocket_handler = Mock()
     new_websocket_handler.start = AsyncMock()
+    new_websocket_handler.is_running.return_value = False
 
     with patch('homematicip.async_home.WebsocketHandler', return_value=new_websocket_handler):
         await fake_home.enable_events()
 
+    stale_websocket_handler.stop.assert_awaited_once()
     assert fake_home._websocket_client is new_websocket_handler
     new_websocket_handler.start.assert_awaited_once()
 
 
 @pytest.mark.asyncio
-async def test_disable_events(fake_home):
+async def test_disable_events():
+    fake_home = Home()
     fake_client = AsyncMock()
     fake_home._websocket_client = fake_client
     await fake_home.disable_events_async()
@@ -816,10 +826,33 @@ async def test_disable_events(fake_home):
     assert fake_client.stop.called
 
 
-def test_websocket_is_connected_returns_bool(fake_home):
+def test_websocket_is_connected_returns_bool():
+    fake_home = Home()
     assert fake_home.websocket_is_connected() is False
 
     fake_home._websocket_client = Mock()
     fake_home._websocket_client.is_connected.return_value = True
 
     assert fake_home.websocket_is_connected() is True
+
+
+def test_websocket_message_metrics_wrappers():
+    fake_home = Home()
+    assert fake_home.websocket_last_message_time() is None
+    assert fake_home.websocket_message_count() == 0
+    assert fake_home.websocket_seconds_since_last_message() is None
+    assert fake_home.websocket_reconnect_attempt_count() == 0
+    assert fake_home.websocket_last_disconnect_reason() is None
+
+    fake_home._websocket_client = Mock()
+    fake_home._websocket_client.last_message_time.return_value = 123.0
+    fake_home._websocket_client.message_count.return_value = 7
+    fake_home._websocket_client.seconds_since_last_message.return_value = 4.5
+    fake_home._websocket_client.reconnect_attempt_count.return_value = 2
+    fake_home._websocket_client.last_disconnect_reason.return_value = "idle timeout"
+
+    assert fake_home.websocket_last_message_time() == 123.0
+    assert fake_home.websocket_message_count() == 7
+    assert fake_home.websocket_seconds_since_last_message() == 4.5
+    assert fake_home.websocket_reconnect_attempt_count() == 2
+    assert fake_home.websocket_last_disconnect_reason() == "idle timeout"
