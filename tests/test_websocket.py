@@ -1,4 +1,5 @@
 import asyncio
+import time
 from unittest.mock import AsyncMock, MagicMock
 
 import aiohttp
@@ -214,3 +215,13 @@ async def test_handle_reconnect_updates_reason_and_attempt_count():
 
     assert client.reconnect_attempt_count() == 1
     assert client.last_disconnect_reason() == "connection dropped"
+
+
+def test_seconds_since_last_message_works_without_running_loop():
+    client = WebsocketHandler()
+    client._last_message_time = time.monotonic() - 5
+
+    elapsed = client.seconds_since_last_message()
+
+    assert elapsed is not None
+    assert 0 < elapsed < 60
