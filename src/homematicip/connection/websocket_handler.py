@@ -1,6 +1,7 @@
 import asyncio
 import inspect
 import logging
+import time
 from collections.abc import Callable
 
 import aiohttp
@@ -94,7 +95,6 @@ class WebsocketHandler:
                     async with ws:
                         backoff = self.INITIAL_BACKOFF
                         self._reconnect_attempt_count = 0
-                        self._last_disconnect_reason = None
                         LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
                         self._websocket_connected.set()
                         self._disconnect_notified = False
@@ -140,7 +140,7 @@ class WebsocketHandler:
                 break
 
             if msg.type in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
-                self._last_message_time = asyncio.get_running_loop().time()
+                self._last_message_time = time.monotonic()
                 self._message_count += 1
                 await self._handle_ws_message(msg)
             elif msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSED):
@@ -236,7 +236,7 @@ class WebsocketHandler:
         """Returns the seconds since the last WebSocket message was received."""
         if self._last_message_time is None:
             return None
-        return asyncio.get_running_loop().time() - self._last_message_time
+        return time.monotonic() - self._last_message_time
 
     def reconnect_attempt_count(self) -> int:
         """Returns the number of reconnect attempts in the current outage."""
