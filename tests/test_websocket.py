@@ -190,7 +190,7 @@ async def test_listen_stale_timeout_triggers_close_and_warning(monkeypatch, capl
     monkeypatch.setattr(
         asyncio,
         "wait_for",
-        AsyncMock(side_effect=asyncio.TimeoutError()),
+        AsyncMock(side_effect=TimeoutError()),
     )
 
     with caplog.at_level("WARNING"):

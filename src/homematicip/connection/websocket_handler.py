@@ -101,7 +101,7 @@ class WebsocketHandler:
                         await self._call_handlers(self._on_connected_handler)
                         await self._listen(ws)
 
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 reason = (
                     f"Websocket connect timed out after {self.CONNECT_TIMEOUT}s. "
                     f"Retry in {backoff}s."
@@ -125,7 +125,7 @@ class WebsocketHandler:
                     ws.receive(),
                     timeout=self.MESSAGE_STALE_TIMEOUT,
                 )
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 reason = (
                     "No HomematicIP websocket events received for "
                     f"{self.MESSAGE_STALE_TIMEOUT} seconds despite an open connection. "
