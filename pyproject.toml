@@ -47,11 +47,21 @@ select = [
     "F",    # pyflakes
     "I",    # isort
     "UP",   # pyupgrade
+    "B",    # bugbear
+    "SIM",  # simplify
+    "RET",  # return statements
+    "PIE",  # misc lints
 ]
 ignore = [
-    "F403",  # star imports (to be addressed separately)
-    "F405",  # names from star imports (consequence of F403)
-    "F811",  # redefinition of unused name (false positives from star imports)
+    "F403",   # star imports (to be addressed separately)
+    "F405",   # names from star imports (consequence of F403)
+    "F811",   # redefinition of unused name (false positives from star imports)
+    "UP042",  # str(Enum) → StrEnum — behavioral differences, not a safe migration
+    "RET502", # implicit return None — style preference, can hurt readability
+    "RET503", # missing explicit return — same
+    "RET504", # unnecessary assignment before return — same
+    "SIM102", # collapsible if — nested ifs are sometimes clearer
+    "SIM112", # capitalized env vars — os.environ uses lowercase intentionally here
 ]
 
 [tool.pytest.ini_options]

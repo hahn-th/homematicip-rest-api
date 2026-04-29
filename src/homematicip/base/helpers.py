@@ -68,27 +68,26 @@ def handle_config(json_state: str, anonymize: bool) -> str:
             json_state["errorCode"],
         )
         return None
-    else:
-        c = json.dumps(json_state, indent=4, sort_keys=True)
-        if anonymize:
-            # generate dummy guids
-            c = anonymizeConfig(
-                c,
-                "[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}",
-                "00000000-0000-0000-0000-{0:0>12}",
-            )
-            # generate dummy SGTIN
-            c = anonymizeConfig(c, '"[A-Z0-9]{24}"', '"3014F711{0:0>16}"', flags=0)
-            # remove refresh Token
-            c = anonymizeConfig(c, '"refreshToken": ?"[^"]+"', '"refreshToken": null')
-            # location
-            c = anonymizeConfig(
-                c, '"city": ?"[^"]+"', '"city": "1010, Vienna, Austria"'
-            )
-            c = anonymizeConfig(c, '"latitude": ?"[^"]+"', '"latitude": "48.208088"')
-            c = anonymizeConfig(c, '"longitude": ?"[^"]+"', '"longitude": "16.358608"')
+    c = json.dumps(json_state, indent=4, sort_keys=True)
+    if anonymize:
+        # generate dummy guids
+        c = anonymizeConfig(
+            c,
+            "[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}",
+            "00000000-0000-0000-0000-{0:0>12}",
+        )
+        # generate dummy SGTIN
+        c = anonymizeConfig(c, '"[A-Z0-9]{24}"', '"3014F711{0:0>16}"', flags=0)
+        # remove refresh Token
+        c = anonymizeConfig(c, '"refreshToken": ?"[^"]+"', '"refreshToken": null')
+        # location
+        c = anonymizeConfig(
+            c, '"city": ?"[^"]+"', '"city": "1010, Vienna, Austria"'
+        )
+        c = anonymizeConfig(c, '"latitude": ?"[^"]+"', '"latitude": "48.208088"')
+        c = anonymizeConfig(c, '"longitude": ?"[^"]+"', '"longitude": "16.358608"')
 
-        return c
+    return c
 
 
 def anonymizeConfig(config, pattern, format, flags=re.IGNORECASE):
@@ -98,7 +97,7 @@ def anonymizeConfig(config, pattern, format, flags=re.IGNORECASE):
     map = {}
     i = 0
     for s in m:
-        if s in map.keys():
+        if s in map:
             continue
         map[s] = format.format(i)
         i = i + 1

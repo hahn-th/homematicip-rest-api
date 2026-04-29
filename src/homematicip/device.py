@@ -673,7 +673,6 @@ class WiredCarbonTemperatureHumiditySensorDisplay(Device):
 
 class RoomControlDevice(WallMountedThermostatPro):
     """ALPHA-IP-RBG    (Alpha IP Wall Thermostat Display)"""
-    pass
 
 
 class RoomControlDeviceAnalog(Device):
@@ -697,7 +696,6 @@ class RoomControlDeviceAnalog(Device):
 class WallMountedThermostatBasicHumidity(WallMountedThermostatPro):
     """HMIP-WTH-B (Wall Thermostat – basic)"""
 
-    pass
 
 
 class SmokeDetector(Device):
@@ -2765,7 +2763,6 @@ class EnergySensorsInterface(Device):
 
 class DaliGateway(Device):
     """HmIP-DRG-DALI Dali Gateway device."""
-    pass
 
 
 class MotionDetectorSwitchOutdoor(SabotageDevice):

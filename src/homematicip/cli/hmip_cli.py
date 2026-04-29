@@ -6,8 +6,8 @@ import sys
 import time
 import traceback
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
-from asyncio import iscoroutinefunction
 from importlib.metadata import version
+from inspect import iscoroutinefunction
 from logging.handlers import TimedRotatingFileHandler
 from operator import attrgetter
 
@@ -264,12 +264,11 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             if argdevice == "*":
                 devices = home.devices
                 break
+            device = home.search_device_by_id(argdevice)
+            if device is None:
+                logger.error("Could not find device %s", argdevice)
             else:
-                device = home.search_device_by_id(argdevice)
-                if device is None:
-                    logger.error("Could not find device %s", argdevice)
-                else:
-                    devices.append(device)
+                devices.append(device)
 
         for device in devices:
             if args.device_new_label:
@@ -573,12 +572,11 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             if argrule == "*":
                 rules = home.rules
                 break
+            r = home.search_rule_by_id(argrule)
+            if r is None:
+                logger.error("Could not find automation rule %s", argrule)
             else:
-                r = home.search_rule_by_id(argrule)
-                if r is None:
-                    logger.error("Could not find automation rule %s", argrule)
-                else:
-                    rules.append(r)
+                rules.append(r)
 
         for rule in rules:
             if args.rule_activation is not None:
@@ -1097,14 +1095,13 @@ async def _execute_cli_action(
             result = "OK"
         print(f"{result}")
         return True
-    else:
-        logger.warning(
-            f"{str(action)} IS NOT allowed for channel {channel.functionalChannelType}"
-        )
-        print(
-            f"{str(action)} is not supported by channel {channel.functionalChannelType} (Index: {channel.index})"
-        )
-        return False
+    logger.warning(
+        f"{str(action)} IS NOT allowed for channel {channel.functionalChannelType}"
+    )
+    print(
+        f"{str(action)} is not supported by channel {channel.functionalChannelType} (Index: {channel.index})"
+    )
+    return False
 
 
 def _channel_supports_action(channel: FunctionalChannel, action: CliActions) -> bool:

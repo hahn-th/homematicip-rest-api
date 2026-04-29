@@ -124,9 +124,9 @@ async def test_home_download_configuration_result_failed(fake_home: Home):
     mock_response.status = 500
     mock_response.status_text = "Internal Server Error"
 
-    with patch.object(fake_home, '_rest_call_async', return_value=mock_response):
-        with pytest.raises(HmipConnectionError):
-            await fake_home.download_configuration_async()
+    with patch.object(fake_home, '_rest_call_async', return_value=mock_response), \
+         pytest.raises(HmipConnectionError):
+        await fake_home.download_configuration_async()
 
 
 @pytest.mark.asyncio
@@ -137,9 +137,9 @@ async def test_home_download_configuration_auth_error(fake_home: Home):
     mock_response.status_text = "Forbidden"
     mock_response.text = '{"errorCode":"INVALID_AUTHORIZATION"}'
 
-    with patch.object(fake_home, '_rest_call_async', return_value=mock_response):
-        with pytest.raises(HmipAuthenticationError):
-            await fake_home.download_configuration_async()
+    with patch.object(fake_home, '_rest_call_async', return_value=mock_response), \
+         pytest.raises(HmipAuthenticationError):
+        await fake_home.download_configuration_async()
 
 
 def test_home_update_home(fake_home: Home):

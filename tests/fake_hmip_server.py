@@ -30,8 +30,7 @@ class FakeResolver:
                     "flags": socket.AI_NUMERICHOST,
                 }
             ]
-        else:
-            return await self._resolver.resolve(host, port, family)
+        return await self._resolver.resolve(host, port, family)
 
 
 class FakeServer:

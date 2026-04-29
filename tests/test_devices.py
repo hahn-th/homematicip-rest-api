@@ -144,7 +144,7 @@ def _build_full_flush_lock_controller():
 
 
 def test_getTypeFunctionalChannelMap(fake_home: Home):
-    for channelType in TYPE_FUNCTIONALCHANNEL_MAP.keys():
+    for channelType in TYPE_FUNCTIONALCHANNEL_MAP:
         fc = TYPE_FUNCTIONALCHANNEL_MAP[channelType](None, None)
         assert fc != None
 
