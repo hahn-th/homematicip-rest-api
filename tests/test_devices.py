@@ -2042,6 +2042,26 @@ def test_door_lock_drive3(fake_home: Home):
         d.set_lock_state(LockState.OPEN)
 
 
+def test_door_lock_drive_pro(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000DLP")
+        assert isinstance(d, DoorLockDrivePro)
+        assert d.lockState == LockState.UNLOCKED
+        assert d.motorState == MotorState.STOPPED
+        assert d.door_lock_channel == 1
+        assert d.autoRelockEnabled is False
+        assert d.doorOpeningDirection == "INWARDS"
+        assert d.lockSilenceMode == "OFF"
+        assert d.lockStateChangeReason == "MOTOR"
+        assert d.autoRelockDelay == 300.0
+        assert d.doorHandleType == "LEVER_HANDLE"
+        assert d.doorLockDirection == "RIGHT"
+        assert d.doorLockNeutralPosition == "VERTICAL"
+        assert d.doorLockTurns == 2
+
+        d.set_lock_state(LockState.OPEN)
+
+
 def test_door_lock_sensor(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000DLS")
