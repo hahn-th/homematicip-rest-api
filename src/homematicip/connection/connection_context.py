@@ -18,7 +18,12 @@ class ConnectionContextBuilder:
                                   auth_token: str | None = None,
                                   enforce_ssl: bool = True,
                                   httpx_client_session: httpx.AsyncClient | None = None,
-                                  ssl_ctx=None):
+                                  ssl_ctx=None,
+                                  websocket_heartbeat_interval: int = 30,
+                                  websocket_connect_timeout: int = 30,
+                                  websocket_message_stale_timeout: int = 28800,
+                                  websocket_initial_backoff: int = 8,
+                                  websocket_max_backoff: int = 900):
         """
         Create a new connection context and lookup urls
 
@@ -35,6 +40,11 @@ class ConnectionContextBuilder:
         ctx.client_auth_token = ClientTokenBuilder.build_client_token(accesspoint_id)
         ctx.ssl_ctx = ssl_ctx
         ctx.enforce_ssl = enforce_ssl
+        ctx.websocket_heartbeat_interval = websocket_heartbeat_interval
+        ctx.websocket_connect_timeout = websocket_connect_timeout
+        ctx.websocket_message_stale_timeout = websocket_message_stale_timeout
+        ctx.websocket_initial_backoff = websocket_initial_backoff
+        ctx.websocket_max_backoff = websocket_max_backoff
 
         cc = ClientCharacteristicsBuilder.get(accesspoint_id)
         ctx.rest_url, ctx.websocket_url = await ConnectionUrlResolver().lookup_urls_async(cc, lookup_url, enforce_ssl,
@@ -50,7 +60,12 @@ class ConnectionContextBuilder:
                       lookup_url: str = "https://lookup.homematic.com:48335/getHost",
                       auth_token: str | None = None,
                       enforce_ssl: bool = True,
-                      ssl_ctx: SSLContext | str | bool | None = None):
+                      ssl_ctx: SSLContext | str | bool | None = None,
+                      websocket_heartbeat_interval: int = 30,
+                      websocket_connect_timeout: int = 30,
+                      websocket_message_stale_timeout: int = 28800,
+                      websocket_initial_backoff: int = 8,
+                      websocket_max_backoff: int = 900):
         """
         Create a new connection context and lookup urls
 
@@ -66,6 +81,11 @@ class ConnectionContextBuilder:
         ctx.client_auth_token = ClientTokenBuilder.build_client_token(accesspoint_id)
         ctx.ssl_ctx = ssl_ctx
         ctx.enforce_ssl = enforce_ssl
+        ctx.websocket_heartbeat_interval = websocket_heartbeat_interval
+        ctx.websocket_connect_timeout = websocket_connect_timeout
+        ctx.websocket_message_stale_timeout = websocket_message_stale_timeout
+        ctx.websocket_initial_backoff = websocket_initial_backoff
+        ctx.websocket_max_backoff = websocket_max_backoff
 
         cc = ClientCharacteristicsBuilder.get(accesspoint_id)
         ctx.rest_url, ctx.websocket_url = ConnectionUrlResolver().lookup_urls(cc, lookup_url, enforce_ssl, ssl_ctx)
@@ -87,3 +107,8 @@ class ConnectionContext:
 
     enforce_ssl: bool = True
     ssl_ctx: SSLContext | str | bool | None = None
+    websocket_heartbeat_interval: int = 30
+    websocket_connect_timeout: int = 30
+    websocket_message_stale_timeout: int = 28800
+    websocket_initial_backoff: int = 8
+    websocket_max_backoff: int = 900

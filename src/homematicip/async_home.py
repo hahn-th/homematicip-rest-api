@@ -662,8 +662,10 @@ class AsyncHome(HomeMaticIPObject):
 
     async def enable_events(self, additional_message_handler: Callable = None):
         """Connect to Websocket and listen for events"""
-        if self._websocket_client and self._websocket_client.is_connected():
-            return
+        if self._websocket_client:
+            if self._websocket_client.is_running():
+                return
+            await self._websocket_client.stop()
 
         self._websocket_client = WebsocketHandler()
         self._websocket_client.add_on_message_handler(self._ws_on_message)
@@ -774,6 +776,36 @@ class AsyncHome(HomeMaticIPObject):
     def websocket_is_connected(self):
         """returns if the websocket is connected."""
         return self._websocket_client.is_connected() if self._websocket_client else False
+
+    def websocket_last_message_time(self) -> float | None:
+        """Returns the loop timestamp of the last received websocket message."""
+        if self._websocket_client is None:
+            return None
+        return self._websocket_client.last_message_time()
+
+    def websocket_message_count(self) -> int:
+        """Returns the number of received websocket messages."""
+        if self._websocket_client is None:
+            return 0
+        return self._websocket_client.message_count()
+
+    def websocket_seconds_since_last_message(self) -> float | None:
+        """Returns the seconds since the last received websocket message."""
+        if self._websocket_client is None:
+            return None
+        return self._websocket_client.seconds_since_last_message()
+
+    def websocket_reconnect_attempt_count(self) -> int:
+        """Returns the number of reconnect attempts in the current outage."""
+        if self._websocket_client is None:
+            return 0
+        return self._websocket_client.reconnect_attempt_count()
+
+    def websocket_last_disconnect_reason(self) -> str | None:
+        """Returns the last websocket disconnect or reconnect reason."""
+        if self._websocket_client is None:
+            return None
+        return self._websocket_client.last_disconnect_reason()
 
     def set_on_connected_handler(self, handler: Callable):
         """Sets a callback that is called when the WebSocket connection is established."""
