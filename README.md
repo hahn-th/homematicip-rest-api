@@ -117,6 +117,7 @@ A few examples:
 - [ ] HMIP-BWTH24 (Wall Thermostat Display with switching output – for brand switches, 24V)
 - [x] HMIP-DBB (Doorbell Push-Button)
 - [x] HMIP-DLD (Door Lock Drive)
+- [x] HMIP-DLP (Door Lock Drive Pro)
 - [x] HMIP-DLS (Door Lock Sensor)
 - [x] HmIP-DRG-DALI (Dali Gateway - readonly at the moment)
 - [x] HMIP-DRBLI4 (Blind Actuator for DIN rail mount – 4 channels)
