@@ -38,9 +38,14 @@ class Buckets:
         """
         start_time = time.time()
         while True:
-            if tokens <= await self.tokens():
-                self._tokens -= tokens
-                return True
+            # Hold the lock for the check + decrement so concurrent callers
+            # cannot both observe enough tokens and both take them. Release
+            # before sleeping so a refill can complete and other waiters can
+            # try in the meantime.
+            async with self.lock:
+                if tokens <= await self.tokens():
+                    self._tokens -= tokens
+                    return True
 
             if time.time() - start_time > timeout:
                 raise TimeoutError("Timeout while waiting for token.")

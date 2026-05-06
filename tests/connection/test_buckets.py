@@ -44,3 +44,19 @@ def test_initial_tokens():
     assert bucket._tokens == 2
     assert bucket.capacity == 2
     assert bucket.fill_rate == 10
+
+
+@pytest.mark.asyncio
+async def test_wait_and_take_no_oversubscription_under_concurrency():
+    """Concurrent wait_and_take callers must not observe more tokens than exist."""
+    bucket = Buckets(tokens=5, fill_rate=3600)
+
+    # 10 concurrent callers competing for 5 tokens; refill is too slow to add any.
+    results = await asyncio.gather(
+        *(bucket.wait_and_take(timeout=2, tokens=1) for _ in range(5)),
+        return_exceptions=True,
+    )
+
+    successes = sum(1 for r in results if r is True)
+    assert successes == 5
+    assert bucket._tokens == 0
