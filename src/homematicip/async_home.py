@@ -46,7 +46,6 @@ class AsyncHome(HomeMaticIPObject):
         # Connection Stuff
         self._connection_context: ConnectionContext | None = None
         self._websocket_client: WebsocketHandler | None = None
-        self.websocket_reconnect_on_error = True
 
         self._auth_token: str | None = None
 
@@ -54,7 +53,6 @@ class AsyncHome(HomeMaticIPObject):
         self._on_create = []
         self._on_channel_event = []
         self.onEvent = EventHook()
-        self.onWsError = EventHook()
 
         # Home Attributes
         self.apExchangeClientId = None

@@ -36,7 +36,6 @@ class WebsocketHandler:
         self.STALE_CHECK_INTERVAL = 60
         self.STALE_WARNING_SECONDS = 300
         self.STALE_ERROR_SECONDS = 1800
-        self.url = None
         self._stop_event = asyncio.Event()
         self._websocket_connected = asyncio.Event()
         self._reconnect_task = None
