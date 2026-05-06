@@ -111,3 +111,18 @@ def test_redact_sensitive_data_nested():
     assert redacted["nested"]["safe"] == "value"
     assert redacted["items"][0]["ACCESSPOINT-ID"] == "REDACTED"
     assert redacted["items"][1]["value"] == "still-visible"
+
+
+def test_get_verify_returns_ssl_context_when_provided():
+    sentinel = object()
+    assert RestConnection._get_verify(enforce_ssl=True, ssl_context=sentinel) is sentinel
+    assert RestConnection._get_verify(enforce_ssl=False, ssl_context=sentinel) is sentinel
+
+
+def test_get_verify_disables_ssl_when_enforce_false():
+    """enforce_ssl=False with no ssl_context must disable verification."""
+    assert RestConnection._get_verify(enforce_ssl=False, ssl_context=None) is False
+
+
+def test_get_verify_enforces_ssl_when_enforce_true():
+    assert RestConnection._get_verify(enforce_ssl=True, ssl_context=None) is True

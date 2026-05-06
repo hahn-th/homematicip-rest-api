@@ -89,7 +89,11 @@ class WebsocketHandler:
                                 ATTR_ACCESSPOINT_ID: context.accesspoint_id
                             },
                             heartbeat=self.HEARTBEAT_INTERVAL,
-                            ssl=getattr(context, 'ssl_ctx', True),
+                            ssl=(
+                                context.ssl_ctx
+                                if context.ssl_ctx is not None
+                                else context.enforce_ssl
+                            ),
                         ),
                         timeout=self.CONNECT_TIMEOUT,
                     )

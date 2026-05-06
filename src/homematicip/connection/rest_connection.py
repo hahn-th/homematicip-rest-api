@@ -178,7 +178,4 @@ class RestConnection:
     def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | str | bool:
         if ssl_context is not None:
             return ssl_context
-        if enforce_ssl:
-            return enforce_ssl
-
-        return True
+        return enforce_ssl
