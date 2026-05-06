@@ -109,8 +109,20 @@ def test_redact_sensitive_data_nested():
     assert redacted["nested"]["clientId"] == "REDACTED"
     assert redacted["nested"]["PIN"] == "REDACTED"
     assert redacted["nested"]["safe"] == "value"
+
+
     assert redacted["items"][0]["ACCESSPOINT-ID"] == "REDACTED"
     assert redacted["items"][1]["value"] == "still-visible"
+
+
+def test_redact_sensitive_data_authorization_pin():
+    """Door-lock commands send authorizationPin in the request body and the
+    body is logged at debug level. Make sure the PIN is redacted."""
+    redacted = RestConnection._redact_sensitive_data(
+        {"authorizationPin": "1234", "channelIndex": 1}
+    )
+    assert redacted["authorizationPin"] == "REDACTED"
+    assert redacted["channelIndex"] == 1
 
 
 def test_get_verify_returns_ssl_context_when_provided():

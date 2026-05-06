@@ -23,6 +23,7 @@ SENSITIVE_LOG_KEYS = {
     "ACCESSPOINT-ID",
     "authToken",
     "AUTHTOKEN",
+    "authorizationPin",
     "clientAuthToken",
     "CLIENTAUTH",
     "clientId",
