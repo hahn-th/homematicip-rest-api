@@ -265,8 +265,13 @@ def test_set_pin(fake_home: Home):
         fake_home.set_pin("5555", "1234")
         assert get_pin(fake_home) == "5555"
 
+        # The PIN sent for one-shot authentication must not leak into the
+        # connection's persistent headers (regression: it used to).
+        assert "PIN" not in fake_home._connection._headers
+
         fake_home.set_pin(None, "5555")
         assert get_pin(fake_home) is None
+        assert "PIN" not in fake_home._connection._headers
 
 
 def test_set_timezone(fake_home: Home):
@@ -437,6 +442,22 @@ def test_home_unknown_types(fake_home: Home):
         func_home = fake_home.functionalHomes[0]
         assert isinstance(func_home, FunctionalHome)
         assert func_home.solution == "DUMMY_FUNCTIONAL_HOME"
+
+
+def test_home_unknown_functional_home_not_duplicated_on_reload(fake_home: Home):
+    """Repeated state updates must not append duplicate FunctionalHome entries
+    for unknown solution types (regression: previously the unknown-type fallback
+    path always appended without deduping by solution)."""
+    with no_ssl_verification():
+        fake_home._rest_call("fake/loadConfig", {"file": "unknown_types.json"})
+        fake_home.get_current_state(clear_config=True)
+        before = len(fake_home.functionalHomes)
+        assert before >= 1
+
+        # Second update without clear_config (functionalHomes is not cleared
+        # by clear_config, so this is the relevant code path).
+        fake_home.get_current_state()
+        assert len(fake_home.functionalHomes) == before
 
 
 def test_home_getOAuthOTK(fake_home: Home):

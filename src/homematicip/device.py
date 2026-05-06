@@ -126,13 +126,13 @@ class Device(BaseDevice):
         "IFeatureDeviceMountingModuleError": ["mountingModuleError"],
         "IFeatureDeviceOverheated": ["deviceOverheated"],
         "IFeatureDeviceOverloaded": ["deviceOverloaded"],
-        "IFeatureDeviceParticulateMatterSensorCommunicationError": "particulateMatterSensorCommunicationError",
-        "IFeatureDeviceParticulateMatterSensorError": "particulateMatterSensorError",
+        "IFeatureDeviceParticulateMatterSensorCommunicationError": ["particulateMatterSensorCommunicationError"],
+        "IFeatureDeviceParticulateMatterSensorError": ["particulateMatterSensorError"],
         "IFeatureDevicePowerFailure": ["devicePowerFailureDetected"],
         "IFeatureDeviceSensorCommunicationError": ["sensorCommunicationError"],
         "IFeatureDeviceSensorError": ["sensorError"],
-        "IFeatureDeviceTemperatureHumiditySensorCommunicationError": "temperatureHumiditySensorCommunicationError",
-        "IFeatureDeviceTemperatureHumiditySensorError": "temperatureHumiditySensorError",
+        "IFeatureDeviceTemperatureHumiditySensorCommunicationError": ["temperatureHumiditySensorCommunicationError"],
+        "IFeatureDeviceTemperatureHumiditySensorError": ["temperatureHumiditySensorError"],
         "IFeatureDeviceTemperatureOutOfRange": ["temperatureOutOfRange"],
         "IFeatureDeviceUndervoltage": ["deviceUndervoltage"],
         "IFeatureMinimumFloorHeatingValvePosition": ["minimumFloorHeatingValvePosition"],
@@ -143,7 +143,7 @@ class Device(BaseDevice):
             "pulseWidthModulationAtLowFloorHeatingValvePositionEnabled"],
         "IFeatureRssiValue": ["rssiDeviceValue"],
         "IFeatureShortCircuitDataLine": ["shortCircuitDataLine"],
-        "IOptionalFeatureColorTemperature": "colorTemperature",
+        "IOptionalFeatureColorTemperature": ["colorTemperature"],
         # "IOptionalFeatureColorTemperatureDim2Warm": false,
         # "IOptionalFeatureColorTemperatureDynamicDaylight": false,
         "IOptionalFeatureControlsMountingOrientation": ["controlsMountingOrientation"],
@@ -2708,7 +2708,7 @@ class DoorLockDrive(OperationLockableDevice):
         Returns:
             the result of the _restCall
         """
-        self._run_non_async(self.set_lock_state_async, doorLockState, pin, channelIndex)
+        return self._run_non_async(self.set_lock_state_async, doorLockState, pin, channelIndex)
 
     async def set_lock_state_async(self, doorLockState: LockState, pin="", channelIndex=1):
         """sets the door lock state

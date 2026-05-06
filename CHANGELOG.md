@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..master)
 
+### Fixed
+
+- Fix `set_pin_async` leaking the old PIN into the connection's persistent headers (subsequent requests carried it indefinitely)
+- Fix SSL verification not actually disabled when `enforce_ssl=False` (REST + websocket)
+- Fix race condition in `Buckets.wait_and_take` where concurrent callers could oversubscribe the rate-limit bucket
+- Fix duplicate `functionalHome` entries accumulating on repeated state updates for unknown solution types
+- Fix README example calling `set_auth_token` before `init()` (would fail with `AttributeError`)
+- Fix Python 3.14 compatibility in sync wrappers (`_run_non_async`, `_rest_call`): create an event loop on demand instead of relying on the now-removed default loop behavior
+- Fix door-lock `authorizationPin` leaking into debug logs (added to redaction set)
+- Fix several `_supportedFeatureAttributeMap` entries that were bare strings instead of lists, so attributes like `colorTemperature` and the particulate-matter / temperature-humidity sensor error flags were never actually set on devices
+- Fix `DoorLockDrive.set_lock_state` and `HeatingCoolingProfile.update_profile` sync wrappers dropping the async return value
+
 ## [2.9.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.8.0..2.9.0)
 
 ### Added

@@ -72,3 +72,18 @@ async def test_lookup_urls_async_without_client_session(mocker):
     patched.assert_called_once_with(lookup_url, json=client_characteristics)
     assert rest_url == "https://example.com/rest"
     assert websocket_url == "wss://example.com/ws"
+
+
+def test_get_verify_returns_ssl_context_when_provided():
+    sentinel = object()
+    assert ConnectionUrlResolver._get_verify(enforce_ssl=True, ssl_context=sentinel) is sentinel
+    assert ConnectionUrlResolver._get_verify(enforce_ssl=False, ssl_context=sentinel) is sentinel
+
+
+def test_get_verify_disables_ssl_when_enforce_false():
+    """enforce_ssl=False with no ssl_context must disable verification."""
+    assert ConnectionUrlResolver._get_verify(enforce_ssl=False, ssl_context=None) is False
+
+
+def test_get_verify_enforces_ssl_when_enforce_true():
+    assert ConnectionUrlResolver._get_verify(enforce_ssl=True, ssl_context=None) is True

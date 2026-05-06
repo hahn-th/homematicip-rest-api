@@ -361,24 +361,28 @@ class AsyncHome(HomeMaticIPObject):
     def _get_functionalHomes(self, json_state):
         """loads the functional homes."""
         for solution, functionalHome in json_state["functionalHomes"].items():
+            # Reuse an existing functionalHome with the same solution if any,
+            # so that repeated state updates don't accumulate duplicates.
+            existing = next(
+                (fh for fh in self.functionalHomes if fh.solution == solution),
+                None,
+            )
             try:
                 solutionType = FunctionalHomeType.from_str(solution)
-                h = None
-                for fh in self.functionalHomes:
-                    if fh.solution == solution:
-                        h = fh
-                        break
-                if h is None:
-                    h = self._typeFunctionalHomeMap[solutionType](self._connection)
-                    self.functionalHomes.append(h)
-                h.from_json(functionalHome, self.groups)
+                if existing is None:
+                    existing = self._typeFunctionalHomeMap[solutionType](
+                        self._connection
+                    )
+                    self.functionalHomes.append(existing)
+                existing.from_json(functionalHome, self.groups)
             except:
-                h = FunctionalHome(self._connection)
-                h.from_json(functionalHome, self.groups)
-                LOGGER.warning(
-                    "There is no class for functionalHome '%s' yet", solution
-                )
-                self.functionalHomes.append(h)
+                if existing is None:
+                    existing = FunctionalHome(self._connection)
+                    self.functionalHomes.append(existing)
+                    LOGGER.warning(
+                        "There is no class for functionalHome '%s' yet", solution
+                    )
+                existing.from_json(functionalHome, self.groups)
 
     def _load_functionalChannels(self):
         """loads the functional channels for all devices"""
@@ -569,7 +573,10 @@ class AsyncHome(HomeMaticIPObject):
 
         headers = None
         if old_pin:
-            headers = self._connection._headers
+            # Copy before mutation: self._connection._headers is the live
+            # connection-wide dict, and leaking the old PIN into it would
+            # leak into every subsequent request.
+            headers = dict(self._connection._headers)
             headers["PIN"] = str(old_pin)
 
         result = await self._rest_call_async("home/setPin", body={"pin": new_pin}, custom_header=headers)

@@ -23,6 +23,7 @@ SENSITIVE_LOG_KEYS = {
     "ACCESSPOINT-ID",
     "authToken",
     "AUTHTOKEN",
+    "authorizationPin",
     "clientAuthToken",
     "CLIENTAUTH",
     "clientId",
@@ -178,7 +179,4 @@ class RestConnection:
     def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | str | bool:
         if ssl_context is not None:
             return ssl_context
-        if enforce_ssl:
-            return enforce_ssl
-
-        return True
+        return enforce_ssl
