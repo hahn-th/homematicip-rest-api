@@ -60,7 +60,7 @@ class HomeMaticIPObject:
             body (dict): the body to send
             custom_header (dict): the custom header to send. This will be merged with the default header
         """
-        loop = asyncio.get_event_loop()
+        loop = self._get_or_create_loop()
         return loop.run_until_complete(self._connection.async_post(path, body, custom_header))
 
     async def _rest_call_async(self, path, body=None, custom_header: dict = None):
@@ -122,7 +122,13 @@ class HomeMaticIPObject:
         return "".join([f"{x}({self.__dict__[x]}) " for x in self._dictAttributes])[:-1]
 
     def _run_non_async(self, method, *args, **kwargs):
-        """Run an async method in a sync way.
+        """Run an async method in a sync way."""
+        loop = self._get_or_create_loop()
+        return loop.run_until_complete(method(*args, **kwargs))
+
+    @staticmethod
+    def _get_or_create_loop() -> asyncio.AbstractEventLoop:
+        """Return a usable event loop for sync wrappers.
 
         Python 3.14 raises ``RuntimeError`` from ``asyncio.get_event_loop()``
         when no loop is set in the current thread (the deprecation finally
@@ -131,8 +137,8 @@ class HomeMaticIPObject:
         call remain usable on later ones.
         """
         try:
-            loop = asyncio.get_event_loop()
+            return asyncio.get_event_loop()
         except RuntimeError:
             loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
-        return loop.run_until_complete(method(*args, **kwargs))
+            return loop
