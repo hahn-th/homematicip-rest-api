@@ -48,15 +48,33 @@ def test_initial_tokens():
 
 @pytest.mark.asyncio
 async def test_wait_and_take_no_oversubscription_under_concurrency():
-    """Concurrent wait_and_take callers must not observe more tokens than exist."""
-    bucket = Buckets(tokens=5, fill_rate=3600)
+    """More callers than tokens must not oversubscribe.
 
-    # 10 concurrent callers competing for 5 tokens; refill is too slow to add any.
+    Without the lock around the check + decrement, two callers can observe
+    the same token count and both decrement, taking the bucket negative.
+    The yield injected into ``tokens()`` deterministically opens that race
+    window: every caller awaits ``tokens()`` before deciding to take, so
+    without the lock they all observe the same starting value.
+    """
+    bucket = Buckets(tokens=5, fill_rate=3600)
+    real_tokens = bucket.tokens
+
+    async def yielding_tokens():
+        result = await real_tokens()
+        await asyncio.sleep(0)  # force a scheduling yield between read and decrement
+        return result
+
+    bucket.tokens = yielding_tokens
+
+    # 20 callers competing for 5 tokens. With the lock: exactly 5 succeed,
+    # 15 time out, bucket settles at 0. Without the lock: would oversubscribe.
     results = await asyncio.gather(
-        *(bucket.wait_and_take(timeout=2, tokens=1) for _ in range(5)),
+        *(bucket.wait_and_take(timeout=2, tokens=1) for _ in range(20)),
         return_exceptions=True,
     )
 
     successes = sum(1 for r in results if r is True)
+    timeouts = sum(1 for r in results if isinstance(r, TimeoutError))
     assert successes == 5
-    assert bucket._tokens == 0
+    assert timeouts == 15
+    assert bucket._tokens == 0  # never went negative
