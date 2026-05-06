@@ -444,6 +444,22 @@ def test_home_unknown_types(fake_home: Home):
         assert func_home.solution == "DUMMY_FUNCTIONAL_HOME"
 
 
+def test_home_unknown_functional_home_not_duplicated_on_reload(fake_home: Home):
+    """Repeated state updates must not append duplicate FunctionalHome entries
+    for unknown solution types (regression: previously the unknown-type fallback
+    path always appended without deduping by solution)."""
+    with no_ssl_verification():
+        fake_home._rest_call("fake/loadConfig", {"file": "unknown_types.json"})
+        fake_home.get_current_state(clear_config=True)
+        before = len(fake_home.functionalHomes)
+        assert before >= 1
+
+        # Second update without clear_config (functionalHomes is not cleared
+        # by clear_config, so this is the relevant code path).
+        fake_home.get_current_state()
+        assert len(fake_home.functionalHomes) == before
+
+
 def test_home_getOAuthOTK(fake_home: Home):
     with no_ssl_verification():
         token = fake_home.get_OAuth_OTK()
