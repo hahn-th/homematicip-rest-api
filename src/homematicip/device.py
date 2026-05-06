@@ -1,5 +1,6 @@
 from collections import Counter
 from collections.abc import Iterable
+from typing import ClassVar
 
 from homematicip.base.enums import *
 from homematicip.base.functionalChannels import FunctionalChannel
@@ -13,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 class BaseDevice(HomeMaticIPObject):
     """Base device class. This is the foundation for homematicip and external (hue) devices"""
 
-    _supportedFeatureAttributeMap = {}
+    _supportedFeatureAttributeMap: ClassVar[dict[str, list[str]]] = {}
 
     def __init__(self, connection):
         super().__init__(connection)
@@ -86,8 +87,8 @@ class BaseDevice(HomeMaticIPObject):
         try:
             fc = self._typeFunctionalChannelMap[channel_type](self, self._connection)
             fc.from_json(json_state, groups)
-        except Exception as e:  # pragma: no cover
-            LOGGER.warning(f"Error while parsing functionalChannel: {e}\nJS: {json_state}")
+        except Exception:  # pragma: no cover
+            LOGGER.exception("Error while parsing functionalChannel\nJS: %s", json_state)
 
         return fc
 
@@ -117,7 +118,7 @@ class BaseDevice(HomeMaticIPObject):
 class Device(BaseDevice):
     """this class represents a generic homematic ip device"""
 
-    _supportedFeatureAttributeMap = {
+    _supportedFeatureAttributeMap: ClassVar[dict[str, list[str]]] = {
         "IFeatureBusConfigMismatch": ["busConfigMismatch"],
         "IFeatureDeviceCoProError": ["coProFaulty"],
         "IFeatureDeviceCoProRestart": ["coProRestartNeeded"],

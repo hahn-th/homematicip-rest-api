@@ -51,6 +51,11 @@ select = [
     "SIM",  # simplify
     "RET",  # return statements
     "PIE",  # misc lints
+    "G",    # logging-format (no f-strings in log messages, use .exception not .error+exc_info)
+    "LOG",  # logging best practices
+    "RUF010",  # use !s/!r conversion flags
+    "RUF012",  # mutable class attributes need ClassVar
+    "RUF013",  # explicit Optional (no `x: int = None`)
 ]
 ignore = [
     "F403",   # star imports (to be addressed separately)

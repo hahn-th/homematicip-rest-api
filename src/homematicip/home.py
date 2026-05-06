@@ -50,7 +50,7 @@ class Home(AsyncHome):
     def set_location(self, city, latitude, longitude):
         return self._run_non_async(self.set_location_async, city, latitude, longitude)
 
-    def set_pin(self, newPin: str, oldPin: str = None) -> dict:
+    def set_pin(self, newPin: str, oldPin: str | None = None) -> dict:
         return self._run_non_async(self.set_pin_async, newPin, oldPin)
 
     def set_powermeter_unit_price(self, price):

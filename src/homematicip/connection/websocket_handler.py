@@ -120,15 +120,15 @@ class WebsocketHandler:
                     await handler(*args)
                 else:
                     handler(*args)
-            except Exception as e:
+            except Exception:
                 handler_name = getattr(handler, "__name__", repr(handler))
-                LOGGER.error(f"Error in handler '{handler_name}': {e}", exc_info=True)
+                LOGGER.exception("Error in handler '%s'", handler_name)
 
     async def _connect(self, context: ConnectionContext):
         backoff = self.INITIAL_BACKOFF
         while not self._stop_event.is_set():
             try:
-                LOGGER.info(f"Connect to {context.websocket_url}")
+                LOGGER.info("Connect to %s", context.websocket_url)
 
                 async with aiohttp.ClientSession() as session:
                     ws = await asyncio.wait_for(
@@ -151,7 +151,10 @@ class WebsocketHandler:
                     async with ws:
                         backoff = self.INITIAL_BACKOFF
                         self._reconnect_attempt_count = 0
-                        LOGGER.info(f"WebSocket connection established to {context.websocket_url}.")
+                        LOGGER.info(
+                            "WebSocket connection established to %s.",
+                            context.websocket_url,
+                        )
                         self._websocket_connected.set()
                         self._disconnect_notified = False
                         await self._call_handlers(self._on_connected_handler)
@@ -209,8 +212,8 @@ class WebsocketHandler:
     async def _handle_ws_message(self, message: WSMessage):
         try:
             await self._call_handlers(self._on_message_handlers, message.data)
-        except Exception as e:
-            LOGGER.error(f"Error handling message: {e}", exc_info=True)
+        except Exception:
+            LOGGER.exception("Error handling message")
 
     async def _cleanup(self):
         if self._disconnect_notified:
@@ -227,8 +230,8 @@ class WebsocketHandler:
 
         try:
             await self._call_handlers(self._on_reconnect_handler, reason)
-        except Exception as handler_error:
-            LOGGER.error(f"Error in reconnect handler: {handler_error}", exc_info=True)
+        except Exception:
+            LOGGER.exception("Error in reconnect handler")
 
     def _apply_context_settings(self, context: ConnectionContext):
         self.HEARTBEAT_INTERVAL = context.websocket_heartbeat_interval
@@ -273,8 +276,8 @@ class WebsocketHandler:
             task.result()
         except asyncio.CancelledError:
             LOGGER.info("[Task] Reconnect task was cancelled.")
-        except Exception as e:
-            LOGGER.error(f"[Task] Error in reconnect task: {e}")
+        except Exception:
+            LOGGER.exception("[Task] Error in reconnect task")
 
     def is_connected(self):
         """Returns True if the WebSocket connection is active."""

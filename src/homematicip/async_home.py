@@ -270,8 +270,10 @@ class AsyncHome(HomeMaticIPObject):
                 else:
                     self.devices.append(self._parse_device(raw))
             except Exception as err:
-                LOGGER.error(
-                    f"An exception in _get_devices (device-id {id_}) of type {type(err).__name__} occurred: {err}"
+                LOGGER.exception(
+                    "An exception in _get_devices (device-id %s) of type %s occurred",
+                    id_,
+                    type(err).__name__,
                 )
                 return
 
@@ -667,7 +669,7 @@ class AsyncHome(HomeMaticIPObject):
             "home/startInclusionModeForDevice", body=data
         )
 
-    async def enable_events(self, additional_message_handler: Callable = None):
+    async def enable_events(self, additional_message_handler: Callable | None = None):
         """Connect to Websocket and listen for events"""
         if self._websocket_client:
             if self._websocket_client.is_running():

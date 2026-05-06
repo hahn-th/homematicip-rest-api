@@ -2,6 +2,7 @@ import asyncio
 import pathlib
 import socket
 import ssl
+from typing import ClassVar
 
 import aiohttp
 from aiohttp import web
@@ -10,7 +11,7 @@ from aiohttp.test_utils import unused_port
 
 
 class FakeResolver:
-    _LOCAL_HOST = {0: "127.0.0.1", socket.AF_INET: "127.0.0.1", socket.AF_INET6: "::1"}
+    _LOCAL_HOST: ClassVar[dict] = {0: "127.0.0.1", socket.AF_INET: "127.0.0.1", socket.AF_INET6: "::1"}
 
     def __init__(self, fakes, *, loop):
         """fakes -- dns -> port dict"""
@@ -100,7 +101,7 @@ class BaseFakeHmip:
 
 
 class FakeLookupHmip(BaseFakeHmip):
-    host_response = {"urlREST": "abc", "urlWebSocket": "def"}
+    host_response: ClassVar[dict] = {"urlREST": "abc", "urlWebSocket": "def"}
 
     def add_routes(self):
         self.app.router.add_routes([web.post("/getHost", self.get_host)])
@@ -112,7 +113,7 @@ class FakeLookupHmip(BaseFakeHmip):
 class FakeConnectionHmip(BaseFakeHmip):
     """Test various connection issues"""
 
-    js_response = {"response": True}
+    js_response: ClassVar[dict] = {"response": True}
 
     def add_routes(self):
         self.app.router.add_routes(

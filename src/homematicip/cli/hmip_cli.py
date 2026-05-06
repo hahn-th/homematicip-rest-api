@@ -59,7 +59,7 @@ async def main_async(args=None):
     except Exception as e:
         # stderr and exit code 255
         sys.stderr.write("\n")
-        sys.stderr.write(f"\033[91m{type(e).__name__}: {str(e)}\033[0;0m")
+        sys.stderr.write(f"\033[91m{type(e).__name__}: {e!s}\033[0;0m")
         sys.stderr.write("\n")
         # at this point, you're guaranteed to have args and thus log_level
         if parsed_args.debug_level:
@@ -152,7 +152,7 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         command_entered = True
         sorted_devices = sorted(home.devices, key=attrgetter("deviceType", "label"))
         for device in sorted_devices:
-            print(f"{device.id} {str(device)}")
+            print(f"{device.id} {device!s}")
 
     if args.list_groups:
         command_entered = True
@@ -255,7 +255,7 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         command_entered = True
         sorted_rules = sorted(home.rules, key=attrgetter("ruleType", "label"))
         for device in sorted_rules:
-            print(f"{device.id} {str(device)}")
+            print(f"{device.id} {device!s}")
 
     if args.device:
         command_entered = False
@@ -411,7 +411,7 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
                 print(device)
                 print("------")
                 for fc in device.functionalChannels:
-                    print(f"   Ch {fc.index}: {str(fc)}")
+                    print(f"   Ch {fc.index}: {fc!s}")
                     if (
                             args.print_allowed_commands
                             and fc.functionalChannelType in FUNCTIONALCHANNEL_CLI_MAP
@@ -560,10 +560,10 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             print(group)
             print("------")
             if group.metaGroup:
-                print(f"   Metagroup: {str(group.metaGroup)}")
+                print(f"   Metagroup: {group.metaGroup!s}")
                 print("------")
             for fc in group.devices:
-                print(f"   Assigned device: {str(fc)}")
+                print(f"   Assigned device: {fc!s}")
 
     if args.rules:
         command_entered = False
@@ -1028,7 +1028,7 @@ def get_parser():
     return parser
 
 
-def _get_target_channel_indices(device: BaseDevice, channels: list = None) -> list:
+def _get_target_channel_indices(device: BaseDevice, channels: list | None = None) -> list:
     """Get list with adressed channel indices. Is the channels list None, than the channel 1 is used."""
     target_channels_indices = []
     if channels:
@@ -1038,7 +1038,7 @@ def _get_target_channel_indices(device: BaseDevice, channels: list = None) -> li
     return target_channels_indices
 
 
-def _get_target_channels(device: Device, channels: list = None):
+def _get_target_channels(device: Device, channels: list | None = None):
     target_channels_indices = _get_target_channel_indices(device, channels)
 
     target_channels = [
@@ -1067,7 +1067,7 @@ async def _execute_cli_action(
     """Execute the callback, if allowed"""
     if _channel_supports_action(channel, action):
         logger.debug(
-            f"{str(action)} allowed for channel {channel.functionalChannelType}"
+            "%s allowed for channel %s", action, channel.functionalChannelType
         )
         print(
             f"Execute {action} for channel {channel.functionalChannelType} (Index: {channel.index})",
@@ -1096,10 +1096,10 @@ async def _execute_cli_action(
         print(f"{result}")
         return True
     logger.warning(
-        f"{str(action)} IS NOT allowed for channel {channel.functionalChannelType}"
+        "%s IS NOT allowed for channel %s", action, channel.functionalChannelType
     )
     print(
-        f"{str(action)} is not supported by channel {channel.functionalChannelType} (Index: {channel.index})"
+        f"{action!s} is not supported by channel {channel.functionalChannelType} (Index: {channel.index})"
     )
     return False
 

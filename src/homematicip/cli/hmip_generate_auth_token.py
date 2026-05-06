@@ -10,7 +10,7 @@ from homematicip.connection.connection_context import ConnectionContextBuilder
 from homematicip.connection.rest_connection import RestConnection
 
 
-async def run_auth(access_point: str = None, devicename: str = None, pin: str = None):
+async def run_auth(access_point: str | None = None, devicename: str | None = None, pin: str | None = None):
     print(
         "If you are about to connect to a HomematicIP HCU1 you have to press the button on top of the device, before you continue.")
     print("From now, you have 5 Minutes to complete the registration process.")

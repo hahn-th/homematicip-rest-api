@@ -2383,7 +2383,7 @@ class UniversalLightChannel(FunctionalChannel):
             self._connection, self.device.id, self.index, on
         )
 
-    async def start_light_scene_async(self, light_scene_id: int, dim_level: float = None):
+    async def start_light_scene_async(self, light_scene_id: int, dim_level: float | None = None):
         """Start a light scene."""
         if dim_level is None:
             dim_level = self.dimLevel

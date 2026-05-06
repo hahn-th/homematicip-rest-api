@@ -266,7 +266,7 @@ async def set_hue_saturation_dim_level_with_time_async(rest_connection: RestConn
 
 
 async def set_lock_state_async(rest_connection: RestConnection, device_id: str, channel_index: int, lock_state: str,
-                               pin: str = None):
+                               pin: str | None = None):
     """
     Set the door lock state.
 

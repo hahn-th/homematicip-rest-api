@@ -52,7 +52,7 @@ class HomeMaticIPObject:
         if handler in self._on_update:
             self._on_update.remove(handler)
 
-    def _rest_call(self, path, body=None, custom_header: dict = None) -> RestResult:
+    def _rest_call(self, path, body=None, custom_header: dict | None = None) -> RestResult:
         """Run a rest call non async.
 
         Args:
@@ -63,7 +63,7 @@ class HomeMaticIPObject:
         loop = self._get_or_create_loop()
         return loop.run_until_complete(self._connection.async_post(path, body, custom_header))
 
-    async def _rest_call_async(self, path, body=None, custom_header: dict = None):
+    async def _rest_call_async(self, path, body=None, custom_header: dict | None = None):
         """Run a rest call async
 
         Args:

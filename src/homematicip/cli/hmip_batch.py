@@ -50,7 +50,7 @@ async def main_async(args=None):
     except Exception as e:
         # stderr and exit code 255
         sys.stderr.write("\n")
-        sys.stderr.write(f"\033[91m{type(e).__name__}: {str(e)}\033[0;0m")
+        sys.stderr.write(f"\033[91m{type(e).__name__}: {e!s}\033[0;0m")
         sys.stderr.write("\n")
         # at this point, you're guaranteed to have args and thus log_level
 
@@ -87,7 +87,9 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             continue
 
         if not isinstance(params, dict):
-            logger.error(f"Parameters for function '{function_name}' must be a dictionary.")
+            logger.error(
+                "Parameters for function '%s' must be a dictionary.", function_name
+            )
             continue
 
         if not first_run:
