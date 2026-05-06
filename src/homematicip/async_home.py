@@ -569,7 +569,10 @@ class AsyncHome(HomeMaticIPObject):
 
         headers = None
         if old_pin:
-            headers = self._connection._headers
+            # Copy before mutation: self._connection._headers is the live
+            # connection-wide dict, and leaking the old PIN into it would
+            # leak into every subsequent request.
+            headers = dict(self._connection._headers)
             headers["PIN"] = str(old_pin)
 
         result = await self._rest_call_async("home/setPin", body={"pin": new_pin}, custom_header=headers)

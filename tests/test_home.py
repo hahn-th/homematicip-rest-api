@@ -265,8 +265,13 @@ def test_set_pin(fake_home: Home):
         fake_home.set_pin("5555", "1234")
         assert get_pin(fake_home) == "5555"
 
+        # The PIN sent for one-shot authentication must not leak into the
+        # connection's persistent headers (regression: it used to).
+        assert "PIN" not in fake_home._connection._headers
+
         fake_home.set_pin(None, "5555")
         assert get_pin(fake_home) is None
+        assert "PIN" not in fake_home._connection._headers
 
 
 def test_set_timezone(fake_home: Home):
