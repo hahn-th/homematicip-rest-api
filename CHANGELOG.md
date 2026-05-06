@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..master)
 
+### Added
+
+- Add websocket staleness detection: configurable warning (5m) and error (30m) thresholds fire registered handlers when the websocket reports connected but has gone silent. Register via `home.set_on_websocket_stale_handler(handler)`. Complements the existing 8h `MESSAGE_STALE_TIMEOUT` reconnect safety net by surfacing the condition much earlier.
+
 ## [2.9.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.8.0..2.9.0)
 
 ### Added

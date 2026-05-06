@@ -30,20 +30,30 @@ class WebsocketHandler:
         self.HEARTBEAT_INTERVAL = 30
         self.CONNECT_TIMEOUT = 30
         self.MESSAGE_STALE_TIMEOUT = 28800
+        # Staleness early-warning thresholds. The MESSAGE_STALE_TIMEOUT
+        # safety net only forces a reconnect after 8h; these fire much
+        # earlier so consumers can surface the condition to users.
+        self.STALE_CHECK_INTERVAL = 60
+        self.STALE_WARNING_SECONDS = 300
+        self.STALE_ERROR_SECONDS = 1800
         self.url = None
         self._stop_event = asyncio.Event()
         self._websocket_connected = asyncio.Event()
         self._reconnect_task = None
+        self._staleness_task: asyncio.Task | None = None
         self._task_lock = asyncio.Lock()
         self._last_message_time: float | None = None
         self._message_count = 0
         self._disconnect_notified = True
         self._reconnect_attempt_count = 0
         self._last_disconnect_reason: str | None = None
+        self._stale_warning_fired = False
+        self._stale_error_fired = False
         self._on_message_handlers: list[Callable] = []
         self._on_connected_handler: list[Callable] = []
         self._on_disconnected_handler: list[Callable] = []
         self._on_reconnect_handler: list[Callable] = []
+        self._on_stale_handler: list[Callable] = []
 
     def add_on_connected_handler(self, handler: Callable):
         """Adds a handler that is called when the connection is established."""
@@ -60,6 +70,47 @@ class WebsocketHandler:
     def add_on_message_handler(self, handler: Callable):
         """Adds a handler for incoming messages."""
         self._on_message_handlers.append(handler)
+
+    def add_on_stale_handler(self, handler: Callable):
+        """Adds a handler called when the websocket reports connected but has
+        gone silent past the configured thresholds.
+
+        Handler signature: ``handler(severity: str, seconds_since: float)``
+        where ``severity`` is ``"warning"`` (>= STALE_WARNING_SECONDS) or
+        ``"error"`` (>= STALE_ERROR_SECONDS). Each severity fires at most
+        once per staleness episode and resets when a fresh message arrives.
+        """
+        self._on_stale_handler.append(handler)
+
+    async def _staleness_monitor(self):
+        """Periodically check for a connected-but-silent websocket and fire
+        on_stale handlers when warning/error thresholds are crossed."""
+        while not self._stop_event.is_set():
+            try:
+                await asyncio.sleep(self.STALE_CHECK_INTERVAL)
+            except asyncio.CancelledError:
+                break
+            if not self.is_connected():
+                continue
+            seconds_since = self.seconds_since_last_message()
+            if seconds_since is None:
+                continue
+            if seconds_since < self.STALE_WARNING_SECONDS:
+                self._stale_warning_fired = False
+                self._stale_error_fired = False
+                continue
+            if seconds_since >= self.STALE_ERROR_SECONDS:
+                if not self._stale_error_fired:
+                    await self._call_handlers(
+                        self._on_stale_handler, "error", seconds_since
+                    )
+                    self._stale_error_fired = True
+                continue
+            if not self._stale_warning_fired:
+                await self._call_handlers(
+                    self._on_stale_handler, "warning", seconds_since
+                )
+                self._stale_warning_fired = True
 
     async def _call_handlers(self, handlers, *args):
         """Helper function to call handlers (sync and async)."""
@@ -192,6 +243,7 @@ class WebsocketHandler:
             self._stop_event.clear()
             self._reconnect_task = asyncio.create_task(self._connect(context))
             self._reconnect_task.add_done_callback(self._handle_task_result)
+            self._staleness_task = asyncio.create_task(self._staleness_monitor())
             LOGGER.info("Connect task started.")
 
     async def stop(self):
@@ -204,6 +256,11 @@ class WebsocketHandler:
                     await self._reconnect_task
 
                 self._reconnect_task = None
+            if self._staleness_task and not self._staleness_task.done():
+                self._staleness_task.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await self._staleness_task
+                self._staleness_task = None
         await self._cleanup()
         LOGGER.info("[Stop] WebSocket client stopped.")
 

@@ -822,3 +822,13 @@ class AsyncHome(HomeMaticIPObject):
         after a disconnect."""
         if self._websocket_client:
             self._websocket_client.add_on_reconnect_handler(handler)
+
+    def set_on_websocket_stale_handler(self, handler: Callable):
+        """Sets a callback that is called when the WebSocket reports connected
+        but has not received a message past the configured thresholds.
+
+        Handler signature: ``handler(severity: str, seconds_since: float)``.
+        See :meth:`WebsocketHandler.add_on_stale_handler` for details.
+        """
+        if self._websocket_client:
+            self._websocket_client.add_on_stale_handler(handler)

@@ -1,4 +1,5 @@
 import asyncio
+import contextlib
 import time
 from unittest.mock import AsyncMock, MagicMock
 
@@ -225,3 +226,119 @@ def test_seconds_since_last_message_works_without_running_loop():
 
     assert elapsed is not None
     assert 0 < elapsed < 60
+
+
+@pytest.mark.asyncio
+async def test_add_on_stale_handler_registers():
+    client = WebsocketHandler()
+    handler = MagicMock()
+    client.add_on_stale_handler(handler)
+    assert handler in client._on_stale_handler
+
+
+@pytest.mark.asyncio
+async def test_staleness_monitor_skips_when_disconnected():
+    """No fire when not connected, even if last_message_time is old."""
+    client = WebsocketHandler()
+    client.STALE_CHECK_INTERVAL = 0.01
+    client.STALE_WARNING_SECONDS = 1
+    handler = MagicMock()
+    client.add_on_stale_handler(handler)
+    client._last_message_time = time.monotonic() - 100  # very stale
+    # Note: _websocket_connected is NOT set
+
+    task = asyncio.create_task(client._staleness_monitor())
+    await asyncio.sleep(0.05)
+    client._stop_event.set()
+    task.cancel()
+    with contextlib.suppress(asyncio.CancelledError):
+        await task
+
+    handler.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_staleness_monitor_fires_warning_then_error():
+    client = WebsocketHandler()
+    client.STALE_CHECK_INTERVAL = 0.01
+    client.STALE_WARNING_SECONDS = 1
+    client.STALE_ERROR_SECONDS = 5
+    handler = MagicMock()
+    client.add_on_stale_handler(handler)
+    client._websocket_connected.set()
+    # 2s stale: above warning, below error
+    client._last_message_time = time.monotonic() - 2
+
+    task = asyncio.create_task(client._staleness_monitor())
+    await asyncio.sleep(0.05)
+
+    handler.assert_called_once()
+    args = handler.call_args[0]
+    assert args[0] == "warning"
+    assert args[1] >= 1
+
+    # Now bump to error severity
+    handler.reset_mock()
+    client._last_message_time = time.monotonic() - 6
+    await asyncio.sleep(0.05)
+
+    handler.assert_called_once()
+    assert handler.call_args[0][0] == "error"
+
+    client._stop_event.set()
+    task.cancel()
+    with contextlib.suppress(asyncio.CancelledError):
+        await task
+
+
+@pytest.mark.asyncio
+async def test_staleness_monitor_does_not_refire_same_severity():
+    client = WebsocketHandler()
+    client.STALE_CHECK_INTERVAL = 0.01
+    client.STALE_WARNING_SECONDS = 1
+    client.STALE_ERROR_SECONDS = 100
+    handler = MagicMock()
+    client.add_on_stale_handler(handler)
+    client._websocket_connected.set()
+    client._last_message_time = time.monotonic() - 2
+
+    task = asyncio.create_task(client._staleness_monitor())
+    await asyncio.sleep(0.1)  # multiple check cycles
+
+    handler.assert_called_once()  # still only one call
+
+    client._stop_event.set()
+    task.cancel()
+    with contextlib.suppress(asyncio.CancelledError):
+        await task
+
+
+@pytest.mark.asyncio
+async def test_staleness_monitor_resets_on_fresh_message():
+    client = WebsocketHandler()
+    client.STALE_CHECK_INTERVAL = 0.01
+    client.STALE_WARNING_SECONDS = 1
+    client.STALE_ERROR_SECONDS = 100
+    handler = MagicMock()
+    client.add_on_stale_handler(handler)
+    client._websocket_connected.set()
+    client._last_message_time = time.monotonic() - 2
+
+    task = asyncio.create_task(client._staleness_monitor())
+    await asyncio.sleep(0.05)
+    handler.assert_called_once()
+
+    # Fresh message arrives
+    client._last_message_time = time.monotonic()
+    await asyncio.sleep(0.05)
+    handler.reset_mock()
+
+    # Go stale again
+    client._last_message_time = time.monotonic() - 2
+    await asyncio.sleep(0.05)
+    handler.assert_called_once()  # fired again after reset
+
+    client._stop_event.set()
+    task.cancel()
+    with contextlib.suppress(asyncio.CancelledError):
+        await task
