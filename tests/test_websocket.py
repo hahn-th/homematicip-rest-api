@@ -225,3 +225,80 @@ def test_seconds_since_last_message_works_without_running_loop():
 
     assert elapsed is not None
     assert 0 < elapsed < 60
+
+
+@pytest.mark.asyncio
+async def test_connect_passes_enforce_ssl_false_to_ws_connect(monkeypatch):
+    """When context.enforce_ssl=False and ssl_ctx is None, ws_connect must
+    receive ssl=False. Regression: the handler used to pass only ssl_ctx
+    (defaulting to True), ignoring context.enforce_ssl entirely."""
+    client = WebsocketHandler()
+    client.INITIAL_BACKOFF = 0  # don't sleep on the reconnect loop after our raise
+    captured = {}
+
+    class FakeSession:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def ws_connect(self, url, **kwargs):
+            captured.update(kwargs)
+            client._stop_event.set()
+            raise TimeoutError("stop after capture")
+
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        FakeSession,
+    )
+
+    context = MagicMock()
+    context.websocket_url = "wss://example.invalid/ws"
+    context.auth_token = "t"
+    context.client_auth_token = "c"
+    context.accesspoint_id = "a"
+    context.ssl_ctx = None
+    context.enforce_ssl = False
+
+    await client._connect(context)
+
+    assert captured["ssl"] is False
+
+
+@pytest.mark.asyncio
+async def test_connect_passes_ssl_ctx_when_provided(monkeypatch):
+    """When context.ssl_ctx is set, it takes precedence over enforce_ssl."""
+    client = WebsocketHandler()
+    client.INITIAL_BACKOFF = 0
+    captured = {}
+    sentinel = object()
+
+    class FakeSession:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def ws_connect(self, url, **kwargs):
+            captured.update(kwargs)
+            client._stop_event.set()
+            raise TimeoutError("stop after capture")
+
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        FakeSession,
+    )
+
+    context = MagicMock()
+    context.websocket_url = "wss://example.invalid/ws"
+    context.auth_token = "t"
+    context.client_auth_token = "c"
+    context.accesspoint_id = "a"
+    context.ssl_ctx = sentinel
+    context.enforce_ssl = False  # should be ignored when ssl_ctx is provided
+
+    await client._connect(context)
+
+    assert captured["ssl"] is sentinel
