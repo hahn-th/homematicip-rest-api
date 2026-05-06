@@ -2344,3 +2344,21 @@ def test_full_flush_wiegand_interface(fake_home: Home):
 
     # Total channels: 1 base + 8 action + 1 switch
     assert len(d.functionalChannels) == 10
+
+
+def test_supported_feature_attribute_map_values_are_lists():
+    """All values in Device._supportedFeatureAttributeMap must be lists.
+
+    The parser at device.py iterates ``map[feature]`` to call
+    ``set_attr_from_dict(attribute, c)`` per attribute. A bare string is
+    iterated character-by-character, silently producing garbage attribute
+    names like ``c``/``o``/``l`` (regression: e.g. ``IOptionalFeatureColor-
+    Temperature`` mapped to the bare string ``"colorTemperature"``, so the
+    ``colorTemperature`` attribute was never set).
+    """
+    from homematicip.device import Device
+
+    for key, value in Device._supportedFeatureAttributeMap.items():
+        assert isinstance(value, list), (
+            f"Map value for {key!r} must be a list of attribute names, got {type(value).__name__}"
+        )
