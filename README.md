@@ -294,8 +294,7 @@ def print_events(event_list):
 # Initialise the API.
 config = homematicip.find_and_load_config_file()
 home = Home()
-home.set_auth_token(config.auth_token)
-home.init(config.access_point)
+home.init(config.access_point, config.auth_token)
 
 # Add function to handle events and start the connection.
 home.onEvent += print_events
