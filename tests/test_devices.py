@@ -2362,3 +2362,18 @@ def test_supported_feature_attribute_map_values_are_lists():
         assert isinstance(value, list), (
             f"Map value for {key!r} must be a list of attribute names, got {type(value).__name__}"
         )
+
+
+def test_set_lock_state_returns_result_from_async():
+    """Sync wrapper must return what _run_non_async returns (regression:
+    used to drop the return value, breaking callers that relied on it)."""
+    from unittest.mock import patch
+
+    from homematicip.base.enums import LockState
+    from homematicip.device import DoorLockDrive
+    drive = DoorLockDrive(connection=None)
+    sentinel = {"result": "ok"}
+    with patch.object(drive, "_run_non_async", return_value=sentinel) as m:
+        result = drive.set_lock_state(LockState.LOCKED)
+    assert result is sentinel
+    m.assert_called_once()

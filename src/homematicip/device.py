@@ -2708,7 +2708,7 @@ class DoorLockDrive(OperationLockableDevice):
         Returns:
             the result of the _restCall
         """
-        self._run_non_async(self.set_lock_state_async, doorLockState, pin, channelIndex)
+        return self._run_non_async(self.set_lock_state_async, doorLockState, pin, channelIndex)
 
     async def set_lock_state_async(self, doorLockState: LockState, pin="", channelIndex=1):
         """sets the door lock state

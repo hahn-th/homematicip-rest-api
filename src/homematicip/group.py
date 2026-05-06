@@ -686,7 +686,7 @@ class HeatingCoolingProfile(HomeMaticIPObject):
         return int(s[0]) * 60 + int(s[1])
 
     def update_profile(self):
-        self._run_non_async(self.update_profile_async)
+        return self._run_non_async(self.update_profile_async)
 
     async def update_profile_async(self):
         days = {}

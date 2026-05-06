@@ -582,3 +582,18 @@ def test_energy_group(fake_home: Home):
 def test_all_groups_implemented(fake_home: Home):
     for g in fake_home.groups:
         assert type(g) != Group
+
+
+def test_update_profile_returns_result_from_async():
+    """Sync wrapper must return what _run_non_async returns (regression:
+    used to drop the return value, breaking callers that relied on it)."""
+    from unittest.mock import patch
+
+    from homematicip.group import HeatingCoolingProfile
+    profile = HeatingCoolingProfile(connection=None)
+    profile.profileDays = {}
+    sentinel = {"result": "ok"}
+    with patch.object(profile, "_run_non_async", return_value=sentinel) as m:
+        result = profile.update_profile()
+    assert result is sentinel
+    m.assert_called_once()
