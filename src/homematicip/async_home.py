@@ -1,6 +1,8 @@
 import json
 from collections.abc import Callable
 
+import httpx
+
 from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.class_maps import *
@@ -82,7 +84,13 @@ class AsyncHome(HomeMaticIPObject):
         self.rules = []
         self.functionalHomes = []
 
-    async def init_async(self, access_point_id, auth_token: str | None = None, lookup=True, use_rate_limiting=True):
+    async def init_async(
+        self,
+        access_point_id: str,
+        auth_token: str | None = None,
+        lookup: bool = True,
+        use_rate_limiting: bool = True,
+    ):
         """Initializes the home with the given access point id and auth token
         :param access_point_id: the access point id
         :param auth_token: the auth token
@@ -93,7 +101,12 @@ class AsyncHome(HomeMaticIPObject):
                                                                                       auth_token=auth_token)
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
 
-    def init_with_context(self, context: ConnectionContext, use_rate_limiting=True, httpx_client_session=None):
+    def init_with_context(
+        self,
+        context: ConnectionContext,
+        use_rate_limiting: bool = True,
+        httpx_client_session: httpx.AsyncClient | None = None,
+    ):
         self._connection_context = context
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting,
                                                                httpx_client_session)
@@ -456,7 +469,7 @@ class AsyncHome(HomeMaticIPObject):
                 return r
         return None
 
-    def get_security_zones_activation(self) -> (bool, bool):
+    def get_security_zones_activation(self) -> tuple[bool, bool]:
         """returns the value of the security zones if they are armed or not
 
         :return: internal, external
@@ -499,7 +512,9 @@ class AsyncHome(HomeMaticIPObject):
         data = {"zonesSilentAlarm": {"EXTERNAL": external, "INTERNAL": internal}}
         return await self._rest_call_async("home/security/setZonesSilentAlarm", data)
 
-    async def set_location_async(self, city, latitude, longitude):
+    async def set_location_async(
+        self, city: str, latitude: str | float, longitude: str | float
+    ):
         data = {"city": city, "latitude": latitude, "longitude": longitude}
         return await self._rest_call_async("home/setLocation", data)
 
