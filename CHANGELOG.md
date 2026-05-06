@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..master)
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..master)
+
+## [2.10.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..2.10.0)
 
 ### Added
 
@@ -22,6 +24,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix door-lock `authorizationPin` leaking into debug logs (added to redaction set)
 - Fix several `_supportedFeatureAttributeMap` entries that were bare strings instead of lists, so attributes like `colorTemperature` and the particulate-matter / temperature-humidity sensor error flags were never actually set on devices
 - Fix `DoorLockDrive.set_lock_state` and `HeatingCoolingProfile.update_profile` sync wrappers dropping the async return value
+- Fix docs publish workflow to use `actions-gh-pages` (zensical does not provide `gh-deploy`)
+
+### Changed
+
+- Enable additional ruff rules (`G`, `LOG`, `RUF010`, `RUF012`, `RUF013`); convert log f-strings to lazy formatting and `.error(..., exc_info=True)` to `.exception(...)`; add `ClassVar` annotations to mutable class attributes; explicit `Optional` for parameters defaulting to `None`
+- Tighten public API typing: `get_security_zones_activation` now returns `tuple[bool, bool]` (was `(bool, bool)`); add type hints to `init_async`, `init_with_context`, `set_location_async`
+- Remove dead public state: `AsyncHome.websocket_reconnect_on_error`, `AsyncHome.onWsError`, `WebsocketHandler.url` (set but never read)
+
+### Deprecated
+
+- `init_async(lookup=False)` / `init(lookup=False)`: the parameter was documented but ignored — the URL lookup always runs. A `DeprecationWarning` now fires when `lookup=False` is passed. Use `init_with_context()` with a pre-built `ConnectionContext` to skip the lookup.
 
 ## [2.9.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.8.0..2.9.0)
 
