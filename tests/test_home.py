@@ -35,6 +35,23 @@ def test_init():
         assert home._connection is not None
 
 
+def test_init_warns_when_lookup_false():
+    """lookup=False is deprecated and ignored (the URL lookup always runs).
+    Pass a pre-built context via init_with_context to skip the lookup."""
+    import warnings
+
+    context = ConnectionContext(auth_token="auth_token", accesspoint_id="access_point_id")
+    with patch('homematicip.connection.connection_context.ConnectionContextBuilder.build_context_async',
+               return_value=context):
+        home = Home()
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            home.init('access_point_id', 'auth_token', lookup=False)
+        deprecation = [w for w in caught if issubclass(w.category, DeprecationWarning)]
+        assert deprecation, "expected DeprecationWarning when lookup=False"
+        assert "lookup" in str(deprecation[0].message)
+
+
 def test_init_with_context(mocker, fake_connection_context_with_ssl):
     httpx_client_session = mocker.Mock(spec=httpx.AsyncClient)
     home = Home()

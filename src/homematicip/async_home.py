@@ -1,4 +1,5 @@
 import json
+import warnings
 from collections.abc import Callable
 
 import httpx
@@ -92,11 +93,22 @@ class AsyncHome(HomeMaticIPObject):
         use_rate_limiting: bool = True,
     ):
         """Initializes the home with the given access point id and auth token
+
         :param access_point_id: the access point id
         :param auth_token: the auth token
-        :param lookup: if set to true, the urls will be looked up
+        :param lookup: deprecated and ignored — the URL lookup always happens.
+            Pass a pre-built context via :meth:`init_with_context` if you need
+            to skip the lookup.
         :param use_rate_limiting: if set to true, the connection will be rate limited
         """
+        if not lookup:
+            warnings.warn(
+                "init_async(lookup=False) is deprecated and ignored: the URL "
+                "lookup always runs. Use init_with_context() with a pre-built "
+                "ConnectionContext to skip the lookup.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
         self._connection_context = await ConnectionContextBuilder.build_context_async(accesspoint_id=access_point_id,
                                                                                       auth_token=auth_token)
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting)
