@@ -122,6 +122,17 @@ class HomeMaticIPObject:
         return "".join([f"{x}({self.__dict__[x]}) " for x in self._dictAttributes])[:-1]
 
     def _run_non_async(self, method, *args, **kwargs):
-        """Run an async method in a sync way"""
-        loop = asyncio.get_event_loop()
+        """Run an async method in a sync way.
+
+        Python 3.14 raises ``RuntimeError`` from ``asyncio.get_event_loop()``
+        when no loop is set in the current thread (the deprecation finally
+        took effect). Create one on demand and reuse it for subsequent calls
+        so async resources (e.g. an httpx.AsyncClient) created on the first
+        call remain usable on later ones.
+        """
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
         return loop.run_until_complete(method(*args, **kwargs))
