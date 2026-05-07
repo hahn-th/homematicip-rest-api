@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..master)
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..master)
+
+## [2.11.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..2.11.0)
+
+### Added
+
+- Add post-reconnect recovery helpers on `AsyncHome` so long-running clients (e.g. Home Assistant) can move reconnect orchestration out of integration code:
+  - `wait_for_websocket_connection_async(timeout, poll_interval, warning_threshold)`: best-effort bounded wait for `websocket_is_connected()` to become `True`, with a configurable warning log if the connection takes longer than expected. Returns `True` on success, `False` on timeout. Rejects non-positive `poll_interval` with `ValueError`.
+  - `get_current_state_async_with_retry(initial_delay, max_delay)`: exponential-backoff retry around `get_current_state_async`. Re-raises `HmipAuthenticationError`, `HomeNotInitializedError`, and `asyncio.CancelledError` immediately; retries on `HmipConnectionError` and unforeseen exceptions.
+  - `refresh_state_after_reconnect_async(...)`: convenience wrapper that performs the websocket wait followed by the retrying state refresh in one call.
 
 ## [2.10.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..2.10.0)
 
