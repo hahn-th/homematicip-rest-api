@@ -256,6 +256,8 @@ class AsyncHome(HomeMaticIPObject):
 
         - ``HmipAuthenticationError`` is re-raised immediately so the caller
           can trigger reauth.
+        - ``HomeNotInitializedError`` is re-raised immediately because it
+          signals a programmer error (calling this before ``init``).
         - ``asyncio.CancelledError`` is re-raised to propagate cancellation.
         - All other exceptions, including ``HmipConnectionError`` subclasses
           and unforeseen errors, trigger a retry with exponential backoff
@@ -270,7 +272,7 @@ class AsyncHome(HomeMaticIPObject):
         while True:
             try:
                 return await self.get_current_state_async(clear_config=clear_config)
-            except HmipAuthenticationError:
+            except (HmipAuthenticationError, HomeNotInitializedError):
                 raise
             except asyncio.CancelledError:
                 raise

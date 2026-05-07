@@ -192,6 +192,17 @@ async def test_get_current_state_async_with_retry_raises_auth_error_immediately(
 
 
 @pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_raises_home_not_initialized_immediately(fake_home: Home):
+    """HomeNotInitializedError signals a programmer error and must not retry."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=HomeNotInitializedError())) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock, \
+         pytest.raises(HomeNotInitializedError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
 async def test_get_current_state_async_with_retry_propagates_cancellation(fake_home: Home):
     """asyncio.CancelledError is re-raised, not swallowed."""
     import asyncio
