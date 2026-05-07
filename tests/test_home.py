@@ -275,6 +275,50 @@ async def test_wait_for_websocket_connection_returns_false_on_timeout(fake_home:
 
 
 @pytest.mark.asyncio
+async def test_wait_for_websocket_connection_respects_uneven_timeout(fake_home: Home):
+    """Total wait does not exceed timeout when timeout is not a multiple of poll_interval."""
+    sleep_args = []
+    async def fake_sleep(d):
+        sleep_args.append(d)
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         patch("asyncio.sleep", new=fake_sleep):
+        await fake_home.wait_for_websocket_connection_async(
+            timeout=5, poll_interval=2, warning_threshold=100
+        )
+    # 2 + 2 + 1 = 5, not 6
+    assert sleep_args == [2, 2, 1]
+    assert sum(sleep_args) == pytest.approx(5.0)
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_no_double_warning_when_threshold_equals_timeout(
+    fake_home: Home, caplog
+):
+    """warning_threshold == timeout: the timeout warning fires, the threshold warning does not."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         patch("asyncio.sleep", new=AsyncMock()), \
+         caplog.at_level("WARNING"):
+        await fake_home.wait_for_websocket_connection_async(
+            timeout=4, poll_interval=2, warning_threshold=4
+        )
+    still_waiting = [r for r in caplog.records if "Still waiting" in r.message]
+    timeout_logged = [r for r in caplog.records if "did not reconnect" in r.message]
+    assert len(still_waiting) == 0
+    assert len(timeout_logged) == 1
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_rejects_non_positive_poll_interval(fake_home: Home):
+    """poll_interval <= 0 is rejected up-front to avoid a hung coroutine."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         pytest.raises(ValueError):
+        await fake_home.wait_for_websocket_connection_async(poll_interval=0)
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         pytest.raises(ValueError):
+        await fake_home.wait_for_websocket_connection_async(poll_interval=-1)
+
+
+@pytest.mark.asyncio
 async def test_wait_for_websocket_connection_logs_warning_after_threshold(fake_home: Home, caplog):
     """Emits a single warning once warning_threshold has elapsed."""
     with patch.object(fake_home, "websocket_is_connected", return_value=False), \

@@ -263,9 +263,16 @@ class AsyncHome(HomeMaticIPObject):
         Args:
             timeout: maximum total wait, in seconds.
             poll_interval: how often to check :meth:`websocket_is_connected`.
+                Must be > 0.
             warning_threshold: emit a "still waiting" warning once this many
                 seconds have elapsed without a connection.
+
+        Raises:
+            ValueError: if ``poll_interval`` is not positive.
         """
+        if poll_interval <= 0:
+            raise ValueError("poll_interval must be positive")
+
         elapsed = 0.0
         warning_logged = False
 
@@ -276,11 +283,12 @@ class AsyncHome(HomeMaticIPObject):
                     timeout,
                 )
                 return False
-            await asyncio.sleep(poll_interval)
-            elapsed += poll_interval
+            sleep_for = min(poll_interval, timeout - elapsed)
+            await asyncio.sleep(sleep_for)
+            elapsed += sleep_for
             if (
                 not warning_logged
-                and elapsed >= warning_threshold
+                and warning_threshold <= elapsed < timeout
                 and not self.websocket_is_connected()
             ):
                 warning_logged = True
