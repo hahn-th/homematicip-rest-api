@@ -159,6 +159,75 @@ async def test_home_download_configuration_auth_error(fake_home: Home):
         await fake_home.download_configuration_async()
 
 
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_succeeds_first_try(fake_home: Home):
+    """Returns immediately when get_current_state_async succeeds."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(return_value=None)) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_retries_on_connection_error(fake_home: Home):
+    """Retries on HmipConnectionError, then succeeds."""
+    side_effects = [HmipConnectionError("boom"), HmipConnectionError("again"), None]
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        await fake_home.get_current_state_async_with_retry(initial_delay=1, max_delay=10)
+    assert mocked.await_count == 3
+    assert sleep_mock.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_raises_auth_error_immediately(fake_home: Home):
+    """HmipAuthenticationError propagates without retry."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=HmipAuthenticationError("nope"))) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock, \
+         pytest.raises(HmipAuthenticationError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_propagates_cancellation(fake_home: Home):
+    """asyncio.CancelledError is re-raised, not swallowed."""
+    import asyncio
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=asyncio.CancelledError())) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()), \
+         pytest.raises(asyncio.CancelledError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_retries_on_unexpected_exception(fake_home: Home):
+    """Unforeseen exceptions also trigger retry (covers cases like the
+    NoneType error that motivated keeping a catch-all in the recovery loop)."""
+    side_effects = [TypeError("NoneType has no attribute"), None]
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        await fake_home.get_current_state_async_with_retry(initial_delay=1)
+    assert mocked.await_count == 2
+    assert sleep_mock.await_count == 1
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_caps_delay(fake_home: Home):
+    """Backoff doubles but does not exceed max_delay."""
+    side_effects = [HmipConnectionError("e1"), HmipConnectionError("e2"), HmipConnectionError("e3"), None]
+    sleep_args = []
+    async def fake_sleep(d):
+        sleep_args.append(d)
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)), \
+         patch("asyncio.sleep", new=fake_sleep):
+        await fake_home.get_current_state_async_with_retry(initial_delay=2, max_delay=5)
+    # 2, 4, then capped at 5
+    assert sleep_args == [2, 4, 5]
+
+
 def test_home_update_home(fake_home: Home):
     configuration = fake_home.download_configuration()
 

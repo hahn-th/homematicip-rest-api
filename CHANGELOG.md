@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..master)
 
+### Added
+
+- Add `AsyncHome.get_current_state_async_with_retry()`: refreshes state with exponential backoff retry for use in long-running clients (e.g. Home Assistant post-reconnect recovery). Re-raises `HmipAuthenticationError` and `asyncio.CancelledError` immediately; retries on connection errors and unforeseen exceptions. Lets callers move retry orchestration out of integration code and into the library.
+
 ## [2.10.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..2.10.0)
 
 ### Added

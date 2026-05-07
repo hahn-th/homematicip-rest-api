@@ -1,3 +1,4 @@
+import asyncio
 import json
 import warnings
 from collections.abc import Callable
@@ -241,6 +242,51 @@ class AsyncHome(HomeMaticIPObject):
         logger.debug("Run get_current_state_async")
         json_state = await self.download_configuration_async()
         return self.update_home(json_state, clear_config)
+
+    async def get_current_state_async_with_retry(
+        self,
+        clear_config: bool = False,
+        initial_delay: float = 8.0,
+        max_delay: float = 1500.0,
+    ):
+        """Refresh state with exponential backoff retry on transient errors.
+
+        Wraps :meth:`get_current_state_async` with a retry loop intended for
+        post-reconnect recovery in long-running clients (e.g. Home Assistant).
+
+        - ``HmipAuthenticationError`` is re-raised immediately so the caller
+          can trigger reauth.
+        - ``asyncio.CancelledError`` is re-raised to propagate cancellation.
+        - All other exceptions, including ``HmipConnectionError`` subclasses
+          and unforeseen errors, trigger a retry with exponential backoff
+          (``initial_delay`` doubling up to ``max_delay`` seconds).
+
+        Args:
+            clear_config: forwarded to :meth:`get_current_state_async`.
+            initial_delay: seconds to wait before the first retry.
+            max_delay: cap on the backoff delay between retries.
+        """
+        delay = initial_delay
+        while True:
+            try:
+                return await self.get_current_state_async(clear_config=clear_config)
+            except HmipAuthenticationError:
+                raise
+            except asyncio.CancelledError:
+                raise
+            except HmipConnectionError as err:
+                logger.warning(
+                    "get_current_state failed, retrying in %s seconds: %s",
+                    delay,
+                    err,
+                )
+            except Exception:
+                logger.exception(
+                    "Unexpected error in get_current_state, retrying in %s seconds",
+                    delay,
+                )
+            await asyncio.sleep(delay)
+            delay = min(delay * 2, max_delay)
 
     def update_home(self, json_state, clear_config: bool = False):
         """parse a given json configuration into self.
