@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `AsyncHome.get_current_state_async_with_retry()`: refreshes state with exponential backoff retry for use in long-running clients (e.g. Home Assistant post-reconnect recovery). Re-raises `HmipAuthenticationError` and `asyncio.CancelledError` immediately; retries on connection errors and unforeseen exceptions. Lets callers move retry orchestration out of integration code and into the library.
+- Add post-reconnect recovery helpers on `AsyncHome` so long-running clients (e.g. Home Assistant) can move reconnect orchestration out of integration code:
+  - `wait_for_websocket_connection_async(timeout, poll_interval, warning_threshold)`: best-effort bounded wait for `websocket_is_connected()` to become `True`, with a configurable warning log if the connection takes longer than expected. Returns `True` on success, `False` on timeout.
+  - `get_current_state_async_with_retry(initial_delay, max_delay)`: exponential-backoff retry around `get_current_state_async`. Re-raises `HmipAuthenticationError`, `HomeNotInitializedError`, and `asyncio.CancelledError` immediately; retries on `HmipConnectionError` and unforeseen exceptions.
+  - `refresh_state_after_reconnect_async(...)`: convenience wrapper that performs the websocket wait followed by the retrying state refresh in one call.
 
 ## [2.10.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.9.0..2.10.0)
 

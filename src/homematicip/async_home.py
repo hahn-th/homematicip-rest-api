@@ -243,6 +243,86 @@ class AsyncHome(HomeMaticIPObject):
         json_state = await self.download_configuration_async()
         return self.update_home(json_state, clear_config)
 
+    async def wait_for_websocket_connection_async(
+        self,
+        timeout: float = 120.0,
+        poll_interval: float = 2.0,
+        warning_threshold: float = 60.0,
+    ) -> bool:
+        """Wait up to ``timeout`` seconds for the websocket to report connected.
+
+        Polls :meth:`websocket_is_connected` every ``poll_interval`` seconds.
+        If still not connected after ``warning_threshold`` seconds, emits a
+        single ``WARNING`` log line. Returns ``True`` once connected, or
+        ``False`` if ``timeout`` elapses first.
+
+        Designed for post-reconnect recovery in long-running clients
+        (e.g. Home Assistant). Callers typically proceed with a state
+        refresh even on timeout, since a REST call may still recover state.
+
+        Args:
+            timeout: maximum total wait, in seconds.
+            poll_interval: how often to check :meth:`websocket_is_connected`.
+            warning_threshold: emit a "still waiting" warning once this many
+                seconds have elapsed without a connection.
+        """
+        elapsed = 0.0
+        warning_logged = False
+
+        while not self.websocket_is_connected():
+            if elapsed >= timeout:
+                logger.warning(
+                    "Websocket did not reconnect within %s seconds",
+                    timeout,
+                )
+                return False
+            await asyncio.sleep(poll_interval)
+            elapsed += poll_interval
+            if (
+                not warning_logged
+                and elapsed >= warning_threshold
+                and not self.websocket_is_connected()
+            ):
+                warning_logged = True
+                logger.warning(
+                    "Still waiting for websocket reconnect after %s seconds",
+                    elapsed,
+                )
+
+        return True
+
+    async def refresh_state_after_reconnect_async(
+        self,
+        clear_config: bool = False,
+        websocket_timeout: float = 120.0,
+        websocket_poll_interval: float = 2.0,
+        websocket_warning_threshold: float = 60.0,
+        retry_initial_delay: float = 8.0,
+        retry_max_delay: float = 1500.0,
+    ) -> None:
+        """Wait (best-effort) for websocket reconnect, then refresh state with retry.
+
+        Convenience wrapper combining :meth:`wait_for_websocket_connection_async`
+        and :meth:`get_current_state_async_with_retry`. The websocket wait is
+        best-effort: if it times out, the state refresh proceeds anyway, since
+        the REST call is independent and may still recover state.
+
+        Re-raises ``HmipAuthenticationError``, ``HomeNotInitializedError``, and
+        ``asyncio.CancelledError`` immediately. All other errors trigger retry.
+
+        Intended for post-reconnect recovery flows in long-running clients.
+        """
+        await self.wait_for_websocket_connection_async(
+            timeout=websocket_timeout,
+            poll_interval=websocket_poll_interval,
+            warning_threshold=websocket_warning_threshold,
+        )
+        await self.get_current_state_async_with_retry(
+            clear_config=clear_config,
+            initial_delay=retry_initial_delay,
+            max_delay=retry_max_delay,
+        )
+
     async def get_current_state_async_with_retry(
         self,
         clear_config: bool = False,
