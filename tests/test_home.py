@@ -159,6 +159,209 @@ async def test_home_download_configuration_auth_error(fake_home: Home):
         await fake_home.download_configuration_async()
 
 
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_succeeds_first_try(fake_home: Home):
+    """Returns immediately when get_current_state_async succeeds."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(return_value=None)) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_retries_on_connection_error(fake_home: Home):
+    """Retries on HmipConnectionError, then succeeds."""
+    side_effects = [HmipConnectionError("boom"), HmipConnectionError("again"), None]
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        await fake_home.get_current_state_async_with_retry(initial_delay=1, max_delay=10)
+    assert mocked.await_count == 3
+    assert sleep_mock.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_raises_auth_error_immediately(fake_home: Home):
+    """HmipAuthenticationError propagates without retry."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=HmipAuthenticationError("nope"))) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock, \
+         pytest.raises(HmipAuthenticationError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_raises_home_not_initialized_immediately(fake_home: Home):
+    """HomeNotInitializedError signals a programmer error and must not retry."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=HomeNotInitializedError())) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock, \
+         pytest.raises(HomeNotInitializedError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_propagates_cancellation(fake_home: Home):
+    """asyncio.CancelledError is re-raised, not swallowed."""
+    import asyncio
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=asyncio.CancelledError())) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()), \
+         pytest.raises(asyncio.CancelledError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_retries_on_unexpected_exception(fake_home: Home):
+    """Unforeseen exceptions also trigger retry (covers cases like the
+    NoneType error that motivated keeping a catch-all in the recovery loop)."""
+    side_effects = [TypeError("NoneType has no attribute"), None]
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        await fake_home.get_current_state_async_with_retry(initial_delay=1)
+    assert mocked.await_count == 2
+    assert sleep_mock.await_count == 1
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_caps_delay(fake_home: Home):
+    """Backoff doubles but does not exceed max_delay."""
+    side_effects = [HmipConnectionError("e1"), HmipConnectionError("e2"), HmipConnectionError("e3"), None]
+    sleep_args = []
+    async def fake_sleep(d):
+        sleep_args.append(d)
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)), \
+         patch("asyncio.sleep", new=fake_sleep):
+        await fake_home.get_current_state_async_with_retry(initial_delay=2, max_delay=5)
+    # 2, 4, then capped at 5
+    assert sleep_args == [2, 4, 5]
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_returns_true_immediately_when_connected(fake_home: Home):
+    """Returns True without sleeping when websocket is already connected."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=True), \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        result = await fake_home.wait_for_websocket_connection_async()
+    assert result is True
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_returns_true_when_connection_arrives(fake_home: Home):
+    """Polls and returns True when connection arrives mid-wait."""
+    states = [False, False, True]
+    with patch.object(fake_home, "websocket_is_connected", side_effect=states), \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
+        result = await fake_home.wait_for_websocket_connection_async(
+            timeout=10, poll_interval=2, warning_threshold=100
+        )
+    assert result is True
+    # Two sleeps before the True state arrives
+    assert sleep_mock.await_count == 2
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_returns_false_on_timeout(fake_home: Home):
+    """Returns False after timeout when never connected."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         patch("asyncio.sleep", new=AsyncMock()):
+        result = await fake_home.wait_for_websocket_connection_async(
+            timeout=4, poll_interval=2, warning_threshold=100
+        )
+    assert result is False
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_respects_uneven_timeout(fake_home: Home):
+    """Total wait does not exceed timeout when timeout is not a multiple of poll_interval."""
+    sleep_args = []
+    async def fake_sleep(d):
+        sleep_args.append(d)
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         patch("asyncio.sleep", new=fake_sleep):
+        await fake_home.wait_for_websocket_connection_async(
+            timeout=5, poll_interval=2, warning_threshold=100
+        )
+    # 2 + 2 + 1 = 5, not 6
+    assert sleep_args == [2, 2, 1]
+    assert sum(sleep_args) == pytest.approx(5.0)
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_no_double_warning_when_threshold_equals_timeout(
+    fake_home: Home, caplog
+):
+    """warning_threshold == timeout: the timeout warning fires, the threshold warning does not."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         patch("asyncio.sleep", new=AsyncMock()), \
+         caplog.at_level("WARNING"):
+        await fake_home.wait_for_websocket_connection_async(
+            timeout=4, poll_interval=2, warning_threshold=4
+        )
+    still_waiting = [r for r in caplog.records if "Still waiting" in r.message]
+    timeout_logged = [r for r in caplog.records if "did not reconnect" in r.message]
+    assert len(still_waiting) == 0
+    assert len(timeout_logged) == 1
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_rejects_non_positive_poll_interval(fake_home: Home):
+    """poll_interval <= 0 is rejected up-front to avoid a hung coroutine."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         pytest.raises(ValueError):
+        await fake_home.wait_for_websocket_connection_async(poll_interval=0)
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         pytest.raises(ValueError):
+        await fake_home.wait_for_websocket_connection_async(poll_interval=-1)
+
+
+@pytest.mark.asyncio
+async def test_wait_for_websocket_connection_logs_warning_after_threshold(fake_home: Home, caplog):
+    """Emits a single warning once warning_threshold has elapsed."""
+    with patch.object(fake_home, "websocket_is_connected", return_value=False), \
+         patch("asyncio.sleep", new=AsyncMock()), \
+         caplog.at_level("WARNING"):
+        await fake_home.wait_for_websocket_connection_async(
+            timeout=10, poll_interval=2, warning_threshold=4
+        )
+    still_waiting = [r for r in caplog.records if "Still waiting" in r.message]
+    timeout = [r for r in caplog.records if "did not reconnect" in r.message]
+    assert len(still_waiting) == 1
+    assert len(timeout) == 1
+
+
+@pytest.mark.asyncio
+async def test_refresh_state_after_reconnect_calls_wait_then_retry(fake_home: Home):
+    """Composition: waits for websocket, then runs the retry refresh."""
+    call_order = []
+    async def fake_wait(**_kwargs):
+        call_order.append("wait")
+        return True
+    async def fake_retry(**_kwargs):
+        call_order.append("retry")
+    with patch.object(fake_home, "wait_for_websocket_connection_async", new=fake_wait), \
+         patch.object(fake_home, "get_current_state_async_with_retry", new=fake_retry):
+        await fake_home.refresh_state_after_reconnect_async()
+    assert call_order == ["wait", "retry"]
+
+
+@pytest.mark.asyncio
+async def test_refresh_state_after_reconnect_proceeds_on_websocket_timeout(fake_home: Home):
+    """Even when wait returns False (timeout), retry still runs."""
+    retry_called = []
+    async def fake_wait(**_kwargs):
+        return False
+    async def fake_retry(**_kwargs):
+        retry_called.append(True)
+    with patch.object(fake_home, "wait_for_websocket_connection_async", new=fake_wait), \
+         patch.object(fake_home, "get_current_state_async_with_retry", new=fake_retry):
+        await fake_home.refresh_state_after_reconnect_async()
+    assert retry_called == [True]
+
+
 def test_home_update_home(fake_home: Home):
     configuration = fake_home.download_configuration()
 
