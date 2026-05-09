@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..master)
 
+### Added
+
+- Add `DOOR_LOCK_AUTHORIZATION_PROFILE` group type with `DoorLockAuthorizationProfileGroup` class. The cloud exposes this group type for HmIP-FLC and similar door-lock devices to control which clients are authorized to operate the lock; previously the group fell back to the base `Group` and emitted a "no class for group" warning at home load.
+
 ## [2.11.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..2.11.0)
 
 ### Added
