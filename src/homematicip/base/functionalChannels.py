@@ -1502,6 +1502,19 @@ class AccessAuthorizationChannel(FunctionalChannel):
         super().from_json(js, groups)
         self.authorized = js["authorized"]
 
+    def pull_latch(self, pin: str | None = None):
+        """Trigger the latch via this access-authorization channel.
+
+        Only meaningful for channels with role ``DOOR_OPENER_ACTUATOR``.
+        See :func:`homematicip.commands.functional_channel_commands.pull_latch_async`.
+        """
+        return self._run_non_async(lambda: self.async_pull_latch(pin))
+
+    async def async_pull_latch(self, pin: str | None = None):
+        return await functional_channel_commands.pull_latch_async(
+            self._connection, self.device.id, self.index, pin
+        )
+
 
 class HeatingThermostatChannel(FunctionalChannel):
     """this is the representative of the HEATING_THERMOSTAT_CHANNEL channel"""
