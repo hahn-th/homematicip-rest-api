@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..master)
 
+### Added
+
+- Extend `ChannelEventTypes` enum with the four channel event type strings the HomematicIP cloud emits for `SINGLE_KEY_CHANNEL` button presses (HmIP-WRC2, HmIP-WRC6, HmIP-WRC6-230, ...):
+  - `KEY_PRESS_SHORT`: fires once on a short press
+  - `KEY_PRESS_LONG_START`: fires once at the beginning of a long press
+  - `KEY_PRESS_LONG`: fires repeatedly (~every 250 ms) while the button is held
+  - `KEY_PRESS_LONG_STOP`: fires once when the button is released after a long press
+
 ## [2.11.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..2.11.0)
 
 ### Added

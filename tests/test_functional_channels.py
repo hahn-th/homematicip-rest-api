@@ -1,11 +1,12 @@
 from unittest.mock import AsyncMock, Mock
 
+import pytest
 from homematicip_demo.helper import (
     no_ssl_verification,
 )
 
 from homematicip.base.channel_event import ChannelEvent
-from homematicip.base.enums import FunctionalChannelType
+from homematicip.base.enums import ChannelEventTypes, FunctionalChannelType
 from homematicip.base.functionalChannels import *
 from homematicip.device import *
 from homematicip.home import Home
@@ -560,6 +561,40 @@ def test_door_bell_channel_event(fake_home: Home):
         ch.fire_channel_event(channel_event)
 
         handler.assert_called_once_with(channel_event)
+
+
+@pytest.mark.parametrize(
+    "channel_event_type",
+    [
+        "KEY_PRESS_SHORT",
+        "KEY_PRESS_LONG",
+        "KEY_PRESS_LONG_START",
+        "KEY_PRESS_LONG_STOP",
+    ],
+)
+def test_key_press_channel_event(fake_home: Home, channel_event_type: str):
+    with no_ssl_verification():
+        handler = Mock()
+        ch = fake_home.search_channel("3014F711000000000WRC6230", 1)
+        channel_event = ChannelEvent()
+        channel_event.from_json(
+            {
+                "pushEventType": "DEVICE_CHANNEL_EVENT",
+                "deviceId": "3014F711000000000WRC6230",
+                "channelIndex": 1,
+                "channelEventType": channel_event_type,
+                "functionalChannelIndex": 1,
+            }
+        )
+        ch.add_on_channel_event_handler(handler)
+
+        ch.fire_channel_event(channel_event)
+
+        handler.assert_called_once_with(channel_event)
+        assert (
+            ChannelEventTypes.from_str(channel_event_type)
+            == ChannelEventTypes(channel_event_type)
+        )
 
 
 def test_channel_role_read(fake_home: Home):
