@@ -333,6 +333,7 @@ class GroupType(AutoNameEnum):
     ACCESS_CONTROL = auto()
     ALARM_SWITCHING = auto()
     AUTO_RELOCK_PROFILE = auto()
+    DOOR_LOCK_AUTHORIZATION_PROFILE = auto()
     ENERGY = auto()
     ENVIRONMENT = auto()
     EXTENDED_LINKED_GARAGE_DOOR = auto()

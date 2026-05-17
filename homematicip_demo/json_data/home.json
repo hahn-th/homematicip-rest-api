@@ -19777,6 +19777,27 @@
       "type": "ACCESS_AUTHORIZATION_PROFILE",
       "unreach": false
     },
+    "00000000-0000-0000-0000-000000000091": {
+      "active": true,
+      "authorizationPinAssigned": false,
+      "authorized": true,
+      "channels": [],
+      "clientIds": [
+        "00000000-0000-0000-0000-000000000003"
+      ],
+      "dutyCycle": null,
+      "groupVisibility": "VISIBLE",
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-000000000091",
+      "label": "FLC Test Profile",
+      "lastStatusUpdate": 0,
+      "lowBat": null,
+      "metaGroupId": null,
+      "profileId": "00000000-0000-0000-0000-000000000092",
+      "sensorSpecificParameters": {},
+      "type": "DOOR_LOCK_AUTHORIZATION_PROFILE",
+      "unreach": null
+    },
     "00000000-0000-0000-0000-000000000033": {
       "channels": [
         {

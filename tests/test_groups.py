@@ -537,6 +537,16 @@ def test_access_authorization_profile_group(fake_home: Home):
         assert g.authorized == True
 
 
+def test_door_lock_authorization_profile_group(fake_home: Home):
+    with no_ssl_verification():
+        g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000091")
+        assert g.label == "FLC Test Profile"
+        assert g.active == True
+        assert g.authorizationPinAssigned == False
+        assert g.authorized == True
+        assert g.profileId == "00000000-0000-0000-0000-000000000092"
+
+
 def test_access_control_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000033")

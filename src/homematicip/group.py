@@ -1261,6 +1261,22 @@ class AccessAuthorizationProfileGroup(Group):
         self.authorized = js["authorized"]
 
 
+class DoorLockAuthorizationProfileGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.active = False
+        self.authorizationPinAssigned = False
+        self.authorized = False
+        self.profileId = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.active = js["active"]
+        self.authorizationPinAssigned = js["authorizationPinAssigned"]
+        self.authorized = js["authorized"]
+        self.profileId = js.get("profileId")
+
+
 class AccessControlGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
