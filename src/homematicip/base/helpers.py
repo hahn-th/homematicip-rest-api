@@ -14,11 +14,11 @@ def get_functional_channel(channel_type, js):
 
 
 def get_functional_channels(channel_type, js):
-    result = []
-    for channel in js["functionalChannels"].values():
-        if channel["functionalChannelType"] == channel_type:
-            result.append(channel)
-    return result
+    return [
+        channel
+        for channel in js["functionalChannels"].values()
+        if channel["functionalChannelType"] == channel_type
+    ]
 
 
 # from https://bugs.python.org/file43513/json_detect_encoding_3.patch
@@ -90,18 +90,18 @@ def handle_config(json_state: str, anonymize: bool) -> str:
     return c
 
 
-def anonymizeConfig(config, pattern, format, flags=re.IGNORECASE):
+def anonymizeConfig(config, pattern, format, flags=re.IGNORECASE):  # noqa: A002 — public API, preserved for backwards compatibility
     m = re.findall(pattern, config, flags=flags)
     if m is None:
         return config
-    map = {}
+    mapping = {}
     i = 0
     for s in m:
-        if s in map:
+        if s in mapping:
             continue
-        map[s] = format.format(i)
+        mapping[s] = format.format(i)
         i = i + 1
 
-    for k, v in map.items():
+    for k, v in mapping.items():
         config = config.replace(k, v)
     return config

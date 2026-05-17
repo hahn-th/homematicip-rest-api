@@ -2,7 +2,6 @@
 import asyncio
 import configparser
 import json
-import time
 
 import homematicip
 import homematicip.auth
@@ -53,7 +52,7 @@ async def run_auth(access_point: str | None = None, devicename: str | None = Non
             print("PIN IS INVALID!")
         elif errorCode == "ASSIGNMENT_LOCKED":
             print("LOCKED ! Press button on HCU to unlock.")
-            time.sleep(5)
+            await asyncio.sleep(5)
         else:
             print(f"Error: {errorCode}\nExiting")
             return
@@ -62,7 +61,7 @@ async def run_auth(access_point: str | None = None, devicename: str | None = Non
     print("Please press the blue button on the access point")
     while not await auth.is_request_acknowledged():
         print("Please press the blue button on the access point")
-        time.sleep(2)
+        await asyncio.sleep(2)
 
     auth_token = await auth.request_auth_token()
     clientId = await auth.confirm_auth_token(auth_token)
@@ -81,7 +80,7 @@ async def run_auth(access_point: str | None = None, devicename: str | None = Non
     _config["AUTH"] = {"AuthToken": auth_token, "AccessPoint": access_point}
     _config.set("LOGGING", "Level", "30")
     _config.set("LOGGING", "FileName", "None")
-    with open("./config.ini", "w") as configfile:
+    with open("./config.ini", "w") as configfile:  # noqa: ASYNC230 — CLI tool, sync file write at finish is fine
         _config.write(configfile)
 
 

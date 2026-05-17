@@ -89,8 +89,8 @@ class HomeMaticIPObject:
     def set_attr_from_dict(
             self,
             attr: str,
-            dict,
-            type: AutoNameEnum = None,
+            data: dict,
+            enum_type: AutoNameEnum = None,
             dict_attr=None,
             addToStrOutput=True,
     ):
@@ -98,20 +98,20 @@ class HomeMaticIPObject:
 
         Args:
             attr(str): the attribute which value should be changed
-            dict(dict): the dictionary from which the value should be extracted
-            type(AutoNameEnum): this will call type.from_str(value), if a type gets provided
+            data(dict): the dictionary from which the value should be extracted
+            enum_type(AutoNameEnum): this will call enum_type.from_str(value), if a type gets provided
             dict_attr: the name of the attribute in the dict. Set this to None(default) to use attr
             addToStrOutput(str): should the attribute be returned via __str__()
         """
         if not dict_attr:
             dict_attr = attr
 
-        if dict_attr not in dict:
+        if dict_attr not in data:
             return
 
-        value = dict[dict_attr]
-        if type:
-            value = type.from_str(value)
+        value = data[dict_attr]
+        if enum_type:
+            value = enum_type.from_str(value)
 
         self.__dict__[attr] = value
         if addToStrOutput and attr not in self._dictAttributes:

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..master)
 
+### Changed
+
+- Enable additional ruff rule sets to catch common bugs and tighten code quality:
+  - `ASYNC` (async correctness, e.g. `time.sleep` in async functions, `open()` blocking calls)
+  - `A` (Python builtin shadowing, e.g. `id`, `type`, `dict` as variable/argument names)
+  - `C4`, `ISC`, `TCH`, `TID` (already clean, added for enforcement going forward)
+  - `PERF` (manual list-append loops → comprehensions)
+  - `PT` (pytest style)
+  - `RSE` (unnecessary parens on `raise`)
+- Fix all violations exposed by the new rules (~22 changes). Notable: `time.sleep` in async auth flow replaced with `await asyncio.sleep`, internal builtin shadowing renamed (`id` → `gid`/`device_id`, `dict` → `data`, `type` → `enum_type` on the internal `set_attr_from_dict` helper). One public-API parameter name (`anonymizeConfig(format=...)`) is preserved with `# noqa` for backwards compatibility.
+
 ## [2.11.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..2.11.0)
 
 ### Added

@@ -718,7 +718,7 @@ class SmokeDetector(Device):
         super().from_json(js)
         c = get_functional_channel("SMOKE_DETECTOR_CHANNEL", js)
         if c:
-            self.set_attr_from_dict("smokeDetectorAlarmType", c, type=SmokeDetectorAlarmType)
+            self.set_attr_from_dict("smokeDetectorAlarmType", c, enum_type=SmokeDetectorAlarmType)
             self.set_attr_from_dict("chamberDegraded", c)
             self.set_attr_from_dict("dirtLevel", c)
             self.set_attr_from_dict("smokeDetectorGroupAssignment", c)
