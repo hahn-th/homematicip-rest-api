@@ -151,6 +151,7 @@ A few examples:
 - [x] HMIP-FBL (Blind Actuator - flush-mount)
 - [x] HMIP-FCI1 (Contact Interface flush-mount – 1x channel)
 - [x] HMIP-FCI6 (Contact Interface flush-mount – 6x channels)
+- [x] HMIP-FDC (Full Flush Door Controller / Türöffner-Aktor)
 - [x] HMIP-FLC (Full Flush Lock Controller)
 - [x] HMIP-FDT (Dimming Actuator - flush-mount)
 - [x] HMIP-FROLL (Shutter Actuator - flush-mount)

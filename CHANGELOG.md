@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..master)
 
+### Added
+
+- Add support for HmIP-FDC (Full Flush Door Controller / Türöffner-Aktor): impulse-driven door opener with two MULTI_MODE_LOCK_INPUT_CHANNEL inputs and eight ACCESS_AUTHORIZATION_CHANNEL channels for code/keypad access.
+
 ## [2.11.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..2.11.0)
 
 ### Added
