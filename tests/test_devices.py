@@ -256,6 +256,50 @@ def test_full_flush_lock_controller_pull_latch_with_pin():
     patched.assert_awaited_once_with(d._connection, d.id, 9, "1234")
 
 
+def test_full_flush_door_controller(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711000000000000FDC1")
+
+    assert isinstance(d, FullFlushDoorController)
+    assert d.modelType == "HmIP-FDC"
+    assert d.impulseDuration == 3.0
+    assert d.processing is False
+
+    opener_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.DOOR_SWITCH_CHANNEL
+        and ch.index == 3
+    )
+    assert isinstance(opener_channel, DoorSwitchChannel)
+    assert opener_channel.channelRole == "DOOR_OPENER_ACTUATOR"
+    assert opener_channel.impulseDuration == 3.0
+
+    input_channels = [
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.MULTI_MODE_LOCK_INPUT_CHANNEL
+    ]
+    assert len(input_channels) == 2
+    assert all(isinstance(ch, MultiModeLockInputChannel) for ch in input_channels)
+
+    auth_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.ACCESS_AUTHORIZATION_CHANNEL
+    )
+    assert isinstance(auth_channel, AccessAuthorizationChannel)
+    assert auth_channel.channelRole == "DOOR_OPENER_ACTUATOR"
+    assert auth_channel.authorized is True
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.start_impulse_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        d.send_start_impulse()
+
+    patched.assert_awaited_once_with(d._connection, d.id, 3)
+
+
 def test_room_control_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000BBBB000000000")
     assert isinstance(d, RoomControlDevice)

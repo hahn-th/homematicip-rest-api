@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `KEY_PRESS_LONG_START`: fires once at the beginning of a long press
   - `KEY_PRESS_LONG`: fires repeatedly (~every 250 ms) while the button is held
   - `KEY_PRESS_LONG_STOP`: fires once when the button is released after a long press
+- Add support for HmIP-FDC (Full Flush Door Controller / Türöffner-Aktor): impulse-driven door opener with two MULTI_MODE_LOCK_INPUT_CHANNEL inputs and eight ACCESS_AUTHORIZATION_CHANNEL channels for code/keypad access.
 
 ### Changed
 

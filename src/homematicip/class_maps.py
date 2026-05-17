@@ -44,6 +44,7 @@ TYPE_CLASS_MAP = {
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE: FullFlushContactInterface,
     DeviceType.FULL_FLUSH_CONTACT_INTERFACE_6: FullFlushContactInterface6,
     DeviceType.FULL_FLUSH_DIMMER: FullFlushDimmer,
+    DeviceType.FULL_FLUSH_DOOR_CONTROLLER: FullFlushDoorController,
     DeviceType.FULL_FLUSH_INPUT_SWITCH: FullFlushInputSwitch,
     DeviceType.FULL_FLUSH_LOCK_CONTROLLER: FullFlushLockController,
     DeviceType.FULL_FLUSH_SHUTTER: FullFlushShutter,
