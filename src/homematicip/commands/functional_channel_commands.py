@@ -596,6 +596,36 @@ async def start_impulse_async(rest_connection: RestConnection, device_id: str, c
     return await rest_connection.async_post("device/control/startImpulse", data)
 
 
+async def pull_latch_async(rest_connection: RestConnection, device_id: str, channel_index: int,
+                           pin: str | None = None):
+    """
+    Trigger the latch of a door opening device by activating the switching output of the
+    target device channel for its configured impulse duration.
+
+    Both the requesting client and the target device channel must belong to the same
+    access authorization. Used for ``ACCESS_AUTHORIZATION_CHANNEL`` channels with role
+    ``DOOR_OPENER_ACTUATOR`` (e.g. on HmIP-FLC, HmIP-DLD).
+
+    :param rest_connection: The REST connection instance.
+    :type rest_connection: RestConnection
+    :param device_id: The device ID.
+    :type device_id: str
+    :param channel_index: The channel index of the access-authorization channel.
+    :type channel_index: int
+    :param pin: The authorization PIN (optional, only required if a PIN is configured
+        on the access authorization profile).
+    :type pin: str or None
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {
+        "channelIndex": channel_index,
+        "deviceId": device_id,
+        "authorizationPin": pin,
+    }
+    return await rest_connection.async_post("device/control/pullLatch", data)
+
+
 async def set_acceleration_sensor_mode_async(rest_connection: RestConnection, device_id: str, channel_index: int,
                                              mode: str):
     """

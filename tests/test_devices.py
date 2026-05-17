@@ -118,6 +118,17 @@ def _full_flush_lock_controller_json():
                 "label": "",
                 "supportedOptionalFeatures": {},
             },
+            "9": {
+                "authorized": True,
+                "channelRole": "DOOR_OPENER_ACTUATOR",
+                "deviceId": "3014F7110000000000000026",
+                "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+                "groupIndex": 4,
+                "groups": [],
+                "index": 9,
+                "label": "",
+                "supportedOptionalFeatures": {},
+            },
         },
         "homeId": "00000000-0000-0000-0000-000000000001",
         "id": "3014F7110000000000000026",
@@ -203,6 +214,46 @@ def test_full_flush_lock_controller_channel_first_support():
         d.send_start_impulse()
 
     patched.assert_awaited_once_with(d._connection, d.id, 4)
+
+
+def test_full_flush_lock_controller_pull_latch():
+    d = _build_full_flush_lock_controller()
+
+    door_opener_auth_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.ACCESS_AUTHORIZATION_CHANNEL
+        and ch.channelRole == "DOOR_OPENER_ACTUATOR"
+    )
+    assert isinstance(door_opener_auth_channel, AccessAuthorizationChannel)
+    assert door_opener_auth_channel.index == 9
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.pull_latch_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        door_opener_auth_channel.pull_latch()
+
+    patched.assert_awaited_once_with(d._connection, d.id, 9, None)
+
+
+def test_full_flush_lock_controller_pull_latch_with_pin():
+    d = _build_full_flush_lock_controller()
+
+    door_opener_auth_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.ACCESS_AUTHORIZATION_CHANNEL
+        and ch.channelRole == "DOOR_OPENER_ACTUATOR"
+    )
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.pull_latch_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        door_opener_auth_channel.pull_latch("1234")
+
+    patched.assert_awaited_once_with(d._connection, d.id, 9, "1234")
 
 
 def test_room_control_device(fake_home: Home):
