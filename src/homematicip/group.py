@@ -691,20 +691,17 @@ class HeatingCoolingProfile(HomeMaticIPObject):
     async def update_profile_async(self):
         days = {}
         for i in range(7):
-            periods = []
             day = self.profileDays[i]
-            for p in day.periods:
-                periods.append(
-                    {
-                        "endtime": p.endtime,
-                        "starttime": p.starttime,
-                        "value": p.value,
-                        "endtimeAsMinutesOfDay": self._time_to_totalminutes(p.endtime),
-                        "starttimeAsMinutesOfDay": self._time_to_totalminutes(
-                            p.starttime
-                        ),
-                    }
-                )
+            periods = [
+                {
+                    "endtime": p.endtime,
+                    "starttime": p.starttime,
+                    "value": p.value,
+                    "endtimeAsMinutesOfDay": self._time_to_totalminutes(p.endtime),
+                    "starttimeAsMinutesOfDay": self._time_to_totalminutes(p.starttime),
+                }
+                for p in day.periods
+            ]
 
             dayOfWeek = calendar.day_name[i].upper()
             days[dayOfWeek] = {

@@ -53,9 +53,9 @@ class FunctionalChannel(HomeMaticIPObject):
             js["functionalChannelType"], js["functionalChannelType"]
         )
         self.groups = []
-        for id in js["groups"]:
+        for gid in js["groups"]:
             for g in groups:
-                if g.id == id:
+                if g.id == gid:
                     self.groups.append(g)
                     break
 

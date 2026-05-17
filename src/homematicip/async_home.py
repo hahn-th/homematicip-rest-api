@@ -214,7 +214,7 @@ class AsyncHome(HomeMaticIPObject):
             Exception: if the download fails
         """
         if self._connection_context is None:
-            raise HomeNotInitializedError()
+            raise HomeNotInitializedError
 
         client_characteristics = ClientCharacteristicsBuilder.get(self._connection_context.accesspoint_id)
         result = await self._rest_call_async(

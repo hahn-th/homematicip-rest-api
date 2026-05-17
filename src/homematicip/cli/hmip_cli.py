@@ -3,7 +3,6 @@ import json
 import logging
 import signal
 import sys
-import time
 import traceback
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from importlib.metadata import version
@@ -446,18 +445,18 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         external = []
         error = False
         command_entered = True
-        for id in args.external_devices:
-            device = home.search_device_by_id(id)
+        for device_id in args.external_devices:
+            device = home.search_device_by_id(device_id)
             if device is None:
-                logger.error("Device %s is not registered on this Access Point", id)
+                logger.error("Device %s is not registered on this Access Point", device_id)
                 error = True
             else:
                 external.append(device)
 
-        for id in args.internal_devices:
-            device = home.search_device_by_id(id)
+        for device_id in args.internal_devices:
+            device = home.search_device_by_id(device_id)
             if device is None:
-                logger.error("Device %s is not registered on this Access Point", id)
+                logger.error("Device %s is not registered on this Access Point", device_id)
                 error = True
             else:
                 internal.append(device)
@@ -598,7 +597,7 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
             logger.info("Listening for events. Press Ctrl+c to stop.")
             print("Listening for events. Press Ctrl+c to stop.")
             await home.enable_events()
-            while True:
+            while True:  # noqa: ASYNC110 — CLI listener loop, exits via KeyboardInterrupt
                 await asyncio.sleep(1)
         except KeyboardInterrupt:
             await home.disable_events_async()
@@ -613,8 +612,8 @@ async def run(config: homematicip.HmipConfig, home: AsyncHome, logger: logging.L
         home.on_channel_event(lambda x: print(x))
         await home.enable_events(additional_message_handler=lambda x: print(x))
         try:
-            while True:
-                time.sleep(1)
+            while True:  # noqa: ASYNC110 — CLI listener loop, exits via KeyboardInterrupt
+                await asyncio.sleep(1)
         except KeyboardInterrupt:
             return
 
@@ -1131,7 +1130,7 @@ async def fake_download_configuration():
     """Use a json file as configuration source for the server."""
     global server_config
     if server_config:
-        with open(server_config) as file:
+        with open(server_config) as file:  # noqa: ASYNC230 — CLI tool, sync file read at startup is fine
             return json.load(file)
     return None
 
