@@ -84,7 +84,7 @@ async def session_stop_threads():
 
     stop_threads = True
     t.join()
-    while loop.is_running():  # pragma: no cover
+    while loop.is_running():  # pragma: no cover  # noqa: ASYNC110 — test fixture teardown polling background loop
         await asyncio.sleep(0.1)
     loop.close()
 
@@ -155,7 +155,7 @@ async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, n
     home.init_with_context(fake_connection_context_with_ssl, use_rate_limiting=False)
     await home.get_current_state_async()
 
-    yield home
+    return home
 
 
 #

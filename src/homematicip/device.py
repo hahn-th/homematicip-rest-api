@@ -718,7 +718,7 @@ class SmokeDetector(Device):
         super().from_json(js)
         c = get_functional_channel("SMOKE_DETECTOR_CHANNEL", js)
         if c:
-            self.set_attr_from_dict("smokeDetectorAlarmType", c, type=SmokeDetectorAlarmType)
+            self.set_attr_from_dict("smokeDetectorAlarmType", c, enum_type=SmokeDetectorAlarmType)
             self.set_attr_from_dict("chamberDegraded", c)
             self.set_attr_from_dict("dirtLevel", c)
             self.set_attr_from_dict("smokeDetectorGroupAssignment", c)
@@ -2474,6 +2474,61 @@ class FullFlushLockController(Device):
             FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_LOCK_ACTUATOR"
         )
         return channel.doorLockActive if channel else None
+
+    @property
+    def impulseDuration(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        return channel.impulseDuration if channel else None
+
+    @property
+    def processing(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        return channel.processing if channel else None
+
+    def send_start_impulse(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        if channel is None:
+            raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_OPENER_ACTUATOR not loaded for device")
+        return channel.send_start_impulse()
+
+    async def send_start_impulse_async(self):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_OPENER_ACTUATOR"
+        )
+        if channel is None:
+            raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_OPENER_ACTUATOR not loaded for device")
+        return await channel.async_send_start_impulse()
+
+
+class FullFlushDoorController(Device):
+    """HmIP-FDC Full Flush Door Controller (door opener).
+
+    Provides an impulse-driven door opener output via DOOR_SWITCH_CHANNEL
+    (role DOOR_OPENER_ACTUATOR). Two MULTI_MODE_LOCK_INPUT_CHANNEL inputs and a
+    set of ACCESS_AUTHORIZATION_CHANNEL channels for keypad/code access are
+    exposed via the standard `functionalChannels` collection.
+    """
+
+    def _get_channel_by_role(
+            self, channel_type: FunctionalChannelType | str, channel_role: str
+    ) -> FunctionalChannel | None:
+        for channel in self.functionalChannels:
+            if isinstance(channel_type, str):
+                expected_type = FunctionalChannelType.from_str(channel_type, channel_type)
+            else:
+                expected_type = channel_type
+            if channel.functionalChannelType != expected_type:
+                continue
+            if channel.channelRole != channel_role:
+                continue
+            return channel
+        return None
 
     @property
     def impulseDuration(self):

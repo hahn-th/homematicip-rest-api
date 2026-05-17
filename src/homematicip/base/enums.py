@@ -233,6 +233,7 @@ class DeviceType(AutoNameEnum):
     FULL_FLUSH_CONTACT_INTERFACE = auto()
     FULL_FLUSH_CONTACT_INTERFACE_6 = auto()
     FULL_FLUSH_DIMMER = auto()
+    FULL_FLUSH_DOOR_CONTROLLER = auto()
     FULL_FLUSH_WIEGAND_INTERFACE = auto()
     FULL_FLUSH_INPUT_SWITCH = auto()
     FULL_FLUSH_LOCK_CONTROLLER = auto()
@@ -333,6 +334,7 @@ class GroupType(AutoNameEnum):
     ACCESS_CONTROL = auto()
     ALARM_SWITCHING = auto()
     AUTO_RELOCK_PROFILE = auto()
+    DOOR_LOCK_AUTHORIZATION_PROFILE = auto()
     ENERGY = auto()
     ENVIRONMENT = auto()
     EXTENDED_LINKED_GARAGE_DOOR = auto()
@@ -546,6 +548,10 @@ class FunctionalChannelType(AutoNameEnum):
 
 class ChannelEventTypes(AutoNameEnum):
     DOOR_BELL_SENSOR_EVENT = auto()
+    KEY_PRESS_SHORT = auto()
+    KEY_PRESS_LONG = auto()
+    KEY_PRESS_LONG_START = auto()
+    KEY_PRESS_LONG_STOP = auto()
 
 
 class HeatingLoadType(AutoNameEnum):

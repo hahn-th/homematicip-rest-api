@@ -311,10 +311,10 @@ async def test_wait_for_websocket_connection_no_double_warning_when_threshold_eq
 async def test_wait_for_websocket_connection_rejects_non_positive_poll_interval(fake_home: Home):
     """poll_interval <= 0 is rejected up-front to avoid a hung coroutine."""
     with patch.object(fake_home, "websocket_is_connected", return_value=False), \
-         pytest.raises(ValueError):
+         pytest.raises(ValueError, match="poll_interval must be positive"):
         await fake_home.wait_for_websocket_connection_async(poll_interval=0)
     with patch.object(fake_home, "websocket_is_connected", return_value=False), \
-         pytest.raises(ValueError):
+         pytest.raises(ValueError, match="poll_interval must be positive"):
         await fake_home.wait_for_websocket_connection_async(poll_interval=-1)
 
 

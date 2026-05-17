@@ -53,9 +53,9 @@ class FunctionalChannel(HomeMaticIPObject):
             js["functionalChannelType"], js["functionalChannelType"]
         )
         self.groups = []
-        for id in js["groups"]:
+        for gid in js["groups"]:
             for g in groups:
-                if g.id == id:
+                if g.id == gid:
                     self.groups.append(g)
                     break
 
@@ -1501,6 +1501,19 @@ class AccessAuthorizationChannel(FunctionalChannel):
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.authorized = js["authorized"]
+
+    def pull_latch(self, pin: str | None = None):
+        """Trigger the latch via this access-authorization channel.
+
+        Only meaningful for channels with role ``DOOR_OPENER_ACTUATOR``.
+        See :func:`homematicip.commands.functional_channel_commands.pull_latch_async`.
+        """
+        return self._run_non_async(lambda: self.async_pull_latch(pin))
+
+    async def async_pull_latch(self, pin: str | None = None):
+        return await functional_channel_commands.pull_latch_async(
+            self._connection, self.device.id, self.index, pin
+        )
 
 
 class HeatingThermostatChannel(FunctionalChannel):

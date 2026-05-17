@@ -18250,6 +18250,126 @@
       "serializedGlobalTradeItemNumber": "3014F7110000000000000FWI",
       "type": "FULL_FLUSH_WIEGAND_INTERFACE",
       "updateState": "UP_TO_DATE"
+    },
+    "3014F711000000000000FDC1": {
+      "availableFirmwareVersion": "1.0.0",
+      "connectionType": "HMIP_RF",
+      "firmwareVersion": "1.0.0",
+      "firmwareVersionInteger": 65536,
+      "functionalChannels": {
+        "0": {
+          "configPending": false,
+          "deviceId": "3014F711000000000000FDC1",
+          "dutyCycle": false,
+          "functionalChannelType": "DEVICE_BASE",
+          "groupIndex": 0,
+          "groups": [],
+          "index": 0,
+          "label": "",
+          "lowBat": null,
+          "multicastRoutingEnabled": false,
+          "routerModuleEnabled": false,
+          "routerModuleSupported": false,
+          "rssiDeviceValue": -60,
+          "rssiPeerValue": -60,
+          "unreach": false,
+          "supportedOptionalFeatures": {
+            "IFeatureDeviceIdentify": true,
+            "IFeatureRssiValue": true,
+            "IOptionalFeatureDutyCycle": true
+          }
+        },
+        "1": {
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "binaryBehaviorType": "NORMALLY_CLOSE",
+          "channelRole": null,
+          "corrosionPreventionActive": false,
+          "deviceId": "3014F711000000000000FDC1",
+          "doorBellSensorEventTimestamp": null,
+          "eventDelay": 0,
+          "functionalChannelType": "MULTI_MODE_LOCK_INPUT_CHANNEL",
+          "glassBroken": false,
+          "groupIndex": 1,
+          "groups": [],
+          "index": 1,
+          "label": "",
+          "lockState": "UNLOCKED",
+          "multiModeInputMode": "KEY_BEHAVIOR",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureLongPressSupported": true
+          },
+          "windowState": "CLOSED"
+        },
+        "2": {
+          "actionParameter": "NOT_CUSTOMISABLE",
+          "binaryBehaviorType": "NORMALLY_CLOSE",
+          "channelRole": null,
+          "corrosionPreventionActive": false,
+          "deviceId": "3014F711000000000000FDC1",
+          "doorBellSensorEventTimestamp": null,
+          "eventDelay": 0,
+          "functionalChannelType": "MULTI_MODE_LOCK_INPUT_CHANNEL",
+          "glassBroken": false,
+          "groupIndex": 2,
+          "groups": [],
+          "index": 2,
+          "label": "",
+          "lockState": "UNLOCKED",
+          "multiModeInputMode": "KEY_BEHAVIOR",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureLongPressSupported": true
+          },
+          "windowState": "CLOSED"
+        },
+        "3": {
+          "channelRole": "DOOR_OPENER_ACTUATOR",
+          "deviceId": "3014F711000000000000FDC1",
+          "doorLockActive": false,
+          "functionalChannelType": "DOOR_SWITCH_CHANNEL",
+          "groupIndex": 3,
+          "groups": [],
+          "impulseDuration": 3.0,
+          "index": 3,
+          "internalLinkConfiguration": null,
+          "label": "",
+          "multiModeInputMode": "KEY_BEHAVIOR",
+          "processing": false,
+          "profileMode": "AUTOMATIC",
+          "supportedOptionalFeatures": {
+            "IOptionalFeatureImpulseDuration": true,
+            "IOptionalFeatureImpulseOutputState": true
+          },
+          "userDesiredProfileMode": "AUTOMATIC"
+        },
+        "4": {
+          "authorized": true,
+          "channelRole": "DOOR_OPENER_ACTUATOR",
+          "deviceId": "3014F711000000000000FDC1",
+          "functionalChannelType": "ACCESS_AUTHORIZATION_CHANNEL",
+          "groupIndex": 3,
+          "groups": [],
+          "index": 4,
+          "label": "",
+          "supportedOptionalFeatures": {
+            "IFeatureAccessAuthorizationActuatorChannel": true
+          }
+        }
+      },
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "3014F711000000000000FDC1",
+      "label": "Türöffner Haustür",
+      "lastStatusUpdate": 1778954102356,
+      "liveUpdateState": "LIVE_UPDATE_NOT_SUPPORTED",
+      "manuallyUpdateForced": true,
+      "manufacturerCode": 1,
+      "measuredAttributes": {},
+      "modelId": 571,
+      "modelType": "HmIP-FDC",
+      "oem": "eQ-3",
+      "permanentlyReachable": true,
+      "serializedGlobalTradeItemNumber": "3014F711000000000000FDC1",
+      "type": "FULL_FLUSH_DOOR_CONTROLLER",
+      "updateState": "UP_TO_DATE"
     }
   },
   "groups": {
@@ -19776,6 +19896,27 @@
       "profileId": "00000000-0000-0000-0000-000000000040",
       "type": "ACCESS_AUTHORIZATION_PROFILE",
       "unreach": false
+    },
+    "00000000-0000-0000-0000-000000000091": {
+      "active": true,
+      "authorizationPinAssigned": false,
+      "authorized": true,
+      "channels": [],
+      "clientIds": [
+        "00000000-0000-0000-0000-000000000003"
+      ],
+      "dutyCycle": null,
+      "groupVisibility": "VISIBLE",
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-000000000091",
+      "label": "FLC Test Profile",
+      "lastStatusUpdate": 0,
+      "lowBat": null,
+      "metaGroupId": null,
+      "profileId": "00000000-0000-0000-0000-000000000092",
+      "sensorSpecificParameters": {},
+      "type": "DOOR_LOCK_AUTHORIZATION_PROFILE",
+      "unreach": null
     },
     "00000000-0000-0000-0000-000000000033": {
       "channels": [

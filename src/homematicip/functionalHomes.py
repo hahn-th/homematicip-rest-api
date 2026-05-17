@@ -24,9 +24,7 @@ class FunctionalHome(HomeMaticIPObject):
     def assignGroups(self, gids, groups: list[Group]):
         ret = []
         for gid in gids:
-            for g in groups:
-                if g.id == gid:
-                    ret.append(g)
+            ret.extend(g for g in groups if g.id == gid)
         return ret
 
 

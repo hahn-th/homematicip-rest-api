@@ -5,7 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..master)
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.12.0..master)
+
+## [2.12.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..2.12.0)
+
+### Added
+
+- Add `DOOR_LOCK_AUTHORIZATION_PROFILE` group type with `DoorLockAuthorizationProfileGroup` class. The cloud exposes this group type for HmIP-FLC and similar door-lock devices to control which clients are authorized to operate the lock; previously the group fell back to the base `Group` and emitted a "no class for group" warning at home load.
+- Add `pull_latch` / `async_pull_latch` on `AccessAuthorizationChannel` (and the underlying `pull_latch_async` command) to trigger a door opener via the cloud's `device/control/pullLatch` endpoint. This is the correct endpoint for `ACCESS_AUTHORIZATION_CHANNEL` channels with role `DOOR_OPENER_ACTUATOR` (e.g. on HmIP-FLC, HmIP-DLD): the cloud routes the impulse through the access-authorization profile, so calling `startImpulse` directly on the underlying `DOOR_SWITCH_CHANNEL` fails with `CLIENT_ACCESS_DENIED` for non-admin clients. Optional `pin` parameter is forwarded as `authorizationPin` for profiles that require a PIN.
+- Extend `ChannelEventTypes` enum with the four channel event type strings the HomematicIP cloud emits for `SINGLE_KEY_CHANNEL` button presses (HmIP-WRC2, HmIP-WRC6, HmIP-WRC6-230, ...):
+  - `KEY_PRESS_SHORT`: fires once on a short press
+  - `KEY_PRESS_LONG_START`: fires once at the beginning of a long press
+  - `KEY_PRESS_LONG`: fires repeatedly (~every 250 ms) while the button is held
+  - `KEY_PRESS_LONG_STOP`: fires once when the button is released after a long press
+- Add support for HmIP-FDC (Full Flush Door Controller / Türöffner-Aktor): impulse-driven door opener with two MULTI_MODE_LOCK_INPUT_CHANNEL inputs and eight ACCESS_AUTHORIZATION_CHANNEL channels for code/keypad access.
+
+### Changed
+
+- Enable additional ruff rule sets to catch common bugs and tighten code quality:
+  - `ASYNC` (async correctness, e.g. `time.sleep` in async functions, `open()` blocking calls)
+  - `A` (Python builtin shadowing, e.g. `id`, `type`, `dict` as variable/argument names)
+  - `C4`, `ISC`, `TCH`, `TID` (already clean, added for enforcement going forward)
+  - `PERF` (manual list-append loops → comprehensions)
+  - `PT` (pytest style)
+  - `RSE` (unnecessary parens on `raise`)
+- Fix all violations exposed by the new rules (~22 changes). Notable: `time.sleep` in async auth flow replaced with `await asyncio.sleep`, internal builtin shadowing renamed (`id` → `gid`/`device_id`, `dict` → `data`, `type` → `enum_type` on the internal `set_attr_from_dict` helper). One public-API parameter name (`anonymizeConfig(format=...)`) is preserved with `# noqa` for backwards compatibility.
 
 ## [2.11.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.10.0..2.11.0)
 

@@ -53,20 +53,30 @@ select = [
     "PIE",  # misc lints
     "G",    # logging-format (no f-strings in log messages, use .exception not .error+exc_info)
     "LOG",  # logging best practices
+    "A",    # builtin shadowing
+    "ASYNC", # async correctness
+    "C4",   # comprehensions
+    "ISC",  # implicit string concatenation
+    "PERF", # performance anti-patterns
+    "PT",   # pytest style
+    "RSE",  # raise style
+    "TCH",  # type-checking imports
+    "TID",  # tidy imports
     "RUF010",  # use !s/!r conversion flags
     "RUF012",  # mutable class attributes need ClassVar
     "RUF013",  # explicit Optional (no `x: int = None`)
 ]
 ignore = [
-    "F403",   # star imports (to be addressed separately)
-    "F405",   # names from star imports (consequence of F403)
-    "F811",   # redefinition of unused name (false positives from star imports)
-    "UP042",  # str(Enum) → StrEnum — behavioral differences, not a safe migration
-    "RET502", # implicit return None — style preference, can hurt readability
-    "RET503", # missing explicit return — same
-    "RET504", # unnecessary assignment before return — same
-    "SIM102", # collapsible if — nested ifs are sometimes clearer
-    "SIM112", # capitalized env vars — os.environ uses lowercase intentionally here
+    "F403",     # star imports (to be addressed separately)
+    "F405",     # names from star imports (consequence of F403)
+    "F811",     # redefinition of unused name (false positives from star imports)
+    "UP042",    # str(Enum) → StrEnum — behavioral differences, not a safe migration
+    "RET502",   # implicit return None — style preference, can hurt readability
+    "RET503",   # missing explicit return — same
+    "RET504",   # unnecessary assignment before return — same
+    "SIM102",   # collapsible if — nested ifs are sometimes clearer
+    "SIM112",   # capitalized env vars — os.environ uses lowercase intentionally here
+    "ASYNC109", # async function with timeout parameter — would break public API (wait_for_websocket_connection_async)
 ]
 
 [tool.pytest.ini_options]
