@@ -13,11 +13,13 @@ async def run_auth(access_point: str | None = None, devicename: str | None = Non
     print(
         "If you are about to connect to a HomematicIP HCU1 you have to press the button on top of the device, before you continue.")
     print("From now, you have 5 Minutes to complete the registration process.")
-    input("Press Enter to continue...")
+    input("Press Enter to continue...")  # noqa: ASYNC250
 
     while True:
         access_point = (
-            input("Please enter the accesspoint id (SGTIN): ").replace("-", "").upper()
+            input("Please enter the accesspoint id (SGTIN): ")  # noqa: ASYNC250
+            .replace("-", "")
+            .upper()
         )
         if len(access_point) != 24:
             print("Invalid access_point id")
@@ -29,12 +31,12 @@ async def run_auth(access_point: str | None = None, devicename: str | None = Non
 
     auth = homematicip.auth.Auth(connection, context.client_auth_token, access_point)
 
-    devicename = input(
+    devicename = input(  # noqa: ASYNC250
         "Please enter the client/devicename (leave blank to use default):"
     )
 
     while True:
-        pin = input("Please enter the PIN (leave Blank if there is none): ")
+        pin = input("Please enter the PIN (leave Blank if there is none): ")  # noqa: ASYNC250
 
         if pin != "":
             auth.set_pin(pin)
