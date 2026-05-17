@@ -547,6 +547,10 @@ class FunctionalChannelType(AutoNameEnum):
 
 class ChannelEventTypes(AutoNameEnum):
     DOOR_BELL_SENSOR_EVENT = auto()
+    KEY_PRESS_SHORT = auto()
+    KEY_PRESS_LONG = auto()
+    KEY_PRESS_LONG_START = auto()
+    KEY_PRESS_LONG_STOP = auto()
 
 
 class HeatingLoadType(AutoNameEnum):

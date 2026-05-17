@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `DOOR_LOCK_AUTHORIZATION_PROFILE` group type with `DoorLockAuthorizationProfileGroup` class. The cloud exposes this group type for HmIP-FLC and similar door-lock devices to control which clients are authorized to operate the lock; previously the group fell back to the base `Group` and emitted a "no class for group" warning at home load.
 - Add `pull_latch` / `async_pull_latch` on `AccessAuthorizationChannel` (and the underlying `pull_latch_async` command) to trigger a door opener via the cloud's `device/control/pullLatch` endpoint. This is the correct endpoint for `ACCESS_AUTHORIZATION_CHANNEL` channels with role `DOOR_OPENER_ACTUATOR` (e.g. on HmIP-FLC, HmIP-DLD): the cloud routes the impulse through the access-authorization profile, so calling `startImpulse` directly on the underlying `DOOR_SWITCH_CHANNEL` fails with `CLIENT_ACCESS_DENIED` for non-admin clients. Optional `pin` parameter is forwarded as `authorizationPin` for profiles that require a PIN.
+- Extend `ChannelEventTypes` enum with the four channel event type strings the HomematicIP cloud emits for `SINGLE_KEY_CHANNEL` button presses (HmIP-WRC2, HmIP-WRC6, HmIP-WRC6-230, ...):
+  - `KEY_PRESS_SHORT`: fires once on a short press
+  - `KEY_PRESS_LONG_START`: fires once at the beginning of a long press
+  - `KEY_PRESS_LONG`: fires repeatedly (~every 250 ms) while the button is held
+  - `KEY_PRESS_LONG_STOP`: fires once when the button is released after a long press
 
 ### Changed
 
