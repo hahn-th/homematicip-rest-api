@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.12.0..master)
 
+### Added
+
+- Register `DEVICE_CODE_STATE_EVENT` in the `EventType` enum so the websocket dispatcher recognizes the push event the HmIP-WKP keypad emits when a code is entered (payload: `codeIndex`, `codeState`). Previously this logged a "Unknown EventType" warning on every keypad press (fixes [#668](https://github.com/hahn-th/homematicip-rest-api/issues/668)). Full `codeState` handling (surfacing valid vs. unknown code as a typed event) will follow once all observed `codeState` values are documented.
+
 ## [2.12.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..2.12.0)
 
 ### Added

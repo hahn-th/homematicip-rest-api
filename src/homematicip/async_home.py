@@ -920,6 +920,13 @@ class AsyncHome(HomeMaticIPObject):
                     ch = self.search_channel(channel_event.deviceId, channel_event.channelIndex)
                     if ch is not None:
                         ch.fire_channel_event(channel_event)
+                elif pushEventType == EventType.DEVICE_CODE_STATE_EVENT:
+                    # Emitted by HmIP-WKP (keypad) when a code is entered.
+                    # Payload: {"deviceId", "codeIndex", "codeState"}.
+                    # Registered to silence the "Unknown EventType" warning;
+                    # full codeState handling is a follow-up once all
+                    # codeState values are known.
+                    pass
                 elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
                     obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
