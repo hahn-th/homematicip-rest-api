@@ -7,6 +7,7 @@ import httpx
 
 from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent
+from homematicip.base.code_state_event import CodeStateEvent
 from homematicip.class_maps import *
 from homematicip.client import Client
 from homematicip.connection.client_characteristics_builder import (
@@ -922,11 +923,15 @@ class AsyncHome(HomeMaticIPObject):
                         ch.fire_channel_event(channel_event)
                 elif pushEventType == EventType.DEVICE_CODE_STATE_EVENT:
                     # Emitted by HmIP-WKP (keypad) when a code is entered.
-                    # Payload: {"deviceId", "codeIndex", "codeState"}.
-                    # Registered to silence the "Unknown EventType" warning;
-                    # full codeState handling is a follow-up once all
-                    # codeState values are known.
-                    pass
+                    # Observed codeStates: "KNOWN_CODE_ID_RECEIVED" (valid),
+                    # "UNKNOWN_CODE_DETECTED" (wrong). The raw string is
+                    # forwarded so consumers can match any future state
+                    # without library changes.
+                    code_state_event = CodeStateEvent()
+                    code_state_event.from_json(event)
+                    device = self.search_device_by_id(code_state_event.deviceId)
+                    if device is not None:
+                        device.fire_code_state_event(code_state_event)
                 elif pushEventType == EventType.GROUP_REMOVED:
                     obj = self.search_group_by_id(event["id"])
                     obj.fire_remove_event(obj, event_type=pushEventType, obj=obj)
