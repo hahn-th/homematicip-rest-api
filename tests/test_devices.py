@@ -1590,6 +1590,37 @@ def test_door_bell_button(fake_home: Home):
     assert c.doublePressTime == 0.0
 
 
+def test_wall_mounted_remote_control_rotary_button(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711AAAAAAAAAAAAA001")
+    assert isinstance(d, WallMountedRemoteControlRotaryButton)
+    assert d.modelType == "HmIP-WRCR"
+    assert d.modelId == 416
+
+    push = d.functionalChannels[1]
+    assert isinstance(push, SingleKeyChannel)
+    assert push.index == 1
+
+    cw = d.functionalChannels[2]
+    assert isinstance(cw, RotaryWheelChannel)
+    assert cw.rotationDirection == "CLOCK_WISE"
+
+    ccw = d.functionalChannels[3]
+    assert isinstance(ccw, RotaryWheelChannel)
+    assert ccw.rotationDirection == "COUNTER_CLOCK_WISE"
+
+
+def test_key_remote_control_key_matic(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F711AAAAAAAAAAAAA002")
+    assert isinstance(d, KeyRemoteControlKeyMatic)
+    assert d.modelType == "HmIP-KRC-K"
+
+    for idx in range(1, 5):
+        ch = d.functionalChannels[idx]
+        assert isinstance(ch, SingleKeyChannel)
+        assert ch.index == idx
+        assert ch.channelRole == "KEY_GROUP_FOR_DOOR_LOCK"
+
+
 def test_open_collector_8(fake_home: Home):
     with no_ssl_verification():
         d = OpenCollector8Module(fake_home._connection)

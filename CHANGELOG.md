@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.12.0..master)
 
+### Added
+
+- Add support for HmIP-WRCR (Wall-mount Remote Control - Rotary). New device type `WALL_MOUNTED_REMOTE_CONTROL_ROTARY_BUTTON` with class `WallMountedRemoteControlRotaryButton`, and new functional channel type `ROTARY_WHEEL_CHANNEL` with class `RotaryWheelChannel`. The device exposes a `SINGLE_KEY_CHANNEL` for the centre push button and two `ROTARY_WHEEL_CHANNEL` instances (one per `rotationDirection`: `CLOCK_WISE` / `COUNTER_CLOCK_WISE`).
+- Add support for HmIP-KRC-K (Key Ring Remote Control for KeyMatic / door lock). New device type `KEY_REMOTE_CONTROL_KEY_MATIC` with class `KeyRemoteControlKeyMatic`. The four `SINGLE_KEY_CHANNEL` buttons carry `KEY_GROUP_FOR_DOOR_LOCK` as their role.
+
 ## [2.12.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.11.0..2.12.0)
 
 ### Added

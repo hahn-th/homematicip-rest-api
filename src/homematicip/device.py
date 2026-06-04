@@ -1128,6 +1128,19 @@ class KeyRemoteControl4(PushButton):
     """HMIP-KRC4 (Key Ring Remote Control - 4 buttons)"""
 
 
+class KeyRemoteControlKeyMatic(PushButton):
+    """HmIP-KRC-K (Key Ring Remote Control - 4 buttons, for door lock)"""
+
+
+class WallMountedRemoteControlRotaryButton(PushButton):
+    """HmIP-WRCR (Wall-mount Remote Control - Rotary)
+
+    Exposes a SINGLE_KEY_CHANNEL for the push button and two
+    ROTARY_WHEEL_CHANNEL instances, one per rotation direction
+    (CLOCK_WISE / COUNTER_CLOCK_WISE).
+    """
+
+
 class RemoteControl8(PushButton):
     """HMIP-RC8 (Remote Control - 8 buttons)"""
 
