@@ -169,6 +169,7 @@ A few examples:
 - [ ] HMIP-K-DRSI4 (Switch Actuator – 4x channels, 16A per channel) electrical DIN rail
 - [x] HMIP-KRCA (Key Ring Remote Control & Alarm)
 - [x] HMIP-KRC4 (Key Ring Remote Control - 4x buttons)
+- [x] HmIP-KRC-K (Key Ring Remote Control for KeyMatic - 4x buttons)
 - [x] HMIP-LSC (Light Strip Controller)
 - [ ] HMIP-MIO16-PCB (Multi Analog/Digital Interface - Switch Circuit Board)
 - [x] HMIP-MIOB (Multi IO Box for floor heating & cooling)
@@ -245,7 +246,7 @@ A few examples:
 - [x] HmIP-WRC6-230 (Wall-mount Remote Control - 6x buttons, 230V, with LED)
 - [x] HMIP-WRCC2 (Wall-mount Remote Control – flat)
 - [ ] HMIP-WRCD (Wall-mount Remote Control - E-Paper-Status display)
-- [ ] HMIP-WRCR (Wall-mount Remote Control - Rotary)
+- [x] HMIP-WRCR (Wall-mount Remote Control - Rotary)
 - [ ] HMIP-WT (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 - [x] HMIP-WTH (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really)

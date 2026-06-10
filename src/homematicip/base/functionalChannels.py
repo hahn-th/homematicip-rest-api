@@ -1853,6 +1853,22 @@ class SingleKeyChannel(FunctionalChannel):
         self.set_attr_from_dict("doublePressTime", js)
 
 
+class RotaryWheelChannel(FunctionalChannel):
+    """this is the representative of the ROTARY_WHEEL_CHANNEL channel.
+
+    HmIP-WRCR exposes two ROTARY_WHEEL_CHANNEL instances, one per
+    rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).
+    """
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.rotationDirection = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("rotationDirection", js)
+
+
 class AlarmSirenChannel(FunctionalChannel):
     """this is the representative of the ALARM_SIREN_CHANNEL channel"""
 
