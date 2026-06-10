@@ -170,6 +170,8 @@ class Device(BaseDevice):
     def __init__(self, connection):
         super().__init__(connection)
 
+        self._on_code_state_event_handler = []
+
         self.liveUpdateState = None
         self.updateState = DeviceUpdateState.UP_TO_DATE
         self.availableFirmwareVersion = None
@@ -247,6 +249,19 @@ class Device(BaseDevice):
 
     def __str__(self):
         return f"{self.modelType} {self.label} {self.str_from_attr_map()}"
+
+    def add_on_code_state_event_handler(self, handler):
+        """Register a handler for code-state push events emitted by this device.
+
+        Fired with a :class:`CodeStateEvent` when the cloud reports
+        a ``DEVICE_CODE_STATE_EVENT`` for this device (HmIP-WKP keypad).
+        """
+        self._on_code_state_event_handler.append(handler)
+
+    def fire_code_state_event(self, *args, **kwargs):
+        """Invoke all registered code-state handlers."""
+        for _handler in self._on_code_state_event_handler:
+            _handler(*args, **kwargs)
 
     def set_label(self, label):
         return self._run_non_async(lambda: self.set_label_async(label))

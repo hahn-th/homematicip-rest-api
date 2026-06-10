@@ -11,6 +11,8 @@ from homematicip_demo.helper import (
 
 from conftest import utc_offset
 from homematicip.base.channel_event import ChannelEvent
+from homematicip.base.code_state_event import CodeStateEvent
+from homematicip.base.enums import EventType
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import BaseDevice, Device
 from homematicip.exceptions.connection_exceptions import (
@@ -1006,6 +1008,54 @@ async def test_websocket_channel_event(fake_home: Home):
     channel_event.from_json(payload["events"]["0"])
     fake_handler.assert_called_once_with(channel_event)
 
+
+@pytest.mark.parametrize(
+    ("code_index", "code_state"),
+    [
+        (1, "KNOWN_CODE_ID_RECEIVED"),
+        (32, "UNKNOWN_CODE_DETECTED"),
+    ],
+)
+async def test_websocket_device_code_state_event(
+    fake_home: Home, caplog, code_index: int, code_state: str
+):
+    # HmIP-WKP emits this event when a code is entered. Verify it is
+    # recognized (no "Unknown EventType" warning), forwarded via onEvent,
+    # and dispatched to the device's typed code-state handler with the
+    # raw codeState string preserved.
+    device_id = "3014F7110000RAIN_SENSOR"
+    payload = {
+        "events":
+            {
+                "0":
+                    {
+                        "pushEventType": "DEVICE_CODE_STATE_EVENT",
+                        "deviceId": device_id,
+                        "codeIndex": code_index,
+                        "codeState": code_state,
+                    }
+            }
+    }
+    event_handler = Mock()
+    fake_home.onEvent += event_handler
+    device_handler = Mock()
+    device = fake_home.search_device_by_id(device_id)
+    device.add_on_code_state_event_handler(device_handler)
+    with caplog.at_level("WARNING", logger="homematicip.async_home"):
+        await fake_home._ws_on_message(json.dumps(payload))
+
+    assert "Unknown EventType" not in caplog.text
+    event_handler.assert_called_once()
+    fired = event_handler.call_args.args[0]
+    assert fired[0]["eventType"] == EventType.DEVICE_CODE_STATE_EVENT
+
+    expected = CodeStateEvent(
+        pushEventType="DEVICE_CODE_STATE_EVENT",
+        deviceId=device_id,
+        codeIndex=code_index,
+        codeState=code_state,
+    )
+    device_handler.assert_called_once_with(expected)
 
 
 @pytest.mark.asyncio
