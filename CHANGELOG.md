@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.0..master)
 
+### Changed
+
+- Lower default `websocket_message_stale_timeout` from 28800 s (8 h) to 1800 s (30 min). The websocket listen loop closes and reconnects when no message arrives within this window while the connection is reported open. The previous 8 h was a conservative last-resort safety net; in practice the websocket can stay healthy at the protocol layer while push events stop arriving, in which case devices appear unavailable until the safety net fires. The new default matches `STALE_ERROR_SECONDS`, the threshold at which the same condition is already reported via the `on_stale` callback. The previous value can be restored by passing `websocket_message_stale_timeout=28800` to `ConnectionContextBuilder.build_context_async` / `build_context`.
+
 ## [2.13.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.12.0..2.13.0)
 
 ### Added

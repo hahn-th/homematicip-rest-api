@@ -21,7 +21,7 @@ class ConnectionContextBuilder:
                                   ssl_ctx=None,
                                   websocket_heartbeat_interval: int = 30,
                                   websocket_connect_timeout: int = 30,
-                                  websocket_message_stale_timeout: int = 28800,
+                                  websocket_message_stale_timeout: int = 1800,
                                   websocket_initial_backoff: int = 8,
                                   websocket_max_backoff: int = 900):
         """
@@ -63,7 +63,7 @@ class ConnectionContextBuilder:
                       ssl_ctx: SSLContext | str | bool | None = None,
                       websocket_heartbeat_interval: int = 30,
                       websocket_connect_timeout: int = 30,
-                      websocket_message_stale_timeout: int = 28800,
+                      websocket_message_stale_timeout: int = 1800,
                       websocket_initial_backoff: int = 8,
                       websocket_max_backoff: int = 900):
         """
@@ -109,6 +109,6 @@ class ConnectionContext:
     ssl_ctx: SSLContext | str | bool | None = None
     websocket_heartbeat_interval: int = 30
     websocket_connect_timeout: int = 30
-    websocket_message_stale_timeout: int = 28800
+    websocket_message_stale_timeout: int = 1800
     websocket_initial_backoff: int = 8
     websocket_max_backoff: int = 900
