@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.1..master)
 
+### Fixed
+
+- Re-resolve the cloud host after repeated websocket connect failures. The reconnect loop retried the same cached host indefinitely, so when the assigned host went down (returning HTTP 502 on every connect) the connection never recovered even though a fresh lookup would have returned a healthy host. After `WebsocketHandler.RELOOKUP_AFTER_ATTEMPTS` consecutive failures (default 3) the handler now performs a new host lookup before the next attempt. Short outages still recover via cheap same-host retries first; a failing lookup falls back to the current host.
+
 ## [2.13.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.0..2.13.1)
 
 ### Changed

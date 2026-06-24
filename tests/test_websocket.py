@@ -306,6 +306,70 @@ async def test_connect_passes_ssl_ctx_when_provided(monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_connect_relookups_host_after_repeated_failures(monkeypatch):
+    """After RELOOKUP_AFTER_ATTEMPTS consecutive failures the handler re-resolves
+    the cloud host and connects to the freshly looked-up url instead of retrying
+    the dead one forever."""
+    client = WebsocketHandler()
+    client.INITIAL_BACKOFF = 0
+    client.RELOOKUP_AFTER_ATTEMPTS = 2
+    tried = []
+
+    class FakeSession:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def ws_connect(self, url, **kwargs):
+            tried.append(url)
+            if url == "wss://healthy.invalid/ws":
+                client._stop_event.set()
+            raise TimeoutError("dead host")
+
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        FakeSession,
+    )
+
+    fresh = MagicMock()
+    fresh.websocket_url = "wss://healthy.invalid/ws"
+    build_mock = AsyncMock(return_value=fresh)
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.ConnectionContextBuilder.build_context_async",
+        build_mock,
+    )
+
+    context = MagicMock()
+    context.websocket_url = "wss://dead.invalid/ws"
+    context.accesspoint_id = "a"
+
+    await client._connect(context)
+
+    build_mock.assert_awaited()
+    assert tried[:2] == ["wss://dead.invalid/ws", "wss://dead.invalid/ws"]
+    assert "wss://healthy.invalid/ws" in tried
+
+
+@pytest.mark.asyncio
+async def test_relookup_context_falls_back_on_error(monkeypatch):
+    """A failing re-lookup keeps the current context instead of raising."""
+    client = WebsocketHandler()
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.ConnectionContextBuilder.build_context_async",
+        AsyncMock(side_effect=Exception("lookup down")),
+    )
+
+    context = MagicMock()
+    context.websocket_url = "wss://dead.invalid/ws"
+
+    result = await client._relookup_context(context)
+
+    assert result is context
+
+
+@pytest.mark.asyncio
 async def test_add_on_stale_handler_registers():
     client = WebsocketHandler()
     handler = MagicMock()
