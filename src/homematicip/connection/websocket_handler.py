@@ -13,7 +13,10 @@ from homematicip.connection import (
     ATTR_AUTH_TOKEN,
     ATTR_CLIENT_AUTH,
 )
-from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.connection_context import (
+    ConnectionContext,
+    ConnectionContextBuilder,
+)
 
 LOGGER = logging.getLogger(__name__)
 
@@ -30,6 +33,10 @@ class WebsocketHandler:
         self.HEARTBEAT_INTERVAL = 30
         self.CONNECT_TIMEOUT = 30
         self.MESSAGE_STALE_TIMEOUT = 28800
+        # Re-resolve the cloud host after this many consecutive connect
+        # failures. The reconnect loop otherwise retries the same cached host
+        # forever, which never recovers when that host stays down (HTTP 502).
+        self.RELOOKUP_AFTER_ATTEMPTS = 3
         # Staleness early-warning thresholds. The MESSAGE_STALE_TIMEOUT
         # safety net only forces a reconnect after 8h; these fire much
         # earlier so consumers can surface the condition to users.
@@ -127,6 +134,8 @@ class WebsocketHandler:
         backoff = self.INITIAL_BACKOFF
         while not self._stop_event.is_set():
             try:
+                if self._reconnect_attempt_count >= self.RELOOKUP_AFTER_ATTEMPTS:
+                    context = await self._relookup_context(context)
                 LOGGER.info("Connect to %s", context.websocket_url)
 
                 async with aiohttp.ClientSession() as session:
@@ -175,6 +184,25 @@ class WebsocketHandler:
             finally:
                 await self._cleanup()
 
+    async def _relookup_context(self, context: ConnectionContext) -> ConnectionContext:
+        try:
+            refreshed = await ConnectionContextBuilder.build_context_async(
+                accesspoint_id=context.accesspoint_id,
+                auth_token=context.auth_token,
+                enforce_ssl=context.enforce_ssl,
+                ssl_ctx=context.ssl_ctx,
+                websocket_heartbeat_interval=context.websocket_heartbeat_interval,
+                websocket_connect_timeout=context.websocket_connect_timeout,
+                websocket_message_stale_timeout=context.websocket_message_stale_timeout,
+                websocket_initial_backoff=context.websocket_initial_backoff,
+                websocket_max_backoff=context.websocket_max_backoff,
+            )
+        except Exception:
+            LOGGER.exception("Re-lookup of websocket host failed, keeping current host")
+            return context
+        if refreshed.websocket_url != context.websocket_url:
+            LOGGER.info("Re-resolved websocket host to %s", refreshed.websocket_url)
+        return refreshed
 
     async def _listen(self, ws):
         while not self._stop_event.is_set():
