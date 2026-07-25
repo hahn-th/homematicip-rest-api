@@ -155,16 +155,12 @@ class AsyncFakeCloudServer:
 
         js = json.loads(request.data)
 
-        external = js["zonesActivation"]["EXTERNAL"]
-        internal = js["zonesActivation"]["INTERNAL"]
+        zones_activation = js["zonesActivation"]
 
         for g_id in self.data["groups"]:
             g = self.data["groups"][g_id]
-            if g["type"] == "SECURITY_ZONE":
-                if g["label"] == "INTERNAL":
-                    g["active"] = internal
-                elif g["label"] == "EXTERNAL":
-                    g["active"] = external
+            if g["type"] == "SECURITY_ZONE" and g["label"] in zones_activation:
+                g["active"] = zones_activation[g["label"]]
 
         return web.json_response(None)
 

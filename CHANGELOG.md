@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.2..master)
 
+### Fixed
+
+- Support the new request-based alarm panel (`securityZoneActivationMode` `ACTIVATION_REQUEST_BASED`). It labels its two security zones `ABSENCE`/`PRESENCE` instead of `INTERNAL`/`EXTERNAL`, which made `get_security_zones_activation` always report disarmed and `set_security_zones_activation` fail with HTTP 400 (unknown group). Both now resolve the zone labels from the home instead of hardcoding them. Added `SecurityZoneActivationMode.ACTIVATION_REQUEST_BASED`.
+
 ## [2.13.2](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.1..2.13.2)
 
 ### Fixed

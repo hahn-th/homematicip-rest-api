@@ -468,6 +468,35 @@ def test_security_zones_activation(fake_home: Home):
         assert external is True
 
 
+def test_security_zones_activation_request_based(fake_home: Home):
+    with no_ssl_verification():
+        data = fake_home._fake_cloud.aio_server.data
+        data["home"]["functionalHomes"]["SECURITY_AND_ALARM"][
+            "securityZoneActivationMode"
+        ] = "ACTIVATION_REQUEST_BASED"
+        relabel = {"INTERNAL": "ABSENCE", "EXTERNAL": "PRESENCE"}
+        for g in data["groups"].values():
+            if g["type"] == "SECURITY_ZONE" and g["label"] in relabel:
+                g["label"] = relabel[g["label"]]
+        fake_home.get_current_state()
+
+        assert (
+            fake_home.get_functionalHome(SecurityAndAlarmHome).securityZoneActivationMode
+            == SecurityZoneActivationMode.ACTIVATION_REQUEST_BASED
+        )
+
+        internal, external = fake_home.get_security_zones_activation()
+        assert internal is False
+        assert external is False
+
+        fake_home.set_security_zones_activation(True, True)
+        fake_home.get_current_state()
+
+        internal, external = fake_home.get_security_zones_activation()
+        assert internal is True
+        assert external is True
+
+
 def test_set_pin(fake_home: Home):
     with no_ssl_verification():
         def get_pin(fake_home_inner):

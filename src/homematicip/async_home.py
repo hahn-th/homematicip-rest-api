@@ -618,18 +618,27 @@ class AsyncHome(HomeMaticIPObject):
                 return r
         return None
 
+    def _get_security_zone_labels(self) -> tuple[str, str]:
+        """return the (internal, external) zone labels: the request-based alarm
+        panel uses ABSENCE/PRESENCE where the classic one uses INTERNAL/EXTERNAL."""
+        for g in self.groups:
+            if isinstance(g, SecurityZoneGroup) and g.label in ("ABSENCE", "PRESENCE"):
+                return "ABSENCE", "PRESENCE"
+        return "INTERNAL", "EXTERNAL"
+
     def get_security_zones_activation(self) -> tuple[bool, bool]:
         """returns the value of the security zones if they are armed or not
 
         :return: internal, external
         """
+        internal_label, external_label = self._get_security_zone_labels()
         internal_active = False
         external_active = False
         for g in self.groups:
             if isinstance(g, SecurityZoneGroup):
-                if g.label == "EXTERNAL":
+                if g.label == external_label:
                     external_active = g.active
-                elif g.label == "INTERNAL":
+                elif g.label == internal_label:
                     internal_active = g.active
         return internal_active, external_active
 
@@ -649,7 +658,8 @@ class AsyncHome(HomeMaticIPObject):
         :param internal: activates/deactivates the internal zone
         :param external: activates/deactivates the external zone
         """
-        data = {"zonesActivation": {"EXTERNAL": external, "INTERNAL": internal}}
+        internal_label, external_label = self._get_security_zone_labels()
+        data = {"zonesActivation": {external_label: external, internal_label: internal}}
         return await self._rest_call_async("home/security/setZonesActivation", data)
 
     async def set_silent_alarm_async(self, internal=True, external=True):
