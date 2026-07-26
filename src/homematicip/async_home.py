@@ -618,29 +618,35 @@ class AsyncHome(HomeMaticIPObject):
                 return r
         return None
 
-    def _get_security_zone_labels(self) -> tuple[str, str]:
-        """return the (internal, external) zone labels: the request-based alarm
-        panel uses ABSENCE/PRESENCE where the classic one uses INTERNAL/EXTERNAL."""
-        for g in self.groups:
-            if isinstance(g, SecurityZoneGroup) and g.label in ("ABSENCE", "PRESENCE"):
-                return "ABSENCE", "PRESENCE"
-        return "INTERNAL", "EXTERNAL"
+    def _has_request_based_security_zones(self) -> bool:
+        """the request-based alarm panel exposes two mutually exclusive modes
+        PRESENCE/ABSENCE instead of the additive INTERNAL/EXTERNAL zones of the
+        classic panel."""
+        return any(
+            isinstance(g, SecurityZoneGroup) and g.label in ("ABSENCE", "PRESENCE")
+            for g in self.groups
+        )
 
     def get_security_zones_activation(self) -> tuple[bool, bool]:
         """returns the value of the security zones if they are armed or not
 
         :return: internal, external
         """
-        internal_label, external_label = self._get_security_zone_labels()
-        internal_active = False
-        external_active = False
-        for g in self.groups:
-            if isinstance(g, SecurityZoneGroup):
-                if g.label == external_label:
-                    external_active = g.active
-                elif g.label == internal_label:
-                    internal_active = g.active
-        return internal_active, external_active
+        active = {
+            g.label: g.active
+            for g in self.groups
+            if isinstance(g, SecurityZoneGroup)
+        }
+        if self._has_request_based_security_zones():
+            # ABSENCE and PRESENCE are mutually exclusive; map them onto the
+            # classic (internal, external) tuple so ABSENCE reads as armed away
+            # and PRESENCE as armed home.
+            if active.get("ABSENCE"):
+                return True, True
+            if active.get("PRESENCE"):
+                return False, True
+            return False, False
+        return active.get("INTERNAL", False), active.get("EXTERNAL", False)
 
     async def set_security_zones_activation_async(self, internal=True, external=True):
         """this function will set the alarm system to armed or disable it
@@ -658,8 +664,14 @@ class AsyncHome(HomeMaticIPObject):
         :param internal: activates/deactivates the internal zone
         :param external: activates/deactivates the external zone
         """
-        internal_label, external_label = self._get_security_zone_labels()
-        data = {"zonesActivation": {external_label: external, internal_label: internal}}
+        if self._has_request_based_security_zones():
+            # Map the classic (internal, external) intent onto the mutually
+            # exclusive modes: away (both) -> ABSENCE, home (external only) ->
+            # PRESENCE, disarm -> neither.
+            zones = {"PRESENCE": external and not internal, "ABSENCE": internal}
+        else:
+            zones = {"EXTERNAL": external, "INTERNAL": internal}
+        data = {"zonesActivation": zones}
         return await self._rest_call_async("home/security/setZonesActivation", data)
 
     async def set_silent_alarm_async(self, internal=True, external=True):

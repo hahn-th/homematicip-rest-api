@@ -590,7 +590,8 @@ class SecurityZoneGroup(Group):
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
-        self.active = js["active"]
+        # request-based panels omit "active" for a disarmed zone
+        self.active = js.get("active", False)
         self.silent = js["silent"]
         self.windowState = js["windowState"]
         self.motionDetected = js["motionDetected"]

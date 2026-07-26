@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.3..master)
 
+### Fixed
+
+- Correct arm/disarm semantics for the request-based alarm panel. Its PRESENCE/ABSENCE zones are mutually exclusive modes rather than the additive INTERNAL/EXTERNAL zones of the classic panel, so `get`/`set_security_zones_activation` now map ABSENCE to armed-away and PRESENCE to armed-home instead of activating both at once (and instead of ignoring an ABSENCE activation). Also default `SecurityZoneGroup.active` to `False` when the cloud omits the `active` key for a disarmed zone.
+
 ## [2.13.3](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.2..2.13.3)
 
 ### Fixed

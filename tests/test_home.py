@@ -21,7 +21,7 @@ from homematicip.exceptions.connection_exceptions import (
 )
 from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.functionalHomes import *
-from homematicip.group import Group
+from homematicip.group import Group, SecurityZoneGroup
 from homematicip.home import Home
 from homematicip.rule import *
 from homematicip.securityEvent import *
@@ -468,16 +468,29 @@ def test_security_zones_activation(fake_home: Home):
         assert external is True
 
 
+def _make_request_based(fake_home: Home) -> None:
+    """relabel the fixture's security zones to the request-based scheme."""
+    data = fake_home._fake_cloud.aio_server.data
+    data["home"]["functionalHomes"]["SECURITY_AND_ALARM"][
+        "securityZoneActivationMode"
+    ] = "ACTIVATION_REQUEST_BASED"
+    relabel = {"INTERNAL": "ABSENCE", "EXTERNAL": "PRESENCE"}
+    for g in data["groups"].values():
+        if g["type"] == "SECURITY_ZONE" and g["label"] in relabel:
+            g["label"] = relabel[g["label"]]
+
+
+def _zone_states(fake_home: Home) -> dict:
+    return {
+        g.label: g.active
+        for g in fake_home.groups
+        if isinstance(g, SecurityZoneGroup)
+    }
+
+
 def test_security_zones_activation_request_based(fake_home: Home):
     with no_ssl_verification():
-        data = fake_home._fake_cloud.aio_server.data
-        data["home"]["functionalHomes"]["SECURITY_AND_ALARM"][
-            "securityZoneActivationMode"
-        ] = "ACTIVATION_REQUEST_BASED"
-        relabel = {"INTERNAL": "ABSENCE", "EXTERNAL": "PRESENCE"}
-        for g in data["groups"].values():
-            if g["type"] == "SECURITY_ZONE" and g["label"] in relabel:
-                g["label"] = relabel[g["label"]]
+        _make_request_based(fake_home)
         fake_home.get_current_state()
 
         assert (
@@ -485,16 +498,39 @@ def test_security_zones_activation_request_based(fake_home: Home):
             == SecurityZoneActivationMode.ACTIVATION_REQUEST_BASED
         )
 
-        internal, external = fake_home.get_security_zones_activation()
-        assert internal is False
-        assert external is False
+        # disarmed
+        assert fake_home.get_security_zones_activation() == (False, False)
 
+        # arm home -> only PRESENCE active, reported as (internal, external) = (F, T)
+        fake_home.set_security_zones_activation(False, True)
+        fake_home.get_current_state()
+        assert fake_home.get_security_zones_activation() == (False, True)
+        assert _zone_states(fake_home) == {"PRESENCE": True, "ABSENCE": False}
+
+        # arm away -> only ABSENCE active, reported as (T, T)
         fake_home.set_security_zones_activation(True, True)
         fake_home.get_current_state()
+        assert fake_home.get_security_zones_activation() == (True, True)
+        assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": True}
 
-        internal, external = fake_home.get_security_zones_activation()
-        assert internal is True
-        assert external is True
+        # disarm -> neither active
+        fake_home.set_security_zones_activation(False, False)
+        fake_home.get_current_state()
+        assert fake_home.get_security_zones_activation() == (False, False)
+        assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": False}
+
+
+def test_security_zone_omitted_active_key(fake_home: Home):
+    with no_ssl_verification():
+        _make_request_based(fake_home)
+        # a disarmed request-based zone omits "active" entirely
+        for g in fake_home._fake_cloud.aio_server.data["groups"].values():
+            if g["type"] == "SECURITY_ZONE":
+                g.pop("active", None)
+        fake_home.get_current_state()
+
+        assert fake_home.get_security_zones_activation() == (False, False)
+        assert all(z is False for z in _zone_states(fake_home).values())
 
 
 def test_set_pin(fake_home: Home):
