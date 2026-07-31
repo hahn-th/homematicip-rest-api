@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.4..master)
 
+### Added
+
+- Add `DeviceType.HOME_CONTROL_ACCESS_POINT_TWO`, mapped to the existing `HomeControlAccessPoint` class. Fixes repeated `'HOME_CONTROL_ACCESS_POINT_TWO' isn't a valid option for class 'DeviceType'` warnings for installations using the Access Point 2 (HmIP-HAP2).
+
 ## [2.13.4](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.3..2.13.4)
 
 ### Fixed
