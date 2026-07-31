@@ -248,6 +248,7 @@ class DeviceType(AutoNameEnum):
     HEATING_THERMOSTAT_THREE = auto()
     HEATING_THERMOSTAT_FLEX = auto()
     HOME_CONTROL_ACCESS_POINT = auto()
+    HOME_CONTROL_ACCESS_POINT_TWO = auto()
     HOERMANN_DRIVES_MODULE = auto()
     KEY_REMOTE_CONTROL_4 = auto()
     KEY_REMOTE_CONTROL_ALARM = auto()
