@@ -151,6 +151,30 @@ def test_redact_sensitive_data_authorization_pin():
     assert redacted["channelIndex"] == 1
 
 
+def test_redact_response_body_redacts_json():
+    """error bodies get pasted into bug reports, so they must be redacted too."""
+    body = RestConnection._redact_response_body(
+        '{"errorCode": "INVALID_REQUEST", "authToken": "TOPSECRET", "sgtin": "3014F711"}'
+    )
+    assert "INVALID_REQUEST" in body
+    assert "TOPSECRET" not in body
+    assert "3014F711" not in body
+    assert "REDACTED" in body
+
+
+def test_redact_response_body_passes_through_non_json():
+    assert RestConnection._redact_response_body("<html>Bad Gateway</html>") == (
+        "<html>Bad Gateway</html>"
+    )
+    assert RestConnection._redact_response_body("") == "<empty>"
+
+
+def test_redact_response_body_truncates():
+    body = RestConnection._redact_response_body("x" * 5000)
+    assert body.endswith("... (truncated)")
+    assert len(body) < 5000
+
+
 def test_redact_sensitive_data_keeps_none():
     """An unset optional field must stay distinguishable from a real value."""
     redacted = RestConnection._redact_sensitive_data(

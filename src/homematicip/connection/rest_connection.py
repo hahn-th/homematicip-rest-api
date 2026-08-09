@@ -18,6 +18,8 @@ from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 LOGGER = logging.getLogger(__name__)
 
+MAX_LOGGED_BODY_LENGTH = 2000
+
 SENSITIVE_LOG_KEYS = {
     "accessPointId",
     "ACCESSPOINT-ID",
@@ -95,6 +97,26 @@ class RestConnection:
         return self._headers
 
     @staticmethod
+    def _redact_response_body(text: str) -> str:
+        """error bodies end up in bug reports, so redact them like requests"""
+        if not text:
+            return "<empty>"
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            # not JSON (a proxy error page, for example), so nothing to redact by key
+            return RestConnection._truncate(text)
+        return RestConnection._truncate(
+            json.dumps(RestConnection._redact_sensitive_data(parsed))
+        )
+
+    @staticmethod
+    def _truncate(text: str) -> str:
+        if len(text) <= MAX_LOGGED_BODY_LENGTH:
+            return text
+        return f"{text[:MAX_LOGGED_BODY_LENGTH]}... (truncated)"
+
+    @staticmethod
     def _redact_sensitive_data(value: Any) -> Any:
         if isinstance(value, dict):
             return {
@@ -152,7 +174,7 @@ class RestConnection:
                     exc.response.status_code,
                     exc.request.url,
                     data_logging if data_logging is not None else "<no-data>",
-                    exc.response.text or "<empty>",
+                    self._redact_response_body(exc.response.text),
                 )
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
