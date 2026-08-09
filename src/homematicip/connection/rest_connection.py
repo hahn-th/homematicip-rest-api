@@ -100,7 +100,7 @@ class RestConnection:
             return {
                 key: (
                     "REDACTED"
-                    if key in SENSITIVE_LOG_KEYS
+                    if key in SENSITIVE_LOG_KEYS and item is not None
                     else RestConnection._redact_sensitive_data(item)
                 )
                 for key, item in value.items()
@@ -148,10 +148,11 @@ class RestConnection:
         except httpx.HTTPStatusError as exc:
             if self._log_status_exceptions:
                 LOGGER.error(
-                    "Error response %s while requesting %r with data %s.",
+                    "Error response %s while requesting %r with data %s. Response body: %s",
                     exc.response.status_code,
                     exc.request.url,
                     data_logging if data_logging is not None else "<no-data>",
+                    exc.response.text or "<empty>",
                 )
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
