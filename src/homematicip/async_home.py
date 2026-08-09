@@ -648,8 +648,34 @@ class AsyncHome(HomeMaticIPObject):
             return False, False
         return active.get("INTERNAL", False), active.get("EXTERNAL", False)
 
+    def _zones_activation(self, internal: bool, external: bool) -> dict:
+        if self._has_request_based_security_zones():
+            # Map the classic (internal, external) intent onto the mutually
+            # exclusive modes: away (both) -> ABSENCE, home (external only) ->
+            # PRESENCE, disarm -> neither.
+            return {"PRESENCE": external and not internal, "ABSENCE": internal}
+        return {"EXTERNAL": external, "INTERNAL": internal}
+
+    def get_security_zone_activation_problems(self, result) -> dict[str, list[str]]:
+        """returns what blocked an activation as {device label: [reason]}
+
+        Unknown devices keep their raw "deviceId:channelIndex" key.
+
+        :param result: the RestResult of a set_security_zones_activation call
+        """
+        js = result.json or {}
+        problems = {}
+        for key, reasons in (js.get("channelActivationProblems") or {}).items():
+            device = self.search_device_by_id(key.split(":")[0])
+            problems[device.label if device else key] = reasons
+        return problems
+
     async def set_security_zones_activation_async(self, internal=True, external=True):
         """this function will set the alarm system to armed or disable it
+
+        On a request-based panel a blocked activation does not arm. The result is
+        marked unsuccessful then, and get_security_zone_activation_problems names the
+        sensors. Use set_security_zones_activation_with_ignore_list to arm anyway.
 
         Examples:
           arming while being at home
@@ -664,15 +690,42 @@ class AsyncHome(HomeMaticIPObject):
         :param internal: activates/deactivates the internal zone
         :param external: activates/deactivates the external zone
         """
-        if self._has_request_based_security_zones():
-            # Map the classic (internal, external) intent onto the mutually
-            # exclusive modes: away (both) -> ABSENCE, home (external only) ->
-            # PRESENCE, disarm -> neither.
-            zones = {"PRESENCE": external and not internal, "ABSENCE": internal}
-        else:
-            zones = {"EXTERNAL": external, "INTERNAL": internal}
-        data = {"zonesActivation": zones}
-        return await self._rest_call_async("home/security/setZonesActivation", data)
+        data = {"zonesActivation": self._zones_activation(internal, external)}
+        if not self._has_request_based_security_zones():
+            return await self._rest_call_async("home/security/setZonesActivation", data)
+
+        # setZonesActivation answers 200 without arming when a sensor blocks it
+        data["ignoreLowBat"] = False
+        result = await self._rest_call_async(
+            "home/security/setExtendedZonesActivation", data
+        )
+        js = result.json or {}
+        if result.success and (
+            js.get("activationProblems") or js.get("channelActivationProblems")
+        ):
+            result.success = False
+        return result
+
+    async def set_security_zones_activation_with_ignore_list_async(
+        self, internal=True, external=True, ignore_low_bat=True
+    ):
+        """arms the alarm system even though sensors report problems
+
+        Leaves the blocking entry points unmonitored, so call it only on an explicit
+        user decision, never as an automatic fallback.
+
+        :param internal: activates/deactivates the internal zone
+        :param external: activates/deactivates the external zone
+        :param ignore_low_bat: arm despite devices reporting a low battery
+        """
+        data = {
+            "zonesActivation": self._zones_activation(internal, external),
+            "ignorableDeviceChannels": [],
+            "ignoreLowBat": ignore_low_bat,
+        }
+        return await self._rest_call_async(
+            "home/security/setExtendedZonesActivationWithIgnoreList", data
+        )
 
     async def set_silent_alarm_async(self, internal=True, external=True):
         """this function will set the silent alarm for internal or external

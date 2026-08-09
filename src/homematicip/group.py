@@ -597,13 +597,16 @@ class SecurityZoneGroup(Group):
         self.motionDetected = js["motionDetected"]
         self.sabotage = js["sabotage"]
         self.ignorableDevices = []
+        # sensor channels, not channel 0; a device can appear more than once
+        seen = set()
         for channel in js["ignorableDeviceChannels"]:
-            # there are multiple channels per device and we only need each deviceId once
-            # as each device has at least channel 0, we skip the other ones
-            if channel["channelIndex"] == 0:
-                self.ignorableDevices.append(
-                    [d for d in devices if d.id == channel["deviceId"]][0]
-                )
+            device_id = channel["deviceId"]
+            if device_id in seen:
+                continue
+            device = next((d for d in devices if d.id == device_id), None)
+            if device is not None:
+                seen.add(device_id)
+                self.ignorableDevices.append(device)
 
     def __str__(self):
         return f"{super().__str__()} active({self.active}) silent({self.silent}) windowState({self.windowState}) motionDetected({self.motionDetected}) sabotage({self.sabotage}) presenceDetected({self.presenceDetected}) ignorableDevices(#{len(self.ignorableDevices)})"

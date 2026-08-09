@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.4..master)
 
+### Added
+
+- `set_security_zones_activation_with_ignore_list` arms the request-based alarm panel even though sensors report problems, which is the "arm anyway" the app offers after listing the blocking sensors. It uses the undocumented `home/security/setExtendedZonesActivationWithIgnoreList` endpoint. Since it leaves those entry points unmonitored it is never used automatically, only on an explicit user decision.
+- `get_security_zone_activation_problems` resolves an activation result into `{device label: [reason]}`, so a caller can tell the user which sensors blocked arming instead of only that it failed.
+
+### Fixed
+
+- On a request-based alarm panel, arming with an open window failed silently. `home/security/setZonesActivation` answers HTTP 200 with an empty body and does not arm, so the call looked successful while nothing happened and the caller had no way to tell why. `set_security_zones_activation` now uses `home/security/setExtendedZonesActivation` on these panels, which reports the blocking channels, and marks the result unsuccessful when activation was refused. Fixes home-assistant/core#177173.
+- `SecurityZoneGroup.ignorableDevices` was always empty. It only collected `ignorableDeviceChannels` entries with `channelIndex == 0`, but the cloud reports sensor channels there (`channelIndex` 1 for shutter contacts). Devices are now resolved from any channel index and listed once.
+
 ## [2.13.4](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.3..2.13.4)
 
 ### Fixed
