@@ -164,6 +164,57 @@ class AsyncFakeCloudServer:
 
         return web.json_response(None)
 
+    def _channel_activation_problems(self, zones_activation) -> dict:
+        """channels blocking the zones being armed, as {"deviceId:channelIndex": [reason]}"""
+        problems = {}
+        for g in self.data["groups"].values():
+            if g["type"] != "SECURITY_ZONE" or not zones_activation.get(g["label"]):
+                continue
+            for channel in g.get("channels", []):
+                device = self.data["devices"].get(channel["deviceId"], {})
+                fc = (device.get("functionalChannels") or {}).get(
+                    str(channel["channelIndex"]), {}
+                )
+                if fc.get("windowState") not in (None, "CLOSED"):
+                    key = f"{channel['deviceId']}:{channel['channelIndex']}"
+                    problems[key] = ["WINDOW_NOT_CLOSED"]
+        return problems
+
+    def _apply_zones_activation(self, zones_activation) -> None:
+        for g in self.data["groups"].values():
+            if g["type"] == "SECURITY_ZONE" and g["label"] in zones_activation:
+                g["active"] = zones_activation[g["label"]]
+
+    @validate_authorization
+    async def post_hmip_home_security_setExtendedZonesActivation(
+        self, request: web.Request
+    ) -> web.Response:
+
+        js = json.loads(request.data)
+        zones_activation = js["zonesActivation"]
+
+        problems = self._channel_activation_problems(zones_activation)
+        if not problems:
+            self._apply_zones_activation(zones_activation)
+
+        return web.json_response(
+            {"activationProblems": [], "channelActivationProblems": problems}
+        )
+
+    @validate_authorization
+    async def post_hmip_home_security_setExtendedZonesActivationWithIgnoreList(
+        self, request: web.Request
+    ) -> web.Response:
+
+        js = json.loads(request.data)
+
+        # arms regardless of blocking sensors
+        self._apply_zones_activation(js["zonesActivation"])
+
+        return web.json_response(
+            {"activationProblems": [], "channelActivationProblems": {}}
+        )
+
     @validate_authorization
     async def post_hmip_home_security_setIntrusionAlertThroughSmokeDetectors(
         self, request: web.Request

@@ -59,6 +59,16 @@ class Home(AsyncHome):
     def set_security_zones_activation(self, internal=True, external=True):
         return self._run_non_async(self.set_security_zones_activation_async, internal, external)
 
+    def set_security_zones_activation_with_ignore_list(
+        self, internal=True, external=True, ignore_low_bat=True
+    ):
+        return self._run_non_async(
+            self.set_security_zones_activation_with_ignore_list_async,
+            internal,
+            external,
+            ignore_low_bat,
+        )
+
     def set_silent_alarm(self, internal=True, external=True):
         return self._run_non_async(self.set_silent_alarm_async, internal, external)
 

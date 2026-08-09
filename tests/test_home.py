@@ -488,9 +488,18 @@ def _zone_states(fake_home: Home) -> dict:
     }
 
 
+def _close_all_windows(fake_home: Home) -> None:
+    """the fixture ships three open windows, which would block activation."""
+    for device in fake_home._fake_cloud.aio_server.data["devices"].values():
+        for channel in (device.get("functionalChannels") or {}).values():
+            if channel.get("windowState") is not None:
+                channel["windowState"] = "CLOSED"
+
+
 def test_security_zones_activation_request_based(fake_home: Home):
     with no_ssl_verification():
         _make_request_based(fake_home)
+        _close_all_windows(fake_home)
         fake_home.get_current_state()
 
         assert (
@@ -518,6 +527,86 @@ def test_security_zones_activation_request_based(fake_home: Home):
         fake_home.get_current_state()
         assert fake_home.get_security_zones_activation() == (False, False)
         assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": False}
+
+
+def test_security_zones_activation_request_based_blocked(fake_home: Home):
+    """an open window must not silently look like a successful activation."""
+    with no_ssl_verification():
+        _make_request_based(fake_home)
+        fake_home.get_current_state()
+
+        # PRESENCE holds the fixture's three open windows
+        result = fake_home.set_security_zones_activation(False, True)
+
+        assert result.status == 200
+        assert result.success is False
+
+        problems = fake_home.get_security_zone_activation_problems(result)
+        assert problems == {
+            "Wohnzimmer": ["WINDOW_NOT_CLOSED"],
+            "Balkontüre": ["WINDOW_NOT_CLOSED"],
+            "Fenster": ["WINDOW_NOT_CLOSED"],
+        }
+
+        # and nothing was armed
+        fake_home.get_current_state()
+        assert fake_home.get_security_zones_activation() == (False, False)
+        assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": False}
+
+
+def test_security_zones_activation_request_based_unblocked_zone(fake_home: Home):
+    """only the zone owning the open windows is blocked."""
+    with no_ssl_verification():
+        _make_request_based(fake_home)
+        fake_home.get_current_state()
+
+        # ABSENCE has no open window, so arming away still works
+        result = fake_home.set_security_zones_activation(True, True)
+
+        assert result.success is True
+        assert fake_home.get_security_zone_activation_problems(result) == {}
+
+        fake_home.get_current_state()
+        assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": True}
+
+
+def test_security_zones_activation_with_ignore_list(fake_home: Home):
+    """arm anyway despite the open windows."""
+    with no_ssl_verification():
+        _make_request_based(fake_home)
+        fake_home.get_current_state()
+
+        assert fake_home.set_security_zones_activation(False, True).success is False
+
+        result = fake_home.set_security_zones_activation_with_ignore_list(False, True)
+
+        assert result.success is True
+        assert fake_home.get_security_zone_activation_problems(result) == {}
+
+        fake_home.get_current_state()
+        assert fake_home.get_security_zones_activation() == (False, True)
+        assert _zone_states(fake_home) == {"PRESENCE": True, "ABSENCE": False}
+
+
+def test_security_zone_ignorable_devices(fake_home: Home):
+    """ignorableDeviceChannels reports sensor channels, not channel 0."""
+    with no_ssl_verification():
+        for g in fake_home._fake_cloud.aio_server.data["groups"].values():
+            if g["type"] == "SECURITY_ZONE" and g["label"] == "EXTERNAL":
+                g["ignorableDeviceChannels"] = [
+                    {"deviceId": "3014F7110000000000000005", "channelIndex": 1},
+                    {"deviceId": "3014F7110000000000000000", "channelIndex": 1},
+                    # same device again, must not be listed twice
+                    {"deviceId": "3014F7110000000000000000", "channelIndex": 0},
+                ]
+        fake_home.get_current_state()
+
+        zone = next(
+            g
+            for g in fake_home.groups
+            if isinstance(g, SecurityZoneGroup) and g.label == "EXTERNAL"
+        )
+        assert [d.label for d in zone.ignorableDevices] == ["Wohnzimmer", "Balkontüre"]
 
 
 def test_security_zone_omitted_active_key(fake_home: Home):
