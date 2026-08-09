@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import AsyncMock
 
 import httpx
@@ -49,6 +50,31 @@ async def test_conn_async_post(mocker):
     assert patched.call_args[0][0] == "http://asdf/hmip/url"
     assert patched.call_args[1] == {"json": {"a": "b"}, "headers": {"c": "d"}}
     assert result.status == 200
+
+
+@pytest.mark.asyncio
+async def test_conn_async_post_logs_error_response_body(mocker, caplog):
+    """The HmIP error code is only in the response body, so it has to be logged."""
+    request = httpx.Request("POST", "http://asdf/hmip/url")
+    response = mocker.Mock(spec=httpx.Response)
+    response.status_code = 400
+    response.text = '{"errorCode": "INVALID_REQUEST"}'
+    response.raise_for_status.side_effect = httpx.HTTPStatusError(
+        "400", request=request, response=response
+    )
+    mocker.patch(
+        "homematicip.connection.rest_connection.httpx.AsyncClient.post",
+        return_value=response,
+    )
+
+    conn = RestConnection(ConnectionContext(rest_url="http://asdf"))
+
+    with caplog.at_level(logging.ERROR):
+        result = await conn.async_post("url", {"a": "b"})
+
+    assert result.status == 400
+    assert result.text == '{"errorCode": "INVALID_REQUEST"}'
+    assert "INVALID_REQUEST" in caplog.text
 
 
 @pytest.mark.asyncio
@@ -123,6 +149,16 @@ def test_redact_sensitive_data_authorization_pin():
     )
     assert redacted["authorizationPin"] == "REDACTED"
     assert redacted["channelIndex"] == 1
+
+
+def test_redact_sensitive_data_keeps_none():
+    """An unset optional field must stay distinguishable from a real value."""
+    redacted = RestConnection._redact_sensitive_data(
+        {"authorizationPin": None, "deviceId": None, "channelIndex": 9}
+    )
+    assert redacted["authorizationPin"] is None
+    assert redacted["deviceId"] is None
+    assert redacted["channelIndex"] == 9
 
 
 def test_get_verify_returns_ssl_context_when_provided():
