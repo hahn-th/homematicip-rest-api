@@ -695,7 +695,7 @@ class AsyncHome(HomeMaticIPObject):
             return await self._rest_call_async("home/security/setZonesActivation", data)
 
         # setZonesActivation answers 200 without arming when a sensor blocks it
-        data["ignoreLowBat"] = False
+        data["ignoreLowBat"] = True
         result = await self._rest_call_async(
             "home/security/setExtendedZonesActivation", data
         )
@@ -704,7 +704,43 @@ class AsyncHome(HomeMaticIPObject):
             js.get("activationProblems") or js.get("channelActivationProblems")
         ):
             result.success = False
+        if result.success:
+            self._warn_low_battery(data["zonesActivation"])
         return result
+
+    def _warn_low_battery(self, zones_activation: dict) -> None:
+        """a low battery must not block arming, but it should not pass unnoticed"""
+        devices = self.get_security_zone_low_battery_devices(zones_activation)
+        if devices:
+            LOGGER.warning(
+                "Security zone armed with %d device(s) reporting a low battery: %s",
+                len(devices),
+                ", ".join(d.label for d in devices),
+            )
+
+    def get_security_zone_low_battery_devices(
+        self, zones_activation: dict | None = None
+    ) -> list:
+        """returns devices with a low battery in the given (or all active) zones
+
+        :param zones_activation: {zone label: bool} as sent to the cloud; when omitted
+            the currently active zones are used
+        """
+        devices = {}
+        for group in self.groups:
+            if not isinstance(group, SecurityZoneGroup):
+                continue
+            armed = (
+                zones_activation.get(group.label)
+                if zones_activation is not None
+                else group.active
+            )
+            if not armed:
+                continue
+            for device in group.devices:
+                if device.lowBat:
+                    devices[device.id] = device
+        return list(devices.values())
 
     async def set_security_zones_activation_with_ignore_list_async(
         self, internal=True, external=True, ignore_low_bat=True
