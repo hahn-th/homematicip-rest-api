@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `set_security_zones_activation_with_ignore_list` arms the request-based alarm panel even though sensors report problems, which is the "arm anyway" the app offers after listing the blocking sensors. It uses the undocumented `home/security/setExtendedZonesActivationWithIgnoreList` endpoint. Since it leaves those entry points unmonitored it is never used automatically, only on an explicit user decision.
 - `get_security_zone_activation_problems` resolves an activation result into `{device label: [reason]}`, so a caller can tell the user which sensors blocked arming instead of only that it failed.
+- `get_security_zone_low_battery_devices` lists devices with a low battery in the armed zones. A low battery does not block arming, since it is not resolvable at arming time and refusing would leave the home entirely unarmed, but arming with one now logs a warning naming the devices.
 
 ### Fixed
 

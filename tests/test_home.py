@@ -1,4 +1,5 @@
 import json
+import logging
 from datetime import timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
@@ -586,6 +587,31 @@ def test_security_zones_activation_with_ignore_list(fake_home: Home):
         fake_home.get_current_state()
         assert fake_home.get_security_zones_activation() == (False, True)
         assert _zone_states(fake_home) == {"PRESENCE": True, "ABSENCE": False}
+
+
+def test_security_zones_activation_low_battery_warns_but_arms(fake_home: Home, caplog):
+    """a low battery must not block arming, but it must be visible in the log."""
+    with no_ssl_verification():
+        _make_request_based(fake_home)
+        _close_all_windows(fake_home)
+        # Vorzimmer sits in ABSENCE (the relabelled INTERNAL zone)
+        fake_home._fake_cloud.aio_server.data["devices"][
+            "3014F7110000000000000007"
+        ]["functionalChannels"]["0"]["lowBat"] = True
+        fake_home.get_current_state()
+
+        with caplog.at_level(logging.WARNING):
+            result = fake_home.set_security_zones_activation(True, True)
+
+        assert result.success is True
+        assert "low battery" in caplog.text
+        assert "Vorzimmer" in caplog.text
+
+        fake_home.get_current_state()
+        assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": True}
+        assert [
+            d.label for d in fake_home.get_security_zone_low_battery_devices()
+        ] == ["Vorzimmer"]
 
 
 def test_security_zone_ignorable_devices(fake_home: Home):
