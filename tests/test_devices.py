@@ -1,14 +1,13 @@
 from datetime import datetime, timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
+import pytest
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
 )
 
-import pytest
 from conftest import utc_offset
-from homematicip.commands import functional_channel_commands
 from homematicip.base.enums import (
     DeviceType,
     FunctionalChannelType,
@@ -17,6 +16,7 @@ from homematicip.base.enums import (
 )
 from homematicip.base.functionalChannels import *
 from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_FUNCTIONALCHANNEL_MAP
+from homematicip.commands import functional_channel_commands
 from homematicip.device import *
 from homematicip.home import Home
 
