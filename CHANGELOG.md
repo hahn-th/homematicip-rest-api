@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `SecurityZoneGroup.ignorableDevices` was always empty. It only collected `ignorableDeviceChannels` entries with `channelIndex == 0`, but the cloud reports sensor channels there (`channelIndex` 1 for shutter contacts). Devices are now resolved from any channel index and listed once.
 - Log the response body when the cloud answers with an error status. The HmIP error code (`INVALID_REQUEST`, `CLIENT_ACCESS_DENIED`, ...) is only carried in that body, so a failing call previously logged nothing that identified the cause.
 - Keep `None` values visible in the redacted request log, so an unset optional field is distinguishable from a real one.
+- Redact the logged error response body with the same key set as the request, and truncate it at 2000 characters. These lines are meant to be pasted into bug reports, and only the request half was redacted.
 
 ## [2.13.4](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.3..2.13.4)
 
