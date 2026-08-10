@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.0..master)
 
+### Fixed
+
+- Send `authorizationPin` as an empty string in `pull_latch_async` when no PIN is given. The cloud requires the field to be a string and rejects both `null` and an omitted key with `INVALID_REQUEST`, so the HmIP-FLC door opener could not be triggered at all from a client without a PIN (fixes [#606](https://github.com/hahn-th/homematicip-rest-api/issues/606)).
+
 ## [2.14.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.4..2.14.0)
 
 ### Added

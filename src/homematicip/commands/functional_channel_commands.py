@@ -613,7 +613,8 @@ async def pull_latch_async(rest_connection: RestConnection, device_id: str, chan
     :param channel_index: The channel index of the access-authorization channel.
     :type channel_index: int
     :param pin: The authorization PIN (optional, only required if a PIN is configured
-        on the access authorization profile).
+        on the access authorization profile). The cloud requires the field to be a
+        string, so ``None`` is sent as an empty string.
     :type pin: str or None
     :return: The response from the cloud.
     :rtype: dict
@@ -621,7 +622,7 @@ async def pull_latch_async(rest_connection: RestConnection, device_id: str, chan
     data = {
         "channelIndex": channel_index,
         "deviceId": device_id,
-        "authorizationPin": pin,
+        "authorizationPin": pin if pin is not None else "",
     }
     return await rest_connection.async_post("device/control/pullLatch", data)
 
