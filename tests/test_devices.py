@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
+import pytest
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
@@ -15,6 +16,7 @@ from homematicip.base.enums import (
 )
 from homematicip.base.functionalChannels import *
 from homematicip.class_maps import TYPE_CLASS_MAP, TYPE_FUNCTIONALCHANNEL_MAP
+from homematicip.commands import functional_channel_commands
 from homematicip.device import *
 from homematicip.home import Home
 
@@ -254,6 +256,32 @@ def test_full_flush_lock_controller_pull_latch_with_pin():
         door_opener_auth_channel.pull_latch("1234")
 
     patched.assert_awaited_once_with(d._connection, d.id, 9, "1234")
+
+
+@pytest.mark.asyncio
+async def test_pull_latch_sends_empty_string_when_no_pin():
+    """The cloud rejects a null or missing authorizationPin with INVALID_REQUEST,
+    so an unset PIN has to go out as an empty string."""
+    connection = AsyncMock()
+
+    await functional_channel_commands.pull_latch_async(connection, "device-id", 9)
+
+    connection.async_post.assert_awaited_once_with(
+        "device/control/pullLatch",
+        {"channelIndex": 9, "deviceId": "device-id", "authorizationPin": ""},
+    )
+
+
+@pytest.mark.asyncio
+async def test_pull_latch_forwards_pin():
+    connection = AsyncMock()
+
+    await functional_channel_commands.pull_latch_async(connection, "device-id", 9, "1234")
+
+    connection.async_post.assert_awaited_once_with(
+        "device/control/pullLatch",
+        {"channelIndex": 9, "deviceId": "device-id", "authorizationPin": "1234"},
+    )
 
 
 def test_full_flush_door_controller(fake_home: Home):
