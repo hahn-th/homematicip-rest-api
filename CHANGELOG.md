@@ -29,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep `None` values visible in the redacted request log, so an unset optional field is distinguishable from a real one.
 - Redact the logged error response body with the same key set as the request, and truncate it at 2000 characters. These lines are meant to be pasted into bug reports, and only the request half was redacted.
 
+### Added
+
+- Add `DeviceType.HOME_CONTROL_ACCESS_POINT_TWO`, mapped to the existing `HomeControlAccessPoint` class. Fixes repeated `'HOME_CONTROL_ACCESS_POINT_TWO' isn't a valid option for class 'DeviceType'` warnings for installations using the Access Point 2 (HmIP-HAP2).
+
 ## [2.13.4](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.3..2.13.4)
 
 ### Fixed
