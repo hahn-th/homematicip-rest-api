@@ -677,6 +677,26 @@ class WallMountedThermostatPro(
             self.setPointTemperature = c["setPointTemperature"]
 
 
+class WallMountedThermostatWithCarbon(WallMountedThermostatPro):
+    """HmIP-WGTC (Glass Wall Thermostat with Carbon Dioxide Sensor)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.carbonDioxideConcentration = 0.0
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("WALL_MOUNTED_THERMOSTAT_WITH_CARBON_CHANNEL", js)
+        if c:
+            self.temperatureOffset = c["temperatureOffset"]
+            self.display = ClimateControlDisplay.from_str(c["display"])
+            self.actualTemperature = c["actualTemperature"]
+            self.humidity = c["humidity"]
+            self.setPointTemperature = c["setPointTemperature"]
+            self.vaporAmount = c["vaporAmount"]
+            self.carbonDioxideConcentration = c["carbonDioxideConcentration"]
+
+
 class WiredCarbonTemperatureHumiditySensorDisplay(Device):
     """HMIP-STHD-C (Wired Carbon Dioxide, Temperature and Humidity Sensor with display)"""
 

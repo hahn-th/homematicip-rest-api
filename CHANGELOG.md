@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `DeviceType.HOME_CONTROL_ACCESS_POINT_TWO`, mapped to the existing `HomeControlAccessPoint` class. Fixes repeated `'HOME_CONTROL_ACCESS_POINT_TWO' isn't a valid option for class 'DeviceType'` warnings for installations using the Access Point 2 (HmIP-HAP2).
+- Add `DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT_CARBON` and a `WallMountedThermostatWithCarbon` class for the HmIP-WGTC. The device type was missing, so the thermostat fell back to `BaseDevice` and exposed none of its readings on the device, even though its `WALL_MOUNTED_THERMOSTAT_WITH_CARBON_CHANNEL` was already supported. `carbonDioxideConcentration`, `actualTemperature`, `humidity`, `setPointTemperature`, `vaporAmount` and `temperatureOffset` are now read from that channel (fixes [#674](https://github.com/hahn-th/homematicip-rest-api/issues/674)).
 
 ## [2.14.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.0..2.14.1)
 
