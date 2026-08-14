@@ -2032,6 +2032,25 @@ def test_home_control_access_point(fake_home: Home):
         )
 
 
+def test_home_control_access_point_two(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000HAP2")
+        assert isinstance(d, HomeControlAccessPoint)
+        assert isinstance(d.functionalChannels[0], AccessControllerChannel)
+        assert d.dutyCycleLevel == 5
+        assert d.signalBrightness == 0.25
+        # The HAP2 omits accessPointPriority entirely: the attribute keeps its
+        # default and stays out of __str__, since set_attr_from_dict skips
+        # missing keys.
+        assert d.accessPointPriority == 0
+        assert "accessPointPriority" not in str(d)
+        assert str(d) == (
+            "HmIP-HAP2-A HOME_CONTROL_ACCESS_POINT_TWO lowBat(None) unreach(False) "
+            "rssiDeviceValue(None) rssiPeerValue(None) configPending(False) dutyCycle(False) "
+            "filteredMulticastRoutingEnabled(True) dutyCycleLevel(5) signalBrightness(0.25)"
+        )
+
+
 def test_wired_din_rail_access_point(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000WDRAP")
