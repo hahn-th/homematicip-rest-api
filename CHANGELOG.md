@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.1..master)
 
+### Added
+
+- Add `DeviceType.HOME_CONTROL_ACCESS_POINT_TWO`, mapped to the existing `HomeControlAccessPoint` class. Fixes repeated `'HOME_CONTROL_ACCESS_POINT_TWO' isn't a valid option for class 'DeviceType'` warnings for installations using the Access Point 2 (HmIP-HAP2).
+- Add `DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT_CARBON` and a `WallMountedThermostatWithCarbon` class for the HmIP-WGTC. The device type was missing, so the thermostat fell back to `BaseDevice` and exposed none of its readings on the device, even though its `WALL_MOUNTED_THERMOSTAT_WITH_CARBON_CHANNEL` was already supported. `carbonDioxideConcentration`, `actualTemperature`, `humidity`, `setPointTemperature`, `vaporAmount` and `temperatureOffset` are now read from that channel (fixes [#674](https://github.com/hahn-th/homematicip-rest-api/issues/674)).
+
 ## [2.14.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.0..2.14.1)
 
 ### Fixed
@@ -28,10 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Log the response body when the cloud answers with an error status. The HmIP error code (`INVALID_REQUEST`, `CLIENT_ACCESS_DENIED`, ...) is only carried in that body, so a failing call previously logged nothing that identified the cause.
 - Keep `None` values visible in the redacted request log, so an unset optional field is distinguishable from a real one.
 - Redact the logged error response body with the same key set as the request, and truncate it at 2000 characters. These lines are meant to be pasted into bug reports, and only the request half was redacted.
-
-### Added
-
-- Add `DeviceType.HOME_CONTROL_ACCESS_POINT_TWO`, mapped to the existing `HomeControlAccessPoint` class. Fixes repeated `'HOME_CONTROL_ACCESS_POINT_TWO' isn't a valid option for class 'DeviceType'` warnings for installations using the Access Point 2 (HmIP-HAP2).
 
 ## [2.13.4](https://github.com/hahn-th/homematicip-rest-api/compare/2.13.3..2.13.4)
 

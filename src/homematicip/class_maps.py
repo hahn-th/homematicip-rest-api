@@ -115,6 +115,7 @@ TYPE_CLASS_MAP = {
     DeviceType.WALL_MOUNTED_KEY_PAD: WallMountedKeyPad,
     DeviceType.WALL_MOUNTED_REMOTE_CONTROL_ROTARY_BUTTON: WallMountedRemoteControlRotaryButton,
     DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT: WallMountedThermostatPro,
+    DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT_CARBON: WallMountedThermostatWithCarbon,
     DeviceType.WALL_MOUNTED_GARAGE_DOOR_CONTROLLER: WallMountedGarageDoorController,
     DeviceType.WALL_MOUNTED_THERMOSTAT_PRO: WallMountedThermostatPro,
     DeviceType.WALL_MOUNTED_THERMOSTAT_BASIC_HUMIDITY: WallMountedThermostatBasicHumidity,

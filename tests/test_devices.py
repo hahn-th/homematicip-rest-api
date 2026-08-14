@@ -2287,6 +2287,22 @@ def test_light_strip_dimmer(fake_home: Home):
         assert d.fastColorChangeSupported is True
 
 
+def test_wall_mounted_thermostat_with_carbon(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000WGTC")
+        assert isinstance(d, WallMountedThermostatWithCarbon)
+        assert d.label == "Wandthermostat mit CO2"
+        assert d.modelType == "HmIP-WGTC"
+        assert d.carbonDioxideConcentration == 440.0
+        assert d.actualTemperature == 22.6
+        assert d.humidity == 48
+        assert d.setPointTemperature == 18.0
+        assert d.vaporAmount == 9.619851889906071
+        assert d.temperatureOffset == -0.5
+        assert d.display == ClimateControlDisplay.ACTUAL
+        assert d.operationLockActive is False
+
+
 def test_wired_carbon_temperature_humidity_sensor_display(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F71100000000000SCTHD")
