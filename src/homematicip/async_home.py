@@ -670,6 +670,24 @@ class AsyncHome(HomeMaticIPObject):
             problems[device.label if device else key] = reasons
         return problems
 
+    @staticmethod
+    def get_security_zone_activation_problem_channels(result) -> list[dict]:
+        """returns the blocking channels as [{"deviceId": .., "channelIndex": ..}]
+
+        Pass them to set_security_zones_activation_with_ignore_list_async to name
+        what may be ignored.
+
+        :param result: the RestResult of a set_security_zones_activation call
+        """
+        js = result.json or {}
+        channels = []
+        for key in js.get("channelActivationProblems") or {}:
+            device_id, _, channel_index = key.partition(":")
+            channels.append(
+                {"deviceId": device_id, "channelIndex": int(channel_index or 0)}
+            )
+        return channels
+
     async def set_security_zones_activation_async(self, internal=True, external=True):
         """this function will set the alarm system to armed or disable it
 
@@ -743,20 +761,28 @@ class AsyncHome(HomeMaticIPObject):
         return list(devices.values())
 
     async def set_security_zones_activation_with_ignore_list_async(
-        self, internal=True, external=True, ignore_low_bat=True
+        self,
+        internal=True,
+        external=True,
+        ignore_low_bat=True,
+        ignorable_device_channels=None,
     ):
         """arms the alarm system even though sensors report problems
 
         Leaves the blocking entry points unmonitored, so call it only on an explicit
-        user decision, never as an automatic fallback.
+        user decision, never as an automatic fallback. Note that the access point
+        arms regardless of what ignorable_device_channels names, so it does not
+        protect against an entry point that opened after the check.
 
         :param internal: activates/deactivates the internal zone
         :param external: activates/deactivates the external zone
         :param ignore_low_bat: arm despite devices reporting a low battery
+        :param ignorable_device_channels: the channels that may be left unmonitored,
+            as returned by get_security_zone_activation_problem_channels
         """
         data = {
             "zonesActivation": self._zones_activation(internal, external),
-            "ignorableDeviceChannels": [],
+            "ignorableDeviceChannels": ignorable_device_channels or [],
             "ignoreLowBat": ignore_low_bat,
         }
         return await self._rest_call_async(
