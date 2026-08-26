@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `DeviceType.FULL_FLUSH_INPUT_SWITCH_COMPACT` for the HmIP-FSI6, mapped to the existing `FullFlushInputSwitch` class. The device type was missing, so the switch actuator fell back to `BaseDevice` and exposed no switch (fixes [#686](https://github.com/hahn-th/homematicip-rest-api/issues/686)).
+- Add `DeviceType.TEMPERATURE_TILT_VIBRATION_SENSOR` with a `TemperatureTiltVibrationSensor` class and `FunctionalChannelType.TEMPERATURE_SENSOR_CHANNEL` with a `TemperatureSensorChannel` class for the ELV-SH-TACO. Both were missing, so the device fell back to `BaseDevice` and its temperature channel was unsupported (fixes [#690](https://github.com/hahn-th/homematicip-rest-api/issues/690)).
 
 ## [2.15.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.1..2.15.0)
 

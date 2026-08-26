@@ -2111,6 +2111,19 @@ class TemperatureDifferenceSensor2Channel(FunctionalChannel):
         self.set_attr_from_dict("temperatureExternalTwo", js)
 
 
+class TemperatureSensorChannel(FunctionalChannel):
+    """this is the representative of the TEMPERATURE_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        #:float:
+        self.actualTemperature = 0.0
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("actualTemperature", js)
+
+
 class ExternalBaseChannel(FunctionalChannel):
     """this represents the EXTERNAL_BASE_CHANNEL function-channel for external devices"""
 
