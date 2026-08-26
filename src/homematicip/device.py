@@ -2714,6 +2714,24 @@ class TiltVibrationSensor(Device):
         )
 
 
+class TemperatureTiltVibrationSensor(TiltVibrationSensor):
+    """ELV-SH-TACO (Inclination and vibration sensor with temperature sensor).
+
+    The tilt channel is index 2, so the acceleration setters need channelIndex=2.
+    """
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.actualTemperature = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("TEMPERATURE_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("actualTemperature", c)
+
+
 class RainSensor(Device):
     """HMIP-SRD (Rain Sensor)"""
 

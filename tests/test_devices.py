@@ -446,6 +446,21 @@ def test_tilt_vibration_sensor(fake_home: Home):
         assert d.accelerationSensorTriggerAngle == 30
 
 
+def test_temperature_tilt_vibration_sensor(fake_home: Home):
+    """ELV-SH-TACO combines a temperature channel with a tilt/vibration channel."""
+    d = fake_home.search_device_by_id("3014F711000000000000TACO")
+    assert isinstance(d, TemperatureTiltVibrationSensor)
+    assert d.modelType == "ELV-SH-TACO"
+    assert d.actualTemperature == 22.9
+    assert d.accelerationSensorMode == AccelerationSensorMode.ANY_MOTION
+    assert d.accelerationSensorTriggered is True
+
+    temperature_channel = d.functionalChannels[1]
+    assert isinstance(temperature_channel, TemperatureSensorChannel)
+    assert temperature_channel.actualTemperature == 22.9
+    assert d.functionalChannels[2].tiltState == "NON_NEUTRAL"
+
+
 def test_multi_io_box(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711ABCD0ABCD000002")
     assert isinstance(d, MultiIOBox)
