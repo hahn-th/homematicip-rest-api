@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..master)
 
+### Added
+
+- Add `DeviceType.FULL_FLUSH_INPUT_SWITCH_COMPACT` for the HmIP-FSI6, mapped to the existing `FullFlushInputSwitch` class. The device type was missing, so the switch actuator fell back to `BaseDevice` and exposed no switch (fixes [#686](https://github.com/hahn-th/homematicip-rest-api/issues/686)).
+
 ## [2.15.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.1..2.15.0)
 
 ### Added

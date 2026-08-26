@@ -2218,7 +2218,8 @@ class WiredInput32(FullFlushContactInterface):
 
 
 class FullFlushInputSwitch(Switch):
-    """HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)"""
+    """HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)
+    and HMIP-FSI6 (Switch Actuator with Push-button Input, compact)"""
 
     def __init__(self, connection):
         super().__init__(connection)

@@ -537,6 +537,17 @@ def test_full_flush_input_switch(fake_home: Home):
     )
 
 
+def test_full_flush_input_switch_compact(fake_home: Home):
+    """HmIP-FSI6 reports FULL_FLUSH_INPUT_SWITCH_COMPACT, not FULL_FLUSH_INPUT_SWITCH."""
+    d = fake_home.search_device_by_id("3014F71100000000HmIPFSI6")
+    assert isinstance(d, FullFlushInputSwitch)
+    assert d.modelType == "HmIP-FSI6"
+    assert (
+        d.functionalChannels[1].functionalChannelType
+        == "MULTI_MODE_INPUT_SWITCH_CHANNEL"
+    )
+
+
 def test_shutter_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000001")
     assert isinstance(d, ShutterContact)
