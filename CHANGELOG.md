@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.16.0..master)
 
+### Added
+
+- Add `set_door_lock_active` / `async_set_door_lock_active` on `DoorSwitchChannel` and `set_door_lock_active_async` in `functional_channel_commands`, covering `setDoorLockActive` and `setDoorLockActiveWithAuthorization` ([#685](https://github.com/hahn-th/homematicip-rest-api/issues/685)).
+
 ## [2.16.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..2.16.0)
 
 ### Added

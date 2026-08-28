@@ -771,6 +771,21 @@ class DoorSwitchChannel(FunctionalChannel):
             self._connection, self.device.id, self.index
         )
 
+    def set_door_lock_active(self, door_lock_active: bool, pin: str | None = None):
+        """Lock or release the door ("always open") via this door switch channel.
+
+        Only meaningful for channels with role ``DOOR_LOCK_ACTUATOR``.
+        See :func:`homematicip.commands.functional_channel_commands.set_door_lock_active_async`.
+        """
+        return self._run_non_async(
+            lambda: self.async_set_door_lock_active(door_lock_active, pin)
+        )
+
+    async def async_set_door_lock_active(self, door_lock_active: bool, pin: str | None = None):
+        return await functional_channel_commands.set_door_lock_active_async(
+            self._connection, self.device.id, self.index, door_lock_active, pin
+        )
+
 
 class EnergySensorInterfaceChannel(FunctionalChannel):
     """EnergySensorInterfaceChannel"""

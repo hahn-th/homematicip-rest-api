@@ -284,6 +284,103 @@ async def test_pull_latch_forwards_pin():
     )
 
 
+def test_full_flush_lock_controller_set_door_lock_active():
+    d = _build_full_flush_lock_controller()
+
+    door_lock_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.DOOR_SWITCH_CHANNEL
+        and ch.channelRole == "DOOR_LOCK_ACTUATOR"
+    )
+    assert isinstance(door_lock_channel, DoorSwitchChannel)
+    assert door_lock_channel.index == 3
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.set_door_lock_active_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        door_lock_channel.set_door_lock_active(True)
+
+    patched.assert_awaited_once_with(d._connection, d.id, 3, True, None)
+
+
+def test_full_flush_lock_controller_set_door_lock_active_with_pin():
+    d = _build_full_flush_lock_controller()
+
+    door_lock_channel = next(
+        ch
+        for ch in d.functionalChannels
+        if ch.functionalChannelType == FunctionalChannelType.DOOR_SWITCH_CHANNEL
+        and ch.channelRole == "DOOR_LOCK_ACTUATOR"
+    )
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.set_door_lock_active_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        door_lock_channel.set_door_lock_active(False, "1234")
+
+    patched.assert_awaited_once_with(d._connection, d.id, 3, False, "1234")
+
+
+@pytest.mark.asyncio
+async def test_set_door_lock_active_without_pin_uses_plain_endpoint():
+    """Without an access authorization the plain endpoint applies, and its
+    documented body carries no authorizationPin at all."""
+    connection = AsyncMock()
+
+    await functional_channel_commands.set_door_lock_active_async(
+        connection, "device-id", 3, True
+    )
+
+    connection.async_post.assert_awaited_once_with(
+        "device/control/setDoorLockActive",
+        {"deviceId": "device-id", "channelIndex": 3, "doorLockActive": True},
+    )
+
+
+@pytest.mark.asyncio
+async def test_set_door_lock_active_with_pin_uses_authorization_endpoint():
+    connection = AsyncMock()
+
+    await functional_channel_commands.set_door_lock_active_async(
+        connection, "device-id", 3, False, "1234"
+    )
+
+    connection.async_post.assert_awaited_once_with(
+        "device/control/setDoorLockActiveWithAuthorization",
+        {
+            "deviceId": "device-id",
+            "channelIndex": 3,
+            "doorLockActive": False,
+            "authorizationPin": "1234",
+        },
+    )
+
+
+@pytest.mark.asyncio
+async def test_set_door_lock_active_empty_pin_still_uses_authorization_endpoint():
+    """An access authorization without a configured PIN sends an empty string.
+    Routing on truthiness would silently fall back to the plain endpoint and
+    earn a CLIENT_ACCESS_DENIED."""
+    connection = AsyncMock()
+
+    await functional_channel_commands.set_door_lock_active_async(
+        connection, "device-id", 3, True, ""
+    )
+
+    connection.async_post.assert_awaited_once_with(
+        "device/control/setDoorLockActiveWithAuthorization",
+        {
+            "deviceId": "device-id",
+            "channelIndex": 3,
+            "doorLockActive": True,
+            "authorizationPin": "",
+        },
+    )
+
+
 def test_full_flush_door_controller(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711000000000000FDC1")
 
