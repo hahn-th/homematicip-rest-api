@@ -632,17 +632,14 @@ async def set_door_lock_active_async(rest_connection: RestConnection, device_id:
     """
     Hold a door permanently released ("always open"), or end that state.
 
-    A lasting state, unlike the one-shot ``pullLatch``. It lives in
-    ``doorLockActive`` on the ``DOOR_SWITCH_CHANNEL`` with role
-    ``DOOR_LOCK_ACTUATOR`` and is lost when the device loses power.
-
-    Mind the polarity: ``True`` is the released state, although the vendor
-    documentation describes the field as activating the locking of the door.
+    Sets ``doorLockActive`` on the ``DOOR_SWITCH_CHANNEL`` with role
+    ``DOOR_LOCK_ACTUATOR``. Note the polarity: ``True`` is the released state,
+    although the vendor documentation describes the field as activating the
+    locking of the door.
 
     Without a PIN the plain endpoint applies, which takes the
-    ``DOOR_SWITCH_CHANNEL``; an ``ACCESS_AUTHORIZATION_CHANNEL`` answers
-    ``FEATURE_NOT_SUPPORTED`` there. A client outside the access authorization
-    gets ``CLIENT_ACCESS_DENIED`` and needs the ``...WithAuthorization`` variant,
+    ``DOOR_SWITCH_CHANNEL``. A client outside the access authorization gets
+    ``CLIENT_ACCESS_DENIED`` and needs the ``...WithAuthorization`` variant,
     which takes the ``ACCESS_AUTHORIZATION_CHANNEL`` with role
     ``DOOR_LOCK_ACTUATOR`` instead. Pass ``pin=""`` when that authorization has
     no PIN. The authorization variant is untested, see issue #685.

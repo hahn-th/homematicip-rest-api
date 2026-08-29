@@ -284,6 +284,31 @@ async def test_pull_latch_forwards_pin():
     )
 
 
+def test_full_flush_lock_controller_device_set_door_lock_active():
+    d = _build_full_flush_lock_controller()
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.set_door_lock_active_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        d.set_door_lock_active(True)
+
+    patched.assert_awaited_once_with(d._connection, d.id, 3, True, None)
+
+
+@pytest.mark.asyncio
+async def test_full_flush_lock_controller_device_set_door_lock_active_async():
+    d = _build_full_flush_lock_controller()
+
+    with patch(
+        "homematicip.commands.functional_channel_commands.set_door_lock_active_async",
+        new_callable=AsyncMock,
+    ) as patched:
+        await d.set_door_lock_active_async(False, "1234")
+
+    patched.assert_awaited_once_with(d._connection, d.id, 3, False, "1234")
+
+
 def test_full_flush_lock_controller_set_door_lock_active():
     d = _build_full_flush_lock_controller()
 
@@ -326,8 +351,6 @@ def test_full_flush_lock_controller_set_door_lock_active_with_pin():
 
 @pytest.mark.asyncio
 async def test_set_door_lock_active_without_pin_uses_plain_endpoint():
-    """Without an access authorization the plain endpoint applies, and its
-    documented body carries no authorizationPin at all."""
     connection = AsyncMock()
 
     await functional_channel_commands.set_door_lock_active_async(
@@ -361,9 +384,6 @@ async def test_set_door_lock_active_with_pin_uses_authorization_endpoint():
 
 @pytest.mark.asyncio
 async def test_set_door_lock_active_empty_pin_still_uses_authorization_endpoint():
-    """An access authorization without a configured PIN sends an empty string.
-    Routing on truthiness would silently fall back to the plain endpoint and
-    earn a CLIENT_ACCESS_DENIED."""
     connection = AsyncMock()
 
     await functional_channel_commands.set_door_lock_active_async(
