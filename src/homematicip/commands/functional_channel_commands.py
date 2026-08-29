@@ -627,6 +627,52 @@ async def pull_latch_async(rest_connection: RestConnection, device_id: str, chan
     return await rest_connection.async_post("device/control/pullLatch", data)
 
 
+async def set_door_lock_active_async(rest_connection: RestConnection, device_id: str, channel_index: int,
+                                     door_lock_active: bool, pin: str | None = None):
+    """
+    Hold a door permanently released ("always open"), or end that state.
+
+    Sets ``doorLockActive`` on the ``DOOR_SWITCH_CHANNEL`` with role
+    ``DOOR_LOCK_ACTUATOR``. Note the polarity: ``True`` is the released state,
+    although the vendor documentation describes the field as activating the
+    locking of the door.
+
+    Without a PIN the plain endpoint applies, which takes the
+    ``DOOR_SWITCH_CHANNEL``. A client outside the access authorization gets
+    ``CLIENT_ACCESS_DENIED`` and needs the ``...WithAuthorization`` variant,
+    which takes the ``ACCESS_AUTHORIZATION_CHANNEL`` with role
+    ``DOOR_LOCK_ACTUATOR`` instead. Pass ``pin=""`` when that authorization has
+    no PIN. The authorization variant is untested, see issue #685.
+
+    :param rest_connection: The REST connection instance.
+    :type rest_connection: RestConnection
+    :param device_id: The device ID.
+    :type device_id: str
+    :param channel_index: The channel index of the door switch channel.
+    :type channel_index: int
+    :param door_lock_active: ``True`` releases the door permanently ("always open"),
+        ``False`` returns it to normal locking.
+    :type door_lock_active: bool
+    :param pin: The authorization PIN. ``None`` selects the plain endpoint, a string
+        (including an empty one) selects the authorization endpoint.
+    :type pin: str or None
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {
+        "deviceId": device_id,
+        "channelIndex": channel_index,
+        "doorLockActive": door_lock_active,
+    }
+    if pin is None:
+        return await rest_connection.async_post("device/control/setDoorLockActive", data)
+
+    data["authorizationPin"] = pin
+    return await rest_connection.async_post(
+        "device/control/setDoorLockActiveWithAuthorization", data
+    )
+
+
 async def set_acceleration_sensor_mode_async(rest_connection: RestConnection, device_id: str, channel_index: int,
                                              mode: str):
     """

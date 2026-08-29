@@ -2554,6 +2554,23 @@ class FullFlushLockController(Device):
             raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_OPENER_ACTUATOR not loaded for device")
         return await channel.async_send_start_impulse()
 
+    def set_door_lock_active(self, door_lock_active: bool, pin: str | None = None):
+        """Hold the door released ("always open") with ``True``, lock it with ``False``."""
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_LOCK_ACTUATOR"
+        )
+        if channel is None:
+            raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_LOCK_ACTUATOR not loaded for device")
+        return channel.set_door_lock_active(door_lock_active, pin)
+
+    async def set_door_lock_active_async(self, door_lock_active: bool, pin: str | None = None):
+        channel = self._get_channel_by_role(
+            FunctionalChannelType.DOOR_SWITCH_CHANNEL, "DOOR_LOCK_ACTUATOR"
+        )
+        if channel is None:
+            raise AttributeError("DOOR_SWITCH_CHANNEL with DOOR_LOCK_ACTUATOR not loaded for device")
+        return await channel.async_set_door_lock_active(door_lock_active, pin)
+
 
 class FullFlushDoorController(Device):
     """HmIP-FDC Full Flush Door Controller (door opener).
