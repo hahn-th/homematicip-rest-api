@@ -571,15 +571,38 @@ def test_security_zones_activation_request_based_unblocked_zone(fake_home: Home)
         assert _zone_states(fake_home) == {"PRESENCE": False, "ABSENCE": True}
 
 
+def test_security_zone_activation_problem_channels(fake_home: Home):
+    """the blocking channels come back in the shape the ignore list expects."""
+    with no_ssl_verification():
+        _make_request_based(fake_home)
+        fake_home.get_current_state()
+
+        result = fake_home.set_security_zones_activation(False, True)
+
+        channels = fake_home.get_security_zone_activation_problem_channels(result)
+        assert sorted(channels, key=lambda c: c["deviceId"]) == [
+            {"deviceId": "3014F7110000000000000000", "channelIndex": 1},
+            {"deviceId": "3014F7110000000000000004", "channelIndex": 1},
+            {"deviceId": "3014F7110000000000000005", "channelIndex": 1},
+        ]
+
+
 def test_security_zones_activation_with_ignore_list(fake_home: Home):
     """arm anyway despite the open windows."""
     with no_ssl_verification():
         _make_request_based(fake_home)
         fake_home.get_current_state()
 
-        assert fake_home.set_security_zones_activation(False, True).success is False
+        blocked = fake_home.set_security_zones_activation(False, True)
+        assert blocked.success is False
 
-        result = fake_home.set_security_zones_activation_with_ignore_list(False, True)
+        result = fake_home.set_security_zones_activation_with_ignore_list(
+            False,
+            True,
+            ignorable_device_channels=(
+                fake_home.get_security_zone_activation_problem_channels(blocked)
+            ),
+        )
 
         assert result.success is True
         assert fake_home.get_security_zone_activation_problems(result) == {}
