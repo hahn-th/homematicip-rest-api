@@ -632,34 +632,20 @@ async def set_door_lock_active_async(rest_connection: RestConnection, device_id:
     """
     Hold a door permanently released ("always open"), or end that state.
 
-    This is a lasting state, not the one-shot buzz that ``pullLatch`` sends on the
-    ``DOOR_OPENER_ACTUATOR`` channel. It is reflected in ``doorLockActive`` on the
-    ``DOOR_SWITCH_CHANNEL`` with role ``DOOR_LOCK_ACTUATOR`` and it survives until
-    it is switched back, or until the device loses power: an HmIP-FLC returns to
-    locked when power comes back.
+    A lasting state, unlike the one-shot ``pullLatch``. It lives in
+    ``doorLockActive`` on the ``DOOR_SWITCH_CHANNEL`` with role
+    ``DOOR_LOCK_ACTUATOR`` and is lost when the device loses power.
 
-    Mind the polarity. The vendor documentation describes ``doorLockActive`` as
-    activating the locking of the door, but on an HmIP-FLC ``True`` is the released
-    state: switching always-open on in the app flips the field ``false -> true`` and
-    the door lock channel follows with ``lockState: LOCKED -> UNLOCKED``. Confirmed
-    on hardware from both sides, see issue #685.
+    Mind the polarity: ``True`` is the released state, although the vendor
+    documentation describes the field as activating the locking of the door.
 
-    The cloud offers two endpoints and they do not take the same channel.
-    Without a PIN the plain one applies, whose body carries no
-    ``authorizationPin`` at all, and it targets the ``DOOR_SWITCH_CHANNEL``.
-    Confirmed on an HmIP-FLC: channel 3 answers 200 in both directions and the
-    app reflects the new state at once, while the same call against an
-    ``ACCESS_AUTHORIZATION_CHANNEL`` answers ``FEATURE_NOT_SUPPORTED``.
-    A client without the access authorization answers ``CLIENT_ACCESS_DENIED``
-    and needs the ``...WithAuthorization`` variant instead, where both the
-    requesting client and the target channel must belong to that same
-    authorization. Pass ``pin=""`` when the authorization has no PIN configured.
-
-    That variant is not confirmed against hardware. The door switch channel
-    answers ``UNKNOWN_CHANNEL`` there, so it presumably wants the
-    ``ACCESS_AUTHORIZATION_CHANNEL`` whose role is ``DOOR_LOCK_ACTUATOR``, the
-    way ``pullLatch`` targets the one with role ``DOOR_OPENER_ACTUATOR`` rather
-    than the switching channel. See issue #685.
+    Without a PIN the plain endpoint applies, which takes the
+    ``DOOR_SWITCH_CHANNEL``; an ``ACCESS_AUTHORIZATION_CHANNEL`` answers
+    ``FEATURE_NOT_SUPPORTED`` there. A client outside the access authorization
+    gets ``CLIENT_ACCESS_DENIED`` and needs the ``...WithAuthorization`` variant,
+    which takes the ``ACCESS_AUTHORIZATION_CHANNEL`` with role
+    ``DOOR_LOCK_ACTUATOR`` instead. Pass ``pin=""`` when that authorization has
+    no PIN. The authorization variant is untested, see issue #685.
 
     :param rest_connection: The REST connection instance.
     :type rest_connection: RestConnection
@@ -668,8 +654,7 @@ async def set_door_lock_active_async(rest_connection: RestConnection, device_id:
     :param channel_index: The channel index of the door switch channel.
     :type channel_index: int
     :param door_lock_active: ``True`` releases the door permanently ("always open"),
-        ``False`` returns it to normal locking. Note the field name reads the other
-        way round; the value is passed through to the API verbatim.
+        ``False`` returns it to normal locking.
     :type door_lock_active: bool
     :param pin: The authorization PIN. ``None`` selects the plain endpoint, a string
         (including an empty one) selects the authorization endpoint.
