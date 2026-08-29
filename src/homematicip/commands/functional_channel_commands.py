@@ -630,10 +630,19 @@ async def pull_latch_async(rest_connection: RestConnection, device_id: str, chan
 async def set_door_lock_active_async(rest_connection: RestConnection, device_id: str, channel_index: int,
                                      door_lock_active: bool, pin: str | None = None):
     """
-    Activate or deactivate the locking of a door for a device channel ("always open").
+    Hold a door permanently released ("always open"), or end that state.
 
-    The state is reflected in ``doorLockActive`` on the ``DOOR_SWITCH_CHANNEL``
-    with role ``DOOR_LOCK_ACTUATOR``.
+    This is a lasting state, not the one-shot buzz that ``pullLatch`` sends on the
+    ``DOOR_OPENER_ACTUATOR`` channel. It is reflected in ``doorLockActive`` on the
+    ``DOOR_SWITCH_CHANNEL`` with role ``DOOR_LOCK_ACTUATOR`` and it survives until
+    it is switched back, or until the device loses power: an HmIP-FLC returns to
+    locked when power comes back.
+
+    Mind the polarity. The vendor documentation describes ``doorLockActive`` as
+    activating the locking of the door, but on an HmIP-FLC ``True`` is the released
+    state: switching always-open on in the app flips the field ``false -> true`` and
+    the door lock channel follows with ``lockState: LOCKED -> UNLOCKED``. Confirmed
+    on hardware from both sides, see issue #685.
 
     The cloud offers two endpoints and they do not take the same channel.
     Without a PIN the plain one applies, whose body carries no
@@ -658,7 +667,9 @@ async def set_door_lock_active_async(rest_connection: RestConnection, device_id:
     :type device_id: str
     :param channel_index: The channel index of the door switch channel.
     :type channel_index: int
-    :param door_lock_active: True locks the door, False releases it (always open).
+    :param door_lock_active: ``True`` releases the door permanently ("always open"),
+        ``False`` returns it to normal locking. Note the field name reads the other
+        way round; the value is passed through to the API verbatim.
     :type door_lock_active: bool
     :param pin: The authorization PIN. ``None`` selects the plain endpoint, a string
         (including an empty one) selects the authorization endpoint.

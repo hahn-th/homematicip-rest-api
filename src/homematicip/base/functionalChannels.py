@@ -772,9 +772,10 @@ class DoorSwitchChannel(FunctionalChannel):
         )
 
     def set_door_lock_active(self, door_lock_active: bool, pin: str | None = None):
-        """Lock or release the door ("always open") via this door switch channel.
+        """Hold the door permanently released ("always open"), or end that state.
 
-        Only meaningful for channels with role ``DOOR_LOCK_ACTUATOR``.
+        ``True`` releases, ``False`` locks again; see the polarity note in the
+        command. Only meaningful for channels with role ``DOOR_LOCK_ACTUATOR``.
         See :func:`homematicip.commands.functional_channel_commands.set_door_lock_active_async`.
         """
         return self._run_non_async(
