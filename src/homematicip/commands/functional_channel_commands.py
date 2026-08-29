@@ -638,17 +638,19 @@ async def set_door_lock_active_async(rest_connection: RestConnection, device_id:
     The cloud offers two endpoints and they do not take the same channel.
     Without a PIN the plain one applies, whose body carries no
     ``authorizationPin`` at all, and it targets the ``DOOR_SWITCH_CHANNEL``.
-    A device assigned to an access authorization answers ``CLIENT_ACCESS_DENIED``
-    there and needs the ``...WithAuthorization`` variant instead, where both the
+    Confirmed on an HmIP-FLC: channel 3 answers 200 in both directions and the
+    app reflects the new state at once, while the same call against an
+    ``ACCESS_AUTHORIZATION_CHANNEL`` answers ``FEATURE_NOT_SUPPORTED``.
+    A client without the access authorization answers ``CLIENT_ACCESS_DENIED``
+    and needs the ``...WithAuthorization`` variant instead, where both the
     requesting client and the target channel must belong to that same
     authorization. Pass ``pin=""`` when the authorization has no PIN configured.
 
-    For that variant, pass the index of the ``ACCESS_AUTHORIZATION_CHANNEL`` whose
-    role is ``DOOR_LOCK_ACTUATOR``, not the door switch channel: on an HmIP-FLC the
-    door switch channel answers ``UNKNOWN_CHANNEL``. This mirrors ``pullLatch``,
-    which likewise targets the access-authorization channel (role
-    ``DOOR_OPENER_ACTUATOR``) rather than the switching one. Not yet confirmed
-    against hardware, see issue #685.
+    That variant is not confirmed against hardware. The door switch channel
+    answers ``UNKNOWN_CHANNEL`` there, so it presumably wants the
+    ``ACCESS_AUTHORIZATION_CHANNEL`` whose role is ``DOOR_LOCK_ACTUATOR``, the
+    way ``pullLatch`` targets the one with role ``DOOR_OPENER_ACTUATOR`` rather
+    than the switching channel. See issue #685.
 
     :param rest_connection: The REST connection instance.
     :type rest_connection: RestConnection

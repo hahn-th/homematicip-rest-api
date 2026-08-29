@@ -7,14 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.16.0..master)
 
-### Added
-
-- Add `set_door_lock_active` / `async_set_door_lock_active` on `DoorSwitchChannel` and `set_door_lock_active_async` in `functional_channel_commands`, covering `setDoorLockActive` and `setDoorLockActiveWithAuthorization` ([#685](https://github.com/hahn-th/homematicip-rest-api/issues/685)).
-
 ## [2.16.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..2.16.0)
 
 ### Added
 
+- Add `set_door_lock_active` / `async_set_door_lock_active` on `DoorSwitchChannel` and `set_door_lock_active_async` in `functional_channel_commands`, covering `setDoorLockActive` and `setDoorLockActiveWithAuthorization` ([#685](https://github.com/hahn-th/homematicip-rest-api/issues/685)).
 - Add support for the HmIP-FSI6 (`DeviceType.FULL_FLUSH_INPUT_SWITCH_COMPACT`, mapped to `FullFlushInputSwitch`) ([#686](https://github.com/hahn-th/homematicip-rest-api/issues/686)).
 - Add support for the ELV-SH-TACO: `DeviceType.TEMPERATURE_TILT_VIBRATION_SENSOR` with a `TemperatureTiltVibrationSensor` class and `FunctionalChannelType.TEMPERATURE_SENSOR_CHANNEL` with a `TemperatureSensorChannel` class ([#690](https://github.com/hahn-th/homematicip-rest-api/issues/690)).
 
