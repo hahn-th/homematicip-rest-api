@@ -12,6 +12,7 @@ nav:
   - Changelog: changelog.md
 - API Reference:
   - Introduction: api-introduction.md
+  - Modules: reference/index.md
 
 theme:
   name: material
@@ -52,14 +53,3 @@ plugins:
           summary: false
           show_source: false
           members_order: alphabetical
-- api-autonav:
-    modules: ['src/homematicip']
-    nav_section_title: "API Reference"
-    api_root_uri: "reference"
-#    nav_item_prefix: "<code class='doc-symbol doc-symbol-nav doc-symbol-module'></code>"
-    nav_item_prefix: ""
-    #exclude_private: false
-    on_implicit_namespace_package: "skip"
-    exclude:
-      - "homematicip._version"
-      - "homematicip.__main__"
