@@ -9,16 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.16.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..2.16.0)
 
-### Removed
-
-- Drop `requests` and `websockets` from the runtime dependencies. `websockets` was imported nowhere, and `requests` only in the test suite and in `homematicip_demo`, neither of which ships in the wheel.
-
 ### Added
 
-- Add `set_door_lock_active` / `async_set_door_lock_active` on `DoorSwitchChannel` and `set_door_lock_active_async` in `functional_channel_commands`, covering `setDoorLockActive` and `setDoorLockActiveWithAuthorization`. `True` is the released state ("always open") ([#685](https://github.com/hahn-th/homematicip-rest-api/issues/685)).
-- Add support for the HmIP-FSI6 (`DeviceType.FULL_FLUSH_INPUT_SWITCH_COMPACT`, mapped to `FullFlushInputSwitch`) ([#686](https://github.com/hahn-th/homematicip-rest-api/issues/686)).
-- Add support for the ELV-SH-TACO: `DeviceType.TEMPERATURE_TILT_VIBRATION_SENSOR` with a `TemperatureTiltVibrationSensor` class and `FunctionalChannelType.TEMPERATURE_SENSOR_CHANNEL` with a `TemperatureSensorChannel` class ([#690](https://github.com/hahn-th/homematicip-rest-api/issues/690)).
-- Add `ignorable_device_channels` to `set_security_zones_activation_with_ignore_list` and `Home.get_security_zone_activation_problem_channels()`, which returns the blocking channels in the shape that parameter expects. The access point currently arms regardless of what the list names, so it does not protect against an entry point that opened between the check and the call.
+- Add `set_door_lock_active` / `async_set_door_lock_active` on `DoorSwitchChannel` and `set_door_lock_active_async` in `functional_channel_commands`, covering `setDoorLockActive` and `setDoorLockActiveWithAuthorization`. `True` is "always open" ([#685](https://github.com/hahn-th/homematicip-rest-api/issues/685)).
+- Add support for the HmIP-FSI6: `DeviceType.FULL_FLUSH_INPUT_SWITCH_COMPACT`, mapped to `FullFlushInputSwitch` ([#686](https://github.com/hahn-th/homematicip-rest-api/issues/686)).
+- Add support for the ELV-SH-TACO: `DeviceType.TEMPERATURE_TILT_VIBRATION_SENSOR` with a `TemperatureTiltVibrationSensor` class, and `FunctionalChannelType.TEMPERATURE_SENSOR_CHANNEL` with a `TemperatureSensorChannel` class ([#690](https://github.com/hahn-th/homematicip-rest-api/issues/690)).
+- Add `ignorable_device_channels` to `set_security_zones_activation_with_ignore_list`, and `Home.get_security_zone_activation_problem_channels()`, which returns the blocking channels in the shape that parameter expects. Note that the access point arms regardless of what the list names.
+
+### Removed
+
+- Drop `requests` and `websockets` from the runtime dependencies. Neither is imported by the package.
 
 ## [2.15.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.14.1..2.15.0)
 
