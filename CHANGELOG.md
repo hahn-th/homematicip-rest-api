@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.16.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..2.16.0)
 
+### Removed
+
+- Drop `requests` and `websockets` from the runtime dependencies. `websockets` was imported nowhere, and `requests` only in the test suite and in `homematicip_demo`, neither of which ships in the wheel.
+
 ### Added
 
 - Add `set_door_lock_active` / `async_set_door_lock_active` on `DoorSwitchChannel` and `set_door_lock_active_async` in `functional_channel_commands`, covering `setDoorLockActive` and `setDoorLockActiveWithAuthorization`. `True` is the released state ("always open") ([#685](https://github.com/hahn-th/homematicip-rest-api/issues/685)).
