@@ -6,7 +6,7 @@ done via reverse engineering. Use at your own risk.
 
 Any help from the community through e.g. pull requests would be highly appreciated.
 
-[![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![Tests](https://github.com/hahn-th/homematicip-rest-api/actions/workflows/test-on-push.yml/badge.svg)](https://github.com/hahn-th/homematicip-rest-api/actions/workflows/test-on-push.yml) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip)
+[![PyPI download month](https://img.shields.io/pypi/dm/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![PyPI version fury.io](https://badge.fury.io/py/homematicip.svg)](https://pypi.python.org/pypi/homematicip/) [![Discord](https://img.shields.io/discord/537253254074073088.svg?logo=discord&style=plastic)](https://discord.gg/mZG2myJ) [![Tests](https://github.com/hahn-th/homematicip-rest-api/actions/workflows/test-on-push.yml/badge.svg)](https://github.com/hahn-th/homematicip-rest-api/actions/workflows/test-on-push.yml) [![Coverage](https://codecov.io/gh/hahn-th/homematicip-rest-api/branch/master/graph/badge.svg)](https://codecov.io/gh/hahn-th/homematicip-rest-api) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/homematicip) [![License](https://img.shields.io/pypi/l/homematicip.svg)](LICENSE.txt)
 
 ## Using Home Assistant?
 
