@@ -190,7 +190,11 @@ If your device is missing from the list below, or is listed but does not do what
 issue with a configuration dump attached. A dump is what makes a device implementable without owning
 the hardware.
 
-Create it with the CLI:
+**From Home Assistant**, which is the shortest path if you use it: open Settings > Devices &
+services > Homematic IP Cloud, use the three-dot menu next to your access point and choose *Download
+diagnostics*. The result is already redacted and contains everything needed.
+
+**From this library**, if you have it set up:
 
 ```sh
 hmip_cli --dump-configuration --anonymize
@@ -206,37 +210,32 @@ Please include:
 - what the device should do that the library cannot do yet
 - the dump itself, as a [gist](https://gist.github.com) if it is long
 
-## Implemented Stuff
+## Device support
 
-- [x] Generate authentication token
-- [x] Read current state of the Environment
-- [x] Weather
-- [x] Location
-- [x] Basic Informations( apversion, pinAssigned, timeZone, … )
-- [x] Devices (partly)
-- [x] Client
-- [x] Groups
+A checked box means the model is mapped to a device class here, so its readings and commands are
+available. An unchecked box means the model is known but not implemented, usually because nobody has
+sent a dump for it yet, see [New devices and config dump](#new-devices-and-config-dump).
 
-## Supported devices
-
-Both radio and wired devices are listed together; wired models carry the `HMIPW` prefix.
-A checked box means the device is mapped to a class in this library. Unchecked usually means nobody
-has sent a config dump for it yet, see above. Entries marked `*powered by HmIP` are third-party
-devices using the Homematic IP protocol.
+Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. Entries marked
+`*powered by HmIP` are third-party devices speaking the Homematic IP protocol.
 
 - [x] ALPHA-IP-RBG (Alpha IP Wall Thermostat Display)
 - [x] ALPHA-IP-RBGa (Alpha IP Wall Thermostat Display analog)
 - [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) \*powered by HmIP
 - [x] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
+- [x] ELV-SH-CTH (Temperature and Humidity Sensor Compact) \*powered by HmIP
 - [x] ELV-SH-CTV Tilt Vibration Sensor Compact
 - [ ] ELV-SH-GVI (Garden valve interface) \*powered by HmIP
 - [ ] ELV-SH-IRS8 (Infrared Remote control - 8x channels) \*powered by HmIP
 - [x] ELV-SH-PSMCI (Switch Measuring Cable Indoor) \*powered by HmIP
 - [x] ELV-SH-PTI2 (Temperature Difference Sensor 2 - Platin) \*powered by HmIP
 - [x] ELV-SH-SB8 (Status Board) \*powered by HmIP
+- [x] ELV-SH-SMSI (Soil Moisture Sensor Interface) \*powered by HmIP
 - [x] ELV-SH-SPS25 (Switchable Power Supply) \*powered by HmIP
 - [ ] ELV-SH-SW1-BAT (2x Actuator Switch for 30V/1A with 2xAA Batteries) \*powered by HmIP
+- [x] ELV-SH-TACO (Temperature, Tilt and Vibration Sensor) \*powered by HmIP
 - [ ] ELV-SH-WSC (2x Servo Controls, 5v - 12V) \*powered by HmIP
+- [x] ELV-SH-WSM (Watering Actuator) \*powered by HmIP
 - [ ] ELV-SH-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V) \*powered by HmIP
 - [x] HMIP-ASIR (Alarm Siren - indoor)
 - [x] HMIP-ASIR-2 (Alarm Siren - indoor) New Version
@@ -263,6 +262,7 @@ devices using the Homematic IP protocol.
 - [x] HMIP-DRSI1 (Switch Actuator for DIN rail mount – 1x channel)
 - [x] HMIP-DRSI4 (Switch Actuator for DIN rail mount – 4x channels)
 - [x] HMIP-DSD-PCB (Door Signal Detector PCB)
+- [x] HMIP-ESI (Energy Sensors Interface)
 - [x] HMIP-eTRV (Heating-Thermostat with Display)
 - [x] HMIP-eTRV-2 (Heating-Thermostat with Display) New Version
 - [x] HMIP-eTRV-2 I9F (Heating-Thermostat with Display) New Version
@@ -294,11 +294,14 @@ devices using the Homematic IP protocol.
 - [x] HMIP-FLC (Full Flush Lock Controller)
 - [x] HMIP-FROLL (Shutter Actuator - flush-mount)
 - [x] HMIP-FSI16 (Switch Actuator with Push-button Input 230V, 16A)
+- [x] HMIP-FSI6 (Full Flush Input Switch Compact)
 - [x] HMIP-FSM (Switch Actuator and Meter 5A – flush-mount)
 - [x] HMIP-FSM16 (Switch Actuator and Meter 16A – flush-mount)
 - [x] HMIP-FWI (Wiegand Interface)
 - [x] HMIP-HAP (Cloud Access Point)
 - [x] HMIP-HAP-B1 (Cloud Access Point) _Silvercrest Edition_
+- [x] HMIP-HAP2 (Access Point 2)
+- [x] HMIP-HCU (Home Control Unit)
 - [x] HMIP-HDM1 (Hunter Douglas & erfal window blinds)
 - [ ] HMIP-HDRC (Hunter Douglas & erfal window blinds remote control)
 - [ ] HMIP-K-DRBLI4 (Blinds Actuator – 4x channels, 230V, 2,2A / 500W per channel) electrical DIN rail
@@ -375,6 +378,7 @@ devices using the Homematic IP protocol.
 - [x] HMIP-USBSM (USB Switching Measurement Actuator)
 - [x] HMIP-WGC (Garage Door Button)
 - [x] HMIP-WGT (Wall Thermostat with Glass Display)
+- [x] HMIP-WGTC (Wall Mounted Glass Thermostat with Carbon Dioxide Sensor)
 - [x] HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)
 - [x] HMIP-WKP (Keypad)
 - [x] HMIP-WLAN-HAP (WLAN Access Point)
