@@ -1,0 +1,5898 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A Python wrapper for the homematicIP REST API.">
+      
+      
+      
+        <link rel="canonical" href="https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/functionalChannels/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.57">
+    
+    
+      
+        <title>homematicip.base.functionalChannels - HomematicIP Cloud Rest API Wrapper</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.5da3a30f.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#homematicipbasefunctionalchannels" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="HomematicIP Cloud Rest API Wrapper" class="md-header__button md-logo" aria-label="HomematicIP Cloud Rest API Wrapper" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            HomematicIP Cloud Rest API Wrapper
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              homematicip.base.functionalChannels
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/hahn-th/homematicip-rest-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hahn-th/homematicip-rest-api
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../.." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../api-introduction/" class="md-tabs__link">
+          
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="HomematicIP Cloud Rest API Wrapper" class="md-nav__button md-logo" aria-label="HomematicIP Cloud Rest API Wrapper" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    HomematicIP Cloud Rest API Wrapper
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hahn-th/homematicip-rest-api" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hahn-th/homematicip-rest-api
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Home
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Home
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Getting Started
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../batch-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Batch testing
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Changelog
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  API Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../api-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Introduction
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Modules
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+  
+
+
+<h1 id="homematicipbasefunctionalchannels">homematicip.base.functionalChannels<a class="headerlink" href="#homematicipbasefunctionalchannels" title="Permanent link">&para;</a></h1>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h1 id="homematicip.base.functionalChannels" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">homematicip.base.functionalChannels</span>
+
+
+<a href="#homematicip.base.functionalChannels" class="headerlink" title="Permanent link">&para;</a></h1>
+
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AccelerationSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AccelerationSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AccelerationSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ACCELERATION_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AccessAuthorizationChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AccessAuthorizationChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AccessAuthorizationChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this represents ACCESS_AUTHORIZATION_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.AccessAuthorizationChannel.pull_latch" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">pull_latch</span>
+
+
+<a href="#homematicip.base.functionalChannels.AccessAuthorizationChannel.pull_latch" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">pull_latch</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Trigger the latch via this access-authorization channel.</p>
+<p>Only meaningful for channels with role <code>DOOR_OPENER_ACTUATOR</code>.
+See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_async</code>.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AccessControllerChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AccessControllerChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AccessControllerChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ACCESS_CONTROLLER_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AccessControllerWiredChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AccessControllerWiredChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AccessControllerWiredChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ACCESS_CONTROLLER_WIRED_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AlarmSirenChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AlarmSirenChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AlarmSirenChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ALARM_SIREN_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AnalogOutputChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AnalogOutputChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AnalogOutputChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ANALOG_OUTPUT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AnalogRoomControlChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AnalogRoomControlChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AnalogRoomControlChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ANALOG_ROOM_CONTROL_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.AutoNameEnum" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AutoNameEnum</span>
+
+
+<a href="#homematicip.base.functionalChannels.AutoNameEnum" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-external" title="enum.StrEnum" href="https://docs.python.org/3/library/enum.html#enum.StrEnum">StrEnum</a></code></p>
+
+
+
+        <p>auto() will generate the name of the attribute as value</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.AutoNameEnum.from_str" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_str</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.AutoNameEnum.from_str" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_str</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>this function will create the enum object based on its string value</p>
+<p>Args:
+    text(str): the string value of the enum
+    default(AutoNameEnum): a default value if text could not be used
+Returns:
+    the enum object or None if the text is None or the default value</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.BlindChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">BlindChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.BlindChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the BLIND_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.BlindChannel.set_shutter_level" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_shutter_level</span>
+
+
+<a href="#homematicip.base.functionalChannels.BlindChannel.set_shutter_level" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_shutter_level</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the shutter level</p>
+<p>Args:
+    level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+    channelIndex(int): the channel to control
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.BlindChannel.set_shutter_stop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_shutter_stop</span>
+
+
+<a href="#homematicip.base.functionalChannels.BlindChannel.set_shutter_stop" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_shutter_stop</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>stops the current operation
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.BlindChannel.set_slats_level" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_slats_level</span>
+
+
+<a href="#homematicip.base.functionalChannels.BlindChannel.set_slats_level" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_slats_level</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the slats and shutter level</p>
+<p>Args:
+    slatsLevel(float): the new level of the slats. 0.0 = open, 1.0 = closed,
+    shutterLevel(float): the new level of the shutter. 0.0 = open, 1.0 = closed, None = use the current value
+    channelIndex(int): the channel to control
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.BlindChannel.stop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">stop</span>
+
+
+<a href="#homematicip.base.functionalChannels.BlindChannel.stop" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">stop</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>stops the current shutter operation</p>
+<p>Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.CarbonDioxideSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">CarbonDioxideSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.CarbonDioxideSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>Representation of the CarbonDioxideSensorChannel Channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ChangeOverChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ChangeOverChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ChangeOverChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the CHANGE_OVER_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ClimateSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ClimateSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ClimateSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the CLIMATE_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.CodeProtectedPrimaryActionChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">CodeProtectedPrimaryActionChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.CodeProtectedPrimaryActionChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the CODE_PROTECTED_PRIMARY_ACTION_CHANNEL channel (HmIP-WKP)</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.CodeProtectedSecondaryActionChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">CodeProtectedSecondaryActionChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.CodeProtectedSecondaryActionChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the CODE_PROTECTED_SECONDARY_ACTION_CHANNEL channel (HmIP-WKP)</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.CodeProtectedSingleActionChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">CodeProtectedSingleActionChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.CodeProtectedSingleActionChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the CODE_PROTECTED_SINGLE_ACTION_CHANNEL channel (HmIP-FWI)</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ContactInterfaceChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ContactInterfaceChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ContactInterfaceChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContactChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
+
+
+
+        <p>this is the representative of the CONTACT_INTERFACE_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DehumidifierDemandChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DehumidifierDemandChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DehumidifierDemandChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEHUMIDIFIER_DEMAND_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceBaseChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceBaseChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceBaseChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_BASE channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceBaseFloorHeatingChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceBaseFloorHeatingChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceBaseFloorHeatingChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_BASE_FLOOR_HEATING channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.DeviceBaseFloorHeatingChannel.set_minimum_floor_heating_valve_position" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_minimum_floor_heating_valve_position</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceBaseFloorHeatingChannel.set_minimum_floor_heating_valve_position" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_minimum_floor_heating_valve_position</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the minimum floot heating valve position</p>
+<p>Args:
+    minimumFloorHeatingValvePosition(float): the minimum valve position. must be between 0.0 and 1.0</p>
+<p>Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceBlockingChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceBlockingChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceBlockingChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_BLOCKING channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceBlockingWithTeachableCodeChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceBlockingWithTeachableCodeChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceBlockingWithTeachableCodeChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBlockingChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBlockingChannel">DeviceBlockingChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_BLOCKING_WITH_TEACHABLE_CODE channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceGlobalPumpControlChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceGlobalPumpControlChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceGlobalPumpControlChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_GLOBAL_PUMP_CONTROL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceIncorrectPositionedChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceIncorrectPositionedChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceIncorrectPositionedChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_INCORRECT_POSITIONED channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceOperationLockChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceOperationLockChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceOperationLockChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_OPERATIONLOCK channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceOperationLockChannelWithSabotage" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceOperationLockChannelWithSabotage</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceOperationLockChannelWithSabotage" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceOperationLockChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceOperationLockChannel">DeviceOperationLockChannel</a></code></p>
+
+
+
+        <p>this is the representation of the DeviceOperationLockChannelWithSabotage channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DevicePermanentFullRxChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DevicePermanentFullRxChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DevicePermanentFullRxChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_PERMANENT_FULL_RX channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceRechargeableWithSabotage" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceRechargeableWithSabotage</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceRechargeableWithSabotage" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceSabotageChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceSabotageChannel">DeviceSabotageChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_RECHARGEABLE_WITH_SABOTAGE channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DeviceSabotageChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DeviceSabotageChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DeviceSabotageChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DEVICE_SABOTAGE channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DimmerChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DimmerChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DimmerChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DIMMER_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DoorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DoorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DoorChannel channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DoorLockChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DoorLockChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorLockChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This respresents of the DoorLockChannel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.DoorLockChannel.async_set_lock_state" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">async_set_lock_state</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.DoorLockChannel.async_set_lock_state" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">async_set_lock_state</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the door lock state</p>
+<p>Args:
+    doorLockState(float): the state of the door. See LockState from base/enums.py
+    pin(string): Pin, if specified.
+    channelIndex(int): the channel to control. Normally the channel from DOOR_LOCK_CHANNEL is used.
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.DoorLockChannel.set_lock_state" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_lock_state</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorLockChannel.set_lock_state" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_lock_state</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the door lock state</p>
+<p>Args:
+    doorLockState(float): the state of the door. See LockState from base/enums.py
+    pin(string): Pin, if specified.
+    channelIndex(int): the channel to control. Normally the channel from DOOR_LOCK_CHANNEL is used.
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DoorLockProChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DoorLockProChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorLockProChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DoorLockChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DoorLockChannel">DoorLockChannel</a></code></p>
+
+
+
+        <p>This represents the DOOR_LOCK_PRO_CHANNEL channel (HmIP-DLP)</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DoorLockSensorBaseChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DoorLockSensorBaseChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorLockSensorBaseChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This represents the DOOR_LOCK_SENSOR_BASE_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DoorLockSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DoorLockSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorLockSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This respresents of the DoorLockSensorChannel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.DoorSwitchChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">DoorSwitchChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorSwitchChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the DOOR_SWITCH_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.DoorSwitchChannel.set_door_lock_active" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_door_lock_active</span>
+
+
+<a href="#homematicip.base.functionalChannels.DoorSwitchChannel.set_door_lock_active" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_door_lock_active</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Hold the door released ("always open") with <code>True</code>, lock it with <code>False</code>.</p>
+<p>See :func:<code>homematicip.commands.functional_channel_commands.set_door_lock_active_async</code>.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.EnergySensorInterfaceChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">EnergySensorInterfaceChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.EnergySensorInterfaceChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>EnergySensorInterfaceChannel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ExternalBaseChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ExternalBaseChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ExternalBaseChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this represents the EXTERNAL_BASE_CHANNEL function-channel for external devices</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ExternalSwitchChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ExternalSwitchChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ExternalSwitchChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+
+
+
+        <p>this is the representative of the EXTERNAL_SWITCH_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ExternalUniversalLightChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ExternalUniversalLightChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ExternalUniversalLightChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this represents the EXTERNAL_UNIVERSAL_LIGHT_CHANNEL function-channel for external devices</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.ExternalUniversalLightChannel.set_dim_level_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_dim_level_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.ExternalUniversalLightChannel.set_dim_level_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_dim_level_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Set the dim level of the light channel.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.ExternalUniversalLightChannel.set_dim_level_with_time_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_dim_level_with_time_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.ExternalUniversalLightChannel.set_dim_level_with_time_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_dim_level_with_time_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Set the dim level of the light channel with a specified time.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.FloorTeminalBlockChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FloorTeminalBlockChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.FloorTeminalBlockChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the FLOOR_TERMINAL_BLOCK_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.FloorTerminalBlockLocalPumpChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FloorTerminalBlockLocalPumpChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.FloorTerminalBlockLocalPumpChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL  channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.FloorTerminalBlockMechanicChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FloorTerminalBlockMechanicChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.FloorTerminalBlockMechanicChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the class FLOOR_TERMINAL_BLOCK_MECHANIC_CHANNEL(FunctionalChannel) channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.FunctionalChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FunctionalChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.FunctionalChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+
+
+
+        <p>this is the base class for the functional channels</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.FunctionalChannel.add_on_channel_event_handler" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">add_on_channel_event_handler</span>
+
+
+<a href="#homematicip.base.functionalChannels.FunctionalChannel.add_on_channel_event_handler" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">add_on_channel_event_handler</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Adds an event handler to the update method. Fires when a device
+is updated.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.FunctionalChannel.fire_channel_event" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">fire_channel_event</span>
+
+
+<a href="#homematicip.base.functionalChannels.FunctionalChannel.fire_channel_event" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">fire_channel_event</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Trigger the methods tied to _on_channel_event</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.FunctionalChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.FunctionalChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>this function will load the functional channel object
+from a json object and the given groups</p>
+<p>Args:
+    js(dict): the json object
+    groups(Iterable[Group]): the groups for referencing</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.GenericInputChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">GenericInputChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.GenericInputChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the GENERIC_INPUT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.HeatDemandChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">HeatDemandChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.HeatDemandChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the HEAT_DEMAND_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.HeatingThermostatChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">HeatingThermostatChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.HeatingThermostatChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the HEATING_THERMOSTAT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ImpulseOutputChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ImpulseOutputChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ImpulseOutputChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representation of the IMPULSE_OUTPUT_CHANNEL</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.ImpulseOutputChannel.send_start_impulse" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">send_start_impulse</span>
+
+
+<a href="#homematicip.base.functionalChannels.ImpulseOutputChannel.send_start_impulse" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">send_start_impulse</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Toggle Wall mounted Garage Door Controller.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.InternalSwitchChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">InternalSwitchChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.InternalSwitchChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the INTERNAL_SWITCH_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.LightSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">LightSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.LightSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the LIGHT_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MagneticDoorSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MagneticDoorSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MagneticDoorSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This represents the MAGNETIC_DOOR_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MainsFailureChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MainsFailureChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MainsFailureChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MAINS_FAILURE_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MotionDetectionChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MotionDetectionChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MotionDetectionChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MOTION_DETECTION_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MultiModeInputBlindChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MultiModeInputBlindChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MultiModeInputBlindChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;BlindChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.BlindChannel">BlindChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MULTI_MODE_INPUT_BLIND_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MultiModeInputChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MultiModeInputChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MultiModeInputChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MULTI_MODE_INPUT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MultiModeInputDimmerChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MultiModeInputDimmerChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MultiModeInputDimmerChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DimmerChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MULTI_MODE_INPUT_DIMMER_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MultiModeInputSwitchChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MultiModeInputSwitchChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MultiModeInputSwitchChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MULTI_MODE_INPUT_SWITCH_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.MultiModeLockInputChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">MultiModeLockInputChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.MultiModeLockInputChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;MultiModeInputChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.MultiModeInputChannel">MultiModeInputChannel</a></code></p>
+
+
+
+        <p>this is the representative of the MULTI_MODE_LOCK_INPUT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.NotificationLightChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">NotificationLightChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.NotificationLightChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DimmerChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code>, <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+
+
+
+        <p>this is the representative of the NOTIFICATION_LIGHT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationLightChannel.async_set_optical_signal" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">async_set_optical_signal</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.NotificationLightChannel.async_set_optical_signal" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">async_set_optical_signal</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the signal type for the leds</p>
+<p>Args:
+    opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+    rgb(RGBColorState): Color
+    dimLevel(float): usally 1.01. Use set_dim_level instead</p>
+<p>Returns:
+    Result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationLightChannel.async_set_rgb_dim_level_with_time" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">async_set_rgb_dim_level_with_time</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.NotificationLightChannel.async_set_rgb_dim_level_with_time" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">async_set_rgb_dim_level_with_time</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the color and dimlevel of the lamp</p>
+<p>Args:
+    channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+    rgb(RGBColorState): the color of the lamp
+    dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX
+    onTime(float):
+    rampTime(float):
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationLightChannel.set_rgb_dim_level" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_rgb_dim_level</span>
+
+
+<a href="#homematicip.base.functionalChannels.NotificationLightChannel.set_rgb_dim_level" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_rgb_dim_level</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the color and dimlevel of the lamp</p>
+<p>Args:
+    channelIndex(int): the channelIndex of the lamp. Use self.topLightChannelIndex or self.bottomLightChannelIndex
+    rgb(RGBColorState): the color of the lamp
+    dimLevel(float): the dimLevel of the lamp. 0.0 = off, 1.0 = MAX</p>
+<p>Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.NotificationMp3SoundChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">NotificationMp3SoundChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.NotificationMp3SoundChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the NOTIFICATION_MP3_SOUND_CHANNEL channel.</p>
+<p>This channel is used by combination signalling devices like the HmIP-MP3P
+which can play MP3 sounds and show optical signals for various alarm conditions.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationMp3SoundChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.NotificationMp3SoundChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationMp3SoundChannel.set_rgb_dim_level_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_rgb_dim_level_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.NotificationMp3SoundChannel.set_rgb_dim_level_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_rgb_dim_level_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Set LED color and brightness.</p>
+<p>Args:
+    rgb_color_state: The RGB color state from RGBColorState enum:
+        BLACK, BLUE, GREEN, TURQUOISE, RED, PURPLE, YELLOW, WHITE
+    dim_level: The dim/brightness level (0.0 to 1.0). Default 1.0.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationMp3SoundChannel.set_sound_file_volume_level_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_sound_file_volume_level_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.NotificationMp3SoundChannel.set_sound_file_volume_level_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_sound_file_volume_level_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Play specified sound file at given volume.</p>
+<p>Args:
+    sound_file: The sound file to play. Possible values:
+        INTERNAL_SOUNDFILE - Built-in system sound
+        SOUNDFILE_001 through SOUNDFILE_252 - User sounds on SD card
+        RANDOM_SOUNDFILE - Random selection
+        DISABLE_ACOUSTIC_SIGNAL - Stop/no sound
+    volume_level: The volume level (0.0 to 1.0). Default 1.0.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationMp3SoundChannel.stop_sound_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">stop_sound_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.NotificationMp3SoundChannel.stop_sound_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">stop_sound_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Stop current sound playback by setting volume to 0.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NotificationMp3SoundChannel.turn_off_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">turn_off_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.NotificationMp3SoundChannel.turn_off_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">turn_off_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Turn off both LED and sound.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.OpticalSignalChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">OpticalSignalChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.OpticalSignalChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this class represents the OPTICAL_SIGNAL_CHANNEL</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.OpticalSignalGroupChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">OpticalSignalGroupChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.OpticalSignalGroupChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this class represents the OPTICAL_SIGNAL_GROUP_CHANNEL</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ParticulateMatterSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ParticulateMatterSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ParticulateMatterSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>Representation of the PARTICULATE_MATTER_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.PassageDetectorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">PassageDetectorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.PassageDetectorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the PASSAGE_DETECTOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.PresenceDetectionChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">PresenceDetectionChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.PresenceDetectionChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the PRESENCE_DETECTION_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.RainDetectionChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">RainDetectionChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.RainDetectionChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.RotaryHandleChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">RotaryHandleChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.RotaryHandleChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContactChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ROTARY_HANDLE_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.RotaryWheelChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">RotaryWheelChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.RotaryWheelChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the ROTARY_WHEEL_CHANNEL channel.</p>
+<p>HmIP-WRCR exposes two ROTARY_WHEEL_CHANNEL instances, one per
+rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ShadingChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ShadingChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ShadingChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SHADING_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.ShadingChannel.async_set_shutter_stop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">async_set_shutter_stop</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.ShadingChannel.async_set_shutter_stop" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">async_set_shutter_stop</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>stops the current operation
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ShutterChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ShutterChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ShutterChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SHUTTER_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.ShutterChannel.async_set_shutter_level" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">async_set_shutter_level</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.ShutterChannel.async_set_shutter_level" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">async_set_shutter_level</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>sets the shutter level</p>
+<p>Args:
+    level(float): the new level of the shutter. 0.0 = open, 1.0 = closed
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.ShutterChannel.async_set_shutter_stop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">async_set_shutter_stop</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.ShutterChannel.async_set_shutter_stop" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">async_set_shutter_stop</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>stops the current shutter operation</p>
+<p>Args:
+    channelIndex(int): the channel to control
+Returns:
+    the result of the _restCall</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.ShutterContactChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">ShutterContactChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.ShutterContactChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SHUTTER_CONTACT_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.SingleKeyChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SingleKeyChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.SingleKeyChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SINGLE_KEY_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.SmokeDetectorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SmokeDetectorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.SmokeDetectorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SMOKE_DETECTOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.SoilMoistureSensorInterfaceChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SoilMoistureSensorInterfaceChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.SoilMoistureSensorInterfaceChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the SOIL_MOISTURE_SENSOR_INTERFACE_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.SoilMoistureSensorInterfaceChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.SoilMoistureSensorInterfaceChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.SwitchChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SwitchChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.SwitchChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SWITCH_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.SwitchMeasuringChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">SwitchMeasuringChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.SwitchMeasuringChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+
+
+
+        <p>this is the representative of the SWITCH_MEASURING_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.TemperatureDifferenceSensor2Channel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TemperatureDifferenceSensor2Channel</span>
+
+
+<a href="#homematicip.base.functionalChannels.TemperatureDifferenceSensor2Channel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the TEMPERATURE_SENSOR_2_EXTERNAL_DELTA_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.TemperatureSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TemperatureSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.TemperatureSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the TEMPERATURE_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.TiltVibrationSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TiltVibrationSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.TiltVibrationSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the TILT_VIBRATION_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.UniversalActuatorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UniversalActuatorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.UniversalActuatorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the UniversalActuatorChannel UNIVERSAL_ACTUATOR_CHANNEL</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.UniversalLightChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UniversalLightChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.UniversalLightChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>Represents Universal Light Channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.UniversalLightChannel.set_dim_level_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_dim_level_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.UniversalLightChannel.set_dim_level_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_dim_level_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Set the dim level of the light channel.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.UniversalLightChannel.set_dim_level_with_time_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_dim_level_with_time_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.UniversalLightChannel.set_dim_level_with_time_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_dim_level_with_time_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Set the dim level of the light channel with a specified time.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.UniversalLightChannel.start_light_scene_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">start_light_scene_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.UniversalLightChannel.start_light_scene_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">start_light_scene_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Start a light scene.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.UniversalLightChannelGroup" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UniversalLightChannelGroup</span>
+
+
+<a href="#homematicip.base.functionalChannels.UniversalLightChannelGroup" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;UniversalLightChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.UniversalLightChannel">UniversalLightChannel</a></code></p>
+
+
+
+        <p>Universal-Light-Channel-Group.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WallMountedThermostatProChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WallMountedThermostatProChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WallMountedThermostatProChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WallMountedThermostatWithCarbonChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WallMountedThermostatWithCarbonChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WallMountedThermostatWithCarbonChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WallMountedThermostatProChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.WallMountedThermostatProChannel">WallMountedThermostatProChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WALL_MOUNTED_THERMOSTAT_WITH_CARBON_DIOXIDE_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WallMountedThermostatWithoutDisplayChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WallMountedThermostatWithoutDisplayChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WallMountedThermostatWithoutDisplayChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ClimateSensorChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.ClimateSensorChannel">ClimateSensorChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WaterSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WaterSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WaterSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WATER_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WateringActuatorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WateringActuatorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WATERING_ACTUATOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.WateringActuatorChannel.reset_water_volume_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">reset_water_volume_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel.reset_water_volume_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">reset_water_volume_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Resets the water volume counter of the specified device.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_watering_switch_state_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_watering_switch_state_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Sets the watering switch state of the specified device.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_with_time_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_watering_switch_state_with_time_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_with_time_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_watering_switch_state_with_time_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Sets the watering switch state of the specified device with a specified time.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+<h4 id="homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_with_time_async(on)" class="doc doc-heading doc-heading-parameter">                  <code>on</code>
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_with_time_async(on)" class="headerlink" title="Permanent link">&para;</a></h4>            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>True to turn on, False to turn off.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+<h4 id="homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_with_time_async(seconds)" class="doc doc-heading doc-heading-parameter">                  <code>seconds</code>
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel.set_watering_switch_state_with_time_async(seconds)" class="headerlink" title="Permanent link">&para;</a></h4>            </td>
+            <td>
+                  <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The watering time in seconds.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.WateringActuatorChannel.toggle_watering_state_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">toggle_watering_state_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.WateringActuatorChannel.toggle_watering_state_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">toggle_watering_state_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Toggles the watering state of the specified device.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WeatherSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WeatherSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WeatherSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WEATHER_SENSOR_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WeatherSensorPlusChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WeatherSensorPlusChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WeatherSensorPlusChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WeatherSensorChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.WeatherSensorChannel">WeatherSensorChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WEATHER_SENSOR_PLUS_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.base.functionalChannels.WeatherSensorProChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WeatherSensorProChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WeatherSensorProChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WeatherSensorPlusChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.WeatherSensorPlusChannel">WeatherSensorPlusChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WEATHER_SENSOR_PRO_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"search":"../../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.49251538.min.js"></script>
+      
+    
+  </body>
+</html>
