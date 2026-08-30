@@ -1,3 +1,2 @@
 zensical
 mkdocstrings[python]>=0.18
-mkdocs-api-autonav>=0.3.0
