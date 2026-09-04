@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.16.0..master)
 
+### Added
+
+- Add support for the ELV-SH-DUSI: `DeviceType.ULTRASONIC_DISTANCE_SENSOR` with an `UltrasonicDistanceSensor` class, and `FunctionalChannelType.DISTANCE_SENSOR_CHANNEL` with a `DistanceSensorChannel` class ([#701](https://github.com/hahn-th/homematicip-rest-api/issues/701)).
+
 ## [2.16.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..2.16.0)
 
 ### Added

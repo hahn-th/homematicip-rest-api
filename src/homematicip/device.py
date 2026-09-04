@@ -2749,6 +2749,30 @@ class TemperatureTiltVibrationSensor(TiltVibrationSensor):
             self.set_attr_from_dict("actualTemperature", c)
 
 
+class UltrasonicDistanceSensor(Device):
+    """ELV-SH-DUSI (Ultrasonic distance sensor interface)"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        #:float:
+        self.distance = None
+        #:float:
+        self.calculatedHeight = None
+        #:bool:
+        self.heightActivated = False
+        #:float:
+        self.referenceHeight = None
+
+    def from_json(self, js):
+        super().from_json(js)
+        c = get_functional_channel("DISTANCE_SENSOR_CHANNEL", js)
+        if c:
+            self.set_attr_from_dict("distance", c)
+            self.set_attr_from_dict("calculatedHeight", c)
+            self.set_attr_from_dict("heightActivated", c)
+            self.set_attr_from_dict("referenceHeight", c)
+
+
 class RainSensor(Device):
     """HMIP-SRD (Rain Sensor)"""
 
