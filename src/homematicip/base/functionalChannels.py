@@ -603,6 +603,34 @@ class DimmerChannel(FunctionalChannel):
         )
 
 
+class DistanceSensorChannel(FunctionalChannel):
+    """this is the representative of the DISTANCE_SENSOR_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        #:float:
+        self.distance = None
+        #:float:
+        self.calculatedHeight = None
+        #:bool:
+        self.heightActivated = False
+        #:float:
+        self.referenceHeight = None
+        #:int:
+        self.measuringInterval = None
+        #:str: kept as the raw string, the full value set is unknown
+        self.distanceSensorVoltage = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.set_attr_from_dict("distance", js)
+        self.set_attr_from_dict("calculatedHeight", js)
+        self.set_attr_from_dict("heightActivated", js)
+        self.set_attr_from_dict("referenceHeight", js)
+        self.set_attr_from_dict("measuringInterval", js)
+        self.set_attr_from_dict("distanceSensorVoltage", js)
+
+
 class DoorChannel(FunctionalChannel):
     """this is the representative of the DoorChannel channel"""
 
