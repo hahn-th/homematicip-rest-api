@@ -132,6 +132,30 @@ class AsyncHome(HomeMaticIPObject):
 
         self._connection.update_connection_context(self._connection_context)
 
+    def __str__(self):
+        security = next(
+            (fh for fh in self.functionalHomes if isinstance(fh, SecurityAndAlarmHome)),
+            None,
+        )
+        result = (
+            f"HOME {self.id} connected({self.connected}) dutyCycle({self.dutyCycle})"
+            f" carrierSense({self.carrierSense}) updateState({self.updateState})"
+            f" currentAPVersion({self.currentAPVersion})"
+            f" availableAPVersion({self.availableAPVersion})"
+            f" pinAssigned({self.pinAssigned}) timeZoneId({self.timeZoneId})"
+        )
+        if security:
+            result += (
+                f" securityZoneActivationMode({security.securityZoneActivationMode})"
+                f" alarmActive({security.alarmActive})"
+                f" activationInProgress({security.activationInProgress})"
+                f" intrusionAlertThroughSmokeDetectors("
+                f"{security.intrusionAlertThroughSmokeDetectors})"
+            )
+        if self.weather:
+            result += f" weather({self.weather})"
+        return result
+
     def _clear_configuration(self):
         """Clears all objects from the home"""
         self.devices = []

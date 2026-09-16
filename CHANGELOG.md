@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for the ELV-SH-DUSI: `DeviceType.ULTRASONIC_DISTANCE_SENSOR` with an `UltrasonicDistanceSensor` class, and `FunctionalChannelType.DISTANCE_SENSOR_CHANNEL` with a `DistanceSensorChannel` class ([#701](https://github.com/hahn-th/homematicip-rest-api/issues/701)).
 - Add support for the HmIP-WGS: `DeviceType.WALL_MOUNTED_GLASS_SWITCH`, mapped to a `WallMountedGlassSwitch` class ([#182365](https://github.com/home-assistant/core/issues/182365)).
+- Add `__str__` to `AsyncHome`, covering access point state, the security and alarm state and the weather. `hmip_cli --listen-events` printed a raw object repr for `HOME_CHANGED` before ([#703](https://github.com/hahn-th/homematicip-rest-api/issues/703)).
 
 ## [2.16.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.15.0..2.16.0)
 
