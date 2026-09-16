@@ -108,6 +108,21 @@ def test_home_base(fake_home: Home):
     assert fake_home._rawJSONData == fake_home_download_configuration()["home"]
 
 
+def test_home_str(fake_home: Home):
+    assert str(fake_home) == (
+        "HOME 00000000-0000-0000-0000-000000000001 connected(True) dutyCycle(8.0)"
+        " carrierSense(None) updateState(UP_TO_DATE) currentAPVersion(1.2.4)"
+        " availableAPVersion(None) pinAssigned(False) timeZoneId(Europe/Vienna)"
+        " securityZoneActivationMode(ACTIVATION_WITH_DEVICE_IGNORELIST)"
+        " alarmActive(False) activationInProgress(False)"
+        " intrusionAlertThroughSmokeDetectors(False)"
+        " weather(temperature(16.6) weatherCondition(LIGHT_CLOUDY)"
+        " weatherDayTime(NIGHT) minTemperature(16.6) maxTemperature(16.6)"
+        " humidity(54) vaporAmount(5.465858858389302) windSpeed(8.568)"
+        " windDirection(294))"
+    )
+
+
 def test_home_location(fake_home: Home):
     assert fake_home.location.city == "1010  Wien, Österreich"
     assert fake_home.location.latitude == "48.208088"
