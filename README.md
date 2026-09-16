@@ -378,6 +378,7 @@ Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. 
 - [x] HMIP-SWSD-2 (Smoke Detector with Siren)
 - [x] HMIP-USBSM (USB Switching Measurement Actuator)
 - [x] HMIP-WGC (Garage Door Button)
+- [x] HmIP-WGS (Wall Mounted Glass Switch)
 - [x] HMIP-WGT (Wall Thermostat with Glass Display)
 - [x] HMIP-WGTC (Wall Mounted Glass Thermostat with Carbon Dioxide Sensor)
 - [x] HMIP-WHS2 (Switch Actuator for heating systems – 2x channels)

@@ -3068,6 +3068,10 @@ class FullFlushWiegandInterface(Device):
             self.set_attr_from_dict("blockedWrongCodeTemporarily", c)
 
 
+class WallMountedGlassSwitch(Device):
+    """HmIP-WGS (Wall Mounted Glass Switch)"""
+
+
 class WallMountedKeyPad(Device):
     pass
 

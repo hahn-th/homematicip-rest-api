@@ -117,6 +117,7 @@ TYPE_CLASS_MAP = {
     DeviceType.USB_SWITCH_MEASURING: SwitchMeasuring,
     DeviceType.WALL_MOUNTED_KEY_PAD: WallMountedKeyPad,
     DeviceType.WALL_MOUNTED_REMOTE_CONTROL_ROTARY_BUTTON: WallMountedRemoteControlRotaryButton,
+    DeviceType.WALL_MOUNTED_GLASS_SWITCH: WallMountedGlassSwitch,
     DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT: WallMountedThermostatPro,
     DeviceType.WALL_MOUNTED_GLASS_THERMOSTAT_CARBON: WallMountedThermostatWithCarbon,
     DeviceType.WALL_MOUNTED_GARAGE_DOOR_CONTROLLER: WallMountedGarageDoorController,
