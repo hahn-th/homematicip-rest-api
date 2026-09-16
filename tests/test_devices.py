@@ -2554,6 +2554,23 @@ def test_motion_detector_switch_outdoor(fake_home: Home):
         assert sabotage_channel.sabotage is False
 
 
+def test_wall_mounted_glass_switch(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000WGS")
+        assert isinstance(d, WallMountedGlassSwitch)
+        assert d.modelType == "HmIP-WGS"
+
+        key_channels = [
+            c
+            for c in d.functionalChannels
+            if c.functionalChannelType == "SINGLE_KEY_CHANNEL"
+        ]
+        assert [c.index for c in key_channels] == [4, 5, 6, 7]
+
+        assert d.functionalChannels[2].dimLevel == 0.75
+        assert d.functionalChannels[3].on is False
+
+
 def test_wall_mounted_keypad(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000WKP")
