@@ -277,6 +277,7 @@ class DeviceType(AutoNameEnum):
     RAIN_SENSOR = auto()
     REMOTE_CONTROL_8 = auto()
     REMOTE_CONTROL_8_MODULE = auto()
+    REMOTE_CONTROL_COMPACT = auto()
     RGBW_DIMMER = auto()
     LIGHT_STRIP_DIMMER = auto()
     ROOM_CONTROL_DEVICE = auto()

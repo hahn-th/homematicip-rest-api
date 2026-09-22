@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.17.0..master)
 
+### Added
+
+- Add support for the ELV-SH-CRC: `DeviceType.REMOTE_CONTROL_COMPACT`, mapped to a `RemoteControlCompact` class ([#707](https://github.com/hahn-th/homematicip-rest-api/issues/707)).
+
 ### Fixed
 
 - `Auth.request_auth_token` and `Auth.confirm_auth_token` raise `HmipConnectionError` when the cloud rejects the request. They read the response field without checking the result before, so a rejected token step failed with a `TypeError`.

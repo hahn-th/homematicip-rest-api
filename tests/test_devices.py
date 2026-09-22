@@ -1771,6 +1771,19 @@ def test_remote_control_8(fake_home: Home):
     assert d.label == "Fernbedienung - 8 Tasten"
 
 
+def test_remote_control_compact(fake_home: Home):
+    d = fake_home.search_device_by_id("3014F7110000000000000CRC")
+    assert isinstance(d, RemoteControlCompact)
+    assert d.modelType == "ELV-SH-CRC"
+    assert d.modelId == 593
+    assert d.permanentlyReachable is False
+
+    key = d.functionalChannels[1]
+    assert isinstance(key, SingleKeyChannel)
+    assert key.channelRole == "KEY_OR_SWITCH_FOR_GROUP"
+    assert key.doublePressTime == 0.0
+
+
 def test_door_bell_button(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000DBB")
     assert isinstance(d, DoorBellButton)

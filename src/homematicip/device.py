@@ -1184,6 +1184,10 @@ class RemoteControl8Module(RemoteControl8):
     """HMIP-MOD-RC8 (Open Collector Module Sender - 8x)"""
 
 
+class RemoteControlCompact(PushButton):
+    """ELV-SH-CRC (Compact Remote Control - 1 button)"""
+
+
 class RgbwDimmer(Device):
     """HmIP-RGBW"""
 
