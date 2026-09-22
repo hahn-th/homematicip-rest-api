@@ -595,6 +595,38 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
+    async def post_hmip_device_control_setVentilationLevel(
+        self, request: web.Request
+    ) -> web.Response:
+
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = str(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["ventilationLevel"] = js["ventilationLevel"]
+
+        except:
+            response = self.errorCode("INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
+    async def post_hmip_device_control_setVentilationState(
+        self, request: web.Request
+    ) -> web.Response:
+
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            channelIndex = str(js["channelIndex"])
+            d["functionalChannels"][channelIndex]["ventilationState"] = js["ventilationState"]
+
+        except:
+            response = self.errorCode("INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
     async def post_hmip_device_control_setOpticalSignal(
         self, request: web.Request
     ) -> web.Response:

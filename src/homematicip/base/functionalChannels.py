@@ -2114,6 +2114,22 @@ class UniversalActuatorChannel(FunctionalChannel):
         self.ventilationLevel = js["ventilationLevel"]
         self.ventilationState = js["ventilationState"]
 
+    def set_ventilation_level(self, ventilationLevel=0.0):
+        return self._run_non_async(self.async_set_ventilation_level, ventilationLevel)
+
+    async def async_set_ventilation_level(self, ventilationLevel=0.0):
+        return await functional_channel_commands.set_ventilation_level_async(
+            self._connection, self.device.id, self.index, ventilationLevel
+        )
+
+    def set_ventilation_state(self, ventilationState="VENTILATION"):
+        return self._run_non_async(self.async_set_ventilation_state, ventilationState)
+
+    async def async_set_ventilation_state(self, ventilationState="VENTILATION"):
+        return await functional_channel_commands.set_ventilation_state_async(
+            self._connection, self.device.id, self.index, ventilationState
+        )
+
     def __str__(self):
         return f"{super().__str__()} channelRole({self.channelRole}) dimLevel({self.dimLevel}) ventilationLevel({self.ventilationLevel}) ventilationState({self.ventilationState}) on({self.on}) profileMode({self.profileMode}) relayMode({self.relayMode})"
 

@@ -2584,6 +2584,25 @@ def test_wall_mounted_glass_switch(fake_home: Home):
         assert d.functionalChannels[3].on is False
 
 
+def test_wall_mounted_universal_actuator(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000WUA")
+        assert isinstance(d, WallMountedUniversalActuator)
+        assert d.modelType == "HmIP-WUA"
+        assert d.modelId == 442
+        assert d.permanentlyReachable is True
+
+        actuator = d.functionalChannels[1]
+        assert isinstance(actuator, UniversalActuatorChannel)
+        assert actuator.channelRole == "VENTILATION_ACTUATOR"
+        assert actuator.on is True
+        assert actuator.dimLevel == 0.01
+        assert actuator.ventilationLevel == 0.01
+        assert actuator.ventilationState == "VENTILATION"
+        assert actuator.relayMode == "RELAY_OFFDELAY_0S"
+        assert actuator.profileMode == "AUTOMATIC"
+
+
 def test_wall_mounted_keypad(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000000000WKP")

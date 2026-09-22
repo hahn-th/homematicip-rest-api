@@ -573,6 +573,46 @@ async def set_switch_state_async(rest_connection: RestConnection, device_id: str
     return await rest_connection.async_post("device/control/setSwitchState", data)
 
 
+async def set_ventilation_level_async(rest_connection: RestConnection, device_id: str, channel_index: int,
+                                     ventilation_level: float):
+    """
+    Set the ventilation level for a functional channel.
+
+    :param rest_connection: The REST connection instance.
+    :type rest_connection: RestConnection
+    :param device_id: The device ID.
+    :type device_id: str
+    :param channel_index: The channel index.
+    :type channel_index: int
+    :param ventilation_level: The desired ventilation level, 0.0 to 1.0.
+    :type ventilation_level: float
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {"channelIndex": channel_index, "deviceId": device_id, "ventilationLevel": ventilation_level}
+    return await rest_connection.async_post("device/control/setVentilationLevel", data)
+
+
+async def set_ventilation_state_async(rest_connection: RestConnection, device_id: str, channel_index: int,
+                                      ventilation_state: str):
+    """
+    Set the ventilation state for a functional channel.
+
+    :param rest_connection: The REST connection instance.
+    :type rest_connection: RestConnection
+    :param device_id: The device ID.
+    :type device_id: str
+    :param channel_index: The channel index.
+    :type channel_index: int
+    :param ventilation_state: The desired ventilation state, VENTILATION or NO_VENTILATION.
+    :type ventilation_state: str
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {"channelIndex": channel_index, "deviceId": device_id, "ventilationState": ventilation_state}
+    return await rest_connection.async_post("device/control/setVentilationState", data)
+
+
 async def set_shutter_stop_async(rest_connection: RestConnection, device_id: str, channel_index: int):
     """
     Stop the shutter for a functional channel.
