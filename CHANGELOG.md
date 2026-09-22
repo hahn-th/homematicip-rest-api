@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.17.0..master)
 
+### Fixed
+
+- `Auth.request_auth_token` and `Auth.confirm_auth_token` raise `HmipConnectionError` when the cloud rejects the request. They read the response field without checking the result before, so a rejected token step failed with a `TypeError`.
+
 ## [2.17.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.16.0..2.17.0)
 
 ### Added

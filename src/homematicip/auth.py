@@ -4,8 +4,30 @@ import uuid
 from dataclasses import dataclass
 
 from homematicip.connection.rest_connection import RestConnection, RestResult
+from homematicip.exceptions.connection_exceptions import HmipConnectionError
 
 LOGGER = logging.getLogger(__name__)
+
+
+def _read_field(result: RestResult, field: str, action: str) -> str:
+    """Read a field from an auth response, or raise.
+    @param result: The result of the auth request
+    @param field: The name of the field to read
+    @param action: What was attempted, for the error message
+    @return: The value of the field
+    @raises HmipConnectionError: If the request failed or carried no such field
+    """
+    # async_post reports a failed call as a RestResult instead of raising, so an
+    # unchecked read turns a rejected token step into a TypeError on json being None
+    if not result.success:
+        raise HmipConnectionError(
+            f"{action} failed with status {result.status} ({result.status_text})"
+        )
+
+    if not isinstance(result.json, dict) or field not in result.json:
+        raise HmipConnectionError(f"{action} returned no {field}")
+
+    return result.json[field]
 
 
 @dataclass
@@ -74,7 +96,7 @@ class Auth:
         result = await self.connection.async_post("auth/requestAuthToken", data, self.headers)
         LOGGER.debug("Auth token request finished with status %s", result.status)
 
-        return result.json["authToken"]
+        return _read_field(result, "authToken", "Requesting the auth token")
 
     async def confirm_auth_token(self, auth_token: str) -> str:
         """Confirm the auth token and get the client id.
@@ -86,7 +108,7 @@ class Auth:
         result = await self.connection.async_post("auth/confirmAuthToken", data, self.headers)
         LOGGER.debug("Auth token confirmation finished with status %s", result.status)
 
-        return result.json["clientId"]
+        return _read_field(result, "clientId", "Confirming the auth token")
 
 #
 # class Auth(object):
