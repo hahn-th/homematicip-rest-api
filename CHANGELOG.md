@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - `Auth.request_auth_token` and `Auth.confirm_auth_token` raise `HmipConnectionError` when the cloud rejects the request. They read the response field without checking the result before, so a rejected token step failed with a `TypeError`.
+- Map the `IFeatureDeviceDaliBusError`, `IOptionalFeatureDeviceInputLayoutMode` and `IOptionalFeatureDimmerState` device features. The first two now expose `daliBusState` and `inputLayoutMode`, and all three stop logging "Optional Device Feature ... is not yet supported".
 
 ## [2.17.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.16.0..2.17.0)
 
