@@ -223,6 +223,7 @@ Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. 
 - [x] ALPHA-IP-RBGa (Alpha IP Wall Thermostat Display analog)
 - [ ] ELV-SH-AI8 (Alarmline Interface 8x Inputs) \*powered by HmIP
 - [x] ELV-SH-BS2 (Switch Actuator for brand switches 2x channels) \*powered by HmIP
+- [x] ELV-SH-CRC (Remote Control Compact) \*powered by HmIP
 - [x] ELV-SH-CTH (Temperature and Humidity Sensor Compact) \*powered by HmIP
 - [x] ELV-SH-CTV Tilt Vibration Sensor Compact
 - [x] ELV-SH-DUSI (Ultrasonic Distance Sensor Interface) \*powered by HmIP

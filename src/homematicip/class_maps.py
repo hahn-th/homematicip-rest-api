@@ -87,6 +87,7 @@ TYPE_CLASS_MAP = {
     DeviceType.RAIN_SENSOR: RainSensor,
     DeviceType.REMOTE_CONTROL_8: RemoteControl8,
     DeviceType.REMOTE_CONTROL_8_MODULE: RemoteControl8Module,
+    DeviceType.REMOTE_CONTROL_COMPACT: RemoteControlCompact,
     DeviceType.RGBW_DIMMER: RgbwDimmer,
     DeviceType.LIGHT_STRIP_DIMMER: RgbwDimmer,
     DeviceType.ROOM_CONTROL_DEVICE: RoomControlDevice,
