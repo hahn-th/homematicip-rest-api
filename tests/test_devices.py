@@ -2582,6 +2582,15 @@ def test_wall_mounted_glass_switch(fake_home: Home):
 
         assert d.functionalChannels[2].dimLevel == 0.75
         assert d.functionalChannels[3].on is False
+        assert d.inputLayoutMode == "FOUR_BUTTONS"
+
+
+def test_dali_gateway(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F711000000000000DALI")
+        assert isinstance(d, DaliGateway)
+        assert d.modelType == "HmIP-DRG-DALI"
+        assert d.daliBusState == "BUS_OK"
 
 
 def test_wall_mounted_universal_actuator(fake_home: Home):
