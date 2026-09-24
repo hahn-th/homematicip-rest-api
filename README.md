@@ -368,7 +368,7 @@ Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. 
 - [ ] HMIP-SWDM-2 (Door / Window Contact - magnetic) New Version
 - [x] HMIP-SWDM-B2 (Door / Window Contact - magnetic) _Silvercrest Edition_
 - [x] HMIP-SWDO (Shutter Contact Optical)
-- [ ] HMIP-SWDO-2 (Shutter Contact Optical) New Version
+- [x] HMIP-SWDO-2 (Shutter Contact Optical) New Version
 - [x] HMIP-SWDO-I (Shutter Contact Optical Invisible)
 - [x] HMIP-SWDO-PL (Shutter Contact Optical Plus)
 - [ ] HMIP-SWDO-PL-2 (Shutter Contact Optical Plus) New Version
