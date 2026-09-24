@@ -161,6 +161,7 @@ TYPE_GROUP_MAP = {
     GroupType.EXTENDED_LINKED_NOTIFICATION: ExtendedLinkedNotificationGroup,
     GroupType.EXTENDED_LINKED_SHUTTER: ExtendedLinkedShutterGroup,
     GroupType.EXTENDED_LINKED_SWITCHING: ExtendedLinkedSwitchingGroup,
+    GroupType.EXTENDED_LINKED_VENTILATION: ExtendedLinkedVentilationGroup,
     GroupType.HEATING_CHANGEOVER: HeatingChangeoverGroup,
     GroupType.HEATING_COOLING_DEMAND_BOILER: HeatingCoolingDemandBoilerGroup,
     GroupType.HEATING_COOLING_DEMAND_PUMP: HeatingCoolingDemandPumpGroup,
@@ -187,6 +188,7 @@ TYPE_GROUP_MAP = {
     GroupType.SHUTTER_WIND_PROTECTION_RULE: ShutterWindProtectionRule,
     GroupType.SMOKE_ALARM_DETECTION_RULE: SmokeAlarmDetectionRule,
     GroupType.SWITCHING_PROFILE: SwitchingProfileGroup,
+    GroupType.VENTILATION_PROFILE: VentilationProfileGroup,
     GroupType.DEMAND_CONTROLLED_VENTILATION_GROUP: Group,
     GroupType.SWITCHING: SwitchingGroup,
 }

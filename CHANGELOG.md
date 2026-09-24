@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add support for the ELV-SH-CRC: `DeviceType.REMOTE_CONTROL_COMPACT`, mapped to a `RemoteControlCompact` class ([#707](https://github.com/hahn-th/homematicip-rest-api/issues/707)).
+- Add the `EXTENDED_LINKED_VENTILATION` and `VENTILATION_PROFILE` group types, mapped to `ExtendedLinkedVentilationGroup` and `VentilationProfileGroup`.
 - Add support for the HmIP-WUA: `DeviceType.WALL_MOUNTED_UNIVERSAL_ACTUATOR`, mapped to a `WallMountedUniversalActuator` class, and `FunctionalChannelType.UNIVERSAL_ACTUATOR_CHANNEL`, mapped to the existing `UniversalActuatorChannel`, which gains `set_ventilation_level` and `set_ventilation_state`.
 
 ### Fixed

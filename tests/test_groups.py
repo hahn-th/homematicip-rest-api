@@ -569,6 +569,30 @@ def test_hot_water(fake_home: Home):
         )
 
 
+def test_extended_linked_ventilation_group(fake_home: Home):
+    g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000VG")
+    assert isinstance(g, ExtendedLinkedVentilationGroup)
+    assert [d.id for d in g.devices] == ["3014F7110000000000000WUA"]
+    assert g.label == "Lueftung Bad"
+    assert g.dimStep == 0.05
+    assert g.dutyCycle is False
+    assert g.ventilationLevel == 0.01
+    assert g.ventilationState == "VENTILATION"
+    assert g.ventilationTime == 111600.0
+    assert g.ventilationVentilationLevel == 0.8
+
+
+def test_ventilation_profile_group(fake_home: Home):
+    g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000VP")
+    assert isinstance(g, VentilationProfileGroup)
+    assert [d.id for d in g.devices] == ["3014F7110000000000000WUA"]
+    assert g.label == "Lueftung Profil"
+    assert g.profileId == "00000000-0000-0000-0000-0000000000PF"
+    assert g.profileMode == ProfileMode.AUTOMATIC
+    assert g.ventilationLevel == 0.01
+    assert g.ventilationState == "VENTILATION"
+
+
 def test_indoor_climate_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000IC")
