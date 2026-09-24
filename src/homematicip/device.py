@@ -3080,5 +3080,9 @@ class WallMountedKeyPad(Device):
     pass
 
 
+class WallMountedUniversalActuator(Device):
+    """HmIP-WUA (Wall Mounted Universal Actuator)"""
+
+
 class WateringActuator(Device):
     pass

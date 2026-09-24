@@ -398,7 +398,7 @@ Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. 
 - [x] HMIP-WTH-2 (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-B (Wall Mounted Thermostat basic without adjusting wheel)
 - [ ] HMIP-WTH-B-2 (Wall Mounted Thermostat basic without adjusting wheel) New Version
-- [ ] HMIP-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V)
+- [x] HMIP-WUA (Dimming Actuator, 0-10/1-10-V-Control inputs, 8A 230V)
 - [ ] HMIPW-BRC2 (Homematic IP Wired Remote Control for brand switches – 2x channels)
 - [x] HMIPW-DRAP (Homematic IP Wired Access Point)
 - [x] HMIPW-DRBL4 (Homematic IP Wired Blinds Actuator – 4x channels)

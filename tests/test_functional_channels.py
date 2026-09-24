@@ -534,6 +534,25 @@ async def test_universal_light_channel(fake_home: Home):
 
 
 
+def test_universal_actuator_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110000000000000WUA", 1)
+        assert isinstance(ch, UniversalActuatorChannel)
+        assert ch.channelRole == "VENTILATION_ACTUATOR"
+        assert ch.ventilationLevel == 0.01
+        assert ch.ventilationState == "VENTILATION"
+
+        ch.set_ventilation_level(0.5)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000WUA", 1)
+        assert ch.ventilationLevel == 0.5
+
+        ch.set_ventilation_state("NO_VENTILATION")
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F7110000000000000WUA", 1)
+        assert ch.ventilationState == "NO_VENTILATION"
+
+
 def test_universal_light_group_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F711000000000000DALI", 5)
