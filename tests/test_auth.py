@@ -6,7 +6,8 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 
 from homematicip.auth import Auth
-from homematicip.connection.rest_connection import RestConnection
+from homematicip.connection.rest_connection import RestConnection, RestResult
+from homematicip.exceptions.connection_exceptions import HmipConnectionError
 
 
 @pytest.mark.asyncio
@@ -71,3 +72,31 @@ def test_auth_logging_does_not_log_tokens_or_pin(caplog):
     assert "CLIENTSECRET" not in caplog.text
     assert "1234" not in caplog.text
     assert "ACCESSPOINTSECRET" not in caplog.text
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "result",
+    [
+        RestResult(status=400),
+        RestResult(status=403),
+        RestResult(status=200, json={}),
+    ],
+    ids=["rejected", "forbidden", "no_field"],
+)
+@pytest.mark.parametrize(
+    "call",
+    [
+        lambda auth: auth.request_auth_token(),
+        lambda auth: auth.confirm_auth_token("TOPSECRET"),
+    ],
+    ids=["request_auth_token", "confirm_auth_token"],
+)
+async def test_auth_token_steps_raise_on_unusable_response(call, result):
+    connection = AsyncMock(spec=RestConnection)
+    connection.async_post.return_value = result
+
+    auth = Auth(connection, "CLIENTAUTHSECRET", "ACCESSPOINTSECRET")
+
+    with pytest.raises(HmipConnectionError):
+        await call(auth)
