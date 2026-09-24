@@ -325,6 +325,33 @@ class ExtendedLinkedSwitchingGroup(SwitchGroupBase):
         return await self._rest_call_async("group/switching/linked/setOnTime", body=data)
 
 
+class ExtendedLinkedVentilationGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.dimStep = None
+        self.dutyCycle = None
+        self.lowBat = None
+        self.sensorSpecificParameters = None
+        self.ventilationLevel = None
+        self.ventilationState = None
+        self.ventilationTime = None
+        self.ventilationVentilationLevel = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("dimStep", js)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("sensorSpecificParameters", js)
+        self.set_attr_from_dict("ventilationLevel", js)
+        self.set_attr_from_dict("ventilationState", js)
+        self.set_attr_from_dict("ventilationTime", js)
+        self.set_attr_from_dict("ventilationVentilationLevel", js)
+
+    def __str__(self):
+        return f"{super().__str__()} ventilationLevel({self.ventilationLevel}) ventilationState({self.ventilationState}) ventilationTime({self.ventilationTime})"
+
+
 class ExtendedLinkedNotificationGroup(SwitchGroupBase):
     def __init__(self, connection):
         super().__init__(connection)
@@ -1065,6 +1092,29 @@ class TimeProfile(HomeMaticIPObject):
             period = TimeProfilePeriod(self._connection)
             period.from_json(p)
             self.periods.append(period)
+
+
+class VentilationProfileGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.dutyCycle = None
+        self.lowBat = None
+        self.profileId = None
+        self.profileMode = None
+        self.ventilationLevel = None
+        self.ventilationState = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("profileId", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("ventilationLevel", js)
+        self.set_attr_from_dict("ventilationState", js)
+
+    def __str__(self):
+        return f"{super().__str__()} profileMode({self.profileMode}) ventilationLevel({self.ventilationLevel}) ventilationState({self.ventilationState})"
 
 
 class SwitchingProfileGroup(Group):

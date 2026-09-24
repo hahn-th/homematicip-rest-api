@@ -19712,7 +19712,10 @@
           "dimLevel": 0.01,
           "functionalChannelType": "UNIVERSAL_ACTUATOR_CHANNEL",
           "groupIndex": 1,
-          "groups": [],
+          "groups": [
+            "00000000-0000-0000-0000-0000000000VG",
+            "00000000-0000-0000-0000-0000000000VP"
+          ],
           "index": 1,
           "label": "",
           "on": true,
@@ -21393,6 +21396,52 @@
       "ventilationLevel": 0.5,
       "ventilationState": null,
       "windowState": "CLOSED"
+    },
+    "00000000-0000-0000-0000-0000000000VG": {
+      "channels": [
+        {
+          "channelIndex": 1,
+          "deviceId": "3014F7110000000000000WUA"
+        }
+      ],
+      "dimStep": 0.05,
+      "dutyCycle": false,
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-0000000000VG",
+      "label": "Lueftung Bad",
+      "lastStatusUpdate": 1790082161197,
+      "lowBat": null,
+      "metaGroupId": null,
+      "processing": null,
+      "sensorSpecificParameters": {},
+      "type": "EXTENDED_LINKED_VENTILATION",
+      "unreach": false,
+      "ventilationLevel": 0.01,
+      "ventilationState": "VENTILATION",
+      "ventilationTime": 111600.0,
+      "ventilationVentilationLevel": 0.8
+    },
+    "00000000-0000-0000-0000-0000000000VP": {
+      "channels": [
+        {
+          "channelIndex": 1,
+          "deviceId": "3014F7110000000000000WUA"
+        }
+      ],
+      "dutyCycle": false,
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-0000000000VP",
+      "label": "Lueftung Profil",
+      "lastStatusUpdate": 1790082161197,
+      "lowBat": null,
+      "metaGroupId": null,
+      "processing": null,
+      "profileId": "00000000-0000-0000-0000-0000000000PF",
+      "profileMode": "AUTOMATIC",
+      "type": "VENTILATION_PROFILE",
+      "unreach": false,
+      "ventilationLevel": 0.01,
+      "ventilationState": "VENTILATION"
     }
   },
   "home": {
