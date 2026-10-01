@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.18.0..master)
 
+### Added
+
+- Add `FunctionalChannel.remove_on_channel_event_handler`, the counterpart to `add_on_channel_event_handler`.
+
 ## [2.18.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.17.0..2.18.0)
 
 ### Added
