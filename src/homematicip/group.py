@@ -693,7 +693,8 @@ class HeatingCoolingProfile(HomeMaticIPObject):
             "profileIndex": self.index,
             "profileName": self.name,
         }
-        js = await self._rest_call_async("group/heating/getProfile", body=data)
+        result = await self._rest_call_async("group/heating/getProfile", body=data)
+        js = result.json
         self.homeId = js["homeId"]
         self.type = js["type"]
         self.profileDays = {}

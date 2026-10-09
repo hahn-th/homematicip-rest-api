@@ -631,3 +631,36 @@ def test_update_profile_returns_result_from_async():
         result = profile.update_profile()
     assert result is sentinel
     m.assert_called_once()
+
+
+def test_heating_profile_get_details():
+    from unittest.mock import AsyncMock, patch
+
+    from homematicip.connection.rest_connection import RestResult
+    from homematicip.group import HeatingCoolingProfile
+
+    # Recorded from the cloud, IDs replaced
+    day = {"periods": [{"starttime": "06:00", "endtime": "22:00", "value": 22.0}], "baseValue": 20.0}
+    response = {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "groupId": "00000000-0000-0000-0000-000000000002",
+        "homeId": "00000000-0000-0000-0000-000000000003",
+        "type": "HEATING_COOLING",
+        "profileDays": dict.fromkeys(
+            ("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"), day
+        ),
+    }
+    profile = HeatingCoolingProfile(connection=None)
+    profile.groupId = response["groupId"]
+    profile.index = "PROFILE_1"
+    profile.name = ""
+    with patch.object(
+        profile, "_rest_call_async", AsyncMock(return_value=RestResult(status=200, json=response))
+    ):
+        profile.get_details()
+
+    assert profile.homeId == response["homeId"]
+    assert profile.type == "HEATING_COOLING"
+    assert profile.profileDays[0].baseValue == 20.0
+    assert profile.profileDays[6].periods[0].starttime == "06:00"
+    assert profile.profileDays[6].periods[0].value == 22.0
