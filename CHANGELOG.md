@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.18.0..master)
 
+### Fixed
+
+- `HeatingCoolingProfile.get_details` read the schedule from the request result instead of its JSON and failed with a `TypeError`.
+
 ## [2.18.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.17.0..2.18.0)
 
 ### Added
