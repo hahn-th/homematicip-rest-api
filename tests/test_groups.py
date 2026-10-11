@@ -593,6 +593,23 @@ def test_ventilation_profile_group(fake_home: Home):
     assert g.ventilationState == "VENTILATION"
 
 
+def test_water_alarm_group(fake_home: Home):
+    g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000WA")
+    assert isinstance(g, WaterAlarmGroup)
+    assert [d.id for d in g.devices] == [
+        "3014F7110000000000000WSS",
+        "3014F7110000000000000050",
+    ]
+    assert g.dutyCycle is False
+    assert g.lowBat is False
+    assert g.moistureDetected is False
+    assert g.waterlevelDetected is False
+    assert g.sensorSpecificParameters["3014F7110000000000000050:1"] == {
+        "type": "WATER_DETECTION_TYPE",
+        "waterDetectionType": "WATER_MOISTURE_DETECTION",
+    }
+
+
 def test_indoor_climate_group(fake_home: Home):
     with no_ssl_verification():
         g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000IC")

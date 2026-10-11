@@ -21533,6 +21533,35 @@
       "unreach": false,
       "ventilationLevel": 0.01,
       "ventilationState": "VENTILATION"
+    },
+    "00000000-0000-0000-0000-0000000000WA": {
+      "channels": [
+        {
+          "channelIndex": 1,
+          "deviceId": "3014F7110000000000000WSS"
+        },
+        {
+          "channelIndex": 1,
+          "deviceId": "3014F7110000000000000050"
+        }
+      ],
+      "dutyCycle": false,
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-0000000000WA",
+      "label": "",
+      "lastStatusUpdate": 1791748002722,
+      "lowBat": false,
+      "metaGroupId": null,
+      "moistureDetected": false,
+      "sensorSpecificParameters": {
+        "3014F7110000000000000050:1": {
+          "type": "WATER_DETECTION_TYPE",
+          "waterDetectionType": "WATER_MOISTURE_DETECTION"
+        }
+      },
+      "type": "WATER_ALARM",
+      "unreach": false,
+      "waterlevelDetected": false
     }
   },
   "home": {

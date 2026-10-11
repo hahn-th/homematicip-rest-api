@@ -389,6 +389,7 @@ class GroupType(AutoNameEnum):
     SWITCHING_PROFILE = auto()
     VENTILATION_PROFILE = auto()
     DEMAND_CONTROLLED_VENTILATION_GROUP = auto()
+    WATER_ALARM = auto()
 
 
 class SecurityEventType(AutoNameEnum):
