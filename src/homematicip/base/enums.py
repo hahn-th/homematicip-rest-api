@@ -167,6 +167,12 @@ class WeatherDayTime(AutoNameEnum):
     NIGHT = auto()
 
 
+class DimmingMode(AutoNameEnum):
+    OFF = auto()
+    REGULAR_DIMMING = auto()
+    LED_DIMMING = auto()
+
+
 class ClimateControlMode(AutoNameEnum):
     AUTOMATIC = auto()
     MANUAL = auto()

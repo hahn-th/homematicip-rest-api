@@ -600,12 +600,22 @@ class DimmerChannel(FunctionalChannel):
         self.dimLevel = 0
         self.profileMode = None
         self.userDesiredProfileMode = None
+        self.on: bool | None = None
+        self.dimmingMode: DimmingMode | None = None
+        self.rampTime: float | None = None
+        self.dimLevelHighest: float | None = None
+        self.dimLevelLowest: float | None = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
         self.dimLevel = js["dimLevel"]
         self.profileMode = js["profileMode"]
         self.userDesiredProfileMode = js["userDesiredProfileMode"]
+        self.set_attr_from_dict("on", js)
+        self.set_attr_from_dict("dimmingMode", js, DimmingMode)
+        self.set_attr_from_dict("rampTime", js)
+        self.set_attr_from_dict("dimLevelHighest", js)
+        self.set_attr_from_dict("dimLevelLowest", js)
 
     def set_dim_level(self, dimLevel=0.0):
         return self._run_non_async(self.async_set_dim_level, dimLevel)

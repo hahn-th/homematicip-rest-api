@@ -158,6 +158,11 @@ def test_dimmer_channel(fake_home: Home):
         ch = fake_home.search_channel("3014F711AAAA000000000005", 1)
         assert isinstance(ch, DimmerChannel)
         assert ch.dimLevel == 0.0
+        assert ch.on is False
+        assert ch.dimmingMode == DimmingMode.REGULAR_DIMMING
+        assert ch.rampTime == 0.0
+        assert ch.dimLevelHighest == 0.995
+        assert ch.dimLevelLowest == 0.05
 
         ch.set_dim_level(0.8)
         fake_home.get_current_state()
@@ -169,6 +174,8 @@ def test_backlight_channel(fake_home: Home):
     ch = fake_home.search_channel("3014F71100000000000000WGT", 2)
     assert isinstance(ch, DimmerChannel)
     assert ch.dimLevel == 1.0
+    assert ch.on is True
+    assert ch.dimmingMode is None
     assert ch.profileMode == "AUTOMATIC"
     assert ch.userDesiredProfileMode == "AUTOMATIC"
 

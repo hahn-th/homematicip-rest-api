@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `InternalSwitchChannel` reads `valvePosition` and `climateControlType`.
 - `Home.set_cooling_enabled` turns the cooling function of the home on or off (`home/heating/setCoolingEnabled`).
 - `DeviceBaseChannel.set_identify` lets a device identify itself (`device/control/setIdentify`), and `identifySupported` tells whether the device has the `IFeatureDeviceIdentify` feature.
+- `DimmerChannel` reads `on`, `dimmingMode`, `rampTime`, `dimLevelHighest` and `dimLevelLowest`, with a new `DimmingMode` enum.
 
 ### Fixed
 
