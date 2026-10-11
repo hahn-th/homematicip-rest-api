@@ -94,6 +94,7 @@ class DeviceBaseChannel(FunctionalChannel):
         self.deviceOverloaded = None
         self.deviceUndervoltage = None
         self.temperatureOutOfRange = None
+        self.identifySupported = False
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -121,6 +122,13 @@ class DeviceBaseChannel(FunctionalChannel):
             self.temperatureOutOfRange = js.get("temperatureOutOfRange")
         if sof.get("IFeatureDeviceUndervoltage", False):
             self.deviceUndervoltage = js.get("deviceUndervoltage")
+        self.identifySupported = sof["IFeatureDeviceIdentify"]
+
+    def set_identify(self):
+        return self._run_non_async(self.async_set_identify)
+
+    async def async_set_identify(self):
+        return await functional_channel_commands.set_identify_async(self._connection, self.device.id, self.index)
 
 
 class DeviceBlockingChannel(FunctionalChannel):

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for the HmIP-WSS and HmIP-WSS-GB: `DeviceType.WATER_SUPPLY_STOP`, mapped to a `WaterSupplyStop` class, and `FunctionalChannelType.WATER_SUPPLY_STOP_CHANNEL`, mapped to a `WaterSupplyStopChannel` with `set_water_supply_state_async` and the new `WaterSupplyState` enum ([#716](https://github.com/hahn-th/homematicip-rest-api/issues/716)).
 - `InternalSwitchChannel` reads `valvePosition` and `climateControlType`.
 - `Home.set_cooling_enabled` turns the cooling function of the home on or off (`home/heating/setCoolingEnabled`).
+- `DeviceBaseChannel.set_identify` lets a device identify itself (`device/control/setIdentify`), and `identifySupported` tells whether the device has the `IFeatureDeviceIdentify` feature.
 
 ### Fixed
 

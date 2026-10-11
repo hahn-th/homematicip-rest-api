@@ -569,6 +569,20 @@ class AsyncFakeCloudServer:
         return response
 
     @validate_authorization
+    async def post_hmip_device_control_setIdentify(
+        self, request: web.Request
+    ) -> web.Response:
+
+        response = web.json_response(None)
+        js = json.loads(request.data)
+        try:
+            d = self.data["devices"][js["deviceId"]]
+            d["functionalChannels"][str(js["channelIndex"])]
+        except:
+            response = self.errorCode("INVALID_DEVICE", 404)
+        return response
+
+    @validate_authorization
     async def post_hmip_device_control_setSwitchState(
         self, request: web.Request
     ) -> web.Response:
