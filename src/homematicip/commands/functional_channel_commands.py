@@ -21,6 +21,26 @@ async def reset_energy_counter_async(rest_connection: RestConnection, device_id:
     return await rest_connection.async_post("device/control/resetEnergyCounter", data)
 
 
+async def set_identify_async(rest_connection: RestConnection, device_id: str, channel_index: int):
+    """
+    Let the device identify itself, e.g. by blinking. Only works on devices with IFeatureDeviceIdentify.
+
+    :param rest_connection: The REST connection instance.
+    :type rest_connection: RestConnection
+    :param device_id: The device ID.
+    :type device_id: str
+    :param channel_index: The channel index.
+    :type channel_index: int
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {
+        "channelIndex": channel_index,
+        "deviceId": device_id
+    }
+    return await rest_connection.async_post("device/control/setIdentify", data)
+
+
 async def reset_passage_counter_async(rest_connection: RestConnection, device_id: str, channel_index: int):
     data = {
         "channelIndex": channel_index,

@@ -118,6 +118,16 @@ def test_device_base_floor_heating_channel(fake_home: Home):
         assert ch.minimumFloorHeatingValvePosition == 0.2
 
 
+def test_device_base_channel_identify(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F7110DIN_RAIL_SWITCH", 0)
+        assert ch.identifySupported is True
+        assert ch.set_identify().success
+
+        ch = fake_home.search_channel("3014F7110000RAIN_SENSOR", 0)
+        assert ch.identifySupported is False
+
+
 def test_device_operation_lock_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000015", 0)
