@@ -8013,6 +8013,9 @@
         "1": {
           "deviceId": "3014F711AAAA000000000005",
           "dimLevel": 0.0,
+          "dimLevelHighest": 0.995,
+          "dimLevelLowest": 0.05,
+          "dimmingMode": "REGULAR_DIMMING",
           "functionalChannelType": "DIMMER_CHANNEL",
           "groupIndex": 1,
           "groups": [
@@ -8020,7 +8023,9 @@
           ],
           "index": 1,
           "label": "",
+          "on": false,
           "profileMode": "AUTOMATIC",
+          "rampTime": 0.0,
           "userDesiredProfileMode": "AUTOMATIC"
         }
       },
