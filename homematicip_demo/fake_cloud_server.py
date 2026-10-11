@@ -352,6 +352,12 @@ class AsyncFakeCloudServer:
     async def post_hmip_home_heating_setCooling(self, request: web.Request) -> web.Response:
         return web.json_response()
 
+    @validate_authorization
+    async def post_hmip_home_heating_setCoolingEnabled(self, request: web.Request) -> web.Response:
+        js = json.loads(request.data)
+        self.data["home"]["functionalHomes"]["INDOOR_CLIMATE"]["coolingEnabled"] = js["coolingEnabled"]
+        return web.json_response(None)
+
     # endregion
 
     # region rule

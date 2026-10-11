@@ -44,6 +44,9 @@ class Home(AsyncHome):
     def set_cooling(self, cooling):
         return self._run_non_async(self.set_cooling_async, cooling)
 
+    def set_cooling_enabled(self, enabled: bool):
+        return self._run_non_async(self.set_cooling_enabled_async, enabled)
+
     def set_intrusion_alert_through_smoke_detectors(self, activate: bool = True):
         return self._run_non_async(self.set_intrusion_alert_through_smoke_detectors_async, activate)
 

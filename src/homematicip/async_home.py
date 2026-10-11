@@ -832,6 +832,10 @@ class AsyncHome(HomeMaticIPObject):
         data = {"cooling": cooling}
         return await self._rest_call_async("home/heating/setCooling", data)
 
+    async def set_cooling_enabled_async(self, enabled: bool):
+        data = {"coolingEnabled": enabled}
+        return await self._rest_call_async("home/heating/setCoolingEnabled", data)
+
     async def set_intrusion_alert_through_smoke_detectors_async(self, activate: bool = True):
         """activate or deactivate if smoke detectors should "ring" during an alarm
 
