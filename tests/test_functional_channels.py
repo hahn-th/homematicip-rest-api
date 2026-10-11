@@ -119,6 +119,14 @@ def test_device_base_floor_heating_channel(fake_home: Home):
         assert ch.minimumFloorHeatingValvePosition == 0.2
 
 
+def test_internal_switch_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F71100000000000000WGT", 4)
+        assert isinstance(ch, InternalSwitchChannel)
+        assert ch.valvePosition == 1.0
+        assert ch.climateControlType == "PWM_CONTROL"
+
+
 def test_device_operation_lock_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F7110000000000000015", 0)

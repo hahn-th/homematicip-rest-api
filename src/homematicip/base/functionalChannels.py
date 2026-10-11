@@ -1984,6 +1984,8 @@ class InternalSwitchChannel(FunctionalChannel):
         self.internalSwitchOutputEnabled = False
         self.valveProtectionDuration = 0
         self.valveProtectionSwitchingInterval = 0
+        self.valvePosition: float | None = None
+        self.climateControlType: str | None = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -1992,9 +1994,11 @@ class InternalSwitchChannel(FunctionalChannel):
         self.internalSwitchOutputEnabled = js["internalSwitchOutputEnabled"]
         self.valveProtectionDuration = js["valveProtectionDuration"]
         self.valveProtectionSwitchingInterval = js["valveProtectionSwitchingInterval"]
+        self.set_attr_from_dict("valvePosition", js)
+        self.set_attr_from_dict("climateControlType", js)
 
     def __str__(self):
-        return f"{super().__str__()} frostProtectionTemperature({self.frostProtectionTemperature}) heatingValveType({self.heatingValveType}) internalSwitchOutputEnabled({self.internalSwitchOutputEnabled}) valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval})"
+        return f"{super().__str__()} frostProtectionTemperature({self.frostProtectionTemperature}) heatingValveType({self.heatingValveType}) internalSwitchOutputEnabled({self.internalSwitchOutputEnabled}) valveProtectionDuration({self.valveProtectionDuration}) valveProtectionSwitchingInterval({self.valveProtectionSwitchingInterval}) valvePosition({self.valvePosition}) climateControlType({self.climateControlType})"
 
 
 class LightSensorChannel(FunctionalChannel):

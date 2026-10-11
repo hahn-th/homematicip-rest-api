@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `FunctionalChannel.remove_on_channel_event_handler`, the counterpart to `add_on_channel_event_handler`.
 - Add support for the HmIP-WSS and HmIP-WSS-GB: `DeviceType.WATER_SUPPLY_STOP`, mapped to a `WaterSupplyStop` class, and `FunctionalChannelType.WATER_SUPPLY_STOP_CHANNEL`, mapped to a `WaterSupplyStopChannel` with `set_water_supply_state_async` and the new `WaterSupplyState` enum ([#716](https://github.com/hahn-th/homematicip-rest-api/issues/716)).
+- `InternalSwitchChannel` reads `valvePosition` and `climateControlType`.
 
 ### Fixed
 
