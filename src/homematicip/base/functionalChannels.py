@@ -31,6 +31,11 @@ class FunctionalChannel(HomeMaticIPObject):
         is updated."""
         self._on_channel_event_handler.append(handler)
 
+    def remove_on_channel_event_handler(self, handler):
+        """Remove an event handler added with add_on_channel_event_handler."""
+        if handler in self._on_channel_event_handler:
+            self._on_channel_event_handler.remove(handler)
+
     def fire_channel_event(self, *args, **kwargs):
         """Trigger the methods tied to _on_channel_event"""
         for _handler in self._on_channel_event_handler:

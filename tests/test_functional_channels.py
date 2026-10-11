@@ -582,6 +582,19 @@ def test_door_bell_channel_event(fake_home: Home):
         handler.assert_called_once_with(channel_event)
 
 
+def test_remove_channel_event_handler(fake_home: Home):
+    with no_ssl_verification():
+        handler = Mock()
+        ch = fake_home.search_channel("3014F7110000000000DSDPCB", 1)
+        ch.add_on_channel_event_handler(handler)
+
+        ch.remove_on_channel_event_handler(handler)
+        ch.remove_on_channel_event_handler(handler)
+        ch.fire_channel_event(ChannelEvent())
+
+        handler.assert_not_called()
+
+
 @pytest.mark.parametrize(
     "channel_event_type",
     [
