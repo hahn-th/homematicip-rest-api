@@ -934,6 +934,15 @@ def test_set_cooling(fake_home):
     assert result.success
 
 
+def test_set_cooling_enabled(fake_home: Home):
+    with no_ssl_verification():
+        result = fake_home.set_cooling_enabled(True)
+        assert result.success
+        fake_home.get_current_state()
+        fh = next(f for f in fake_home.functionalHomes if isinstance(f, IndoorClimateHome))
+        assert fh.coolingEnabled is True
+
+
 def test_get_security_journal_with_error(fake_home: Home):
     with patch.object(fake_home, '_rest_call_async', return_value=AsyncMock(success=False)):
         result = fake_home.get_security_journal()
