@@ -2595,6 +2595,63 @@ class WateringActuatorChannel(FunctionalChannel):
         )
 
 
+class WaterSupplyStopChannel(FunctionalChannel):
+    """this is the representative of the WATER_SUPPLY_STOP_CHANNEL channel"""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+
+        self.canbusSensorUsages: list[str] | None = None
+        self.externalSensorMode: str | None = None
+        self.flushReminderInterval: int | None = None
+        self.lastFlushReminderTimestamp: int | None = None
+        self.lastFlushTimestamp: int | None = None
+        self.processing: bool | None = None
+        self.vacationEndTime: int | None = None
+        self.vacationStartTime: int | None = None
+        self.waterAlarmActive: bool | None = None
+        self.waterAlarmGroupId: str | None = None
+        self.waterFlow: float | None = None
+        self.waterFlowDurationExceeded: bool | None = None
+        self.waterFlowErrorDuration: int | None = None
+        self.waterFlowErrorDurationAction: str | None = None
+        self.waterFlowErrorThreshold: float | None = None
+        self.waterFlowErrorThresholdAction: str | None = None
+        self.waterFlowThresholdExceeded: bool | None = None
+        self.waterPressure: float | None = None
+        self.waterSupplyState: WaterSupplyState | None = None
+        self.waterSupplyVacationModeActive: bool | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        self.canbusSensorUsages = js.get("canbusSensorUsages")
+        self.externalSensorMode = js.get("externalSensorMode")
+        self.flushReminderInterval = js.get("flushReminderInterval")
+        self.lastFlushReminderTimestamp = js.get("lastFlushReminderTimestamp")
+        self.lastFlushTimestamp = js.get("lastFlushTimestamp")
+        self.processing = js.get("processing")
+        self.vacationEndTime = js.get("vacationEndTime")
+        self.vacationStartTime = js.get("vacationStartTime")
+        self.waterAlarmActive = js.get("waterAlarmActive")
+        self.waterAlarmGroupId = js.get("waterAlarmGroupId")
+        self.waterFlow = js.get("waterFlow")
+        self.waterFlowDurationExceeded = js.get("waterFlowDurationExceeded")
+        self.waterFlowErrorDuration = js.get("waterFlowErrorDuration")
+        self.waterFlowErrorDurationAction = js.get("waterFlowErrorDurationAction")
+        self.waterFlowErrorThreshold = js.get("waterFlowErrorThreshold")
+        self.waterFlowErrorThresholdAction = js.get("waterFlowErrorThresholdAction")
+        self.waterFlowThresholdExceeded = js.get("waterFlowThresholdExceeded")
+        self.waterPressure = js.get("waterPressure")
+        self.waterSupplyState = WaterSupplyState.from_str(js.get("waterSupplyState"))
+        self.waterSupplyVacationModeActive = js.get("waterSupplyVacationModeActive")
+
+    async def set_water_supply_state_async(self, state: WaterSupplyState):
+        """Opens or closes the valve, FULL_OPENED or NO_WATERFLOW."""
+        return await functional_channel_commands.set_water_supply_state_async(
+            self._connection, self.device.id, self.index, str(state)
+        )
+
+
 class SoilMoistureSensorInterfaceChannel(FunctionalChannel):
     """This is the representative of the SOIL_MOISTURE_SENSOR_INTERFACE_CHANNEL channel."""
 

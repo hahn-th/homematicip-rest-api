@@ -2624,6 +2624,39 @@ def test_watering_actuator(fake_home: Home):
         assert isinstance(d, WateringActuator)
 
 
+def test_water_supply_stop(fake_home: Home):
+    with no_ssl_verification():
+        d = fake_home.search_device_by_id("3014F7110000000000000WSS")
+        assert isinstance(d, WaterSupplyStop)
+        assert d.modelType == "HmIP-WSS-GB"
+        assert d.modelId == 609
+        assert d.permanentlyReachable is True
+
+        ch = d.functionalChannels[1]
+        assert isinstance(ch, WaterSupplyStopChannel)
+        assert ch.channelRole == "WATER_SUPPLY"
+        assert ch.canbusSensorUsages == ["WATER_FLOW"]
+        assert ch.waterSupplyState == WaterSupplyState.FULL_OPENED
+        assert ch.waterFlow == 0
+        assert ch.waterPressure is None
+        assert ch.waterAlarmActive is False
+        assert ch.waterAlarmGroupId == "00000000-0000-0000-0000-0000000000WA"
+        assert ch.waterFlowThresholdExceeded is True
+        assert ch.waterFlowDurationExceeded is False
+        assert ch.waterFlowErrorThreshold == 37
+        assert ch.waterFlowErrorThresholdAction == "NOTIFICATION_AND_CLOSE_VALVE"
+        assert ch.waterFlowErrorDuration == 60
+        assert ch.waterFlowErrorDurationAction == "NOTIFICATION_AND_CLOSE_VALVE"
+        assert ch.waterSupplyVacationModeActive is False
+        assert ch.vacationStartTime is None
+        assert ch.vacationEndTime is None
+        assert ch.externalSensorMode == "INACTIVE"
+        assert ch.flushReminderInterval == 0
+        assert ch.lastFlushTimestamp == 1785676204873
+        assert ch.lastFlushReminderTimestamp == 1785676204873
+        assert ch.processing is False
+
+
 def test_soil_moisture_sensor_interface(fake_home: Home):
     with no_ssl_verification():
         d = fake_home.search_device_by_id("3014F7110000000ELVSHSMSI")

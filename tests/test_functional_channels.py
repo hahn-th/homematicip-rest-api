@@ -8,6 +8,7 @@ from homematicip_demo.helper import (
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.enums import ChannelEventTypes, FunctionalChannelType
 from homematicip.base.functionalChannels import *
+from homematicip.commands import functional_channel_commands
 from homematicip.device import *
 from homematicip.home import Home
 
@@ -656,6 +657,33 @@ async def test_watering_actuator_channel(fake_home: Home):
         await ch.toggle_watering_state_async()
 
         assert len(connection_mock.mock_calls) == 4
+
+
+@pytest.mark.asyncio
+async def test_water_supply_stop_channel(fake_home_async: Home):
+    with no_ssl_verification():
+        ch = fake_home_async.search_channel("3014F7110000000000000WSS", 1)
+        assert isinstance(ch, WaterSupplyStopChannel)
+        assert ch.waterSupplyState == WaterSupplyState.FULL_OPENED
+
+        await ch.set_water_supply_state_async(WaterSupplyState.NO_WATERFLOW)
+        await fake_home_async.get_current_state_async()
+        ch = fake_home_async.search_channel("3014F7110000000000000WSS", 1)
+        assert ch.waterSupplyState == WaterSupplyState.NO_WATERFLOW
+
+
+@pytest.mark.asyncio
+async def test_set_water_supply_state_body():
+    connection = AsyncMock()
+
+    await functional_channel_commands.set_water_supply_state_async(
+        connection, "device-id", 1, "FULL_OPENED"
+    )
+
+    connection.async_post.assert_awaited_once_with(
+        "device/control/setWaterSupplyState",
+        {"channelIndex": 1, "deviceId": "device-id", "waterSupplyState": "FULL_OPENED"},
+    )
 
 
 def test_soil_moisture_sensor_interface_channel(fake_home: Home):

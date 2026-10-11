@@ -3089,3 +3089,7 @@ class WallMountedUniversalActuator(Device):
 
 class WateringActuator(Device):
     pass
+
+
+class WaterSupplyStop(Device):
+    """HmIP-WSS / HmIP-WSS-GB (Water Stop and Supply Unit)"""

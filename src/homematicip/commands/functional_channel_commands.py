@@ -934,6 +934,26 @@ async def set_watering_switch_state_async(rest_connection: RestConnection, devic
     return await rest_connection.async_post("device/control/setWateringSwitchState", data)
 
 
+async def set_water_supply_state_async(rest_connection: RestConnection, device_id: str, channel_index: int,
+                                       water_supply_state: str):
+    """
+    Open or close the valve of a water supply stop channel.
+
+    :param rest_connection: The REST connection instance.
+    :param device_id: The device ID.
+    :param channel_index: The channel index.
+    :param water_supply_state: FULL_OPENED to open, NO_WATERFLOW to close.
+    :return: The response from the cloud.
+    :rtype: dict
+    """
+    data = {
+        "channelIndex": channel_index,
+        "deviceId": device_id,
+        "waterSupplyState": water_supply_state
+    }
+    return await rest_connection.async_post("device/control/setWaterSupplyState", data)
+
+
 async def set_watering_switch_state_with_time_async(rest_connection: RestConnection, device_id: str, channel_index: int,
                                                     watering_active: bool, watering_time: float):
     """

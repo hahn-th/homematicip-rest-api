@@ -392,6 +392,8 @@ Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. 
 - [x] HMIP-WRCC2 (Wall-mount Remote Control – flat)
 - [ ] HMIP-WRCD (Wall-mount Remote Control - E-Paper-Status display)
 - [x] HMIP-WRCR (Wall-mount Remote Control - Rotary)
+- [x] HMIP-WSS (Water Stop and Supply Unit)
+- [x] HMIP-WSS-GB (Water Stop and Supply Unit) _Grünbeck protectliQ:B_
 - [ ] HMIP-WT (Wall Mounted Thermostat without adjusting wheel) #probably only prototype for WTH-B and was not released
 - [x] HMIP-WTH (Wall Mounted Thermostat Pro with Display)
 - [x] HMIP-WTH-1 (Wall Mounted Thermostat Pro with Display _Newest Version_ - successor of WTH-2 - really)
