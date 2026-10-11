@@ -859,7 +859,7 @@ async def set_notification_sound_type_async(rest_connection: RestConnection, dev
         "channelIndex": channel_index,
         "deviceId": device_id,
         "notificationSoundType": sound_type,
-        "isHighToLow": is_high_to_low
+        "highToLow": is_high_to_low
     }
     return await rest_connection.async_post("device/configuration/setNotificationSoundType", data)
 

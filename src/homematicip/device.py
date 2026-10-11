@@ -2407,7 +2407,7 @@ class AccelerationSensor(Device):
             "channelIndex": channelIndex,
             "deviceId": self.id,
             "notificationSoundType": str(soundType),
-            "isHighToLow": isHighToLow,
+            "highToLow": isHighToLow,
         }
         return await self._rest_call_async(
             "device/configuration/setNotificationSoundType", data
