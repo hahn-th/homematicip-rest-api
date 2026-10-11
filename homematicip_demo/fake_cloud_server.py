@@ -796,7 +796,7 @@ class AsyncFakeCloudServer:
         channelIndex = str(js["channelIndex"])
         notificationSoundTypeKey = (
             "notificationSoundTypeHighToLow"
-            if js["isHighToLow"]
+            if js["highToLow"]
             else "notificationSoundTypeLowToHigh"
         )
         d["functionalChannels"][channelIndex][notificationSoundTypeKey] = js[
