@@ -38,6 +38,13 @@ class AcousticAlarmTiming(AutoNameEnum):
     ONCE_PER_MINUTE = auto()
 
 
+class WaterSupplyState(AutoNameEnum):
+    UNKNOWN = auto()
+    NO_WATERFLOW = auto()
+    REDUCED_WATERFLOW = auto()
+    FULL_OPENED = auto()
+
+
 class WaterAlarmTrigger(AutoNameEnum):
     NO_ALARM = auto()
     MOISTURE_DETECTION = auto()
@@ -316,6 +323,7 @@ class DeviceType(AutoNameEnum):
     WALL_MOUNTED_GARAGE_DOOR_CONTROLLER = auto()
     WALL_MOUNTED_UNIVERSAL_ACTUATOR = auto()
     WATER_SENSOR = auto()
+    WATER_SUPPLY_STOP = auto()
     WATERING_ACTUATOR = auto()
     WEATHER_SENSOR = auto()
     WEATHER_SENSOR_PLUS = auto()
@@ -556,6 +564,7 @@ class FunctionalChannelType(AutoNameEnum):
     WALL_MOUNTED_THERMOSTAT_WITHOUT_DISPLAY_CHANNEL = auto()
     WALL_MOUNTED_THERMOSTAT_WITH_CARBON_CHANNEL = auto()
     WATER_SENSOR_CHANNEL = auto()
+    WATER_SUPPLY_STOP_CHANNEL = auto()
     WATERING_ACTUATOR_CHANNEL = auto()
     WEATHER_SENSOR_CHANNEL = auto()
     WEATHER_SENSOR_PLUS_CHANNEL = auto()
