@@ -794,6 +794,16 @@ class HeatingGroup(Group):
         self.valveSilentModeSupported = False
         self.lastSetPointReachedTimestamp = None
         self.lastSetPointUpdatedTimestamp = None
+        self.boostAllowed = None
+        self.dewPointControlEnabled = None
+        self.dewPointTemperature = None
+        self.humidityLimitPreEnabled = None
+        self.humidityLimitPreValue = None
+        self.humidityLimiterAlarm = None
+        self.switchClimateCoolingEnable = None
+        self.switchClimateHeatingEnable = None
+        self.valveActualTemperature = None
+        self.windowOpenTemperatureCooling = None
 
     def from_json(self, js, devices):
         super().from_json(js, devices)
@@ -832,6 +842,16 @@ class HeatingGroup(Group):
         self.lastSetPointUpdatedTimestamp = self.fromtimestamp(
             js["lastSetPointUpdatedTimestamp"]
         )
+        self.set_attr_from_dict("boostAllowed", js)
+        self.set_attr_from_dict("dewPointControlEnabled", js)
+        self.set_attr_from_dict("dewPointTemperature", js)
+        self.set_attr_from_dict("humidityLimitPreEnabled", js)
+        self.set_attr_from_dict("humidityLimitPreValue", js)
+        self.set_attr_from_dict("humidityLimiterAlarm", js)
+        self.set_attr_from_dict("switchClimateCoolingEnable", js)
+        self.set_attr_from_dict("switchClimateHeatingEnable", js)
+        self.set_attr_from_dict("valveActualTemperature", js)
+        self.set_attr_from_dict("windowOpenTemperatureCooling", js)
 
         profiles = []
         activeProfile = js["activeProfile"]  # not self.!!!!
