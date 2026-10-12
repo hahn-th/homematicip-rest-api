@@ -195,6 +195,13 @@ class ClientType(AutoNameEnum):
     PLUGIN = auto()
 
 
+class UserRole(AutoNameEnum):
+    ADMIN = auto()
+    USER = auto()
+    RESTRICTED_USER = auto()
+    URM_DEACTIVATED_FALLBACK = auto()
+
+
 class DeviceType(AutoNameEnum):
     DEVICE = auto()
     BASE_DEVICE = auto()

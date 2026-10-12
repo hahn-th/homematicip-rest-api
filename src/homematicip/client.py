@@ -1,4 +1,4 @@
-from homematicip.base.enums import ClientType
+from homematicip.base.enums import ClientType, UserRole
 from homematicip.base.homematicip_object import HomeMaticIPObject
 
 
@@ -19,6 +19,8 @@ class Client(HomeMaticIPObject):
         self.c2cServiceIdentifier = ""
         #:ClientType: the type of this client
         self.clientType = ClientType.APP
+        #:UserRole: what the client may do, None for clients without a role (e.g. plugins)
+        self.userRole: UserRole | None = None
 
     def from_json(self, js):
         super().from_json(js)
@@ -28,6 +30,7 @@ class Client(HomeMaticIPObject):
         self.clientType = ClientType.from_str(js["clientType"])
         if "c2cServiceIdentifier" in js:
             self.c2cServiceIdentifier = js["c2cServiceIdentifier"]
+        self.set_attr_from_dict("userRole", js, UserRole)
 
     def __str__(self):
         return f"label({self.label})"

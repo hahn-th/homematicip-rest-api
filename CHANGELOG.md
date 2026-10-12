@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.18.0..master)
 
+### Added
+
+- `Client.userRole` reads the role of a client (`ADMIN`, `USER`, `RESTRICTED_USER`) with a new `UserRole` enum, and `Home.userRightsManagementActive` tells whether roles are enforced at all.
+
 ### Fixed
 
 - `HeatingCoolingProfile.get_details` read the schedule from the request result instead of its JSON and failed with a `TypeError`.

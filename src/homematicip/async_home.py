@@ -76,6 +76,8 @@ class AsyncHome(HomeMaticIPObject):
         self.powerMeterUnitPrice = None
         self.timeZoneId = None
         self.updateState = HomeUpdateState.UP_TO_DATE
+        # without user rights management every client has full rights
+        self.userRightsManagementActive = None
         self.weather = None
         self.accessPointUpdateStates = {}
 
@@ -177,6 +179,7 @@ class AsyncHome(HomeMaticIPObject):
         self.availableAPVersion = js_home["availableAPVersion"]
         self.timeZoneId = js_home["timeZoneId"]
         self.pinAssigned = js_home["pinAssigned"]
+        self.set_attr_from_dict("userRightsManagementActive", js_home)
         self.dutyCycle = js_home["dutyCycle"]
         self.updateState = HomeUpdateState.from_str(js_home["updateState"])
         self.powerMeterUnitPrice = js_home["powerMeterUnitPrice"]
