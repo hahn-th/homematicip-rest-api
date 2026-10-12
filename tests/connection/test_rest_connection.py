@@ -20,6 +20,18 @@ def test_rest_result():
     assert result.status_text == "No status code"
 
 
+def test_rest_result_error_code():
+    assert RestResult(status=200).error_code is None
+    assert (
+        RestResult(status=403, text='{"errorCode": "CLIENT_ACCESS_DENIED"}').error_code
+        == "CLIENT_ACCESS_DENIED"
+    )
+    assert RestResult(status=403, text='{"errorCode": null}').error_code is None
+    assert RestResult(status=503, text="").error_code is None
+    assert RestResult(status=502, text="<html>Bad Gateway</html>").error_code is None
+    assert RestResult(status=-1).error_code is None
+
+
 def test_conn_update_connection_context(mocker):
     patched = mocker.patch("homematicip.connection.rest_connection.RestConnection._get_header")
     patched.return_value = {"test_a": "a", "test_b": "b"}
@@ -74,6 +86,7 @@ async def test_conn_async_post_logs_error_response_body(mocker, caplog):
 
     assert result.status == 400
     assert result.text == '{"errorCode": "INVALID_REQUEST"}'
+    assert result.error_code == "INVALID_REQUEST"
     assert "INVALID_REQUEST" in caplog.text
 
 

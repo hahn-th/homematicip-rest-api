@@ -53,6 +53,16 @@ class RestResult:
 
         self.success = 200 <= self.status < 300
 
+    @property
+    def error_code(self) -> str | None:
+        """The errorCode the cloud sent with a failed request, None if there is none."""
+        if self.success:
+            return None
+        with contextlib.suppress(ValueError, KeyError, TypeError):
+            if error_code := json.loads(self.text)["errorCode"]:
+                return str(error_code)
+        return None
+
 
 @dataclass
 class RestConnection:
