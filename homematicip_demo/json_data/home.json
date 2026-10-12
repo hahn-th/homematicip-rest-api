@@ -13515,6 +13515,7 @@
           "energyCounterThreeType": "ENERGY_COUNTER_INPUT_SINGLE_TARIFF",
           "energyCounterTwo": 0.0,
           "energyCounterTwoType": "ENERGY_COUNTER_USAGE_LOW_TARIFF",
+          "energyMeterRole": "GRID_CONNECTION_POINT",
           "functionalChannelType": "ENERGY_SENSORS_INTERFACE_CHANNEL",
           "gasVolume": null,
           "gasVolumePerImpulse": 0.01,
@@ -19906,6 +19907,7 @@
     "00000000-0000-0000-0000-000000000012": {
       "activeProfile": "PROFILE_1",
       "actualTemperature": 24.7,
+      "boostAllowed": true,
       "boostDuration": 15,
       "boostMode": false,
       "channels": [
@@ -19927,6 +19929,8 @@
       "cooling": false,
       "coolingAllowed": false,
       "coolingIgnored": false,
+      "dewPointControlEnabled": false,
+      "dewPointTemperature": 12.0,
       "dutyCycle": false,
       "ecoAllowed": true,
       "ecoIgnored": false,
@@ -19937,7 +19941,10 @@
       "homeId": "00000000-0000-0000-0000-000000000001",
       "humidity": 43,
       "humidityLimitEnabled": true,
+      "humidityLimitPreEnabled": true,
+      "humidityLimitPreValue": 60,
       "humidityLimitValue": 60,
+      "humidityLimiterAlarm": true,
       "id": "00000000-0000-0000-0000-000000000012",
       "label": "Schlafzimmer",
       "lastSetPointReachedTimestamp": 1557767559939,
@@ -19999,13 +20006,17 @@
         }
       },
       "setPointTemperature": 5.0,
+      "switchClimateCoolingEnable": true,
+      "switchClimateHeatingEnable": true,
       "type": "HEATING",
       "unreach": false,
+      "valveActualTemperature": 21.1,
       "valvePosition": 0.0,
       "valveSilentModeEnabled": false,
       "valveSilentModeSupported": false,
       "heatingFailureSupported": true,
       "windowOpenTemperature": 5.0,
+      "windowOpenTemperatureCooling": 28.0,
       "windowState": "OPEN"
     },
     "00000000-0000-0000-0000-000000000016": {

@@ -851,6 +851,7 @@ class EnergySensorInterfaceChannel(FunctionalChannel):
         self.energyCounterThreeType = ""
         self.energyCounterTwo = 0.0
         self.energyCounterTwoType = ""
+        self.energyMeterRole = None
         self.gasVolume = None
         self.gasVolumePerImpulse = None
         self.impulsesPerKWH = None
@@ -866,6 +867,7 @@ class EnergySensorInterfaceChannel(FunctionalChannel):
         self.energyCounterThreeType = js["energyCounterThreeType"]
         self.energyCounterTwo = js["energyCounterTwo"]
         self.energyCounterTwoType = js["energyCounterTwoType"]
+        self.set_attr_from_dict("energyMeterRole", js)
         self.gasVolume = js["gasVolume"]
         self.gasVolumePerImpulse = js["gasVolumePerImpulse"]
         self.impulsesPerKWH = js["impulsesPerKWH"]

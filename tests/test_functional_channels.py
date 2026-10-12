@@ -269,6 +269,7 @@ def test_energy_sensor_interface_channel(fake_home: Home):
     assert ch.energyCounterTwoType == "ENERGY_COUNTER_USAGE_LOW_TARIFF"
     assert ch.energyCounterThree == 3.0
     assert ch.energyCounterThreeType == "ENERGY_COUNTER_INPUT_SINGLE_TARIFF"
+    assert ch.energyMeterRole == "GRID_CONNECTION_POINT"
     assert ch.gasVolume == None
     assert ch.gasVolumePerImpulse == 0.01
     assert ch.impulsesPerKWH == 10000
@@ -282,6 +283,7 @@ def test_energy_sensor_interface_channel(fake_home: Home):
     assert ch.energyCounterTwoType == "ENERGY_COUNTER_USAGE_LOW_TARIFF"
     assert ch.energyCounterThree == None
     assert ch.energyCounterThreeType == "UNKNOWN"
+    assert ch.energyMeterRole is None
     assert ch.gasVolume == None
     assert ch.gasVolumePerImpulse == 0.01
     assert ch.impulsesPerKWH == 10000

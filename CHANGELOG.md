@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `WALL_MOUNTED_THERMOSTAT_CHANNEL`, `WALL_MOUNTED_THERMOSTAT_BASIC_CHANNEL`, `UNIVERSAL_DIMMING_CHANNEL` and `DEVICE_GLASS_DISPLAY` use `WallMountedThermostatProChannel`, `AnalogRoomControlChannel`, `MultiModeInputDimmerChannel` and `DeviceBaseChannel` instead of the generic `FunctionalChannel`.
 - `RestResult.error_code` returns the `errorCode` the cloud sent with a failed request, so callers no longer parse the response body themselves.
 - Add `AirPressureSensorChannel`, `NumberValueSensorChannel`, `BaseWaterSensorChannel` and `TubularDriveChannel` for `AIR_PRESSURE_SENSOR_CHANNEL`, `NUMBER_VALUE_SENSOR_CHANNEL`, `BASE_WATER_SENSOR_CHANNEL` and `TUBULAR_DRIVE_CHANNEL`. They read the channel state; the tubular drive has no commands yet.
+- `HeatingGroup` reads `boostAllowed`, `dewPointControlEnabled`, `dewPointTemperature`, `humidityLimitPreEnabled`, `humidityLimitPreValue`, `humidityLimiterAlarm`, `switchClimateCoolingEnable`, `switchClimateHeatingEnable`, `valveActualTemperature` and `windowOpenTemperatureCooling`, and `EnergySensorInterfaceChannel` reads `energyMeterRole`.
 
 ### Fixed
 

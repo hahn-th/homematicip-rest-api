@@ -69,6 +69,7 @@ def test_heating_group(fake_home: Home):
     assert profile3.id == "00000000-0000-0000-0000-000000000025"
 
     assert g.actualTemperature == 24.7
+    assert g.boostAllowed is True
     assert g.boostDuration == 15
     assert g.boostMode is False
     assert g.controlMode == ClimateControlMode.AUTOMATIC
@@ -76,6 +77,8 @@ def test_heating_group(fake_home: Home):
     assert g.cooling is False
     assert g.coolingAllowed is False
     assert g.coolingIgnored is False
+    assert g.dewPointControlEnabled is False
+    assert g.dewPointTemperature == 12.0
     assert g.dutyCycle is False
     assert g.ecoAllowed is True
     assert g.ecoIgnored is False
@@ -85,7 +88,10 @@ def test_heating_group(fake_home: Home):
     assert g.floorHeatingMode == "FLOOR_HEATING_STANDARD"
     assert g.humidity == 43
     assert g.humidityLimitEnabled is True
+    assert g.humidityLimitPreEnabled is True
+    assert g.humidityLimitPreValue == 60
     assert g.humidityLimitValue == 60
+    assert g.humidityLimiterAlarm is True
     assert g.label == "Schlafzimmer"
     assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
         0, utc_offset
@@ -96,9 +102,13 @@ def test_heating_group(fake_home: Home):
     assert g.minTemperature == 5.0
     assert g.partyMode is False
     assert g.setPointTemperature == 5.0
+    assert g.switchClimateCoolingEnable is True
+    assert g.switchClimateHeatingEnable is True
     assert g.unreach is False
+    assert g.valveActualTemperature == 21.1
     assert g.valvePosition == 0.0
     assert g.windowOpenTemperature == 5.0
+    assert g.windowOpenTemperatureCooling == 28.0
     assert g.windowState == "OPEN"
     assert g.lastSetPointReachedTimestamp == datetime.fromtimestamp(
         1557767559939 / 1000.0
