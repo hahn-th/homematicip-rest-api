@@ -804,3 +804,78 @@ def test_app_channel_type_uses_existing_class(
     assert type(fc) is expected_class
     assert fc.functionalChannelType == FunctionalChannelType(channel_type)
     assert caplog.text == ""
+
+
+@pytest.mark.parametrize(
+    ("channel_type", "expected_class", "fields", "expected"),
+    [
+        (
+            "AIR_PRESSURE_SENSOR_CHANNEL",
+            AirPressureSensorChannel,
+            {"actualTemperature": 21.4, "airPressure": 1013.2},
+            {},
+        ),
+        (
+            "NUMBER_VALUE_SENSOR_CHANNEL",
+            NumberValueSensorChannel,
+            {
+                "convertedValue": 12.34,
+                "decimalPlaces": 2,
+                "factor": 0.01,
+                "offset": 0.0,
+                "rawValue": 1234,
+                "unit": "kWh",
+            },
+            {},
+        ),
+        (
+            "BASE_WATER_SENSOR_CHANNEL",
+            BaseWaterSensorChannel,
+            {
+                "inAppWaterAlarmTrigger": "WATER_MOISTURE_DETECTION",
+                "sirenWaterAlarmTrigger": "NO_ALARM",
+                "waterlevelDetected": True,
+            },
+            {
+                "inAppWaterAlarmTrigger": WaterAlarmTrigger.WATER_MOISTURE_DETECTION,
+                "sirenWaterAlarmTrigger": WaterAlarmTrigger.NO_ALARM,
+            },
+        ),
+        (
+            "TUBULAR_DRIVE_CHANNEL",
+            TubularDriveChannel,
+            {
+                "bottomPositionSet": True,
+                "favoritePrimaryShadingPosition": 0.5,
+                "obstacleDetectedError": False,
+                "processing": False,
+                "profileMode": "AUTOMATIC",
+                "shutterLevel": 0.3,
+                "topPositionSet": True,
+            },
+            {},
+        ),
+    ],
+)
+def test_app_channel_type_own_class(
+    fake_home: Home, caplog, channel_type, expected_class, fields, expected
+):
+    # No dump of these channels yet: fields as the app reads them
+    device = fake_home.search_device_by_id("3014F711000BBBB000000000")
+    js = {
+        "deviceId": device.id,
+        "functionalChannelType": channel_type,
+        "groupIndex": 1,
+        "groups": [],
+        "index": 1,
+        "label": "",
+        **fields,
+    }
+
+    with caplog.at_level("WARNING"):
+        fc = device._parse_functionalChannel(js, fake_home.groups)
+
+    assert type(fc) is expected_class
+    assert caplog.text == ""
+    for key, value in fields.items():
+        assert getattr(fc, key) == expected.get(key, value)

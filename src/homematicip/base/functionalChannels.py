@@ -2793,3 +2793,83 @@ class NotificationMp3SoundChannel(FunctionalChannel):
     async def turn_off_async(self):
         """Turn off both LED and sound."""
         return await self.set_rgb_dim_level_async("BLACK", 0.0)
+
+
+class AirPressureSensorChannel(FunctionalChannel):
+    """This is the representative of the AIR_PRESSURE_SENSOR_CHANNEL channel."""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.actualTemperature: float | None = None
+        self.airPressure: float | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+        super().from_json(js, groups)
+        self.set_attr_from_dict("actualTemperature", js)
+        self.set_attr_from_dict("airPressure", js)
+
+
+class NumberValueSensorChannel(FunctionalChannel):
+    """This is the representative of the NUMBER_VALUE_SENSOR_CHANNEL channel."""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.convertedValue: float | None = None
+        self.decimalPlaces: int | None = None
+        self.factor: float | None = None
+        self.offset: float | None = None
+        self.rawValue: float | None = None
+        self.unit: str | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+        super().from_json(js, groups)
+        self.set_attr_from_dict("convertedValue", js)
+        self.set_attr_from_dict("decimalPlaces", js)
+        self.set_attr_from_dict("factor", js)
+        self.set_attr_from_dict("offset", js)
+        self.set_attr_from_dict("rawValue", js)
+        self.set_attr_from_dict("unit", js)
+
+
+class BaseWaterSensorChannel(FunctionalChannel):
+    """This is the representative of the BASE_WATER_SENSOR_CHANNEL channel."""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.inAppWaterAlarmTrigger: WaterAlarmTrigger | None = None
+        self.sirenWaterAlarmTrigger: WaterAlarmTrigger | None = None
+        self.waterlevelDetected: bool | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+        super().from_json(js, groups)
+        self.set_attr_from_dict("inAppWaterAlarmTrigger", js, WaterAlarmTrigger)
+        self.set_attr_from_dict("sirenWaterAlarmTrigger", js, WaterAlarmTrigger)
+        self.set_attr_from_dict("waterlevelDetected", js)
+
+
+class TubularDriveChannel(FunctionalChannel):
+    """This is the representative of the TUBULAR_DRIVE_CHANNEL channel."""
+
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.bottomPositionSet: bool | None = None
+        self.favoritePrimaryShadingPosition: float | None = None
+        self.obstacleDetectedError: bool | None = None
+        self.processing: bool | None = None
+        self.profileMode: str | None = None
+        self.shutterLevel: float | None = None
+        self.topPositionSet: bool | None = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        """Update the channel attributes from a JSON dictionary."""
+        super().from_json(js, groups)
+        self.set_attr_from_dict("bottomPositionSet", js)
+        self.set_attr_from_dict("favoritePrimaryShadingPosition", js)
+        self.set_attr_from_dict("obstacleDetectedError", js)
+        self.set_attr_from_dict("processing", js)
+        self.set_attr_from_dict("profileMode", js)
+        self.set_attr_from_dict("shutterLevel", js)
+        self.set_attr_from_dict("topPositionSet", js)
