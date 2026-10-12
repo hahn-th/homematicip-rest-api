@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `DeviceBaseChannel.set_identify` lets a device identify itself (`device/control/setIdentify`), and `identifySupported` tells whether the device has the `IFeatureDeviceIdentify` feature.
 - `DimmerChannel` reads `on`, `dimmingMode`, `rampTime`, `dimLevelHighest` and `dimLevelLowest`, with a new `DimmingMode` enum.
 - Add `GroupType.WATER_ALARM`, mapped to a `WaterAlarmGroup` with `moistureDetected` and `waterlevelDetected`, the group linking an HmIP-WSS to its water sensors ([#716](https://github.com/hahn-th/homematicip-rest-api/issues/716)).
+- `Client.userRole` reads the role of a client (`ADMIN`, `USER`, `RESTRICTED_USER`) with a new `UserRole` enum, and `Home.userRightsManagementActive` tells whether roles are enforced at all.
 
 ### Fixed
 

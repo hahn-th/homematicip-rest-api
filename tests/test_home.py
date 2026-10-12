@@ -14,6 +14,7 @@ from conftest import utc_offset
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.code_state_event import CodeStateEvent
 from homematicip.base.enums import EventType
+from homematicip.client import Client
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import BaseDevice, Device
 from homematicip.exceptions.connection_exceptions import (
@@ -99,6 +100,7 @@ def test_home_base(fake_home: Home):
     )
     assert fake_home.dutyCycle == 8.0
     assert fake_home.pinAssigned is False
+    assert fake_home.userRightsManagementActive is True
     assert fake_home.powerMeterCurrency == "EUR"
     assert fake_home.powerMeterUnitPrice == 0.0
     assert fake_home.timeZoneId == "Europe/Vienna"
@@ -424,6 +426,16 @@ def test_clients(fake_home: Home):
     assert client.homeId == "00000000-0000-0000-0000-000000000001"
     assert client.id == "00000000-0000-0000-0000-000000000000"
     assert client.clientType == ClientType.APP
+    assert client.userRole == UserRole.ADMIN
+    assert (
+        fake_home.search_client_by_id("AA000000-0000-0000-0000-000000000000").userRole
+        == UserRole.RESTRICTED_USER
+    )
+    plugin = Client(None)
+    plugin.from_json(
+        {"id": "plugin", "label": "Hue", "homeId": client.homeId, "clientType": "PLUGIN"}
+    )
+    assert plugin.userRole is None
 
     assert (
             client._rawJSONData
