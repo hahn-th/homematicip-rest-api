@@ -706,3 +706,35 @@ async def test_notification_mp3_sound_channel_control(fake_home: Home):
         await ch.turn_off_async()
 
         assert len(connection_mock.mock_calls) == 4
+
+@pytest.mark.parametrize(
+    ("channel_type", "device_id", "index", "dropped_keys", "expected_class"),
+    [
+        ("DEVICE_GLASS_DISPLAY", "3014F7110000RAIN_SENSOR", 0, [], DeviceBaseChannel),
+        ("UNIVERSAL_DIMMING_CHANNEL", "3014F711A000DIN_RAIL_DIMMER3", 1, [], MultiModeInputDimmerChannel),
+        ("WALL_MOUNTED_THERMOSTAT_CHANNEL", "3014F711000BBBB000000000", 1, [], WallMountedThermostatProChannel),
+        (
+            "WALL_MOUNTED_THERMOSTAT_BASIC_CHANNEL",
+            "3014F711000BBBB000000000",
+            1,
+            ["humidity", "vaporAmount"],
+            AnalogRoomControlChannel,
+        ),
+    ],
+)
+def test_app_channel_type_uses_existing_class(
+    fake_home: Home, caplog, channel_type, device_id, index, dropped_keys, expected_class
+):
+    # No dump of these channels yet: reuse a fixture channel with the same fields
+    device = fake_home.search_device_by_id(device_id)
+    js = dict(device._rawJSONData["functionalChannels"][str(index)])
+    js["functionalChannelType"] = channel_type
+    for key in dropped_keys:
+        del js[key]
+
+    with caplog.at_level("WARNING"):
+        fc = device._parse_functionalChannel(js, fake_home.groups)
+
+    assert type(fc) is expected_class
+    assert fc.functionalChannelType == FunctionalChannelType(channel_type)
+    assert caplog.text == ""

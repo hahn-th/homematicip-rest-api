@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Recognize the device, functional channel, group and event type values the Homematic IP app knows. Devices, channels and groups of these types still use the generic classes, push events of the new types reach `onEvent`, and security journal entries without their own class come back as `SecurityEvent`.
+- `WALL_MOUNTED_THERMOSTAT_CHANNEL`, `WALL_MOUNTED_THERMOSTAT_BASIC_CHANNEL`, `UNIVERSAL_DIMMING_CHANNEL` and `DEVICE_GLASS_DISPLAY` use `WallMountedThermostatProChannel`, `AnalogRoomControlChannel`, `MultiModeInputDimmerChannel` and `DeviceBaseChannel` instead of the generic `FunctionalChannel`.
 
 ### Fixed
 
