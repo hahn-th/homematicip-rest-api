@@ -877,6 +877,8 @@ def test_home_getSecurityJournal(fake_home: Home):
         assert isinstance(journal[5], SabotageEvent)
         assert isinstance(journal[6], MoistureDetectionEvent)
         assert isinstance(journal[7], SecurityEvent)
+        assert type(journal[8]) is SecurityEvent
+        assert journal[8].eventType == "MOTION_EVENT"
 
 
 def test_home_unknown_types(fake_home: Home):
@@ -1295,6 +1297,19 @@ async def test_websocket_device_code_state_event(
         codeState=code_state,
     )
     device_handler.assert_called_once_with(expected)
+
+
+@pytest.mark.parametrize("push_event_type", ["CURRENT_STATE", "INCLUSION_REQUESTED"])
+async def test_websocket_event_without_handler(fake_home: Home, caplog, push_event_type: str):
+    payload = {"events": {"0": {"pushEventType": push_event_type}}}
+    event_handler = Mock()
+    fake_home.onEvent += event_handler
+    with caplog.at_level("WARNING", logger="homematicip.async_home"):
+        await fake_home._ws_on_message(json.dumps(payload))
+
+    assert "Unknown EventType" not in caplog.text
+    fired = event_handler.call_args.args[0]
+    assert fired == [{"eventType": EventType(push_event_type), "data": None}]
 
 
 @pytest.mark.asyncio

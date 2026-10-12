@@ -937,8 +937,9 @@ class AsyncHome(HomeMaticIPObject):
             journal_entry = None
             try:
                 event_type = SecurityEventType(entry["eventType"])
-                if event_type in self._typeSecurityEventMap:
-                    journal_entry = self._typeSecurityEventMap[event_type](self._connection)
+                journal_entry = self._typeSecurityEventMap.get(event_type, SecurityEvent)(
+                    self._connection
+                )
             except:
                 journal_entry = SecurityEvent(self._connection)
                 LOGGER.warning("There is no class for %s yet", entry["eventType"])
