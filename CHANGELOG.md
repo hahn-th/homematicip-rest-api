@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.18.0..master)
 
+### Added
+
+- Recognize the device, functional channel, group and event type values the Homematic IP app knows. Devices, channels and groups of these types still use the generic classes, push events of the new types reach `onEvent`, and security journal entries without their own class come back as `SecurityEvent`.
+
 ### Fixed
 
 - `HeatingCoolingProfile.get_details` read the schedule from the request result instead of its JSON and failed with a `TypeError`.

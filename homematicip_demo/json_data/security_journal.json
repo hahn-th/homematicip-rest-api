@@ -47,6 +47,11 @@
             "eventTimestamp": 1543777807110,
             "eventType": "FLUX_CAPACITOR_OVERLOAD_EVENT",
             "label": "Fluxkondensator"
+        },
+        {
+            "eventTimestamp": 1543777807110,
+            "eventType": "MOTION_EVENT",
+            "label": "Bewegungsmelder (Flur)"
         }
     ]
 }
