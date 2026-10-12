@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `GroupType.WATER_ALARM`, mapped to a `WaterAlarmGroup` with `moistureDetected` and `waterlevelDetected`, the group linking an HmIP-WSS to its water sensors ([#716](https://github.com/hahn-th/homematicip-rest-api/issues/716)).
 - `Client.userRole` reads the role of a client (`ADMIN`, `USER`, `RESTRICTED_USER`) with a new `UserRole` enum, and `Home.userRightsManagementActive` tells whether roles are enforced at all.
 - Recognize the device, functional channel, group and event type values the Homematic IP app knows. Devices, channels and groups of these types still use the generic classes, push events of the new types reach `onEvent`, and security journal entries without their own class come back as `SecurityEvent`.
+- `WALL_MOUNTED_THERMOSTAT_CHANNEL`, `WALL_MOUNTED_THERMOSTAT_BASIC_CHANNEL`, `UNIVERSAL_DIMMING_CHANNEL` and `DEVICE_GLASS_DISPLAY` use `WallMountedThermostatProChannel`, `AnalogRoomControlChannel`, `MultiModeInputDimmerChannel` and `DeviceBaseChannel` instead of the generic `FunctionalChannel`.
 
 ### Fixed
 
