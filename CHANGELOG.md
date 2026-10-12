@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Home.set_cooling_enabled` turns the cooling function of the home on or off (`home/heating/setCoolingEnabled`).
 - `DeviceBaseChannel.set_identify` lets a device identify itself (`device/control/setIdentify`), and `identifySupported` tells whether the device has the `IFeatureDeviceIdentify` feature.
 - `DimmerChannel` reads `on`, `dimmingMode`, `rampTime`, `dimLevelHighest` and `dimLevelLowest`, with a new `DimmingMode` enum.
+- Add `GroupType.WATER_ALARM`, mapped to a `WaterAlarmGroup` with `moistureDetected` and `waterlevelDetected`, the group linking an HmIP-WSS to its water sensors ([#716](https://github.com/hahn-th/homematicip-rest-api/issues/716)).
 
 ### Fixed
 

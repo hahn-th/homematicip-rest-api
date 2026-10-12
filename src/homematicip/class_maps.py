@@ -191,6 +191,7 @@ TYPE_GROUP_MAP = {
     GroupType.SWITCHING_PROFILE: SwitchingProfileGroup,
     GroupType.VENTILATION_PROFILE: VentilationProfileGroup,
     GroupType.DEMAND_CONTROLLED_VENTILATION_GROUP: Group,
+    GroupType.WATER_ALARM: WaterAlarmGroup,
     GroupType.SWITCHING: SwitchingGroup,
 }
 

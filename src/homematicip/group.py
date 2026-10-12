@@ -1118,6 +1118,29 @@ class VentilationProfileGroup(Group):
         return f"{super().__str__()} profileMode({self.profileMode}) ventilationLevel({self.ventilationLevel}) ventilationState({self.ventilationState})"
 
 
+class WaterAlarmGroup(Group):
+    """the water alarm of a HmIP-WSS valve and its water sensors"""
+
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.dutyCycle = None
+        self.lowBat = None
+        self.moistureDetected = None
+        self.waterlevelDetected = None
+        self.sensorSpecificParameters = {}
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("moistureDetected", js)
+        self.set_attr_from_dict("waterlevelDetected", js)
+        self.sensorSpecificParameters = js.get("sensorSpecificParameters") or {}
+
+    def __str__(self):
+        return f"{super().__str__()} moistureDetected({self.moistureDetected}) waterlevelDetected({self.waterlevelDetected})"
+
+
 class SwitchingProfileGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)
