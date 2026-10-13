@@ -15,11 +15,12 @@
       
       
       
+      
         
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.64">
+      <meta name="generator" content="zensical-0.0.70">
     
     
       
@@ -30,12 +31,12 @@
       
         
       
-      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.40d3fdbb.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.e442bf79.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/modern/palette.b60ce83d.min.css">
       
       
 
@@ -75,14 +76,11 @@
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#homematicipconnectionrest_connection" class="md-skip">
-          Skip to content
-        </a>
-      
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
     </div>
     <div data-md-component="announce">
       
@@ -597,8 +595,10 @@
 
               
               <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
                 
                   
+
   
   
 
@@ -757,6 +757,78 @@
 
 </div>
 
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.connection.rest_connection.RestResult" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">RestResult</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#homematicip.connection.rest_connection.RestResult" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="homematicip.connection.rest_connection.RestResult.error_code" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">error_code</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#homematicip.connection.rest_connection.RestResult.error_code" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">error_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>The errorCode the cloud sent with a failed request, None if there is none.</p>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
 
 
 
@@ -816,7 +888,7 @@
 </footer>
       
     </div>
-    <div class="md-dialog" data-md-component="dialog">
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
@@ -828,10 +900,10 @@
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"redirect":null,"search":"../../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"redirect":null,"search":"../../../../assets/javascripts/workers/search.c47bb847.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.c04ba553.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.a2388154.min.js"></script>
       
     
   </body>

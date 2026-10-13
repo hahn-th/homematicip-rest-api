@@ -15,11 +15,12 @@
       
       
       
+      
         
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.64">
+      <meta name="generator" content="zensical-0.0.70">
     
     
       
@@ -30,12 +31,12 @@
       
         
       
-      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.40d3fdbb.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.e442bf79.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/modern/palette.b60ce83d.min.css">
       
       
 
@@ -75,14 +76,11 @@
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#homematicipbasefunctionalchannels" class="md-skip">
-          Skip to content
-        </a>
-      
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
     </div>
     <div data-md-component="announce">
       
@@ -597,8 +595,10 @@
 
               
               <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
                 
                   
+
   
   
 
@@ -650,7 +650,7 @@
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -698,7 +698,7 @@
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -768,7 +768,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -816,7 +816,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -855,6 +855,74 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
 
 
+<h2 id="homematicip.base.functionalChannels.AirPressureSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AirPressureSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.AirPressureSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the AIR_PRESSURE_SENSOR_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.AirPressureSensorChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.AirPressureSensorChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.base.functionalChannels.AlarmSirenChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AlarmSirenChannel</span>
 
@@ -864,7 +932,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -912,7 +980,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -960,7 +1028,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1076,6 +1144,74 @@ Returns:
 
 
 
+<h2 id="homematicip.base.functionalChannels.BaseWaterSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">BaseWaterSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.BaseWaterSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the BASE_WATER_SENSOR_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.BaseWaterSensorChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.BaseWaterSensorChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.base.functionalChannels.BlindChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">BlindChannel</span>
 
@@ -1085,7 +1221,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1228,7 +1364,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1276,7 +1412,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1324,7 +1460,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1372,7 +1508,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1420,7 +1556,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1468,7 +1604,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1516,7 +1652,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContactChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
 
 
 
@@ -1564,7 +1700,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1612,7 +1748,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1660,7 +1796,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -1732,7 +1868,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1780,7 +1916,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBlockingChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBlockingChannel">DeviceBlockingChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBlockingChannel">DeviceBlockingChannel</a></code></p>
 
 
 
@@ -1828,7 +1964,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -1876,7 +2012,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -1924,7 +2060,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -1972,7 +2108,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceOperationLockChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceOperationLockChannel">DeviceOperationLockChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceOperationLockChannel">DeviceOperationLockChannel</a></code></p>
 
 
 
@@ -2020,7 +2156,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -2068,7 +2204,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceSabotageChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceSabotageChannel">DeviceSabotageChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceSabotageChannel">DeviceSabotageChannel</a></code></p>
 
 
 
@@ -2116,7 +2252,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -2164,7 +2300,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2212,7 +2348,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2260,7 +2396,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2308,7 +2444,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2412,7 +2548,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DoorLockChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DoorLockChannel">DoorLockChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DoorLockChannel">DoorLockChannel</a></code></p>
 
 
 
@@ -2460,7 +2596,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2508,7 +2644,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2556,7 +2692,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2625,7 +2761,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2673,7 +2809,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2721,7 +2857,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -2769,7 +2905,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2865,7 +3001,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2913,7 +3049,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -2961,7 +3097,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3009,7 +3145,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -3101,6 +3237,26 @@ from a json object and the given groups</p>
 
 </div>
 
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.FunctionalChannel.remove_on_channel_event_handler" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">remove_on_channel_event_handler</span>
+
+
+<a href="#homematicip.base.functionalChannels.FunctionalChannel.remove_on_channel_event_handler" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">remove_on_channel_event_handler</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Remove an event handler added with add_on_channel_event_handler.</p>
+
+
+    </div>
+
+</div>
+
 
 
   </div>
@@ -3122,7 +3278,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3170,7 +3326,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3218,7 +3374,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3266,7 +3422,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3334,7 +3490,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3382,7 +3538,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3430,7 +3586,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3478,7 +3634,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3526,7 +3682,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3574,7 +3730,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;BlindChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.BlindChannel">BlindChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.BlindChannel">BlindChannel</a></code></p>
 
 
 
@@ -3622,7 +3778,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3670,7 +3826,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DimmerChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code></p>
 
 
 
@@ -3718,7 +3874,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -3766,7 +3922,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;MultiModeInputChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.MultiModeInputChannel">MultiModeInputChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.MultiModeInputChannel">MultiModeInputChannel</a></code></p>
 
 
 
@@ -3814,7 +3970,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DimmerChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code>, <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code>, <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -3950,7 +4106,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4118,6 +4274,74 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
 
 
+<h2 id="homematicip.base.functionalChannels.NumberValueSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">NumberValueSensorChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.NumberValueSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the NUMBER_VALUE_SENSOR_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.NumberValueSensorChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.NumberValueSensorChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.base.functionalChannels.OpticalSignalChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">OpticalSignalChannel</span>
 
@@ -4127,7 +4351,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4175,7 +4399,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4223,7 +4447,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4271,7 +4495,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4319,7 +4543,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4367,7 +4591,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4415,7 +4639,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContactChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
 
 
 
@@ -4463,7 +4687,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4513,7 +4737,7 @@ rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4587,7 +4811,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4691,7 +4915,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4739,7 +4963,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4787,7 +5011,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4835,7 +5059,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4903,7 +5127,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4951,7 +5175,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -4999,7 +5223,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5047,7 +5271,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5095,7 +5319,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5134,6 +5358,74 @@ Returns:
 
 
 
+<h2 id="homematicip.base.functionalChannels.TubularDriveChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TubularDriveChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.TubularDriveChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the TUBULAR_DRIVE_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.TubularDriveChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.base.functionalChannels.TubularDriveChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.base.functionalChannels.UniversalActuatorChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UniversalActuatorChannel</span>
 
@@ -5143,7 +5435,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5191,7 +5483,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5311,7 +5603,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;UniversalLightChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.UniversalLightChannel">UniversalLightChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.UniversalLightChannel">UniversalLightChannel</a></code></p>
 
 
 
@@ -5359,7 +5651,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5407,7 +5699,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WallMountedThermostatProChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.WallMountedThermostatProChannel">WallMountedThermostatProChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.WallMountedThermostatProChannel">WallMountedThermostatProChannel</a></code></p>
 
 
 
@@ -5455,7 +5747,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ClimateSensorChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.ClimateSensorChannel">ClimateSensorChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.ClimateSensorChannel">ClimateSensorChannel</a></code></p>
 
 
 
@@ -5503,7 +5795,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5542,6 +5834,78 @@ Returns:
 
 
 
+<h2 id="homematicip.base.functionalChannels.WaterSupplyStopChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WaterSupplyStopChannel</span>
+
+
+<a href="#homematicip.base.functionalChannels.WaterSupplyStopChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WATER_SUPPLY_STOP_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.base.functionalChannels.WaterSupplyStopChannel.set_water_supply_state_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_water_supply_state_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.base.functionalChannels.WaterSupplyStopChannel.set_water_supply_state_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_water_supply_state_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Opens or closes the valve, FULL_OPENED or NO_WATERFLOW.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.base.functionalChannels.WateringActuatorChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WateringActuatorChannel</span>
 
@@ -5551,7 +5915,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5742,7 +6106,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5790,7 +6154,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WeatherSensorChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.WeatherSensorChannel">WeatherSensorChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.WeatherSensorChannel">WeatherSensorChannel</a></code></p>
 
 
 
@@ -5838,7 +6202,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WeatherSensorPlusChannel&lt;/span&gt;" href="./#homematicip.base.functionalChannels.WeatherSensorPlusChannel">WeatherSensorPlusChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.base.functionalChannels.WeatherSensorPlusChannel">WeatherSensorPlusChannel</a></code></p>
 
 
 
@@ -5932,7 +6296,7 @@ Returns:
 </footer>
       
     </div>
-    <div class="md-dialog" data-md-component="dialog">
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
@@ -5944,10 +6308,10 @@ Returns:
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"redirect":null,"search":"../../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"redirect":null,"search":"../../../../assets/javascripts/workers/search.c47bb847.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.c04ba553.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.a2388154.min.js"></script>
       
     
   </body>

@@ -15,11 +15,12 @@
       
       
       
+      
         
       
       
       <link rel="icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.64">
+      <meta name="generator" content="zensical-0.0.70">
     
     
       
@@ -30,12 +31,12 @@
       
         
       
-      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.40d3fdbb.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.e442bf79.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.b60ce83d.min.css">
       
       
 
@@ -75,14 +76,11 @@
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
     <div data-md-component="skip">
-      
-        
-        <a href="#homematicipasync_home" class="md-skip">
-          Skip to content
-        </a>
-      
+      <a href="#__skip" class="md-skip">
+        Skip to content
+      </a>
     </div>
     <div data-md-component="announce">
       
@@ -597,8 +595,10 @@
 
               
               <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
                 
                   
+
   
   
 
@@ -650,7 +650,7 @@
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -698,7 +698,7 @@
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -746,7 +746,7 @@
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -816,7 +816,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -864,7 +864,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -903,6 +903,74 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
 
 
+<h2 id="homematicip.async_home.AirPressureSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AirPressureSensorChannel</span>
+
+
+<a href="#homematicip.async_home.AirPressureSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the AIR_PRESSURE_SENSOR_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.async_home.AirPressureSensorChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.async_home.AirPressureSensorChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.async_home.AlarmSirenChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">AlarmSirenChannel</span>
 
@@ -912,7 +980,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1008,7 +1076,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;AlarmSirenIndoor&lt;/span&gt;" href="../device/#homematicip.device.AlarmSirenIndoor">AlarmSirenIndoor</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.AlarmSirenIndoor">AlarmSirenIndoor</a></code></p>
 
 
 
@@ -1056,7 +1124,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1104,7 +1172,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -1152,7 +1220,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="./#homematicip.async_home.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="./#homematicip.async_home.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -1464,7 +1532,7 @@ See :func:<code>homematicip.commands.functional_channel_commands.pull_latch_asyn
 <h4 id="homematicip.async_home.AsyncHome.delete_group(group)" class="doc doc-heading doc-heading-parameter">                  <code>group</code>
 <a href="#homematicip.async_home.AsyncHome.delete_group(group)" class="headerlink" title="Permanent link">&para;</a></h4>            </td>
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Group&lt;/span&gt;" href="../group/#homematicip.group.Group">Group</a></code>
+                  <code><a class="autorefs autorefs-internal" href="../group/#homematicip.group.Group">Group</a></code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2233,7 +2301,7 @@ the REST call is independent and may still recover state.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="./#homematicip.async_home.FunctionalChannel">FunctionalChannel</a> | None</code>
+                  <code><a class="autorefs autorefs-internal" href="./#homematicip.async_home.FunctionalChannel">FunctionalChannel</a> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2306,7 +2374,7 @@ the REST call is independent and may still recover state.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Client&lt;/span&gt;" href="../client/#homematicip.client.Client">Client</a> | None</code>
+                  <code><a class="autorefs autorefs-internal" href="../client/#homematicip.client.Client">Client</a> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2379,7 +2447,7 @@ the REST call is independent and may still recover state.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a> | None</code>
+                  <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2452,7 +2520,7 @@ the REST call is independent and may still recover state.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Group&lt;/span&gt;" href="../group/#homematicip.group.Group">Group</a> | None</code>
+                  <code><a class="autorefs autorefs-internal" href="../group/#homematicip.group.Group">Group</a> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -2525,7 +2593,7 @@ the REST call is independent and may still recover state.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Rule&lt;/span&gt;" href="../rule/#homematicip.rule.Rule">Rule</a> | None</code>
+                  <code><a class="autorefs autorefs-internal" href="../rule/#homematicip.rule.Rule">Rule</a> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -3555,7 +3623,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -3634,6 +3702,74 @@ Returns:
 
 
 
+<h2 id="homematicip.async_home.BaseWaterSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">BaseWaterSensorChannel</span>
+
+
+<a href="#homematicip.async_home.BaseWaterSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the BASE_WATER_SENSOR_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.async_home.BaseWaterSensorChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.async_home.BaseWaterSensorChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.async_home.Blind" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">Blind</span>
 
@@ -3643,7 +3779,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Shutter&lt;/span&gt;" href="../device/#homematicip.device.Shutter">Shutter</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Shutter">Shutter</a></code></p>
 
 
 
@@ -3747,7 +3883,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -3890,7 +4026,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -3990,7 +4126,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FullFlushBlind&lt;/span&gt;" href="../device/#homematicip.device.FullFlushBlind">FullFlushBlind</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.FullFlushBlind">FullFlushBlind</a></code></p>
 
 
 
@@ -4038,7 +4174,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Dimmer&lt;/span&gt;" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
 
 
 
@@ -4086,7 +4222,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -4134,7 +4270,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -4182,7 +4318,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -4346,7 +4482,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -4394,7 +4530,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4442,7 +4578,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4490,7 +4626,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4538,7 +4674,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4586,7 +4722,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4634,7 +4770,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4682,7 +4818,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -4780,7 +4916,7 @@ for various alarm and notification conditions.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContactChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
 
 
 
@@ -4828,7 +4964,7 @@ for various alarm and notification conditions.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -4876,7 +5012,7 @@ for various alarm and notification conditions.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -4924,7 +5060,7 @@ for various alarm and notification conditions.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;BaseDevice&lt;/span&gt;" href="../device/#homematicip.device.BaseDevice">BaseDevice</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.BaseDevice">BaseDevice</a></code></p>
 
 
 
@@ -5014,7 +5150,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5062,7 +5198,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -5134,7 +5270,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5182,7 +5318,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBlockingChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBlockingChannel">DeviceBlockingChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBlockingChannel">DeviceBlockingChannel</a></code></p>
 
 
 
@@ -5230,7 +5366,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -5278,7 +5414,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -5326,7 +5462,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -5374,7 +5510,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceOperationLockChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceOperationLockChannel">DeviceOperationLockChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceOperationLockChannel">DeviceOperationLockChannel</a></code></p>
 
 
 
@@ -5422,7 +5558,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -5470,7 +5606,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceSabotageChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceSabotageChannel">DeviceSabotageChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceSabotageChannel">DeviceSabotageChannel</a></code></p>
 
 
 
@@ -5518,7 +5654,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DeviceBaseChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DeviceBaseChannel">DeviceBaseChannel</a></code></p>
 
 
 
@@ -5566,7 +5702,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -5614,7 +5750,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5662,7 +5798,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Blind&lt;/span&gt;" href="../device/#homematicip.device.Blind">Blind</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Blind">Blind</a></code></p>
 
 
 
@@ -5710,7 +5846,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Dimmer&lt;/span&gt;" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
 
 
 
@@ -5758,7 +5894,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FullFlushInputSwitch&lt;/span&gt;" href="../device/#homematicip.device.FullFlushInputSwitch">FullFlushInputSwitch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.FullFlushInputSwitch">FullFlushInputSwitch</a></code></p>
 
 
 
@@ -5806,7 +5942,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -5854,7 +5990,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -5902,7 +6038,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -5950,7 +6086,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -5998,7 +6134,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6046,7 +6182,7 @@ a <code>DEVICE_CODE_STATE_EVENT</code> for this device (HmIP-WKP keypad).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6254,7 +6390,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DoorLockDrive&lt;/span&gt;" href="../device/#homematicip.device.DoorLockDrive">DoorLockDrive</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.DoorLockDrive">DoorLockDrive</a></code></p>
 
 
 
@@ -6302,7 +6438,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DoorLockChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DoorLockChannel">DoorLockChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DoorLockChannel">DoorLockChannel</a></code></p>
 
 
 
@@ -6350,7 +6486,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -6398,7 +6534,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6446,7 +6582,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6494,7 +6630,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -6542,7 +6678,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6611,7 +6747,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6659,7 +6795,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -6707,7 +6843,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6755,7 +6891,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;BaseDevice&lt;/span&gt;" href="../device/#homematicip.device.BaseDevice">BaseDevice</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.BaseDevice">BaseDevice</a></code></p>
 
 
 
@@ -6803,7 +6939,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -6851,7 +6987,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6947,7 +7083,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -6995,7 +7131,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FloorTerminalBlock6&lt;/span&gt;" href="../device/#homematicip.device.FloorTerminalBlock6">FloorTerminalBlock6</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.FloorTerminalBlock6">FloorTerminalBlock6</a></code></p>
 
 
 
@@ -7043,7 +7179,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7143,7 +7279,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7191,7 +7327,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -7239,7 +7375,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -7287,7 +7423,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FullFlushShutter&lt;/span&gt;" href="../device/#homematicip.device.FullFlushShutter">FullFlushShutter</a></code>, <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Blind&lt;/span&gt;" href="../device/#homematicip.device.Blind">Blind</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.FullFlushShutter">FullFlushShutter</a></code>, <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Blind">Blind</a></code></p>
 
 
 
@@ -7335,7 +7471,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7383,7 +7519,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7431,7 +7567,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Dimmer&lt;/span&gt;" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
 
 
 
@@ -7479,7 +7615,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7531,7 +7667,7 @@ exposed via the standard <code>functionalChannels</code> collection.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -7580,7 +7716,7 @@ and HMIP-FSI6 (Switch Actuator with Push-button Input, compact)</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7648,7 +7784,7 @@ and HMIP-FSI6 (Switch Actuator with Push-button Input, compact)</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Shutter&lt;/span&gt;" href="../device/#homematicip.device.Shutter">Shutter</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Shutter">Shutter</a></code></p>
 
 
 
@@ -7696,7 +7832,7 @@ and HMIP-FSI6 (Switch Actuator with Push-button Input, compact)</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -7744,7 +7880,7 @@ and HMIP-FSI6 (Switch Actuator with Push-button Input, compact)</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -7836,6 +7972,26 @@ from a json object and the given groups</p>
 
 </div>
 
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.async_home.FunctionalChannel.remove_on_channel_event_handler" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">remove_on_channel_event_handler</span>
+
+
+<a href="#homematicip.async_home.FunctionalChannel.remove_on_channel_event_handler" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">remove_on_channel_event_handler</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Remove an event handler added with add_on_channel_event_handler.</p>
+
+
+    </div>
+
+</div>
+
 
 
   </div>
@@ -7857,7 +8013,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DoorModule&lt;/span&gt;" href="../device/#homematicip.device.DoorModule">DoorModule</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.DoorModule">DoorModule</a></code></p>
 
 
 
@@ -7905,7 +8061,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -7953,7 +8109,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -8001,7 +8157,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -8049,7 +8205,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -8145,7 +8301,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -8289,7 +8445,7 @@ from a json object and the given groups</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DoorModule&lt;/span&gt;" href="../device/#homematicip.device.DoorModule">DoorModule</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.DoorModule">DoorModule</a></code></p>
 
 
 
@@ -8602,7 +8758,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -8670,7 +8826,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -8718,7 +8874,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -8766,7 +8922,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -8814,7 +8970,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -8862,7 +9018,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -8910,7 +9066,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -8958,7 +9114,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -9006,7 +9162,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -9054,7 +9210,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Group&lt;/span&gt;" href="../group/#homematicip.group.Group">Group</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../group/#homematicip.group.Group">Group</a></code></p>
 
 
 
@@ -9102,7 +9258,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -9198,7 +9354,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -9246,7 +9402,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;MotionDetectorOutdoor&lt;/span&gt;" href="../device/#homematicip.device.MotionDetectorOutdoor">MotionDetectorOutdoor</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.MotionDetectorOutdoor">MotionDetectorOutdoor</a></code></p>
 
 
 
@@ -9342,7 +9498,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -9390,7 +9546,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;BlindChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.BlindChannel">BlindChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.BlindChannel">BlindChannel</a></code></p>
 
 
 
@@ -9438,7 +9594,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -9486,7 +9642,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DimmerChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code></p>
 
 
 
@@ -9534,7 +9690,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -9582,7 +9738,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;MultiModeInputChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.MultiModeInputChannel">MultiModeInputChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.MultiModeInputChannel">MultiModeInputChannel</a></code></p>
 
 
 
@@ -9630,7 +9786,7 @@ is updated.</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;DimmerChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code>, <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.DimmerChannel">DimmerChannel</a></code>, <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -9766,7 +9922,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -9934,6 +10090,74 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
 
 
+<h2 id="homematicip.async_home.NumberValueSensorChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">NumberValueSensorChannel</span>
+
+
+<a href="#homematicip.async_home.NumberValueSensorChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the NUMBER_VALUE_SENSOR_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.async_home.NumberValueSensorChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.async_home.NumberValueSensorChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.async_home.OpenCollector8Module" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">OpenCollector8Module</span>
 
@@ -9943,7 +10167,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -9991,7 +10215,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -10039,7 +10263,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -10087,7 +10311,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -10135,7 +10359,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -10231,7 +10455,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -10279,7 +10503,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -10327,7 +10551,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Dimmer&lt;/span&gt;" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
 
 
 
@@ -10375,7 +10599,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -10423,7 +10647,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -10519,7 +10743,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -10567,7 +10791,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -10615,7 +10839,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -10663,7 +10887,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -10711,7 +10935,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WiredPushButton&lt;/span&gt;" href="../device/#homematicip.device.WiredPushButton">WiredPushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.WiredPushButton">WiredPushButton</a></code></p>
 
 
 
@@ -10759,7 +10983,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -10807,7 +11031,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -10855,7 +11079,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -10903,7 +11127,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -10951,7 +11175,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;RemoteControl8&lt;/span&gt;" href="../device/#homematicip.device.RemoteControl8">RemoteControl8</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.RemoteControl8">RemoteControl8</a></code></p>
 
 
 
@@ -10999,7 +11223,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -11047,7 +11271,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -11095,7 +11319,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WallMountedThermostatPro&lt;/span&gt;" href="../device/#homematicip.device.WallMountedThermostatPro">WallMountedThermostatPro</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.WallMountedThermostatPro">WallMountedThermostatPro</a></code></p>
 
 
 
@@ -11143,7 +11367,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -11191,7 +11415,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContactChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.ShutterContactChannel">ShutterContactChannel</a></code></p>
 
 
 
@@ -11287,7 +11511,7 @@ which can play MP3 sounds and show optical signals for various alarm conditions.
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -11337,7 +11561,7 @@ rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -11429,7 +11653,7 @@ rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;HomeMaticIPObject&lt;/span&gt;" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/homematicip_object/#homematicip.base.homematicip_object.HomeMaticIPObject">HomeMaticIPObject</a></code></p>
 
 
 
@@ -11477,7 +11701,7 @@ rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SecurityEvent&lt;/span&gt;" href="../securityEvent/#homematicip.securityEvent.SecurityEvent">SecurityEvent</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../securityEvent/#homematicip.securityEvent.SecurityEvent">SecurityEvent</a></code></p>
 
 
 
@@ -11525,7 +11749,7 @@ rotation direction (CLOCK_WISE / COUNTER_CLOCK_WISE).</p>
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -11599,7 +11823,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -11753,7 +11977,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -11905,7 +12129,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -11953,7 +12177,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12001,7 +12225,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ShutterContact&lt;/span&gt;" href="../device/#homematicip.device.ShutterContact">ShutterContact</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.ShutterContact">ShutterContact</a></code></p>
 
 
 
@@ -12049,7 +12273,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Rule&lt;/span&gt;" href="../rule/#homematicip.rule.Rule">Rule</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../rule/#homematicip.rule.Rule">Rule</a></code></p>
 
 
 
@@ -12229,7 +12453,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -12277,7 +12501,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12325,7 +12549,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -12373,7 +12597,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12421,7 +12645,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -12489,7 +12713,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -12537,7 +12761,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12585,7 +12809,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -12633,7 +12857,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -12681,7 +12905,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;SwitchChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.SwitchChannel">SwitchChannel</a></code></p>
 
 
 
@@ -12729,7 +12953,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12777,7 +13001,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -12825,7 +13049,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12873,7 +13097,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12921,7 +13145,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -12969,7 +13193,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -13017,7 +13241,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;TiltVibrationSensor&lt;/span&gt;" href="../device/#homematicip.device.TiltVibrationSensor">TiltVibrationSensor</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.TiltVibrationSensor">TiltVibrationSensor</a></code></p>
 
 
 
@@ -13066,7 +13290,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -13114,7 +13338,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -13153,6 +13377,74 @@ Returns:
 
 
 
+<h2 id="homematicip.async_home.TubularDriveChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">TubularDriveChannel</span>
+
+
+<a href="#homematicip.async_home.TubularDriveChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>This is the representative of the TUBULAR_DRIVE_CHANNEL channel.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.async_home.TubularDriveChannel.from_json" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_json</span>
+
+
+<a href="#homematicip.async_home.TubularDriveChannel.from_json" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">from_json</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Update the channel attributes from a JSON dictionary.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.async_home.UltrasonicDistanceSensor" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">UltrasonicDistanceSensor</span>
 
@@ -13162,7 +13454,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -13210,7 +13502,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -13258,7 +13550,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -13378,7 +13670,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;UniversalLightChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.UniversalLightChannel">UniversalLightChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.UniversalLightChannel">UniversalLightChannel</a></code></p>
 
 
 
@@ -13426,7 +13718,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -13518,7 +13810,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -13566,7 +13858,7 @@ Returns:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -13617,7 +13909,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WallMountedThermostatPro&lt;/span&gt;" href="../device/#homematicip.device.WallMountedThermostatPro">WallMountedThermostatPro</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.WallMountedThermostatPro">WallMountedThermostatPro</a></code></p>
 
 
 
@@ -13665,7 +13957,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;TemperatureHumiditySensorDisplay&lt;/span&gt;" href="../device/#homematicip.device.TemperatureHumiditySensorDisplay">TemperatureHumiditySensorDisplay</a></code>, <code><span title="homematicip.device.OperationLockableDevice">OperationLockableDevice</span></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.TemperatureHumiditySensorDisplay">TemperatureHumiditySensorDisplay</a></code>, <code><span title="homematicip.device.OperationLockableDevice">OperationLockableDevice</span></code></p>
 
 
 
@@ -13713,7 +14005,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -13761,7 +14053,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WallMountedThermostatPro&lt;/span&gt;" href="../device/#homematicip.device.WallMountedThermostatPro">WallMountedThermostatPro</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.WallMountedThermostatPro">WallMountedThermostatPro</a></code></p>
 
 
 
@@ -13809,7 +14101,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WallMountedThermostatProChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.WallMountedThermostatProChannel">WallMountedThermostatProChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.WallMountedThermostatProChannel">WallMountedThermostatProChannel</a></code></p>
 
 
 
@@ -13857,7 +14149,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;ClimateSensorChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.ClimateSensorChannel">ClimateSensorChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.ClimateSensorChannel">ClimateSensorChannel</a></code></p>
 
 
 
@@ -13905,11 +14197,59 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
         <p>HmIP-WUA (Wall Mounted Universal Actuator)</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.async_home.WaterAlarmGroup" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WaterAlarmGroup</span>
+
+
+<a href="#homematicip.async_home.WaterAlarmGroup" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../group/#homematicip.group.Group">Group</a></code></p>
+
+
+
+        <p>the water alarm of a HmIP-WSS valve and its water sensors</p>
 
 
 
@@ -13953,7 +14293,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -14001,7 +14341,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -14040,6 +14380,126 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
 
 
+<h2 id="homematicip.async_home.WaterSupplyStop" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WaterSupplyStop</span>
+
+
+<a href="#homematicip.async_home.WaterSupplyStop" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
+
+
+
+        <p>HmIP-WSS / HmIP-WSS-GB (Water Stop and Supply Unit)</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="homematicip.async_home.WaterSupplyStopChannel" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WaterSupplyStopChannel</span>
+
+
+<a href="#homematicip.async_home.WaterSupplyStopChannel" class="headerlink" title="Permanent link">&para;</a></h2>
+
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+
+
+
+        <p>this is the representative of the WATER_SUPPLY_STOP_CHANNEL channel</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="homematicip.async_home.WaterSupplyStopChannel.set_water_supply_state_async" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">set_water_supply_state_async</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-async"><code>async</code></small>
+  </span>
+
+<a href="#homematicip.async_home.WaterSupplyStopChannel.set_water_supply_state_async" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">set_water_supply_state_async</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Opens or closes the valve, FULL_OPENED or NO_WATERFLOW.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
 <h2 id="homematicip.async_home.WateringActuatorChannel" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">WateringActuatorChannel</span>
 
@@ -14049,7 +14509,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -14240,7 +14700,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -14288,7 +14748,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FunctionalChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.FunctionalChannel">FunctionalChannel</a></code></p>
 
 
 
@@ -14336,7 +14796,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -14384,7 +14844,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WeatherSensorChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.WeatherSensorChannel">WeatherSensorChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.WeatherSensorChannel">WeatherSensorChannel</a></code></p>
 
 
 
@@ -14432,7 +14892,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -14480,7 +14940,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;WeatherSensorPlusChannel&lt;/span&gt;" href="../base/functionalChannels/#homematicip.base.functionalChannels.WeatherSensorPlusChannel">WeatherSensorPlusChannel</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../base/functionalChannels/#homematicip.base.functionalChannels.WeatherSensorPlusChannel">WeatherSensorPlusChannel</a></code></p>
 
 
 
@@ -14528,7 +14988,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Device&lt;/span&gt;" href="../device/#homematicip.device.Device">Device</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Device">Device</a></code></p>
 
 
 
@@ -14576,7 +15036,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Dimmer&lt;/span&gt;" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Dimmer">Dimmer</a></code></p>
 
 
 
@@ -14624,7 +15084,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Blind&lt;/span&gt;" href="../device/#homematicip.device.Blind">Blind</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Blind">Blind</a></code></p>
 
 
 
@@ -14672,7 +15132,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FloorTerminalBlock12&lt;/span&gt;" href="../device/#homematicip.device.FloorTerminalBlock12">FloorTerminalBlock12</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.FloorTerminalBlock12">FloorTerminalBlock12</a></code></p>
 
 
 
@@ -14720,7 +15180,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FullFlushContactInterface&lt;/span&gt;" href="../device/#homematicip.device.FullFlushContactInterface">FullFlushContactInterface</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.FullFlushContactInterface">FullFlushContactInterface</a></code></p>
 
 
 
@@ -14768,7 +15228,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -14816,7 +15276,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;MotionDetectorOutdoor&lt;/span&gt;" href="../device/#homematicip.device.MotionDetectorOutdoor">MotionDetectorOutdoor</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.MotionDetectorOutdoor">MotionDetectorOutdoor</a></code></p>
 
 
 
@@ -14864,7 +15324,7 @@ ROTARY_WHEEL_CHANNEL instances, one per rotation direction
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;PushButton&lt;/span&gt;" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.PushButton">PushButton</a></code></p>
 
 
 
@@ -15024,7 +15484,7 @@ Args:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -15072,7 +15532,7 @@ Args:
 
     <div class="doc doc-contents ">
             <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;Switch&lt;/span&gt;" href="../device/#homematicip.device.Switch">Switch</a></code></p>
+              Bases: <code><a class="autorefs autorefs-internal" href="../device/#homematicip.device.Switch">Switch</a></code></p>
 
 
 
@@ -15166,7 +15626,7 @@ Args:
 </footer>
       
     </div>
-    <div class="md-dialog" data-md-component="dialog">
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
@@ -15178,10 +15638,10 @@ Args:
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"redirect":null,"search":"../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.expand","navigation.footer","navigation.instant.preview","navigation.path","navigation.sections","navigation.tabs","navigation.tabs.sticky","navigation.top"],"redirect":null,"search":"../../../assets/javascripts/workers/search.c47bb847.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.c04ba553.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.a2388154.min.js"></script>
       
     
   </body>

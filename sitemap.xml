@@ -4,7 +4,7 @@
         <loc>https://hahn-th.github.io/homematicip-rest-api/</loc>
       </url>
       <url>
-        <loc>https://hahn-th.github.io/homematicip-rest-api/getting-started/</loc>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/api-introduction/</loc>
       </url>
       <url>
         <loc>https://hahn-th.github.io/homematicip-rest-api/batch-testing/</loc>
@@ -13,9 +13,126 @@
         <loc>https://hahn-th.github.io/homematicip-rest-api/changelog/</loc>
       </url>
       <url>
-        <loc>https://hahn-th.github.io/homematicip-rest-api/api-introduction/</loc>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/getting-started/</loc>
       </url>
       <url>
         <loc>https://hahn-th.github.io/homematicip-rest-api/reference/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/EventHook/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/access_point_update_state/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/async_home/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/auth/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/channel_event/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/code_state_event/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/constants/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/enums/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/functionalChannels/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/helpers/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/base/homematicip_object/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/class_maps/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/client/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/commands/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/commands/functional_channel_commands/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/buckets/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/client_characteristics_builder/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/client_token_builder/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/connection_context/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/connection_factory/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/connection_url_resolver/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/rate_limited_rest_connection/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/rest_connection/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/websocket_handler/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/device/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/exceptions/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/exceptions/connection_exceptions/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/exceptions/home_exceptions/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/functionalHomes/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/group/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/home/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/location/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/oauth_otk/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/rule/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/securityEvent/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/weather/</loc>
       </url>
 </urlset>
