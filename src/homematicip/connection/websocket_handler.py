@@ -37,6 +37,10 @@ class WebsocketHandler:
         # failures. The reconnect loop otherwise retries the same cached host
         # forever, which never recovers when that host stays down (HTTP 502).
         self.RELOOKUP_AFTER_ATTEMPTS = 3
+        # A connection only counts as working once it stayed open this long.
+        # The cloud may accept the handshake and close right away, and
+        # resetting the backoff on the handshake alone reconnects in a tight loop.
+        self.STABLE_CONNECTION_SECONDS = 10
         # Staleness early-warning thresholds. The MESSAGE_STALE_TIMEOUT
         # safety net only forces a reconnect after 8h; these fire much
         # earlier so consumers can surface the condition to users.
@@ -133,6 +137,7 @@ class WebsocketHandler:
     async def _connect(self, context: ConnectionContext):
         backoff = self.INITIAL_BACKOFF
         while not self._stop_event.is_set():
+            connected_at = None
             try:
                 if self._reconnect_attempt_count >= self.RELOOKUP_AFTER_ATTEMPTS:
                     context = await self._relookup_context(context)
@@ -157,8 +162,7 @@ class WebsocketHandler:
                         timeout=self.CONNECT_TIMEOUT,
                     )
                     async with ws:
-                        backoff = self.INITIAL_BACKOFF
-                        self._reconnect_attempt_count = 0
+                        connected_at = time.monotonic()
                         LOGGER.info(
                             "WebSocket connection established to %s.",
                             context.websocket_url,
@@ -166,23 +170,26 @@ class WebsocketHandler:
                         self._websocket_connected.set()
                         self._disconnect_notified = False
                         await self._call_handlers(self._on_connected_handler)
-                        await self._listen(ws)
+                        reason = await self._listen(ws)
 
             except TimeoutError:
-                reason = (
-                    f"Websocket connect timed out after {self.CONNECT_TIMEOUT}s. "
-                    f"Retry in {backoff}s."
-                )
-                await self._handle_reconnect(reason)
-                await asyncio.sleep(backoff)
-                backoff = min(backoff * 2, self.MAX_BACKOFF)
+                reason = f"Websocket connect timed out after {self.CONNECT_TIMEOUT}s"
             except Exception as e:
-                reason = f"Websocket lost connection: {e}. Retry in {backoff}s."
-                await self._handle_reconnect(reason)
-                await asyncio.sleep(backoff)
-                backoff = min(backoff * 2, self.MAX_BACKOFF)
+                reason = f"Websocket lost connection: {e}"
             finally:
                 await self._cleanup()
+
+            if self._stop_event.is_set():
+                break
+            if connected_at is not None:
+                lifetime = time.monotonic() - connected_at
+                reason = f"{reason} after {lifetime:.1f}s"
+                if lifetime >= self.STABLE_CONNECTION_SECONDS:
+                    backoff = self.INITIAL_BACKOFF
+                    self._reconnect_attempt_count = 0
+            await self._handle_reconnect(f"{reason}. Retry in {backoff}s.")
+            await asyncio.sleep(backoff)
+            backoff = min(backoff * 2, self.MAX_BACKOFF)
 
     async def _relookup_context(self, context: ConnectionContext) -> ConnectionContext:
         try:
@@ -204,7 +211,8 @@ class WebsocketHandler:
             LOGGER.info("Re-resolved websocket host to %s", refreshed.websocket_url)
         return refreshed
 
-    async def _listen(self, ws):
+    async def _listen(self, ws) -> str:
+        """Process messages until the connection ends and return why it ended."""
         while not self._stop_event.is_set():
             try:
                 msg = await asyncio.wait_for(
@@ -222,19 +230,18 @@ class WebsocketHandler:
                     code=aiohttp.WSCloseCode.GOING_AWAY,
                     message=b"Stale connection safety net",
                 )
-                self._last_disconnect_reason = reason
-                break
+                return reason
 
             if msg.type in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
                 self._last_message_time = time.monotonic()
                 self._message_count += 1
                 await self._handle_ws_message(msg)
             elif msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSED):
-                LOGGER.info("WebSocket closed by server.")
-                break
+                return f"Websocket closed by server with code {ws.close_code}"
             elif msg.type == aiohttp.WSMsgType.ERROR:
                 LOGGER.error("Error in websocket: %s", msg)
-                break
+                return f"Websocket error: {ws.exception()}"
+        return "Websocket client stopped"
 
     async def _handle_ws_message(self, message: WSMessage):
         try:

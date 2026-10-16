@@ -195,9 +195,10 @@ async def test_listen_stale_timeout_triggers_close_and_warning(monkeypatch, capl
     )
 
     with caplog.at_level("WARNING"):
-        await client._listen(ws_mock)
+        reason = await client._listen(ws_mock)
 
     ws_mock.close.assert_awaited_once()
+    assert reason.startswith("No HomematicIP websocket events received")
     assert "stale-connection safety net" in caplog.text
     assert "No HomematicIP websocket events received" in caplog.text
 
@@ -350,6 +351,91 @@ async def test_connect_relookups_host_after_repeated_failures(monkeypatch):
     build_mock.assert_awaited()
     assert tried[:2] == ["wss://dead.invalid/ws", "wss://dead.invalid/ws"]
     assert "wss://healthy.invalid/ws" in tried
+
+
+def _closing_session(client, connects, max_connects):
+    """A session whose sockets the server closes cleanly right after the handshake."""
+
+    class FakeWs:
+        close_code = 1000
+
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def receive(self):
+            return DummyMsg(None, type_=aiohttp.WSMsgType.CLOSE)
+
+    class FakeSession:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def ws_connect(self, url, **kwargs):
+            connects.append(url)
+            if len(connects) >= max_connects:
+                client._stop_event.set()
+            return FakeWs()
+
+    return FakeSession
+
+
+@pytest.mark.asyncio
+async def test_connect_backs_off_after_short_lived_clean_close(monkeypatch):
+    """A socket the server closes cleanly before it was stable is a failed
+    attempt. Regression: the backoff was reset on the handshake and a clean
+    close reconnected at once, a tight loop against a server that keeps closing."""
+    client = WebsocketHandler()
+    connects = []
+    sleeps = []
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        _closing_session(client, connects, 4),
+    )
+
+    async def fake_sleep(delay):
+        sleeps.append(delay)
+
+    monkeypatch.setattr(asyncio, "sleep", fake_sleep)
+
+    context = MagicMock()
+    context.websocket_url = "wss://example.invalid/ws"
+
+    await client._connect(context)
+
+    assert len(connects) == 4
+    assert sleeps == [8, 16, 32]
+    assert "closed by server with code 1000" in client.last_disconnect_reason()
+
+
+@pytest.mark.asyncio
+async def test_connect_resets_backoff_after_stable_connection(monkeypatch):
+    """A socket that stayed open for STABLE_CONNECTION_SECONDS resets the backoff."""
+    client = WebsocketHandler()
+    client.STABLE_CONNECTION_SECONDS = 0
+    connects = []
+    sleeps = []
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        _closing_session(client, connects, 3),
+    )
+
+    async def fake_sleep(delay):
+        sleeps.append(delay)
+
+    monkeypatch.setattr(asyncio, "sleep", fake_sleep)
+
+    context = MagicMock()
+    context.websocket_url = "wss://example.invalid/ws"
+
+    await client._connect(context)
+
+    assert sleeps == [8, 8]
+    assert client.reconnect_attempt_count() == 1
 
 
 @pytest.mark.asyncio
