@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.1..master)
 
+### Added
+
+- `OpticalSignalChannel.set_optical_signal` and `async_set_optical_signal` set an LED of a wired push button on its own channel, as `NotificationLightChannel` already does.
+
 ## [2.19.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.0..2.19.1)
 
 ### Fixed
