@@ -354,6 +354,19 @@ def test_notification_light_channel_v2_switch(fake_home: Home):
         assert ch.on is False
 
 
+def test_optical_signal_channel(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711000000000WRC6230", 9)
+        assert isinstance(ch, OpticalSignalChannel)
+
+        ch.set_optical_signal(OpticalSignalBehaviour.FLASH_MIDDLE, RGBColorState.RED, 0.5)
+        fake_home.get_current_state()
+        ch = fake_home.search_channel("3014F711000000000WRC6230", 9)
+        assert ch.dimLevel == 0.5
+        assert ch.simpleRGBColorState == RGBColorState.RED
+        assert ch.opticalSignalBehaviour == OpticalSignalBehaviour.FLASH_MIDDLE
+
+
 def test_shading_channel(fake_home: Home):
     with no_ssl_verification():
         ch = fake_home.search_channel("3014F71100BLIND_MODULE00", 1)
