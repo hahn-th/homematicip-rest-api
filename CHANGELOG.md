@@ -5,11 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.0..master)
+## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.1..master)
+
+## [2.19.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.0..2.19.1)
 
 ### Fixed
 
-- The websocket reconnected without any delay when the server closed a connection cleanly right after the handshake. The backoff now resets only once a connection stayed open for `STABLE_CONNECTION_SECONDS` (10 s), and the reconnect reason names the close code and how long the connection lasted ([#729](https://github.com/hahn-th/homematicip-rest-api/issues/729)).
+- The websocket reconnected without any delay when the server closed a connection cleanly right after the handshake. The backoff now resets only once a connection stayed open for `STABLE_CONNECTION_SECONDS` (10 s), and the reconnect reason names the close code and how long the connection lasted ([#729](https://github.com/hahn-th/homematicip-rest-api/issues/729)). Thanks to @Ne0os for the analysis.
 
 ## [2.19.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.18.0..2.19.0)
 
