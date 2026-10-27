@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.1..master)
 
+### Fixed
+
+- A device that fails to load no longer leaves every device after it missing or stale.
+
 ## [2.19.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.0..2.19.1)
 
 ### Fixed
