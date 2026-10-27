@@ -2288,6 +2288,37 @@ class OpticalSignalChannel(FunctionalChannel):
     def __str__(self):
         return f"{super().__str__()} dimLevel({self.dimLevel}) on({self.on}) opticalSignalBehaviour({self.opticalSignalBehaviour}) powerUpSwitchState({self.powerUpSwitchState}) profileMode({self.profileMode}) simpleRGBColorState({self.simpleRGBColorState}) userDesiredProfileMode({self.userDesiredProfileMode})"
 
+    def set_optical_signal(
+            self,
+            opticalSignalBehaviour: OpticalSignalBehaviour,
+            rgb: RGBColorState,
+            dimLevel: float | None = None,
+    ):
+        return self._run_non_async(self.async_set_optical_signal, opticalSignalBehaviour, rgb, dimLevel)
+
+    async def async_set_optical_signal(
+            self,
+            opticalSignalBehaviour: OpticalSignalBehaviour,
+            rgb: RGBColorState,
+            dimLevel: float | None = None,
+    ):
+        """sets the signal type for the led
+
+        Args:
+            opticalSignalBehaviour(OpticalSignalBehaviour): LED signal behaviour
+            rgb(RGBColorState): Color
+            dimLevel(float): the current dim level when omitted
+
+        Returns:
+            Result of the _restCall
+        """
+        if dimLevel is None:
+            dimLevel = self.dimLevel
+
+        return await functional_channel_commands.set_optical_signal_async(
+            self._connection, self.device.id, self.index, str(opticalSignalBehaviour), str(rgb), dimLevel
+        )
+
 
 class CarbonDioxideSensorChannel(FunctionalChannel):
     """Representation of the CarbonDioxideSensorChannel Channel"""
