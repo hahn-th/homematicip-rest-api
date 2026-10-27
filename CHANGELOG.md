@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `OpticalSignalChannel.set_optical_signal` and `async_set_optical_signal` set an LED of a wired push button on its own channel, as `NotificationLightChannel` already does.
 
+### Changed
+
+- A device, group, rule or functional home that fails to load is logged with its error and skipped, instead of being loaded as an unknown type.
+
 ### Fixed
 
 - A device that fails to load no longer leaves every device after it missing or stale.

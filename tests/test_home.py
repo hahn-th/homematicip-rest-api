@@ -13,7 +13,7 @@ from homematicip_demo.helper import (
 from conftest import berlin_time
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.code_state_event import CodeStateEvent
-from homematicip.base.enums import EventType
+from homematicip.base.enums import DeviceType, EventType, FunctionalHomeType, GroupType
 from homematicip.client import Client
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.device import BaseDevice, Device
@@ -952,6 +952,58 @@ def test_get_devices_skips_a_failing_device(fake_home: Home):
 
     assert len(fake_home.devices) == len(config["devices"]) - 1
     assert fake_home.search_device_by_id(failing_id) is None
+
+
+class _BrokenParser:
+    def __init__(self, *args):
+        pass
+
+    def from_json(self, *args):
+        raise KeyError("broken")
+
+
+def test_parse_device_does_not_hide_an_error_as_an_unknown_type(fake_home: Home):
+    raw = next(
+        d
+        for d in fake_home.download_configuration()["devices"].values()
+        if d["type"] == "SMOKE_DETECTOR"
+    )
+    fake_home._typeClassMap = {
+        **fake_home._typeClassMap,
+        DeviceType.SMOKE_DETECTOR: _BrokenParser,
+    }
+
+    with pytest.raises(KeyError):
+        fake_home._parse_device(raw)
+
+
+def test_get_groups_skips_a_failing_group(fake_home: Home):
+    config = fake_home.download_configuration()
+    fake_home._typeGroupMap = {
+        **fake_home._typeGroupMap,
+        GroupType.SECURITY_ZONE: _BrokenParser,
+    }
+
+    fake_home.groups = []
+    fake_home._get_groups(config)
+
+    loaded = {g.id for g in fake_home.groups}
+    for id_, raw in config["groups"].items():
+        assert (id_ in loaded) == (raw["type"] != "SECURITY_ZONE")
+
+
+def test_get_functional_homes_skips_a_failing_home(fake_home: Home):
+    config = fake_home.download_configuration()
+    fake_home._typeFunctionalHomeMap = {
+        **fake_home._typeFunctionalHomeMap,
+        FunctionalHomeType.ENERGY: _BrokenParser,
+    }
+
+    fake_home.functionalHomes = []
+    fake_home._get_functionalHomes(config["home"])
+
+    solutions = {fh.solution for fh in fake_home.functionalHomes}
+    assert solutions == set(config["home"]["functionalHomes"]) - {"ENERGY"}
 
 
 def test_search_channel_not_found(fake_home: Home):
