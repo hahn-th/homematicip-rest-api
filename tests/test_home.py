@@ -10,7 +10,7 @@ from homematicip_demo.helper import (
     no_ssl_verification,
 )
 
-from conftest import utc_offset
+from conftest import berlin_time
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.code_state_event import CodeStateEvent
 from homematicip.base.enums import EventType
@@ -918,9 +918,7 @@ def test_home_getOAuthOTK(fake_home: Home):
     with no_ssl_verification():
         token = fake_home.get_OAuth_OTK()
         assert token.authToken == "C001ED"
-        assert token.expirationTimestamp == datetime(
-            2018, 12, 23, 11, 38, 21, 680000
-        ) + timedelta(0, utc_offset)
+        assert token.expirationTimestamp == berlin_time(2018, 12, 23, 13, 38, 21, 680000)
 
 
 def test_search_channel(fake_home: Home):
