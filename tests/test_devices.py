@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
@@ -7,7 +6,7 @@ from homematicip_demo.helper import (
     no_ssl_verification,
 )
 
-from conftest import utc_offset
+from conftest import berlin_time
 from homematicip.base.enums import (
     DeviceType,
     FunctionalChannelType,
@@ -703,9 +702,7 @@ def test_shutter_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000001")
     assert isinstance(d, ShutterContact)
     assert d.label == "Fenster"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 37, 34, 304000)
     assert d.manufacturerCode == 1
     assert d.modelId == 258
     assert d.modelType == "HMIP-SWDO"
@@ -743,9 +740,7 @@ def test_shutter_device_magnetic(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000005551")
     assert isinstance(d, ShutterContactMagnetic)
     assert d.label == "Eingangstürkontakt"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 37, 34, 304000)
     assert d.manufacturerCode == 1
     assert d.modelId == 340
     assert d.modelType == "HmIP-SWDM"
@@ -792,9 +787,7 @@ def test_contact_interface_device(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000064")
     assert isinstance(d, ContactInterface)
     assert d.label == "Schließer Magnet"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 37, 34, 304000)
     assert d.manufacturerCode == 1
     assert d.modelId == 375
     assert d.modelType == "HmIP-SCI"
@@ -836,7 +829,7 @@ def test_pluggable_switch_measuring(fake_home: Home):
     assert isinstance(d, SwitchMeasuring)
     assert d.label == "Brunnen"
     assert d.lastStatusUpdate == (
-            datetime(2018, 4, 23, 20, 36, 26, 303000) + timedelta(0, utc_offset)
+            berlin_time(2018, 4, 23, 22, 36, 26, 303000)
     )
     assert d.manufacturerCode == 1
     assert d.modelId == 262
@@ -887,9 +880,7 @@ def test_smoke_detector(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000020")
     assert isinstance(d, SmokeDetector)
     assert d.label == "Rauchwarnmelder3"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 4, 5, 24, 824000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 6, 5, 24, 824000)
     assert d.manufacturerCode == 1
     assert d.modelId == 296
     assert d.modelType == "HmIP-SWSD-2"
@@ -931,9 +922,7 @@ def test_wall_mounted_thermostat_pro(fake_home: Home):
     assert isinstance(d, WallMountedThermostatPro)
     assert d.id == "3014F7110000000000000022"
     assert d.label == "Wandthermostat"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 48, 54, 382000)
     assert d.manufacturerCode == 1
     assert d.modelId == 297
     assert d.modelType == "HmIP-WTH-2"
@@ -996,9 +985,7 @@ def test_heating_thermostat(fake_home: Home):
     d = fake_home.search_device_by_id("3014F7110000000000000015")
     assert isinstance(d, HeatingThermostat)
     assert d.label == "Wohnzimmer-Heizung"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 5, 50, 325000)
     assert d.manufacturerCode == 1
     assert d.modelId == 269
     assert d.modelType == "HMIP-eTRV"
@@ -1170,9 +1157,7 @@ def test_temperature_humidity_sensor_outdoor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000002")
     assert isinstance(d, TemperatureHumiditySensorOutdoor)
     assert d.label == "Temperatur- und Luftfeuchtigkeitssensor - außen"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 5, 50, 325000)
     assert d.manufacturerCode == 1
     assert d.modelId == 314
     assert d.modelType == "HmIP-STHO"
@@ -1205,9 +1190,7 @@ def test_weather_sensor_pro(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000001")
     assert isinstance(d, WeatherSensorPro)
     assert d.label == "Wettersensor - pro"
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 5, 50, 325000)
     assert d.manufacturerCode == 1
     assert d.modelId == 352
     assert d.modelType == "HmIP-SWO-PR"
@@ -1265,9 +1248,7 @@ def test_weather_sensor_pro(fake_home: Home):
 def test_weather_sensor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000003")
     assert isinstance(d, WeatherSensor)
-    assert d.lastStatusUpdate == datetime(2018, 4, 23, 20, 5, 50, 325000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 5, 50, 325000)
     assert d.lowBat is False
     assert d.routerModuleEnabled is False
     assert d.routerModuleSupported is False
@@ -1359,9 +1340,7 @@ def test_rotary_handle_sensor(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000004")
     assert isinstance(d, RotaryHandleSensor)
     assert d.label == "Fenstergriffsensor"
-    assert d.lastStatusUpdate == datetime(2018, 4, 27, 8, 6, 25, 462000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 27, 10, 6, 25, 462000)
     assert d.manufacturerCode == 1
     assert d.modelId == 286
     assert d.modelType == "HmIP-SRH"
@@ -1393,9 +1372,7 @@ def test_dimmer(fake_home: Home):
     d = fake_home.search_device_by_id("3014F711AAAA000000000005")
     assert isinstance(d, BrandDimmer)
     assert d.label == "Schlafzimmerlicht"
-    assert d.lastStatusUpdate == datetime(2018, 4, 27, 8, 6, 25, 462000) + timedelta(
-        0, utc_offset
-    )
+    assert d.lastStatusUpdate == berlin_time(2018, 4, 27, 10, 6, 25, 462000)
     assert d.modelId == 290
     assert d.modelType == "HmIP-BDT"
     assert d.oem == "eQ-3"
@@ -1487,9 +1464,7 @@ def test_external_device(fake_home: Home):
         assert d.id == "HUE00000-0000-0000-0000-000000000008"
         assert d.label == "Hinten rechts"
         # 1669539365772
-        assert d.lastStatusUpdate == datetime(
-            2022, 11, 27, 9, 56, 5, 772000
-        )  # + timedelta(0, utc_offset)
+        assert d.lastStatusUpdate == berlin_time(2022, 11, 27, 9, 56, 5, 772000)
         assert d.modelType == "LTW013"
         assert d.permanentlyReachable == True
         assert d.supported == True

@@ -2,9 +2,9 @@ import asyncio
 import os
 import ssl
 import sys
-import time
-from datetime import UTC, datetime, timedelta
+from datetime import datetime
 from threading import Thread
+from zoneinfo import ZoneInfo
 
 from homematicip.connection.connection_context import (
     ConnectionContextBuilder,
@@ -170,9 +170,8 @@ async def no_ssl_fake_async_home(fake_cloud, fake_connection_context_with_ssl, n
 #     await auth._connection._websession.close()
 
 
-dt = datetime.now(UTC).astimezone()
-utc_offset = dt.utcoffset() // timedelta(seconds=1)
-# the timestamp of the tests were written during DST so utc_offset is one hour less outside of DST
-# -> adding one hour extra
-if not time.localtime().tm_isdst:
-    utc_offset = utc_offset + 3600  # pragma: no cover
+def berlin_time(*args):
+    """Expected timestamps are written as Berlin wall time; the library returns local time."""
+    return (
+        datetime(*args, tzinfo=ZoneInfo("Europe/Berlin")).astimezone().replace(tzinfo=None)
+    )
