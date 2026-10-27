@@ -24,7 +24,7 @@ class AutoNameEnum(StrEnum):
             return None
         try:
             return cls(text)
-        except:
+        except ValueError:
             logger.warning(
                 "'%s' isn't a valid option for class '%s'", text, cls.__name__
             )

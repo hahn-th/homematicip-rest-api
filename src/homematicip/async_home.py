@@ -464,39 +464,36 @@ class AsyncHome(HomeMaticIPObject):
                 )
 
     def _parse_device(self, json_state):
-        try:
-            deviceType = DeviceType.from_str(json_state["type"])
-            d = self._typeClassMap[deviceType](self._connection)
-            d.from_json(json_state)
-            return d
-        except:
-            d = self._typeClassMap[DeviceType.BASE_DEVICE](self._connection)
-            d.from_json(json_state)
+        device_class = self._typeClassMap.get(DeviceType.from_str(json_state["type"]))
+        if device_class is None:
             LOGGER.warning("There is no class for device '%s' yet", json_state["type"])
-            return d
+            device_class = self._typeClassMap[DeviceType.BASE_DEVICE]
+        d = device_class(self._connection)
+        d.from_json(json_state)
+        return d
 
     def _get_rules(self, json_state):
         self.rules = [
             x for x in self.rules if x.id in json_state["ruleMetaDatas"]
         ]
         for id_, raw in json_state["ruleMetaDatas"].items():
-            _rule = self.search_rule_by_id(id_)
-            if _rule:
-                _rule.from_json(raw)
-            else:
-                self.rules.append(self._parse_rule(raw))
+            try:
+                _rule = self.search_rule_by_id(id_)
+                if _rule:
+                    _rule.from_json(raw)
+                else:
+                    self.rules.append(self._parse_rule(raw))
+            except Exception:
+                LOGGER.exception("Could not load rule %s", id_)
 
     def _parse_rule(self, json_state):
-        try:
-            ruleType = AutomationRuleType.from_str(json_state["type"])
-            r = self._typeRuleMap[ruleType](self._connection)
-            r.from_json(json_state)
-            return r
-        except:
-            r = Rule(self._connection)
-            r.from_json(json_state)
-            LOGGER.warning("There is no class for rule  '%s' yet", json_state["type"])
-            return r
+        rule_class = self._typeRuleMap.get(AutomationRuleType.from_str(json_state["type"]))
+        if rule_class is None:
+            LOGGER.warning("There is no class for rule '%s' yet", json_state["type"])
+            rule_class = Rule
+        r = rule_class(self._connection)
+        r.from_json(json_state)
+        return r
 
     def _get_clients(self, json_state):
         self.clients = [x for x in self.clients if x.id in json_state["clients"]]
@@ -515,36 +512,38 @@ class AsyncHome(HomeMaticIPObject):
             g = MetaGroup(self._connection)
             g.from_json(json_state, self.devices, self.groups)
         else:
-            try:
-                groupType = GroupType.from_str(json_state["type"])
-                g = self._typeGroupMap[groupType](self._connection)
-                g.from_json(json_state, self.devices)
-            except:
-                g = self._typeGroupMap[GroupType.GROUP](self._connection)
-                g.from_json(json_state, self.devices)
+            group_class = self._typeGroupMap.get(GroupType.from_str(json_state["type"]))
+            if group_class is None:
                 LOGGER.warning(
                     "There is no class for group '%s' yet", json_state["type"]
                 )
+                group_class = self._typeGroupMap[GroupType.GROUP]
+            g = group_class(self._connection)
+            g.from_json(json_state, self.devices)
         return g
 
     def _get_groups(self, json_state):
         self.groups = [x for x in self.groups if x.id in json_state["groups"]]
         metaGroups = []
         for id_, raw in json_state["groups"].items():
-            _group = self.search_group_by_id(id_)
-            if _group:
-                if isinstance(_group, MetaGroup):
-                    _group.from_json(raw, self.devices, self.groups)
-                else:
-                    _group.from_json(raw, self.devices)
-            else:
-                group_type = raw["type"]
-                if group_type == "META":
+            try:
+                _group = self.search_group_by_id(id_)
+                if _group:
+                    if isinstance(_group, MetaGroup):
+                        _group.from_json(raw, self.devices, self.groups)
+                    else:
+                        _group.from_json(raw, self.devices)
+                elif raw["type"] == "META":
                     metaGroups.append(raw)
                 else:
                     self.groups.append(self._parse_group(raw))
+            except Exception:
+                LOGGER.exception("Could not load group %s", id_)
         for mg in metaGroups:
-            self.groups.append(self._parse_group(mg))
+            try:
+                self.groups.append(self._parse_group(mg))
+            except Exception:
+                LOGGER.exception("Could not load group %s", mg["id"])
 
     def _get_functionalHomes(self, json_state):
         """loads the functional homes."""
@@ -555,22 +554,24 @@ class AsyncHome(HomeMaticIPObject):
                 (fh for fh in self.functionalHomes if fh.solution == solution),
                 None,
             )
-            try:
-                solutionType = FunctionalHomeType.from_str(solution)
-                if existing is None:
-                    existing = self._typeFunctionalHomeMap[solutionType](
-                        self._connection
-                    )
-                    self.functionalHomes.append(existing)
-                existing.from_json(functionalHome, self.groups)
-            except:
-                if existing is None:
-                    existing = FunctionalHome(self._connection)
-                    self.functionalHomes.append(existing)
+            is_new = existing is None
+            if is_new:
+                home_class = self._typeFunctionalHomeMap.get(
+                    FunctionalHomeType.from_str(solution)
+                )
+                if home_class is None:
                     LOGGER.warning(
                         "There is no class for functionalHome '%s' yet", solution
                     )
+                    home_class = FunctionalHome
+                existing = home_class(self._connection)
+            try:
                 existing.from_json(functionalHome, self.groups)
+            except Exception:
+                LOGGER.exception("Could not load functionalHome %s", solution)
+                continue
+            if is_new:
+                self.functionalHomes.append(existing)
 
     def _load_functionalChannels(self):
         """loads the functional channels for all devices"""
@@ -939,7 +940,7 @@ class AsyncHome(HomeMaticIPObject):
                 journal_entry = self._typeSecurityEventMap.get(event_type, SecurityEvent)(
                     self._connection
                 )
-            except:
+            except ValueError:
                 journal_entry = SecurityEvent(self._connection)
                 LOGGER.warning("There is no class for %s yet", entry["eventType"])
 
