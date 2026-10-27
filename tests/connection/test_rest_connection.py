@@ -1,8 +1,10 @@
 import logging
+import ssl
 from unittest.mock import AsyncMock
 
 import httpx
 import pytest
+from homematicip_demo.helper import get_full_path
 
 from homematicip.connection.rest_connection import (
     ConnectionContext,
@@ -211,3 +213,11 @@ def test_get_verify_disables_ssl_when_enforce_false():
 
 def test_get_verify_enforces_ssl_when_enforce_true():
     assert RestConnection._get_verify(enforce_ssl=True, ssl_context=None) is True
+
+
+def test_get_verify_turns_a_ca_path_into_a_context():
+    verify = RestConnection._get_verify(
+        enforce_ssl=True, ssl_context=str(get_full_path("client.pem"))
+    )
+    assert isinstance(verify, ssl.SSLContext)
+    assert verify.verify_mode == ssl.CERT_REQUIRED

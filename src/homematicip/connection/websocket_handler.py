@@ -12,6 +12,7 @@ from homematicip.connection import (
     ATTR_ACCESSPOINT_ID,
     ATTR_AUTH_TOKEN,
     ATTR_CLIENT_AUTH,
+    get_ssl_verify,
 )
 from homematicip.connection.connection_context import (
     ConnectionContext,
@@ -153,10 +154,8 @@ class WebsocketHandler:
                                 ATTR_ACCESSPOINT_ID: context.accesspoint_id
                             },
                             heartbeat=self.HEARTBEAT_INTERVAL,
-                            ssl=(
-                                context.ssl_ctx
-                                if context.ssl_ctx is not None
-                                else context.enforce_ssl
+                            ssl=get_ssl_verify(
+                                context.enforce_ssl, context.ssl_ctx
                             ),
                         ),
                         timeout=self.CONNECT_TIMEOUT,

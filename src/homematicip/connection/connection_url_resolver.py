@@ -2,6 +2,8 @@ from ssl import SSLContext
 
 import httpx
 
+from homematicip.connection import get_ssl_verify
+
 
 class ConnectionUrlResolver:
     """Lookup rest and websocket urls."""
@@ -70,6 +72,4 @@ class ConnectionUrlResolver:
 
     @staticmethod
     def _get_verify(enforce_ssl: bool, ssl_context):
-        if ssl_context is not None:
-            return ssl_context
-        return enforce_ssl
+        return get_ssl_verify(enforce_ssl, ssl_context)
