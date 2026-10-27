@@ -10,7 +10,7 @@ from homematicip_demo.helper import (
     no_ssl_verification,
 )
 
-from conftest import utc_offset
+from conftest import berlin_time
 from homematicip.base.channel_event import ChannelEvent
 from homematicip.base.code_state_event import CodeStateEvent
 from homematicip.base.enums import EventType
@@ -918,9 +918,7 @@ def test_home_getOAuthOTK(fake_home: Home):
     with no_ssl_verification():
         token = fake_home.get_OAuth_OTK()
         assert token.authToken == "C001ED"
-        assert token.expirationTimestamp == datetime(
-            2018, 12, 23, 11, 38, 21, 680000
-        ) + timedelta(0, utc_offset)
+        assert token.expirationTimestamp == berlin_time(2018, 12, 23, 13, 38, 21, 680000)
 
 
 def test_search_channel(fake_home: Home):
@@ -936,6 +934,24 @@ def test_get_devices_fails(fake_home: Home):
     with patch.object(fake_home, 'search_device_by_id', side_effect=Exception("Device not found")):
         result = fake_home._get_devices(config)
         assert result is None
+
+
+def test_get_devices_skips_a_failing_device(fake_home: Home):
+    config = fake_home.download_configuration()
+    failing_id = next(iter(config["devices"]))
+    search_device_by_id = fake_home.search_device_by_id
+
+    def search(id_):
+        if id_ == failing_id:
+            raise Exception("broken device")
+        return search_device_by_id(id_)
+
+    fake_home.devices = []
+    with patch.object(fake_home, "search_device_by_id", side_effect=search):
+        fake_home._get_devices(config)
+
+    assert len(fake_home.devices) == len(config["devices"]) - 1
+    assert fake_home.search_device_by_id(failing_id) is None
 
 
 def test_search_channel_not_found(fake_home: Home):

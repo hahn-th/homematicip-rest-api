@@ -25,12 +25,6 @@ jobs:
       matrix:
         python-version: ["3.12", "3.13", "3.14"]
     steps:
-      - name: Set Timezone
-        uses: szenius/set-timezone@v1.1
-        with:
-          timezoneLinux: "Europe/Berlin"
-          timezoneMacos: "Europe/Berlin"
-          timezoneWindows: "Europe/Berlin"
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5

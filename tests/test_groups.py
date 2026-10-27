@@ -1,11 +1,11 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from homematicip_demo.helper import (
     fake_home_download_configuration,
     no_ssl_verification,
 )
 
-from conftest import utc_offset
+from conftest import berlin_time
 from homematicip.group import *
 from homematicip.home import Home
 
@@ -14,9 +14,7 @@ def test_meta_group(fake_home: Home):
     g = fake_home.search_group_by_id("00000000-0000-0000-0000-000000000020")
     assert isinstance(g, MetaGroup)
     assert g.label == "Badezimmer"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 49, 16, 479000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 49, 16, 479000)
     assert g.lowBat is False
     assert g.metaGroup is None
     assert g.sabotage is None
@@ -93,9 +91,7 @@ def test_heating_group(fake_home: Home):
     assert g.humidityLimitValue == 60
     assert g.humidityLimiterAlarm is True
     assert g.label == "Schlafzimmer"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 54, 382000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 48, 54, 382000)
     assert g.lowBat is False
     assert g.maxTemperature == 30.0
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000011"
@@ -175,9 +171,7 @@ def test_security_group(fake_home: Home):
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000009"
     assert g.label == "Büro"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 37, 34, 304000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 37, 34, 304000)
     assert g.lowBat is False
     assert g.metaGroup.id == "00000000-0000-0000-0000-000000000008"
     assert g.motionDetected is None
@@ -244,9 +238,7 @@ def test_security_zone(fake_home: Home):
     assert g.homeId == "00000000-0000-0000-0000-000000000001"
     assert g.id == "00000000-0000-0000-0000-000000000005"
     assert g.label == "EXTERNAL"
-    assert g.lastStatusUpdate == datetime(2018, 4, 23, 20, 48, 46, 498000) + timedelta(
-        0, utc_offset
-    )
+    assert g.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 48, 46, 498000)
     assert g.metaGroup is None
     assert g.unreach is False
 
@@ -280,9 +272,7 @@ def test_switching_group(fake_home: Home):
         assert g.homeId == "00000000-0000-0000-0000-000000000001"
         assert g.id == "00000000-0000-0000-0000-000000000018"
         assert g.label == "Strom"
-        assert g.lastStatusUpdate == datetime(
-            2018, 4, 23, 20, 49, 14, 56000
-        ) + timedelta(0, utc_offset)
+        assert g.lastStatusUpdate == berlin_time(2018, 4, 23, 22, 49, 14, 56000)
         assert g.lowBat is None
         assert g.metaGroup.id == "00000000-0000-0000-0000-000000000017"
         assert g.on is True
@@ -480,7 +470,7 @@ def test_heating_failure_alert_group(fake_home: Home):
             "HEATING_FAILURE_ALERT_RULE_GROUP HEATING_FAILURE_ALERT_RULE_GROUP"
             " enabled(True) heatingFailureValidationResult(NO_HEATING_FAILURE)"
             " checkInterval(600) validationTimeout(86400000)"
-            " lastExecutionTimestamp(2019-02-21 19:30:00.084000)"
+            f" lastExecutionTimestamp({berlin_time(2019, 2, 21, 19, 30, 0, 84000)})"
         )
 
 
@@ -491,8 +481,8 @@ def test_humidity_warning_rule_group(fake_home: Home):
             "HUMIDITY_WARNING_RULE_GROUP Büro enabled(True) "
             "humidityValidationResult(LESSER_LOWER_THRESHOLD) "
             "humidityLowerThreshold(40) humidityUpperThreshold(60) "
-            "triggered(False) lastExecutionTimestamp(2019-02-28 22:05:05.665000) "
-            "lastStatusUpdate(2019-02-28 22:08:24.260000) ventilationRecommended(True)"
+            f"triggered(False) lastExecutionTimestamp({berlin_time(2019, 2, 28, 22, 5, 5, 665000)}) "
+            f"lastStatusUpdate({berlin_time(2019, 2, 28, 22, 8, 24, 260000)}) ventilationRecommended(True)"
         )
         assert g.outdoorClimateSensor is None
 
