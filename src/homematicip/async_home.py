@@ -462,7 +462,6 @@ class AsyncHome(HomeMaticIPObject):
                     id_,
                     type(err).__name__,
                 )
-                return
 
     def _parse_device(self, json_state):
         try:
