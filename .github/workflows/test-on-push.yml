@@ -36,6 +36,6 @@ jobs:
           pip install -r requirements_dev.txt
           pip install -e .
       - name: Run tests and collect coverage
-        run: pytest --cov=./ tests --asyncio-mode=legacy
+        run: pytest --cov=./ tests
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
