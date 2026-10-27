@@ -12,6 +12,7 @@ from homematicip.connection import (
     ATTR_AUTH_TOKEN,
     ATTR_CLIENT_AUTH,
     THROTTLE_STATUS_CODE,
+    get_ssl_verify,
 )
 from homematicip.connection.connection_context import ConnectionContext
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
@@ -88,7 +89,7 @@ class RestConnection:
     def update_connection_context(self, context: ConnectionContext) -> None:
         self._context: ConnectionContext = context
         self._headers: dict = self._get_header(context)
-        self._verify:  SSLContext | str | bool = self._get_verify(context.enforce_ssl, context.ssl_ctx)
+        self._verify: SSLContext | bool = self._get_verify(context.enforce_ssl, context.ssl_ctx)
 
     @staticmethod
     def _get_header(context: ConnectionContext) -> dict[str, str]:
@@ -209,7 +210,5 @@ class RestConnection:
         return f"{base_url}/hmip/{path}"
 
     @staticmethod
-    def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | str | bool:
-        if ssl_context is not None:
-            return ssl_context
-        return enforce_ssl
+    def _get_verify(enforce_ssl: bool, ssl_context) -> SSLContext | bool:
+        return get_ssl_verify(enforce_ssl, ssl_context)

@@ -1,10 +1,12 @@
 import asyncio
 import contextlib
+import ssl
 import time
 from unittest.mock import AsyncMock, MagicMock
 
 import aiohttp
 import pytest
+from homematicip_demo.helper import get_full_path
 
 from homematicip.connection.websocket_handler import WebsocketHandler
 
@@ -304,6 +306,42 @@ async def test_connect_passes_ssl_ctx_when_provided(monkeypatch):
     await client._connect(context)
 
     assert captured["ssl"] is sentinel
+
+
+@pytest.mark.asyncio
+async def test_connect_turns_a_ca_path_into_a_context(monkeypatch):
+    client = WebsocketHandler()
+    client.INITIAL_BACKOFF = 0
+    captured = {}
+
+    class FakeSession:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def ws_connect(self, url, **kwargs):
+            captured.update(kwargs)
+            client._stop_event.set()
+            raise TimeoutError("stop after capture")
+
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        FakeSession,
+    )
+
+    context = MagicMock()
+    context.websocket_url = "wss://example.invalid/ws"
+    context.auth_token = "t"
+    context.client_auth_token = "c"
+    context.accesspoint_id = "a"
+    context.ssl_ctx = str(get_full_path("client.pem"))
+    context.enforce_ssl = True
+
+    await client._connect(context)
+
+    assert isinstance(captured["ssl"], ssl.SSLContext)
 
 
 @pytest.mark.asyncio
