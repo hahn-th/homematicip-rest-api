@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- A device that fails to load no longer leaves every device after it missing or stale.
 - A CA file path in `ssl_ctx` works for the websocket and no longer triggers the httpx deprecation warning.
 
 ## [2.19.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.0..2.19.1)
