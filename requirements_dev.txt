@@ -6,4 +6,4 @@ pytest-asyncio>=1.0
 pytest-cov>=6.0
 pytest-aiohttp
 pytest-rerunfailures>=14.0
-pytest-mock>=3.14
+pytest-mock>=3.17.0
