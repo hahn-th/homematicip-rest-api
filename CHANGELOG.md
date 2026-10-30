@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.20.0..master)
 
+### Added
+
+- `FloorTeminalBlockChannel` and `FloorTerminalBlockLocalPumpChannel` read `valvePosition`, so the valve positions of the HmIP-FAL230 and HmIP-FAL24 actuators are available ([#749](https://github.com/hahn-th/homematicip-rest-api/issues/749)).
+
 ## [2.20.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.1..2.20.0)
 
 ### Added

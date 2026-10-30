@@ -1942,6 +1942,8 @@ def test_floor_terminal_block(fake_home: Home):
         assert d.pumpLeadTime == 2
         assert d.pumpProtectionDuration == 1
         assert d.pumpProtectionSwitchingInterval == 14
+        assert d.functionalChannels[1].valvePosition == 0.0
+        assert d.functionalChannels[2].valvePosition == 1.0
         assert str(d) == (
             "HmIP-FAL230-C6 Fußbodenheizungsaktor lowBat(None) unreach(False) "
             "rssiDeviceValue(-62) rssiPeerValue(None) configPending(False) dutyCycle(False) "
@@ -1953,6 +1955,7 @@ def test_floor_terminal_block(fake_home: Home):
         )
         d = FloorTerminalBlock10(fake_home._connection)
         d = fake_home.search_device_by_id("3014F71100000000FAL24C10")
+        assert d.functionalChannels[2].valvePosition is None
         assert str(d) == (
             "HmIP-FAL24-C10 Fußbodenheizungsaktor lowBat(None) unreach(False) "
             "rssiDeviceValue(-73) rssiPeerValue(-74) configPending(False) "

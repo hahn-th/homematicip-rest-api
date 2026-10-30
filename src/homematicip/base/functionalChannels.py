@@ -1943,6 +1943,15 @@ class AlarmSirenChannel(FunctionalChannel):
 class FloorTeminalBlockChannel(FunctionalChannel):
     """this is the representative of the FLOOR_TERMINAL_BLOCK_CHANNEL channel"""
 
+    def __init__(self, device, connection):
+        super().__init__(device, connection)
+        self.valvePosition = None
+
+    def from_json(self, js, groups: Iterable[Group]):
+        super().from_json(js, groups)
+        if "valvePosition" in js:
+            self.set_attr_from_dict("valvePosition", js)
+
 
 class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
     """this is the representative of the FLOOR_TERMINAL_BLOCK_LOCAL_PUMP_CHANNEL  channel"""
@@ -1953,6 +1962,7 @@ class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
         self.pumpLeadTime = 0
         self.pumpProtectionDuration = 0
         self.pumpProtectionSwitchingInterval = 20
+        self.valvePosition = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -1960,6 +1970,8 @@ class FloorTerminalBlockLocalPumpChannel(FunctionalChannel):
         self.pumpLeadTime = js["pumpLeadTime"]
         self.pumpProtectionDuration = js["pumpProtectionDuration"]
         self.pumpProtectionSwitchingInterval = js["pumpProtectionSwitchingInterval"]
+        if "valvePosition" in js:
+            self.set_attr_from_dict("valvePosition", js)
 
 
 class HeatDemandChannel(FunctionalChannel):
