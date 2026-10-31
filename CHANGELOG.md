@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `EnergySensorInterfaceChannel` reads `waterFlow` and `waterVolume`, which newer access point firmware sends (seen with HCU1 1.8.10). Both are `None` when the payload does not carry them.
 - The `WATERING_PROFILE` group type is mapped to `WateringProfileGroup`, which reads `profileId`, `profileMode` and `wateringActive` instead of loading as a plain `Group`.
 
+### Changed
+
+- A device or group of a known type that has no class of its own loads as `BaseDevice` or `Group` with a debug message instead of a warning. Unknown types still warn.
+
 ## [2.20.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.19.1..2.20.0)
 
 ### Added
