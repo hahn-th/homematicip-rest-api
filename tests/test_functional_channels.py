@@ -273,6 +273,8 @@ def test_energy_sensor_interface_channel(fake_home: Home):
     assert ch.gasVolume == None
     assert ch.gasVolumePerImpulse == 0.01
     assert ch.impulsesPerKWH == 10000
+    assert ch.waterFlow == 0.0
+    assert ch.waterVolume is None
 
     ch = fake_home.search_channel("3014F711000000000000ESI2", 1)
     assert isinstance(ch, EnergySensorInterfaceChannel)
@@ -287,6 +289,9 @@ def test_energy_sensor_interface_channel(fake_home: Home):
     assert ch.gasVolume == None
     assert ch.gasVolumePerImpulse == 0.01
     assert ch.impulsesPerKWH == 10000
+    # payload from before the water fields existed
+    assert ch.waterFlow is None
+    assert ch.waterVolume is None
 
 
 def test_floor_terminal_block_mechanic_channel(fake_home: Home):
