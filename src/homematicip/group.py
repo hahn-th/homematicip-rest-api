@@ -1161,6 +1161,27 @@ class WaterAlarmGroup(Group):
         return f"{super().__str__()} moistureDetected({self.moistureDetected}) waterlevelDetected({self.waterlevelDetected})"
 
 
+class WateringProfileGroup(Group):
+    def __init__(self, connection):
+        super().__init__(connection)
+        self.dutyCycle = None
+        self.lowBat = None
+        self.profileId = None
+        self.profileMode = None
+        self.wateringActive = None
+
+    def from_json(self, js, devices):
+        super().from_json(js, devices)
+        self.set_attr_from_dict("dutyCycle", js)
+        self.set_attr_from_dict("lowBat", js)
+        self.set_attr_from_dict("profileId", js)
+        self.set_attr_from_dict("profileMode", js, ProfileMode)
+        self.set_attr_from_dict("wateringActive", js)
+
+    def __str__(self):
+        return f"{super().__str__()} profileMode({self.profileMode}) wateringActive({self.wateringActive})"
+
+
 class SwitchingProfileGroup(Group):
     def __init__(self, connection):
         super().__init__(connection)

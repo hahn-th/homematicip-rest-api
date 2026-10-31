@@ -21558,6 +21558,26 @@
       "ventilationLevel": 0.01,
       "ventilationState": "VENTILATION"
     },
+    "00000000-0000-0000-0000-0000000000WP": {
+      "channels": [
+        {
+          "channelIndex": 1,
+          "deviceId": "3014F71100000000000SHWSM"
+        }
+      ],
+      "dutyCycle": false,
+      "homeId": "00000000-0000-0000-0000-000000000001",
+      "id": "00000000-0000-0000-0000-0000000000WP",
+      "label": "Bewaesserung Profil",
+      "lastStatusUpdate": 1793459888527,
+      "lowBat": false,
+      "metaGroupId": null,
+      "profileId": "00000000-0000-0000-0000-0000000000PW",
+      "profileMode": "AUTOMATIC",
+      "type": "WATERING_PROFILE",
+      "unreach": false,
+      "wateringActive": false
+    },
     "00000000-0000-0000-0000-0000000000WA": {
       "channels": [
         {

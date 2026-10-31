@@ -593,6 +593,19 @@ def test_ventilation_profile_group(fake_home: Home):
     assert g.ventilationState == "VENTILATION"
 
 
+def test_watering_profile_group(fake_home: Home):
+    g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000WP")
+    assert isinstance(g, WateringProfileGroup)
+    assert [d.id for d in g.devices] == ["3014F71100000000000SHWSM"]
+    assert g.label == "Bewaesserung Profil"
+    assert g.dutyCycle is False
+    assert g.lowBat is False
+    assert g.profileId == "00000000-0000-0000-0000-0000000000PW"
+    assert g.profileMode == ProfileMode.AUTOMATIC
+    assert g.wateringActive is False
+    assert str(g).endswith("profileMode(AUTOMATIC) wateringActive(False)")
+
+
 def test_water_alarm_group(fake_home: Home):
     g = fake_home.search_group_by_id("00000000-0000-0000-0000-0000000000WA")
     assert isinstance(g, WaterAlarmGroup)
