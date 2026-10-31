@@ -47,10 +47,15 @@ def ssl_ctx_client():
     return str(get_full_path("client.pem"))
 
 
+# Bound at import: tests that patch asyncio.sleep would otherwise reach this thread
+# too, spin it, and count its calls as their own.
+_sleep = asyncio.sleep
+
+
 def start_background_loop(stop_threads, loop: asyncio.AbstractEventLoop) -> None:
     async def wait_for_close(stop_threads):
         while True:
-            await asyncio.sleep(1)
+            await _sleep(1)
             if stop_threads():
                 break
 
