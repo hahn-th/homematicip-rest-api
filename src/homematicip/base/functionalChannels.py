@@ -855,6 +855,8 @@ class EnergySensorInterfaceChannel(FunctionalChannel):
         self.gasVolume = None
         self.gasVolumePerImpulse = None
         self.impulsesPerKWH = None
+        self.waterFlow = None
+        self.waterVolume = None
 
     def from_json(self, js, groups: Iterable[Group]):
         super().from_json(js, groups)
@@ -871,6 +873,8 @@ class EnergySensorInterfaceChannel(FunctionalChannel):
         self.gasVolume = js["gasVolume"]
         self.gasVolumePerImpulse = js["gasVolumePerImpulse"]
         self.impulsesPerKWH = js["impulsesPerKWH"]
+        self.set_attr_from_dict("waterFlow", js)
+        self.set_attr_from_dict("waterVolume", js)
 
 
 class ImpulseOutputChannel(FunctionalChannel):
