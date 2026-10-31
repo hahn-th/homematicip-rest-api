@@ -13542,7 +13542,9 @@
             "IOptionalFeatureGasVolume": false,
             "IOptionalFeatureGasVolumePerImpulse": false,
             "IOptionalFeatureImpulsesPerKWH": false
-          }
+          },
+          "waterFlow": 0.0,
+          "waterVolume": null
         }
       },
       "homeId": "00000000-0000-0000-0000-000000000001",
