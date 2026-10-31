@@ -464,9 +464,12 @@ class AsyncHome(HomeMaticIPObject):
                 )
 
     def _parse_device(self, json_state):
-        device_class = self._typeClassMap.get(DeviceType.from_str(json_state["type"]))
+        device_type = DeviceType.from_str(json_state["type"])
+        device_class = self._typeClassMap.get(device_type)
         if device_class is None:
-            LOGGER.warning("There is no class for device '%s' yet", json_state["type"])
+            # a known type without a class still works through its channels
+            log = LOGGER.debug if device_type is not None else LOGGER.warning
+            log("There is no class for device '%s' yet", json_state["type"])
             device_class = self._typeClassMap[DeviceType.BASE_DEVICE]
         d = device_class(self._connection)
         d.from_json(json_state)
@@ -512,11 +515,11 @@ class AsyncHome(HomeMaticIPObject):
             g = MetaGroup(self._connection)
             g.from_json(json_state, self.devices, self.groups)
         else:
-            group_class = self._typeGroupMap.get(GroupType.from_str(json_state["type"]))
+            group_type = GroupType.from_str(json_state["type"])
+            group_class = self._typeGroupMap.get(group_type)
             if group_class is None:
-                LOGGER.warning(
-                    "There is no class for group '%s' yet", json_state["type"]
-                )
+                log = LOGGER.debug if group_type is not None else LOGGER.warning
+                log("There is no class for group '%s' yet", json_state["type"])
                 group_class = self._typeGroupMap[GroupType.GROUP]
             g = group_class(self._connection)
             g.from_json(json_state, self.devices)

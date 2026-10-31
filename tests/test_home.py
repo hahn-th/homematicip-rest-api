@@ -977,6 +977,48 @@ def test_parse_device_does_not_hide_an_error_as_an_unknown_type(fake_home: Home)
         fake_home._parse_device(raw)
 
 
+@pytest.mark.parametrize(
+    ("device_type", "warns"),
+    [("BRAND_SWITCH_MEASURING_INTERNATIONAL", False), ("NOT_A_DEVICE_TYPE", True)],
+)
+def test_parse_device_warns_only_for_an_unknown_type(
+    fake_home: Home, caplog, device_type: str, warns: bool
+):
+    raw = {
+        **fake_home.download_configuration()["devices"]["3014F7110000000000000108"],
+        "type": device_type,
+    }
+
+    with caplog.at_level(logging.WARNING, logger="homematicip.async_home"):
+        device = fake_home._parse_device(raw)
+
+    assert type(device) is fake_home._typeClassMap[DeviceType.BASE_DEVICE]
+    assert ("There is no class for device" in caplog.text) is warns
+
+
+@pytest.mark.parametrize(
+    ("group_type", "warns"),
+    [("WATERING_PROFILE", False), ("NOT_A_GROUP_TYPE", True)],
+)
+def test_parse_group_warns_only_for_an_unknown_type(
+    fake_home: Home, caplog, group_type: str, warns: bool
+):
+    raw = {
+        **fake_home.download_configuration()["groups"][
+            "00000000-0000-0000-0000-0000000000WP"
+        ],
+        "type": group_type,
+    }
+    fake_home._typeGroupMap = {
+        k: v for k, v in fake_home._typeGroupMap.items() if k != GroupType.WATERING_PROFILE
+    }
+
+    with caplog.at_level(logging.WARNING, logger="homematicip.async_home"):
+        fake_home._parse_group(raw)
+
+    assert ("There is no class for group" in caplog.text) is warns
+
+
 def test_get_groups_skips_a_failing_group(fake_home: Home):
     config = fake_home.download_configuration()
     fake_home._typeGroupMap = {
