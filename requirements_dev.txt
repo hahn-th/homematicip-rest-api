@@ -3,7 +3,7 @@ aiohttp>=3.10.11
 httpx>=0.28.1
 pytest>=8.0
 pytest-asyncio>=1.4.0
-pytest-cov>=6.0
+pytest-cov>=7.1.0
 pytest-aiohttp
 pytest-rerunfailures>=16.7
 pytest-mock>=3.17.0
