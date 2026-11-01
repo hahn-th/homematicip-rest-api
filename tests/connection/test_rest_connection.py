@@ -93,9 +93,11 @@ async def test_conn_async_post_logs_error_response_body(mocker, caplog):
 
 
 @pytest.mark.asyncio
-async def test_conn_async_post_throttle(mocker):
+async def test_conn_async_post_throttle(mocker, caplog):
     response = mocker.Mock(spec=httpx.Response)
     response.status_code = 429
+    response.headers = {"Retry-After": "900"}
+    response.text = '{"errorCode": "THROTTLED", "authToken": "secret"}'
     patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
     patched.return_value = response
 
@@ -104,6 +106,10 @@ async def test_conn_async_post_throttle(mocker):
 
     with pytest.raises(HmipThrottlingError):
         await conn.async_post("url", {"a": "b"}, {"c": "d"})
+
+    assert "'Retry-After': '900'" in caplog.text
+    assert "THROTTLED" in caplog.text
+    assert "secret" not in caplog.text
 
 @pytest.mark.asyncio
 async def test_conn_async_post_with_httpx_client_session(mocker):

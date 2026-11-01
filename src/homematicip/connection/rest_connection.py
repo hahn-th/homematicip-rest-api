@@ -165,7 +165,12 @@ class RestConnection:
             LOGGER.debug("Got response %s.", r.status_code)
 
             if r.status_code == THROTTLE_STATUS_CODE:
-                LOGGER.error("Got error 429 (Throttling active)")
+                # nobody has captured what the cloud sends with a 429 yet, so keep the whole answer
+                LOGGER.error(
+                    "Got error 429 (Throttling active). Response headers: %s. Response body: %s",
+                    dict(r.headers),
+                    self._redact_response_body(r.text),
+                )
                 raise HmipThrottlingError
 
             r.raise_for_status()

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.21.0..master)
 
+### Changed
+
+- `get_current_state_async` warns once more than `STATE_REFRESH_BUDGET` (6) full state downloads ran within `STATE_REFRESH_WINDOW` (one hour), and `set_on_refresh_budget_exceeded_handler` registers a callback for it. With `STATE_REFRESH_BUDGET_ENFORCED` the download raises `HmipRefreshBudgetError` instead. Every known throttling incident was a reconnect loop downloading the whole home over and over.
+- `get_current_state_async_with_retry` waits `max_delay` after a `HmipThrottlingError` and does not retry `HmipRefreshBudgetError`.
+- A 429 response is logged with its headers and redacted body.
+
 ## [2.21.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.20.0..2.21.0)
 
 ### Added

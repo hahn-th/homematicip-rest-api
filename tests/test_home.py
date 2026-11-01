@@ -20,6 +20,8 @@ from homematicip.device import BaseDevice, Device
 from homematicip.exceptions.connection_exceptions import (
     HmipAuthenticationError,
     HmipConnectionError,
+    HmipRefreshBudgetError,
+    HmipThrottlingError,
 )
 from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.functionalHomes import *
@@ -257,6 +259,69 @@ async def test_get_current_state_async_with_retry_caps_delay(fake_home: Home):
         await fake_home.get_current_state_async_with_retry(initial_delay=2, max_delay=5)
     # 2, 4, then capped at 5
     assert sleep_args == [2, 4, 5]
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_waits_max_delay_when_throttled(fake_home: Home):
+    """A 429 means the cloud blocks the IP for a while, so the retry waits the full max_delay at once."""
+    side_effects = [HmipThrottlingError(), HmipConnectionError("e2"), None]
+    sleep_args = []
+    async def fake_sleep(d):
+        sleep_args.append(d)
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)), \
+         patch("asyncio.sleep", new=fake_sleep):
+        await fake_home.get_current_state_async_with_retry(initial_delay=2, max_delay=1500)
+    assert sleep_args == [1500, 1500]
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_raises_budget_error_immediately(fake_home: Home):
+    """Retrying an exhausted budget would be the loop the budget exists to stop."""
+    with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=HmipRefreshBudgetError("6 downloads"))) as mocked, \
+         patch("asyncio.sleep", new=AsyncMock()) as sleep_mock, \
+         pytest.raises(HmipRefreshBudgetError):
+        await fake_home.get_current_state_async_with_retry()
+    assert mocked.await_count == 1
+    sleep_mock.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_warns_beyond_budget_by_default(fake_home: Home, caplog):
+    """The seventh download in an hour still runs, but with a warning and a call to the registered handler."""
+    fake_home._state_refresh_times.clear()
+    handler = Mock()
+    fake_home.set_on_refresh_budget_exceeded_handler(handler)
+    with patch.object(fake_home, "download_configuration_async", new=AsyncMock(return_value={})) as download, \
+         patch.object(fake_home, "update_home"):
+        for _ in range(fake_home.STATE_REFRESH_BUDGET):
+            await fake_home.get_current_state_async()
+        assert "full state downloads" not in caplog.text
+        handler.assert_not_called()
+        await fake_home.get_current_state_async()
+    assert download.await_count == fake_home.STATE_REFRESH_BUDGET + 1
+    assert "6 full state downloads within the last 3600 seconds" in caplog.text
+    assert "https://github.com/hahn-th/homematicip-rest-api/issues" in caplog.text
+    handler.assert_called_once_with(6, 3600.0, False)
+
+
+@pytest.mark.asyncio
+async def test_get_current_state_async_refuses_beyond_budget_until_window_passes(fake_home: Home):
+    """Enforced, the seventh download in an hour is refused and an hour later one is allowed again."""
+    fake_home.STATE_REFRESH_BUDGET_ENFORCED = True
+    fake_home._state_refresh_times.clear()
+    clock = [1000.0]
+    with patch.object(fake_home, "download_configuration_async", new=AsyncMock(return_value={})) as download, \
+         patch.object(fake_home, "update_home"), \
+         patch("homematicip.async_home.time.monotonic", side_effect=lambda: clock[0]):
+        for _ in range(fake_home.STATE_REFRESH_BUDGET):
+            await fake_home.get_current_state_async()
+        with pytest.raises(HmipRefreshBudgetError, match="6 full state downloads"):
+            await fake_home.get_current_state_async()
+        assert download.await_count == fake_home.STATE_REFRESH_BUDGET
+
+        clock[0] += fake_home.STATE_REFRESH_WINDOW + 1
+        await fake_home.get_current_state_async()
+        assert download.await_count == fake_home.STATE_REFRESH_BUDGET + 1
 
 
 @pytest.mark.asyncio

@@ -1,6 +1,8 @@
 import asyncio
 import json
+import time
 import warnings
+from collections import deque
 from collections.abc import Callable
 
 import httpx
@@ -24,6 +26,8 @@ from homematicip.EventHook import *
 from homematicip.exceptions.connection_exceptions import (
     HmipAuthenticationError,
     HmipConnectionError,
+    HmipRefreshBudgetError,
+    HmipThrottlingError,
 )
 from homematicip.exceptions.home_exceptions import HomeNotInitializedError
 from homematicip.group import *
@@ -45,6 +49,14 @@ class AsyncHome(HomeMaticIPObject):
     _typeRuleMap = TYPE_RULE_MAP
     _typeFunctionalHomeMap = TYPE_FUNCTIONALHOME_MAP
 
+    # Full state downloads allowed per window. A healthy client needs one at start and one per
+    # reconnect; every throttling incident so far was a loop doing far more than this.
+    STATE_REFRESH_BUDGET = 6
+    STATE_REFRESH_WINDOW = 3600.0
+    # Warn only until installations in the wild have shown that the budget fits normal use,
+    # then refusing the download becomes the default.
+    STATE_REFRESH_BUDGET_ENFORCED = False
+
     def __init__(self, connection=None):
         super().__init__(connection)
 
@@ -53,9 +65,11 @@ class AsyncHome(HomeMaticIPObject):
         self._websocket_client: WebsocketHandler | None = None
 
         self._auth_token: str | None = None
+        self._state_refresh_times: deque[float] = deque()
 
         # Events and EventHandler
         self._on_create = []
+        self._on_refresh_budget_exceeded: list[Callable] = []
         self._on_channel_event = []
         self.onEvent = EventHook()
 
@@ -268,8 +282,38 @@ class AsyncHome(HomeMaticIPObject):
             from self.devices, self.client, ... to have a fresh config instead of reparsing them
         """
         logger.debug("Run get_current_state_async")
+        self._take_state_refresh_budget()
         json_state = await self.download_configuration_async()
         return self.update_home(json_state, clear_config)
+
+    def _take_state_refresh_budget(self) -> None:
+        """Count a full state download and warn or refuse once the window holds the budget.
+
+        Attempts count, not successes: a failing loop costs the cloud just as much. The window
+        slides, so a stuck client gets another try an hour later instead of staying dark.
+        """
+        now = time.monotonic()
+        times = self._state_refresh_times
+        while times and now - times[0] > self.STATE_REFRESH_WINDOW:
+            times.popleft()
+        if len(times) >= self.STATE_REFRESH_BUDGET:
+            message = (
+                f"{len(times)} full state downloads within the last {int(self.STATE_REFRESH_WINDOW)} seconds, "
+                "more than a healthy client needs"
+            )
+            for handler in self._on_refresh_budget_exceeded:
+                try:
+                    handler(len(times), self.STATE_REFRESH_WINDOW, self.STATE_REFRESH_BUDGET_ENFORCED)
+                except Exception:
+                    logger.exception("Error in refresh budget handler")
+            if self.STATE_REFRESH_BUDGET_ENFORCED:
+                raise HmipRefreshBudgetError(f"{message}; refusing another one until the window has passed")
+            logger.warning(
+                "%s; a future release refuses the download at this point, please report it with your log at "
+                "https://github.com/hahn-th/homematicip-rest-api/issues",
+                message,
+            )
+        times.append(now)
 
     async def wait_for_websocket_connection_async(
         self,
@@ -388,10 +432,18 @@ class AsyncHome(HomeMaticIPObject):
         while True:
             try:
                 return await self.get_current_state_async(clear_config=clear_config)
-            except (HmipAuthenticationError, HomeNotInitializedError):
+            except (HmipAuthenticationError, HmipRefreshBudgetError, HomeNotInitializedError):
                 raise
             except asyncio.CancelledError:
                 raise
+            except HmipThrottlingError as err:
+                # the cloud blocks this IP for a while and every early retry extends the block
+                delay = max_delay
+                logger.warning(
+                    "get_current_state throttled by the cloud, retrying in %s seconds: %s",
+                    delay,
+                    err,
+                )
             except HmipConnectionError as err:
                 logger.warning(
                     "get_current_state failed, retrying in %s seconds: %s",
@@ -1186,3 +1238,13 @@ class AsyncHome(HomeMaticIPObject):
         """
         if self._websocket_client:
             self._websocket_client.add_on_stale_handler(handler)
+
+    def set_on_refresh_budget_exceeded_handler(self, handler: Callable):
+        """Sets a callback that is called when more full state downloads ran within
+        ``STATE_REFRESH_WINDOW`` than ``STATE_REFRESH_BUDGET`` allows, so a client can
+        show it to the user instead of leaving it in the log.
+
+        Handler signature: ``handler(count: int, window: float, enforced: bool)``.
+        It is called synchronously, before the download is refused or run.
+        """
+        self._on_refresh_budget_exceeded.append(handler)
