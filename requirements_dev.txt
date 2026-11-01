@@ -1,7 +1,7 @@
 requests>=2.34.2
 aiohttp>=3.10.11
 httpx>=0.28.1
-pytest>=8.0
+pytest>=9.2.0
 pytest-asyncio>=1.4.0
 pytest-cov>=6.0
 pytest-aiohttp
