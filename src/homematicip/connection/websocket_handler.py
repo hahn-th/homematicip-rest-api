@@ -12,12 +12,14 @@ from homematicip.connection import (
     ATTR_ACCESSPOINT_ID,
     ATTR_AUTH_TOKEN,
     ATTR_CLIENT_AUTH,
+    THROTTLE_STATUS_CODE,
     get_ssl_verify,
 )
 from homematicip.connection.connection_context import (
     ConnectionContext,
     ConnectionContextBuilder,
 )
+from homematicip.connection.throttling import record_throttled
 
 LOGGER = logging.getLogger(__name__)
 
@@ -139,6 +141,7 @@ class WebsocketHandler:
         backoff = self.INITIAL_BACKOFF
         while not self._stop_event.is_set():
             connected_at = None
+            throttled = False
             try:
                 if self._reconnect_attempt_count >= self.RELOOKUP_AFTER_ATTEMPTS:
                     context = await self._relookup_context(context)
@@ -173,6 +176,9 @@ class WebsocketHandler:
 
             except TimeoutError:
                 reason = f"Websocket connect timed out after {self.CONNECT_TIMEOUT}s"
+            except aiohttp.WSServerHandshakeError as e:
+                reason = f"Websocket handshake failed: {e}"
+                throttled = e.status == THROTTLE_STATUS_CODE
             except Exception as e:
                 reason = f"Websocket lost connection: {e}"
             finally:
@@ -186,6 +192,10 @@ class WebsocketHandler:
                 if lifetime >= self.STABLE_CONNECTION_SECONDS:
                     backoff = self.INITIAL_BACKOFF
                     self._reconnect_attempt_count = 0
+            if throttled:
+                # the cloud blocks this IP for a while and every early retry extends the block
+                record_throttled()
+                backoff = self.MAX_BACKOFF
             await self._handle_reconnect(f"{reason}. Retry in {backoff}s.")
             await asyncio.sleep(backoff)
             backoff = min(backoff * 2, self.MAX_BACKOFF)

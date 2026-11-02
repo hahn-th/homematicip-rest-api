@@ -8,6 +8,7 @@ import aiohttp
 import pytest
 from homematicip_demo.helper import get_full_path
 
+from homematicip.connection.throttling import throttle_cooldown_remaining
 from homematicip.connection.websocket_handler import WebsocketHandler
 
 
@@ -448,6 +449,49 @@ async def test_connect_backs_off_after_short_lived_clean_close(monkeypatch):
     assert len(connects) == 4
     assert sleeps == [8, 16, 32]
     assert "closed by server with code 1000" in client.last_disconnect_reason()
+
+
+@pytest.mark.asyncio
+async def test_connect_waits_max_backoff_after_throttled_handshake(monkeypatch):
+    """A 429 on the handshake means the IP is blocked, so the next attempt waits the maximum."""
+    client = WebsocketHandler()
+    connects = []
+    sleeps = []
+
+    class FakeSession:
+        async def __aenter__(self):
+            return self
+
+        async def __aexit__(self, *exc):
+            return False
+
+        async def ws_connect(self, url, **kwargs):
+            connects.append(url)
+            if len(connects) >= 2:
+                client._stop_event.set()
+            raise aiohttp.WSServerHandshakeError(
+                request_info=MagicMock(), history=(), status=429, message="Too Many Requests"
+            )
+
+    monkeypatch.setattr(
+        "homematicip.connection.websocket_handler.aiohttp.ClientSession",
+        FakeSession,
+    )
+
+    async def fake_sleep(delay):
+        sleeps.append(delay)
+
+    monkeypatch.setattr(asyncio, "sleep", fake_sleep)
+
+    context = MagicMock()
+    context.websocket_url = "wss://example.invalid/ws"
+
+    await client._connect(context)
+
+    assert sleeps == [900]
+    assert throttle_cooldown_remaining() > 0
+    assert "Websocket handshake failed" in client.last_disconnect_reason()
+    assert "Retry in 900s" in client.last_disconnect_reason()
 
 
 @pytest.mark.asyncio

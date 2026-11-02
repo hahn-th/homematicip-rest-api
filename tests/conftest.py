@@ -19,6 +19,7 @@ from homematicip_demo.fake_cloud_server import AsyncFakeCloudServer
 from homematicip_demo.helper import *
 
 from homematicip.async_home import AsyncHome
+from homematicip.connection.throttling import clear_throttled
 from homematicip.home import Home
 
 
@@ -180,3 +181,11 @@ def berlin_time(*args):
     return (
         datetime(*args, tzinfo=ZoneInfo("Europe/Berlin")).astimezone().replace(tzinfo=None)
     )
+
+
+@pytest.fixture(autouse=True)
+def _forget_throttle():
+    """The last 429 is process state, so no test inherits one from another."""
+    clear_throttled()
+    yield
+    clear_throttled()
