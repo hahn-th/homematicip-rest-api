@@ -3,6 +3,7 @@ from ssl import SSLContext
 import httpx
 
 from homematicip.connection import get_ssl_verify
+from homematicip.exceptions.connection_exceptions import HmipConnectionError
 
 
 class ConnectionUrlResolver:
@@ -28,20 +29,26 @@ class ConnectionUrlResolver:
         """
         verify = ConnectionUrlResolver._get_verify(enforce_ssl, ssl_context)
 
-        if httpx_client_session is None:
-            async with httpx.AsyncClient(verify=verify) as client:
-                result = await client.post(lookup_url, json=client_characteristics)
-        else:
-            result = await httpx_client_session.post(lookup_url, json=client_characteristics)
+        try:
+            if httpx_client_session is None:
+                async with httpx.AsyncClient(verify=verify) as client:
+                    result = await client.post(lookup_url, json=client_characteristics)
+            else:
+                result = await httpx_client_session.post(lookup_url, json=client_characteristics)
+            return ConnectionUrlResolver._urls_from_response(result)
+        except httpx.HTTPError as err:
+            raise HmipConnectionError(f"Lookup of the cloud hosts failed: {err}") from err
 
+    @staticmethod
+    def _urls_from_response(result: httpx.Response) -> tuple[str, str]:
+        # callers only know HmipConnectionError, a raw httpx or parsing error ends a Home Assistant
+        # setup for good instead of being retried
         result.raise_for_status()
-
-        js = result.json()
-
-        rest_url = js["urlREST"]
-        websocket_url = js["urlWebSocket"]
-
-        return rest_url, websocket_url
+        try:
+            js = result.json()
+            return js["urlREST"], js["urlWebSocket"]
+        except (ValueError, KeyError, TypeError) as err:
+            raise HmipConnectionError(f"Lookup of the cloud hosts returned an unexpected answer: {err!r}") from err
 
     @staticmethod
     def lookup_urls(
@@ -60,15 +67,11 @@ class ConnectionUrlResolver:
         :return: The rest and websocket url as tuple
         """
         verify = ConnectionUrlResolver._get_verify(enforce_ssl, ssl_context)
-        result = httpx.post(lookup_url, json=client_characteristics, verify=verify)
-        result.raise_for_status()
-
-        js = result.json()
-
-        rest_url = js["urlREST"]
-        websocket_url = js["urlWebSocket"]
-
-        return rest_url, websocket_url
+        try:
+            result = httpx.post(lookup_url, json=client_characteristics, verify=verify)
+            return ConnectionUrlResolver._urls_from_response(result)
+        except httpx.HTTPError as err:
+            raise HmipConnectionError(f"Lookup of the cloud hosts failed: {err}") from err
 
     @staticmethod
     def _get_verify(enforce_ssl: bool, ssl_context):
