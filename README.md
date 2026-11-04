@@ -1,6 +1,6 @@
 # HomematicIP REST API
 
-A **Python 3** wrapper for the homematicIP REST API (Access Point Based)
+A Python wrapper for the homematicIP REST API (Access Point Based), for Python 3.12 or newer.
 Since there is no official documentation about this API everything was
 done via reverse engineering. Use at your own risk.
 
@@ -18,23 +18,18 @@ itself and its command line tools.
 A device has to be supported here before Home Assistant can expose it, so if your device is missing
 entirely, see [New devices and config dump](#new-devices-and-config-dump).
 
-## Get Help / Discord
-
-If you want to get in contact with me or need help with the library, you can get in touch with me via discord. There is a **[discord server](https://discord.gg/mZG2myJ)** and my discord tag is **agonist#6159**
-
 ## :book: Documentation
 
 The documentation is at https://hahn-th.github.io/homematicip-rest-api and is generated from the
-`docs/` folder of this repository. It covers getting started, the API reference and the changelog.
-
-## Support me
-
-:heart: If you want to say thank you or want to support me, you can do that via PayPal.
-[https://paypal.me/thomas08154711](https://paypal.me/thomas08154711?country.x=DE&locale.x=de_DE)
+`docs/` folder of this repository. It covers the command line tools, an introduction to the API,
+the API reference and the changelog. Questions and bug reports go to the
+[GitHub issues](https://github.com/hahn-th/homematicip-rest-api/issues), pull requests are
+welcome, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Thanks
 
-Kudos and a big thank you to @coreGreenberet, who created this library.
+Kudos and a big thank you to @coreGreenberet, who created this library, and to @hahn-th, who
+maintained it from 2023 to 2026.
 
 ## Installation
 
@@ -53,16 +48,9 @@ After that, run `hmip_generate_auth_token` (from the command line) to get an aut
 
 ### Use the CLI
 
-You can send commands to homematicIP using the `hmip_cli` script. To get an overview, use -h or --help param. To address devices, use the argument -d in combination with the 24-digit ID (301400000000000000000000) from --list-devices.
-
-A few examples:
-
-- `hmip_cli --help` to get help
-- `hmip_cli --list-devices` to get a list of your devices.
-- `hmip_cli -d <id-from-device-list> --toggle-garage-door` to toggle the garage door with HmIP-WGC.
-- `hmip_cli --list-events` to listen to events and changes in your homematicIP system
-- `hmip_cli -d <id> --set-lock-state LOCKED --pin 1234` to lock a door with HmIP-DLD
-- `hmip_cli --dump-configuration --anonymize` to dump the current config and anonymize it.
+`hmip_cli` sends commands and lists devices, groups and events without writing any code, for
+example `hmip_cli --list-devices` or `hmip_cli -d <id> --toggle-garage-door`. The
+[command line tools](https://hahn-th.github.io/homematicip-rest-api/cli/) page has the details.
 
 ### Examples
 
