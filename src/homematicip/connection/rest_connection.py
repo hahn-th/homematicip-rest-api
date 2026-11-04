@@ -15,6 +15,7 @@ from homematicip.connection import (
     get_ssl_verify,
 )
 from homematicip.connection.connection_context import ConnectionContext
+from homematicip.connection.throttling import record_throttled
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 LOGGER = logging.getLogger(__name__)
@@ -171,6 +172,7 @@ class RestConnection:
                     dict(r.headers),
                     self._redact_response_body(r.text),
                 )
+                record_throttled()
                 raise HmipThrottlingError
 
             r.raise_for_status()

@@ -11,6 +11,7 @@ from homematicip.connection.rest_connection import (
     RestConnection,
     RestResult,
 )
+from homematicip.connection.throttling import throttle_cooldown_remaining
 from homematicip.exceptions.connection_exceptions import HmipThrottlingError
 
 
@@ -110,6 +111,7 @@ async def test_conn_async_post_throttle(mocker, caplog):
     assert "'Retry-After': '900'" in caplog.text
     assert "THROTTLED" in caplog.text
     assert "secret" not in caplog.text
+    assert throttle_cooldown_remaining() > 0
 
 @pytest.mark.asyncio
 async def test_conn_async_post_with_httpx_client_session(mocker):
