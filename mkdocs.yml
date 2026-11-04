@@ -7,7 +7,7 @@ repo_name: hahn-th/homematicip-rest-api
 nav:
 - Home:
   - Overview: index.md
-  - Getting Started: getting-started.md
+  - Command line tools: cli.md
   - Batch testing: batch-testing.md
   - Changelog: changelog.md
 - API Reference:

@@ -19,7 +19,7 @@ def find_and_load_config_file() -> HmipConfig:
 
 def load_config_file(config_file: str) -> HmipConfig:
     """Loads the config ini file.
-    :raises a FileNotFoundError when the config file does not exist."""
+    :raises FileNotFoundError: when the config file does not exist."""
     expanded_config_file = os.path.expanduser(config_file)
     config = configparser.ConfigParser()
     with open(expanded_config_file) as fl:
