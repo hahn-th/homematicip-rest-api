@@ -1133,7 +1133,6 @@ class AsyncHome(HomeMaticIPObject):
                 elif pushEventType == EventType.SECURITY_JOURNAL_CHANGED:
                     pass  # data is just none so nothing to do here
 
-                # TODO: implement INCLUSION_REQUESTED, NONE
                 event_list.append({"eventType": pushEventType, "data": obj})
             except ValueError:  # pragma: no cover
                 LOGGER.warning(

@@ -251,7 +251,7 @@ Radio and wired devices are in one list; wired models carry the `HMIPW` prefix. 
 - [ ] HMIP-BROLL-2 (Shutter Actuator - brand-mount) New Version
 - [x] HMIP-BSL (Switch Actuator for brand switches – with signal lamp)
 - [x] HMIP-BSM (Brand Switch and Meter Actuator)
-- [ ] HMIP-BSM-I (Brand Switch and Meter Actuator, International)
+- [x] HMIP-BSM-I (Brand Switch and Meter Actuator, International)
 - [x] HMIP-BWTH (Wall Thermostat Display with switching output – for brand switches, 230V)
 - [ ] HMIP-BWTH24 (Wall Thermostat Display with switching output – for brand switches, 24V)
 - [x] HMIP-DBB (Doorbell Push-Button)
