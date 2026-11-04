@@ -361,14 +361,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../getting-started/" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Getting Started
+  Command line tools
 
     
   </span>
@@ -515,6 +515,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Introduction
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -530,6 +547,81 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Key classes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Reading values
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sending-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Sending commands
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Events
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors-and-throttling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Errors and throttling
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -588,6 +680,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -599,6 +696,69 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Key classes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reading-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Reading values
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sending-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Sending commands
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Events
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors-and-throttling" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Errors and throttling
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -624,20 +784,72 @@
   
 
 
-<h1 id="api-introduction_old">API Introduction_old<a class="headerlink" href="#api-introduction_old" title="Permanent link">&para;</a></h1>
-<p>There are a few key classes for communication with the Rest API of HomematicIP.</p>
+<h1 id="api-introduction">API introduction<a class="headerlink" href="#api-introduction" title="Permanent link">&para;</a></h1>
+<p>The library talks to the Homematic IP cloud the way the app does: REST calls for commands and
+for the full state, a websocket for pushed changes. There is no official documentation, so
+everything here was reverse engineered and can change with a firmware or cloud update.</p>
+<h2 id="key-classes">Key classes<a class="headerlink" href="#key-classes" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Home:</strong> The most important object as it has the "overview" of the installation</li>
-<li><strong>Group:</strong> A group of devices for a specific need. E.g. Heating group, security group, ...</li>
-<li><strong>MetaGroup:</strong> A collection of groups. In the HomematicIP App this is called a "Room"</li>
-<li><strong>Device:</strong> A hardware device e.g. shutter contact, heating thermostat, alarm siren, ...</li>
-<li><strong>FunctionChannel:</strong> A channel of a device. For example DoorLockChannel for DoorLockDrive or <strong>DimmerChannel</strong>. A device has multiple channels - depending on its functions.</li>
+<li><strong>AsyncHome</strong> is the entry point. <code>init_async(access_point_id, auth_token)</code> resolves the cloud
+  hosts for the access point, <code>get_current_state_async()</code> downloads the whole installation and
+  builds the objects below. <code>Home</code> in <code>homematicip.home</code> wraps it for synchronous code; every
+  method there has an <code>_async</code> counterpart on <code>AsyncHome</code>.</li>
+<li><strong>Device</strong> is a piece of hardware. Devices are containers: the readings and the commands live
+  on their channels, and the device class mostly decides which channel classes get loaded.</li>
+<li><strong>FunctionalChannel</strong> is one channel of a device, typed by <code>functionalChannelType</code>. Channel 0
+  is the <code>DEVICE_BASE</code> channel with the device-wide values such as <code>rssiDeviceValue</code>,
+  <code>lowBat</code> and <code>unreach</code>. Which further channels a device has depends on the model;
+  <code>hmip_cli -d &lt;id&gt; --print-infos</code> shows them.</li>
+<li><strong>Group</strong> collects devices for a purpose: a heating group, a security zone, a switching
+  group. <strong>MetaGroup</strong> is what the app calls a room.</li>
+<li><strong>FunctionalHome</strong> holds the home-wide features: <code>IndoorClimateHome</code>, <code>SecurityAndAlarmHome</code>,
+  <code>LightAndShadowHome</code>, <code>AccessControlHome</code>, <code>EnergyHome</code> and <code>WeatherAndEnvironmentHome</code>.</li>
 </ul>
-<p>For example:
-The device HmIP-DLD is represented by the class <strong>DoorLockDrive</strong> (or AsyncDoorLockDrive). The device has multiple channels.
-The base channel holds information about the device and has the index 0.
-The device also has a channel called <strong>DoorLockChannel</strong> which contains the functions "set_lock_state" and "async_set_lock_state". These are functions to set the lock state of that device.</p>
-<p>If you have a dimmer with multiple I/Os, there are multiple channels. For each I/O a unique channel.</p>
+<p>A device type the library knows but has no class for loads as <code>BaseDevice</code> and keeps all its
+channels, a channel type without a class loads as a plain <code>FunctionalChannel</code>. Both carry the
+raw JSON in <code>_rawJSONData</code>, so a missing class rarely means missing data, only missing commands.</p>
+<h2 id="reading-values">Reading values<a class="headerlink" href="#reading-values" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">device</span> <span class="o">=</span> <span class="n">home</span><span class="o">.</span><span class="n">search_device_by_id</span><span class="p">(</span><span class="s2">"3014F711A000000000000001"</span><span class="p">)</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">functionalChannels</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">channel</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">channel</span><span class="o">.</span><span class="n">functionalChannelType</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># on a wall thermostat, channel 1 is the WALL_MOUNTED_THERMOSTAT_PRO_CHANNEL</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">functionalChannels</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">actualTemperature</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="sending-commands">Sending commands<a class="headerlink" href="#sending-commands" title="Permanent link">&para;</a></h2>
+<p>Write methods live where the function lives: switching on the device or its channel, the set
+point temperature on the heating group that owns the thermostat:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">await</span> <span class="n">device</span><span class="o">.</span><span class="n">turn_on_async</span><span class="p">()</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">await</span> <span class="n">heating_group</span><span class="o">.</span><span class="n">set_point_temperature_async</span><span class="p">(</span><span class="mf">21.0</span><span class="p">)</span>
+</span></code></pre></div>
+<p>A command is one REST call. The cloud answers with the new state only through the websocket,
+so read the value again after the next event rather than right after the call.</p>
+<h2 id="events">Events<a class="headerlink" href="#events" title="Permanent link">&para;</a></h2>
+<p><code>enable_events()</code> opens the websocket and keeps it open with its own reconnect loop. Every
+pushed change updates the objects and calls the handlers registered on <code>home.onEvent</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">print_events</span><span class="p">(</span><span class="n">event_list</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">event_list</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">"eventType"</span><span class="p">],</span> <span class="n">event</span><span class="p">[</span><span class="s2">"data"</span><span class="p">])</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">home</span><span class="o">.</span><span class="n">onEvent</span> <span class="o">+=</span> <span class="n">print_events</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">await</span> <span class="n">home</span><span class="o">.</span><span class="n">enable_events</span><span class="p">()</span>
+</span></code></pre></div>
+<p><code>set_on_connected_handler</code>, <code>set_on_disconnected_handler</code> and <code>set_on_reconnect_handler</code>
+tell a long-running client what the connection does. After a reconnect the cloud does not
+replay missed events, so call <code>refresh_state_after_reconnect_async()</code>: it waits for the
+websocket, then downloads the state again with an exponential backoff on errors.</p>
+<h2 id="errors-and-throttling">Errors and throttling<a class="headerlink" href="#errors-and-throttling" title="Permanent link">&para;</a></h2>
+<p>All connection problems raise <code>HmipConnectionError</code> or a subclass. <code>HmipAuthenticationError</code>
+means the cloud answered 403, usually because the auth token is no longer valid, and
+<code>HmipThrottlingError</code> means it answered 429.</p>
+<p>The cloud throttles by public IP: too many requests in a short time, typically a client that
+reconnects and downloads the whole state in a loop, block every client behind that IP for a
+while, from 15 minutes to hours. The library remembers a 429 for the whole process in
+<code>homematicip.connection.throttling</code>; <code>throttle_cooldown_remaining()</code> returns how long to leave
+the cloud alone, and the websocket reconnect and the state refresh wait that out themselves.
+A client that builds new <code>AsyncHome</code> instances, as Home Assistant does on every reload, should
+check it before the first call.</p>
 
 
 

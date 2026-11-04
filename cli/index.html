@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://hahn-th.github.io/homematicip-rest-api/getting-started/">
+        <link rel="canonical" href="https://hahn-th.github.io/homematicip-rest-api/cli/">
       
       
       
@@ -28,7 +28,7 @@
     
     
       
-        <title>Getting Started - HomematicIP Cloud Rest API Wrapper</title>
+        <title>Command line tools - HomematicIP Cloud Rest API Wrapper</title>
       
     
     
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Getting Started
+              Command line tools
             
           </span>
         </div>
@@ -380,7 +380,7 @@
   <span class="md-ellipsis">
     
   
-  Getting Started
+  Command line tools
 
     
   </span>
@@ -397,7 +397,7 @@
   <span class="md-ellipsis">
     
   
-  Getting Started
+  Command line tools
 
     
   </span>
@@ -423,10 +423,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#welcome-to-homematic-ip-rest-apis-documentation" class="md-nav__link">
+  <a href="#getting-an-auth-token" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Welcome to Homematic IP Rest API's documentation!
+        Getting an auth token
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-hmip_cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Using hmip_cli
       </span>
     </span>
   </a>
@@ -660,10 +671,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#welcome-to-homematic-ip-rest-apis-documentation" class="md-nav__link">
+  <a href="#getting-an-auth-token" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Welcome to Homematic IP Rest API's documentation!
+        Getting an auth token
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-hmip_cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Using hmip_cli
       </span>
     </span>
   </a>
@@ -696,57 +718,41 @@
   
 
 
-<h1 id="homematicip-rest-api-documentation">HomematicIP Rest API Documentation<a class="headerlink" href="#homematicip-rest-api-documentation" title="Permanent link">&para;</a></h1>
-<h2 id="welcome-to-homematic-ip-rest-apis-documentation">Welcome to Homematic IP Rest API's documentation!<a class="headerlink" href="#welcome-to-homematic-ip-rest-apis-documentation" title="Permanent link">&para;</a></h2>
-<p>This documentation is for a <strong>Python 3</strong> wrapper for the homematicIP REST API (Access Point Based).
-Since there is no official documentation about this API everything was
-done via reverse engineering. Use at your own risk.</p>
-<h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>Install the library using pip:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>homematicip
+<h1 id="command-line-tools">Command line tools<a class="headerlink" href="#command-line-tools" title="Permanent link">&para;</a></h1>
+<p>The package installs three scripts: <code>hmip_generate_auth_token</code> registers a client with your
+access point, <code>hmip_cli</code> reads and controls the installation, and <code>hmip_batch</code> tries commands
+against a channel, see <a href="../batch-testing/">Batch testing</a>.</p>
+<h2 id="getting-an-auth-token">Getting an auth token<a class="headerlink" href="#getting-an-auth-token" title="Permanent link">&para;</a></h2>
+<p>You need an access point that is online (its LED glows blue), its SGTIN, and the PIN if one is
+set. With a <strong>HomematicIP HCU1</strong>, press the button on top of the device first; the registration
+then has to complete within five minutes.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>hmip_generate_auth_token
 </span></code></pre></div>
-<h2 id="getting-the-auth-token">Getting the AUTH-TOKEN<a class="headerlink" href="#getting-the-auth-token" title="Permanent link">&para;</a></h2>
-<p>Before you can use the library, you need an auth-token. Otherwise, the HomematicIP Cloud will not trust your requests.</p>
-<p>You will need:
-- Access to an active Access Point (it must glow blue)
-- The SGTIN of the Access Point
-- [Optional] The PIN</p>
-<p>If you are connecting to a <strong>HomematicIP HCU1</strong>, press the button on top of the device before running the script. You then have 5 minutes to complete the registration process.</p>
-<p>To get an auth-token, run the following script (installed with the library):</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>hmip_generate_auth_token
-</span></code></pre></div>
-<p>This will generate a <strong>config.ini</strong> in your current working directory. Scripts using this library will look for this file to load the auth-token and SGTIN of the Access Point. You can place it in the working directory or in one of the following global folders, depending on your OS:</p>
+<p>The script writes a <code>config.ini</code> with the access point ID and the auth token into the current
+directory. Every script and every example in this documentation loads it from the current
+directory or from one of these places:</p>
 <ul>
-<li><strong>General</strong></li>
-<li>Current working directory</li>
-<li><strong>Windows</strong></li>
-<li>%APPDATA%\homematicip-rest-api\</li>
-<li>%PROGRAMDATA%\homematicip-rest-api\</li>
-<li><strong>Linux</strong></li>
-<li>~/.homematicip-rest-api/</li>
-<li>/etc/homematicip-rest-api/</li>
-<li><strong>macOS</strong></li>
-<li>~/Library/Preferences/homematicip-rest-api/</li>
-<li>/Library/Application Support/homematicip-rest-api/</li>
+<li>Windows: <code>%APPDATA%\homematicip-rest-api\</code> or <code>%PROGRAMDATA%\homematicip-rest-api\</code></li>
+<li>Linux: <code>~/.homematicip-rest-api/</code> or <code>/etc/homematicip-rest-api/</code></li>
+<li>macOS: <code>~/Library/Preferences/homematicip-rest-api/</code> or
+  <code>/Library/Application Support/homematicip-rest-api/</code></li>
 </ul>
-<h2 id="using-the-cli">Using the CLI<a class="headerlink" href="#using-the-cli" title="Permanent link">&para;</a></h2>
-<p>You can send commands to HomematicIP using the <code>hmip_cli</code> script. For an overview, use the <code>-h</code> or <code>--help</code> parameter. To address devices, use the <code>-d</code> argument with the 24-digit ID (e.g., 301400000000000000000000) from <code>--list-devices</code>.</p>
-<h3 id="get-information-about-devices-and-groups">Get Information about Devices and Groups<a class="headerlink" href="#get-information-about-devices-and-groups" title="Permanent link">&para;</a></h3>
-<p>Commands are bound to the channel type. To get a list of all allowed actions for a device, use:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hmip_cli<span class="w"> </span>-d<span class="w"> </span><span class="o">{</span>deviceid<span class="o">}</span><span class="w"> </span>--print-allowed-commands
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1"># or</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>hmip_cli<span class="w"> </span>-d<span class="w"> </span><span class="o">{</span>deviceid<span class="o">}</span><span class="w"> </span>-ac
+<h2 id="using-hmip_cli">Using hmip_cli<a class="headerlink" href="#using-hmip_cli" title="Permanent link">&para;</a></h2>
+<p><code>hmip_cli --help</code> lists every option. Devices are addressed with <code>-d</code> and the 24-digit ID from
+<code>--list-devices</code>, groups with <code>-g</code> and the ID from <code>--list-groups</code>.</p>
+<p>Commands are bound to the channel type, so the first step with an unknown device is to see
+what it offers:</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>hmip_cli<span class="w"> </span>-d<span class="w"> </span>&lt;device<span class="w"> </span>id&gt;<span class="w"> </span>--print-infos<span class="w">             </span><span class="c1"># the device and its channels</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>hmip_cli<span class="w"> </span>-d<span class="w"> </span>&lt;device<span class="w"> </span>id&gt;<span class="w"> </span>--print-allowed-commands<span class="w">  </span><span class="c1"># what each channel accepts</span>
 </span></code></pre></div>
-<p>To get information for a device and its channels, use the <code>--print-infos</code> argument with <code>-d</code> for a device or <code>-g</code> for a group.</p>
-<h3 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h3>
+<p>A few examples:</p>
 <ul>
-<li><code>hmip_cli --help</code> — Show help</li>
-<li><code>hmip_cli --list-devices</code> — List your devices</li>
-<li><code>hmip_cli -d &lt;id-from-device-list&gt; --toggle-garage-door</code> — Toggle the garage door with HmIP-WGC</li>
-<li><code>hmip_cli --list-events</code> — Listen to events and changes in your HomematicIP system</li>
-<li><code>hmip_cli -d &lt;id&gt; --set-lock-state LOCKED --pin 1234</code> — Lock a door with HmIP-DLD</li>
-<li><code>hmip_cli --dump-configuration --anonymize</code> — Dump the current config and anonymize it</li>
+<li><code>hmip_cli --list-devices</code> lists your devices.</li>
+<li><code>hmip_cli -d &lt;id&gt; --toggle-garage-door</code> toggles the garage door of an HmIP-WGC.</li>
+<li><code>hmip_cli -d &lt;id&gt; --set-lock-state LOCKED --pin 1234</code> locks a door with an HmIP-DLD.</li>
+<li><code>hmip_cli --list-events</code> prints the events the cloud pushes, until you stop it.</li>
+<li><code>hmip_cli --dump-configuration --anonymize</code> dumps the installation for a bug report, see
+  <a href="../#new-devices-and-config-dump">New devices and config dump</a>.</li>
 </ul>
 
 

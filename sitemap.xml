@@ -13,7 +13,7 @@
         <loc>https://hahn-th.github.io/homematicip-rest-api/changelog/</loc>
       </url>
       <url>
-        <loc>https://hahn-th.github.io/homematicip-rest-api/getting-started/</loc>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/cli/</loc>
       </url>
       <url>
         <loc>https://hahn-th.github.io/homematicip-rest-api/reference/</loc>
@@ -95,6 +95,9 @@
       </url>
       <url>
         <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/rest_connection/</loc>
+      </url>
+      <url>
+        <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/throttling/</loc>
       </url>
       <url>
         <loc>https://hahn-th.github.io/homematicip-rest-api/reference/homematicip/connection/websocket_handler/</loc>
