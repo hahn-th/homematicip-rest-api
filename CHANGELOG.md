@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A 429 response is logged with its headers and redacted body, and `homematicip.connection.throttling` remembers it for the whole process: `throttle_cooldown_remaining()` tells a client how long to leave the cloud alone (15 minutes, the shortest block observed). The websocket reconnect waits its maximum backoff after a 429 on the handshake, and `get_current_state_async_with_retry` waits `max_delay` after a `HmipThrottlingError` and the remaining cooldown before its first attempt. The cloud blocks the public IP, and every early retry extends the block.
 
+### Fixed
+
+- The host lookup raises `HmipConnectionError` instead of the raw httpx error when it fails or returns an unexpected answer. Home Assistant only retries its setup on `HmipConnectionError`, so a lookup that failed because the network was not up yet at boot left the integration dead until a manual reload.
+
 ## [2.21.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.20.0..2.21.0)
 
 ### Added
