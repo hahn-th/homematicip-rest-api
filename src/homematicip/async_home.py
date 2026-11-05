@@ -3,7 +3,7 @@ import json
 import warnings
 from collections.abc import Callable
 
-import httpx
+import httpx2
 
 from homematicip.access_point_update_state import AccessPointUpdateState
 from homematicip.base.channel_event import ChannelEvent
@@ -123,7 +123,7 @@ class AsyncHome(HomeMaticIPObject):
         self,
         context: ConnectionContext,
         use_rate_limiting: bool = True,
-        httpx_client_session: httpx.AsyncClient | None = None,
+        httpx_client_session: httpx2.AsyncClient | None = None,
     ):
         self._connection_context = context
         self._connection = ConnectionFactory.create_connection(self._connection_context, use_rate_limiting,

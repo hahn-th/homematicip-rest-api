@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from ssl import SSLContext
 
-import httpx
+import httpx2
 
 from homematicip.connection.client_characteristics_builder import (
     ClientCharacteristicsBuilder,
@@ -17,7 +17,7 @@ class ConnectionContextBuilder:
                                   lookup_url: str = "https://lookup.homematic.com:48335/getHost",
                                   auth_token: str | None = None,
                                   enforce_ssl: bool = True,
-                                  httpx_client_session: httpx.AsyncClient | None = None,
+                                  httpx_client_session: httpx2.AsyncClient | None = None,
                                   ssl_ctx=None,
                                   websocket_heartbeat_interval: int = 30,
                                   websocket_connect_timeout: int = 30,
@@ -31,7 +31,7 @@ class ConnectionContextBuilder:
         :param lookup_url: Url to lookup the connection urls
         :param auth_token: The Auth Token if exists. If no one is provided None will be used
         :param enforce_ssl: Disable ssl verification by setting enforce_ssl to False
-        :param httpx_client_session: The httpx client session if you want to use a custom one
+        :param httpx_client_session: The httpx2 client session if you want to use a custom one
         :param ssl_ctx: ssl context to use
         :return: a new ConnectionContext
         """

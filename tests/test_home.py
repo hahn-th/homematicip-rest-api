@@ -3,7 +3,7 @@ import logging
 from datetime import timedelta
 from unittest.mock import AsyncMock, Mock, patch
 
-import httpx
+import httpx2
 import pytest
 from homematicip_demo.helper import (
     fake_home_download_configuration,
@@ -59,7 +59,7 @@ def test_init_warns_when_lookup_false():
 
 
 def test_init_with_context(mocker, fake_connection_context_with_ssl):
-    httpx_client_session = mocker.Mock(spec=httpx.AsyncClient)
+    httpx_client_session = mocker.Mock(spec=httpx2.AsyncClient)
     home = Home()
     home.init_with_context(fake_connection_context_with_ssl, httpx_client_session=httpx_client_session)
     assert home._connection_context == fake_connection_context_with_ssl

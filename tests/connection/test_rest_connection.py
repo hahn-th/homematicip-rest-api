@@ -2,7 +2,7 @@ import logging
 import ssl
 from unittest.mock import AsyncMock
 
-import httpx
+import httpx2
 import pytest
 from homematicip_demo.helper import get_full_path
 
@@ -51,9 +51,9 @@ def test_conn_update_connection_context(mocker):
 
 @pytest.mark.asyncio
 async def test_conn_async_post(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=httpx2.Response)
     response.status_code = 200
-    patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
+    patched = mocker.patch("homematicip.connection.rest_connection.httpx2.AsyncClient.post")
     patched.return_value = response
 
     context = ConnectionContext(rest_url="http://asdf")
@@ -70,15 +70,15 @@ async def test_conn_async_post(mocker):
 @pytest.mark.asyncio
 async def test_conn_async_post_logs_error_response_body(mocker, caplog):
     """The HmIP error code is only in the response body, so it has to be logged."""
-    request = httpx.Request("POST", "http://asdf/hmip/url")
-    response = mocker.Mock(spec=httpx.Response)
+    request = httpx2.Request("POST", "http://asdf/hmip/url")
+    response = mocker.Mock(spec=httpx2.Response)
     response.status_code = 400
     response.text = '{"errorCode": "INVALID_REQUEST"}'
-    response.raise_for_status.side_effect = httpx.HTTPStatusError(
+    response.raise_for_status.side_effect = httpx2.HTTPStatusError(
         "400", request=request, response=response
     )
     mocker.patch(
-        "homematicip.connection.rest_connection.httpx.AsyncClient.post",
+        "homematicip.connection.rest_connection.httpx2.AsyncClient.post",
         return_value=response,
     )
 
@@ -95,11 +95,11 @@ async def test_conn_async_post_logs_error_response_body(mocker, caplog):
 
 @pytest.mark.asyncio
 async def test_conn_async_post_throttle(mocker, caplog):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=httpx2.Response)
     response.status_code = 429
     response.headers = {"Retry-After": "900"}
     response.text = '{"errorCode": "THROTTLED", "authToken": "secret"}'
-    patched = mocker.patch("homematicip.connection.rest_connection.httpx.AsyncClient.post")
+    patched = mocker.patch("homematicip.connection.rest_connection.httpx2.AsyncClient.post")
     patched.return_value = response
 
     context = ConnectionContext(rest_url="http://asdf")
@@ -115,10 +115,10 @@ async def test_conn_async_post_throttle(mocker, caplog):
 
 @pytest.mark.asyncio
 async def test_conn_async_post_with_httpx_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=httpx2.Response)
     response.status_code = 200
 
-    mock_client = AsyncMock(spec=httpx.AsyncClient)
+    mock_client = AsyncMock(spec=httpx2.AsyncClient)
     mock_client.post.return_value = response
 
     context = ConnectionContext(rest_url="http://asdf")

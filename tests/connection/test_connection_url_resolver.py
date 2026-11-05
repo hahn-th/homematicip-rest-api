@@ -1,7 +1,7 @@
 
 from unittest.mock import AsyncMock
 
-import httpx
+import httpx2
 import pytest
 
 from homematicip.connection.connection_url_resolver import ConnectionUrlResolver
@@ -10,7 +10,7 @@ from homematicip.exceptions.connection_exceptions import HmipConnectionError
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_with_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=httpx2.Response)
     response.status_code = 200
     response.json.return_value = {"urlREST": "https://example.com/rest", "urlWebSocket": "wss://example.com/ws"}
     client_characteristics = {
@@ -27,7 +27,7 @@ async def test_lookup_urls_async_with_client_session(mocker):
         "id": "access_point_id",
     }
     lookup_url = "https://example.com/lookup"
-    mock_client = AsyncMock(spec=httpx.AsyncClient)
+    mock_client = AsyncMock(spec=httpx2.AsyncClient)
     mock_client.post.return_value = response
 
     rest_url, websocket_url = await ConnectionUrlResolver.lookup_urls_async(
@@ -43,11 +43,11 @@ async def test_lookup_urls_async_with_client_session(mocker):
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_without_client_session(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=httpx2.Response)
     response.status_code = 200
     response.json.return_value = {"urlREST": "https://example.com/rest", "urlWebSocket": "wss://example.com/ws"}
 
-    patched = mocker.patch("homematicip.connection.connection_url_resolver.httpx.AsyncClient.post")
+    patched = mocker.patch("homematicip.connection.connection_url_resolver.httpx2.AsyncClient.post")
     patched.return_value = response
 
     client_characteristics = {
@@ -92,10 +92,10 @@ def test_get_verify_enforces_ssl_when_enforce_true():
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_raises_connection_error_on_transport_error(mocker):
-    """A lookup that cannot reach the cloud is a connection error, not an httpx error."""
+    """A lookup that cannot reach the cloud is a connection error, not an httpx2 error."""
     mocker.patch(
-        "homematicip.connection.connection_url_resolver.httpx.AsyncClient.post",
-        side_effect=httpx.ConnectError("name resolution failed"),
+        "homematicip.connection.connection_url_resolver.httpx2.AsyncClient.post",
+        side_effect=httpx2.ConnectError("name resolution failed"),
     )
 
     with pytest.raises(HmipConnectionError, match="name resolution failed"):
@@ -104,11 +104,11 @@ async def test_lookup_urls_async_raises_connection_error_on_transport_error(mock
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_raises_connection_error_on_status_error(mocker):
-    response = mocker.Mock(spec=httpx.Response)
-    response.raise_for_status.side_effect = httpx.HTTPStatusError(
+    response = mocker.Mock(spec=httpx2.Response)
+    response.raise_for_status.side_effect = httpx2.HTTPStatusError(
         "502", request=mocker.Mock(), response=mocker.Mock(status_code=502)
     )
-    mocker.patch("homematicip.connection.connection_url_resolver.httpx.AsyncClient.post", return_value=response)
+    mocker.patch("homematicip.connection.connection_url_resolver.httpx2.AsyncClient.post", return_value=response)
 
     with pytest.raises(HmipConnectionError, match="502"):
         await ConnectionUrlResolver().lookup_urls_async({}, "https://lookup.invalid/getHost")
@@ -116,10 +116,10 @@ async def test_lookup_urls_async_raises_connection_error_on_status_error(mocker)
 
 @pytest.mark.asyncio
 async def test_lookup_urls_async_raises_connection_error_on_unexpected_answer(mocker):
-    response = mocker.Mock(spec=httpx.Response)
+    response = mocker.Mock(spec=httpx2.Response)
     response.raise_for_status.return_value = None
     response.json.return_value = {"urlREST": "https://rest.invalid"}
-    mocker.patch("homematicip.connection.connection_url_resolver.httpx.AsyncClient.post", return_value=response)
+    mocker.patch("homematicip.connection.connection_url_resolver.httpx2.AsyncClient.post", return_value=response)
 
     with pytest.raises(HmipConnectionError, match="urlWebSocket"):
         await ConnectionUrlResolver().lookup_urls_async({}, "https://lookup.invalid/getHost")
@@ -127,8 +127,8 @@ async def test_lookup_urls_async_raises_connection_error_on_unexpected_answer(mo
 
 def test_lookup_urls_raises_connection_error_on_transport_error(mocker):
     mocker.patch(
-        "homematicip.connection.connection_url_resolver.httpx.post",
-        side_effect=httpx.ConnectError("name resolution failed"),
+        "homematicip.connection.connection_url_resolver.httpx2.post",
+        side_effect=httpx2.ConnectError("name resolution failed"),
     )
 
     with pytest.raises(HmipConnectionError, match="name resolution failed"):
