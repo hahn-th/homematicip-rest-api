@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.22.0..master)
 
+### Changed
+
+- REST requests use `httpx2` instead of `httpx`, which has not had a release since 2024. The API is the same, so a client that passes its own `AsyncClient` passes an `httpx2.AsyncClient` now; Home Assistant has done so since 2026.11 ([#699](https://github.com/hahn-th/homematicip-rest-api/issues/699)).
+
 ## [2.22.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.21.0..2.22.0)
 
 ### Changed
