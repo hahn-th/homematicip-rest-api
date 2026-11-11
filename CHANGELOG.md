@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.22.0..master)
 
+### Added
+
+- `UniversalLightChannel` can set the color temperature together with the dim level, with and without on and ramp time.
+
 ## [2.22.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.21.0..2.22.0)
 
 ### Changed

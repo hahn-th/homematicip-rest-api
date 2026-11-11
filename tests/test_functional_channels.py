@@ -579,6 +579,37 @@ async def test_universal_light_channel(fake_home: Home):
         await ch.start_light_scene_async(2, 0.8)
 
 
+async def test_universal_light_channel_color_temperature(fake_home: Home):
+    with no_ssl_verification():
+        ch = fake_home.search_channel("3014F711000000000000RGBW", 1)
+        connection_mock = AsyncMock()
+        ch._connection = connection_mock
+
+        await ch.set_color_temperature_dim_level_async(2700, 0.5)
+        connection_mock.async_post.assert_awaited_with(
+            "device/control/setColorTemperatureDimLevel",
+            {
+                "channelIndex": 1,
+                "deviceId": "3014F711000000000000RGBW",
+                "colorTemperature": 2700,
+                "dimLevel": 0.5,
+            },
+        )
+
+        await ch.set_color_temperature_dim_level_with_time_async(6500, 1.0, 10, 2)
+        connection_mock.async_post.assert_awaited_with(
+            "device/control/setColorTemperatureDimLevelWithTime",
+            {
+                "channelIndex": 1,
+                "deviceId": "3014F711000000000000RGBW",
+                "colorTemperature": 6500,
+                "dimLevel": 1.0,
+                "onTime": 10,
+                "rampTime": 2,
+            },
+        )
+
+
 
 def test_universal_actuator_channel(fake_home: Home):
     with no_ssl_verification():

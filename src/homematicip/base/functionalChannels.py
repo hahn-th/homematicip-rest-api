@@ -2554,6 +2554,17 @@ class UniversalLightChannel(FunctionalChannel):
             self._connection, self.device.id, self.index, hue, saturation_level, dim_level, on_time, ramp_time
         )
 
+    async def set_color_temperature_dim_level_async(self, color_temperature: int, dim_level: float):
+        return await functional_channel_commands.set_color_temperature_dim_level_async(
+            self._connection, self.device.id, self.index, color_temperature, dim_level
+        )
+
+    async def set_color_temperature_dim_level_with_time_async(self, color_temperature: int, dim_level: float,
+                                                              on_time: float, ramp_time: float):
+        return await functional_channel_commands.set_color_temperature_dim_level_with_time_async(
+            self._connection, self.device.id, self.index, color_temperature, dim_level, on_time, ramp_time
+        )
+
     async def set_switch_state_async(self, on: bool):
         return await functional_channel_commands.set_switch_state_async(
             self._connection, self.device.id, self.index, on
