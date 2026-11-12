@@ -15,10 +15,7 @@ from homematicip.connection import (
     THROTTLE_STATUS_CODE,
     get_ssl_verify,
 )
-from homematicip.connection.connection_context import (
-    ConnectionContext,
-    ConnectionContextBuilder,
-)
+from homematicip.connection.connection_context import ConnectionContext
 from homematicip.connection.throttling import record_throttled
 
 LOGGER = logging.getLogger(__name__)
@@ -53,6 +50,7 @@ class WebsocketHandler:
         self._stop_event = asyncio.Event()
         self._websocket_connected = asyncio.Event()
         self._reconnect_task = None
+        self._ws: aiohttp.ClientWebSocketResponse | None = None
         self._staleness_task: asyncio.Task | None = None
         self._task_lock = asyncio.Lock()
         self._last_message_time: float | None = None
@@ -144,7 +142,7 @@ class WebsocketHandler:
             throttled = False
             try:
                 if self._reconnect_attempt_count >= self.RELOOKUP_AFTER_ATTEMPTS:
-                    context = await self._relookup_context(context)
+                    await self._relookup_context(context)
                 LOGGER.info("Connect to %s", context.websocket_url)
 
                 async with aiohttp.ClientSession() as session:
@@ -164,6 +162,7 @@ class WebsocketHandler:
                         timeout=self.CONNECT_TIMEOUT,
                     )
                     async with ws:
+                        self._ws = ws
                         connected_at = time.monotonic()
                         LOGGER.info(
                             "WebSocket connection established to %s.",
@@ -182,6 +181,7 @@ class WebsocketHandler:
             except Exception as e:
                 reason = f"Websocket lost connection: {e}"
             finally:
+                self._ws = None
                 await self._cleanup()
 
             if self._stop_event.is_set():
@@ -200,25 +200,23 @@ class WebsocketHandler:
             await asyncio.sleep(backoff)
             backoff = min(backoff * 2, self.MAX_BACKOFF)
 
-    async def _relookup_context(self, context: ConnectionContext) -> ConnectionContext:
+    async def _relookup_context(self, context: ConnectionContext) -> None:
         try:
-            refreshed = await ConnectionContextBuilder.build_context_async(
-                accesspoint_id=context.accesspoint_id,
-                auth_token=context.auth_token,
-                enforce_ssl=context.enforce_ssl,
-                ssl_ctx=context.ssl_ctx,
-                websocket_heartbeat_interval=context.websocket_heartbeat_interval,
-                websocket_connect_timeout=context.websocket_connect_timeout,
-                websocket_message_stale_timeout=context.websocket_message_stale_timeout,
-                websocket_initial_backoff=context.websocket_initial_backoff,
-                websocket_max_backoff=context.websocket_max_backoff,
-            )
+            changed = await context.relookup_urls_async()
         except Exception:
             LOGGER.exception("Re-lookup of websocket host failed, keeping current host")
-            return context
-        if refreshed.websocket_url != context.websocket_url:
-            LOGGER.info("Re-resolved websocket host to %s", refreshed.websocket_url)
-        return refreshed
+            return
+        if changed:
+            LOGGER.info("Re-resolved websocket host to %s", context.websocket_url)
+
+    async def reconnect(self) -> None:
+        """Close the current connection so the loop connects again.
+
+        The loop connects to the context's websocket url, so this follows a
+        host change after :meth:`ConnectionContext.relookup_urls_async`.
+        """
+        if self._ws is not None:
+            await self._ws.close()
 
     async def _listen(self, ws) -> str:
         """Process messages until the connection ends and return why it ended."""
