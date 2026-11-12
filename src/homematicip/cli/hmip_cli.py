@@ -111,9 +111,9 @@ def setup_logger(default_debug_level: int, argument_debug_level: int, log_file: 
     logger = logging.getLogger("hmip_cli")
 
     third_party_loggers = [
-        "httpx",
-        "httpcore.http11",
-        "httpcore.connection",
+        "httpx2",
+        "httpcore2.http11",
+        "httpcore2.connection",
         "asyncio",
         "websockets.client"
     ]

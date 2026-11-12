@@ -133,7 +133,7 @@ class HomeMaticIPObject:
         Python 3.14 raises ``RuntimeError`` from ``asyncio.get_event_loop()``
         when no loop is set in the current thread (the deprecation finally
         took effect). Create one on demand and reuse it for subsequent calls
-        so async resources (e.g. an httpx.AsyncClient) created on the first
+        so async resources (e.g. an httpx2.AsyncClient) created on the first
         call remain usable on later ones.
         """
         try:

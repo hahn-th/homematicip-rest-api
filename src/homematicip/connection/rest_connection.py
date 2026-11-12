@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from ssl import SSLContext
 from typing import Any
 
-import httpx
+import httpx2
 
 from homematicip.connection import (
     ATTR_ACCESSPOINT_ID,
@@ -49,7 +49,7 @@ class RestResult:
     text: str = ""
 
     def __post_init__(self):
-        self.status_text = httpx.codes.get_reason_phrase(self.status)
+        self.status_text = httpx2.codes.get_reason_phrase(self.status)
         if self.status_text == "":
             self.status_text = "No status code"
 
@@ -72,14 +72,14 @@ class RestConnection:
     _headers: dict[str, str] = None
     _verify = None
     _log_status_exceptions = True
-    _httpx_client_session: httpx.AsyncClient | None = None
+    _httpx_client_session: httpx2.AsyncClient | None = None
 
-    def __init__(self, context: ConnectionContext, httpx_client_session: httpx.AsyncClient | None = None,
+    def __init__(self, context: ConnectionContext, httpx_client_session: httpx2.AsyncClient | None = None,
                  log_status_exceptions: bool = True):
         """Initialize the RestConnection object.
 
         @param context: The connection context
-        @param httpx_client_session: The httpx client session if you want to use a custom one
+        @param httpx_client_session: The httpx2 client session if you want to use a custom one
         @param log_status_exceptions: If status exceptions should be logged
         """
         LOGGER.debug("Initialize new RestConnection")
@@ -182,10 +182,10 @@ class RestConnection:
                 result.json = r.json()
 
             return result
-        except httpx.RequestError as exc:
+        except httpx2.RequestError as exc:
             LOGGER.error("An error occurred while requesting %r.", exc.request.url)
             return RestResult(status=-1, exception=exc)
-        except httpx.HTTPStatusError as exc:
+        except httpx2.HTTPStatusError as exc:
             if self._log_status_exceptions:
                 LOGGER.error(
                     "Error response %s while requesting %r with data %s. Response body: %s",
@@ -197,14 +197,14 @@ class RestConnection:
             return RestResult(status=exc.response.status_code, exception=exc, text=exc.response.text)
 
     async def _execute_request_async(self, url: str, data: dict | None = None, header: dict | None = None):
-        """Execute a request async. Uses the httpx client session if available.
+        """Execute a request async. Uses the httpx2 client session if available.
         @param url: The path of the url to send the request to
         @param data: The data to send as json
         @param custom_header: A custom header to send. Replaces the default header
         @return: The result as a RestResult object
         """
         if self._httpx_client_session is None:
-            async with httpx.AsyncClient(verify=self._verify) as client:
+            async with httpx2.AsyncClient(verify=self._verify) as client:
                 result = await client.post(url, json=data, headers=header)
         else:
             result = await self._httpx_client_session.post(url, json=data, headers=header)
