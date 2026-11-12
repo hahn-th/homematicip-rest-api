@@ -415,6 +415,7 @@ class AsyncHome(HomeMaticIPObject):
                     delay,
                     err,
                 )
+                await self._relookup_hosts_async()
             except Exception:
                 logger.exception(
                     "Unexpected error in get_current_state, retrying in %s seconds",
@@ -422,6 +423,23 @@ class AsyncHome(HomeMaticIPObject):
                 )
             await asyncio.sleep(delay)
             delay = min(delay * 2, max_delay)
+
+    async def _relookup_hosts_async(self) -> None:
+        """Follow the home to another cloud host.
+
+        A moved home answers 503 on its old host while the websocket there
+        stays open but silent, so neither recovers by retrying alone.
+        """
+        try:
+            changed = await self._connection_context.relookup_urls_async()
+        except Exception as err:
+            logger.debug("Re-lookup of the cloud hosts failed: %s", err)
+            return
+        if not changed:
+            return
+        logger.info("The home moved to %s", self._connection_context.rest_url)
+        if self._websocket_client is not None:
+            await self._websocket_client.reconnect()
 
     def update_home(self, json_state, clear_config: bool = False):
         """parse a given json configuration into self.
