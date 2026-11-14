@@ -112,3 +112,21 @@ class ConnectionContext:
     websocket_message_stale_timeout: int = 1800
     websocket_initial_backoff: int = 8
     websocket_max_backoff: int = 900
+
+    async def relookup_urls_async(
+        self, lookup_url: str = "https://lookup.homematic.com:48335/getHost"
+    ) -> bool:
+        """Look up the cloud hosts again and return whether they changed.
+
+        The cloud may move a home to another host, for instance after the
+        access point reconnected. Updating this context in place moves the REST
+        connection and the websocket that share it along.
+        """
+        cc = ClientCharacteristicsBuilder.get(self.accesspoint_id)
+        urls = await ConnectionUrlResolver().lookup_urls_async(
+            cc, lookup_url, self.enforce_ssl, self.ssl_ctx
+        )
+        if urls == (self.rest_url, self.websocket_url):
+            return False
+        self.rest_url, self.websocket_url = urls
+        return True

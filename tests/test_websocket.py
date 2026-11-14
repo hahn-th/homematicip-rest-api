@@ -373,21 +373,19 @@ async def test_connect_relookups_host_after_repeated_failures(monkeypatch):
         FakeSession,
     )
 
-    fresh = MagicMock()
-    fresh.websocket_url = "wss://healthy.invalid/ws"
-    build_mock = AsyncMock(return_value=fresh)
-    monkeypatch.setattr(
-        "homematicip.connection.websocket_handler.ConnectionContextBuilder.build_context_async",
-        build_mock,
-    )
-
     context = MagicMock()
     context.websocket_url = "wss://dead.invalid/ws"
     context.accesspoint_id = "a"
 
+    async def relookup():
+        context.websocket_url = "wss://healthy.invalid/ws"
+        return True
+
+    context.relookup_urls_async = AsyncMock(side_effect=relookup)
+
     await client._connect(context)
 
-    build_mock.assert_awaited()
+    context.relookup_urls_async.assert_awaited()
     assert tried[:2] == ["wss://dead.invalid/ws", "wss://dead.invalid/ws"]
     assert "wss://healthy.invalid/ws" in tried
 
@@ -524,17 +522,31 @@ async def test_connect_resets_backoff_after_stable_connection(monkeypatch):
 async def test_relookup_context_falls_back_on_error(monkeypatch):
     """A failing re-lookup keeps the current context instead of raising."""
     client = WebsocketHandler()
-    monkeypatch.setattr(
-        "homematicip.connection.websocket_handler.ConnectionContextBuilder.build_context_async",
-        AsyncMock(side_effect=Exception("lookup down")),
-    )
-
     context = MagicMock()
     context.websocket_url = "wss://dead.invalid/ws"
+    context.relookup_urls_async = AsyncMock(side_effect=Exception("lookup down"))
 
-    result = await client._relookup_context(context)
+    await client._relookup_context(context)
 
-    assert result is context
+    assert context.websocket_url == "wss://dead.invalid/ws"
+
+
+@pytest.mark.asyncio
+async def test_reconnect_closes_the_current_connection():
+    client = WebsocketHandler()
+    client._ws = MagicMock()
+    client._ws.close = AsyncMock()
+
+    await client.reconnect()
+
+    client._ws.close.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_reconnect_without_connection_does_nothing():
+    client = WebsocketHandler()
+
+    await client.reconnect()
 
 
 @pytest.mark.asyncio

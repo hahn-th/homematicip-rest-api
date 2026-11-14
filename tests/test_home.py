@@ -196,6 +196,7 @@ async def test_get_current_state_async_with_retry_retries_on_connection_error(fa
     """Retries on HmipConnectionError, then succeeds."""
     side_effects = [HmipConnectionError("boom"), HmipConnectionError("again"), None]
     with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)) as mocked, \
+         patch.object(fake_home, "_relookup_hosts_async", new=AsyncMock()), \
          patch("asyncio.sleep", new=AsyncMock()) as sleep_mock:
         await fake_home.get_current_state_async_with_retry(initial_delay=1, max_delay=10)
     assert mocked.await_count == 3
@@ -248,6 +249,60 @@ async def test_get_current_state_async_with_retry_retries_on_unexpected_exceptio
 
 
 @pytest.mark.asyncio
+async def test_get_current_state_async_with_retry_follows_a_moved_home(fake_home: Home):
+    """A moved home answers 503 on its old host, so a failed refresh looks the hosts up again
+    and the next attempt and the websocket go to the new one."""
+    context = fake_home._connection_context
+    context.rest_url = "https://srv5002.example"
+    context.websocket_url = "wss://srv5002.example:8888"
+    websocket = Mock()
+    websocket.reconnect = AsyncMock()
+    fake_home._websocket_client = websocket
+    urls_seen = []
+
+    async def get_state(clear_config=False):
+        urls_seen.append(context.rest_url)
+        if context.rest_url == "https://srv5002.example":
+            raise HmipConnectionError("503 Service Unavailable")
+
+    with patch.object(fake_home, "get_current_state_async", new=get_state), \
+         patch("homematicip.connection.connection_context.ConnectionUrlResolver.lookup_urls_async",
+               new=AsyncMock(return_value=("https://srv5001.example", "wss://srv5001.example:8888"))), \
+         patch("asyncio.sleep", new=AsyncMock()):
+        await fake_home.get_current_state_async_with_retry(initial_delay=1)
+
+    assert urls_seen == ["https://srv5002.example", "https://srv5001.example"]
+    assert context.websocket_url == "wss://srv5001.example:8888"
+    websocket.reconnect.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_relookup_hosts_keeps_the_websocket_when_nothing_moved(fake_home: Home):
+    context = fake_home._connection_context
+    websocket = Mock()
+    websocket.reconnect = AsyncMock()
+    fake_home._websocket_client = websocket
+
+    with patch("homematicip.connection.connection_context.ConnectionUrlResolver.lookup_urls_async",
+               new=AsyncMock(return_value=(context.rest_url, context.websocket_url))):
+        await fake_home._relookup_hosts_async()
+
+    websocket.reconnect.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_relookup_hosts_ignores_a_failed_lookup(fake_home: Home):
+    context = fake_home._connection_context
+    rest_url = context.rest_url
+
+    with patch("homematicip.connection.connection_context.ConnectionUrlResolver.lookup_urls_async",
+               new=AsyncMock(side_effect=HmipConnectionError("lookup down"))):
+        await fake_home._relookup_hosts_async()
+
+    assert context.rest_url == rest_url
+
+
+@pytest.mark.asyncio
 async def test_get_current_state_async_with_retry_caps_delay(fake_home: Home):
     """Backoff doubles but does not exceed max_delay."""
     side_effects = [HmipConnectionError("e1"), HmipConnectionError("e2"), HmipConnectionError("e3"), None]
@@ -255,6 +310,7 @@ async def test_get_current_state_async_with_retry_caps_delay(fake_home: Home):
     async def fake_sleep(d):
         sleep_args.append(d)
     with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)), \
+         patch.object(fake_home, "_relookup_hosts_async", new=AsyncMock()), \
          patch("asyncio.sleep", new=fake_sleep):
         await fake_home.get_current_state_async_with_retry(initial_delay=2, max_delay=5)
     # 2, 4, then capped at 5
@@ -269,6 +325,7 @@ async def test_get_current_state_async_with_retry_waits_max_delay_when_throttled
     async def fake_sleep(d):
         sleep_args.append(d)
     with patch.object(fake_home, "get_current_state_async", new=AsyncMock(side_effect=side_effects)), \
+         patch.object(fake_home, "_relookup_hosts_async", new=AsyncMock()), \
          patch("asyncio.sleep", new=fake_sleep):
         await fake_home.get_current_state_async_with_retry(initial_delay=2, max_delay=1500)
     assert sleep_args == [1500, 1500]
