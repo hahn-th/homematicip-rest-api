@@ -21,6 +21,8 @@ class ChannelEvent:
 
         if self.channelIndex is None:
             self.channelIndex = self.functionalChannelIndex
+        if self.functionalChannelIndex is None:
+            self.functionalChannelIndex = self.channelIndex
 
     # {
     #     "pushEventType": "DEVICE_CHANNEL_EVENT",
