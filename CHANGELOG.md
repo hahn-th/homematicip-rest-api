@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.23.0..master)
 
+### Fixed
+
+- Channel events reach the functional channel named by `functionalChannelIndex`. Before, the lookup used `channelIndex`, which is the key number, so three of the four keys of the `HmIP-WGS` were dropped and the fourth fired on the first key channel ([home-assistant/core#192989](https://github.com/home-assistant/core/issues/192989)).
+
 ## [2.23.0](https://github.com/hahn-th/homematicip-rest-api/compare/2.22.0..2.23.0)
 
 ### Added

@@ -1125,7 +1125,9 @@ class AsyncHome(HomeMaticIPObject):
                 elif pushEventType == EventType.DEVICE_CHANNEL_EVENT:
                     channel_event = ChannelEvent()
                     channel_event.from_json(event)
-                    ch = self.search_channel(channel_event.deviceId, channel_event.channelIndex)
+                    # channelIndex is the key number, which differs from the
+                    # functional channel on multi-channel devices like the HmIP-WGS.
+                    ch = self.search_channel(channel_event.deviceId, channel_event.functionalChannelIndex)
                     if ch is not None:
                         ch.fire_channel_event(channel_event)
                 elif pushEventType == EventType.DEVICE_CODE_STATE_EVENT:

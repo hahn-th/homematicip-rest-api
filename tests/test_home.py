@@ -1451,6 +1451,53 @@ async def test_websocket_channel_event(fake_home: Home):
     fake_handler.assert_called_once_with(channel_event)
 
 
+async def test_websocket_channel_event_uses_functional_channel(fake_home: Home):
+    # From a real HmIP-WGS: the second key is channelIndex 2, but its event
+    # entity sits on functional channel 5. Channel 2 is the backlight.
+    payload = {
+        "events":
+            {
+                "0":
+                    {
+                        "pushEventType": "DEVICE_CHANNEL_EVENT",
+                        "deviceId": "3014F7110000000000000WGS",
+                        "channelIndex": 2,
+                        "channelEventType": "KEY_PRESS_SHORT",
+                        "functionalChannelIndex": 5,
+                    }
+            }
+    }
+    key_handler = Mock()
+    backlight_handler = Mock()
+    fake_home.search_channel("3014F7110000000000000WGS", 5).add_on_channel_event_handler(key_handler)
+    fake_home.search_channel("3014F7110000000000000WGS", 2).add_on_channel_event_handler(backlight_handler)
+    await fake_home._ws_on_message(json.dumps(payload))
+
+    assert key_handler.call_count == 1
+    assert key_handler.call_args.args[0].channelEventType == "KEY_PRESS_SHORT"
+    backlight_handler.assert_not_called()
+
+
+async def test_websocket_channel_event_without_functional_channel(fake_home: Home):
+    payload = {
+        "events":
+            {
+                "0":
+                    {
+                        "pushEventType": "DEVICE_CHANNEL_EVENT",
+                        "deviceId": "3014F7110000000000DSDPCB",
+                        "channelIndex": 1,
+                        "channelEventType": "DOOR_BELL_SENSOR_EVENT",
+                    }
+            }
+    }
+    fake_handler = Mock()
+    fake_home.search_channel("3014F7110000000000DSDPCB", 1).add_on_channel_event_handler(fake_handler)
+    await fake_home._ws_on_message(json.dumps(payload))
+
+    assert fake_handler.call_count == 1
+
+
 @pytest.mark.parametrize(
     ("code_index", "code_state"),
     [
