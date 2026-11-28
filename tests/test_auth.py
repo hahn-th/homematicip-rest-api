@@ -100,3 +100,12 @@ async def test_auth_token_steps_raise_on_unusable_response(call, result):
 
     with pytest.raises(HmipConnectionError):
         await call(auth)
+
+
+def test_auth_client_id_differs_per_instance():
+    connection = Mock(spec=RestConnection)
+
+    first = Auth(connection, "token", "ap")
+    second = Auth(connection, "token", "ap")
+
+    assert first.client_id != second.client_id

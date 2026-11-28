@@ -34,7 +34,7 @@ def _read_field(result: RestResult, field: str, action: str) -> str:
 class Auth:
     """This class generates the auth token for the homematic ip access point."""
 
-    client_id: str = str(uuid.uuid4())
+    client_id: str = None
     header: dict = None
     accesspoint_id: str = None
     pin: str = None
@@ -47,6 +47,8 @@ class Auth:
         @param accesspoint_id: The access point id
         """
         LOGGER.debug("Initialize new Auth")
+        # a class-level default would be evaluated once at import and shared by every pairing attempt
+        self.client_id = str(uuid.uuid4())
         self.accesspoint_id = accesspoint_id
         self.connection = connection
         self.headers = {
