@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [UNRELEASED](https://github.com/hahn-th/homematicip-rest-api/compare/2.23.1..master)
 
+### Fixed
+
+- Every `Auth` gets its own client ID. Before, all instances in one process shared the ID generated at import, so repeated pairing attempts sent the same `deviceId` ([home-assistant/core#195106](https://github.com/home-assistant/core/issues/195106)).
+
 ## [2.23.1](https://github.com/hahn-th/homematicip-rest-api/compare/2.23.0..2.23.1)
 
 ### Fixed
